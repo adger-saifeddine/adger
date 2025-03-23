@@ -984,11 +984,9 @@
             scroll-behavior: smooth;
             scrollbar-width: none;
         }
-
         .carousel::-webkit-scrollbar {
             display: none;
         }
-
         .carousel-item {
             width: 220px;
             margin: 0 7px;
@@ -1000,7 +998,6 @@
             flex: 0 0 auto;
             overflow: hidden; /* لضمان عدم خروج الصورة عن الإطار */
         }
-
         .carousel-item img {
             width: 100%;
             height: 200px;
@@ -1019,11 +1016,9 @@
                 background: #e0e0e031;
             }
         }
-
         .carousel-item p {
             margin: 5px 0;
         }
-
         .carousel-item h1 {
             font-family: 'Cairo', sans-serif;
             margin: 5px 0;
@@ -1031,47 +1026,39 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         /* تعديل نص اسم المنتج فقط */
         .carousel-item h1:nth-child(2) {
             text-align: right; /* محاذاة اسم المنتج إلى اليمين */
             padding-right: 10px; /* مسافة ثابتة على يمين اسم المنتج */
         }
-
         @media (max-width: 768px) {
             .carousel-item {
                 width: 150px;
                 margin: 0 2px;
                 padding: 0; /* إزالة الحشوة لضمان ملء الصورة للإطار */
             }
-
             .carousel-item img {
                 width: 100%;
                 height: 140px;
                 border-radius: 18px 18px 0 0; /* جعل الحدود العلوية مدورة فقط */
                 margin-bottom: 8px;
             }
-
             .carousel-item h1 {
                 font-size: 13.5px !important;
                 margin: 3px 0 !important;
                 line-height: 19px !important;
             }
-
             .carousel-item h1:nth-child(2) { /* اسم المنتج */
                 font-size: 12px !important;
                 padding-right: 5px; /* تعديل المسافة للشاشات الصغيرة */
             }
-
             .carousel-item h1:nth-child(3) { /* السعر الحالي */
                 font-size: 12px !important;
             }
-
             .carousel-item h1:nth-child(4) { /* السعر القديم */
                 font-size: 11px !important;
                 margin-top: -4px !important;
             }
-
             .carousel-item h1:nth-child(5) { /* الخصم */
                 font-size: 10px !important;
                 line-height: 21px !important;
@@ -1082,7 +1069,6 @@
                 margin-bottom: 15px !important; /* زيادة المسافة أسفل نص الخصم في الهواتف */
             }
         }
-
         .arrow-button {
             position: absolute;
             top: 50%;
@@ -1096,26 +1082,22 @@
             font-size: 17px;
             z-index: 1;
         }
-
         .left-arrow {
             left: 10px;
         }
-
         .right-arrow {
             right: 10px;
         }
-
         .carousel-container {
             will-change: transform;
             transform: translateZ(0);
             position: relative;
         }
-
-        /* إضافة عنصر وهمي لإنشاء مسافة في النهاية */
-        .carousel-item.dummy {
-            width: 220px; /* نفس عرض العنصر العادي */
-            margin: 0 7px;
-            visibility: hidden; /* إخفاء العنصر */
+        /* Add spacing after the last item */
+        .carousel::after {
+            content: '';
+            width: 50px; /* Adjust spacing size */
+            flex: 0 0 auto;
         }
     </style>
 </head>
@@ -1150,15 +1132,12 @@
                 </h1>
             </div>
             <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
-            <div class="carousel-item dummy"></div> <!-- العنصر الوهمي لإنشاء مسافة -->
         </div>
     </div>
-
     <script>
         function selectImage(path) {
             window.location.href = path;
         }
-
         function isDesktop() {
             const userAgent = navigator.userAgent.toLowerCase();
             const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
@@ -1166,13 +1145,10 @@
             const screenWidth = window.innerWidth;
             return !isMobile && !isTablet && screenWidth > 768;
         }
-
         function createArrows() {
             if (!isDesktop()) return;
-
             const container = document.querySelector('.carousel-container');
             const carousel = document.querySelector('.carousel');
-
             const leftArrow = document.createElement('button');
             leftArrow.innerHTML = '❮';
             leftArrow.classList.add('arrow-button', 'left-arrow');
@@ -1181,7 +1157,6 @@
                 scrollCarousel(-200);
                 updateArrowsVisibility();
             };
-
             const rightArrow = document.createElement('button');
             rightArrow.innerHTML = '❯';
             rightArrow.classList.add('arrow-button', 'right-arrow');
@@ -1190,10 +1165,8 @@
                 scrollCarousel(200);
                 updateArrowsVisibility();
             };
-
             container.appendChild(leftArrow);
             container.appendChild(rightArrow);
-
             function updateArrowsVisibility() {
                 if (carousel.scrollLeft === 0) {
                     leftArrow.style.display = 'block';
@@ -1206,11 +1179,9 @@
                     rightArrow.style.display = 'block';
                 }
             }
-
             carousel.addEventListener('scroll', debounce(updateArrowsVisibility, 100));
             updateArrowsVisibility();
         }
-
         function scrollCarousel(scrollAmount) {
             const carousel = document.querySelector('.carousel');
             carousel.scrollBy({
@@ -1218,7 +1189,6 @@
                 behavior: 'smooth'
             });
         }
-
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -1230,9 +1200,7 @@
                 timeout = setTimeout(later, wait);
             };
         }
-
         createArrows();
-
         document.addEventListener('DOMContentLoaded', function() {
             const images = document.querySelectorAll('img[loading="lazy"]');
             const observer = new IntersectionObserver((entries, observer) => {
@@ -1244,7 +1212,6 @@
                     }
                 });
             }, { rootMargin: '0px 0px 100px 0px' });
-
             images.forEach(img => observer.observe(img));
         });
     </script>
