@@ -1110,6 +1110,13 @@
             transform: translateZ(0);
             position: relative;
         }
+
+        /* إضافة عنصر وهمي لإنشاء مسافة في النهاية */
+        .carousel-item.dummy {
+            width: 220px; /* نفس عرض العنصر العادي */
+            margin: 0 7px;
+            visibility: hidden; /* إخفاء العنصر */
+        }
     </style>
 </head>
 <body>
@@ -1143,6 +1150,7 @@
                 </h1>
             </div>
             <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
+            <div class="carousel-item dummy"></div> <!-- العنصر الوهمي لإنشاء مسافة -->
         </div>
     </div>
 
