@@ -1,12 +1,12 @@
 [
     {
-        "name": "ساعة تاتش سوداء",
-        "dataName": "كتب عصري وأنيق",
-        "price": "1,500.00",
-        "image": "a1.jpg",
+        "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
+        "dataName": "كتب كتاب ابق قوي قويا ",
+        "price": "70.00",
+        "image": "img/1.jpg",
         "sold": 25,
-        "discountTexts": ["كان ب 200,000 جنيه", "خصم24%"],
-        "link": "prod1.html"
+        "discountTexts": ["كان ب 114.00 جنيه", "خصم 38.6%"],
+        "link": "prod.html?id=1"
     },
    
     {
