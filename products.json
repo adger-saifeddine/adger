@@ -4,7 +4,7 @@
         "dataName": "كتب كتاب ابق قوي قويا ",
         "price": "70.00",
         "image": "img/1.jpg",
-        "sold": 25,
+        "sold": "موثوق",
         "discountTexts": ["كان ب 114.00 جنيه", "خصم 38.6%"],
         "link": "prod.html?id=1"
     },
