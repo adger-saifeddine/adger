@@ -2077,8 +2077,14 @@
                 align-items: center;
                 font-family: Cairo, sans-serif;
                 font-size: 14px;
-                margin-bottom: -34px !important;
+                margin-bottom: 4px;
             }
+            @media (max-width: 768px) { /* تعديل المارغن فقط للشاشات الأكبر من الهواتف */
+                .footer{
+                 margin-bottom: -2px !important;
+                }
+            }
+
         </style>
     </head>
     <body>
