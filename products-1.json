@@ -2,59 +2,6 @@
     {
         "id": "1",
         "media": [
-            {"src": "img/1.jpg", "type": "image"},
-            {"src": "img/1.2.jpg", "type": "image"},
-            {"src": "img/1.3.jpg", "type": "image"},
-            {"src": "img/1.4.jpg", "type": "image"}
-        ],
-        "pri": "70",
-        "oldPrice": "114",
-        "dis": "خصم أكثر من 38.6%",
-        "changingText": ["ابداع", "طبعة مثالية", "جودة"],
-        "longText": "كتاب ابقَ قويًا 365 يومًا في السنة هو كتاب تنمية ذاتية من تأليف ديمي لوفاتو",
-        "sales": "مباع بواسطة أدجر",
-        "buttonId": "commentButton1",
-        "commentId": "1",
-        "elementId": "commentCount1",
-        "tableData": [
-            {"question": "اللون", "answer": "أبيض"},
-            {"question": "المادة", "answer": "ورق"},
-            {"question": "المؤلف", "answer": "ديمي لوفاتو"},
-            {"question": "عدد الصفح", "answer": "402"}
-        ],
-        "desc": "هو كتاب تحفيزي للكاتبة ديمي لوفاتو، يحتوي على 365 تأملًا يوميًا مستوحى من تجاربها الشخصية، حيث تقدم نصائح وإلهامًا يوميًا لمساعدة القارئ على مواجهة التحديات، وبناء الثقة بالنفس، وتحقيق التوازن في الحياة. يعكس الكتاب رحلة الكاتبة في التغلب على الصعوبات وتعزيز القوة الداخلية من خلال التفكير الإيجابي والتأملات العميقة.",
-        "groups": [
-            {
-                "type": "images",
-                "items": [
-                    "img/1.jpg",
-                    "img/1.2.jpg",
-                    "img/1.3.jpg",
-                    "img/1.4.jpg"
-                ]
-            }
-        
-        ],
-        "product": {
-            "image": "img/1.jpg",
-            "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
-            "sold": "مباع بواسطة أدجر",
-            "location": "القاهرة",
-            "price": "70",
-            "discount": "38.6%",
-            "pageId": "1",
-            "productId": "1",
-            "shippingPrice": "60"
-        },
-        "texts": {
-            "currency": "جنيه",
-            "discountLabel": "خصم"
-        }
-    },
-
-    {
-        "id": "2",
-        "media": [
             {"src": "1.jpg", "type": "image"},
             {"src": "1.2.jpg", "type": "image"},
             {"src": "1.3.jpg", "type": "image"},
@@ -63,7 +10,7 @@
         "pri": "70",
         "oldPrice": "114",
         "dis": "خصم أكثر من 38.6%",
-        "changingText": ["ابداع", "طبعة مثالية", "جودة"],
+        "changingText": ["النص الأول", "طبعة مثالية", "جودة"],
         "longText": "كتاب ابقَ قويًا 365 يومًا في السنة هو كتاب تنمية ذاتية من تأليف ديمي لوفاتو",
         "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton1",
@@ -81,9 +28,10 @@
                 "type": "images",
                 "items": [
                     "1.jpg",
-                    "1.2.jpg",
-                    "1.3.jpg",
-                    "1.4.jpg"
+                    "1.jpg",
+                    "path/to/image3.jpg",
+                    "path/to/image4.jpg",
+                    "path/to/image5.jpg"
                 ]
             },
             {
@@ -112,5 +60,4 @@
             "discountLabel": "خصم"
         }
     }
-
 ]
