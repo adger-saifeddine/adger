@@ -2484,11 +2484,38 @@
     </div>
 
     <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المنتجات</title>
+    <style>
+        /* تنسيق دائرة التحميل */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <!-- دائرة التحميل -->
+    <div id="loading" style="display: none; text-align: center; padding: 20px;">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+    <!-- معرض المنتجات -->
+    <div id="gallery"></div>
+
     <script>
         // استرجاع بيانات المستخدم من localStorage
         const username = localStorage.getItem('username');
@@ -2506,9 +2533,9 @@
                 }
                 return name;
             }
-            usernameDisplay.textContent = truncateUsername(username);
+            if (usernameDisplay) usernameDisplay.textContent = truncateUsername(username);
             window.addEventListener('resize', () => {
-                usernameDisplay.textContent = truncateUsername(username);
+                if (usernameDisplay) usernameDisplay.textContent = truncateUsername(username);
             });
         } else if (welcomeMessage) {
             welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
@@ -2541,7 +2568,7 @@
         const menuPopup = document.getElementById('menuPopup');
 
         function startDrag(event) {
-            if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
+            if (menuPopup && menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
                 startX = event.touches[0].clientX;
                 isDragging = true;
             }
@@ -2558,15 +2585,17 @@
             isDragging = false;
         }
         function handleClickOutside(event) {
-            if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
+            if (menuPopup && menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
         }
         document.addEventListener('touchstart', startDrag);
         document.addEventListener('touchmove', drag);
         document.addEventListener('touchend', endDrag);
         document.addEventListener('click', handleClickOutside);
-        menuPopup.addEventListener('touchmove', (event) => {
-            if (menuPopup.classList.contains('active')) event.preventDefault();
-        }, { passive: false });
+        if (menuPopup) {
+            menuPopup.addEventListener('touchmove', (event) => {
+                if (menuPopup.classList.contains('active')) event.preventDefault();
+            }, { passive: false });
+        }
 
         // دالة لإضافة المنتج إلى السلة
         function addToCart(element) {
@@ -2582,38 +2611,41 @@
         const itemsPerLoad = 20;
         let loadedItems = 0;
 
-        // دالة لجلب وتصفية المنتجات
+        // دالة لجلب وتصفية المنتجات مع دائرة التحميل
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
-            const noResultsMessage = document.getElementById('no-results-message');
-            const searchTermDisplay = document.getElementById('search-term-display');
-            const searchBox = document.getElementById('search-box');
+            const loading = document.getElementById('loading');
 
-            if (searchBox) searchBox.value = searchTerm;
+            // إظهار دائرة التحميل
+            if (loading) loading.style.display = 'block';
+
+            // تنظيف المعرض
+            gallery.innerHTML = '';
 
             fetch('products.json')
                 .then(response => response.json())
                 .then(products => {
+                    // تصفية المنتجات
                     filteredProducts = products.filter(product => 
                         product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
                     );
                     shuffleArray(filteredProducts);
-                    gallery.innerHTML = '';
                     loadedItems = 0;
+
+                    // إخفاء دائرة التحميل
+                    if (loading) loading.style.display = 'none';
 
                     if (filteredProducts.length > 0) {
                         loadProducts(0, itemsPerLoad);
-                        noResultsMessage.style.display = 'none';
                     } else {
-                        noResultsMessage.style.display = 'block';
-                        searchTermDisplay.textContent = searchTerm;
+                        gallery.innerHTML = '<p>لا توجد نتائج</p>';
                     }
                 })
                 .catch(error => {
                     console.error('فشل جلب المنتجات من JSON:', error);
-                    gallery.innerHTML = '';
-                    noResultsMessage.style.display = 'block';
-                    searchTermDisplay.textContent = searchTerm;
+                    // إخفاء دائرة التحميل في حالة الخطأ
+                    if (loading) loading.style.display = 'none';
+                    gallery.innerHTML = '<p>حدث خطأ أثناء جلب المنتجات</p>';
                 });
         }
 
