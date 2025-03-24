@@ -2490,43 +2490,63 @@
 </head>
 <body>
     <!DOCTYPE html>
-    <html lang="ar">
+    <html lang="ar" dir="rtl">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>متجر المنتجات</title>
+        <title>المتجر</title>
         <style>
-            body {
-                font-family: 'Cairo', sans-serif;
-                direction: rtl;
-            }
-            .loading-spinner {
+            /* Loading Spinner CSS */
+            .loading-container {
                 position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 100px;
-                height: 100px;
-                border: 8px solid rgba(0, 0, 0, 0.1);
-                border-top: 8px solid #3498db;
+                background-color: rgba(255, 255, 255, 0.9);
+                z-index: 9999;
+                transition: opacity 0.5s ease-out;
+            }
+    
+            .spinner {
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #ffa600;
                 animation: spin 1s linear infinite;
             }
+    
             @keyframes spin {
-                0% { transform: translate(-50%, -50%) rotate(0deg); }
-                100% { transform: translate(-50%, -50%) rotate(360deg); }
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
             }
-            #gallery {
-                display: none;
+    
+            /* غير مرئي عند الانتهاء */
+            .loading-hidden {
+                opacity: 0;
+                pointer-events: none;
             }
         </style>
     </head>
     <body>
-        <div class="loading-spinner" id="loadingSpinner"></div>
-        <div id="gallery"></div>
+        <!-- دائرة التحميل -->
+        <div class="loading-container" id="loadingSpinner">
+            <div class="spinner"></div>
+        </div>
+    
+        <!-- محتوى الصفحة -->
+        <div id="content" style="opacity: 0; transition: opacity 0.5s ease-in;">
+            <!-- هنا يتم وضع باقي محتوى الصفحة -->
+            <div id="gallery"></div>
+            <div id="no-results-message" style="display: none;">
+                لا توجد نتائج لـ "<span id="search-term-display"></span>"
+            </div>
+        </div>
+    
         <script>
             // استرجاع بيانات المستخدم من localStorage
             const username = localStorage.getItem('username');
@@ -2626,6 +2646,10 @@
                 const noResultsMessage = document.getElementById('no-results-message');
                 const searchTermDisplay = document.getElementById('search-term-display');
                 const searchBox = document.getElementById('search-box');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                
+                // إظهار دائرة التحميل
+                loadingSpinner.classList.remove('loading-hidden');
     
                 if (searchBox) searchBox.value = searchTerm;
     
@@ -2646,16 +2670,24 @@
                             noResultsMessage.style.display = 'block';
                             searchTermDisplay.textContent = searchTerm;
                         }
+                        
+                        // إخفاء دائرة التحميل وإظهار المحتوى
+                        setTimeout(() => {
+                            loadingSpinner.classList.add('loading-hidden');
+                            document.getElementById('content').style.opacity = '1';
+                        }, 500);
                     })
                     .catch(error => {
                         console.error('فشل جلب المنتجات من JSON:', error);
                         gallery.innerHTML = '';
                         noResultsMessage.style.display = 'block';
                         searchTermDisplay.textContent = searchTerm;
-                    })
-                    .finally(() => {
-                        document.getElementById('loadingSpinner').style.display = 'none';
-                        gallery.style.display = 'block';
+                        
+                        // إخفاء دائرة التحميل حتى في حالة الخطأ
+                        setTimeout(() => {
+                            loadingSpinner.classList.add('loading-hidden');
+                            document.getElementById('content').style.opacity = '1';
+                        }, 500);
                     });
             }
     
