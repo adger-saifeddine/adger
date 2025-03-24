@@ -2494,57 +2494,142 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>المتجر</title>
+        <title>متجر المنتجات</title>
         <style>
-            /* Loading Spinner CSS */
-            .loading-container {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: rgba(255, 255, 255, 0.9);
-                z-index: 9999;
-                transition: opacity 0.5s ease-out;
+            /* General Styles */
+            body {
+                font-family: 'Cairo', sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+                overflow-x: hidden;
             }
     
-            .spinner {
+            /* Loading Spinner */
+            .loading-spinner {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 width: 60px;
                 height: 60px;
+                border: 6px solid #f3f3f3;
+                border-top: 6px solid #3498db;
                 border-radius: 50%;
-                border: 5px solid #f3f3f3;
-                border-top: 5px solid #ffa600;
                 animation: spin 1s linear infinite;
+                z-index: 9999;
             }
     
             @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
             }
     
-            /* غير مرئي عند الانتهاء */
-            .loading-hidden {
+            /* Hide the spinner after loading */
+            .hidden {
+                display: none;
+            }
+    
+            /* Gallery Styles */
+            #gallery {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 20px;
+                justify-content: center;
+            }
+    
+            .image-container {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                width: 200px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+    
+            .image-container:hover {
+                transform: scale(1.05);
+            }
+    
+            .image-frame img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+    
+            .text-under {
+                padding: 10px;
+                text-align: center;
+            }
+    
+            .text-under h1 {
+                font-size: 16px;
+                margin: 0;
+            }
+    
+            .text-under h2 {
+                font-size: 13px;
+                color: #ffa600;
+                margin: 5px 0;
+            }
+    
+            .container {
+                display: flex;
+                align-items: baseline;
+                justify-content: center;
+            }
+    
+            .number {
+                font-size: 20px;
+                font-weight: bold;
+            }
+    
+            .letter {
+                font-size: 14px;
+                color: #666;
+                margin-right: 4px;
+            }
+    
+            /* Add to Cart Button */
+            .add-to-cart {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                padding: 5px;
+                border-radius: 50%;
+                cursor: pointer;
                 opacity: 0;
-                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+    
+            .image-wrapper:hover .add-to-cart {
+                opacity: 1;
+            }
+    
+            /* No Results Message */
+            #no-results-message {
+                text-align: center;
+                font-size: 18px;
+                color: #666;
+                margin-top: 20px;
+                display: none;
             }
         </style>
     </head>
     <body>
-        <!-- دائرة التحميل -->
-        <div class="loading-container" id="loadingSpinner">
-            <div class="spinner"></div>
-        </div>
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner"></div>
     
-        <!-- محتوى الصفحة -->
-        <div id="content" style="opacity: 0; transition: opacity 0.5s ease-in;">
-            <!-- هنا يتم وضع باقي محتوى الصفحة -->
+        <!-- Main Content -->
+        <div id="mainContent" style="display: none;">
+            <div id="welcomeMessage">مرحباً، <span id="usernameDisplay"></span></div>
+            <input type="text" id="search-box" placeholder="ابحث عن منتج...">
             <div id="gallery"></div>
-            <div id="no-results-message" style="display: none;">
-                لا توجد نتائج لـ "<span id="search-term-display"></span>"
-            </div>
+            <div id="no-results-message">لم يتم العثور على نتائج لـ "<span id="search-term-display"></span>"</div>
         </div>
     
         <script>
@@ -2552,7 +2637,6 @@
             const username = localStorage.getItem('username');
             const welcomeMessage = document.getElementById('welcomeMessage');
             const usernameDisplay = document.getElementById('usernameDisplay');
-    
             if (username) {
                 function isArabic(text) {
                     return /[\u0600-\u06FF]/.test(text);
@@ -2572,70 +2656,7 @@
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
     
-            // دالة لتحريك الخط عند النقر على عناصر القائمة
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', () => window.scrollTo(0, 0));
-            });
-    
-            // دالة لإظهار أو إخفاء القائمة الجانبية
-            function toggleMenu() {
-                const menuPopup = document.getElementById('menuPopup');
-                if (menuPopup.classList.contains('active')) {
-                    menuPopup.classList.remove('active');
-                    menuPopup.classList.add('closing');
-                    setTimeout(() => {
-                        menuPopup.classList.remove('closing');
-                        menuPopup.style.display = 'none';
-                    }, 300);
-                } else {
-                    menuPopup.style.display = 'block';
-                    setTimeout(() => menuPopup.classList.add('active'), 10);
-                }
-            }
-    
-            // متغيرات ودوال لتتبع السحب
-            let startX = 0, currentX = 0, isDragging = false;
-            const menuPopup = document.getElementById('menuPopup');
-    
-            function startDrag(event) {
-                if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
-                    startX = event.touches[0].clientX;
-                    isDragging = true;
-                }
-            }
-            function drag(event) {
-                if (!isDragging) return;
-                currentX = event.touches[0].clientX;
-                if (currentX - startX < -50) {
-                    toggleMenu();
-                    isDragging = false;
-                }
-            }
-            function endDrag() {
-                isDragging = false;
-            }
-            function handleClickOutside(event) {
-                if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
-            }
-            document.addEventListener('touchstart', startDrag);
-            document.addEventListener('touchmove', drag);
-            document.addEventListener('touchend', endDrag);
-            document.addEventListener('click', handleClickOutside);
-            menuPopup.addEventListener('touchmove', (event) => {
-                if (menuPopup.classList.contains('active')) event.preventDefault();
-            }, { passive: false });
-    
-            // دالة لإضافة المنتج إلى السلة
-            function addToCart(element) {
-                event.stopPropagation();
-                event.preventDefault();
-                element.classList.add('checked');
-                alert("تمت إضافة المنتج إلى سلة التسوق");
-                return false;
-            }
-    
-            // متغيرات عالمية لتتبع المنتجات
+            // متغيرات ودوال لتتبع المنتجات
             let filteredProducts = [];
             const itemsPerLoad = 20;
             let loadedItems = 0;
@@ -2646,11 +2667,6 @@
                 const noResultsMessage = document.getElementById('no-results-message');
                 const searchTermDisplay = document.getElementById('search-term-display');
                 const searchBox = document.getElementById('search-box');
-                const loadingSpinner = document.getElementById('loadingSpinner');
-                
-                // إظهار دائرة التحميل
-                loadingSpinner.classList.remove('loading-hidden');
-    
                 if (searchBox) searchBox.value = searchTerm;
     
                 fetch('products.json')
@@ -2662,7 +2678,6 @@
                         shuffleArray(filteredProducts);
                         gallery.innerHTML = '';
                         loadedItems = 0;
-    
                         if (filteredProducts.length > 0) {
                             loadProducts(0, itemsPerLoad);
                             noResultsMessage.style.display = 'none';
@@ -2670,24 +2685,16 @@
                             noResultsMessage.style.display = 'block';
                             searchTermDisplay.textContent = searchTerm;
                         }
-                        
-                        // إخفاء دائرة التحميل وإظهار المحتوى
-                        setTimeout(() => {
-                            loadingSpinner.classList.add('loading-hidden');
-                            document.getElementById('content').style.opacity = '1';
-                        }, 500);
+                        document.getElementById('loadingSpinner').classList.add('hidden');
+                        document.getElementById('mainContent').style.display = 'block';
                     })
                     .catch(error => {
                         console.error('فشل جلب المنتجات من JSON:', error);
                         gallery.innerHTML = '';
                         noResultsMessage.style.display = 'block';
                         searchTermDisplay.textContent = searchTerm;
-                        
-                        // إخفاء دائرة التحميل حتى في حالة الخطأ
-                        setTimeout(() => {
-                            loadingSpinner.classList.add('loading-hidden');
-                            document.getElementById('content').style.opacity = '1';
-                        }, 500);
+                        document.getElementById('loadingSpinner').classList.add('hidden');
+                        document.getElementById('mainContent').style.display = 'block';
                     });
             }
     
@@ -2695,14 +2702,12 @@
             function loadProducts(startIndex, count) {
                 const gallery = document.getElementById('gallery');
                 const endIndex = Math.min(startIndex + count, filteredProducts.length);
-    
                 for (let i = startIndex; i < endIndex; i++) {
                     const product = filteredProducts[i];
                     const priceStr = product.price.toString();
                     const firstDigit = priceStr.charAt(0);
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
                     const letterMargin = specialDigits.includes(firstDigit) ? '-1px' : '-4px';
-    
                     const productDiv = document.createElement('div');
                     productDiv.className = 'image-container product';
                     productDiv.setAttribute('data-name', product.dataName || product.name);
@@ -2734,7 +2739,6 @@
                     `;
                     gallery.appendChild(productDiv);
                 }
-    
                 loadedItems = endIndex;
                 const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
                 lazyImages.forEach(img => observer.observe(img));
@@ -2769,13 +2773,11 @@
                 const data = imageData.data;
                 let whitePixelCount = 0;
                 let totalPixelCount = data.length / 4;
-    
                 for (let i = 0; i < data.length; i += 4) {
                     if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
                         whitePixelCount++;
                     }
                 }
-    
                 return (whitePixelCount / totalPixelCount) > 0.9;
             }
     
@@ -2799,59 +2801,6 @@
                 });
             }
     
-            // دالة لقراءة معلمة البحث من URL
-            function getSearchTermFromURL() {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('search') || '';
-            }
-    
-            // تحميل المنتجات عند التمرير
-            document.addEventListener('scroll', function () {
-                const gallery = document.getElementById('gallery');
-                const triggerHeight = window.innerHeight * 1.5;
-                const galleryHeight = gallery.scrollHeight;
-    
-                if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
-                    loadProducts(loadedItems, itemsPerLoad);
-                }
-            });
-    
-            // دالة لتحريك الخط وتنفيذ البحث
-            function selectItem(item, element) {
-                const searchBox = document.getElementById('search-box');
-    
-                if (searchBox) {
-                    if (item === 'الكل') {
-                        searchBox.value = '';
-                    } else {
-                        searchBox.value = item;
-                    }
-                }
-    
-                if (item === 'الكل') {
-                    fetchAndFilterProducts('');
-                } else if (item) {
-                    fetchAndFilterProducts(item);
-                }
-    
-                const allItems = document.querySelectorAll('.sub-header nav a');
-                allItems.forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-    
-                const underline = document.querySelector('.underline');
-                const itemRect = element.getBoundingClientRect();
-                const navRect = element.parentElement.getBoundingClientRect();
-    
-                underline.style.width = `${itemRect.width}px`;
-                underline.style.left = `${itemRect.left - navRect.left}px`;
-    
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'center'
-                });
-            }
-    
             // دالة لخلط مصفوفة عشوائيًا
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -2871,7 +2820,6 @@
                     underline.style.width = `${itemRect.width}px`;
                     underline.style.left = `${itemRect.left - navRect.left}px`;
                 }
-    
                 const searchTerm = getSearchTermFromURL();
                 const searchBox = document.getElementById('search-box');
                 if (searchBox && searchTerm) {
@@ -2879,6 +2827,31 @@
                 }
                 fetchAndFilterProducts(searchTerm || '');
             };
+    
+            // دالة لقراءة معلمة البحث من URL
+            function getSearchTermFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('search') || '';
+            }
+    
+            // تحميل المنتجات عند التمرير
+            document.addEventListener('scroll', function () {
+                const gallery = document.getElementById('gallery');
+                const triggerHeight = window.innerHeight * 1.5;
+                const galleryHeight = gallery.scrollHeight;
+                if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
+                    loadProducts(loadedItems, itemsPerLoad);
+                }
+            });
+    
+            // دالة لإضافة المنتج إلى السلة
+            function addToCart(element) {
+                event.stopPropagation();
+                event.preventDefault();
+                element.classList.add('checked');
+                alert("تمت إضافة المنتج إلى سلة التسوق");
+                return false;
+            }
         </script>
     </body>
     </html>
