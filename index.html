@@ -2526,6 +2526,50 @@
     </head>
     <body>
         <script>
+            // دالة لإنشاء وإزالة أداة التحميل
+            function showLoadingAnimation(container) {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.id = 'loading-animation';
+                loadingDiv.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    z-index: 9999;
+                `;
+                loadingDiv.innerHTML = `
+                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: moveDots 1s infinite;"></div>
+                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: moveDots 1s infinite 0.5s;"></div>
+                `;
+                container.appendChild(loadingDiv);
+        
+                // إضافة أنميشن CSS
+                const styleSheet = document.createElement('style');
+                styleSheet.textContent = `
+                    @keyframes moveDots {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-20px); }
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+            }
+        
+            function removeLoadingAnimation() {
+                const loadingDiv = document.getElementById('loading-animation');
+                if (loadingDiv) loadingDiv.remove();
+            }
+        
+            // إظهار أداة التحميل فور تحميل الصفحة
+            document.addEventListener('DOMContentLoaded', () => {
+                showLoadingAnimation(document.body);
+            });
+        
             // استرجاع بيانات المستخدم من localStorage
             const username = localStorage.getItem('username');
             const welcomeMessage = document.getElementById('welcomeMessage');
@@ -2618,40 +2662,6 @@
             const itemsPerLoad = 20;
             let loadedItems = 0;
         
-            // دالة لإنشاء وإزالة أداة التحميل
-            function showLoadingAnimation() {
-                const gallery = document.getElementById('gallery');
-                const loadingDiv = document.createElement('div');
-                loadingDiv.id = 'loading-animation';
-                loadingDiv.style.cssText = `
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100px;
-                    gap: 10px;
-                `;
-                loadingDiv.innerHTML = `
-                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: moveDots 1s infinite;"></div>
-                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: moveDots 1s infinite 0.5s;"></div>
-                `;
-                gallery.appendChild(loadingDiv);
-        
-                // إضافة أنميشن CSS
-                const styleSheet = document.createElement('style');
-                styleSheet.textContent = `
-                    @keyframes moveDots {
-                        0%, 100% { transform: translateY(0); }
-                        50% { transform: translateY(-20px); }
-                    }
-                `;
-                document.head.appendChild(styleSheet);
-            }
-        
-            function removeLoadingAnimation() {
-                const loadingDiv = document.getElementById('loading-animation');
-                if (loadingDiv) loadingDiv.remove();
-            }
-        
             // دالة لجلب وتصفية المنتجات مع أداة التحميل
             function fetchAndFilterProducts(searchTerm) {
                 const gallery = document.getElementById('gallery');
@@ -2662,7 +2672,7 @@
                 if (searchBox) searchBox.value = searchTerm;
         
                 gallery.innerHTML = '';
-                showLoadingAnimation(); // إظهار أداة التحميل قبل جلب البيانات
+                showLoadingAnimation(document.body); // إظهار أداة التحميل عند استدعاء المنتجات
         
                 fetch('products.json')
                     .then(response => response.json())
@@ -2863,6 +2873,8 @@
         
             // عند تحميل الصفحة
             window.onload = function () {
+                removeLoadingAnimation(); // إزالة أداة التحميل بعد اكتمال تحميل الصفحة
+        
                 const defaultItem = document.querySelector('.sub-header nav a');
                 const underline = document.querySelector('.underline');
                 if (defaultItem && underline) {
