@@ -801,10 +801,26 @@
                 <title>Example Page</title>
                 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
                 <style>
+                    /* الخلفية العلوية */
+                    .top-background {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 12px;
+                        background-color: white;
+                        z-index: 1000;
+                    }
+                    @media (max-width: 768px) {
+                        .top-background {
+                            height: 1px;
+                        }
+                    }
+            
                     /* الشريط العلوي الثابت */
                     .header {
                         position: fixed;
-                        top: 0;
+                        top: 12px;
                         left: 0;
                         right: 0;
                         display: flex;
@@ -815,11 +831,16 @@
                         padding: 0 20px;
                         z-index: 1;
                     }
+                    @media (max-width: 768px) {
+                        .header {
+                            top: 1px;
+                        }
+                    }
             
                     /* الشريط الأبيض الثابت أسفل الشريط العلوي */
                     .sub-header {
                         position: fixed;
-                        top: 62px;
+                        top: 74px;
                         left: 0;
                         right: 0;
                         height: 51px;
@@ -836,7 +857,7 @@
                     }
                     @media (max-width: 769px) {
                         .sub-header {
-                            top: 55px;
+                            top: 56px;
                         }
                     }
             
@@ -1121,50 +1142,53 @@
                         border-radius: 10px;
                     }
             
-                 /* أسلوب دائرة التحميل */
-#loading-spinner {
-    display: block;
-    text-align: center;
-    margin-top: 20px; /* المسافة العلوية مشابهة لرسالة 'لا توجد نتائج' */
-    padding: 20px;    /* المسافة الداخلية للتناسق */
-    border-radius: 10px;
-}
-.spinner {
-    display: inline-block;
-    position: relative;
-    width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
-    height: 20px;
-}
-.spinner div {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    animation: dot-flashing 1s infinite linear alternate;
-}
-.spinner div:first-child {
-    background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
-    left: 0;
-}
-.spinner div:last-child {
-    background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
-    right: 0;
-    animation-delay: 0.5s; /* تأخير لتبادل الحركة */
-}
-@keyframes dot-flashing {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.5); /* الدائرة تكبر */
-    }
-    100% {
-        transform: scale(1);
-    }
-}
+                    /* أسلوب دائرة التحميل */
+                    #loading-spinner {
+                        display: block;
+                        text-align: center;
+                        margin-top: 20px; /* المسافة العلوية مشابهة لرسالة 'لا توجد نتائج' */
+                        padding: 20px;    /* المسافة الداخلية للتناسق */
+                        border-radius: 10px;
+                    }
+                    .spinner {
+                        display: inline-block;
+                        position: relative;
+                        width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
+                        height: 20px;
+                    }
+                    .spinner div {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        animation: dot-flashing 1s infinite linear alternate;
+                    }
+                    .spinner div:first-child {
+                        background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
+                        left: 0;
+                    }
+                    .spinner div:last-child {
+                        background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
+                        right: 0;
+                        animation-delay: 0.5s; /* تأخير لتبادل الحركة */
+                    }
+                    @keyframes dot-flashing {
+                        0% {
+                            transform: scale(1);
+                        }
+                        50% {
+                            transform: scale(1.5); /* الدائرة تكبر */
+                        }
+                        100% {
+                            transform: scale(1);
+                        }
+                    }
                 </style>
             </head>
             <body>
+                <!-- الخلفية العلوية -->
+                <div class="top-background"></div>
+            
                 <!-- Sub Header -->
                 <div class="sub-header">
                     <nav>
@@ -1270,6 +1294,8 @@
                         لا توجد نتائج لـ "<span id="search-term-display"></span>"
                     </p>
                 </div>
+            </body>
+            </html>
             
                 <script>
                     // استرجاع بيانات المستخدم من localStorage
