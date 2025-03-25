@@ -2550,6 +2550,43 @@
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
     
+            // دالة لإظهار دائرة التحميل
+            function showLoadingSpinner() {
+                const gallery = document.getElementById('gallery');
+                const spinner = document.createElement('div');
+                spinner.id = 'loading-spinner';
+                spinner.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 1000;
+                    width: 50px;
+                    height: 50px;
+                    border: 5px solid #f3f3f3;
+                    border-top: 5px solid #3498db;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                `;
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes spin {
+                        0% { transform: translate(-50%, -50%) rotate(0deg); }
+                        100% { transform: translate(-50%, -50%) rotate(360deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+                gallery.appendChild(spinner);
+            }
+    
+            // دالة لإخفاء دائرة التحميل
+            function hideLoadingSpinner() {
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) {
+                    spinner.remove();
+                }
+            }
+    
             // دالة لتحريك الخط عند النقر على عناصر القائمة
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => {
@@ -2627,9 +2664,15 @@
     
                 if (searchBox) searchBox.value = searchTerm;
     
+                // إظهار دائرة التحميل
+                showLoadingSpinner();
+    
                 fetch('products.json')
                     .then(response => response.json())
                     .then(products => {
+                        // إخفاء دائرة التحميل
+                        hideLoadingSpinner();
+    
                         filteredProducts = products.filter(product => 
                             product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
                         );
@@ -2646,6 +2689,9 @@
                         }
                     })
                     .catch(error => {
+                        // إخفاء دائرة التحميل في حالة الخطأ
+                        hideLoadingSpinner();
+    
                         console.error('فشل جلب المنتجات من JSON:', error);
                         gallery.innerHTML = '';
                         noResultsMessage.style.display = 'block';
@@ -2675,7 +2721,7 @@
                                     <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
                                     <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
                                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 1 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 1 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
                                         </svg>
                                     </div>
                                 </div>
@@ -2842,8 +2888,6 @@
                 fetchAndFilterProducts(searchTerm || '');
             };
         </script>
-    </body>
-    </html>
 
 
 <script>
