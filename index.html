@@ -2525,20 +2525,6 @@
         <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
     </head>
     <body>
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>صفحة المنتجات</title>
-        </head>
-        <body>
-            <div id="gallery"></div>
-            <div id="no-results-message" style="display: none;">لا توجد نتائج لـ "<span id="search-term-display"></span>"</div>
-            <input type="text" id="search-box" placeholder="ابحث هنا...">
-            <div id="menuPopup"></div>
-            <div id="welcomeMessage"></div>
-            <span id="usernameDisplay"></span>
-        
         <script>
             // دالة لإنشاء وإزالة أداة التحميل
             function showLoadingAnimation() {
@@ -2550,26 +2536,21 @@
                     justify-content: center;
                     align-items: center;
                     height: 100px;
-                    width: 60px; /* عرض ثابت للحاوية */
-                    position: relative;
                     gap: 10px;
                 `;
                 loadingDiv.innerHTML = `
-                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: swapDots 1s infinite;"></div>
-                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: swapDotsReverse 1s infinite;"></div>
+                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: moveDots 1s infinite;"></div>
+                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: moveDots 1s infinite 0.5s;"></div>
                 `;
                 gallery.appendChild(loadingDiv);
         
                 // إضافة أنميشن CSS
                 const styleSheet = document.createElement('style');
                 styleSheet.textContent = `
-                    @keyframes swapDots {
+                    @keyframes moveDots {
                         0%, 100% { transform: translateX(0); }
-                        50% { transform: translateX(20px); } /* تقليل المسافة لتبادل سلس ضمن العرض */
-                    }
-                    @keyframes swapDotsReverse {
-                        0%, 100% { transform: translateX(0); }
-                        50% { transform: translateX(-20px); } /* تقليل المسافة لليسار */
+                        25% { transform: translateX(20px); }
+                        75% { transform: translateX(-20px); }
                     }
                 `;
                 document.head.appendChild(styleSheet);
