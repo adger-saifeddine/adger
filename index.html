@@ -2536,31 +2536,31 @@
                     justify-content: center;
                     align-items: center;
                     height: 100px;
-                    gap: 15px;
                     position: relative;
+                    width: 60px; /* عرض الحاوية لاحتواء الدوران */
                 `;
                 loadingDiv.innerHTML = `
-                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; position: absolute; animation: tikTokMove1 1.2s infinite ease-in-out;"></div>
-                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; position: absolute; animation: tikTokMove2 1.2s infinite ease-in-out;"></div>
+                    <div style="width: 15px; height: 15px; background: #fe2c55; border-radius: 50%; position: absolute; animation: tikTokSpin1 1.5s infinite ease-in-out;"></div>
+                    <div style="width: 15px; height: 15px; background: #25f4ee; border-radius: 50%; position: absolute; animation: tikTokSpin2 1.5s infinite ease-in-out;"></div>
                 `;
                 gallery.appendChild(loadingDiv);
         
                 // إضافة أنميشن CSS
                 const styleSheet = document.createElement('style');
                 styleSheet.textContent = `
-                    @keyframes tikTokMove1 {
-                        0% { transform: translate(0, 0); }
-                        25% { transform: translate(15px, -15px); }
-                        50% { transform: translate(30px, 0); }
-                        75% { transform: translate(15px, 15px); }
-                        100% { transform: translate(0, 0); }
+                    @keyframes tikTokSpin1 {
+                        0% { transform: translate(20px, 0) scale(1); opacity: 1; }
+                        25% { transform: translate(0, -20px) scale(0.8); opacity: 0.7; }
+                        50% { transform: translate(-20px, 0) scale(1); opacity: 1; }
+                        75% { transform: translate(0, 20px) scale(0.8); opacity: 0.7; }
+                        100% { transform: translate(20px, 0) scale(1); opacity: 1; }
                     }
-                    @keyframes tikTokMove2 {
-                        0% { transform: translate(30px, 0); }
-                        25% { transform: translate(15px, 15px); }
-                        50% { transform: translate(0, 0); }
-                        75% { transform: translate(15px, -15px); }
-                        100% { transform: translate(30px, 0); }
+                    @keyframes tikTokSpin2 {
+                        0% { transform: translate(-20px, 0) scale(1); opacity: 1; }
+                        25% { transform: translate(0, 20px) scale(0.8); opacity: 0.7; }
+                        50% { transform: translate(20px, 0) scale(1); opacity: 1; }
+                        75% { transform: translate(0, -20px) scale(0.8); opacity: 0.7; }
+                        100% { transform: translate(-20px, 0) scale(1); opacity: 1; }
                     }
                 `;
                 document.head.appendChild(styleSheet);
