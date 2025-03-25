@@ -2536,20 +2536,31 @@
                     justify-content: center;
                     align-items: center;
                     height: 100px;
-                    gap: 10px;
+                    gap: 15px;
+                    position: relative;
                 `;
                 loadingDiv.innerHTML = `
-                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: moveDots 1s infinite;"></div>
-                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: moveDots 1s infinite 0.5s;"></div>
+                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; position: absolute; animation: tikTokMove1 1.2s infinite ease-in-out;"></div>
+                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; position: absolute; animation: tikTokMove2 1.2s infinite ease-in-out;"></div>
                 `;
                 gallery.appendChild(loadingDiv);
         
                 // إضافة أنميشن CSS
                 const styleSheet = document.createElement('style');
                 styleSheet.textContent = `
-                    @keyframes moveDots {
-                        0%, 100% { transform: translateY(0); }
-                        50% { transform: translateY(-20px); }
+                    @keyframes tikTokMove1 {
+                        0% { transform: translate(0, 0); }
+                        25% { transform: translate(15px, -15px); }
+                        50% { transform: translate(30px, 0); }
+                        75% { transform: translate(15px, 15px); }
+                        100% { transform: translate(0, 0); }
+                    }
+                    @keyframes tikTokMove2 {
+                        0% { transform: translate(30px, 0); }
+                        25% { transform: translate(15px, 15px); }
+                        50% { transform: translate(0, 0); }
+                        75% { transform: translate(15px, -15px); }
+                        100% { transform: translate(30px, 0); }
                     }
                 `;
                 document.head.appendChild(styleSheet);
