@@ -2074,15 +2074,20 @@
                 top: 0;
                 left: 0;
                 right: 0;
-                height: 6px;
+                height: 9px;
                 background-color: white;
                 z-index: 1000;
+            }
+            @media (max-width: 768px) {
+                .top-background {
+                    height: 1px;
+                }
             }
     
             /* الشريط العلوي الثابت */
             .header {
                 position: fixed;
-                top: 6px;
+                top: 9px;
                 left: 0;
                 right: 0;
                 display: flex;
@@ -2093,11 +2098,16 @@
                 padding: 0 20px;
                 z-index: 1;
             }
+            @media (max-width: 768px) {
+                .header {
+                    top: 1px;
+                }
+            }
     
             /* الشريط الأبيض الثابت أسفل الشريط العلوي */
             .sub-header {
                 position: fixed;
-                top: 68px;
+                top: 71px;
                 left: 0;
                 right: 0;
                 height: 51px;
@@ -2114,7 +2124,7 @@
             }
             @media (max-width: 769px) {
                 .sub-header {
-                    top: 61px;
+                    top: 56px;
                 }
             }
     
@@ -2170,7 +2180,12 @@
                 gap: 10px;
                 justify-content: center;
                 padding: 20px;
-                margin-top: 18px;
+                margin-top: 21px;
+            }
+            @media (max-width: 768px) {
+                .gallery {
+                    margin-top: 13px;
+                }
             }
             
             .image-container {
