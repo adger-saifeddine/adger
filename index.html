@@ -2539,18 +2539,27 @@
                     gap: 10px;
                 `;
                 loadingDiv.innerHTML = `
-                    <div style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%; animation: moveDots 1s infinite;"></div>
-                    <div style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%; animation: moveDots 1s infinite 0.5s;"></div>
+                    <div class="dot1" style="width: 20px; height: 20px; background: #ff0000; border-radius: 50%;"></div>
+                    <div class="dot2" style="width: 20px; height: 20px; background: #00ff00; border-radius: 50%;"></div>
                 `;
                 gallery.appendChild(loadingDiv);
         
                 // إضافة أنميشن CSS
                 const styleSheet = document.createElement('style');
                 styleSheet.textContent = `
-                    @keyframes moveDots {
+                    .dot1 {
+                        animation: moveDot1 1s ease-in-out infinite;
+                    }
+                    .dot2 {
+                        animation: moveDot2 1s ease-in-out infinite;
+                    }
+                    @keyframes moveDot1 {
                         0%, 100% { transform: translateX(0); }
-                        25% { transform: translateX(20px); }
-                        75% { transform: translateX(-20px); }
+                        50% { transform: translateX(30px); }
+                    }
+                    @keyframes moveDot2 {
+                        0%, 100% { transform: translateX(0); }
+                        50% { transform: translateX(-30px); }
                     }
                 `;
                 document.head.appendChild(styleSheet);
