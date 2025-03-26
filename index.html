@@ -2664,7 +2664,6 @@
     function addToCart(element) {
         event.stopPropagation();
         event.preventDefault();
-        element.classList.add('checked');
 
         const productContainer = element.closest('.image-container');
         const product = {
@@ -2683,7 +2682,6 @@
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
-            alert("تمت إضافة المنتج إلى سلة التسوق");
         }
         return false;
     }
