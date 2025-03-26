@@ -17,6 +17,32 @@
             margin-bottom: 5px;
         }
 
+        /* أنماط التحميل */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #0051ff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .carttext {
             text-align: center;
             font-family: Cairo, sans-serif;
@@ -49,7 +75,7 @@
             text-align: center;
             background-color: #ffffff;
             position: relative;
-            overflow: hidden; /* إضافة لقص أي تجاوز */
+            overflow: hidden;
         }
 
         .image-frame .image-wrapper {
@@ -57,7 +83,7 @@
             width: 100%;
             padding-top: 100%;
             background-color: #f3f3f39c;
-            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 30.2px;
         }
 
         .image-frame .placeholder {
@@ -68,7 +94,7 @@
             height: 100%;
             background-color: #f3f3f3;
             opacity: 0.8;
-            border-radius: 32px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 32px;
         }
 
         .image-frame img {
@@ -79,7 +105,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 30.2px;
             opacity: 0;
             transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
         }
@@ -230,7 +256,6 @@
             font-size: 17px;
         }
 
-        /* تعديل حجم نص الاسم بناءً على حجم الشاشة */
         @media (min-width: 1270px) {
             .text-under h1 {
                 font-size: 18px;
@@ -353,8 +378,15 @@
             -webkit-tap-highlight-color: transparent;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
+    <!-- طبقة التحميل -->
+    <div class="loader-overlay" id="loaderOverlay">
+        <div class="loader" id="loader"></div>
+    </div>
+
     <h1 class="carttext">عربة التسوق (<span id="itemCount">0</span>)</h1>
 
     <div class="gallery" id="cart-items"></div>
@@ -383,10 +415,31 @@
     </div>
 
     <script>
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        firebase.initializeApp({
+            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+            authDomain: "buy-from-adger.firebaseapp.com",
+            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+            projectId: "buy-from-adger",
+            storageBucket: "buy-from-adger.appspot.com",
+            messagingSenderId: "396020785601",
+            appId: "1:396020785601:web:yourWebAppID" // استبدل بـ appId الفعلي
+        });
+
+        const database = firebase.database();
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartItemsElement = document.getElementById('cart-items');
         const emptyCartMessage = document.getElementById('empty-cart-message');
+        const loaderOverlay = document.getElementById('loaderOverlay');
 
+        // قائمة المنتجات المحلية (مثال)
+        const productsDatabase = {
+            "prod1": { name: "منتج 1", price: "100", image: "url1", link: "link1", sold: "10 تم بيعها", discount: "20%" },
+            "prod2": { name: "منتج 2", price: "200", image: "url2", link: "link2", sold: "15 تم بيعها", discount: "15%" },
+            "prod3": { name: "منتج 3", price: "150", image: "url3", link: "link3", sold: "8 تم بيعها", discount: "10%" }
+            // أضف المزيد من المنتجات حسب الحاجة
+        };
+
+        // دالة لتحديث عرض العربة
         function updateCartDisplay() {
             document.getElementById('itemCount').textContent = cart.length;
 
@@ -439,18 +492,24 @@
             }
 
             calculateTotalPrice();
-            // تحديث عدد المنتجات في localStorage ليتم استخدامه في الصفحة الرئيسية
             localStorage.setItem('cartCount', cart.length);
+            loaderOverlay.style.display = 'none'; // إخفاء التحميل
         }
 
+        // دالة لحذف منتج من العربة
         function removeFromCart(index) {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                const username = localStorage.getItem('username');
+                const productIds = cart.map(item => item.productId); // تخزين المعرفات فقط
+                database.ref('carts/' + username).set(productIds);
+            }
             updateCartDisplay();
-            // تحديث عدد المنتجات في localStorage عند الحذف
-            localStorage.setItem('cartCount', cart.length);
         }
 
+        // دالة لحساب السعر الإجمالي
         function calculateTotalPrice() {
             let totalPrice = 0;
             cart.forEach(product => {
@@ -460,11 +519,35 @@
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
         }
 
+        // دالة للرجوع إلى الصفحة السابقة
         function goBack() {
             history.back();
         }
 
-        updateCartDisplay();
+        // دالة لمزامنة العربة
+        function syncCart() {
+            loaderOverlay.style.display = 'flex'; // عرض التحميل
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                const username = localStorage.getItem('username');
+                database.ref('carts/' + username).once('value', (snapshot) => {
+                    const productIds = snapshot.val() || [];
+                    // تحويل المعرفات إلى كائنات كاملة باستخدام قاعدة البيانات المحلية
+                    cart = productIds.map(id => productsDatabase[id]).filter(Boolean);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                }).catch((error) => {
+                    console.error('خطأ في جلب معرفات العربة:', error);
+                    updateCartDisplay(); // عرض العربة المحلية إذا فشل الجلب
+                });
+            } else {
+                cart = JSON.parse(localStorage.getItem('cart')) || [];
+                updateCartDisplay();
+            }
+        }
+
+        // استدعاء المزامنة عند تحميل الصفحة
+        syncCart();
     </script>
 </body>
 </html>
