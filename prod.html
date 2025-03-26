@@ -2975,11 +2975,11 @@
         <script>
             // استرجاع بيانات المستخدم من localStorage
             const username = localStorage.getItem('username');
-    
+            
             // عرض "أهلاً" مع اسم المستخدم أو نص بديل
             const welcomeMessage = document.getElementById('welcomeMessage');
             const usernameDisplay = document.getElementById('usernameDisplay');
-    
+            
             if (username) {
                 usernameDisplay.textContent = truncateUsername(username);
                 window.addEventListener('resize', () => {
@@ -2988,12 +2988,12 @@
             } else {
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
-    
+            
             // دالة للتحقق من النصوص العربية
             function isArabic(text) {
                 return /[\u0600-\u06FF]/.test(text);
             }
-    
+            
             // دالة لتقصير اسم المستخدم
             function truncateUsername(name) {
                 const maxLength = isArabic(name) ? 12 : 7;
@@ -3006,7 +3006,7 @@
                 }
                 return name;
             }
-    
+            
             // دالة لإظهار أو إخفاء القائمة الجانبية
             function toggleMenu() {
                 const menuPopup = document.getElementById('menuPopup');
@@ -3021,7 +3021,7 @@
                     menuPopup.classList.add('active');
                 }
             }
-    
+            
             // إغلاق النافذة بالنقر على الشاشة خارج النافذة
             document.body.addEventListener('click', function(event) {
                 const menuPopup = document.getElementById('menuPopup');
@@ -3031,12 +3031,12 @@
                     toggleMenu();
                 }
             });
-    
+            
             // إغلاق النافذة أثناء التمرير من اليمين إلى اليسار
             let touchStartX = 0;
             let touchCurrentX = 0;
             let isSwiping = false;
-    
+            
             document.addEventListener('touchstart', function(event) {
                 const menuPopup = document.getElementById('menuPopup');
                 if (menuPopup.classList.contains('active')) {
@@ -3044,7 +3044,7 @@
                     isSwiping = true;
                 }
             });
-    
+            
             document.addEventListener('touchmove', function(event) {
                 if (isSwiping) {
                     touchCurrentX = event.touches[0].screenX;
@@ -3055,94 +3055,67 @@
                     }
                 }
             });
-    
+            
             document.addEventListener('touchend', function() {
                 isSwiping = false;
             });
+            
+            // دالة لتحديث عدد العناصر في العربة
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartCountElement = document.querySelector('.cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = cart.length;
+                }
+            }
+            
+            // دالة لإضافة المنتج إلى العربة
+            function addToCart(button) {
+                const productContainer = button.closest('.image-container');
+                const product = {
+                    id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
+                    image: productContainer.querySelector('img').src,
+                    name: productContainer.querySelector('h1').textContent,
+                    sold: productContainer.querySelector('h2').textContent,
+                    price: productContainer.querySelector('.number').textContent,
+                    discount: productContainer.querySelector('h3').textContent,
+                    link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
+                };
+            
+                // استرجاع العربة الحالية من localStorage
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // التحقق مما إذا كان المنتج موجودًا بالفعل في العربة
+                const existingProduct = cart.find(item => item.id === product.id);
+                if (!existingProduct) {
+                    cart.push(product); // إضافة المنتج الجديد
+                    localStorage.setItem('cart', JSON.stringify(cart)); // تحديث العربة في localStorage
+                    updateCartCount();
+                }
+            }
+            
+            // التنقل إلى صفحة العربة
+            function navigateToCart() {
+                window.location.href = 'cart.html';
+            }
+            
+            // ربط حدث النقر على أيقونة العربة
+            document.querySelector('.cart-icon')?.addEventListener('click', navigateToCart);
+            
+            // تحديث عدد المنتجات عند تحميل الصفحة
+            document.addEventListener('DOMContentLoaded', function() {
+                updateCartCount();
+            });
+        
+            // الاستماع إلى تغييرات localStorage من صفحات أخرى
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'cart') {
+                    updateCartCount();
+                }
+            });
+        
+            // تحديث العدد عند تحميل الصفحة لأول مرة
+            updateCartCount();
         </script>
-    </body>
-    </html>
-    
-
-
-    <script>
-        // 初始化购物车
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let cartCount = cart.length;
-    
-        // 更新购物车图标数量
-        function updateCartCount() {
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartCount;
-        }
-    
-        // 添加商品到购物车
-        function addToCart(button) {
-            const productId = button.getAttribute('data-product-id');
-            const product = {
-                id: productId,
-                name: document.querySelector(`[data-product-id="${productId}"]`).parentElement.querySelector('h1').textContent,
-                price: document.querySelector(`[data-product-id="${productId}"]`).parentElement.querySelector('.number').textContent,
-                image: document.querySelector(`[data-product-id="${productId}"]`).parentElement.querySelector('img').src
-            };
-    
-            // 检查商品是否已存在于购物车
-            const existingProduct = cart.find(item => item.id === productId);
-            if (!existingProduct) {
-                cart.push(product);
-                cartCount = cart.length;
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-            }
-        }
-    
-        // 导航到购物车页面
-        function navigateToCart() {
-            window.location.href = 'cart.html';
-        }
-    
-        // 初始化页面时更新购物车数量
-        updateCartCount();
-    
-        // 绑定购物车图标的点击事件
-        document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
-    
-        // دالة لإضافة المنتج إلى العربة
-        function addToCart(button) {
-            const productContainer = button.closest('.image-container');
-            const product = {
-                id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
-                image: productContainer.querySelector('img').src,
-                name: productContainer.querySelector('h1').textContent,
-                sold: productContainer.querySelector('h2').textContent,
-                price: productContainer.querySelector('.number').textContent,
-                discount: productContainer.querySelector('h3').textContent,
-                link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
-            };
-    
-            // استرجاع العربة الحالية من localStorage
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            // التحقق مما إذا كان المنتج موجودًا بالفعل في العربة
-            const existingProduct = cart.find(item => item.id === product.id);
-            if (!existingProduct) {
-                cart.push(product); // إضافة المنتج الجديد
-                localStorage.setItem('cart', JSON.stringify(cart)); // 保存更新后的购物车
-                updateCartCount();
-            }
-        }
-    
-        // دالة لتحديث عدد العناصر في العربة
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cart.length;
-        }
-    
-        // 更新购物车数量时加载页面
-        updateCartCount();
-    </script>
-    
-
 
 
 
