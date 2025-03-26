@@ -5,9 +5,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عربة التسوق</title>
-    <!-- إضافة مكتبات Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         /* الأنماط العامة */
         body {
@@ -52,7 +49,7 @@
             text-align: center;
             background-color: #ffffff;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* إضافة لقص أي تجاوز */
         }
 
         .image-frame .image-wrapper {
@@ -60,7 +57,7 @@
             width: 100%;
             padding-top: 100%;
             background-color: #f3f3f39c;
-            border-radius: 30.2px;
+            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
         }
 
         .image-frame .placeholder {
@@ -71,7 +68,7 @@
             height: 100%;
             background-color: #f3f3f3;
             opacity: 0.8;
-            border-radius: 32px;
+            border-radius: 32px; /* تعديل لتتناسب مع الإطار */
         }
 
         .image-frame img {
@@ -82,7 +79,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 30.2px;
+            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
             opacity: 0;
             transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
         }
@@ -233,6 +230,7 @@
             font-size: 17px;
         }
 
+        /* تعديل حجم نص الاسم بناءً على حجم الشاشة */
         @media (min-width: 1270px) {
             .text-under h1 {
                 font-size: 18px;
@@ -358,7 +356,9 @@
 </head>
 <body>
     <h1 class="carttext">عربة التسوق (<span id="itemCount">0</span>)</h1>
+
     <div class="gallery" id="cart-items"></div>
+
     <div id="empty-cart-message">
         <div style="width: 150px; height: 150px; background-color: #e0e0e0; border-radius: 10px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 80px; height: 80px; color: #888;">
@@ -369,6 +369,7 @@
         </div>
         <p>عربة التسوق فارغة</p>
     </div>
+
     <div class="footer">
         <div class="total-price">
             السعر الإجمالي: <span id="totalPrice">0</span> EGP
@@ -382,53 +383,10 @@
     </div>
 
     <script>
-        // تهيئة Firebase
-        firebase.initializeApp({
-            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
-            authDomain: "buy-from-adger.firebaseapp.com",
-            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
-            projectId: "buy-from-adger",
-            storageBucket: "buy-from-adger.appspot.com",
-            messagingSenderId: "396020785601",
-            appId: "1:396020785601:web:yourWebAppID" // استبدل بـ appId الخاص بك
-        });
-
-        const database = firebase.database();
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartItemsElement = document.getElementById('cart-items');
         const emptyCartMessage = document.getElementById('empty-cart-message');
-        let cart = [];
 
-        // التحقق من حالة تسجيل الدخول عند تحميل الصفحة
-        window.addEventListener('load', async () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const username = localStorage.getItem('username');
-
-            console.log('حالة تسجيل الدخول:', isLoggedIn, 'اسم المستخدم:', username);
-
-            if (isLoggedIn && username) {
-                await loadCartFromFirebase(username);
-            } else {
-                cart = JSON.parse(localStorage.getItem('cart')) || [];
-                console.log('العربة من localStorage:', cart);
-                updateCartDisplay();
-            }
-        });
-
-        // جلب بيانات العربة من Firebase
-        async function loadCartFromFirebase(username) {
-            try {
-                console.log('جلب العربة من Firebase لـ:', username);
-                const snapshot = await database.ref('carts/' + username).once('value');
-                const cartData = snapshot.val();
-                console.log('البيانات المسترجعة من Firebase:', cartData);
-                cart = cartData ? Object.values(cartData) : [];
-                updateCartDisplay();
-            } catch (error) {
-                console.error('خطأ في جلب العربة:', error);
-            }
-        }
-
-        // تحديث العرض
         function updateCartDisplay() {
             document.getElementById('itemCount').textContent = cart.length;
 
@@ -481,34 +439,18 @@
             }
 
             calculateTotalPrice();
-            updateCartStorage();
-        }
-
-        // تحديث التخزين (Firebase أو localStorage)
-        function updateCartStorage() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const username = localStorage.getItem('username');
-
-            if (isLoggedIn && username) {
-                console.log('حفظ العربة في Firebase لـ:', username);
-                database.ref('carts/' + username).set(cart)
-                    .then(() => console.log('تم حفظ العربة بنجاح في Firebase:', cart))
-                    .catch((error) => console.error('خطأ في حفظ العربة في Firebase:', error));
-            } else {
-                console.log('حفظ العربة في localStorage');
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
+            // تحديث عدد المنتجات في localStorage ليتم استخدامه في الصفحة الرئيسية
             localStorage.setItem('cartCount', cart.length);
         }
 
-        // حذف منتج من العربة
         function removeFromCart(index) {
             cart.splice(index, 1);
-            console.log('تم حذف منتج، العربة الآن:', cart);
+            localStorage.setItem('cart', JSON.stringify(cart));
             updateCartDisplay();
+            // تحديث عدد المنتجات في localStorage عند الحذف
+            localStorage.setItem('cartCount', cart.length);
         }
 
-        // حساب السعر الإجمالي
         function calculateTotalPrice() {
             let totalPrice = 0;
             cart.forEach(product => {
@@ -518,10 +460,11 @@
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
         }
 
-        // العودة للصفحة السابقة
         function goBack() {
             history.back();
         }
+
+        updateCartDisplay();
     </script>
 </body>
 </html>
