@@ -2519,9 +2519,9 @@
     <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
 </head>
 <body>
- <!-- باقي كود HTML الخاص بك موجود هنا، سنركز فقط على الجزء المتعلق بالسكربت -->
+ <!-- الكود الأصلي لباقي الصفحة هنا -->
 <script>
-    // إظهار وإزالة أداة التحميل
+    // دالة لإنشاء وإزالة أداة التحميل
     function showLoadingAnimation() {
         const gallery = document.getElementById('gallery');
         const loadingDiv = document.createElement('div');
@@ -2540,6 +2540,7 @@
         `;
         gallery.appendChild(loadingDiv);
 
+        // إضافة أنميشن CSS
         const styleSheet = document.createElement('style');
         styleSheet.textContent = `
             .spinner {
@@ -2556,18 +2557,24 @@
                 animation: dot-flashing 1s infinite linear alternate;
             }
             .spinner div:first-child {
-                background-color: #ff0000;
+                background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
                 left: 0;
             }
             .spinner div:last-child {
-                background-color: #0000ff;
+                background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
                 right: 0;
-                animation-delay: 0.5s;
+                animation-delay: 0.5s; /* تأخير لتبادل الحركة */
             }
             @keyframes dot-flashing {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.5); }
-                100% { transform: scale(1); }
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.5); /* الدائرة تكبر */
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
         `;
         document.head.appendChild(styleSheet);
@@ -2578,9 +2585,12 @@
         if (loadingDiv) loadingDiv.remove();
     }
 
+    // إظهار أداة التحميل فور بدء تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
         const gallery = document.getElementById('gallery');
-        if (gallery) showLoadingAnimation();
+        if (gallery) {
+            showLoadingAnimation();
+        }
     });
 
     // استرجاع بيانات المستخدم من localStorage
@@ -2607,13 +2617,13 @@
         welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
     }
 
-    // تحريك الخط عند النقر على عناصر القائمة
+    // دالة لتحريك الخط عند النقر على عناصر القائمة
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach(item => {
         item.addEventListener('click', () => window.scrollTo(0, 0));
     });
 
-    // إظهار أو إخفاء القائمة الجانبية
+    // دالة لإظهار أو إخفاء القائمة الجانبية
     function toggleMenu() {
         const menuPopup = document.getElementById('menuPopup');
         if (menuPopup.classList.contains('active')) {
@@ -2629,6 +2639,7 @@
         }
     }
 
+    // متغيرات ودوال لتتبع السحب
     let startX = 0, currentX = 0, isDragging = false;
     const menuPopup = document.getElementById('menuPopup');
 
@@ -2660,67 +2671,21 @@
         if (menuPopup.classList.contains('active')) event.preventDefault();
     }, { passive: false });
 
-    // دالة لإضافة المنتج إلى السلة (التعديل الرئيسي هنا)
+    // دالة لإضافة المنتج إلى السلة
     function addToCart(element) {
         event.stopPropagation();
         event.preventDefault();
         element.classList.add('checked');
-
-        const productContainer = element.closest('.image-container');
-        const product = {
-            id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
-            image: productContainer.querySelector('img').src,
-            name: productContainer.querySelector('h1').textContent,
-            sold: productContainer.querySelector('h2').textContent,
-            price: productContainer.querySelector('.number').textContent,
-            discount: productContainer.querySelector('h3').textContent,
-            link: productContainer.querySelector('a').href
-        };
-
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (!existingProduct) {
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            alert("تمت إضافة المنتج إلى سلة التسوق");
-        }
+        alert("تمت إضافة المنتج إلى سلة التسوق");
         return false;
     }
 
-    // دالة لتحديث عدد المنتجات في العربة
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartCountElement = document.querySelector('.cart-count');
-        if (cartCountElement) cartCountElement.textContent = cart.length;
-    }
-
-    // الاستماع إلى تغييرات localStorage
-    window.addEventListener('storage', function(event) {
-        if (event.key === 'cart') {
-            updateCartCount();
-        }
-    });
-
-    // تحديث عدد المنتجات عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCartCount();
-    });
-
-    // التنقل إلى صفحة العربة
-    function navigateToCart() {
-        window.location.href = 'cart.html';
-    }
-
-    if (document.querySelector('.cart-icon')) {
-        document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
-    }
-
-    // باقي الكود الخاص بجلب المنتجات والتحميل الكسول
+    // متغيرات عالمية لتتبع المنتجات
     let filteredProducts = [];
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
+    // دالة لجلب وتصفية المنتجات مع أداة التحميل
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
@@ -2730,12 +2695,12 @@
         if (searchBox) searchBox.value = searchTerm;
 
         gallery.innerHTML = '';
-        showLoadingAnimation();
+        showLoadingAnimation(); // إظهار أداة التحميل قبل جلب البيانات
 
         fetch('products.json')
             .then(response => response.json())
             .then(products => {
-                removeLoadingAnimation();
+                removeLoadingAnimation(); // إزالة أداة التحميل بعد جلب البيانات
                 filteredProducts = products.filter(product => 
                     product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
                 );
@@ -2752,7 +2717,7 @@
                 }
             })
             .catch(error => {
-                removeLoadingAnimation();
+                removeLoadingAnimation(); // إزالة أداة التحميل في حالة الخطأ
                 console.error('فشل جلب المنتجات من JSON:', error);
                 gallery.innerHTML = '';
                 noResultsMessage.style.display = 'block';
@@ -2760,6 +2725,7 @@
             });
     }
 
+    // دالة لتحميل المنتجات
     function loadProducts(startIndex, count) {
         const gallery = document.getElementById('gallery');
         const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -2809,6 +2775,7 @@
         startRotatingText(".rotating-text1212:not(.rotating)");
     }
 
+    // مراقب التحميل الكسول
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -2816,13 +2783,16 @@
                 img.src = img.dataset.src;
                 img.onload = () => {
                     img.classList.add("loaded");
-                    if (isWhiteBackground(img)) img.classList.add("white-bg");
+                    if (isWhiteBackground(img)) {
+                        img.classList.add("white-bg");
+                    }
                 };
                 observer.unobserve(img);
             }
         });
     }, { rootMargin: "0px 0px 200px 0px" });
 
+    // دالة للتحقق من خلفية الصورة البيضاء
     function isWhiteBackground(img) {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -2835,11 +2805,15 @@
         let totalPixelCount = data.length / 4;
 
         for (let i = 0; i < data.length; i += 4) {
-            if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) whitePixelCount++;
+            if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
+                whitePixelCount++;
+            }
         }
+
         return (whitePixelCount / totalPixelCount) > 0.9;
     }
 
+    // دالة لتدوير النصوص
     function startRotatingText(selector) {
         document.querySelectorAll(selector).forEach(element => {
             element.classList.add('rotating');
@@ -2859,11 +2833,13 @@
         });
     }
 
+    // دالة لقراءة معلمة البحث من URL
     function getSearchTermFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('search') || '';
     }
 
+    // تحميل المنتجات عند التمرير
     document.addEventListener('scroll', function () {
         const gallery = document.getElementById('gallery');
         const triggerHeight = window.innerHeight * 1.5;
@@ -2874,14 +2850,23 @@
         }
     });
 
+    // دالة لتحريك الخط وتنفيذ البحث
     function selectItem(item, element) {
         const searchBox = document.getElementById('search-box');
+
         if (searchBox) {
-            if (item === 'الكل') searchBox.value = '';
-            else searchBox.value = item;
+            if (item === 'الكل') {
+                searchBox.value = '';
+            } else {
+                searchBox.value = item;
+            }
         }
-        if (item === 'الكل') fetchAndFilterProducts('');
-        else if (item) fetchAndFilterProducts(item);
+
+        if (item === 'الكل') {
+            fetchAndFilterProducts('');
+        } else if (item) {
+            fetchAndFilterProducts(item);
+        }
 
         const allItems = document.querySelectorAll('.sub-header nav a');
         allItems.forEach(item => item.classList.remove('active'));
@@ -2894,9 +2879,14 @@
         underline.style.width = `${itemRect.width}px`;
         underline.style.left = `${itemRect.left - navRect.left}px`;
 
-        element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center'
+        });
     }
 
+    // دالة لخلط مصفوفة عشوائيًا
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -2904,8 +2894,10 @@
         }
     }
 
+    // عند تحميل الصفحة
     window.onload = function () {
-        removeLoadingAnimation();
+        removeLoadingAnimation(); // إزالة أداة التحميل بعد اكتمال تحميل الصفحة
+
         const defaultItem = document.querySelector('.sub-header nav a');
         const underline = document.querySelector('.underline');
         if (defaultItem && underline) {
@@ -2915,11 +2907,64 @@
             underline.style.width = `${itemRect.width}px`;
             underline.style.left = `${itemRect.left - navRect.left}px`;
         }
+
         const searchTerm = getSearchTermFromURL();
         const searchBox = document.getElementById('search-box');
-        if (searchBox && searchTerm) searchBox.value = searchTerm;
+        if (searchBox && searchTerm) {
+            searchBox.value = searchTerm;
+        }
         fetchAndFilterProducts(searchTerm || '');
     };
+
+    // إضافة وظائف العربة كما طلبت
+    // دالة لإضافة المنتج إلى العربة
+    function addToCart(button) {
+        const productContainer = button.closest('.image-container');
+        const product = {
+            id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
+            image: productContainer.querySelector('img').src,
+            name: productContainer.querySelector('h1').textContent,
+            sold: productContainer.querySelector('h2').textContent,
+            price: productContainer.querySelector('.number').textContent,
+            discount: productContainer.querySelector('h3').textContent,
+            link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
+        };
+
+        // استرجاع العربة الحالية من localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // التحقق مما إذا كان المنتج موجودًا بالفعل في العربة
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (!existingProduct) {
+            cart.push(product); // إضافة المنتج الجديد
+            localStorage.setItem('cart', JSON.stringify(cart)); // حفظ العربة المحدثة
+            updateCartCount();
+            alert("تمت إضافة المنتج إلى سلة التسوق"); // إبقاء التنبيه كما في الكود الأصلي
+        }
+        button.classList.add('checked'); // إبقاء إضافة الكلاس كما في الكود الأصلي
+    }
+
+    // دالة لتحديث عدد العناصر في العربة
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCountElement = document.querySelector('.cart-count');
+        if (cartCountElement) cartCountElement.textContent = cart.length;
+    }
+
+    // التنقل إلى صفحة العربة
+    function navigateToCart() {
+        window.location.href = 'cart.html';
+    }
+
+    // تحديث عدد المنتجات عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+    });
+
+    // ربط أيقونة العربة بالنقر للانتقال إلى صفحة العربة
+    const cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', navigateToCart);
+    }
 </script>
 </body>
 </html>
