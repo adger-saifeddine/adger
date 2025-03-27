@@ -1297,7 +1297,6 @@
             </body>
             </html>
             
-
             <script>
                 // استرجاع بيانات المستخدم من localStorage
                 const username = localStorage.getItem('username');
@@ -1350,7 +1349,7 @@
                     }
                 }
         
-                // دالة لإضافة المنتج إلى العربة
+                // دالة لإضافة المنتج إلى العربة (مع التعديلات المطلوبة)
                 function addToCart(element) {
                     event.stopPropagation();
                     event.preventDefault();
@@ -1372,8 +1371,7 @@
                         localStorage.setItem('cart', JSON.stringify(cart));
                         updateCartCount();
                     }
-                    element.classList.add('checked');
-                    alert("تمت إضافة المنتج إلى سلة التسوق");
+                    // لا يتم تغيير الأيقونة ولا تظهر نافذة alert
                     return false;
                 }
         
