@@ -2068,66 +2068,83 @@
         <title>Example Page</title>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
         <style>
-            /* الخلفية العلوية */
-            .top-background {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 12px;
-                background-color: white;
-                z-index: 1000;
-            }
-            @media (max-width: 768px) {
-                .top-background {
-                    height: 1px;
-                }
-            }
-    
-            /* الشريط العلوي الثابت */
-            .header {
-                position: fixed;
-                top: 12px;
-                left: 0;
-                right: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 66px;
-                background-color: white;
-                padding: 0 20px;
-                z-index: 1;
-            }
-            @media (max-width: 768px) {
-                .header {
-                    top: 1px;
-                }
-            }
-    
-            /* الشريط الأبيض الثابت أسفل الشريط العلوي */
-            .sub-header {
-                position: fixed;
-                top: 74px;
-                left: 0;
-                right: 0;
-                height: 51px;
-                background-color: white;
-                box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
-                text-shadow: none;
-                z-index: 999;
-                display: flex;
-                align-items: center;
-                padding: 0 20px;
-                overflow-x: auto;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-            @media (max-width: 769px) {
-                .sub-header {
-                    top: 56px;
-                }
-            }
-    
+         /* الخلفية العلوية */
+.top-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background-color: white;
+    z-index: 1000;
+}
+@media (min-width: 769px) { /* للشاشات الكبيرة */
+    .top-background {
+        padding-left: 50px; /* الحشوة للشاشات الكبيرة */
+        padding-right: 50px; /* الحشوة للشاشات الكبيرة */
+    }
+}
+@media (max-width: 768px) { /* للهواتف */
+    .top-background {
+        height: 1px;
+    }
+}
+
+/* الشريط العلوي الثابت */
+.header {
+    position: fixed;
+    top: 12px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 66px;
+    background-color: white;
+    padding: 0 20px; /* الحشوة الأصلية للهواتف */
+    z-index: 1;
+}
+@media (min-width: 769px) { /* للشاشات الكبيرة */
+    .header {
+        padding-left: 50px; /* الحشوة للشاشات الكبيرة */
+        padding-right: 50px; /* الحشوة للشاشات الكبيرة */
+    }
+}
+@media (max-width: 768px) { /* للهواتف */
+    .header {
+        top: 1px;
+    }
+}
+
+/* الشريط الأبيض الثابت أسفل الشريط العلوي */
+.sub-header {
+    position: fixed;
+    top: 74px;
+    left: 0;
+    right: 0;
+    height: 51px;
+    background-color: white;
+    box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
+    text-shadow: none;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    padding: 0 20px; /* الحشوة الأصلية للهواتف */
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+@media (min-width: 769px) { /* للشاشات الكبيرة */
+    .sub-header {
+        padding-left: 50px; /* الحشوة للشاشات الكبيرة */
+        padding-right: 50px; /* الحشوة للشاشات الكبيرة */
+    }
+}
+@media (max-width: 769px) { /* للهواتف */
+    .sub-header {
+        top: 56px;
+    }
+}
             .sub-header::-webkit-scrollbar {
                 display: none;
             }
