@@ -405,15 +405,6 @@
     </div>
 
     <script>
-  function saveUsername() {
-            const username = document.getElementById('usernameInput').value;
-            if (username) {
-                localStorage.setItem('username', username);
-                // تحديث رسالة الترحيب في نفس النافذة إذا كانت الصفحة الرئيسية مفتوحة
-                if (window.opener) {
-                    window.opener.postMessage({ key: 'username', value: username }, '*');
-                }}}
-
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -514,11 +505,22 @@
                         localStorage.setItem('username', username);
                         localStorage.setItem('profileImage', profileImage);
                         localStorage.setItem('isLoggedIn', true);
+
+                        // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                        if (window.opener) {
+                            window.opener.postMessage({ key: 'username', value: username }, '*');
+                        }
+
                         showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
                             document.getElementById('registerContainer').style.display = 'none';
                             document.getElementById('profileContainer').style.display = 'block';
                             document.getElementById('usernameDisplay').textContent = username;
                             document.getElementById('profilePictureDisplay').src = profileImage;
+
+                            // الرجوع إلى الصفحة الرئيسية بعد التسجيل
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1000);
                         });
                     }
                 });
@@ -539,8 +541,14 @@
                             localStorage.setItem('username', username);
                             localStorage.setItem('profileImage', userData.profileImage);
                             localStorage.setItem('isLoggedIn', true);
+
+                            // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                            if (window.opener) {
+                                window.opener.postMessage({ key: 'username', value: username }, '*');
+                            }
+
                             showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
-                                window.location.reload();
+                                window.location.href = 'index.html'; // الرجوع إلى الصفحة الرئيسية
                             });
                         } else {
                             showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
@@ -563,6 +571,12 @@
             localStorage.removeItem('username');
             localStorage.removeItem('profileImage');
             localStorage.removeItem('isLoggedIn');
+
+            // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
+            if (window.opener) {
+                window.opener.postMessage({ key: 'username', value: null }, '*');
+            }
+
             window.location.href = 'account.html';
         });
 
