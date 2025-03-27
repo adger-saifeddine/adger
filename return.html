@@ -795,10 +795,6 @@
         const savedPhone = localStorage.getItem('phone');
         if (savedName) document.getElementById('name').value = savedName;
         if (savedPhone) document.getElementById('phone').value = savedPhone;
-
-        // تحديث رسالة الترحيب وعدد السلة عند تحميل الصفحة
-        updateWelcomeMessage();
-        updateCartCount();
     });
 
     document.getElementById('name').addEventListener('input', function() {
@@ -874,58 +870,65 @@
         }
     }
 
-    // دالة لتحديث رسالة الترحيب بناءً على اسم المستخدم
-    function updateWelcomeMessage() {
-        const username = localStorage.getItem('username');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const usernameDisplay = document.getElementById('usernameDisplay');
+    const username = localStorage.getItem('username');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const usernameDisplay = document.getElementById('usernameDisplay');
 
-        if (username && welcomeMessage && usernameDisplay) {
+    if (username) {
+        usernameDisplay.textContent = truncateUsername(username);
+        window.addEventListener('resize', () => {
             usernameDisplay.textContent = truncateUsername(username);
-            welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
-        } else if (welcomeMessage) {
-            welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-        }
+        });
+    } else {
+        welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
     }
 
-    // دالة للتحقق من اللغة العربية
     function isArabic(text) {
         return /[\u0600-\u06FF]/.test(text);
     }
 
-    // دالة لتقصير اسم المستخدم بناءً على اللغة
+    // Function to truncate the username based on language
     function truncateUsername(name) {
-        const maxLength = isArabic(name) ? 12 : 7; // 12 للعربية، 7 للإنجليزية
-
+        const maxLength = isArabic(name) ? 12 : 7; // 12 for Arabic names, 7 for English names
+        
+        // Check if the screen width is less than 966px and name length exceeds maxLength
         if (window.innerWidth < 966 && name.length > maxLength) {
             if (isArabic(name)) {
-                return name.substring(0, maxLength) + '..'; // تقصير وإضافة ".." في النهاية للعربية
+                return name.substring(0, maxLength) + '..'; // Truncate and add ".." at the end for Arabic
             } else {
-                return '..' + name.substring(0, maxLength); // تقصير وإضافة ".." في البداية للإنجليزية
+                return '..' + name.substring(0, maxLength); // Truncate and add ".." at the beginning for English
             }
         }
-        return name; // إرجاع الاسم كما هو إذا لم يكن بحاجة إلى تقصير
+        return name; // Return the name unchanged if no truncation is needed
     }
 
-    // دالة لتحديث عدد السلة
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartCount = cart.length;
+
     function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartCountElement = document.querySelector('.cart-count');
-        if (cartCountElement) cartCountElement.textContent = cart.length;
+        cartCountElement.textContent = cartCount;
     }
 
-    // تحديث رسالة الترحيب وعدد السلة عند تغيير localStorage
-    window.addEventListener('storage', function(event) {
-        if (event.key === 'username') {
-            updateWelcomeMessage();
-        } else if (event.key === 'cart') {
-            updateCartCount();
-        }
+    updateCartCount();
+    document.querySelector('.cart-icon').addEventListener('click', () => {
+        window.location.href = 'cart.html';
     });
 
-    // تحديث عدد السلة عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCartCount();
+    // الاستماع إلى تغييرات localStorage لتحديث السلة ورسالة الترحيب
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'cart') {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartCount = cart.length;
+            updateCartCount();
+        } else if (event.key === 'username') {
+            const newUsername = localStorage.getItem('username');
+            if (newUsername) {
+                usernameDisplay.textContent = truncateUsername(newUsername);
+            } else {
+                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+            }
+        }
     });
 
     // متغيرات لتتبع السحب
@@ -960,8 +963,9 @@
 
     // دالة للتحقق من النقر خارج النافذة
     function handleClickOutside(event) {
-        if (menuPopup.classList.contains('active') &&
-            !menuPopup.contains(event.target) &&
+        // التأكد من أن النقر ليس على أي عنصر فعال
+        if (menuPopup.classList.contains('active') && 
+            !menuPopup.contains(event.target) && 
             !event.target.closest('.active')) {
             toggleMenu();
         }
