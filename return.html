@@ -795,6 +795,10 @@
         const savedPhone = localStorage.getItem('phone');
         if (savedName) document.getElementById('name').value = savedName;
         if (savedPhone) document.getElementById('phone').value = savedPhone;
+
+        // تحديث العربة ورسالة الترحيب عند التحميل
+        updateCartCount();
+        updateWelcomeMessage();
     });
 
     document.getElementById('name').addEventListener('input', function() {
@@ -870,6 +874,7 @@
         }
     }
 
+    // إدارة اسم المستخدم
     const username = localStorage.getItem('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
     const usernameDisplay = document.getElementById('usernameDisplay');
@@ -883,31 +888,46 @@
         welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
     }
 
+    // دالة لتحديث رسالة الترحيب
+    function updateWelcomeMessage() {
+        const username = localStorage.getItem('username');
+        if (username && welcomeMessage && usernameDisplay) {
+            usernameDisplay.textContent = truncateUsername(username);
+            welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
+            window.addEventListener('resize', () => {
+                usernameDisplay.textContent = truncateUsername(username);
+            });
+        } else if (welcomeMessage) {
+            welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+        }
+    }
+
     function isArabic(text) {
         return /[\u0600-\u06FF]/.test(text);
     }
 
-    // Function to truncate the username based on language
     function truncateUsername(name) {
-        const maxLength = isArabic(name) ? 12 : 7; // 12 for Arabic names, 7 for English names
-        
-        // Check if the screen width is less than 966px and name length exceeds maxLength
+        const maxLength = isArabic(name) ? 12 : 7;
         if (window.innerWidth < 966 && name.length > maxLength) {
             if (isArabic(name)) {
-                return name.substring(0, maxLength) + '..'; // Truncate and add ".." at the end for Arabic
+                return name.substring(0, maxLength) + '..';
             } else {
-                return '..' + name.substring(0, maxLength); // Truncate and add ".." at the beginning for English
+                return '..' + name.substring(0, maxLength);
             }
         }
-        return name; // Return the name unchanged if no truncation is needed
+        return name;
     }
 
+    // إدارة العربة
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let cartCount = cart.length;
 
     function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartCountElement = document.querySelector('.cart-count');
-        cartCountElement.textContent = cartCount;
+        if (cartCountElement) {
+            cartCountElement.textContent = cart.length;
+        }
     }
 
     updateCartCount();
@@ -915,19 +935,20 @@
         window.location.href = 'cart.html';
     });
 
-    // الاستماع إلى تغييرات localStorage لتحديث السلة ورسالة الترحيب
+    // الاستماع إلى تغييرات localStorage
     window.addEventListener('storage', function(event) {
         if (event.key === 'cart') {
-            cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartCount = cart.length;
             updateCartCount();
         } else if (event.key === 'username') {
-            const newUsername = localStorage.getItem('username');
-            if (newUsername) {
-                usernameDisplay.textContent = truncateUsername(newUsername);
-            } else {
-                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-            }
+            updateWelcomeMessage();
+        }
+    });
+
+    // الاستماع إلى الرسائل من صفحة الحساب
+    window.addEventListener('message', function(event) {
+        if (event.data.key === 'username') {
+            localStorage.setItem('username', event.data.value);
+            updateWelcomeMessage();
         }
     });
 
@@ -963,7 +984,6 @@
 
     // دالة للتحقق من النقر خارج النافذة
     function handleClickOutside(event) {
-        // التأكد من أن النقر ليس على أي عنصر فعال
         if (menuPopup.classList.contains('active') && 
             !menuPopup.contains(event.target) && 
             !event.target.closest('.active')) {
@@ -983,18 +1003,6 @@
             event.preventDefault();
         }
     }, { passive: false });
-
-    // دالة فتح وإغلاق القائمة
-    function toggleMenu() {
-        if (menuPopup.classList.contains('active')) {
-            menuPopup.classList.add('closing');
-            setTimeout(() => {
-                menuPopup.classList.remove('active', 'closing');
-            }, 300);
-        } else {
-            menuPopup.classList.add('active');
-        }
-    }
 </script>
 </body>
 </html>
