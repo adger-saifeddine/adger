@@ -781,7 +781,7 @@
         </script>
 
 <script>
-    // عند تحميل الصفحة: إخفاء شاشة التحميل وإظهار النموذج
+    // إخفاء شاشة التحميل وإظهار النموذج
     document.addEventListener('DOMContentLoaded', function() {
         const loader = document.getElementById('loader');
         const returnContainer = document.getElementById('returnContainer');
@@ -789,36 +789,30 @@
         setTimeout(() => {
             loader.style.display = 'none';
             returnContainer.style.display = 'block';
-        }, 1000); // تأخير 1 ثانية لمحاكاة التحميل
+        }, 1000);
 
-        // استرجاع القيم من localStorage وتعبئتها في الحقول
         const savedName = localStorage.getItem('name');
         const savedPhone = localStorage.getItem('phone');
         if (savedName) document.getElementById('name').value = savedName;
         if (savedPhone) document.getElementById('phone').value = savedPhone;
 
-        // تحديث عدد المنتجات في العربة
+        // تحديث رسالة الترحيب وعدد السلة عند تحميل الصفحة
+        updateWelcomeMessage();
         updateCartCount();
     });
 
-    // حفظ الاسم في localStorage فور التغيير
     document.getElementById('name').addEventListener('input', function() {
         document.getElementById('name-error').style.display = 'none';
-        localStorage.setItem('name', this.value);
     });
 
-    // حفظ رقم الهاتف في localStorage فور التغيير
     document.getElementById('phone').addEventListener('input', function() {
         document.getElementById('phone-error').style.display = 'none';
-        localStorage.setItem('phone', this.value);
     });
 
-    // إخفاء رسالة الخطأ عند إدخال رقم المنتج
     document.getElementById('productNumber').addEventListener('input', function() {
         document.getElementById('productNumber-error').style.display = 'none';
     });
 
-    // دالة التحقق من صحة النموذج قبل الإرسال
     function validateForm() {
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
@@ -846,11 +840,13 @@
         }
     }
 
-    // دالة إرسال البريد الإلكتروني
     function sendEmail() {
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
         const productNumber = document.getElementById('productNumber').value;
+
+        localStorage.setItem('name', name);
+        localStorage.setItem('phone', phone);
 
         const email = "adger.shop@gmail.com";
         const subject = "طلب استرجاع منتج";
@@ -860,21 +856,141 @@
         window.location.href = mailtoLink;
     }
 
-    // إدارة عربة التسوق
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let cartCount = cart.length;
-
-    function updateCartCount() {
-        const cartCountElement = document.querySelector('.cart-count');
-        cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cartCount = cart.length;
-        cartCountElement.textContent = cartCount;
+    // إدارة الشريط العلوي
+    function redirectToSearch(event) {
+        event.preventDefault();
+        window.location.href = "search.html";
     }
 
-    // الانتقال إلى صفحة العربة عند النقر على الأيقونة
-    document.querySelector('.cart-icon').addEventListener('click', () => {
-        window.location.href = 'cart.html';
+    function toggleMenu() {
+        const menuPopup = document.getElementById('menuPopup');
+        if (menuPopup.classList.contains('active')) {
+            menuPopup.classList.add('closing');
+            setTimeout(() => {
+                menuPopup.classList.remove('active', 'closing');
+            }, 300);
+        } else {
+            menuPopup.classList.add('active');
+        }
+    }
+
+    // دالة لتحديث رسالة الترحيب بناءً على اسم المستخدم
+    function updateWelcomeMessage() {
+        const username = localStorage.getItem('username');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+
+        if (username && welcomeMessage && usernameDisplay) {
+            usernameDisplay.textContent = truncateUsername(username);
+            welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
+        } else if (welcomeMessage) {
+            welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+        }
+    }
+
+    // دالة للتحقق من اللغة العربية
+    function isArabic(text) {
+        return /[\u0600-\u06FF]/.test(text);
+    }
+
+    // دالة لتقصير اسم المستخدم بناءً على اللغة
+    function truncateUsername(name) {
+        const maxLength = isArabic(name) ? 12 : 7; // 12 للعربية، 7 للإنجليزية
+
+        if (window.innerWidth < 966 && name.length > maxLength) {
+            if (isArabic(name)) {
+                return name.substring(0, maxLength) + '..'; // تقصير وإضافة ".." في النهاية للعربية
+            } else {
+                return '..' + name.substring(0, maxLength); // تقصير وإضافة ".." في البداية للإنجليزية
+            }
+        }
+        return name; // إرجاع الاسم كما هو إذا لم يكن بحاجة إلى تقصير
+    }
+
+    // دالة لتحديث عدد السلة
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCountElement = document.querySelector('.cart-count');
+        if (cartCountElement) cartCountElement.textContent = cart.length;
+    }
+
+    // تحديث رسالة الترحيب وعدد السلة عند تغيير localStorage
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'username') {
+            updateWelcomeMessage();
+        } else if (event.key === 'cart') {
+            updateCartCount();
+        }
     });
+
+    // تحديث عدد السلة عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+    });
+
+    // متغيرات لتتبع السحب
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    const menuPopup = document.getElementById('menuPopup');
+
+    // دالة لبدء تتبع السحب
+    function startDrag(event) {
+        if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
+            startX = event.touches[0].clientX;
+            isDragging = true;
+        }
+    }
+
+    // دالة لتتبع حركة السحب
+    function drag(event) {
+        if (!isDragging) return;
+        currentX = event.touches[0].clientX;
+        const diff = currentX - startX;
+        if (diff < -50) { // إذا تم السحب إلى اليسار بمقدار 50 بكسل
+            toggleMenu();
+            isDragging = false;
+        }
+    }
+
+    // دالة لإنهاء تتبع السحب
+    function endDrag() {
+        isDragging = false;
+    }
+
+    // دالة للتحقق من النقر خارج النافذة
+    function handleClickOutside(event) {
+        if (menuPopup.classList.contains('active') &&
+            !menuPopup.contains(event.target) &&
+            !event.target.closest('.active')) {
+            toggleMenu();
+        }
+    }
+
+    // إضافة مستمعات الأحداث
+    document.addEventListener('touchstart', startDrag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', endDrag);
+    document.body.addEventListener('click', handleClickOutside, true);
+
+    // منع التمرير أثناء فتح النافذة
+    menuPopup.addEventListener('touchmove', function(event) {
+        if (menuPopup.classList.contains('active')) {
+            event.preventDefault();
+        }
+    }, { passive: false });
+
+    // دالة فتح وإغلاق القائمة
+    function toggleMenu() {
+        if (menuPopup.classList.contains('active')) {
+            menuPopup.classList.add('closing');
+            setTimeout(() => {
+                menuPopup.classList.remove('active', 'closing');
+            }, 300);
+        } else {
+            menuPopup.classList.add('active');
+        }
+    }
 </script>
 </body>
 </html>
