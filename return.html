@@ -791,21 +791,26 @@
             returnContainer.style.display = 'block';
         }, 1000);
 
+        // استرجاع القيم من localStorage عند تحميل الصفحة
         const savedName = localStorage.getItem('name');
         const savedPhone = localStorage.getItem('phone');
         if (savedName) document.getElementById('name').value = savedName;
         if (savedPhone) document.getElementById('phone').value = savedPhone;
 
-        // تحديث عدد المنتجات في سلة التسوق عند تحميل الصفحة
+        // تحديث عدد المنتجات في العربة عند تحميل الصفحة
         updateCartCount();
     });
 
+    // حفظ الاسم في localStorage عند كل تغيير
     document.getElementById('name').addEventListener('input', function() {
         document.getElementById('name-error').style.display = 'none';
+        localStorage.setItem('name', this.value); // حفظ القيمة فور إدخالها
     });
 
+    // حفظ رقم الهاتف في localStorage عند كل تغيير
     document.getElementById('phone').addEventListener('input', function() {
         document.getElementById('phone-error').style.display = 'none';
+        localStorage.setItem('phone', this.value); // حفظ القيمة فور إدخالها
     });
 
     document.getElementById('productNumber').addEventListener('input', function() {
@@ -844,8 +849,9 @@
         const phone = document.getElementById('phone').value;
         const productNumber = document.getElementById('productNumber').value;
 
-        localStorage.setItem('name', name);
-        localStorage.setItem('phone', phone);
+        // لم نعد بحاجة لحفظ القيم هنا لأنها تُحفظ عند كل تغيير
+        // localStorage.setItem('name', name);
+        // localStorage.setItem('phone', phone);
 
         const email = "adger.shop@gmail.com";
         const subject = "طلب استرجاع منتج";
@@ -873,7 +879,6 @@
         }
     }
 
-    // استرجاع اسم المستخدم من localStorage
     const username = localStorage.getItem('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
     const usernameDisplay = document.getElementById('usernameDisplay');
@@ -887,14 +892,13 @@
         welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
     }
 
-    // دالة للتحقق من النصوص العربية
     function isArabic(text) {
         return /[\u0600-\u06FF]/.test(text);
     }
 
-    // دالة لتقصير اسم المستخدم
+    // دالة لتقطيع اسم المستخدم بناءً على اللغة
     function truncateUsername(name) {
-        const maxLength = isArabic(name) ? 12 : 7;
+        const maxLength = isArabic(name) ? 12 : 7; // 12 للأسماء العربية، 7 للإنجليزية
         if (window.innerWidth < 966 && name.length > maxLength) {
             if (isArabic(name)) {
                 return name.substring(0, maxLength) + '..';
@@ -905,30 +909,27 @@
         return name;
     }
 
-    // استرجاع سلة التسوق من localStorage
+    // إدارة عربة التسوق
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let cartCount = cart.length;
 
-    // تحديث عدد المنتجات في سلة التسوق
     function updateCartCount() {
         const cartCountElement = document.querySelector('.cart-count');
-        if (cartCountElement) {
-            cartCountElement.textContent = cartCount;
-        }
+        cart = JSON.parse(localStorage.getItem('cart')) || []; // استرجاع العربة المحدثة
+        cartCount = cart.length;
+        cartCountElement.textContent = cartCount;
     }
 
-    // ربط حدث النقر على أيقونة العربة
-    document.querySelector('.cart-icon')?.addEventListener('click', () => {
+    document.querySelector('.cart-icon').addEventListener('click', () => {
         window.location.href = 'cart.html';
     });
 
-    // متغيرات لتتبع السحب
+    // متغيرات ودوال لتتبع السحب
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
     const menuPopup = document.getElementById('menuPopup');
 
-    // دالة لبدء تتبع السحب
     function startDrag(event) {
         if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
             startX = event.touches[0].clientX;
@@ -936,23 +937,20 @@
         }
     }
 
-    // دالة لتتبع حركة السحب
     function drag(event) {
         if (!isDragging) return;
         currentX = event.touches[0].clientX;
         const diff = currentX - startX;
-        if (diff < -50) { // إذا تم السحب إلى اليسار بمقدار 50 بكسل
+        if (diff < -50) {
             toggleMenu();
             isDragging = false;
         }
     }
 
-    // دالة لإنهاء تتبع السحب
     function endDrag() {
         isDragging = false;
     }
 
-    // دالة للتحقق من النقر خارج النافذة
     function handleClickOutside(event) {
         if (menuPopup.classList.contains('active') && 
             !menuPopup.contains(event.target) && 
@@ -961,13 +959,11 @@
         }
     }
 
-    // إضافة مستمعات الأحداث
     document.addEventListener('touchstart', startDrag);
     document.addEventListener('touchmove', drag);
     document.addEventListener('touchend', endDrag);
     document.body.addEventListener('click', handleClickOutside, true);
 
-    // منع التمرير أثناء فتح النافذة
     menuPopup.addEventListener('touchmove', function(event) {
         if (menuPopup.classList.contains('active')) {
             event.preventDefault();
