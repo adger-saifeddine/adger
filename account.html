@@ -517,9 +517,9 @@
                             document.getElementById('usernameDisplay').textContent = username;
                             document.getElementById('profilePictureDisplay').src = profileImage;
 
-                            // الرجوع إلى الصفحة الرئيسية بعد التسجيل
+                            // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
                             setTimeout(() => {
-                                window.location.href = 'index.html';
+                                history.back();
                             }, 1000);
                         });
                     }
@@ -548,7 +548,8 @@
                             }
 
                             showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
-                                window.location.href = 'index.html'; // الرجوع إلى الصفحة الرئيسية
+                                // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
+                                history.back();
                             });
                         } else {
                             showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
@@ -577,7 +578,8 @@
                 window.opener.postMessage({ key: 'username', value: null }, '*');
             }
 
-            window.location.href = 'account.html';
+            // الرجوع إلى الصفحة السابقة بدلاً من إعادة تحميل صفحة الحساب
+            history.back();
         });
 
         document.getElementById('cancelLogout').addEventListener('click', () => {
