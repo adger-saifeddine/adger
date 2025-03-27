@@ -405,6 +405,15 @@
     </div>
 
     <script>
+  function saveUsername() {
+            const username = document.getElementById('usernameInput').value;
+            if (username) {
+                localStorage.setItem('username', username);
+                // تحديث رسالة الترحيب في نفس النافذة إذا كانت الصفحة الرئيسية مفتوحة
+                if (window.opener) {
+                    window.opener.postMessage({ key: 'username', value: username }, '*');
+                }}}
+
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
