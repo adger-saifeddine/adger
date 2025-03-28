@@ -2323,10 +2323,11 @@
     <script>
        // جلب رقم الصفحة من URL
 const url = new URL(window.location.href);
-const pageNumber = url.searchParams.get('page') || '1'; // الحصول على رقم الصفحة من query string
+const pageNumber = url.searchParams.get('page') || '1';
+const jsonFile = `products-${pageNumber}.json`;
 
 // إضافة طابع زمني لتجنب الذاكرة المؤقتة
-const jsonUrl = `products.json?t=${Date.now()}`;
+const jsonUrl = `${jsonFile}?t=${Date.now()}`;
 
 // جلب بيانات JSON
 fetch(jsonUrl)
@@ -2337,12 +2338,9 @@ fetch(jsonUrl)
         return response.json();
     })
     .then(data => {
-        // البحث عن المنتج المطابق لرقم الصفحة
-        const productData = data.find(item => item.id === pageNumber);
-        if (!productData) {
-            throw new Error("المنتج غير موجود");
-        }
-        populateProduct(productData); // تعبئة بيانات المنتج
+        data.forEach(productData => {
+            populateProduct(productData);
+        });
     })
     .catch(error => {
         console.error('خطأ في جلب بيانات JSON:', error);
@@ -2355,28 +2353,29 @@ function populateProduct(data) {
     const product = data.product;
     const texts = data.texts;
 
-    // إظهار الإطار
-    document.getElementById('product-frame').style.display = 'block';
-    document.getElementById('product-link').href = `${product.pageId}.html`;
-    document.getElementById('product-image').src = product.image;
-    document.getElementById('product-image').alt = product.name;
-    document.getElementById('product-name').textContent = product.name;
-    document.getElementById('product-sold').textContent = product.sold;
-    document.getElementById('product-price').textContent = product.price;
-    document.getElementById('currency').textContent = texts.currency;
-    document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
+    // إنشاء إطار المنتج
+    const productFrame = document.createElement('div');
+    productFrame.id = `product-frame-${product.productId}`;
+    productFrame.className = 'product-frame';
+
+    productFrame.innerHTML = `
+        <a class="product-link" href="${product.pageId}.html">
+            <img class="product-image" src="${product.image}" alt="${product.name}">
+        </a>
+        <h2 class="product-name">${product.name}</h2>
+        <p class="product-sold">${product.sold}</p>
+        <p class="product-price">${product.price} <span class="currency">${texts.currency}</span></p>
+        <p class="product-discount">${texts.discountLabel} ${product.discount}</p>
+        <button class="buy-now-btn">شراء الآن</button>
+        <button onclick="addToCart(this)">إضافة إلى العربة</button>
+    `;
+
+    document.body.appendChild(productFrame);
 
     // تحديث زر "شراء الآن"
-    const buyNowBtn = document.getElementById('buy-now-btn');
-    buyNowBtn.onclick = function () {
-        buyNow(
-            product.name,
-            product.productId,
-            product.price,
-            product.shippingPrice,
-            product.colors || [], // تمرير الألوان إذا كانت موجودة
-            product.sizes || []  // تمرير المقاسات إذا كانت موجودة
-        );
+    const buyNowBtn = productFrame.querySelector('.buy-now-btn');
+    buyNowBtn.onclick = function() {
+        buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
     };
 }
 
