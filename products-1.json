@@ -37,7 +37,7 @@
         ],
         "product": {
             "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
-            "name": "كتاب ابقَ قو555555555555يًا 365 يومًا في السنة",
+            "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
             "sold": "موثوق",
             "price": "70.00",
             "discount": "38.6%",
@@ -88,16 +88,14 @@
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
-            "name": "حذاء جلد - p30 سكاي مريح",
+            "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
+            "name": "كتاب ابقَ قويًا 3654535 يومًا في السنة",
             "sold": "موثوق",
-            "price": "360",
-            "discount": "20",
-            "pageId": "2",
-            "productId": "2",
-            "shippingPrice": "70",
-            "colors": ["أبيض", "أسود","كحلي","هافان"],
-            "sizes": ["41", "42", "43","44","45"]
+            "price": "70.00",
+            "discount": "38.6%",
+            "pageId": "1",
+            "productId": "1",
+            "shippingPrice": "60"
         },
         "texts": {
             "currency": "جنيه",
