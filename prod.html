@@ -2359,21 +2359,21 @@ function populateProduct(data) {
     productFrame.className = 'product-frame';
 
     productFrame.innerHTML = `
-        <a class="product-link" href="${product.pageId}.html">
-            <img class="product-image" src="${product.image}" alt="${product.name}">
+        <a id="product-link-${product.productId}" class="product-link" href="${product.pageId}.html">
+            <img id="product-image-${product.productId}" class="product-image" src="${product.image}" alt="${product.name}">
         </a>
-        <h2 class="product-name">${product.name}</h2>
-        <p class="product-sold">${product.sold}</p>
-        <p class="product-price">${product.price} <span class="currency">${texts.currency}</span></p>
-        <p class="product-discount">${texts.discountLabel} ${product.discount}</p>
-        <button class="buy-now-btn">شراء الآن</button>
+        <h2 id="product-name-${product.productId}" class="product-name">${product.name}</h2>
+        <p id="product-sold-${product.productId}" class="product-sold">${product.sold}</p>
+        <p id="product-price-${product.productId}" class="product-price">${product.price} <span id="currency-${product.productId}" class="currency">${texts.currency}</span></p>
+        <p id="product-discount-${product.productId}" class="product-discount">${texts.discountLabel} ${product.discount}</p>
+        <button id="buy-now-btn-${product.productId}" class="buy-now-btn">شراء الآن</button>
         <button onclick="addToCart(this)">إضافة إلى العربة</button>
     `;
 
     document.body.appendChild(productFrame);
 
     // تحديث زر "شراء الآن"
-    const buyNowBtn = productFrame.querySelector('.buy-now-btn');
+    const buyNowBtn = document.getElementById(`buy-now-btn-${product.productId}`);
     buyNowBtn.onclick = function() {
         buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
     };
