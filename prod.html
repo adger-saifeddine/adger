@@ -2183,114 +2183,114 @@
             margin: 0;
             padding: 0;
         }
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+    }
 
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
+    .image-frame {
+        position: relative;
+        text-align: center;
+        margin-bottom: 20px;
+        display: none !important;
+    }
 
-        .image-frame {
-            position: relative;
-            text-align: center;
-            margin-bottom: 20px;
-            display: none !important;
-        }
+    .image-frame img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
 
-        .image-frame img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
+    .text-under {
+        text-align: center;
+        margin-top: 10px;
+    }
 
-        .text-under {
-            text-align: center;
-            margin-top: 10px;
-        }
+    .text-under h1 {
+        font-size: 18px;
+        margin: 5px 0;
+    }
 
-        .text-under h1 {
-            font-size: 18px;
-            margin: 5px 0;
-        }
+    .text-under h2 {
+        font-size: 13px;
+        color: #ffc400;
+        margin-top: -5px;
+    }
 
-        .text-under h2 {
-            font-size: 13px;
-            color: #ffc400;
-            margin-top: -5px;
-        }
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+    }
 
-        .container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 10px;
-        }
+    .container .zero, .container .number, .container .letter {
+        font-size: 16px;
+    }
 
-        .container .zero, .container .number, .container .letter {
-            font-size: 16px;
-        }
+    .container .number {
+        font-size: 28px;
+    }
 
-        .container .number {
-            font-size: 28px;
-        }
+    h3 {
+        font-size: 12px;
+        color: #ff0000;
+        text-transform: uppercase;
+        margin: 5px 0 0 8px;
+    }
 
-        h3 {
-            font-size: 12px;
-            color: #ff0000;
-            text-transform: uppercase;
-            margin: 5px 0 0 8px;
-        }
+    .bottom-buttons {
+        margin-top: 10px;
+        width: 100%;
+        background-color: white;
+        z-index: 1;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        margin-bottom: 3px;
+    }
 
-        .bottom-buttons {
-            margin-top: 10px;
-            width: 100%;
-            background-color: white;
-            z-index: 1;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            margin-bottom: 3px;
-        }
+    .buttons-wrapper {
+        display: flex;
+        padding: 8px;
+        gap: 10px;
+    }
 
-        .buttons-wrapper {
-            display: flex;
-            padding: 8px;
-            gap: 10px;
-        }
+    .add-to-cart-text, .buy-now-text {
+        flex: 1;
+        color: #ffffff;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 45px;
+        user-select: none;
+        box-sizing: border-box;
+    }
 
-        .add-to-cart-text, .buy-now-text {
-            flex: 1;
-            color: #ffffff;
-            font-size: 18px;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 45px;
-            user-select: none;
-            box-sizing: border-box;
-        }
+    .add-to-cart-text {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border: 1px solid black;
+    }
 
-        .add-to-cart-text {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            border: 1px solid black;
-        }
+    .add-to-cart-text:hover {
+        background-color: #c2c2c23f;
+    }
 
-        .add-to-cart-text:hover {
-            background-color: #c2c2c23f;
-        }
+    .buy-now-text {
+        background-color: #ff6600;
+    }
 
-        .buy-now-text {
-            background-color: #ff6600;
-        }
+    .buy-now-text:hover {
+        background-color: #ff5100;
+    }
+</style>
 
-        .buy-now-text:hover {
-            background-color: #ff5100;
-        }
-    </style>
 </head>
 <body>
     <div class="image-container product" id="product-container">
@@ -2316,83 +2316,85 @@
             </div>
         </div>
     </div>
+<script>
+    // جلب رقم الصفحة من URL
+    const url = new URL(window.location.href);
+    const pageNumber = url.searchParams.get('page') || '1';
+    const jsonFile = `products-${pageNumber}.json`;
 
-    <script>
-        // جلب رقم الصفحة من URL
-        const url = new URL(window.location.href);
-        const pageNumber = url.searchParams.get('page') || '1';
-        const jsonFile = `products-${pageNumber}.json`;
+    // إضافة طابع زمني لتجنب الذاكرة المؤقتة
+    const jsonUrl = `${jsonFile}?t=${Date.now()}`;
 
-        // إضافة طابع زمني لتجنب الذاكرة المؤقتة
-        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-
-        // جلب بيانات JSON
-        fetch(jsonUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const productContainer = document.getElementById('product-container');
-                data.forEach((productData, index) => {
-                    // إنشاء نسخة من product-frame لكل منتج
-                    const productFrame = document.getElementById('product-frame').cloneNode(true);
-                    productFrame.id = `product-frame-${index}`; // إعطاء معرف فريد
-                    productFrame.style.display = 'block !important'; // إظهار الإطار
-                    populateProduct(productData, productFrame);
-                    productContainer.appendChild(productFrame);
-                });
-            })
-            .catch(error => {
-                console.error('خطأ في جلب بيانات JSON:', error);
-                alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
+    // جلب بيانات JSON
+    fetch(jsonUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const productContainer = document.getElementById('product-container');
+            data.forEach((productData, index) => {
+                // إنشاء نسخة من product-frame لكل منتج
+                const productFrame = document.getElementById('product-frame').cloneNode(true);
+                productFrame.id = `product-frame-${index}`; // إعطاء معرف فريد
+                productFrame.style.display = 'block !important'; // إظهار الإطار
+                populateProduct(productData, productFrame);
+                productContainer.appendChild(productFrame);
             });
+        })
+        .catch(error => {
+            console.error('خطأ في جلب بيانات JSON:', error);
+            alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
+        });
 
-        // تعبئة بيانات المنتج
-        function populateProduct(data, frame) {
-            console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
-            const product = data.product;
-            const texts = data.texts;
+    // تعبئة بيانات المنتج
+    function populateProduct(data, frame) {
+        console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
+        const product = data.product;
+        const texts = data.texts;
 
-            frame.querySelector('#product-link').href = `${product.pageId}.html`;
-            frame.querySelector('#product-image').src = product.image;
-            frame.querySelector('#product-image').alt = product.name;
-            frame.querySelector('#product-name').textContent = product.name;
-            frame.querySelector('#product-sold').textContent = product.sold;
-            frame.querySelector('#product-price').textContent = product.price;
-            frame.querySelector('#currency').textContent = texts.currency;
-            frame.querySelector('#product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
+        frame.querySelector('#product-link').href = `${product.pageId}.html`;
+        frame.querySelector('#product-image').src = product.image;
+        frame.querySelector('#product-image').alt = product.name;
+        frame.querySelector('#product-name').textContent = product.name;
+        frame.querySelector('#product-sold').textContent = product.sold;
+        frame.querySelector('#product-price').textContent = product.price;
+        frame.querySelector('#currency').textContent = texts.currency;
+        frame.querySelector('#product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
 
-            // تحديث زر "شراء الآن"
-            const buyNowBtn = frame.querySelector('#buy-now-btn');
-            buyNowBtn.onclick = function() {
-                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
-            };
+        // تحديث زر "شراء الآن"
+        const buyNowBtn = frame.querySelector('#buy-now-btn');
+        buyNowBtn.onclick = function() {
+            buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+        };
 
-            // تحديث زر "أضف إلى السلة"
-            const addToCartBtn = frame.querySelector('#add-to-cart-btn');
-            addToCartBtn.onclick = function() {
-                addToCart(product);
-            };
-        }
+        // تحديث زر "أضف إلى السلة"
+        const addToCartBtn = frame.querySelector('#add-to-cart-btn');
+        addToCartBtn.onclick = function() {
+            addToCart(product);
+        };
+    }
 
-        // دالة شراء الآن
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
-            console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
-            window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
-        }
+    // دالة شراء الآن
+    function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+        console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
+        console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
+        window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
+    }
 
-        // دالة إضافة إلى العربة
-        function addToCart(product) {
-            alert(`تمت إضافة ${product.name} إلى العربة!`);
-            console.log("تم النقر على الزر للمنتج:", product);
-        }
-    </script>
+    // دالة إضافة إلى العربة
+    function addToCart(product) {
+        alert(`تمت إضافة ${product.name} إلى العربة!`);
+        console.log("تم النقر على الزر للمنتج:", product);
+    }
+</script>
+
 </body>
 </html>
+
+
 
 
 
