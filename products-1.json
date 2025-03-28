@@ -93,7 +93,7 @@
             "sold": "موثوق",
             "price": "360",
             "discount": "20",
-            "pageId": "prod.html?id=2",
+            "pageId": "2",
             "productId": "2",
             "shippingPrice": "70",
             "colors": ["أبيض", "أسود","كحلي","هافان"],
@@ -166,7 +166,7 @@
             "sold": "موثوق",
             "price": "290",
             "discount": "17",
-            "pageId": "prod.html?id=3",
+            "pageId": "3",
             "productId": "3",
             "shippingPrice": "70",
             "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
@@ -234,7 +234,7 @@
             "sold": "موثوق",
             "price": "400",
             "discount": "20",
-            "pageId": "prod.html?id=4",
+            "pageId": "4",
             "productId": "4",
             "shippingPrice": "70",
             "colors": ["بينك", "لبني", "أسود", "أخضر"]
