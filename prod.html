@@ -2321,49 +2321,49 @@
     </div>
 
     <script>
-        // جلب معرف المنتج من URL
+        // جلب رقم الصفحة من URL
         const url = new URL(window.location.href);
-        const productId = url.searchParams.get('id'); // الحصول على 'id' من الرابط
-    
-        // التحقق من وجود معرف المنتج
-        if (!productId) {
-            console.error('لم يتم تحديد معرف المنتج في الرابط');
-            alert('يرجى تحديد معرف المنتج في الرابط');
-            return;
-        }
-    
+        const pageNumber = url.searchParams.get('page') || '1';
+        const jsonFile = `products-${pageNumber}.json`;
+        
+        // إضافة طابع زمني لتجنب الذاكرة المؤقتة
+        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
+        
         // جلب بيانات JSON
-        const jsonUrl = `products.json?t=${Date.now()}`; // إضافة طابع زمني لتجنب الذاكرة المؤقتة
-    
         fetch(jsonUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`خطأ في جلب البيانات: ${response.status}`);
+                    throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // البحث عن المنتج المطابق لـ productId
-                const productData = data.find(item => item.product.productId == productId);
-    
+                // استخراج معرف الصفحة الحالية
+                const currentPageId = window.location.pathname.split('/').pop().replace('.html', '');
+                
+                // البحث عن المنتج الذي يطابق معرف الصفحة
+                const productData = data.find(item => item.product.pageId === currentPageId);
+                
                 if (productData) {
                     populateProduct(productData);
                 } else {
-                    console.error(`لم يتم العثور على منتج بـ productId: ${productId}`);
-                    alert("لم يتم العثور على المنتج المطلوب!");
+                    console.error('لم يتم العثور على المنتج المطابق');
+                    alert('حدث خطأ: لم يتم العثور على المنتج');
                 }
             })
             .catch(error => {
-                console.error("خطأ في جلب البيانات:", error);
-                alert("حدث خطأ أثناء جلب بيانات المنتج: " + error.message);
+                console.error('خطأ في جلب بيانات JSON:', error);
+                alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
             });
     
-        // تعبئة بيانات المنتج في الصفحة
+        // تعبئة بيانات المنتج
         function populateProduct(data) {
+            console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
             const product = data.product;
             const texts = data.texts;
-    
-            document.getElementById('product-frame').style.display = 'block';
+            
+            // إظهار الإطار
+            document.getElementById('product-frame').style.display = 'block !important';
             document.getElementById('product-link').href = `${product.pageId}.html`;
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-image').alt = product.name;
@@ -2372,7 +2372,7 @@
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
             document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
-    
+            
             // تحديث زر "شراء الآن"
             const buyNowBtn = document.getElementById('buy-now-btn');
             buyNowBtn.onclick = function() {
@@ -2382,12 +2382,15 @@
     
         // دالة شراء الآن
         function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+            console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
+            console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
             window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
         }
     
         // دالة إضافة إلى العربة
         function addToCart(element) {
             alert("تمت إضافة المنتج إلى العربة!");
+            console.log("تم النقر على الزر:", element);
         }
     </script>
 
