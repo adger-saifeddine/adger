@@ -2176,7 +2176,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض جميع المنتجات</title>
+    <title>كود هام لزر الشراء و الاضافه الى العربة</title>
     <style>
         body {
             font-family: 'Cairo', sans-serif;
@@ -2186,33 +2186,31 @@
 
         .image-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
         }
 
         .image-frame {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 250px;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none !important;
         }
 
         .image-frame img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
+            border-radius: 8px;
         }
 
         .text-under {
             text-align: center;
-            padding: 10px;
+            margin-top: 10px;
         }
 
         .text-under h1 {
-            font-size: 16px;
+            font-size: 18px;
             margin: 5px 0;
         }
 
@@ -2230,11 +2228,11 @@
         }
 
         .container .zero, .container .number, .container .letter {
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .container .number {
-            font-size: 20px;
+            font-size: 28px;
         }
 
         h3 {
@@ -2245,9 +2243,7 @@
         }
 
         .bottom-buttons {
-            position: fixed;
-            bottom: -3px;
-            left: 0;
+            margin-top: 10px;
             width: 100%;
             background-color: white;
             z-index: 1;
@@ -2297,12 +2293,32 @@
     </style>
 </head>
 <body>
-    <div class="image-container" id="product-container">
-        <!-- سيتم إضافة المنتجات هنا ديناميكيًا -->
+    <div class="image-container product" id="product-container">
+        <div class="image-frame" id="product-frame" style="display: none;">
+            <a id="product-link" href="">
+                <img id="product-image" src="" alt="">
+            </a>
+            <div class="text-under">
+                <h1 id="product-name"></h1>
+                <h2 id="product-sold"></h2>
+                <div class="container">
+                    <div class="zero">00.</div>
+                    <div class="number" id="product-price"></div>
+                    <div class="letter" id="currency"></div>
+                </div>
+                <h3 id="product-discount"></h3>
+            </div>
+            <div class="bottom-buttons">
+                <div class="buttons-wrapper">
+                    <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
+                    <div class="add-to-cart-text" id="add-to-cart-btn">أضف إلى السلة</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // جلب رقم الصفحة من URL (اختياري إذا كنت تريد تصفح الصفحات)
+        // جلب رقم الصفحة من URL
         const url = new URL(window.location.href);
         const pageNumber = url.searchParams.get('page') || '1';
         const jsonFile = `products-${pageNumber}.json`;
@@ -2319,9 +2335,14 @@
                 return response.json();
             })
             .then(data => {
-                // عرض كل منتج في الملف JSON
-                data.forEach(productData => {
-                    populateProduct(productData);
+                const productContainer = document.getElementById('product-container');
+                data.forEach((productData, index) => {
+                    // إنشاء نسخة من product-frame لكل منتج
+                    const productFrame = document.getElementById('product-frame').cloneNode(true);
+                    productFrame.id = `product-frame-${index}`; // إعطاء معرف فريد
+                    productFrame.style.display = 'block !important'; // إظهار الإطار
+                    populateProduct(productData, productFrame);
+                    productContainer.appendChild(productFrame);
                 });
             })
             .catch(error => {
@@ -2329,36 +2350,32 @@
                 alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
             });
 
-        // دالة لتعبئة بيانات المنتج وإضافتها إلى واجهة المستخدم
-        function populateProduct(data) {
+        // تعبئة بيانات المنتج
+        function populateProduct(data, frame) {
+            console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
             const product = data.product;
             const texts = data.texts;
 
-            // إنشاء عنصر جديد لكل منتج
-            const productContainer = document.createElement('div');
-            productContainer.classList.add('image-frame');
-            productContainer.innerHTML = `
-                <a href="${product.pageId}.html">
-                    <img src="${product.image}" alt="${product.name}">
-                </a>
-                <div class="text-under">
-                    <h1>${product.name}</h1>
-                    <h2>${product.sold}</h2>
-                    <div class="container">
-                        <div class="zero">00.</div>
-                        <div class="number">${product.price}</div>
-                        <div class="letter">${texts.currency}</div>
-                    </div>
-                    <h3>${texts.discountLabel} ${product.discount}%</h3>
-                </div>
-                <div class="buttons-wrapper">
-                    <div class="buy-now-text" onclick="buyNow('${product.name}', '${product.productId}', '${product.price}', '${product.shippingPrice}', ${JSON.stringify(product.colors)}, ${JSON.stringify(product.sizes)})">اشتري الآن</div>
-                    <div class="add-to-cart-text" onclick="addToCart(this)">أضف إلى السلة</div>
-                </div>
-            `;
+            frame.querySelector('#product-link').href = `${product.pageId}.html`;
+            frame.querySelector('#product-image').src = product.image;
+            frame.querySelector('#product-image').alt = product.name;
+            frame.querySelector('#product-name').textContent = product.name;
+            frame.querySelector('#product-sold').textContent = product.sold;
+            frame.querySelector('#product-price').textContent = product.price;
+            frame.querySelector('#currency').textContent = texts.currency;
+            frame.querySelector('#product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
 
-            // إضافة المنتج إلى الحاوية الرئيسية
-            document.getElementById('product-container').appendChild(productContainer);
+            // تحديث زر "شراء الآن"
+            const buyNowBtn = frame.querySelector('#buy-now-btn');
+            buyNowBtn.onclick = function() {
+                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+            };
+
+            // تحديث زر "أضف إلى السلة"
+            const addToCartBtn = frame.querySelector('#add-to-cart-btn');
+            addToCartBtn.onclick = function() {
+                addToCart(product);
+            };
         }
 
         // دالة شراء الآن
@@ -2369,9 +2386,9 @@
         }
 
         // دالة إضافة إلى العربة
-        function addToCart(element) {
-            alert("تمت إضافة المنتج إلى العربة!");
-            console.log("تم النقر على الزر:", element);
+        function addToCart(product) {
+            alert(`تمت إضافة ${product.name} إلى العربة!`);
+            console.log("تم النقر على الزر للمنتج:", product);
         }
     </script>
 </body>
