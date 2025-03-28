@@ -27,7 +27,18 @@
         "sold": "موثوق",
         "discountTexts": ["كان ب 350 جنيه", "خصم 17.14%"],
         "link": "prod.html?id=3"
+    },
+
+    {
+        "name": "ايربودز A-16 بلوتوث",
+        "dataName": "أقل من 500 جنيه airpods_a16 سماعات بلوتوث لاسلكية",
+        "price": "400",
+        "image": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 500 جنيه", "خصم 20.0%"],
+        "link": "prod.html?id=4"
     }
+    
 
    
 ]

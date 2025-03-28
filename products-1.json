@@ -175,7 +175,69 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+
+    {
+        "id": "4",
+        "media": [
+            {"src": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/nhZpKSDy/1730638416557521783.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/rpwT3dgg/1730638416693813641.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/8cMgMLPk/1730638416619518158.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/jdYbK3ZD/1730638417823496451.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/43yCwDNS/1730638422302252492.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/NfcWZ9jT/1730638420001545577.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/rwy7FBWw/1730638423458264373.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/nzmPPp80/1730638423425295645.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/0jqBgFPx/1730638423532129745.jpg", "type": "image"}
+        ],
+        "pri": "400",
+        "oldPrice": "500",
+        "dis": "خصم 20%",
+        "changingText": ["تقنية متطورة", "صوت نقي", "راحة تامة"],
+        "longText": "تقنية البلوتوث للاتصال بالأجهزة الخارجية مثل الهواتف الذكية والأجهزة اللوحية. تتيح لك هذه التقنية الحديثة إقامة اتصال لاسلكي سلس، مما يسهل عملية الاستماع إلى الفديوهات دون الحاجة إلى وصلات سلكية مزعجة.\n\nجودة الصوت والأداء: يعتبر جودة الصوت والأداء من أهم العوامل التي ينظر إليها عند اختيار سماعة.\n\nمايك قوي مزود بميزة العزل لضمان تجربة مكالمة واضحة.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton4",
+        "commentId": "4",
+        "elementId": "commentCount4",
+        "desc": "سماعة ايربودز A-16 بلوتوث بجودة صوت نقية وعزل ضوضاء، تصميم مريح يدعم الاتصال اللاسلكي بسهولة تامة.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+                    "https://i.postimg.cc/nhZpKSDy/1730638416557521783.jpg",
+                    "https://i.postimg.cc/rpwT3dgg/1730638416693813641.jpg",
+                    "https://i.postimg.cc/8cMgMLPk/1730638416619518158.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/jdYbK3ZD/1730638417823496451.jpg",
+                    "https://i.postimg.cc/43yCwDNS/1730638422302252492.jpg",
+                    "https://i.postimg.cc/NfcWZ9jT/1730638420001545577.jpg",
+                    "https://i.postimg.cc/rwy7FBWw/1730638423458264373.jpg",
+                    "https://i.postimg.cc/nzmPPp80/1730638423425295645.jpg",
+                    "https://i.postimg.cc/0jqBgFPx/1730638423532129745.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+            "name": "ايربودز A-16 بلوتوث",
+            "sold": "موثوق",
+            "price": "400",
+            "discount": "20",
+            "pageId": "prod.html?id=4",
+            "productId": "4",
+            "shippingPrice": "70",
+            "colors": ["بينك", "لبني", "أسود", "أخضر"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
-    
 
 ]
