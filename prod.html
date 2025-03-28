@@ -2338,43 +2338,59 @@ fetch(jsonUrl)
         return response.json();
     })
     .then(data => {
-        // التأكد من أن رقم الصفحة صحيح
-        const productData = data.find(item => item.id === pageNumber);
-        
-        if (productData) {
-            populateProduct(productData);
-        } else {
-            console.error('لم يتم العثور على بيانات للصفحة');
-            alert('لم يتم العثور على بيانات المنتج');
-        }
+        populateProducts(data); // تمرير جميع البيانات إلى دالة populateProducts
     })
     .catch(error => {
         console.error('خطأ في جلب بيانات JSON:', error);
         alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
     });
 
-// تعبئة بيانات المنتج
-function populateProduct(data) {
-    console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
-    const product = data.product;
-    const texts = data.texts;
+// تعبئة بيانات المنتجات
+function populateProducts(products) {
+    products.forEach(productData => {
+        console.log("البيانات المستلمة من JSON:", productData); // للتحقق من البيانات
+        const product = productData.product;
+        const texts = productData.texts;
 
-    // إظهار الإطار
-    document.getElementById('product-frame').style.display = 'block';
-    document.getElementById('product-link').href = `${product.pageId}.html`;
-    document.getElementById('product-image').src = product.image;
-    document.getElementById('product-image').alt = product.name;
-    document.getElementById('product-name').textContent = product.name;
-    document.getElementById('product-sold').textContent = product.sold;
-    document.getElementById('product-price').textContent = product.price;
-    document.getElementById('currency').textContent = texts.currency;
-    document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
+        // إظهار الإطار
+        const productFrame = document.createElement('div');
+        productFrame.className = 'product-frame';
+        productFrame.innerHTML = `
+            <a id="product-link" href="${product.pageId}.html">
+                <img id="product-image" src="${product.image}" alt="${product.name}">
+            </a>
+            <div>
+                <h2 id="product-name">${product.name}</h2>
+                <p id="product-sold">${product.sold}</p>
+                <p id="product-price">${product.price}</p>
+                <p id="currency">${texts.currency}</p>
+                <p id="product-discount">${texts.discountLabel} ${product.discount}%</p>
+                <button id="buy-now-btn">شراء الآن</button>
+                <button onclick="addToCart(this)">إضافة إلى العربة</button>
+            </div>
+        `;
 
-    // تحديث زر "شراء الآن"
-    const buyNowBtn = document.getElementById('buy-now-btn');
-    buyNowBtn.onclick = function() {
-        buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
-    };
+        document.getElementById('products-container').appendChild(productFrame);
+
+        // تحديث زر "شراء الآن"
+        const buyNowBtn = productFrame.querySelector('#buy-now-btn');
+        buyNowBtn.onclick = function() {
+            buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+        };
+    });
+}
+
+// دالة شراء الآن
+function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+    console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
+    console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
+    window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
+}
+
+// دالة إضافة إلى العربة
+function addToCart(element) {
+    alert("تمت إضافة المنتج إلى العربة!");
+    console.log("تم النقر على الزر:", element);
 }
     </script>
 </body>
