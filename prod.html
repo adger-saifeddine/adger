@@ -2323,7 +2323,7 @@
     <script>
         // جلب رقم الصفحة من URL
         const url = new URL(window.location.href);
-        const pageNumber = url.searchParams.get('page') || '2';
+        const pageNumber = url.searchParams.get('page') || '1';
         const jsonFile = `products-${pageNumber}.json`;
 
         // إضافة طابع زمني لتجنب الذاكرة المؤقتة
