@@ -2321,97 +2321,85 @@
     </div>
 
     <script>
-        // جلب معرّف المنتج ورقم الصفحة من URL باستخدام معلمة مختلفة (مثلاً pid بدلاً من id)
-        const url = new URL(window.location.href);
-        const productIdentifier = url.searchParams.get('pid') || url.searchParams.get('product') || url.searchParams.get('item');
-        const pageNumber = url.searchParams.get('page') || '1';
-        const jsonFile = `products-${pageNumber}.json`;
+        document.addEventListener('DOMContentLoaded', function() {
+            const url = new URL(window.location.href);
+            const pageNumber = url.searchParams.get('page') || '1';
+            const jsonFile = `products-${pageNumber}.json`;
+            const jsonUrl = `${jsonFile}?t=${Date.now()}`;
         
-        // إضافة طابع زمني لتجنب الذاكرة المؤقتة
-        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-
-        // جلب بيانات JSON
-        fetch(jsonUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById('loading').style.display = 'none';
-                
-                // البحث عن المنتج باستخدام المعرّف (يمكن استخدام أي حقل كمحدد)
-                const productData = data.find(item => 
-                    item.product.productId === productIdentifier || 
-                    item.product.id === productIdentifier ||
-                    item.product.sku === productIdentifier
-                );
-                
-                if (productData) {
-                    populateProduct(productData);
-                } else {
-                    throw new Error('المنتج غير موجود في هذه الصفحة');
-                }
-            })
-            .catch(error => {
-                document.getElementById('loading').style.display = 'none';
-                console.error('خطأ في جلب بيانات JSON:', error);
-                document.getElementById('error-message').textContent = 'حدث خطأ أثناء جلب بيانات المنتج: ' + error.message;
-                document.getElementById('error-message').style.display = 'block';
-            });
-
-        // باقي الدوال كما هي (populateProduct, buyNow, addToCart)
-        function populateProduct(data) {
-            console.log("البيانات المستلمة من JSON:", data);
-            const product = data.product;
-            const texts = data.texts;
-
-            document.getElementById('product-frame').style.display = 'block';
-            document.getElementById('product-link').href = `${product.pageId}.html`;
-            document.getElementById('product-image').src = product.image;
-            document.getElementById('product-image').alt = product.name;
-            document.getElementById('product-name').textContent = product.name;
-            document.getElementById('product-sold').textContent = product.sold;
-            document.getElementById('product-price').textContent = product.price;
-            document.getElementById('currency').textContent = texts.currency;
-            document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
-
-            document.getElementById('buy-now-btn').onclick = function() {
-                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
-            };
-
-            document.getElementById('add-to-cart-btn').onclick = function() {
-                addToCart(product.name, product.productId, product.price, product.image);
-            };
-        }
-
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
-        }
-
-        function addToCart(productName, productId, price, image) {
-            alert(`تمت إضافة "${productName}" إلى العربة!`);
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingProduct = cart.find(item => item.id === productId);
-            
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: price,
-                    image: image,
-                    quantity: 1
-                });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-    </script>
-</body>
-</html>
-
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('products-container');
+                    container.innerHTML = ''; // مسح المحتوى القديم
+        
+                    data.forEach(productData => {
+                        const product = productData.product;
+                        const texts = productData.texts;
+        
+                        const productHTML = `
+                            <div class="product-item">
+                                <div class="image-frame">
+                                    <a href="${product.pageId}.html">
+                                        <img src="${product.image}" alt="${product.name}">
+                                    </a>
+                                    <div class="text-under">
+                                        <h1>${product.name}</h1>
+                                        <h2>تم بيع ${product.sold} قطع</h2>
+                                        <div class="container">
+                                            <div class="zero">00.</div>
+                                            <div class="number">${product.price}</div>
+                                            <div class="letter">${texts.currency}</div>
+                                        </div>
+                                        ${product.discount > 0 ? 
+                                            `<h3>${texts.discountLabel} ${product.discount}%</h3>` : ''}
+                                    </div>
+                                </div>
+                                <div class="bottom-buttons">
+                                    <div class="buttons-wrapper">
+                                        <div class="buy-now-text" 
+                                            data-id="${product.productId}"
+                                            data-name="${product.name}"
+                                            data-price="${product.price}">
+                                            اشتري الآن
+                                        </div>
+                                        <div class="add-to-cart-text" 
+                                            data-id="${product.productId}"
+                                            data-name="${product.name}"
+                                            data-price="${product.price}">
+                                            أضف إلى السلة
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        container.insertAdjacentHTML('beforeend', productHTML);
+                    });
+        
+                    // إضافة معالجات الأحداث بشكل ديناميكي
+                    document.querySelectorAll('.buy-now-text').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const productId = this.dataset.id;
+                            const productName = this.dataset.name;
+                            const productPrice = this.dataset.price;
+                            // جلب باقي البيانات من الـ dataset أو من مصفوفة البيانات الأصلية
+                            buyNow(productName, productId, productPrice);
+                        });
+                    });
+        
+                    document.querySelectorAll('.add-to-cart-text').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const productId = this.dataset.id;
+                            const productName = this.dataset.name;
+                            const productPrice = this.dataset.price;
+                            addToCart(productName, productId, productPrice);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+        </script>
 
 
 
