@@ -2171,274 +2171,254 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كود هام لزر الشراء و الاضافه الى العربة</title>
+    <title>عرض جميع المنتجات</title>
     <style>
         body {
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f5f5f5;
         }
 
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            padding-bottom: 70px; /* لمنع التداخل مع الأزرار الثابتة */
         }
 
-        .image-frame {
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: relative;
-            text-align: center;
-            margin-bottom: 20px;
-            display: none !important;
         }
 
-        .image-frame img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
         }
 
-        .text-under {
-            text-align: center;
-            margin-top: 10px;
+        .product-info {
+            padding: 15px;
         }
 
-        .text-under h1 {
-            font-size: 18px;
-            margin: 5px 0;
+        .product-name {
+            font-size: 16px;
+            margin: 0 0 10px;
+            color: #333;
         }
 
-        .text-under h2 {
-            font-size: 13px;
+        .product-sold {
+            font-size: 12px;
             color: #ffc400;
-            margin-top: -5px;
+            margin: 0;
         }
 
-        .container {
+        .price-container {
             display: flex;
             align-items: center;
             gap: 5px;
-            margin-top: 10px;
+            margin: 10px 0;
         }
 
-        .container .zero, .container .number, .container .letter {
+        .price-number {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .currency {
             font-size: 16px;
+            color: #666;
         }
 
-        .container .number {
-            font-size: 28px;
-        }
-
-        h3 {
-            font-size: 12px;
+        .discount-badge {
             color: #ff0000;
-            text-transform: uppercase;
-            margin: 5px 0 0 8px;
+            font-size: 12px;
+            margin: 5px 0;
         }
 
         .bottom-buttons {
             position: fixed;
-            bottom: -3px;
+            bottom: 0;
             left: 0;
             width: 100%;
             background-color: white;
-            z-index: 1;
+            z-index: 1000;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
-            margin-bottom: 3px;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
         .buttons-wrapper {
             display: flex;
-            padding: 8px;
             gap: 10px;
+            max-width: 95%;
+            margin: 0 auto;
         }
 
-        .add-to-cart-text, .buy-now-text {
+        .cart-btn, .buy-btn {
             flex: 1;
-            color: #ffffff;
-            font-size: 18px;
-            text-align: center;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            height: 45px;
+            transition: all 0.3s ease;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 45px;
-            user-select: none;
-            box-sizing: border-box;
         }
 
-        .add-to-cart-text {
-            background-color: #ffffff;
+        .cart-btn {
+            background: #fff;
             color: #1a1a1a;
-            border: 1px solid black;
+            border: 1px solid #1a1a1a;
         }
 
-        .add-to-cart-text:hover {
-            background-color: #c2c2c23f;
+        .cart-btn:hover {
+            background: #f0f0f0;
         }
 
-        .buy-now-text {
-            background-color: #ff6600;
+        .buy-btn {
+            background: #ff6600;
+            color: white;
         }
 
-        .buy-now-text:hover {
-            background-color: #ff5100;
+        .buy-btn:hover {
+            background: #e55e00;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class="image-container product" id="product-container">
-        <div class="image-frame" id="product-frame" style="display: none;">
-            <a id="product-link" href="">
-                <img id="product-image" src="" alt="">
-            </a>
-            <div class="text-under">
-                <h1 id="product-name"></h1>
-                <h2 id="product-sold"></h2>
-                <div class="container">
-                    <div class="zero">00.</div>
-                    <div class="number" id="product-price"></div>
-                    <div class="letter" id="currency"></div>
-                </div>
-                <h3 id="product-discount"></h3>
-            </div>
-        </div>
-        <div class="bottom-buttons">
-            <div class="buttons-wrapper">
-                <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
-                <div class="add-to-cart-text" id="add-to-cart-btn" onclick="addToCart(this)">أضف إلى السلة</div>
-            </div>
-        </div>
-    </div>
+    <div class="loading" id="loading">جاري تحميل المنتجات...</div>
+    <div id="products-grid" class="products-grid"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const url = new URL(window.location.href);
             const pageNumber = url.searchParams.get('page') || '1';
-            const jsonFile = `products-${pageNumber}.json`;
-            const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-        
+            const jsonUrl = `products-${pageNumber}.json?t=${Date.now()}`;
+
             fetch(jsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const container = document.getElementById('products-container');
-                    container.innerHTML = '';
-        
-                    data.forEach(productData => {
-                        const product = productData.product;
-                        const texts = productData.texts;
-        
-                        const productHTML = `
-                            <div class="product-item">
-                                <div class="image-frame">
-                                    <a href="${product.pageId}.html">
-                                        <img src="${product.image}" alt="${product.name}">
-                                    </a>
-                                    <div class="text-under">
-                                        <h1>${product.name}</h1>
-                                        <h2>تم بيع ${product.sold} قطع</h2>
-                                        <div class="container">
-                                            <div class="zero">00.</div>
-                                            <div class="number">${product.price}</div>
-                                            <div class="letter">${texts.currency}</div>
-                                        </div>
-                                        ${product.discount > 0 ? 
-                                            `<h3>${texts.discountLabel} ${product.discount}%</h3>` : ''}
-                                    </div>
-                                </div>
-                                <div class="bottom-buttons">
-                                    <div class="buttons-wrapper">
-                                        <button class="buy-now-btn" 
-                                            data-id="${product.productId}"
-                                            data-name="${product.name}"
-                                            data-price="${product.price}"
-                                            data-colors='${JSON.stringify(product.colors)}'
-                                            data-sizes='${JSON.stringify(product.sizes)}'>
-                                            اشتري الآن
-                                        </button>
-                                        <button class="add-to-cart-btn" 
-                                            data-id="${product.productId}"
-                                            data-name="${product.name}"
-                                            data-price="${product.price}"
-                                            data-image="${product.image}">
-                                            أضف إلى السلة
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        container.insertAdjacentHTML('beforeend', productHTML);
-                    });
-        
-                    // إضافة معالجات الأحداث
-                    document.querySelectorAll('.buy-now-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const product = {
-                                id: this.dataset.id,
-                                name: this.dataset.name,
-                                price: this.dataset.price,
-                                colors: JSON.parse(this.dataset.colors),
-                                sizes: JSON.parse(this.dataset.sizes)
-                            };
-                            buyNow(product);
-                        });
-                    });
-        
-                    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const product = {
-                                id: this.dataset.id,
-                                name: this.dataset.name,
-                                price: this.dataset.price,
-                                image: this.dataset.image
-                            };
-                            addToCart(product);
-                        });
-                    });
+                .then(response => {
+                    if (!response.ok) throw new Error(`خطأ: ${response.status}`);
+                    return response.json();
                 })
-                .catch(error => console.error('Error:', error));
-        });
-        
-        // دالة الشراء
-        function buyNow(product) {
-            const params = new URLSearchParams({
-                name: product.name,
-                id: product.id,
-                price: product.price,
-                colors: JSON.stringify(product.colors),
-                sizes: JSON.stringify(product.sizes)
-            });
-            window.location.href = `buy.html?${params}`;
-        }
-        
-        // دالة الإضافة إلى العربة
-        function addToCart(product) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingProduct = cart.find(item => item.id === product.id);
-            
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                cart.push({
-                    ...product,
-                    quantity: 1
+                .then(data => {
+                    document.getElementById('loading').remove();
+                    renderProducts(data);
+                })
+                .catch(error => {
+                    document.getElementById('loading').textContent = 'حدث خطأ: ' + error.message;
+                });
+
+            function renderProducts(products) {
+                const container = document.getElementById('products-grid');
+                
+                products.forEach(({product, texts}) => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <img class="product-image" src="${product.image}" alt="${product.name}">
+                        <div class="product-info">
+                            <h2 class="product-name">${product.name}</h2>
+                            <p class="product-sold">تم البيع: ${product.sold}</p>
+                            <div class="price-container">
+                                <span class="price-number">${product.price}</span>
+                                <span class="currency">${texts.currency}</span>
+                            </div>
+                            ${product.discount > 0 ? 
+                                `<p class="discount-badge">${texts.discountLabel} ${product.discount}%</p>` : ''}
+                            <div class="buttons-wrapper">
+                                <button class="buy-btn" 
+                                    data-id="${product.productId}"
+                                    data-name="${product.name}"
+                                    data-price="${product.price}"
+                                    data-colors='${JSON.stringify(product.colors)}'
+                                    data-sizes='${JSON.stringify(product.sizes)}'>
+                                    اشتري الآن
+                                </button>
+                                <button class="cart-btn" 
+                                    data-id="${product.productId}"
+                                    data-name="${product.name}"
+                                    data-price="${product.price}"
+                                    data-image="${product.image}">
+                                    أضف إلى السلة
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // إضافة الأحداث
+                    productCard.querySelector('.buy-btn').addEventListener('click', handleBuy);
+                    productCard.querySelector('.cart-btn').addEventListener('click', handleAddToCart);
+                    
+                    container.appendChild(productCard);
                 });
             }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`تمت إضافة ${product.name} إلى السلة`);
-        }
-        </script>
+
+            function handleBuy(e) {
+                const dataset = e.target.dataset;
+                const product = {
+                    id: dataset.id,
+                    name: dataset.name,
+                    price: dataset.price,
+                    colors: JSON.parse(dataset.colors),
+                    sizes: JSON.parse(dataset.sizes)
+                };
+                
+                const params = new URLSearchParams({
+                    name: product.name,
+                    id: product.id,
+                    price: product.price,
+                    colors: JSON.stringify(product.colors),
+                    sizes: JSON.stringify(product.sizes)
+                });
+                
+                window.location.href = `buy.html?${params}`;
+            }
+
+            function handleAddToCart(e) {
+                const dataset = e.target.dataset;
+                const product = {
+                    id: dataset.id,
+                    name: dataset.name,
+                    price: dataset.price,
+                    image: dataset.image
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existing = cart.find(item => item.id === product.id);
+
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({...product, quantity: 1});
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`تمت إضافة ${product.name} إلى السلة!`);
+            }
+        });
+    </script>
+</body>
+</html>
 
 
 
