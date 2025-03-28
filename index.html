@@ -1105,59 +1105,42 @@
 <body>
     <div class="carousel-container">
         <div class="carousel" id="carousel">
-            <!-- المنتجات سيتم إدراجها هنا بواسطة الجافاسكريبت -->
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=1')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">ابقَ قوياً 365 يومًا في السنة ل ديمى لوفاتو</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">70.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">114.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                الخصم 38.6% 
+                </h1>
+            </div>
+            
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=2')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">حذاء جلد طبيعي عالي الجودة بمظهر أنيق</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">360.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">450.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 20%
+                </h1>
+            </div>
+
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=3')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">مج حراري فاخر 500 مل مع كوبين</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">290.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">350.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 17,14%
+                </h1>
+            </div>
+
+            
+            <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
         </div>
     </div>
     <script>
-        const products = [
-            {
-                img: 'https://i.postimg.cc/k5BR8sS6/1.jpg',
-                title: 'ابقَ قوياً 365 يومًا في السنة ل ديمى لوفاتو',
-                currentPrice: '70.00 جنيه',
-                oldPrice: '114.00 جنيه',
-                discount: '38.6%',
-                link: 'prod.html?id=1'
-            },
-            {
-                img: 'https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg',
-                title: 'حذاء جلد طبيعي عالي الجودة بمظهر أنيق',
-                currentPrice: '360.00 جنيه',
-                oldPrice: '450.00 جنيه',
-                discount: '20%',
-                link: 'prod.html?id=2'
-            },
-            {
-                img: 'https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg',
-                title: 'مج حراري فاخر 500 مل مع كوبين',
-                currentPrice: '290.00 جنيه',
-                oldPrice: '350.00 جنيه',
-                discount: '17.14%',
-                link: 'prod.html?id=3'
-            }
-            // يمكنك إضافة المزيد من المنتجات هنا
-        ];
-
-        function loadProducts() {
-            const carousel = document.getElementById('carousel');
-            console.log('Loading products...');
-            products.forEach(product => {
-                console.log('Adding product:', product.title);
-                const item = document.createElement('div');
-                item.className = 'carousel-item';
-                item.style.marginRight = '12px';
-                item.innerHTML = `
-                    <img src="${product.img}" alt="صورة" onclick="selectImage('${product.link}')" loading="lazy">
-                    <h1 style="color: #363636; font-size: 16px;">${product.title}</h1>
-                    <h1 style="color: #4e4e4e; font-size: 16px;">${product.currentPrice}</h1>
-                    <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">${product.oldPrice}</h1>
-                    <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
-                        الخصم ${product.discount}
-                    </h1>
-                `;
-                carousel.appendChild(item);
-            });
-        }
-
+        // دالة لترتيب المنتجات عشوائياً
         function shuffleCarouselItems() {
             const carousel = document.getElementById('carousel');
             const items = Array.from(carousel.getElementsByClassName('carousel-item'));
@@ -1171,7 +1154,6 @@
         function selectImage(path) {
             window.location.href = path;
         }
-
         function isDesktop() {
             const userAgent = navigator.userAgent.toLowerCase();
             const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
@@ -1179,7 +1161,6 @@
             const screenWidth = window.innerWidth;
             return !isMobile && !isTablet && screenWidth > 768;
         }
-
         function createArrows() {
             if (!isDesktop()) return;
             const container = document.querySelector('.carousel-container');
@@ -1217,7 +1198,6 @@
             carousel.addEventListener('scroll', debounce(updateArrowsVisibility, 100));
             updateArrowsVisibility();
         }
-
         function scrollCarousel(scrollAmount) {
             const carousel = document.querySelector('.carousel');
             carousel.scrollBy({
@@ -1225,7 +1205,6 @@
                 behavior: 'smooth'
             });
         }
-
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -1237,9 +1216,7 @@
                 timeout = setTimeout(later, wait);
             };
         }
-
         document.addEventListener('DOMContentLoaded', function() {
-            loadProducts(); // تحميل المنتجات عند تحميل الصفحة
             shuffleCarouselItems(); // ترتيب المنتجات عشوائياً عند تحميل الصفحة
             createArrows();
             const images = document.querySelectorAll('img[loading="lazy"]');
