@@ -2338,6 +2338,9 @@ fetch(jsonUrl)
         return response.json();
     })
     .then(data => {
+        // عرض البيانات المستلمة في وحدة التحكم
+        console.log("البيانات المستلمة:", data);
+
         // تأكد من أن البيانات تحتوي على منتجات متعددة
         if (Array.isArray(data) && data.length > 0) {
             data.forEach(productData => {
