@@ -33,6 +33,7 @@
                     "https://i.postimg.cc/YCXmhZvB/1-4.jpg"
                 ]
             }
+        
         ],
         "product": {
             "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
@@ -49,6 +50,7 @@
             "discountLabel": "خصم"
         }
     },
+
     {
         "id": "2",
         "media": [
@@ -83,6 +85,13 @@
                     "https://i.postimg.cc/vHkLP8Y4/1725537665956521323.jpg",
                     "https://i.postimg.cc/1trJTkWL/1725537668073565813.jpg"
                 ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "path/to/image6.jpg",
+                    "path/to/video1.mp4"
+                ]
             }
         ],
         "product": {
@@ -91,15 +100,16 @@
             "sold": "موثوق",
             "price": "360",
             "discount": "20",
-            "pageId": "2",
+            "pageId": "prod.html?id=2",
             "productId": "2",
             "shippingPrice": "70",
-            "colors": ["أبيض", "أسود", "كحلي", "هافان"],
-            "sizes": ["41", "42", "43", "44", "45"]
+            "colors": ["أبيض", "أسود","كحلي","هافان"],
+            "sizes": ["41", "42", "43","44","45"]
         },
         "texts": {
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
     }
+
 ]
