@@ -2174,248 +2174,274 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض جميع المنتجات</title>
+    <!-- نفس الجزء الخاص بالستايل لا تغيير فيه -->
     <style>
+        /* نفس الستايل الأصلي تماماً */
         body {
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
         }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            padding-bottom: 70px; /* لمنع التداخل مع الأزرار الثابتة */
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
         }
 
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .image-frame {
             position: relative;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none !important;
         }
 
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
+        .image-frame img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
         }
 
-        .product-info {
-            padding: 15px;
+        .text-under {
+            text-align: center;
+            margin-top: 10px;
         }
 
-        .product-name {
-            font-size: 16px;
-            margin: 0 0 10px;
-            color: #333;
+        .text-under h1 {
+            font-size: 18px;
+            margin: 5px 0;
         }
 
-        .product-sold {
-            font-size: 12px;
+        .text-under h2 {
+            font-size: 13px;
             color: #ffc400;
-            margin: 0;
+            margin-top: -5px;
         }
 
-        .price-container {
+        .container {
             display: flex;
             align-items: center;
             gap: 5px;
-            margin: 10px 0;
+            margin-top: 10px;
         }
 
-        .price-number {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .currency {
+        .container .zero, .container .number, .container .letter {
             font-size: 16px;
-            color: #666;
         }
 
-        .discount-badge {
-            color: #ff0000;
+        .container .number {
+            font-size: 28px;
+        }
+
+        h3 {
             font-size: 12px;
-            margin: 5px 0;
+            color: #ff0000;
+            text-transform: uppercase;
+            margin: 5px 0 0 8px;
         }
 
         .bottom-buttons {
             position: fixed;
-            bottom: 0;
+            bottom: -3px;
             left: 0;
             width: 100%;
             background-color: white;
-            z-index: 1000;
+            z-index: 1;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 3px;
         }
 
         .buttons-wrapper {
             display: flex;
+            padding: 8px;
             gap: 10px;
-            max-width: 95%;
-            margin: 0 auto;
         }
 
-        .cart-btn, .buy-btn {
+        .add-to-cart-text, .buy-now-text {
             flex: 1;
-            padding: 12px;
-            border-radius: 25px;
-            font-size: 16px;
+            color: #ffffff;
+            font-size: 18px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
+            transition: background-color 0.3s ease;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 45px;
+            user-select: none;
+            box-sizing: border-box;
         }
 
-        .cart-btn {
-            background: #fff;
+        .add-to-cart-text {
+            background-color: #ffffff;
             color: #1a1a1a;
-            border: 1px solid #1a1a1a;
+            border: 1px solid black;
         }
 
-        .cart-btn:hover {
-            background: #f0f0f0;
+        .add-to-cart-text:hover {
+            background-color: #c2c2c23f;
         }
 
-        .buy-btn {
-            background: #ff6600;
-            color: white;
+        .buy-now-text {
+            background-color: #ff6600;
         }
 
-        .buy-btn:hover {
-            background: #e55e00;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            font-size: 18px;
+        .buy-now-text:hover {
+            background-color: #ff5100;
         }
     </style>
 </head>
 <body>
-    <div class="loading" id="loading">جاري تحميل المنتجات...</div>
-    <div id="products-grid" class="products-grid"></div>
+    <div class="image-container product" id="product-container">
+        <div class="image-frame" id="product-frame" style="display: none;">
+            <a id="product-link" href="">
+                <img id="product-image" src="" alt="">
+            </a>
+            <div class="text-under">
+                <h1 id="product-name"></h1>
+                <h2 id="product-sold"></h2>
+                <div class="container">
+                    <div class="zero">00.</div>
+                    <div class="number" id="product-price"></div>
+                    <div class="letter" id="currency"></div>
+                </div>
+                <h3 id="product-discount"></h3>
+            </div>
+        </div>
+        <div class="bottom-buttons">
+            <div class="buttons-wrapper">
+                <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
+                <div class="add-to-cart-text" id="add-to-cart-btn">أضف إلى السلة</div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const url = new URL(window.location.href);
-            const pageNumber = url.searchParams.get('page') || '1';
-            const jsonUrl = `products-${pageNumber}.json?t=${Date.now()}`;
+        // جلب معرّف المنتج ورقم الصفحة من URL
+        const url = new URL(window.location.href);
+        try {
+  const productId = new URLSearchParams(window.location.search).get('id');
+  console.log('productId:', productId); // تحقق من القيمة
+} catch (error) {
+  console.error('Error:', error); // اطبع الخطأ إذا حدث
+}
+        const pageNumber = url.searchParams.get('page') || '1';
+        
+        if (!productId) {
+            alert('معرّف المنتج غير موجود في الرابط');
+            throw new Error('معرّف المنتج مطلوب');
+        }
 
-            fetch(jsonUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error(`خطأ: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('loading').remove();
-                    renderProducts(data);
-                })
-                .catch(error => {
-                    document.getElementById('loading').textContent = 'حدث خطأ: ' + error.message;
-                });
+        const jsonFile = `products-${pageNumber}.json`;
+        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
 
-            function renderProducts(products) {
-                const container = document.getElementById('products-grid');
-                
-                products.forEach(({product, texts}) => {
-                    const productCard = document.createElement('div');
-                    productCard.className = 'product-card';
-                    productCard.innerHTML = `
-                        <img class="product-image" src="${product.image}" alt="${product.name}">
-                        <div class="product-info">
-                            <h2 class="product-name">${product.name}</h2>
-                            <p class="product-sold">تم البيع: ${product.sold}</p>
-                            <div class="price-container">
-                                <span class="price-number">${product.price}</span>
-                                <span class="currency">${texts.currency}</span>
-                            </div>
-                            ${product.discount > 0 ? 
-                                `<p class="discount-badge">${texts.discountLabel} ${product.discount}%</p>` : ''}
-                            <div class="buttons-wrapper">
-                                <button class="buy-btn" 
-                                    data-id="${product.productId}"
-                                    data-name="${product.name}"
-                                    data-price="${product.price}"
-                                    data-colors='${JSON.stringify(product.colors)}'
-                                    data-sizes='${JSON.stringify(product.sizes)}'>
-                                    اشتري الآن
-                                </button>
-                                <button class="cart-btn" 
-                                    data-id="${product.productId}"
-                                    data-name="${product.name}"
-                                    data-price="${product.price}"
-                                    data-image="${product.image}">
-                                    أضف إلى السلة
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // إضافة الأحداث
-                    productCard.querySelector('.buy-btn').addEventListener('click', handleBuy);
-                    productCard.querySelector('.cart-btn').addEventListener('click', handleAddToCart);
-                    
-                    container.appendChild(productCard);
-                });
-            }
-
-            function handleBuy(e) {
-                const dataset = e.target.dataset;
-                const product = {
-                    id: dataset.id,
-                    name: dataset.name,
-                    price: dataset.price,
-                    colors: JSON.parse(dataset.colors),
-                    sizes: JSON.parse(dataset.sizes)
-                };
-                
-                const params = new URLSearchParams({
-                    name: product.name,
-                    id: product.id,
-                    price: product.price,
-                    colors: JSON.stringify(product.colors),
-                    sizes: JSON.stringify(product.sizes)
-                });
-                
-                window.location.href = `buy.html?${params}`;
-            }
-
-            function handleAddToCart(e) {
-                const dataset = e.target.dataset;
-                const product = {
-                    id: dataset.id,
-                    name: dataset.name,
-                    price: dataset.price,
-                    image: dataset.image
-                };
-
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const existing = cart.find(item => item.id === product.id);
-
-                if (existing) {
-                    existing.quantity++;
-                } else {
-                    cart.push({...product, quantity: 1});
+        // جلب بيانات JSON
+        fetch(jsonUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
                 }
+                return response.json();
+            })
+            .then(data => {
+                // البحث عن المنتج باستخدام المعرّف
+                const productData = data.find(item => item.product.productId === productId);
+                
+                if (!productData) {
+                    throw new Error('المنتج غير موجود في هذه الصفحة');
+                }
+                
+                populateProduct(productData);
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+                alert(error.message);
+            });
 
-                localStorage.setItem('cart', JSON.stringify(cart));
-                alert(`تمت إضافة ${product.name} إلى السلة!`);
+        // تعبئة بيانات المنتج
+        function populateProduct(data) {
+            const product = data.product;
+            const texts = data.texts;
+
+            // إظهار الإطار
+            document.getElementById('product-frame').style.display = 'block';
+            
+            // تعبئة البيانات
+            document.getElementById('product-link').href = `${product.pageId}.html`;
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-image').alt = product.name;
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-sold').textContent = product.sold;
+            document.getElementById('product-price').textContent = product.price;
+            document.getElementById('currency').textContent = texts.currency;
+            
+            // عرض الخصم إذا كان موجوداً
+            if (product.discount && product.discount > 0) {
+                document.getElementById('product-discount').textContent = 
+                    `${texts.discountLabel} ${product.discount}%`;
+            } else {
+                document.getElementById('product-discount').style.display = 'none';
             }
-        });
+
+            // إعداد أحداث الأزرار
+            document.getElementById('buy-now-btn').onclick = () => {
+                buyNow(
+                    product.name,
+                    product.productId,
+                    product.price,
+                    product.shippingPrice,
+                    product.colors,
+                    product.sizes
+                );
+            };
+
+            document.getElementById('add-to-cart-btn').onclick = () => {
+                addToCart(
+                    product.name,
+                    product.productId,
+                    product.price,
+                    product.image
+                );
+            };
+        }
+
+        // دالة شراء الآن
+        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+            const params = new URLSearchParams({
+                name: encodeURIComponent(productName),
+                id: encodeURIComponent(productId),
+                price: encodeURIComponent(productPrice),
+                shipping: encodeURIComponent(shippingPrice),
+                colors: encodeURIComponent(JSON.stringify(colors)),
+                sizes: encodeURIComponent(JSON.stringify(sizes))
+            });
+            
+            window.location.href = `buy.html?${params}`;
+        }
+
+        // دالة إضافة إلى العربة
+        function addToCart(productName, productId, price, image) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const existingProduct = cart.find(item => item.id === productId);
+            
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`تمت إضافة "${productName}" إلى العربة!`);
+        }
     </script>
 </body>
 </html>
