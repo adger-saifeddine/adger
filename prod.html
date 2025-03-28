@@ -2321,10 +2321,12 @@
     </div>
 
     <script>
-       // جلب رقم الصفحة من URL
+       // جلب رقم الصفحة ومعرف المنتج من URL
 const url = new URL(window.location.href);
 const pageNumber = url.searchParams.get('page') || '1';
-const jsonFile = `products-${pageNumber}.json`;
+if (p.vendorId == '0x04d8' && p.productId == '0x000a') {
+    port = p;
+}const jsonFile = `products-${pageNumber}.json`;
 
 // إضافة طابع زمني لتجنب الذاكرة المؤقتة
 const jsonUrl = `${jsonFile}?t=${Date.now()}`;
@@ -2338,64 +2340,54 @@ fetch(jsonUrl)
         return response.json();
     })
     .then(data => {
-        // عرض البيانات المستلمة في وحدة التحكم
-        console.log("البيانات المستلمة:", data);
-
-        // تأكد من أن البيانات تحتوي على منتجات متعددة
-        if (Array.isArray(data) && data.length > 0) {
-            data.forEach(productData => {
-                populateProduct(productData);
-            });
+        let productData;
+        if (productId) {
+            // البحث عن المنتج الذي يطابق معرف المنتج
+            productData = data.find(item => item.product.productId === productId);
+            if (!productData) {
+                throw new Error('المنتج المطلوب غير موجود');
+            }
         } else {
-            console.error('لا توجد منتجات في البيانات المستلمة');
+            // إذا لم يكن هناك productId، استخدم أول منتج كافتراضي
+            productData = data[0];
         }
+        populateProduct(productData);
     })
     .catch(error => {
         console.error('خطأ في جلب بيانات JSON:', error);
         alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
     });
 
-// تعبئة بيانات المنتج
+// تعبئة بيانات المنتج (دون تغيير)
 function populateProduct(data) {
-    console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
+    console.log("البيانات المستلمة من JSON:", data);
     const product = data.product;
     const texts = data.texts;
 
-    // إنشاء عنصر إطار جديد لكل منتج
-    const productFrame = document.createElement('div');
-    productFrame.classList.add('product-frame');
+    document.getElementById('product-frame').style.display = 'block';
+    document.getElementById('product-link').href = `${product.pageId}.html`;
+    document.getElementById('product-image').src = product.image;
+    document.getElementById('product-image').alt = product.name;
+    document.getElementById('product-name').textContent = product.name;
+    document.getElementById('product-sold').textContent = product.sold;
+    document.getElementById('product-price').textContent = product.price;
+    document.getElementById('currency').textContent = texts.currency;
+    document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
 
-    // إضافة معرف فريد لكل عنصر
-    const productId = `product-${product.productId}`;
-
-    productFrame.innerHTML = `
-        <a id="product-link-${productId}" href="${product.pageId}.html">
-            <img id="product-image-${productId}" src="${product.image}" alt="${product.name}">
-        </a>
-        <h2 id="product-name-${productId}">${product.name}</h2>
-        <p id="product-sold-${productId}">${product.sold}</p>
-        <p id="product-price-${productId}">${product.price} <span id="currency-${productId}">${texts.currency}</span></p>
-        <p id="product-discount-${productId}">${texts.discountLabel} ${product.discount}%</p>
-        <button id="buy-now-btn-${productId}">شراء الآن</button>
-    `;
-
-    document.body.appendChild(productFrame);
-
-    // تحديث زر "شراء الآن"
-    const buyNowBtn = productFrame.querySelector(`#buy-now-btn-${productId}`);
+    const buyNowBtn = document.getElementById('buy-now-btn');
     buyNowBtn.onclick = function() {
         buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
     };
 }
 
-// دالة شراء الآن
+// دالة شراء الآن (دون تغيير)
 function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-    console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
-    console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
+    console.log("الألوان الممررة:", colors);
+    console.log("المقاسات الممررة:", sizes);
     window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
 }
 
-// دالة إضافة إلى العربة
+// دالة إضافة إلى العربة (دون تغيير)
 function addToCart(element) {
     alert("تمت إضافة المنتج إلى العربة!");
     console.log("تم النقر على الزر:", element);
