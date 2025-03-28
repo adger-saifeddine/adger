@@ -2305,6 +2305,7 @@
             .image-container { direction: rtl; }
             .bottom-buttons { display: flex; gap: 10px; }
             .buy-now-text, .add-to-cart-text { cursor: pointer; padding: 10px; background: #007bff; color: white; }
+            .error { color: red; text-align: center; }
         </style>
     </head>
     <body>
@@ -2329,17 +2330,29 @@
                 <div class="add-to-cart-text" onclick="addToCart()">إضافة إلى العربة</div>
             </div>
         </div>
+        <div class="error" id="error-message"></div>
     <script>
         let productData = {};
     
         // Fetch product data from JSON file
         fetch('products-1.json')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`فشل جلب البيانات: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(data => {
+                if (!data || !data[0] || !data[0].product) {
+                    throw new Error('البيانات غير صالحة أو لا تحتوي على كائن "product"');
+                }
                 productData = data[0].product; // Use the "product" object from the first item
                 loadProductData();
             })
-            .catch(error => console.error('Error loading JSON:', error));
+            .catch(error => {
+                console.error('خطأ:', error);
+                document.getElementById('error-message').textContent = `حدث خطأ أثناء جلب البيانات: ${error.message}`;
+            });
     
         // Populate the page with product data
         function loadProductData() {
@@ -2367,17 +2380,26 @@
     
         // Buy Now function using product data
         function buyNow() {
+            if (!productData.name) {
+                alert('البيانات غير محملة بعد!');
+                return;
+            }
             window.location.href = `buy.html?name=${encodeURIComponent(productData.name)}&id=${encodeURIComponent(productData.productId)}&price=${encodeURIComponent(productData.price)}&shipping=${encodeURIComponent(productData.shippingPrice)}`;
         }
     
         // Add to Cart function using product data
         function addToCart() {
+            if (!productData.name) {
+                alert('البيانات غير محملة بعد!');
+                return;
+            }
             alert(`تمت إضافة ${productData.name} إلى العربة!`);
         }
     </script>
     
     </body>
     </html>
+    </xaiArtifact>
     
     
 
