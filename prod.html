@@ -2321,236 +2321,87 @@
     </div>
 
     <script>
-        // تأخير التنفيذ حتى يتم تحميل DOM بالكامل
-        document.addEventListener('DOMContentLoaded', function() {
+        // دالة رئيسية لجلب ومعالجة البيانات
+        async function loadProduct() {
             try {
-                // التحقق من وجود URL صالح
-                if (!window.location.href) {
-                    throw new Error('عنوان URL غير متاح');
-                }
-    
-                // جلب معرّف المنتج ورقم الصفحة من URL
-                let url;
-                try {
-                    url = new URL(window.location.href);
-                } catch (e) {
-                    throw new Error('عنوان URL غير صالح');
-                }
-    
+                // 1. جلب الـ ID من الـ URL
+                const url = new URL(window.location.href);
                 const productId = url.searchParams.get('id');
-                const pageNumber = url.searchParams.get('page') || '1';
     
-                // التحقق من وجود معرّف المنتج
                 if (!productId) {
-                    throw new Error('معرّف المنتج مطلوب في الرابط');
+                    throw new Error("⚠️ الرابط غير صالح: لم يتم تحديد ID المنتج.");
                 }
     
-                // التحقق من أن رقم الصفحة رقم صحيح
-                if (isNaN(pageNumber) {
-                    throw new Error('رقم الصفحة يجب أن يكون رقماً');
+                // 2. جلب ملف JSON الخاص بالمنتج (مثال: product-123.json)
+                const jsonUrl = `product-${productId}.json?t=${Date.now()}`;
+                const response = await fetch(jsonUrl);
+    
+                if (!response.ok) {
+                    throw new Error(`🚨 خطأ في جلب البيانات: ${response.status}`);
                 }
     
-                const jsonFile = `products-${pageNumber}.json`;
-                const jsonUrl = `${jsonFile}?t=${Date.now()}`;
+                const data = await response.json();
     
-                // جلب بيانات JSON مع مهلة زمنية
-                Promise.race([
-                    fetch(jsonUrl),
-                    new Promise((_, reject) => 
-                        setTimeout(() => reject(new Error('مهلة انتظار جلب البيانات')), 5000)
-                ])
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`خطأ في الاستجابة: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // التحقق من أن البيانات موجودة ومصفوفة
-                    if (!Array.isArray(data)) {
-                        throw new Error('صيغة بيانات JSON غير صالحة');
-                    }
+                // 3. التحقق من وجود البيانات
+                if (!data.product || !data.texts) {
+                    throw new Error("📦 ملف JSON لا يحتوي على هيكل بيانات صحيح.");
+                }
     
-                    document.getElementById('loading').style.display = 'none';
-                    
-                    // البحث عن المنتج باستخدام المعرّف
-                    const productData = data.find(item => {
-                        try {
-                            return item?.product?.id === productId;
-                        } catch (e) {
-                            console.error('خطأ في معالجة بيانات المنتج:', e);
-                            return false;
-                        }
-                    });
-                    
-                    if (productData) {
-                        populateProduct(productData);
-                    } else {
-                        throw new Error('المنتج غير موجود في هذه الصفحة');
-                    }
-                })
-                .catch(error => {
-                    handleError(error);
-                });
+                // 4. تعبئة الصفحة بالبيانات
+                populateProduct(data);
     
             } catch (error) {
-                handleError(error);
+                console.error("❌ فشل تحميل المنتج:", error);
+                alert(`حدث خطأ: ${error.message}\nيرجى المحاولة لاحقًا.`);
+                // إعادة توجيه إلى صفحة افتراضية إذا فشل كل شيء
+                window.location.href = "all-products.html"; 
             }
-        });
-    
-        // دالة معالجة الأخطاء المركزية
-        function handleError(error) {
-            console.error('حدث خطأ:', error);
-            document.getElementById('loading').style.display = 'none';
-            
-            const errorElement = document.getElementById('error-message');
-            if (errorElement) {
-                errorElement.textContent = 'حدث خطأ: ' + error.message;
-                errorElement.style.display = 'block';
-            }
-            
-            // إخفاء العناصر الأخرى في حالة الخطأ
-            const productFrame = document.getElementById('product-frame');
-            if (productFrame) productFrame.style.display = 'none';
         }
     
-        // تعبئة بيانات المنتج مع التحقق من العناصر
+        // دالة تعبئة البيانات في الصفحة
         function populateProduct(data) {
-            try {
-                if (!data || !data.product || !data.texts) {
-                    throw new Error('بيانات المنتج غير كاملة');
-                }
+            const product = data.product;
+            const texts = data.texts;
     
-                const product = data.product;
-                const texts = data.texts;
-    
-                // قائمة بعناصر DOM المطلوبة
-                const elements = {
-                    frame: document.getElementById('product-frame'),
-                    link: document.getElementById('product-link'),
-                    image: document.getElementById('product-image'),
-                    name: document.getElementById('product-name'),
-                    sold: document.getElementById('product-sold'),
-                    price: document.getElementById('product-price'),
-                    currency: document.getElementById('currency'),
-                    discount: document.getElementById('product-discount'),
-                    buyBtn: document.getElementById('buy-now-btn'),
-                    cartBtn: document.getElementById('add-to-cart-btn')
-                };
-    
-                // التحقق من وجود جميع العناصر
-                for (const [key, element] of Object.entries(elements)) {
-                    if (!element) {
-                        throw new Error(`عنصر ${key} غير موجود في الصفحة`);
-                    }
-                }
-    
-                // تعبئة البيانات
-                elements.frame.style.display = 'block';
-                elements.link.href = `${product.pageId}.html`;
-                elements.image.src = product.image || '';
-                elements.image.alt = product.name || '';
-                elements.name.textContent = product.name || 'غير متوفر';
-                elements.sold.textContent = product.sold || '0';
-                elements.price.textContent = product.price || '0';
-                elements.currency.textContent = texts.currency || '';
-                
-                if (product.discount > 0) {
-                    elements.discount.textContent = `${texts.discountLabel || 'خصم'} ${product.discount}%`;
-                } else {
-                    elements.discount.style.display = 'none';
-                }
-    
-                // إضافة معالجي الأحداث
-                elements.buyBtn.onclick = function() {
-                    buyNow(
-                        product.name,
-                        product.id,
-                        product.price,
-                        product.shippingPrice,
-                        product.colors || [],
-                        product.sizes || []
-                    );
-                };
-    
-                elements.cartBtn.onclick = function() {
-                    addToCart(
-                        product.name,
-                        product.id,
-                        product.price,
-                        product.image
-                    );
-                };
-    
-            } catch (error) {
-                handleError(error);
+            // عرض العناصر الأساسية
+            document.getElementById('product-frame').style.display = 'block';
+            document.getElementById('product-link').href = `${product.pageId}.html`;
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-image').alt = product.name;
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-sold').textContent = `${texts.soldLabel || "تم بيع"} ${product.sold}`;
+            document.getElementById('product-price').textContent = product.price;
+            document.getElementById('currency').textContent = texts.currency;
+            
+            // عرض الخصم إذا موجود
+            const discountElement = document.getElementById('product-discount');
+            if (product.discount) {
+                discountElement.textContent = `${texts.discountLabel || "خصم"} ${product.discount}%`;
+                discountElement.style.display = 'block';
+            } else {
+                discountElement.style.display = 'none';
             }
+    
+            // تحديث زر "شراء الآن"
+            document.getElementById('buy-now-btn').onclick = () => {
+                buyNow(product);
+            };
         }
     
-        // دالة شراء الآن مع التحقق من المدخلات
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            try {
-                if (!productId || !productName) {
-                    throw new Error('بيانات المنتج غير كاملة');
-                }
+        // دالة الشراء المباشر
+        function buyNow(product) {
+            const params = new URLSearchParams();
+            params.append('name', product.name);
+            params.append('id', product.id);
+            params.append('price', product.price);
+            params.append('colors', JSON.stringify(product.colors || []));
+            params.append('sizes', JSON.stringify(product.sizes || []));
     
-                const params = new URLSearchParams();
-                params.append('name', encodeURIComponent(productName));
-                params.append('id', encodeURIComponent(productId));
-                params.append('price', encodeURIComponent(productPrice || '0'));
-                params.append('shipping', encodeURIComponent(shippingPrice || '0'));
-                
-                try {
-                    params.append('colors', encodeURIComponent(JSON.stringify(colors || [])));
-                    params.append('sizes', encodeURIComponent(JSON.stringify(sizes || [])));
-                } catch (e) {
-                    console.error('خطأ في ترميز الألوان أو المقاسات:', e);
-                }
-    
-                window.location.href = `buy.html?${params.toString()}`;
-            } catch (error) {
-                handleError(error);
-            }
+            window.location.href = `buy.html?${params.toString()}`;
         }
     
-        // دالة إضافة إلى العربة مع التحقق من المدخلات
-        function addToCart(productName, productId, price, image) {
-            try {
-                if (!productId || !productName) {
-                    throw new Error('بيانات المنتج غير كاملة');
-                }
-    
-                let cart = [];
-                try {
-                    cart = JSON.parse(localStorage.getItem('cart')) || [];
-                } catch (e) {
-                    console.error('خطأ في قراءة سلة التسوق:', e);
-                }
-    
-                const existingIndex = cart.findIndex(item => item.id === productId);
-                
-                if (existingIndex >= 0) {
-                    cart[existingIndex].quantity = (cart[existingIndex].quantity || 0) + 1;
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productName,
-                        price: price || 0,
-                        image: image || '',
-                        quantity: 1
-                    });
-                }
-    
-                try {
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    alert(`تمت إضافة "${productName}" إلى العربة بنجاح!`);
-                } catch (e) {
-                    throw new Error('تعذر حفظ المنتج في سلة التسوق');
-                }
-            } catch (error) {
-                handleError(error);
-            }
-        }
+        // تشغيل الدالة الرئيسية عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', loadProduct);
     </script>
 
 
