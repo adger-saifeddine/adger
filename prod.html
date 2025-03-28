@@ -2323,14 +2323,10 @@
     <script>
         // جلب رقم الصفحة من URL
         const url = new URL(window.location.href);
-        const pageNumber = url.searchParams.get('page') || '1';
-        const jsonFile = `products-${pageNumber}.json`;
-        
-        // إضافة طابع زمني لتجنب الذاكرة المؤقتة
-        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
+        const pageId = url.pathname.split('/').pop().replace('.html', '');
         
         // جلب بيانات JSON
-        fetch(jsonUrl)
+        fetch(`products.json?t=${Date.now()}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
@@ -2338,11 +2334,8 @@
                 return response.json();
             })
             .then(data => {
-                // استخراج معرف الصفحة الحالية
-                const currentPageId = window.location.pathname.split('/').pop().replace('.html', '');
-                
                 // البحث عن المنتج الذي يطابق معرف الصفحة
-                const productData = data.find(item => item.product.pageId === currentPageId);
+                const productData = data.find(item => item.product.pageId === pageId);
                 
                 if (productData) {
                     populateProduct(productData);
@@ -2376,7 +2369,14 @@
             // تحديث زر "شراء الآن"
             const buyNowBtn = document.getElementById('buy-now-btn');
             buyNowBtn.onclick = function() {
-                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+                buyNow(
+                    product.name, 
+                    product.productId, 
+                    product.price, 
+                    product.shippingPrice, 
+                    product.colors || [], 
+                    product.sizes || []
+                );
             };
         }
     
