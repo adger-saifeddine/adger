@@ -2171,7 +2171,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2296,29 +2295,7 @@
     </style>
 </head>
 <body>
-    <div class="image-container product" id="product-container">
-        <div class="image-frame" id="product-frame" style="display: none;">
-            <a id="product-link" href="">
-                <img id="product-image" src="" alt="">
-            </a>
-            <div class="text-under">
-                <h1 id="product-name"></h1>
-                <h2 id="product-sold"></h2>
-                <div class="container">
-                    <div class="zero">00.</div>
-                    <div class="number" id="product-price"></div>
-                    <div class="letter" id="currency"></div>
-                </div>
-                <h3 id="product-discount"></h3>
-            </div>
-        </div>
-        <div class="bottom-buttons">
-            <div class="buttons-wrapper">
-                <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
-                <div class="add-to-cart-text" id="add-to-cart-btn" onclick="addToCart(this)">أضف إلى السلة</div>
-            </div>
-        </div>
-    </div>
+    <div id="products-container"></div>
 
     <script>
         // جلب رقم الصفحة من URL
@@ -2338,8 +2315,9 @@
                 return response.json();
             })
             .then(data => {
-                const productData = data[0]; // أول منتج في الملف
-                populateProduct(productData);
+                data.forEach(productData => {
+                    populateProduct(productData);
+                });
             })
             .catch(error => {
                 console.error('خطأ في جلب بيانات JSON:', error);
@@ -2352,22 +2330,92 @@
             const product = data.product;
             const texts = data.texts;
 
-            // إظهار الإطار
-            document.getElementById('product-frame').style.display = 'block !important';
-            document.getElementById('product-link').href = `${product.pageId}.html`;
-            document.getElementById('product-image').src = product.image;
-            document.getElementById('product-image').alt = product.name;
-            document.getElementById('product-name').textContent = product.name;
-            document.getElementById('product-sold').textContent = product.sold;
-            document.getElementById('product-price').textContent = product.price;
-            document.getElementById('currency').textContent = texts.currency;
-            document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
+            const productContainer = document.createElement('div');
+            productContainer.className = 'image-container product';
 
-            // تحديث زر "شراء الآن"
-            const buyNowBtn = document.getElementById('buy-now-btn');
+            const productFrame = document.createElement('div');
+            productFrame.className = 'image-frame';
+            productFrame.style.display = 'block';
+            productContainer.appendChild(productFrame);
+
+            const productLink = document.createElement('a');
+            productLink.id = `product-link-${product.productId}`;
+            productLink.href = `${product.pageId}.html`;
+            productFrame.appendChild(productLink);
+
+            const productImage = document.createElement('img');
+            productImage.id = `product-image-${product.productId}`;
+            productImage.src = product.image;
+            productImage.alt = product.name;
+            productLink.appendChild(productImage);
+
+            const textUnder = document.createElement('div');
+            textUnder.className = 'text-under';
+            productFrame.appendChild(textUnder);
+
+            const productName = document.createElement('h1');
+            productName.id = `product-name-${product.productId}`;
+            productName.textContent = product.name;
+            textUnder.appendChild(productName);
+
+            const productSold = document.createElement('h2');
+            productSold.id = `product-sold-${product.productId}`;
+            productSold.textContent = product.sold;
+            textUnder.appendChild(productSold);
+
+            const container = document.createElement('div');
+            container.className = 'container';
+            textUnder.appendChild(container);
+
+            const zero = document.createElement('div');
+            zero.className = 'zero';
+            zero.textContent = '00.';
+            container.appendChild(zero);
+
+            const productPrice = document.createElement('div');
+            productPrice.className = 'number';
+            productPrice.id = `product-price-${product.productId}`;
+            productPrice.textContent = product.price;
+            container.appendChild(productPrice);
+
+            const currency = document.createElement('div');
+            currency.className = 'letter';
+            currency.id = `currency-${product.productId}`;
+            currency.textContent = texts.currency;
+            container.appendChild(currency);
+
+            const productDiscount = document.createElement('h3');
+            productDiscount.id = `product-discount-${product.productId}`;
+            productDiscount.textContent = `${texts.discountLabel} ${product.discount}%`;
+            textUnder.appendChild(productDiscount);
+
+            const bottomButtons = document.createElement('div');
+            bottomButtons.className = 'bottom-buttons';
+            productContainer.appendChild(bottomButtons);
+
+            const buttonsWrapper = document.createElement('div');
+            buttonsWrapper.className = 'buttons-wrapper';
+            bottomButtons.appendChild(buttonsWrapper);
+
+            const buyNowBtn = document.createElement('div');
+            buyNowBtn.className = 'buy-now-text';
+            buyNowBtn.id = `buy-now-btn-${product.productId}`;
+            buyNowBtn.textContent = 'اشتري الآن';
             buyNowBtn.onclick = function() {
                 buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
             };
+            buttonsWrapper.appendChild(buyNowBtn);
+
+            const addToCartBtn = document.createElement('div');
+            addToCartBtn.className = 'add-to-cart-text';
+            addToCartBtn.id = `add-to-cart-btn-${product.productId}`;
+            addToCartBtn.textContent = 'أضف إلى السلة';
+            addToCartBtn.onclick = function() {
+                addToCart(this);
+            };
+            buttonsWrapper.appendChild(addToCartBtn);
+
+            document.getElementById('products-container').appendChild(productContainer);
         }
 
         // دالة شراء الآن

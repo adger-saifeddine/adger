@@ -49,57 +49,195 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
-    }
+    },
 
-   
-
-],
-[
     {
         "id": "2",
         "media": [
-            {"src": "https://i.postimg.cc/k5BR8sS6/1.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/7ZP2PwYN/1-2.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/s2qQJWPn/1-3.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/YCXmhZvB/1-4.jpg", "type": "image"}
+            {"src": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/HnWBC6Rj/1725537660232853146.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/vHkLP8Y4/1725537665956521323.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/J4DjBwNM/1725537667833380929.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/1trJTkWL/1725537668073565813.jpg", "type": "image"}
         ],
-        "pri": "70",
-        "oldPrice": "114",
-        "dis": "خصم أكثر من 38.6%",
-        "changingText": ["ابداع", "طبعة مثالية", "جودة"],
-        "longText": "كتاب ابقَ قويًا 365 يومًا في السنة هو كتاب تنمية ذاتية من تأليف ديمي لوفاتو",
-        "sales": "موثوق",
-        "buttonId": "commentButton1",
-        "commentId": "1",
-        "elementId": "commentCount1",
+        "pri": "360",
+        "oldPrice": "450",
+        "dis": "خصم أكثر من 20%",
+        "changingText": ["ابداع", "أناقة", "جودة"],
+        "longText": "حذاء جلد - p30 سكاي مريح",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton2",
+        "commentId": "2",
+        "elementId": "commentCount2",
         "tableData": [
-            {"question": "اللون", "answer": "أبيض"},
-            {"question": "المادة", "answer": "ورق"},
-            {"question": "المؤلف", "answer": "ديمي لوفاتو"},
-            {"question": "عدد الصفح", "answer": "402"}
+            {"question": "اللون", "answer": "متعدد"},
+            {"question": "المادة", "answer": "جلد"},
+            {"question": "الماركة", "answer": "p30"},
+            {"question": "المقاس", "answer": "متعدد"}
         ],
-        "desc": "هو كتاب تحفيزي للكاتبة ديمي لوفاتو، يحتوي على 365 تأملًا يوميًا مستوحى من تجاربها الشخصية، حيث تقدم نصائح وإلهامًا يوميًا لمساعدة القارئ على مواجهة التحديات، وبناء الثقة بالنفس، وتحقيق التوازن في الحياة. يعكس الكتاب رحلة الكاتبة في التغلب على الصعوبات وتعزيز القوة الداخلية من خلال التفكير الإيجابي والتأملات العميقة.",
+        "desc": "خامه جلد سكاي، مبطن مع تطعيم جلد سكاي عالي الجوده والبطانه مزوده بماش ميكرو فايبر لمنع التعرق، فرش ايفا طبي، نعل PVC بيور طري وخفيف، الألوان (أبيض - هافان - كحلي - أسود)، المقاسات من 41 إلى 45.",
         "groups": [
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/k5BR8sS6/1.jpg",
-                    "https://i.postimg.cc/7ZP2PwYN/1-2.jpg",
-                    "https://i.postimg.cc/s2qQJWPn/1-3.jpg",
-                    "https://i.postimg.cc/YCXmhZvB/1-4.jpg"
+                    "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
+                    "https://i.postimg.cc/HnWBC6Rj/1725537660232853146.jpg",
+                    "https://i.postimg.cc/vHkLP8Y4/1725537665956521323.jpg",
+                    "https://i.postimg.cc/1trJTkWL/1725537668073565813.jpg"
                 ]
             }
-        
         ],
         "product": {
-            "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
-            "name": "كتاب ابقَ قويًا 3wew65 يومًا في السنة",
+            "image": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
+            "name": "حذاء جلد - p30 سكاي مريح",
             "sold": "موثوق",
-            "price": "70.00",
-            "discount": "38.6%",
-            "pageId": "1",
-            "productId": "1",
-            "shippingPrice": "60"
+            "price": "360",
+            "discount": "20",
+            "pageId": "2",
+            "productId": "2",
+            "shippingPrice": "70",
+            "colors": ["أبيض", "أسود","كحلي","هافان"],
+            "sizes": ["41", "42", "43","44","45"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
+    },
+
+    {
+        "id": "3",
+        "media": [
+            {"src": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png", "type": "image"},
+            {"src": "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg", "type": "image"}
+        ],
+        "pri": "290",
+        "oldPrice": "350",
+        "dis": "خصم 17%",
+        "changingText": ["أناقة", "جودة", "هدية رائعة"],
+        "longText": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة. يحافظ على مشروبك ساخناً أو بارداً لأكثر من 10 ساعات. يأتيك مع شنطة هدية أنيقة، الهدية المثالية لكل مناسبة!",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton3",
+        "commentId": "3",
+        "elementId": "commentCount3",
+        "tableData": [
+            {"question": "السعة", "answer": "500 مل"},
+            {"question": "المادة", "answer": "ستانلستيل 304"},
+            {"question": "الجدار", "answer": "مزدوج العزل"},
+            {"question": "مدة الحفظ", "answer": "أكثر من 10 ساعات"},
+            {"question": "الألوان", "answer": "مينت جرين - أزرق - بينك - أسود - رصاصي - فضي"}
+        ],
+        "desc": "مج عازل حراري 500 مل مع 2 كوب مصنوع من ستانلستيل 304 الآمن غذائياً ومختوم. ترمس مزدوج الجدار يحفظ المشروبات باردة وساخنة لأكثر من 10 ساعات. متوفر بألوان متعددة.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+                    "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg",
+                    "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg",
+                    "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg",
+                    "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg",
+                    "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg",
+                    "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg",
+                    "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg",
+                    "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg",
+                    "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+            "name": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة",
+            "sold": "موثوق",
+            "price": "290",
+            "discount": "17",
+            "pageId": "3",
+            "productId": "3",
+            "shippingPrice": "70",
+            "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
+    },
+
+    {
+        "id": "4",
+        "media": [
+            {"src": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/nhZpKSDy/1730638416557521783.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/rpwT3dgg/1730638416693813641.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/8cMgMLPk/1730638416619518158.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/jdYbK3ZD/1730638417823496451.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/43yCwDNS/1730638422302252492.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/NfcWZ9jT/1730638420001545577.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/rwy7FBWw/1730638423458264373.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/nzmPPp80/1730638423425295645.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/0jqBgFPx/1730638423532129745.jpg", "type": "image"}
+        ],
+        "pri": "400",
+        "oldPrice": "500",
+        "dis": "خصم 20%",
+        "changingText": ["تقنية متطورة", "صوت نقي", "راحة تامة"],
+        "longText": "سماعة ايربودز A-16 بلوتوث بجودة صوت نقية وعزل ضوضاء، تصميم مريح يدعم الاتصال اللاسلكي بسهولة تامة.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton4",
+        "commentId": "4",
+        "elementId": "commentCount4",
+        "tableData": [
+            {"question": "النوع", "answer": "A-16"},
+            {"question": "كيفية العمل", "answer": "بلوتوث"},
+            {"question": "الألوان", "answer": "أخضر - أسود - لبني - بينك"}
+        ],
+        "desc": "تقنية البلوتوث للاتصال بالأجهزة الخارجية مثل الهواتف الذكية والأجهزة اللوحية. تتيح لك هذه التقنية الحديثة إقامة اتصال لاسلكي سلس، مما يسهل عملية الاستماع إلى الفديوهات دون الحاجة إلى وصلات سلكية مزعجة.\n\nجودة الصوت والأداء: يعتبر جودة الصوت والأداء من أهم العوامل التي ينظر إليها عند اختيار سماعة.\n\nمايك قوي مزود بميزة العزل لضمان تجربة مكالمة واضحة.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+                    "https://i.postimg.cc/nhZpKSDy/1730638416557521783.jpg",
+                    "https://i.postimg.cc/rpwT3dgg/1730638416693813641.jpg",
+                    "https://i.postimg.cc/8cMgMLPk/1730638416619518158.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/jdYbK3ZD/1730638417823496451.jpg",
+                    "https://i.postimg.cc/43yCwDNS/1730638422302252492.jpg",
+                    "https://i.postimg.cc/NfcWZ9jT/1730638420001545577.jpg",
+                    "https://i.postimg.cc/rwy7FBWw/1730638423458264373.jpg",
+                    "https://i.postimg.cc/nzmPPp80/1730638423425295645.jpg",
+                    "https://i.postimg.cc/0jqBgFPx/1730638423532129745.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+            "name": "ايربودز A-16 بلوتوث",
+            "sold": "موثوق",
+            "price": "400",
+            "discount": "20",
+            "pageId": "4",
+            "productId": "4",
+            "shippingPrice": "70",
+            "colors": ["بينك", "لبني", "أسود", "أخضر"]
         },
         "texts": {
             "currency": "جنيه",
@@ -107,6 +245,4 @@
         }
     }
 
-   
-
-]
+] 
