@@ -2321,79 +2321,77 @@
     </div>
 
     <script>
-        // Get page number from URL
+        // جلب معرف الصفحة من URL
         const url = new URL(window.location.href);
-        const pageNumber = url.searchParams.get('page') || '1';
-        const jsonFile = `products-${pageNumber}.json`;
+        const pageId = url.searchParams.get('page') || '1'; // افتراضياً 1 إذا لم يكن موجوداً
+        const jsonFile = `products-${pageId}.json`;
+    // إضافة طابع زمني لتجنب الذاكرة المؤقتة
+    const jsonUrl = `${jsonFile}?t=${Date.now()}`;
     
-        // Add timestamp to avoid caching
-        const jsonUrl = `${jsonFile}?t=${Date.now()}`;
+    // جلب بيانات JSON
+    fetch(jsonUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // التحقق من أن البيانات تحتوي على المنتج المطلوب
+            if (data && data.length > 0) {
+                // البحث عن المنتج بناءً على معرف الصفحة بدلاً من أخذ أول منتج
+                const productData = data.find(item => item.product.pageId === pageId) || data[0];
+                populateProduct(productData);
+            } else {
+                console.error('لا توجد بيانات منتج في الملف.');
+                alert('لا توجد بيانات منتج في الملف.');
+            }
+        })
+        .catch(error => {
+            console.error('خطأ في جلب بيانات JSON:', error);
+            alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
+        });
     
-        // Fetch JSON data
-        fetch(jsonUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Response error: ${response.status} - ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Loop through all products in the JSON array
-                data.forEach(productData => {
-                    populateProduct(productData);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching JSON data:', error);
-                alert('Error fetching product data: ' + error.message);
-            });
+    // تعبئة بيانات المنتج
+    function populateProduct(data) {
+        console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
+        const product = data.product;
+        const texts = data.texts;
     
-        // Populate individual product
-        function populateProduct(data) {
-            console.log("Received JSON data:", data);
-            const product = data.product;
-            const texts = data.texts;
+        // إظهار الإطار
+        document.getElementById('product-frame').style.display = 'block !important';
+        document.getElementById('product-link').href = `${product.pageId}.html`;
+        document.getElementById('product-image').src = product.image;
+        document.getElementById('product-image').alt = product.name;
+        document.getElementById('product-name').textContent = product.name;
+        document.getElementById('product-sold').textContent = product.sold;
+        document.getElementById('product-price').textContent = product.price;
+        document.getElementById('currency').textContent = texts.currency;
+        document.getElementById('product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
     
-            // Create product card element
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <div class="product-frame" style="display: block;">
-                    <a id="product-link" href="${product.pageId}.html">
-                        <img id="product-image" src="${product.image}" alt="${product.name}">
-                    </a>
-                    <h3 id="product-name">${product.name}</h3>
-                    <p id="product-sold">${product.sold}</p>
-                    <p id="product-price">${product.price} <span id="currency">${texts.currency}</span></p>
-                    <p id="product-discount">${texts.discountLabel} ${product.discount}%</p>
-                    <button id="buy-now-btn">Buy Now</button>
-                    <button onclick="addToCart(this)">Add to Cart</button>
-                </div>
-            `;
+        // تحديث زر "شراء الآن"
+        const buyNowBtn = document.getElementById('buy-now-btn');
+        buyNowBtn.onclick = function() {
+            buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+        };
+    }
     
-            // Append product card to container
-            document.getElementById('products-container').appendChild(productCard);
+    // دالة شراء الآن
+    function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+        console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
+        console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
+        window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
+    }
     
-            // Add click event to Buy Now button
-            const buyNowBtn = productCard.querySelector('#buy-now-btn');
-            buyNowBtn.onclick = function() {
-                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
-            };
-        }
+    // دالة إضافة إلى العربة
+    function addToCart(element) {
+        alert("تمت إضافة المنتج إلى العربة!");
+        console.log("تم النقر على الزر:", element);
+    }
     
-        // Buy Now function
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            console.log("Passed colors:", colors);
-            console.log("Passed sizes:", sizes);
-            window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
-        }
-    
-        // Add to Cart function
-        function addToCart(element) {
-            alert("Product added to cart!");
-            console.log("Button clicked:", element);
-        }
     </script>
+    
+    
 
 
 
