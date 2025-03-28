@@ -2296,8 +2296,10 @@
     </style>
 </head>
 <body>
+    <div class="loading" id="loading">جاري تحميل المنتج...</div>
+    
     <div class="image-container product" id="product-container">
-        <div class="image-frame" id="product-frame" style="display: none;">
+        <div class="image-frame" id="product-frame">
             <a id="product-link" href="">
                 <img id="product-image" src="" alt="">
             </a>
@@ -2315,10 +2317,12 @@
         <div class="bottom-buttons">
             <div class="buttons-wrapper">
                 <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
-                <div class="add-to-cart-text" id="add-to-cart-btn" onclick="addToCart(this)">أضف إلى السلة</div>
+                <div class="add-to-cart-text" id="add-to-cart-btn">أضف إلى السلة</div>
             </div>
         </div>
     </div>
+
+    <div class="error-message" id="error-message" style="display: none;"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2333,7 +2337,6 @@
             }
 
             const jsonFile = `products-${pageNumber}.json`;
-            // إضافة طابع زمني لتجنب الذاكرة المؤقتة
             const jsonUrl = `${jsonFile}?t=${Date.now()}`;
             
             // جلب بيانات JSON
@@ -2366,7 +2369,7 @@
                 const product = data.product;
                 const texts = data.texts;
                 
-                // إظهار الإطار وإخفاء رسالة التحميل
+                // إظهار الإطار
                 document.getElementById('product-frame').style.display = 'block';
                 
                 // تعبئة البيانات
@@ -2386,9 +2389,8 @@
                     document.getElementById('product-discount').style.display = 'none';
                 }
                 
-                // تحديث زر "شراء الآن"
-                const buyNowBtn = document.getElementById('buy-now-btn');
-                buyNowBtn.onclick = function() {
+                // إعداد حدث النقر لزر "شراء الآن"
+                document.getElementById('buy-now-btn').addEventListener('click', function() {
                     buyNow(
                         product.name,
                         product.productId,
@@ -2397,21 +2399,54 @@
                         product.colors,
                         product.sizes
                     );
-                };
+                });
+                
+                // إعداد حدث النقر لزر "إضافة إلى السلة"
+                document.getElementById('add-to-cart-btn').addEventListener('click', function() {
+                    addToCart(
+                        product.name,
+                        product.productId,
+                        product.price,
+                        product.image
+                    );
+                });
             }
 
             // دالة شراء الآن
             function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-                console.log("الألوان:", colors);
-                console.log("المقاسات:", sizes);
+                console.log("تفاصيل المنتج:", {
+                    name: productName,
+                    id: productId,
+                    price: productPrice,
+                    colors: colors,
+                    sizes: sizes
+                });
                 
                 window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
             }
 
             // دالة إضافة إلى العربة
-            function addToCart(element) {
-                alert("تمت إضافة المنتج إلى العربة!");
-                console.log("تم النقر على الزر:", element);
+            function addToCart(productName, productId, price, image) {
+                console.log("إضافة إلى السلة:", {
+                    name: productName,
+                    id: productId,
+                    price: price,
+                    image: image
+                });
+                
+                // هنا يمكنك إضافة الكود لإرسال البيانات إلى سلة التسوق
+                alert(`تمت إضافة "${productName}" إلى سلة التسوق!`);
+                
+                // مثال: حفظ في localStorage
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+                localStorage.setItem('cart', JSON.stringify(cart));
             }
 
             // دالة عرض الخطأ
@@ -2424,8 +2459,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
