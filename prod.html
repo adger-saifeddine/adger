@@ -2171,14 +2171,13 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- نفس الجزء الخاص بالستايل لا تغيير فيه -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كود هام لزر الشراء و الاضافه الى العربة</title>
     <style>
-        /* نفس الستايل الأصلي تماماً */
         body {
             font-family: 'Cairo', sans-serif;
             margin: 0;
@@ -2329,6 +2328,7 @@
 } catch (error) {
   console.error('Error:', error); // اطبع الخطأ إذا حدث
 }
+        
         const pageNumber = url.searchParams.get('page') || '1';
         
         if (!productId) {
@@ -2387,8 +2387,8 @@
                 document.getElementById('product-discount').style.display = 'none';
             }
 
-            // إعداد أحداث الأزرار
-            document.getElementById('buy-now-btn').onclick = () => {
+            // إعداد حدث الزر شراء الآن
+            document.getElementById('buy-now-btn').onclick = function() {
                 buyNow(
                     product.name,
                     product.productId,
@@ -2396,15 +2396,6 @@
                     product.shippingPrice,
                     product.colors,
                     product.sizes
-                );
-            };
-
-            document.getElementById('add-to-cart-btn').onclick = () => {
-                addToCart(
-                    product.name,
-                    product.productId,
-                    product.price,
-                    product.image
                 );
             };
         }
@@ -2423,32 +2414,45 @@
             window.location.href = `buy.html?${params}`;
         }
 
-        // دالة إضافة إلى العربة
-        function addToCart(productName, productId, price, image) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            const existingProduct = cart.find(item => item.id === productId);
-            
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: price,
-                    image: image,
-                    quantity: 1
-                });
+        // دالة إضافة إلى العربة المعدلة
+        function addToCart(element) {
+            try {
+                // الحصول على بيانات المنتج من العنصر
+                const productName = document.getElementById('product-name').textContent;
+                const productId = new URLSearchParams(window.location.search).get('id');
+                const productPrice = document.getElementById('product-price').textContent;
+                const productImage = document.getElementById('product-image').src;
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                // البحث عن المنتج في السلة
+                const existingProduct = cart.find(item => item.productId === productId);
+                
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    cart.push({
+                        productId: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`تمت إضافة "${productName}" إلى العربة!`);
+                
+                // للتحقق فقط
+                console.log('سلة التسوق الحالية:', cart);
+            } catch (error) {
+                console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
+                alert('حدث خطأ أثناء إضافة المنتج إلى العربة');
             }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`تمت إضافة "${productName}" إلى العربة!`);
         }
     </script>
 </body>
 </html>
-
-
 
 
 
