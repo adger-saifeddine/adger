@@ -113,75 +113,76 @@
     },
 
     {
-    "id": "3",
-    "media": [
-        {"url": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png"},
-        {"url": "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg"},
-        {"url": "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg"},
-        {"url": "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg"},
-        {"url": "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg"},
-        {"url": "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg"},
-        {"url": "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg"},
-        {"url": "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg"},
-        {"url": "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg"},
-        {"url": "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg"},
-        {"url": "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg"}
-    ],
-    "pri": "290",
-    "oldPrice": "350",
-    "dis": "خصم أكثر من 17.14%",
-    "changingText": ["ابداع", "طبعة مثالية", "جودة"],
-    "longText": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة. يحافظ على مشروبك ساخناً أو بارداً لأكثر من 10 ساعات. يأتيك مع شنطة هدية أنيقة، الهدية المثالية لكل مناسبة!",
-    "sales": "موثوق",
-    "buttonId": "commentButton3",
-    "commentId": "3",
-    "elementId": "commentCount3",
-    "tableData": [
-        {"question": "اللون", "answer": "مينت جرين، ازرق، بينك، اسود، رصاصي، فضي"},
-        {"question": "المادة", "answer": "ستانلستيل 304"},
-        {"question": "عدد الأكواب", "answer": "2"}
-    ],
-    "desc": "مج عازل حر اره 500مل مع 2 كوب. مصنوع من ستانلستيل 304 الامن غذائياو مختوم. ترمس مزدوج الجدار يحفظ المشروبات بارده و ساخنه اكثر من 10 ساعات. الألوان: مينت جرين- ازرق-بينك- اسود- رصاصي -فضي",
-    "groups": [
-        {
-            "type": "images",
-            "items": [
-                "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
-                "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg",
-                "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg",
-                "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg",
-                "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg",
-                "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg"
-            ]
+        "id": "3",
+        "media": [
+            {"src": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png", "type": "image"},
+            {"src": "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg", "type": "image"}
+        ],
+        "pri": "290",
+        "oldPrice": "350",
+        "dis": "خصم 17%",
+        "changingText": ["أناقة", "جودة", "هدية رائعة"],
+        "longText": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة. يحافظ على مشروبك ساخناً أو بارداً لأكثر من 10 ساعات. يأتيك مع شنطة هدية أنيقة، الهدية المثالية لكل مناسبة!",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton3",
+        "commentId": "3",
+        "elementId": "commentCount3",
+        "tableData": [
+            {"question": "السعة", "answer": "500 مل"},
+            {"question": "المادة", "answer": "ستانلستيل 304"},
+            {"question": "الجدار", "answer": "مزدوج العزل"},
+            {"question": "مدة الحفظ", "answer": "أكثر من 10 ساعات"},
+            {"question": "الألوان", "answer": "مينت جرين - أزرق - بينك - أسود - رصاصي - فضي"}
+        ],
+        "desc": "مج عازل حراري 500 مل مع 2 كوب مصنوع من ستانلستيل 304 الآمن غذائياً ومختوم. ترمس مزدوج الجدار يحفظ المشروبات باردة وساخنة لأكثر من 10 ساعات. متوفر بألوان متعددة.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+                    "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg",
+                    "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg",
+                    "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg",
+                    "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg",
+                    "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg",
+                    "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg",
+                    "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg",
+                    "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg",
+                    "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+            "name": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة",
+            "sold": "موثوق",
+            "price": "290",
+            "discount": "17",
+            "pageId": "prod.html?id=3",
+            "productId": "3",
+            "shippingPrice": "70",
+            "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
         },
-        {
-            "type": "mixed",
-            "items": [
-                "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg",
-                "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg",
-                "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg",
-                "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg",
-                "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg",
-                "path/to/video1.mp4"
-            ]
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
         }
-    ],
-    "product": {
-        "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
-        "name": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة. يحافظ على مشروبك ساخناً أو بارداً لأكثر من 10 ساعات. يأتيك مع شنطة هدية أنيقة، الهدية المثالية لكل مناسبة!",
-        "sold": "موثوق",
-        "price": "290",
-        "discount": "17.14%",
-        "pageId": "3",
-        "productId": "3",
-        "shippingPrice": "60"
-    },
-    "texts": {
-        "currency": "جنيه",
-        "discountLabel": "خصم"
     }
-}
-
-
+    
 
 ]
