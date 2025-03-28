@@ -2324,9 +2324,8 @@
        // جلب رقم الصفحة ومعرف المنتج من URL
 const url = new URL(window.location.href);
 const pageNumber = url.searchParams.get('page') || '1';
-if (p.vendorId == '0x04d8' && p.productId == '0x000a') {
-    port = p;
-}const jsonFile = `products-${pageNumber}.json`;
+const productId = url.searchParams.get('productId'); // جلب معرف المنتج من URL
+const jsonFile = `products-${pageNumber}.json`;
 
 // إضافة طابع زمني لتجنب الذاكرة المؤقتة
 const jsonUrl = `${jsonFile}?t=${Date.now()}`;
