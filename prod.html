@@ -1404,17 +1404,48 @@
 </div>
 
 <script>
-    fetch('products.json')
-        .then(response => response.json())
-        .then(data => {
-            const randomProduct = data[Math.floor(Math.random() * data.length)];
-            const hiddenText = `رقم المنتج| ${randomProduct.product.productId}`;
-            
-            document.getElementById('askProductBtn').onclick = function() {
-                window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-            };
-        })
-        .catch(error => console.error('Error fetching the products:', error));
+    // بيانات JSON (يمكن تحميلها من ملف خارجي أو تضمينها مباشرة)
+    const products = [
+        {
+            "id": "1",
+            "product": {
+                "productId": "1"
+            }
+        },
+        {
+            "id": "2",
+            "product": {
+                "productId": "2"
+            }
+        },
+        {
+            "id": "3",
+            "product": {
+                "productId": "3"
+            }
+        },
+        {
+            "id": "4",
+            "product": {
+                "productId": "4"
+            }
+        }
+    ];
+
+    // دالة لجلب productId بناءً على معرف الصفحة أو المنتج الحالي
+    function getProductId() {
+        // هنا يمكنك تحديد المنتج الحالي بناءً على منطقك
+        // على سبيل المثال، نفترض أن رقم المنتج يأتي من معلمة URL أو متغير
+        const currentProductId = new URLSearchParams(window.location.search).get('productId') || "1"; // قيمة افتراضية "1"
+        const product = products.find(p => p.product.productId === currentProductId);
+        return product ? product.product.productId : "1"; // إرجاع productId أو 1 افتراضيًا
+    }
+
+    document.getElementById('askProductBtn').onclick = function() {
+        const productId = getProductId(); // جلب productId ديناميكيًا
+        const hiddenText = `رقم المنتج| ${productId}`;
+        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+    };
 </script>
 </body>
 </html>
