@@ -1237,12 +1237,9 @@
         </style>
     </head>
     <body>
+        <!-- زر التعليق -->
         <button id="commentButton1" class="comment-button">
             التعليقات 1 (<span id="commentCount1">0</span>)
-        </button>
-        
-        <button id="commentButton2" class="comment-button">
-            التعليقات 2 (<span id="commentCount2">0</span>)
         </button>
     
         <!-- أضف Firebase SDK -->
@@ -1308,7 +1305,6 @@
                     console.error('خطأ في جلب بيانات JSON:', error);
                     // إذا فشل جلب JSON، استخدم القيم الافتراضية
                     updateCommentCount(1, 'commentCount1');
-                    updateCommentCount(2, 'commentCount2');
                 });
         </script>
     </body>
