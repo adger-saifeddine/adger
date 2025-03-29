@@ -49,7 +49,7 @@
             text-align: center;
             background-color: #ffffff;
             position: relative;
-            overflow: hidden; /* إضافة لقص أي تجاوز */
+            overflow: hidden;
         }
 
         .image-frame .image-wrapper {
@@ -57,7 +57,7 @@
             width: 100%;
             padding-top: 100%;
             background-color: #f3f3f39c;
-            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 30.2px;
         }
 
         .image-frame .placeholder {
@@ -68,7 +68,7 @@
             height: 100%;
             background-color: #f3f3f3;
             opacity: 0.8;
-            border-radius: 32px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 32px;
         }
 
         .image-frame img {
@@ -79,7 +79,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
+            border-radius: 30.2px;
             opacity: 0;
             transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
         }
@@ -230,7 +230,6 @@
             font-size: 17px;
         }
 
-        /* تعديل حجم نص الاسم بناءً على حجم الشاشة */
         @media (min-width: 1270px) {
             .text-under h1 {
                 font-size: 18px;
@@ -383,7 +382,7 @@
     </div>
 
     <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || []; // تغيير const إلى let للسماح بالتعديل
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartItemsElement = document.getElementById('cart-items');
         const emptyCartMessage = document.getElementById('empty-cart-message');
 
@@ -408,7 +407,7 @@
                     productElement.className = 'image-container';
                     productElement.innerHTML = `
                         <div class="image-frame">
-                            <a href="${product.link}">
+                            <a href="${product.link || '#'}">
                                 <div class="image-wrapper">
                                     <div class="placeholder"></div>
                                     <img src="${product.image}" alt="${product.name}" loading="lazy" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';">
@@ -416,13 +415,13 @@
                             </a>
                             <div class="text-under">
                                 <h1>${product.name}</h1>
-                                <h2>${product.sold}</h2>
+                                <h2>${product.sold || ''}</h2>
                                 <div class="container">
                                     <div class="zero" style="font-size: 24px;"></div>
                                     <div class="number">${product.price}</div>
                                     <div class="letter" style="margin-right: ${letterMargin};">EGP</div>
                                 </div>
-                                <h3>${product.discount}</h3>
+                                ${product.discount ? `<h3>${product.discount}</h3>` : ''}
                             </div>
                             <button class="remove-button" onclick="removeFromCart(${index})">
                                 <span>حذف</span>
@@ -439,23 +438,21 @@
             }
 
             calculateTotalPrice();
-            // تحديث عدد المنتجات في localStorage ليتم استخدامه في الصفحة الرئيسية
-            localStorage.setItem('cart', JSON.stringify(cart)); // تحديث العربة الكاملة في localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1); // حذف المنتج من المصفوفة
-            localStorage.setItem('cart', JSON.stringify(cart)); // تحديث localStorage بعد الحذف
-            updateCartDisplay(); // تحديث العرض في صفحة العربة
-            // إرسال إشعار إلى الصفحات الأخرى (مثل الصفحة الرئيسية) إذا كانت مفتوحة
-            window.dispatchEvent(new Event('storage')); // تفعيل حدث storage يدويًا
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            window.dispatchEvent(new Event('storage'));
         }
 
         function calculateTotalPrice() {
             let totalPrice = 0;
             cart.forEach(product => {
-                const price = parseFloat(product.price.replace(/,/g, ''));
-                totalPrice += price;
+                const price = parseFloat(product.price.toString().replace(/,/g, ''));
+                totalPrice += price * (product.quantity || 1);
             });
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
         }
@@ -463,6 +460,14 @@
         function goBack() {
             history.back();
         }
+
+        // تحديث السلة عند تغييرها من نافذة أخرى
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cart') {
+                cart = JSON.parse(e.newValue) || [];
+                updateCartDisplay();
+            }
+        });
 
         updateCartDisplay();
     </script>
