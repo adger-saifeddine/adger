@@ -1,6 +1,6 @@
 [
     {
-        "id": "5",
+        "id": "1",
         "media": [
             {"src": "https://i.postimg.cc/k5BR8sS6/1.jpg", "type": "image"},
             {"src": "https://i.postimg.cc/7ZP2PwYN/1-2.jpg", "type": "image"},
@@ -238,6 +238,59 @@
             "productId": "4",
             "shippingPrice": "70",
             "colors": ["بينك", "لبني", "أسود", "أخضر"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
+    },
+    {
+        "id": "5",
+        "media": [
+            {"src": "https://i.postimg.cc/XXXXXXX/phone1.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XXXXXXX/phone2.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XXXXXXX/phone3.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XXXXXXX/phone4.jpg", "type": "image"}
+        ],
+        "pri": "12000",
+        "oldPrice": "15000",
+        "dis": "خصم أكثر من 20%",
+        "changingText": ["أحدث مواصفات", "أداء قوي", "كاميرا ممتازة"],
+        "longText": "هاتف ذكي بمواصفات عالية - شاشة AMOLED 6.7 بوصة، معالج ثماني النواة، كاميرا رباعية 108 ميجابكسل",
+        "sales": "موثوق",
+        "buttonId": "commentButton5",
+        "commentId": "5",
+        "elementId": "commentCount5",
+        "tableData": [
+            {"question": "الشاشة", "answer": "6.7 بوصة AMOLED"},
+            {"question": "المعالج", "answer": "ثماني النواة 2.8 جيجاهرتز"},
+            {"question": "الذاكرة", "answer": "8 جيجابايت رام، 256 جيجابايت تخزين"},
+            {"question": "الكاميرا", "answer": "رباعية 108+12+8+5 ميجابكسل"},
+            {"question": "البطارية", "answer": "5000 مللي أمبير"}
+        ],
+        "desc": "هاتف ذكي بمواصفات عالية مع شاشة AMOLED بدقة 2400×1080 بيكسل، معالج ثماني النواة بتردد 2.8 جيجاهرتز، كاميرا خلفية رباعية بدقة 108 ميجابكسل مع تقنية التصوير الليلي، كاميرا أمامية 32 ميجابكسل، يدعم شبكات 5G، مع بطارية 5000 مللي أمبير وشحن سريع 65 وات.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/XXXXXXX/phone1.jpg",
+                    "https://i.postimg.cc/XXXXXXX/phone2.jpg",
+                    "https://i.postimg.cc/XXXXXXX/phone3.jpg",
+                    "https://i.postimg.cc/XXXXXXX/phone4.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/XXXXXXX/phone1.jpg",
+            "name": "هاتف ذكي بمواصفات عالية - شاشة AMOLED 6.7 بوصة",
+            "sold": "موثوق",
+            "price": "12000",
+            "discount": "20",
+            "pageId": "5",
+            "productId": "5",
+            "shippingPrice": "100",
+            "colors": ["أسود", "أزرق", "فضي", "أخضر"],
+            "storage": ["128 جيجابايت", "256 جيجابايت", "512 جيجابايت"]
         },
         "texts": {
             "currency": "جنيه",
