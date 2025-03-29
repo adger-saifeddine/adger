@@ -1210,7 +1210,6 @@
 
 <br>
     <div class="line"></div>
-
     <!DOCTYPE html>
     <html lang="ar">
     <head>
@@ -1235,12 +1234,19 @@
             .comment-button:hover {
                 background-color: #f0f0f0;
             }
+            
+            .buttons-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
-        <button id="commentButton1" class="comment-button" onclick="window.location.href='comments.html?commentId=1'">
-            التعليقات 1 (<span id="commentCount1">0</span>)
-        </button>
+        <div class="buttons-container" id="buttonsContainer">
+            <!-- سيتم إضافة الأزرار ديناميكيًا هنا -->
+        </div>
     
         <!-- أضف Firebase SDK -->
         <script type="module">
@@ -1263,16 +1269,16 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // عرض عدد التعليقات
+            // دالة لتحديث عدد التعليقات
             const updateCommentCount = (commentId, elementId) => {
                 const commentCountElement = document.getElementById(elementId);
-                if (!commentCountElement) return; // التحقق من وجود العنصر
-                let count = 0;
+                if (!commentCountElement) return;
+                
                 onValue(commentsRef, (snapshot) => {
-                    count = 0; // إعادة تعيين العدد لكل تحديث
+                    let count = 0;
                     snapshot.forEach((childSnapshot) => {
                         const comment = childSnapshot.val();
-                        if (comment.commentId === commentId) {
+                        if (comment.commentId == commentId) {
                             count++;
                         }
                     });
@@ -1280,32 +1286,47 @@
                 });
             };
     
-            // جلب بيانات JSON وتحديث الأزرار
-            fetch('config.json')
-                .then(response => {
+            // دالة لإنشاء الأزرار ديناميكيًا
+            const createCommentButtons = async () => {
+                try {
+                    const response = await fetch('config.json');
                     if (!response.ok) throw new Error('فشل في جلب ملف JSON');
-                    return response.json();
-                })
-                .then(config => {
+                    const config = await response.json();
+                    
+                    const container = document.getElementById('buttonsContainer');
+                    
+                    // تفريغ الحاوية أولاً
+                    container.innerHTML = '';
+                    
+                    // إنشاء زر لكل عنصر في config.json
                     config.forEach(item => {
-                        const button = document.getElementById(item.buttonId);
-                        if (button) {
-                            // تحديث رابط الزر بناءً على commentId من JSON
-                            button.onclick = () => {
-                                window.location.href = `comments.html?commentId=${item.commentId}`;
-                            };
-                            // تحديث نص الزر ليعكس commentId
-                            button.childNodes[0].textContent = `التعليقات ${item.commentId} (`;
-                            // تحديث عدد التعليقات بناءً على commentId من JSON
-                            updateCommentCount(item.commentId, item.elementId);
-                        }
+                        const button = document.createElement('button');
+                        button.className = 'comment-button';
+                        button.innerHTML = `التعليقات ${item.commentId} (<span id="${item.elementId}">0</span>)`;
+                        
+                        button.onclick = () => {
+                            window.location.href = `comments.html?commentId=${item.commentId}`;
+                        };
+                        
+                        container.appendChild(button);
+                        updateCommentCount(item.commentId, item.elementId);
                     });
-                })
-                .catch(error => {
+                    
+                } catch (error) {
                     console.error('خطأ في جلب بيانات JSON:', error);
-                    // إذا فشل جلب JSON، استخدم القيم الافتراضية
+                    // استخدام قيم افتراضية في حالة الخطأ
+                    const container = document.getElementById('buttonsContainer');
+                    container.innerHTML = `
+                        <button class="comment-button">
+                            التعليقات 1 (<span id="commentCount1">0</span>)
+                        </button>
+                    `;
                     updateCommentCount(1, 'commentCount1');
-                });
+                }
+            };
+    
+            // استدعاء الدالة عند تحميل الصفحة
+            document.addEventListener('DOMContentLoaded', createCommentButtons);
         </script>
     </body>
     </html>
@@ -2454,8 +2475,7 @@
     </script>
 </body>
 </html>
-</body>
-</html>
+
 
 
 
