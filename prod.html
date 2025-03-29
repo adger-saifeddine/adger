@@ -1336,7 +1336,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نص وزر في نفس السطر</title>
     <style>
-        /* أنماط CSS تبقى كما هي */
         .containe {
             display: flex;
             justify-content: space-between;
@@ -1404,52 +1403,22 @@
 </div>
 
 <script>
-    // دالة لجلب معرف المنتج الحالي
-    async function getCurrentProductId() {
-        try {
-            // جلب بيانات المنتجات من ملف JSON
-            const response = await fetch('products.json');
-            if (!response.ok) {
-                throw new Error('فشل في جلب بيانات المنتجات');
-            }
-            const products = await response.json();
-            
-            // الحصول على معرف الصفحة الحالية من URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentPageId = urlParams.get('pageId');
-            
-            if (!currentPageId) {
-                console.warn('لم يتم العثور على pageId في URL، سيتم استخدام أول منتج');
-                return products[0]?.product?.productId || products[0]?.id || '1';
-            }
-            
-            // البحث عن المنتج المطابق
-            const currentProduct = products.find(product => 
-                product.id === currentPageId || 
-                product.product?.productId === currentPageId ||
-                product.product?.pageId === currentPageId
-            );
-            
-            if (!currentProduct) {
-                console.warn('لم يتم العثور على منتج مطابق، سيتم استخدام أول منتج');
-                return products[0]?.product?.productId || products[0]?.id || '1';
-            }
-            
-            // إرجاع productId أو id كبديل
-            return currentProduct.product?.productId || currentProduct.id;
-            
-        } catch (error) {
-            console.error('حدث خطأ:', error);
-            return '1'; // قيمة افتراضية في حالة الخطأ
-        }
-    }
+    // جلب البيانات من ملف JSON
+    fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+            // اختيار المنتج بناءً على معرف معين (مثلاً يمكن أن يتم تمريره عبر URL أو متغير)
+            // هنا نأخذ أول منتج كمثال، يمكنك تعديله لاختيار منتج معين
+            const selectedProduct = data[0]; // أول منتج كمثال
+            const productId = selectedProduct.product.productId; // جلب productId
 
-    // عند النقر على الزر
-    document.getElementById('askProductBtn').onclick = async function() {
-        const productId = await getCurrentProductId();
-        const hiddenText = `رقم المنتج| ${productId}`;
-        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-    };
+            // تعيين الحدث للزر
+            document.getElementById('askProductBtn').onclick = function() {
+                const hiddenText = `رقم المنتج| ${productId}`; // استخدام productId الديناميكي
+                window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+            };
+        })
+        .catch(error => console.error('حدث خطأ أثناء جلب البيانات:', error));
 </script>
 </body>
 </html>
