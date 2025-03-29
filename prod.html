@@ -1210,6 +1210,7 @@
 
 <br>
     <div class="line"></div>
+
     <!DOCTYPE html>
     <html lang="ar">
     <head>
@@ -1237,8 +1238,7 @@
         </style>
     </head>
     <body>
-        <!-- زر التعليق -->
-        <button id="commentButton1" class="comment-button">
+        <button id="commentButton1" class="comment-button" onclick="window.location.href='comments.html?commentId=1'">
             التعليقات 1 (<span id="commentCount1">0</span>)
         </button>
     
@@ -1304,7 +1304,6 @@
                 .catch(error => {
                     console.error('خطأ في جلب بيانات JSON:', error);
                     // إذا فشل جلب JSON، استخدم القيم الافتراضية
-                    updateCommentCount(1, 'commentCount1');
                 });
         </script>
     </body>
