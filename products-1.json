@@ -36,14 +36,15 @@
         
         ],
         "product": {
-            "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
-            "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
+            "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+            "name": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة",
             "sold": "موثوق",
-            "price": "70.00",
-            "discount": "38.6%",
-            "pageId": "1",
-            "productId": "1",
-            "shippingPrice": "60"
+            "price": "290",
+            "discount": "17",
+            "pageId": "3",
+            "productId": "3",
+            "shippingPrice": "70",
+            "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
         },
         "texts": {
             "currency": "جنيه",

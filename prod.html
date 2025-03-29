@@ -2170,6 +2170,8 @@
 <br>
 
 
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2320,14 +2322,14 @@
 
     <script>
         // جلب معرّف المنتج ورقم الصفحة من URL
-          // جلب معرّف المنتج ورقم الصفحة من URL
-          const url = new URL(window.location.href);
+        const url = new URL(window.location.href);
         try {
   const productId = new URLSearchParams(window.location.search).get('id');
   console.log('productId:', productId); // تحقق من القيمة
 } catch (error) {
   console.error('Error:', error); // اطبع الخطأ إذا حدث
 }
+        
         const pageNumber = url.searchParams.get('page') || '1';
         
         if (!productId) {
@@ -2413,44 +2415,28 @@
             window.location.href = `buy.html?${params}`;
         }
 
-        // دالة إضافة إلى العربة المعدلة مع دعم الخصم
+        // دالة إضافة إلى العربة المعدلة
         function addToCart(element) {
             try {
-                // الحصول على بيانات المنتج من العناصر
+                // الحصول على بيانات المنتج من العنصر
                 const productName = document.getElementById('product-name').textContent;
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
                 
-                // استخراج قيمة الخصم
-                const discountElement = document.getElementById('product-discount');
-                let discountValue = 0;
-                
-                if (discountElement.style.display !== 'none') {
-                    const discountText = discountElement.textContent;
-                    const discountMatch = discountText.match(/\d+/);
-                    if (discountMatch) {
-                        discountValue = parseInt(discountMatch[0]);
-                    }
-                }
-                
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 
                 // البحث عن المنتج في السلة
-                const existingProductIndex = cart.findIndex(item => item.productId === productId);
+                const existingProduct = cart.find(item => item.productId === productId);
                 
-                if (existingProductIndex !== -1) {
-                    // المنتج موجود - زيادة الكمية
-                    cart[existingProductIndex].quantity += 1;
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
                 } else {
-                    // منتج جديد - إضافته للسلة
                     cart.push({
                         productId: productId,
                         name: productName,
                         price: productPrice,
                         image: productImage,
-                        discount: discountValue, // حفظ قيمة الخصم
-                        originalPrice: productPrice, // حفظ السعر الأصلي
                         quantity: 1
                     });
                 }
