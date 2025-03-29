@@ -1231,29 +1231,25 @@
                 margin-top: 11px;
                 margin-right: 12px;
             }
-    
             .comment-button:hover {
                 background-color: #f0f0f0;
             }
         </style>
     </head>
     <body>
-        <!-- سيتم إضافة الزر هنا ديناميكيًا -->
         <div id="commentButtonContainer"></div>
     
-        <!-- أضف Firebase SDK -->
         <script type="module">
-            // استيراد الوظائف المطلوبة من Firebase
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
             import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
     
-            // تهيئة Firebase
+            // Firebase configuration
             const firebaseConfig = {
                 apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
                 authDomain: "adger-ddb84.firebaseapp.com",
                 databaseURL: "https://adger-ddb84-default-rtdb.firebaseio.com",
                 projectId: "adger-ddb84",
-                storageBucket: "adger-ddb84.firebasestorage.app",
+                storageBucket: "adger-ddb84.appspot.com",
                 messagingSenderId: "767665511626",
                 appId: "1:767665511626:web:0ed485898001cdf4a02833"
             };
@@ -1262,34 +1258,43 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // دالة لإنشاء زر التعليقات
-            const createCommentButton = (product) => {
-                const container = document.getElementById('commentButtonContainer');
-                
-                const button = document.createElement('button');
-                button.className = 'comment-button';
-                button.id = `commentButton${product.commentId}`;
-                
-                button.innerHTML = `التعليقات (<span id="commentCount${product.commentId}">0</span>)`;
-                
-                button.onclick = () => {
-                    window.location.href = `comments.html?commentId=${product.commentId}`;
-                };
-                
-                container.appendChild(button);
-                updateCommentCount(product.commentId, `commentCount${product.commentId}`);
+            // 1. جلب productId من URL
+            const getCurrentProductId = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('productId') || '1'; // افتراضي إذا لم يوجد
             };
     
-            // دالة لتحديث عدد التعليقات
+            // 2. جلب commentId المناسب من JSON
+            const getCommentIdForProduct = async (productId) => {
+                try {
+                    const response = await fetch('products.json');
+                    const products = await response.json();
+                    const product = products.find(p => p.id == productId);
+                    return product?.commentId || 1; // افتراضي إذا لم يوجد
+                } catch (error) {
+                    console.error('Error loading products:', error);
+                    return 1; // قيمة افتراضية عند الخطأ
+                }
+            };
+    
+            // 3. إنشاء زر التعليقات
+            const createCommentButton = (commentId) => {
+                const container = document.getElementById('commentButtonContainer');
+                container.innerHTML = `
+                    <button class="comment-button" onclick="window.location.href='comments.html?commentId=${commentId}'">
+                        التعليقات (<span id="commentCount">0</span>)
+                    </button>
+                `;
+                updateCommentCount(commentId, 'commentCount');
+            };
+    
+            // 4. تحديث عدد التعليقات
             const updateCommentCount = (commentId, elementId) => {
                 const commentCountElement = document.getElementById(elementId);
-                if (!commentCountElement) return;
-                
                 onValue(commentsRef, (snapshot) => {
                     let count = 0;
                     snapshot.forEach((childSnapshot) => {
-                        const comment = childSnapshot.val();
-                        if (comment.commentId === commentId) {
+                        if (childSnapshot.val().commentId == commentId) {
                             count++;
                         }
                     });
@@ -1297,35 +1302,12 @@
                 });
             };
     
-            // جلب productId من URL الصفحة
-            const getProductIdFromUrl = () => {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('productId') || urlParams.get('id') || '1'; // قيمة افتراضية إذا لم يوجد
-            };
-    
-            // جلب بيانات المنتجات من JSON
-            fetch('config.json')
-                .then(response => {
-                    if (!response.ok) throw new Error('فشل في جلب ملف JSON');
-                    return response.json();
-                })
-                .then(products => {
-                    const currentProductId = getProductIdFromUrl();
-                    const currentProduct = products.find(p => p.id == currentProductId);
-                    
-                    if (currentProduct) {
-                        createCommentButton(currentProduct);
-                    } else {
-                        // إذا لم يتم العثور على المنتج، استخدم أول منتج كافتراضي
-                        createCommentButton(products[0]);
-                        console.warn('لم يتم العثور على المنتج المطلوب، تم عرض زر التعليقات الافتراضي');
-                    }
-                })
-                .catch(error => {
-                    console.error('خطأ في جلب بيانات JSON:', error);
-                    // إذا فشل جلب JSON، استخدم بيانات افتراضية
-                    createCommentButton({ commentId: 1 });
-                });
+            // التنفيذ الرئيسي
+            (async () => {
+                const productId = getCurrentProductId();
+                const commentId = await getCommentIdForProduct(productId);
+                createCommentButton(commentId);
+            })();
         </script>
     </body>
     </html>
