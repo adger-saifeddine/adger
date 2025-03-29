@@ -1391,7 +1391,6 @@
             }
         }
     </style>
-
 </head>
 <body>
 <div class="containe">
@@ -1405,21 +1404,18 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const productId = 1; // يمكنك تغيير هذا الرقم أو جعله ديناميكيًا حسب الحاجة
+    // دالة للحصول على معرف المنتج من عنوان URL
+    function getProductIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('productId') || '1'; // القيمة الافتراضية 1 إذا لم يكن هناك productId
+    }
 
-        const jsonFileName = `products-${productId}.json`;
-        fetch(jsonFileName)
-            .then(response => response.json())
-            .then(data => {
-                const pageId = data.product.pageId;
-                document.getElementById('askProductBtn').onclick = function() {
-                    const hiddenText = `رقم الصفحة| ${pageId}`;
-                    window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-                };
-            })
-            .catch(error => console.error('Error fetching product data:', error));
-    });
+    // عند النقر على الزر
+    document.getElementById('askProductBtn').onclick = function() {
+        const productId = getProductIdFromUrl();
+        const hiddenText = `رقم المنتج| ${productId}`;
+        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+    };
 </script>
 </body>
 </html>
