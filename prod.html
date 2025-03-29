@@ -1241,6 +1241,14 @@
                 border-radius: 8px;
                 margin-bottom: 20px;
             }
+            #sampleCommentContainer {
+                display: none;
+                margin: 20px 0;
+                padding: 15px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
         </style>
     </head>
     <body>
@@ -1250,12 +1258,27 @@
         </div>
         
         <div id="commentButtonContainer"></div>
+        
+        <!-- قسم عرض التعليق العشوائي -->
+        <div id="sampleCommentContainer">
+            <h3 style="color: #333; margin-bottom: 10px;">آخر تعليق:</h3>
+            <p id="sampleCommentText" style="color: #666; line-height: 1.6;">جاري تحميل التعليقات...</p>
+        </div>
     
         <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-            import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+            import { 
+                initializeApp 
+            } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+            import { 
+                getDatabase, 
+                ref, 
+                onValue, 
+                query, 
+                orderByChild, 
+                equalTo, 
+                limitToLast 
+            } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
     
-            // تكوين Firebase
             const firebaseConfig = {
                 apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
                 authDomain: "adger-ddb84.firebaseapp.com",
@@ -1270,13 +1293,11 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // 1. جلب معرّف المنتج من URL
             const getProductIdFromURL = () => {
                 const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('id') || '1'; // افتراضي إذا لم يوجد
+                return urlParams.get('id') || '1';
             };
     
-            // 2. جلب بيانات المنتج من JSON
             const fetchProductData = async (productId) => {
                 try {
                     const response = await fetch('products.json');
@@ -1298,26 +1319,6 @@
                 }
             };
     
-            // 3. عرض زر التعليقات
-            const renderCommentButton = (product) => {
-                const container = document.getElementById('commentButtonContainer');
-                container.innerHTML = `
-                    <button class="comment-button" 
-                            onclick="window.location.href='comments.html?productId=${product.id}&commentId=${product.commentId}'">
-                        تعليقات المنتج (${product.id}) 
-                        <span id="commentCount">0</span>
-                    </button>
-                `;
-                
-                // تحديث عدد التعليقات
-                updateCommentCount(product.commentId, 'commentCount');
-                
-                // عرض معلومات المنتج
-                document.getElementById('productName').textContent = product.name;
-                document.getElementById('productId').textContent = `معرف المنتج: ${product.id} | معرف التعليقات: ${product.commentId}`;
-            };
-    
-            // 4. تحديث عدد التعليقات
             const updateCommentCount = (commentId, elementId) => {
                 const countElement = document.getElementById(elementId);
                 onValue(commentsRef, (snapshot) => {
@@ -1331,7 +1332,49 @@
                 });
             };
     
-            // التنفيذ الرئيسي
+            const fetchSampleComment = (commentId) => {
+                const commentsQuery = query(
+                    commentsRef, 
+                    orderByChild('commentId'),
+                    equalTo(commentId),
+                    limitToLast(1)
+                );
+                
+                onValue(commentsQuery, (snapshot) => {
+                    const commentContainer = document.getElementById('sampleCommentContainer');
+                    const commentText = document.getElementById('sampleCommentText');
+                    
+                    if (snapshot.exists()) {
+                        let latestComment = '';
+                        snapshot.forEach((child) => {
+                            latestComment = child.val().text;
+                        });
+                        commentText.textContent = latestComment;
+                        commentContainer.style.display = 'block';
+                    } else {
+                        commentText.textContent = 'لا توجد تعليقات حتى الآن.';
+                        commentContainer.style.display = 'block';
+                    }
+                });
+            };
+    
+            const renderCommentButton = (product) => {
+                const container = document.getElementById('commentButtonContainer');
+                container.innerHTML = `
+                    <button class="comment-button" 
+                            onclick="window.location.href='comments.html?productId=${product.id}&commentId=${product.commentId}'">
+                        تعليقات المنتج (${product.id}) 
+                        <span id="commentCount">0</span>
+                    </button>
+                `;
+                
+                updateCommentCount(product.commentId, 'commentCount');
+                fetchSampleComment(product.commentId);
+                
+                document.getElementById('productName').textContent = product.name;
+                document.getElementById('productId').textContent = `معرف المنتج: ${product.id} | معرف التعليقات: ${product.commentId}`;
+            };
+    
             (async () => {
                 const productId = getProductIdFromURL();
                 const product = await fetchProductData(productId);
