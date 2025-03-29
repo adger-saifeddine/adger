@@ -2299,7 +2299,7 @@
     <div class="image-container product" id="product-container">
         <div class="image-frame" id="product-frame" style="display: none;">
             <a id="product-link" href="">
-                <img id="product-image" src="" alt="" loading="lazy">
+                <img id="product-image" src="" alt="">
             </a>
             <div class="text-under">
                 <h1 id="product-name"></h1>
@@ -2324,13 +2324,13 @@
         (function() {
             'use strict';
 
-            // ------ إعداد المتغيرات الأساسية ------
+            // ------ المتغيرات الأساسية باستخدام proId بدلاً من productId ------
             const queryParams = new URLSearchParams(window.location.search);
-            const productId = queryParams.get('id');
-            const pageNumber = Math.max(1, parseInt(queryParams.get('page')) || 1;
+            const proId = queryParams.get('id'); // تغيير الاسم هنا
+            const pageNumber = Math.max(1, parseInt(queryParams.get('page')) || 1);
 
             // ------ التحقق من المعطيات الأساسية ------
-            if (!productId) {
+            if (!proId) { // تحديث الشرط لاستخدام proId
                 alert('❗ الرابط غير صحيح - يرجى العودة للصفحة السابقة');
                 throw new Error('Product ID is required');
             }
@@ -2338,12 +2338,12 @@
             // ------ دالة جلب البيانات ------
             const loadProductData = async () => {
                 try {
-                    const response = await fetch(`products-${pageNumber}.json?t=${Date.now()}`);
+                    const response = await fetch(`products-${pageNumber}.json?_=${Date.now()}`);
                     if (!response.ok) throw new Error('فشل تحميل البيانات');
                     
                     const products = await response.json();
                     const productData = products.find(p => 
-                        p.product.productId.toString() === productId.toString()
+                        p.product?.productId?.toString() === proId.toString() // تحديث المقارنة
                     );
 
                     if (!productData) throw new Error('المنتج غير متوفر حالياً');
@@ -2377,10 +2377,7 @@
                     discountElement.style.display = 'none';
                 }
 
-                // إظهار الإطار
                 frame.style.display = 'block';
-
-                // إعداد الأحداث
                 setupEventHandlers(product);
             };
 
@@ -2389,7 +2386,7 @@
                 // حدث شراء الآن
                 document.getElementById('buy-now-btn').addEventListener('click', () => {
                     const params = new URLSearchParams({
-                        id: productId,
+                        id: proId, // استخدام proId بدلاً من productId
                         name: encodeURIComponent(product.name),
                         price: product.price,
                         image: encodeURIComponent(product.image),
@@ -2401,7 +2398,7 @@
                 // حدث إضافة إلى السلة
                 document.getElementById('add-to-cart-btn').addEventListener('click', () => {
                     const cartItem = {
-                        id: productId,
+                        id: proId, // استخدام proId بدلاً من productId
                         name: product.name,
                         price: product.price,
                         image: product.image,
@@ -2409,7 +2406,7 @@
                     };
 
                     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                    const existingItem = cart.find(item => item.id === productId);
+                    const existingItem = cart.find(item => item.id === proId); // تحديث المقارنة
 
                     if (existingItem) {
                         existingItem.quantity++;
@@ -2428,6 +2425,7 @@
     </script>
 </body>
 </html>
+
 
 
 
