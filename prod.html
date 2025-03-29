@@ -1212,7 +1212,7 @@
     <div class="line"></div>
 
     <!DOCTYPE html>
-    <html lang="ar">
+    <html lang="ar" dir="rtl">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1235,12 +1235,19 @@
             .comment-button:hover {
                 background-color: #f0f0f0;
             }
+            
+            .buttons-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
-        <button id="commentButton1" class="comment-button" onclick="window.location.href='comments.html?commentId=1'">
-            التعليقات 1 (<span id="commentCount1">0</span>)
-        </button>
+        <div class="buttons-container" id="commentsContainer">
+            <!-- سيتم إضافة الأزرار هنا ديناميكيًا -->
+        </div>
     
         <!-- أضف Firebase SDK -->
         <script type="module">
@@ -1263,13 +1270,33 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // عرض عدد التعليقات
+            // دالة لإنشاء أزرار التعليقات
+            const createCommentButtons = (products) => {
+                const container = document.getElementById('commentsContainer');
+                
+                products.forEach(product => {
+                    const button = document.createElement('button');
+                    button.className = 'comment-button';
+                    button.id = `commentButton${product.commentId}`;
+                    
+                    button.innerHTML = `التعليقات ${product.commentId} (<span id="commentCount${product.commentId}">0</span>)`;
+                    
+                    button.onclick = () => {
+                        window.location.href = `comments.html?commentId=${product.commentId}`;
+                    };
+                    
+                    container.appendChild(button);
+                    updateCommentCount(product.commentId, `commentCount${product.commentId}`);
+                });
+            };
+    
+            // دالة لتحديث عدد التعليقات
             const updateCommentCount = (commentId, elementId) => {
                 const commentCountElement = document.getElementById(elementId);
-                if (!commentCountElement) return; // التحقق من وجود العنصر
-                let count = 0;
+                if (!commentCountElement) return;
+                
                 onValue(commentsRef, (snapshot) => {
-                    count = 0; // إعادة تعيين العدد لكل تحديث
+                    let count = 0;
                     snapshot.forEach((childSnapshot) => {
                         const comment = childSnapshot.val();
                         if (comment.commentId === commentId) {
@@ -1280,30 +1307,23 @@
                 });
             };
     
-            // جلب بيانات JSON وتحديث الأزرار
+            // جلب بيانات المنتجات من JSON
             fetch('config.json')
                 .then(response => {
                     if (!response.ok) throw new Error('فشل في جلب ملف JSON');
                     return response.json();
                 })
-                .then(config => {
-                    config.forEach(item => {
-                        const button = document.getElementById(item.buttonId);
-                        if (button) {
-                            // تحديث رابط الزر بناءً على commentId من JSON
-                            button.onclick = () => {
-                                window.location.href = `comments.html?commentId=${item.commentId}`;
-                            };
-                            // تحديث نص الزر ليعكس commentId
-                            button.childNodes[0].textContent = `التعليقات ${item.commentId} (`;
-                            // تحديث عدد التعليقات بناءً على commentId من JSON
-                            updateCommentCount(item.commentId, item.elementId);
-                        }
-                    });
+                .then(products => {
+                    createCommentButtons(products);
                 })
                 .catch(error => {
                     console.error('خطأ في جلب بيانات JSON:', error);
-                    // إذا فشل جلب JSON، استخدم القيم الافتراضية
+                    // إذا فشل جلب JSON، استخدم بيانات افتراضية
+                    createCommentButtons([
+                        { commentId: 1 },
+                        { commentId: 2 },
+                        { commentId: 3 }
+                    ]);
                 });
         </script>
     </body>
