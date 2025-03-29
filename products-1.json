@@ -296,6 +296,61 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
-    }
+    },
+    {
+        "id": "6",
+        "media": [
+        {"src": "https://i.postimg.cc/XXXXXXX/watch1.jpg", "type": "image"},
+        {"src": "https://i.postimg.cc/XXXXXXX/watch2.jpg", "type": "image"},
+        {"src": "https://i.postimg.cc/XXXXXXX/watch3.jpg", "type": "image"},
+        {"src": "https://i.postimg.cc/XXXXXXX/watch4.jpg", "type": "image"}
+        ],
+        "pri": "5000",
+        "oldPrice": "6500",
+        "dis": "خصم أكثر من 23%",
+        "changingText": ["تصميم أنيق", "مقاومة للماء", "تتبع اللياقة"],
+        "longText": "ساعة ذكية بشاشة AMOLED 1.4 بوصة، مقاومة للماء حتى 50 متر، تتبع معدل ضربات القلب والنوم",
+        "sales": "موثوق",
+        "buttonId": "commentButton6",
+        "commentId": "6",
+        "elementId": "commentCount6",
+        "tableData": [
+        {"question": "الشاشة", "answer": "1.4 بوصة AMOLED"},
+        {"question": "المقاومة للماء", "answer": "حتى 50 متر"},
+        {"question": "البطارية", "answer": "14 يوم في وضع الاستعداد"},
+        {"question": "التوصيل", "answer": "بلوتوث 5.0"},
+        {"question": "الميزات", "answer": "تتبع اللياقة، معدل ضربات القلب، النوم"}
+        ],
+        "desc": "ساعة ذكية بتصميم عصري وشاشة AMOLED بدقة 454×454 بيكسل، مقاومة للماء حتى عمق 50 متر، تدعم تتبع الأنشطة الرياضية المختلفة ومراقبة معدل ضربات القلب وجودة النوم، تدعم الإشعارات الذكية، مع بطارية تدوم حتى 14 يوم في وضع الاستعداد.",
+        "groups": [
+        {
+        "type": "images",
+        "items": [
+        "https://i.postimg.cc/XXXXXXX/watch1.jpg",
+        "https://i.postimg.cc/XXXXXXX/watch2.jpg",
+        "https://i.postimg.cc/XXXXXXX/watch3.jpg",
+        "https://i.postimg.cc/XXXXXXX/watch4.jpg"
+        ]
+        }
+        ],
+        "product": {
+        "image": "https://i.postimg.cc/XXXXXXX/watch1.jpg",
+        "name": "ساعة ذكية بشاشة AMOLED 1.4 بوصة",
+        "sold": "موثوق",
+        "price": "5000",
+        "discount": "23",
+        "pageId": "6",
+        "productId": "6",
+        "shippingPrice": "50",
+        "colors": ["أسود", "أبيض", "ذهبي", "أزرق"],
+        "storage": ["غير متوفر"]
+        },
+        "texts": {
+        "currency": "جنيه",
+        "discountLabel": "خصم"
+        }
+        }
+        
+        
 
 ]
