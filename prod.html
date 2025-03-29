@@ -1212,50 +1212,48 @@
     <div class="line"></div>
 
     <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
+    <html lang="ar">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>صفحة المنتج</title>
+        <title>تعليقات المنتجات</title>
         <style>
             .comment-button {
                 font-family: 'Cairo', sans-serif;
-                padding: 10px 25px;
-                font-size: 16px;
-                background-color: #4285f4;
-                color: white;
-                border: none;
-                border-radius: 8px;
+                padding: 8px 25px;
+                margin: 10px;
+                background-color: #f8f9fa;
+                color: #333;
+                border: 2px solid #ddd;
+                border-radius: 25px;
                 cursor: pointer;
-                transition: 0.3s;
-                margin: 20px 0;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
+    
             .comment-button:hover {
-                background-color: #3367d6;
+                background-color: #e9ecef;
                 transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             }
-            .product-info {
-                background: #f5f5f5;
+            
+            #buttonsContainer {
                 padding: 20px;
-                border-radius: 8px;
-                margin-bottom: 20px;
+                max-width: 600px;
+                margin: 0 auto;
             }
         </style>
     </head>
     <body>
-        <div class="product-info">
-            <h2 id="productName">جاري تحميل معلومات المنتج...</h2>
-            <p id="productId"></p>
+        <div id="buttonsContainer">
+            <!-- الأزرار ستضاف هنا تلقائيًا -->
         </div>
-        
-        <div id="commentButtonContainer"></div>
     
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
             import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
     
-            // تكوين Firebase
+            // تهيئة Firebase
             const firebaseConfig = {
                 apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
                 authDomain: "adger-ddb84.firebaseapp.com",
@@ -1267,76 +1265,58 @@
             };
     
             const app = initializeApp(firebaseConfig);
-            const database = getDatabase(app);
-            const commentsRef = ref(database, 'comments');
+            const db = getDatabase(app);
     
-            // 1. جلب معرّف المنتج من URL
-            const getProductIdFromURL = () => {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('id') || '1'; // افتراضي إذا لم يوجد
-            };
-    
-            // 2. جلب بيانات المنتج من JSON
-            const fetchProductData = async (productId) => {
-                try {
-                    const response = await fetch('products.json');
-                    const products = await response.json();
-                    const product = products.find(p => p.id === productId);
+            // دالة إنشاء الأزرار
+            const createButtons = (products) => {
+                const container = document.getElementById('buttonsContainer');
+                
+                products.forEach(product => {
+                    const button = document.createElement('button');
+                    button.className = 'comment-button';
                     
-                    return product || {
-                        id: productId,
-                        commentId: productId,
-                        name: `المنتج ${productId}`
-                    };
-                } catch (error) {
-                    console.error('خطأ في جلب بيانات المنتجات:', error);
-                    return {
-                        id: productId,
-                        commentId: productId,
-                        name: `المنتج ${productId}`
-                    };
-                }
-            };
+                    // HTML هيكل الزر
+                    button.innerHTML = `
+                        <span class="product-name">${product.product.name}</span>
+                        <span class="comment-count" id="${product.elementId}">0</span> تعليق
+                    `;
     
-            // 3. عرض زر التعليقات
-            const renderCommentButton = (product) => {
-                const container = document.getElementById('commentButtonContainer');
-                container.innerHTML = `
-                    <button class="comment-button" 
-                            onclick="window.location.href='comments.html?productId=${product.id}&commentId=${product.commentId}'">
-                        تعليقات المنتج (${product.id}) 
-                        <span id="commentCount">0</span>
-                    </button>
-                `;
-                
-                // تحديث عدد التعليقات
-                updateCommentCount(product.commentId, 'commentCount');
-                
-                // عرض معلومات المنتج
-                document.getElementById('productName').textContent = product.name;
-                document.getElementById('productId').textContent = `معرف المنتج: ${product.id} | معرف التعليقات: ${product.commentId}`;
-            };
+                    // إضافة الحدث
+                    button.onclick = () => {
+                        window.location.href = `comments.html?productId=${product.id}&commentId=${product.commentId}`;
+                    };
     
-            // 4. تحديث عدد التعليقات
-            const updateCommentCount = (commentId, elementId) => {
-                const countElement = document.getElementById(elementId);
-                onValue(commentsRef, (snapshot) => {
-                    let count = 0;
-                    snapshot.forEach((childSnapshot) => {
-                        if (childSnapshot.val().commentId == commentId) {
-                            count++;
-                        }
-                    });
-                    countElement.textContent = count;
+                    container.appendChild(button);
+                    updateCommentCounter(product.commentId, product.elementId);
                 });
             };
     
-            // التنفيذ الرئيسي
-            (async () => {
-                const productId = getProductIdFromURL();
-                const product = await fetchProductData(productId);
-                renderCommentButton(product);
-            })();
+            // دالة تحديث العداد
+            const updateCommentCounter = (commentId, elementId) => {
+                const commentRef = ref(db, `comments/${commentId}`);
+                
+                onValue(commentRef, (snapshot) => {
+                    const count = snapshot.size;
+                    document.getElementById(elementId).textContent = count;
+                }, (error) => {
+                    console.error('حدث خطأ في جلب التعليقات:', error);
+                });
+            };
+    
+            // جلب بيانات المنتجات
+            fetch('products.json')
+                .then(response => response.json())
+                .then(products => {
+                    createButtons(products);
+                })
+                .catch(error => {
+                    console.error('حدث خطأ في جلب البيانات:', error);
+                    document.getElementById('buttonsContainer').innerHTML = `
+                        <p style="color: red; text-align: center;">
+                            خطأ في تحميل البيانات، يرجى المحاولة لاحقًا
+                        </p>
+                    `;
+                });
         </script>
     </body>
     </html>
