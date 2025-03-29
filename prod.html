@@ -2320,15 +2320,14 @@
 
     <script>
         // جلب معرّف المنتج ورقم الصفحة من URL
-        const url = new URL(window.location.href);
-        let productId;
+          // جلب معرّف المنتج ورقم الصفحة من URL
+          const url = new URL(window.location.href);
         try {
-            productId = new URLSearchParams(window.location.search).get('id');
-            console.log('productId:', productId);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-        
+  const productId = new URLSearchParams(window.location.search).get('id');
+  console.log('productId:', productId); // تحقق من القيمة
+} catch (error) {
+  console.error('Error:', error); // اطبع الخطأ إذا حدث
+}
         const pageNumber = url.searchParams.get('page') || '1';
         
         if (!productId) {
