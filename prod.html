@@ -2320,142 +2320,94 @@
         </div>
     </div>
 
-   
-<script>
-    // متغير لتخزين بيانات المنتج الحالي
-    let currentProduct = null;
+    <script>
+        // جلب رقم الصفحة من URL
+        const url = new URL(window.location.href);
+        const pageNumber = url.searchParams.get('page') || '1';
+        const jsonFile = `products-${pageNumber}.json`;
 
-    // جلب معرّف المنتج ورقم الصفحة من URL
- // دالة لاستخراج قيمة معلمة معينة من عنوان URL
-function getQueryParam(param) {
-    const queryString = window.location.search.substring(1);
-    const params = queryString.split('&');
-    for (let i = 0; i < params.length; i++) {
-        const pair = params[i].split('=');
-        if (pair[0] === param) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-    return null;
-}
+        // جلب بيانات JSON مع منع الذاكرة المؤقتة
+        fetch(`${jsonFile}?t=${Date.now()}`)
+            .then(response => {
+                if (!response.ok) throw new Error(`خطأ ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                console.log("بيانات JSON المستلمة:", data);
+                
+                if (!data || data.length === 0) {
+                    throw new Error('لا توجد منتجات في هذه الصفحة');
+                }
 
-// استخراج productId باستخدام الدالة
+                const firstProduct = data[0];
+                populateProduct(firstProduct);
+            })
+            .catch(error => {
+                console.error('خطأ:', error);
+                document.getElementById('product-frame').innerHTML = 
+                    `<p style="color: red">${error.message}</p>`;
+            });
 
-    try {
-        productId = urlParams.get('id');
-        pageNumber = urlParams.get('page') || '1';
-        console.log('معرّف المنتج:', productId);
-    } catch (error) {
-        console.error('خطأ:', error);
-        alert('حدث خطأ في قراءة المعرّف');
-        throw error;
-    }
+        // تعبئة بيانات المنتج
+        function populateProduct(data) {
+            const product = data.product;
+            const texts = data.texts;
 
-    if (!productId) {
-        alert('معرّف المنتج غير موجود في الرابط');
-        throw new Error('معرّف المنتج مطلوب');
-    }
+            // عرض الإطار
+            document.getElementById('product-frame').style.display = 'block';
 
-    const jsonFile = `products-${pageNumber}.json`;
-    const jsonUrl = `${jsonFile}?t=${Date.now()}`;
+            // تعبئة البيانات الأساسية
+            document.getElementById('product-link').href = `${product.pageId}.html`;
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-sold').textContent = product.sold;
+            document.getElementById('product-price').textContent = product.price;
+            document.getElementById('currency').textContent = texts.currency;
 
-    // جلب بيانات JSON
-    fetch(jsonUrl)
-        .then(response => {
-            if (!response.ok) throw new Error(`خطأ ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            const productData = data.find(item => item.product.productId === productId);
-            if (!productData) throw new Error('المنتج غير موجود');
-            populateProduct(productData);
-        })
-        .catch(error => {
-            console.error('خطأ في الجلب:', error);
-            alert(error.message);
-        });
-
-    // تعبئة بيانات المنتج
-    function populateProduct(data) {
-        currentProduct = data.product; // تخزين بيانات المنتج
-        
-        const texts = data.texts;
-        document.getElementById('product-frame').style.display = 'block';
-        
-        // تعبئة العناصر
-        document.getElementById('product-link').href = `${currentProduct.pageId}.html`;
-        document.getElementById('product-image').src = currentProduct.image;
-        document.getElementById('product-image').alt = currentProduct.name;
-        document.getElementById('product-name').textContent = currentProduct.name;
-        document.getElementById('product-sold').textContent = currentProduct.sold;
-        document.getElementById('product-price').textContent = currentProduct.price;
-        document.getElementById('currency').textContent = texts.currency;
-
-        // إدارة الخصم
-        const discountElement = document.getElementById('product-discount');
-        if (currentProduct.discount > 0) {
-            discountElement.textContent = `${texts.discountLabel} ${currentProduct.discount}%`;
-        } else {
-            discountElement.style.display = 'none';
-        }
-
-        // أحداث الأزرار
-        document.getElementById('buy-now-btn').onclick = () => buyNow(
-            currentProduct.name,
-            currentProduct.productId,
-            currentProduct.price,
-            currentProduct.shippingPrice,
-            currentProduct.colors,
-            currentProduct.sizes
-        );
-    }
-
-    // دالة إضافة إلى السلة المعدلة
-    function addToCart() {
-        try {
-            if (!currentProduct) throw new Error('بيانات المنتج غير متوفرة');
-            
-            const cartItem = {
-                productId: currentProduct.productId,
-                name: currentProduct.name,
-                price: currentProduct.price,
-                image: currentProduct.image,
-                discount: currentProduct.discount || 0, // إضافة الخصم هنا
-                quantity: 1
-            };
-
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingItem = cart.find(item => item.productId === cartItem.productId);
-
-            if (existingItem) {
-                existingItem.quantity++;
+            // تعبئة نص الخصم مع التحقق من القيمة
+            const discountElement = document.getElementById('product-discount');
+            if (product.discount && product.discount > 0) {
+                discountElement.textContent = 
+                    `${texts.discountLabel} ${product.discount}%`;
             } else {
-                cart.push(cartItem);
+                discountElement.textContent = 'لا يوجد خصم حالياً';
+                discountElement.style.color = '#999'; // لون مختلف عند عدم وجود خصم
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`تمت إضافة "${cartItem.name}" إلى العربة!`);
-            console.log('السلة الحالية:', cart);
-        } catch (error) {
-            console.error('خطأ في الإضافة:', error);
-            alert(error.message);
+            // تحديث زر الشراء
+            document.getElementById('buy-now-btn').onclick = () => {
+                buyNow(
+                    product.name,
+                    product.productId,
+                    product.price,
+                    product.shippingPrice,
+                    product.colors,
+                    product.sizes
+                );
+            };
         }
-    }
 
-    // دالة الشراء الآن (كما هي)
-    function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-        const params = new URLSearchParams({
-            name: encodeURIComponent(productName),
-            id: encodeURIComponent(productId),
-            price: encodeURIComponent(productPrice),
-            shipping: encodeURIComponent(shippingPrice),
-            colors: encodeURIComponent(JSON.stringify(colors)),
-            sizes: encodeURIComponent(JSON.stringify(sizes))
-        });
-        
-        window.location.href = `buy.html?${params}`;
-    }
-</script>
+        // دالة شراء الآن
+        function buyNow(name, id, price, shipping, colors, sizes) {
+            const params = new URLSearchParams({
+                name: name,
+                id: id,
+                price: price,
+                shipping: shipping,
+                colors: JSON.stringify(colors),
+                sizes: JSON.stringify(sizes)
+            });
+            window.location.href = `buy.html?${params.toString()}`;
+        }
+
+        // دالة إضافة إلى العربة
+        function addToCart(button) {
+            button.textContent = "تم الإضافة ✔";
+            setTimeout(() => {
+                button.textContent = "إضافة إلى العربة";
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
 
