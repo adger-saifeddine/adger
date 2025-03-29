@@ -1216,34 +1216,38 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>الصفحة الرئيسية</title>
+        <title>صفحة المنتج</title>
         <style>
             .comment-button {
                 font-family: 'Cairo', sans-serif;
-                padding: 5px 20px;
-                font-size: 15px;
-                background-color: #ececec;
-                color: rgb(22, 22, 22);
+                padding: 8px 25px;
+                font-size: 16px;
+                background-color: #4285f4;
+                color: white;
                 border: none;
                 border-radius: 8px;
                 cursor: pointer;
-                transition: 0.3s ease-in-out;
-                margin-top: 11px;
-                margin-right: 12px;
+                transition: 0.3s;
+                margin: 15px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             }
             .comment-button:hover {
-                background-color: #f0f0f0;
+                background-color: #3367d6;
+                transform: translateY(-2px);
             }
         </style>
     </head>
     <body>
-        <div id="commentButtonContainer"></div>
+        <div id="productContainer">
+            <!-- سيتم عرض معلومات المنتج هنا -->
+            <div id="commentButtonContainer"></div>
+        </div>
     
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
             import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
     
-            // Firebase configuration
+            // تكوين Firebase
             const firebaseConfig = {
                 apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
                 authDomain: "adger-ddb84.firebaseapp.com",
@@ -1258,55 +1262,71 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // 1. جلب productId من URL
-            const getCurrentProductId = () => {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('productId') || '1'; // افتراضي إذا لم يوجد
+            // 1. جلب معرف الصفحة الحالية من URL
+            const getPageId = () => {
+                const path = window.location.pathname.split('/');
+                return path[path.length - 1].replace('.html', '') || '1';
             };
     
-            // 2. جلب commentId المناسب من JSON
-            const getCommentIdForProduct = async (productId) => {
+            // 2. جلب بيانات المنتج من JSON
+            const getProductData = async (pageId) => {
                 try {
                     const response = await fetch('products.json');
                     const products = await response.json();
-                    const product = products.find(p => p.id == productId);
-                    return product?.commentId || 1; // افتراضي إذا لم يوجد
+                    return products.find(p => p.id === pageId) || {
+                        id: pageId,
+                        commentId: parseInt(pageId) || 1,
+                        name: `المنتج ${pageId}`
+                    };
                 } catch (error) {
-                    console.error('Error loading products:', error);
-                    return 1; // قيمة افتراضية عند الخطأ
+                    console.error('خطأ في جلب بيانات المنتجات:', error);
+                    return {
+                        id: pageId,
+                        commentId: parseInt(pageId) || 1,
+                        name: `المنتج ${pageId}`
+                    };
                 }
             };
     
-            // 3. إنشاء زر التعليقات
-            const createCommentButton = (commentId) => {
+            // 3. عرض زر التعليقات
+            const renderCommentButton = (product) => {
                 const container = document.getElementById('commentButtonContainer');
                 container.innerHTML = `
-                    <button class="comment-button" onclick="window.location.href='comments.html?commentId=${commentId}'">
-                        التعليقات (<span id="commentCount">0</span>)
+                    <button class="comment-button" onclick="window.location.href='comments.html?productId=${product.id}&commentId=${product.commentId}'">
+                        تعليقات المنتج ${product.id} (<span id="commentCount">0</span>)
                     </button>
                 `;
-                updateCommentCount(commentId, 'commentCount');
+                updateCommentCount(product.commentId, 'commentCount');
             };
     
             // 4. تحديث عدد التعليقات
             const updateCommentCount = (commentId, elementId) => {
-                const commentCountElement = document.getElementById(elementId);
+                const countElement = document.getElementById(elementId);
                 onValue(commentsRef, (snapshot) => {
                     let count = 0;
                     snapshot.forEach((childSnapshot) => {
-                        if (childSnapshot.val().commentId == commentId) {
+                        if (childSnapshot.val().commentId === commentId) {
                             count++;
                         }
                     });
-                    commentCountElement.textContent = count;
+                    countElement.textContent = count;
                 });
             };
     
             // التنفيذ الرئيسي
             (async () => {
-                const productId = getCurrentProductId();
-                const commentId = await getCommentIdForProduct(productId);
-                createCommentButton(commentId);
+                const pageId = getPageId();
+                const product = await getProductData(pageId);
+                
+                // عرض معلومات المنتج (اختياري)
+                document.title = product.name;
+                document.getElementById('productContainer').insertAdjacentHTML('afterbegin', `
+                    <h1>${product.name}</h1>
+                    <p>معرف المنتج: ${product.id}</p>
+                    <p>معرف التعليقات: ${product.commentId}</p>
+                `);
+                
+                renderCommentButton(product);
             })();
         </script>
     </body>
