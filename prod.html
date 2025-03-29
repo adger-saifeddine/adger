@@ -1412,7 +1412,7 @@
         fetch(jsonFileName)
             .then(response => response.json())
             .then(data => {
-                const pageId = data.pageId;
+                const pageId = data.product.pageId;
                 document.getElementById('askProductBtn').onclick = function() {
                     const hiddenText = `رقم الصفحة| ${pageId}`;
                     window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
