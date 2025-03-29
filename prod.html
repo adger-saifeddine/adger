@@ -2324,7 +2324,7 @@
         // جلب رقم الصفحة من URL
         const url = new URL(window.location.href);
         const pageNumber = url.searchParams.get('page') || '1';
-        const jsonFile = `products.json`;
+        const jsonFile = `products-${pageNumber}.json`;
 
         // إضافة طابع زمني لتجنب الذاكرة المؤقتة
         const jsonUrl = `${jsonFile}?t=${Date.now()}`;
@@ -2338,13 +2338,8 @@
                 return response.json();
             })
             .then(data => {
-                // البحث عن المنتج الذي يتطابق مع pageNumber
-                const productData = data.find(item => item.id === pageNumber);
-                if (productData) {
-                    populateProduct(productData);
-                } else {
-                    throw new Error('لم يتم العثور على المنتج المطلوب');
-                }
+                const productData = data[0]; // أول منتج في الملف
+                populateProduct(productData);
             })
             .catch(error => {
                 console.error('خطأ في جلب بيانات JSON:', error);
@@ -2353,12 +2348,12 @@
 
         // تعبئة بيانات المنتج
         function populateProduct(data) {
-            console.log("البيانات المستلمة من JSON:", data);
+            console.log("البيانات المستلمة من JSON:", data); // للتحقق من البيانات
             const product = data.product;
             const texts = data.texts;
 
             // إظهار الإطار
-            document.getElementById('product-frame').style.display = 'block';
+            document.getElementById('product-frame').style.display = 'block !important';
             document.getElementById('product-link').href = `${product.pageId}.html`;
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-image').alt = product.name;
@@ -2371,15 +2366,14 @@
             // تحديث زر "شراء الآن"
             const buyNowBtn = document.getElementById('buy-now-btn');
             buyNowBtn.onclick = function() {
-                buyNow(product.name, product.productId, product.price, 
-                       product.shippingPrice, product.colors || [], product.sizes || []);
+                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
             };
         }
 
         // دالة شراء الآن
         function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            console.log("الألوان الممررة:", colors);
-            console.log("المقاسات الممررة:", sizes);
+            console.log("الألوان الممررة:", colors); // للتحقق من الألوان قبل التمرير
+            console.log("المقاسات الممررة:", sizes); // للتحقق من المقاسات قبل التمرير
             window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
         }
 
@@ -2391,6 +2385,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
