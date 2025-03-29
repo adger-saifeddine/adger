@@ -1218,7 +1218,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>صفحة المنتج</title>
         <style>
-             .comment-button {
+            .comment-button {
                 font-family: 'Cairo', sans-serif;
                 padding: 5px 20px;
                 font-size: 15px;
@@ -1235,7 +1235,6 @@
             .comment-button:hover {
                 background-color: #f0f0f0;
             }
-        </style>
         </style>
     </head>
     <body>
@@ -1294,8 +1293,7 @@
                 container.innerHTML = `
                     <button class="comment-button" 
                             onclick="window.location.href='comments.html?productId=${product.id}&commentId=${product.commentId}'">
-                        تعليقات المنتج (${product.id}) 
-                        <span id="commentCount">0</span>
+                        تعليقات <span id="commentCount">0</span>
                     </button>
                 `;
                 
