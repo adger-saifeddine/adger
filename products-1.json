@@ -247,47 +247,48 @@
     {
         "id": "5",
         "media": [
-            {"src": "https://i.postimg.cc/7YxZyKtJ/book5-1.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/8zVqY0J7/book5-2.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/3xJZQYy0/book5-3.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/9fHXZJzG/book5-4.jpg", "type": "image"}
+            {"src": "https://i.postimg.cc/XYZ123/speaker1.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XYZ124/speaker2.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XYZ125/speaker3.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XYZ126/speaker4.jpg", "type": "image"}
         ],
-        "pri": "70",
-        "oldPrice": "114",
-        "dis": "خصم أكثر من 38.6%",
-        "changingText": ["ابداع", "طبعة مثالية", "جودة"],
-        "longText": "كتاب ابقَ قويًا 365 يومًا في السنة هو كتاب تنمية ذاتية من تأليف ديمي لوفاتو",
-        "sales": "موثوق",
+        "pri": "550",
+        "oldPrice": "700",
+        "dis": "خصم أكثر من 21%",
+        "changingText": ["صوت قوي", "تصميم عصري", "جودة عالية"],
+        "longText": "سماعة بلوتوث عالية الجودة مع تقنية صوت متطورة وبطارية تدوم طويلاً",
+        "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton5",
         "commentId": "5",
         "elementId": "commentCount5",
         "tableData": [
-            {"question": "اللون", "answer": "أبيض"},
-            {"question": "المادة", "answer": "ورق"},
-            {"question": "المؤلف", "answer": "ديمي لوفاتو"},
-            {"question": "عدد الصفح", "answer": "402"}
+            {"question": "النوع", "answer": "بلوتوث"},
+            {"question": "المادة", "answer": "بلاستيك ومعدن"},
+            {"question": "الماركة", "answer": "ساوند ماستر"},
+            {"question": "مدة البطارية", "answer": "20 ساعة"}
         ],
-        "desc": "هو كتاب تحفيزي للكاتبة ديمي لوفاتو، يحتوي على 365 تأملًا يوميًا مستوحى من تجاربها الشخصية، حيث تقدم نصائح وإلهامًا يوميًا لمساعدة القارئ على مواجهة التحديات، وبناء الثقة بالنفس، وتحقيق التوازن في الحياة. يعكس الكتاب رحلة الكاتبة في التغلب على الصعوبات وتعزيز القوة الداخلية من خلال التفكير الإيجابي والتأملات العميقة.",
+        "desc": "سماعة بلوتوث بقوة 20 وات، تدعم تقنية الصوت ستريو، مع بطارية تدوم حتى 20 ساعة تشغيل مستمر. مقاومة للماء والغبار، تأتي بتصميم عصري وألوان متعددة.",
         "groups": [
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/7YxZyKtJ/book5-1.jpg",
-                    "https://i.postimg.cc/8zVqY0J7/book5-2.jpg",
-                    "https://i.postimg.cc/3xJZQYy0/book5-3.jpg",
-                    "https://i.postimg.cc/9fHXZJzG/book5-4.jpg"
+                    "https://i.postimg.cc/XYZ123/speaker1.jpg",
+                    "https://i.postimg.cc/XYZ124/speaker2.jpg",
+                    "https://i.postimg.cc/XYZ125/speaker3.jpg",
+                    "https://i.postimg.cc/XYZ126/speaker4.jpg"
                 ]
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/7YxZyKtJ/book5-1.jpg",
-            "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
+            "image": "https://i.postimg.cc/XYZ123/speaker1.jpg",
+            "name": "سماعة بلوتوث ساوند ماستر",
             "sold": "موثوق",
-            "price": "70.00",
-            "discount": "38.6%",
+            "price": "550",
+            "discount": "21",
             "pageId": "5",
             "productId": "5",
-            "shippingPrice": "60"
+            "shippingPrice": "80",
+            "colors": ["أسود", "أزرق", "أحمر", "أبيض"]
         },
         "texts": {
             "currency": "جنيه",
