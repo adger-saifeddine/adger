@@ -2334,8 +2334,8 @@
             return null;
         }
 
-        // جلب معرّف المنتج ورقم الصفحة باستخدام اسم متغير جديد
-        const currentProductId = getQueryParam('id'); // تغيير الاسم إلى currentProductId
+        // جلب معرّف المنتج ورقم الصفحة
+        const currentProductId = getQueryParam('id'); // استخدام اسم جديد لتجنب التعارض
         const pageNumber = getQueryParam('page') || '1';
 
         if (!currentProductId) {
@@ -2389,6 +2389,7 @@
                 document.getElementById('product-discount').style.display = 'none';
             }
 
+            // حفظ الخصم كسمة بيانات
             document.getElementById('product-container').setAttribute('data-discount', product.discount || 0);
 
             document.getElementById('buy-now-btn').onclick = function() {
@@ -2428,14 +2429,14 @@
                         name: productName,
                         price: productPrice,
                         image: productImage,
-                        discount: discount,
+                        discount: discount, // التأكد من حفظ الخصم
                         quantity: 1
                     });
                 }
 
                 localStorage.setItem('cart', JSON.stringify(cart));
                 alert(`تمت إضافة "${productName}" إلى العربة!`);
-                console.log('سلة التسوق الحالية:', cart);
+                console.log('سلة التسوق الحالية:', cart); // تحقق من البيانات
             } catch (error) {
                 console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
                 alert('حدث خطأ أثناء إضافة المنتج إلى العربة');
