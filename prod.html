@@ -2296,14 +2296,10 @@
     </style>
 </head>
 <body>
-    <div class="image-container product" id="products-container">
-        <!-- سيتم إضافة عناصر المنتجات هنا ديناميكيًا -->
-    </div>
-    
     <script>
-        // نموذج HTML لكل منتج
+        // قالب المنتج مع الأزرار مدمجة
         const productTemplate = `
-            <div class="image-frame" style="display: block;">
+            <div class="image-frame">
                 <a class="product-link" href="">
                     <img class="product-image" src="" alt="">
                 </a>
@@ -2311,34 +2307,27 @@
                     <h1 class="product-name"></h1>
                     <h2 class="product-sold"></h2>
                     <div class="container">
-                        <div class="zero">00.</div>
-                        <div class="number product-price"></div>
-                        <div class="letter currency"></div>
+                        <div class="product-price"></div>
+                        <div class="currency"></div>
                     </div>
-                    <h3 class="product-discount"></h3>
                 </div>
                 <div class="bottom-buttons">
-                    <div class="buttons-wrapper">
-                        <div class="buy-now-text buy-now-btn">اشتري الآن</div>
-                        <div class="add-to-cart-text add-to-cart-btn">أضف إلى السلة</div>
-                    </div>
+                    <div class="buy-now-btn">اشتري الآن</div>
+                    <div class="add-to-cart-btn">أضف إلى السلة</div>
                 </div>
             </div>
         `;
-    
-        // جلب رقم الصفحة من URL
+
+        // جلب بيانات المنتجات من ملف JSON
         const url = new URL(window.location.href);
         const pageNumber = url.searchParams.get('page') || '1';
         const jsonFile = `products-${pageNumber}.json`;
-    
-        // إضافة طابع زمني لتجنب الذاكرة المؤقتة
         const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-    
-        // جلب بيانات JSON
+
         fetch(jsonUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`خطأ في الاستجابة: ${response.status} - ${response.statusText}`);
+                    throw new Error('خطأ في جلب البيانات');
                 }
                 return response.json();
             })
@@ -2349,19 +2338,18 @@
                 });
             })
             .catch(error => {
-                console.error('خطأ في جلب بيانات JSON:', error);
-                alert('حدث خطأ أثناء جلب بيانات المنتج: ' + error.message);
+                console.error('خطأ:', error);
+                alert('حدث خطأ أثناء جلب المنتجات');
             });
-    
+
         // تعبئة بيانات المنتج
         function populateProduct(data, container) {
             const product = data.product;
-            const texts = data.texts;
-    
-            // إنشاء عنصر جديد من القالب
+
+            // إنشاء عنصر المنتج من القالب
             const productElement = document.createElement('div');
             productElement.innerHTML = productTemplate;
-    
+
             // تعبئة البيانات
             productElement.querySelector('.product-link').href = `${product.pageId}.html`;
             productElement.querySelector('.product-image').src = product.image;
@@ -2369,35 +2357,26 @@
             productElement.querySelector('.product-name').textContent = product.name;
             productElement.querySelector('.product-sold').textContent = product.sold;
             productElement.querySelector('.product-price').textContent = product.price;
-            productElement.querySelector('.currency').textContent = texts.currency;
-            productElement.querySelector('.product-discount').textContent = `${texts.discountLabel} ${product.discount}%`;
-    
-            // إعداد زر "شراء الآن"
+            productElement.querySelector('.currency').textContent = "ر.س";
+
+            // إعداد زر "اشتري الآن"
             const buyNowBtn = productElement.querySelector('.buy-now-btn');
             buyNowBtn.onclick = function() {
-                buyNow(product.name, product.productId, product.price, product.shippingPrice, product.colors, product.sizes);
+                window.location.href = `buy.html?name=${product.name}&id=${product.productId}`;
             };
-    
-            // إعداد زر "إضافة إلى العربة"
+
+            // إعداد زر "أضف إلى السلة"
             const addToCartBtn = productElement.querySelector('.add-to-cart-btn');
             addToCartBtn.onclick = function() {
-                addToCart(this);
+                alert(`تمت إضافة ${product.name} إلى السلة!`);
             };
-    
-            // إضافة المنتج إلى الحاوية
+
+            // إضافة المنتج إلى الصفحة
             container.appendChild(productElement.firstElementChild);
         }
-    
-        // دالة شراء الآن
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
-            window.location.href = `buy.html?name=${encodeURIComponent(productName)}&id=${encodeURIComponent(productId)}&price=${encodeURIComponent(productPrice)}&shipping=${encodeURIComponent(shippingPrice)}&colors=${encodeURIComponent(JSON.stringify(colors))}&sizes=${encodeURIComponent(JSON.stringify(sizes))}`;
-        }
-    
-        // دالة إضافة إلى العربة
-        function addToCart(element) {
-            alert("تمت إضافة المنتج إلى العربة!");
-        }
     </script>
+</body>
+</html>
 
 
 
