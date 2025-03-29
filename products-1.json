@@ -42,7 +42,7 @@
             "price": "70.00",
             "discount": "38.6%",
             "pageId": "1",
-            "prodId": "1",
+            "productId": "1",
             "shippingPrice": "60"
         },
         "texts": {
@@ -94,7 +94,7 @@
             "price": "360",
             "discount": "20",
             "pageId": "2",
-            "prodId": "2",
+            "productId": "2",
             "shippingPrice": "70",
             "colors": ["أبيض", "أسود","كحلي","هافان"],
             "sizes": ["41", "42", "43","44","45"]
@@ -167,7 +167,7 @@
             "price": "290",
             "discount": "17",
             "pageId": "3",
-            "prodId": "3",
+            "productId": "3",
             "shippingPrice": "70",
             "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
         },
@@ -235,7 +235,7 @@
             "price": "400",
             "discount": "20",
             "pageId": "4",
-            "prodId": "4",
+            "productId": "4",
             "shippingPrice": "70",
             "colors": ["بينك", "لبني", "أسود", "أخضر"]
         },
@@ -244,4 +244,5 @@
             "discountLabel": "خصم"
         }
     }
+
 ]
