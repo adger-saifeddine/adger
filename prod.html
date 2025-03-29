@@ -1235,19 +1235,11 @@
             .comment-button:hover {
                 background-color: #f0f0f0;
             }
-            
-            .buttons-container {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px;
-            }
         </style>
     </head>
     <body>
-        <div class="buttons-container" id="commentsContainer">
-            <!-- سيتم إضافة الأزرار هنا ديناميكيًا -->
-        </div>
+        <!-- سيتم إضافة الزر هنا ديناميكيًا -->
+        <div id="commentButtonContainer"></div>
     
         <!-- أضف Firebase SDK -->
         <script type="module">
@@ -1270,24 +1262,22 @@
             const database = getDatabase(app);
             const commentsRef = ref(database, 'comments');
     
-            // دالة لإنشاء أزرار التعليقات
-            const createCommentButtons = (products) => {
-                const container = document.getElementById('commentsContainer');
+            // دالة لإنشاء زر التعليقات
+            const createCommentButton = (product) => {
+                const container = document.getElementById('commentButtonContainer');
                 
-                products.forEach(product => {
-                    const button = document.createElement('button');
-                    button.className = 'comment-button';
-                    button.id = `commentButton${product.commentId}`;
-                    
-                    button.innerHTML = `التعليقات ${product.commentId} (<span id="commentCount${product.commentId}">0</span>)`;
-                    
-                    button.onclick = () => {
-                        window.location.href = `comments.html?commentId=${product.commentId}`;
-                    };
-                    
-                    container.appendChild(button);
-                    updateCommentCount(product.commentId, `commentCount${product.commentId}`);
-                });
+                const button = document.createElement('button');
+                button.className = 'comment-button';
+                button.id = `commentButton${product.commentId}`;
+                
+                button.innerHTML = `التعليقات (<span id="commentCount${product.commentId}">0</span>)`;
+                
+                button.onclick = () => {
+                    window.location.href = `comments.html?commentId=${product.commentId}`;
+                };
+                
+                container.appendChild(button);
+                updateCommentCount(product.commentId, `commentCount${product.commentId}`);
             };
     
             // دالة لتحديث عدد التعليقات
@@ -1307,6 +1297,12 @@
                 });
             };
     
+            // جلب productId من URL الصفحة
+            const getProductIdFromUrl = () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('productId') || urlParams.get('id') || '1'; // قيمة افتراضية إذا لم يوجد
+            };
+    
             // جلب بيانات المنتجات من JSON
             fetch('config.json')
                 .then(response => {
@@ -1314,16 +1310,21 @@
                     return response.json();
                 })
                 .then(products => {
-                    createCommentButtons(products);
+                    const currentProductId = getProductIdFromUrl();
+                    const currentProduct = products.find(p => p.id == currentProductId);
+                    
+                    if (currentProduct) {
+                        createCommentButton(currentProduct);
+                    } else {
+                        // إذا لم يتم العثور على المنتج، استخدم أول منتج كافتراضي
+                        createCommentButton(products[0]);
+                        console.warn('لم يتم العثور على المنتج المطلوب، تم عرض زر التعليقات الافتراضي');
+                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب بيانات JSON:', error);
                     // إذا فشل جلب JSON، استخدم بيانات افتراضية
-                    createCommentButtons([
-                        { commentId: 1 },
-                        { commentId: 2 },
-                        { commentId: 3 }
-                    ]);
+                    createCommentButton({ commentId: 1 });
                 });
         </script>
     </body>
