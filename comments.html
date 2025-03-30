@@ -466,6 +466,17 @@
                 confirmOverlay.style.display = 'none';
             };
         }
+
+        // Adjust the textarea to be above the keyboard
+        document.getElementById('commentText').addEventListener('focus', () => {
+            document.getElementById('field2').style.position = 'absolute';
+            document.getElementById('field2').style.bottom = '20px';
+        });
+
+        document.getElementById('commentText').addEventListener('blur', () => {
+            document.getElementById('field2').style.position = 'fixed';
+            document.getElementById('field2').style.bottom = '0';
+        });
     </script>
 </body>
 </html>
