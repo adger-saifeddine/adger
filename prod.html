@@ -1404,33 +1404,19 @@
 </div>
 
 <script>
-    // استخراج الرقم من عنوان URL بطريقة يدوية
-    const queryString = window.location.search;
-    const productNumber = queryString.split('product=')[1]?.split('&')[0];
-
-    if (productNumber) {
-        // تكوين اسم الملف JSON بناءً على الرقم
-        const jsonFile = `products-${productNumber}.json`;
-
-        // تحميل ملف JSON
-        fetch(jsonFile)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('لم يتم العثور على الملف');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const productId = data.productId; // استخراج رقم المنتج من JSON
-                document.getElementById('askProductBtn').onclick = function() {
-                    const hiddenText = `رقم المنتج| ${productId}`;
-                    window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-                };
-            })
-            .catch(error => console.error('خطأ في تحميل الملف:', error));
-    } else {
-        console.error('يرجى تحديد رقم المنتج في عنوان URL');
+    // دالة لجلب productId بناءً على معرف الصفحة أو المنتج الحالي
+    function getProductId() {
+        // هنا يمكنك تحديد المنتج الحالي بناءً على منطقك
+        // على سبيل المثال، نفترض أن رقم المنتج يأتي من معلمة URL أو متغير
+        const currentProductId = new URLSearchParams(window.location.search).get('productId') || "1"; // قيمة افتراضية "1"
+        return currentProductId;
     }
+
+    document.getElementById('askProductBtn').onclick = function() {
+        const productId = getProductId(); // جلب productId ديناميكيًا
+        const hiddenText = `رقم المنتج| ${productId}`;
+        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+    };
 </script>
 </body>
 </html>
