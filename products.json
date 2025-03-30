@@ -35,7 +35,7 @@
         "price": "400.00",
         "image": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
         "sold": "موثوق",
-        "discountTexts": ["كان ب 500 جنيه", "خصم 20.0%"],
+        "discountTexts": ["كان ب 500 جنيه", "خصم20%"],
         "link": "prod.html?id=4"
     }
     
