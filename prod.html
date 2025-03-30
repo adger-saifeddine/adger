@@ -1330,7 +1330,7 @@
 
 <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;">تفاصيل المنتج</h2>
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1346,8 +1346,7 @@
             border-radius: 0;
             box-sizing: border-box;
             margin: 0;
-            overflow: hidden;
-            direction: rtl;
+            overflow: hidden; /* منع التجاوز */
         }
         .text-right {
             font-family: Cairo, sans-serif;
@@ -1392,9 +1391,10 @@
             }
         }
     </style>
+
 </head>
 <body>
-<div class="containe" id="productContainer" data-product-id="1">
+<div class="containe">
     <div class="text-right">
         <p>أسئل و أعرف</p>
         <p class="text-small">اسأل و أعرف تفاصيل أكثر عن المنتج</p>
@@ -1405,50 +1405,10 @@
 </div>
 
 <script>
-// دالة لاستخراج معرف المنتج من عنوان URL
-function getProductIdFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('product_id') || 1; // القيمة الافتراضية 1
-}
-
-// دالة لتحميل بيانات المنتج
-async function loadProductData(productId) {
-    try {
-        const response = await fetch(`products-${productId}.json`);
-        if (!response.ok) {
-            throw new Error('المنتج غير موجود');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('حدث خطأ في تحميل بيانات المنتج:', error);
-        return {
-            id: productId,
-            name: 'منتج افتراضي',
-            error: true
-        };
-    }
-}
-
-// دالة رئيسية لتشغيل الكود
-async function init() {
-    // الحصول على معرف المنتج
-    const productId = getProductIdFromURL();
-    
-    // تعيين معرف المنتج في العنصر
-    document.getElementById('productContainer').dataset.productId = productId;
-    
-    // تحميل بيانات المنتج (إذا كنت بحاجة لعرضها)
-    const productData = await loadProductData(productId);
-    console.log('بيانات المنتج:', productData);
-    
-    // إعداد حدث النقر على الزر
-    document.getElementById('askProductBtn').addEventListener('click', () => {
-        window.location.href = `ask.html?product_id=${productId}`;
-    });
-}
-
-// تشغيل الكود عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', init);
+    document.getElementById('askProductBtn').onclick = function() {
+        const hiddenText = "رقم المنتج 1#";
+        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+    };
 </script>
 </body>
 </html>
