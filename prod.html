@@ -1967,18 +1967,16 @@
         <div class="content">
             <h1>الأكثرُ طلبًا</h1>
             <div class="text-container">
-                <p onclick="redirectToPage(1)">ساعدنا فى بناء مجتمع أفضل</p>
-                <p onclick="redirectToPage(2)">نص إضافي مثال 1</p>
-                <p onclick="redirectToPage(3)">نص إضافي مثال 2</p>
-                <p onclick="redirectToPage(4)">نص إضافي مثال 3</p>
-                <p onclick="redirectToPage(5)">نص إضافي مثال 4</p>
-                <p onclick="redirectToPage(6)">نص إضافي مثال 5</p>
+                <p onclick="redirectToPage(1)">كتاب ابقَ قويًا 365 يومًا في السنة</p>
+                <p onclick="redirectToPage(2)">حذاء جلد - p30 سكاي مريح</p>
+                <p onclick="redirectToPage(3)">مج حراري فاخر 500 مل مع كوبين</p>
+                <p onclick="redirectToPage(4)">ايربودز A-16 بلوتوث</p>
             </div>
         </div>
     
         <script>
-            function redirectToPage(pageNumber) {
-                window.location.href = `${pageNumber}.html`;
+            function redirectToPage(id) {
+                window.location.href = `prod.html?id=${id}`;
             }
     
             function performSearch(searchTerm) {
