@@ -2805,14 +2805,6 @@
         const itemsPerLoad = 20;
         let loadedItems = 0;
     
-        // دالة لترتيب المنتجات بشكل عشوائي
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-    
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
@@ -2842,10 +2834,6 @@
                         noResultsMessage.style.display = 'block';
                         searchTermDisplay.textContent = searchTerm;
                     }
-    
-                    // حفظ حالة الترتيب في history
-                    const state = { searchTerm: searchTerm, products: filteredProducts };
-                    history.pushState(state, '', window.location.href);
                 })
                 .catch(error => {
                     removeLoadingAnimation();
@@ -2993,17 +2981,12 @@
             element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         }
     
-        // الاستماع إلى حدث popstate لاستعادة الحالة عند الرجوع
-        window.addEventListener('popstate', function(event) {
-            if (event.state) {
-                const state = event.state;
-                filteredProducts = state.products;
-                const gallery = document.getElementById('gallery');
-                gallery.innerHTML = '';
-                loadedItems = 0;
-                loadProducts(0, itemsPerLoad);
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-        });
+        }
     
         window.onload = function () {
             removeLoadingAnimation();
@@ -3022,6 +3005,9 @@
             fetchAndFilterProducts(searchTerm || '');
         };
     </script>
+    </body>
+    </html>
+
 
 
 
