@@ -397,7 +397,7 @@
                 cartItemsElement.style.display = 'flex';
                 cartItemsElement.innerHTML = '';
 
-                cart.reverse().forEach((product, index) => {
+                [...cart].reverse().forEach((product, index) => {
                     const priceStr = product.price.toString();
                     const firstDigit = priceStr.charAt(0);
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
@@ -407,7 +407,7 @@
                     productElement.className = 'image-container';
                     productElement.innerHTML = `
                         <div class="image-frame">
-                            <a href="${product.link || '#'}">
+                            <a href="${product.link}">
                                 <div class="image-wrapper">
                                     <div class="placeholder"></div>
                                     <img src="${product.image}" alt="${product.name}" loading="lazy" onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';">
@@ -415,13 +415,13 @@
                             </a>
                             <div class="text-under">
                                 <h1>${product.name}</h1>
-                                <h2>${product.sold || ''}</h2>
+                                <h2>${product.sold}</h2>
                                 <div class="container">
                                     <div class="zero" style="font-size: 24px;"></div>
                                     <div class="number">${product.price}</div>
                                     <div class="letter" style="margin-right: ${letterMargin};">EGP</div>
                                 </div>
-                                ${product.discount ? `<h3>${product.discount}</h3>` : ''}
+                                <h3>${product.discount}</h3>
                             </div>
                             <button class="remove-button" onclick="removeFromCart(${index})">
                                 <span>حذف</span>
@@ -442,7 +442,8 @@
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1);
+            const originalIndex = cart.length - 1 - index;
+            cart.splice(originalIndex, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartDisplay();
             window.dispatchEvent(new Event('storage'));
@@ -451,8 +452,8 @@
         function calculateTotalPrice() {
             let totalPrice = 0;
             cart.forEach(product => {
-                const price = parseFloat(product.price.toString().replace(/,/g, ''));
-                totalPrice += price * (product.quantity || 1);
+                const price = typeof product.price === 'number' ? product.price : parseFloat(product.price.replace(/,/g, ''));
+                totalPrice += price;
             });
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
         }
@@ -461,58 +462,7 @@
             history.back();
         }
 
-        // تحديث السلة عند تغييرها من نافذة أخرى
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'cart') {
-                cart = JSON.parse(e.newValue) || [];
-                updateCartDisplay();
-            }
-        });
-
         updateCartDisplay();
-
-    // ... (بقية الكود كما هو)
-
-    // دالة إضافة إلى العربة المعدلة
-    function addToCart(element) {
-        try {
-            // الحصول على بيانات المنتج من العنصر
-            const productName = document.getElementById('product-name').textContent;
-            const productId = new URLSearchParams(window.location.search).get('id');
-            const productPrice = document.getElementById('product-price').textContent;
-            const productImage = document.getElementById('product-image').src;
-            
-            // إضافة هذا الجزء لاستخراج الخصم
-            const discountElement = document.getElementById('product-discount');
-            const productDiscount = discountElement.textContent || '';
-            
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // البحث عن المنتج في السلة
-            const existingProduct = cart.find(item => item.productId === productId);
-            
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                cart.push({
-                    productId: productId,
-                    name: productName,
-                    price: productPrice,
-                    image: productImage,
-                    discount: productDiscount, // إضافة الخصم هنا
-                    quantity: 1
-                });
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`تمت إضافة "${productName}" إلى العربة!`);
-            
-            console.log('سلة التسوق الحالية:', cart);
-        } catch (error) {
-            console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
-            alert('حدث خطأ أثناء إضافة المنتج إلى العربة');
-        }
-    }
     </script>
 </body>
 </html>
