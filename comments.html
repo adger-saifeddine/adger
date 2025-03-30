@@ -117,6 +117,7 @@
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
+            transition: bottom 0.3s ease; /* إضافة انتقال سلس */
         }
         
         #field2 textarea {
@@ -467,16 +468,29 @@
             };
         }
 
-        // Adjust the textarea to be above the keyboard
-        document.getElementById('commentText').addEventListener('focus', () => {
-            document.getElementById('field2').style.position = 'absolute';
-            document.getElementById('field2').style.bottom = '20px';
-        });
+        // دالة لضبط موضع الحقل السفلي عند فتح لوحة المفاتيح
+        function adjustField2Position() {
+            const field2 = document.getElementById('field2');
+            if (window.visualViewport) {
+                const viewportHeight = window.visualViewport.height;
+                const windowHeight = window.innerHeight;
+                const keyboardHeight = windowHeight - viewportHeight;
+                if (keyboardHeight > 0) {
+                    field2.style.bottom = `${keyboardHeight}px`; // رفع الحقل فوق لوحة المفاتيح
+                } else {
+                    field2.style.bottom = '0'; // إعادة الحقل إلى الأسفل عند إغلاق لوحة المفاتيح
+                }
+            }
+        }
 
-        document.getElementById('commentText').addEventListener('blur', () => {
-            document.getElementById('field2').style.position = 'fixed';
-            document.getElementById('field2').style.bottom = '0';
-        });
+        // الاستماع إلى أحداث تغيير الحجم والتمرير
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', adjustField2Position);
+            window.visualViewport.addEventListener('scroll', adjustField2Position);
+        }
+
+        // استدعاء الدالة عند التحميل لضبط الموضع الأولي
+        adjustField2Position();
     </script>
 </body>
 </html>
