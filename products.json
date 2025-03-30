@@ -37,6 +37,15 @@
         "sold": "موثوق",
         "discountTexts": ["كان ب 500 جنيه", "خصم20%"],
         "link": "prod.html?id=4"
+    },
+    {
+        "name": "شنطة كروس jeep",
+        "dataName": " أقل من 300 جنيه #5 jeep شنطة كروس حقيبة حقيبة يد",
+        "price": "225.00",
+        "image": "https://i.postimg.cc/vZVyRsx2/1726421983481892729.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 300 جنيه", "خصم25%"],
+        "link": "prod.html?id=5"
     }
     
 

@@ -243,6 +243,61 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+    {
+        "id": "5",
+        "media": [
+            {"src": "https://i.postimg.cc/vZVyRsx2/1726421983481892729.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/ydVCS3Q2/1726421815695017513.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/V67prGbb/1726421832419519968.png", "type": "image"},
+            {"src": "https://i.postimg.cc/2yVJ4Q49/1726421833273076890.png", "type": "image"}
+        ],
+        "pri": "225",
+        "oldPrice": "300",
+        "dis": "خصم 25%",
+        "changingText": ["تصميم عصري", "مواد عالية الجودة", "راحة في الحمل"],
+        "longText": "شنطة كروس jeep مصنوعة من مواد عالية الجودة وتصميم عصري يتناسب مع جميع الأذواق. مثالية للاستخدام اليومي وتوفر راحة في الحمل.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton5",
+        "commentId": "5",
+        "elementId": "commentCount5",
+        "tableData": [
+            {"question": "النوع", "answer": "شنطة كروس"},
+            {"question": "الماركة", "answer": "jeep"},
+            {"question": "الألوان", "answer": "أسود - بني"}
+        ],
+        "desc": "شنطة كروس jeep تجمع بين التصميم العصري والمواد عالية الجودة لضمان المتانة والأناقة. تحتوي على مساحة واسعة لتخزين جميع احتياجاتك اليومية بسهولة وأمان.\n\nتتميز بجيوب متعددة لتنظيم الأشياء بشكل مثالي وسحاب قوي لضمان الأمان.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/vZVyRsx2/1726421983481892729.jpg",
+                    "https://i.postimg.cc/ydVCS3Q2/1726421815695017513.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/V67prGbb/1726421832419519968.png",
+                    "https://i.postimg.cc/2yVJ4Q49/1726421833273076890.png"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/vZVyRsx2/1726421983481892729.jpg",
+            "name": "شنطة كروس jeep",
+            "sold": "موثوق",
+            "price": "225",
+            "discount": "25",
+            "pageId": "5",
+            "productId": "5",
+            "shippingPrice": "50",
+            "colors": ["أسود", "بني"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
    
 
