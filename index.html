@@ -2583,6 +2583,17 @@
 </head>
 <body>
     <script>
+window.addEventListener('popstate', function (event) {
+    const searchBox = document.getElementById('search-box');
+    const searchTerm = getSearchTermFromURL();
+    if (searchBox && searchTerm) {
+        searchBox.value = searchTerm;
+        fetchAndFilterProducts(searchTerm);
+    } else {
+        fetchAndFilterProducts('');
+    }
+});
+
         // إظهار وإزالة أداة التحميل
         function showLoadingAnimation() {
             const gallery = document.getElementById('gallery');
@@ -2673,12 +2684,17 @@
             }
         }
     
+        // تحديث رسالة الترحيب عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', updateWelcomeMessage);
     
+        // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
-            if (event.key === 'username') updateWelcomeMessage();
+            if (event.key === 'username') {
+                updateWelcomeMessage();
+            }
         });
     
+        // تحديث اسم المستخدم عند تغيير حجم النافذة
         window.addEventListener('resize', () => {
             const username = localStorage.getItem('username');
             if (username && document.getElementById('usernameDisplay')) {
@@ -2686,6 +2702,7 @@
             }
         });
     
+        // تحريك الخط عند النقر على عناصر القائمة
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
             item.addEventListener('click', () => window.scrollTo(0, 0));
@@ -2764,21 +2781,28 @@
             return false;
         }
     
+        // دالة لتحديث عدد المنتجات في العربة
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartCountElement = document.querySelector('.cart-count');
             if (cartCountElement) cartCountElement.textContent = cart.length;
         }
     
+        // الاستماع إلى تغييرات localStorage للسلة
         window.addEventListener('storage', function(event) {
-            if (event.key === 'cart') updateCartCount();
-            else if (event.key === 'username') updateWelcomeMessage();
+            if (event.key === 'cart') {
+                updateCartCount();
+            } else if (event.key === 'username') {
+                updateWelcomeMessage();
+            }
         });
     
+        // تحديث عدد المنتجات عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
         });
     
+        // التنقل إلى صفحة العربة
         function navigateToCart() {
             window.location.href = 'cart.html';
         }
@@ -2787,59 +2811,48 @@
             document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
     
-        // إعدادات التحميل الكسول مع ملفات JSON متعددة
-        let allProducts = [];
+        // باقي الكود الخاص بجلب المنتجات والتحميل الكسول
         let filteredProducts = [];
         const itemsPerLoad = 20;
         let loadedItems = 0;
-        let currentFileIndex = 1;
-        let isFetching = false;
     
-        // جلب المنتجات من ملفات JSON متعددة
-        async function fetchProductsFromFile(fileIndex, searchTerm) {
-            if (isFetching) return;
-            isFetching = true;
-    
-            const gallery = document.getElementById('gallery');
-            showLoadingAnimation();
-    
-            try {
-                const response = await fetch(`products${fileIndex}.json`);
-                if (!response.ok) throw new Error('ملف غير موجود');
-                const products = await response.json();
-    
-                allProducts = allProducts.concat(products);
-                filterAndLoadProducts(searchTerm);
-                currentFileIndex++;
-            } catch (error) {
-                console.log(`انتهت الملفات عند products${fileIndex}.json أو حدث خطأ:`, error);
-                removeLoadingAnimation();
-            } finally {
-                isFetching = false;
-            }
-        }
-    
-        // تصفية المنتجات وتحميلها
-        function filterAndLoadProducts(searchTerm) {
+        function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
             const searchTermDisplay = document.getElementById('search-term-display');
+            const searchBox = document.getElementById('search-box');
     
-            filteredProducts = allProducts.filter(product =>
-                product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            shuffleArray(filteredProducts);
+            if (searchBox) searchBox.value = searchTerm;
+    
             gallery.innerHTML = '';
-            loadedItems = 0;
+            showLoadingAnimation();
     
-            if (filteredProducts.length > 0) {
-                loadProducts(0, itemsPerLoad);
-                noResultsMessage.style.display = 'none';
-            } else {
-                noResultsMessage.style.display = 'block';
-                searchTermDisplay.textContent = searchTerm;
-            }
-            removeLoadingAnimation();
+            fetch('products.json')
+                .then(response => response.json())
+                .then(products => {
+                    removeLoadingAnimation();
+                    filteredProducts = products.filter(product => 
+                        product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    shuffleArray(filteredProducts);
+                    gallery.innerHTML = '';
+                    loadedItems = 0;
+    
+                    if (filteredProducts.length > 0) {
+                        loadProducts(0, itemsPerLoad);
+                        noResultsMessage.style.display = 'none';
+                    } else {
+                        noResultsMessage.style.display = 'block';
+                        searchTermDisplay.textContent = searchTerm;
+                    }
+                })
+                .catch(error => {
+                    removeLoadingAnimation();
+                    console.error('فشل جلب المنتجات من JSON:', error);
+                    gallery.innerHTML = '';
+                    noResultsMessage.style.display = 'block';
+                    searchTermDisplay.textContent = searchTerm;
+                });
         }
     
         function loadProducts(startIndex, count) {
@@ -2946,19 +2959,13 @@
             return urlParams.get('search') || '';
         }
     
-        // تحميل المزيد من الملفات عند التمرير
         document.addEventListener('scroll', function () {
             const gallery = document.getElementById('gallery');
             const triggerHeight = window.innerHeight * 1.5;
             const galleryHeight = gallery.scrollHeight;
     
-            if (window.scrollY >= (galleryHeight - triggerHeight)) {
-                if (loadedItems < filteredProducts.length) {
-                    loadProducts(loadedItems, itemsPerLoad);
-                } else {
-                    const searchTerm = getSearchTermFromURL() || document.getElementById('search-box')?.value || '';
-                    fetchProductsFromFile(currentFileIndex, searchTerm);
-                }
+            if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
+                loadProducts(loadedItems, itemsPerLoad);
             }
         });
     
@@ -2968,11 +2975,8 @@
                 if (item === 'الكل') searchBox.value = '';
                 else searchBox.value = item;
             }
-            allProducts = [];
-            currentFileIndex = 1;
-            loadedItems = 0;
-            filteredProducts = [];
-            fetchProductsFromFile(1, item === 'الكل' ? '' : item);
+            if (item === 'الكل') fetchAndFilterProducts('');
+            else if (item) fetchAndFilterProducts(item);
     
             const allItems = document.querySelectorAll('.sub-header nav a');
             allItems.forEach(item => item.classList.remove('active'));
@@ -3009,9 +3013,11 @@
             const searchTerm = getSearchTermFromURL();
             const searchBox = document.getElementById('search-box');
             if (searchBox && searchTerm) searchBox.value = searchTerm;
-            fetchProductsFromFile(1, searchTerm || '');
+            fetchAndFilterProducts(searchTerm || '');
         };
     </script>
+    </body>
+    </html>
 
 
 
