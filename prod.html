@@ -1391,7 +1391,6 @@
             }
         }
     </style>
-
 </head>
 <body>
 <div class="containe">
@@ -1405,10 +1404,33 @@
 </div>
 
 <script>
-    document.getElementById('askProductBtn').onclick = function() {
-        const hiddenText = "رقم المنتج 1#";
-        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-    };
+    // استخراج الرقم من عنوان URL بطريقة يدوية
+    const queryString = window.location.search;
+    const productNumber = queryString.split('product=')[1]?.split('&')[0];
+
+    if (productNumber) {
+        // تكوين اسم الملف JSON بناءً على الرقم
+        const jsonFile = `products-${productNumber}.json`;
+
+        // تحميل ملف JSON
+        fetch(jsonFile)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('لم يتم العثور على الملف');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const productId = data.productId; // استخراج رقم المنتج من JSON
+                document.getElementById('askProductBtn').onclick = function() {
+                    const hiddenText = `رقم المنتج| ${productId}`;
+                    window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
+                };
+            })
+            .catch(error => console.error('خطأ في تحميل الملف:', error));
+    } else {
+        console.error('يرجى تحديد رقم المنتج في عنوان URL');
+    }
 </script>
 </body>
 </html>
