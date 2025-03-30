@@ -1330,7 +1330,7 @@
 
 <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;">تفاصيل المنتج</h2>
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1346,7 +1346,8 @@
             border-radius: 0;
             box-sizing: border-box;
             margin: 0;
-            overflow: hidden; /* منع التجاوز */
+            overflow: hidden;
+            direction: rtl;
         }
         .text-right {
             font-family: Cairo, sans-serif;
@@ -1393,7 +1394,7 @@
     </style>
 </head>
 <body>
-<div class="containe">
+<div class="containe" id="productContainer" data-product-id="1">
     <div class="text-right">
         <p>أسئل و أعرف</p>
         <p class="text-small">اسأل و أعرف تفاصيل أكثر عن المنتج</p>
@@ -1404,48 +1405,50 @@
 </div>
 
 <script>
-    // بيانات JSON (يمكن تحميلها من ملف خارجي أو تضمينها مباشرة)
-    const products = [
-        {
-            "id": "1",
-            "product": {
-                "productId": "1"
-            }
-        },
-        {
-            "id": "2",
-            "product": {
-                "productId": "2"
-            }
-        },
-        {
-            "id": "3",
-            "product": {
-                "productId": "3"
-            }
-        },
-        {
-            "id": "4",
-            "product": {
-                "productId": "4"
-            }
+// دالة لاستخراج معرف المنتج من عنوان URL
+function getProductIdFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('product_id') || 1; // القيمة الافتراضية 1
+}
+
+// دالة لتحميل بيانات المنتج
+async function loadProductData(productId) {
+    try {
+        const response = await fetch(`products-${productId}.json`);
+        if (!response.ok) {
+            throw new Error('المنتج غير موجود');
         }
-    ];
-
-    // دالة لجلب productId بناءً على معرف الصفحة أو المنتج الحالي
-    function getProductId() {
-        // هنا يمكنك تحديد المنتج الحالي بناءً على منطقك
-        // على سبيل المثال، نفترض أن رقم المنتج يأتي من معلمة URL أو متغير
-        const currentProductId = new URLSearchParams(window.location.search).get('productId') || "1"; // قيمة افتراضية "1"
-        const product = products.find(p => p.product.productId === currentProductId);
-        return product ? product.product.productId : "1"; // إرجاع productId أو 1 افتراضيًا
+        return await response.json();
+    } catch (error) {
+        console.error('حدث خطأ في تحميل بيانات المنتج:', error);
+        return {
+            id: productId,
+            name: 'منتج افتراضي',
+            error: true
+        };
     }
+}
 
-    document.getElementById('askProductBtn').onclick = function() {
-        const productId = getProductId(); // جلب productId ديناميكيًا
-        const hiddenText = `رقم المنتج| ${productId}`;
-        window.location.href = `ask.html?message=${encodeURIComponent(hiddenText)}`;
-    };
+// دالة رئيسية لتشغيل الكود
+async function init() {
+    // الحصول على معرف المنتج
+    const productId = getProductIdFromURL();
+    
+    // تعيين معرف المنتج في العنصر
+    document.getElementById('productContainer').dataset.productId = productId;
+    
+    // تحميل بيانات المنتج (إذا كنت بحاجة لعرضها)
+    const productData = await loadProductData(productId);
+    console.log('بيانات المنتج:', productData);
+    
+    // إعداد حدث النقر على الزر
+    document.getElementById('askProductBtn').addEventListener('click', () => {
+        window.location.href = `ask.html?product_id=${productId}`;
+    });
+}
+
+// تشغيل الكود عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
