@@ -49,7 +49,7 @@
             text-align: center;
             background-color: #ffffff;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* إضافة لقص أي تجاوز */
         }
 
         .image-frame .image-wrapper {
@@ -57,7 +57,7 @@
             width: 100%;
             padding-top: 100%;
             background-color: #f3f3f39c;
-            border-radius: 30.2px;
+            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
         }
 
         .image-frame .placeholder {
@@ -68,7 +68,7 @@
             height: 100%;
             background-color: #f3f3f3;
             opacity: 0.8;
-            border-radius: 32px;
+            border-radius: 32px; /* تعديل لتتناسب مع الإطار */
         }
 
         .image-frame img {
@@ -79,7 +79,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 30.2px;
+            border-radius: 30.2px; /* تعديل لتتناسب مع الإطار */
             opacity: 0;
             transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
         }
@@ -230,6 +230,7 @@
             font-size: 17px;
         }
 
+        /* تعديل حجم نص الاسم بناءً على حجم الشاشة */
         @media (min-width: 1270px) {
             .text-under h1 {
                 font-size: 18px;
@@ -382,7 +383,7 @@
     </div>
 
     <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; // تغيير const إلى let للسماح بالتعديل
         const cartItemsElement = document.getElementById('cart-items');
         const emptyCartMessage = document.getElementById('empty-cart-message');
 
@@ -397,7 +398,7 @@
                 cartItemsElement.style.display = 'flex';
                 cartItemsElement.innerHTML = '';
 
-                [...cart].reverse().forEach((product, index) => {
+                cart.reverse().forEach((product, index) => {
                     const priceStr = product.price.toString();
                     const firstDigit = priceStr.charAt(0);
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
@@ -438,21 +439,22 @@
             }
 
             calculateTotalPrice();
-            localStorage.setItem('cart', JSON.stringify(cart));
+            // تحديث عدد المنتجات في localStorage ليتم استخدامه في الصفحة الرئيسية
+            localStorage.setItem('cart', JSON.stringify(cart)); // تحديث العربة الكاملة في localStorage
         }
 
         function removeFromCart(index) {
-            const originalIndex = cart.length - 1 - index;
-            cart.splice(originalIndex, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartDisplay();
-            window.dispatchEvent(new Event('storage'));
+            cart.splice(index, 1); // حذف المنتج من المصفوفة
+            localStorage.setItem('cart', JSON.stringify(cart)); // تحديث localStorage بعد الحذف
+            updateCartDisplay(); // تحديث العرض في صفحة العربة
+            // إرسال إشعار إلى الصفحات الأخرى (مثل الصفحة الرئيسية) إذا كانت مفتوحة
+            window.dispatchEvent(new Event('storage')); // تفعيل حدث storage يدويًا
         }
 
         function calculateTotalPrice() {
             let totalPrice = 0;
             cart.forEach(product => {
-                const price = typeof product.price === 'number' ? product.price : parseFloat(product.price.replace(/,/g, ''));
+                const price = parseFloat(product.price.replace(/,/g, ''));
                 totalPrice += price;
             });
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
