@@ -1924,37 +1924,35 @@
             }
     
             .text-container p {
-    font-size: 14px;
-    font-family: Cairo, sans-serif;
-    background-color: #f0f0f0;
-    padding: 10px; /* يمكن تعديل هذه القيمة حسب الحاجة */
-    border-radius: 5px;
-    display: inline-block;
-    cursor: pointer;
-    margin: 0 10px 0 0;
-    flex-shrink: 0;
-    position: relative; /* تمكين التحريك */
-    right: -22px; /* تحريك النص مع الخلفية لليمين بمسافة -22px */
-    margin-bottom: 8px;
-    line-height: 1.5; /* تحسين تباعد الأسطر */
-    text-align: center; /* توسيط النص أفقيًا */
-    box-sizing: border-box; /* لجعل الـ padding جزء من العرض والارتفاع */
-}
-/* تأثير hover */
-.text-container p:hover {
-    background-color: #e4e4e4; /* تغيير لون الخلفية عند تمرير الماوس */
-    transform: scale(1.02); /* تكبير العنصر بنسبة 5% */
-}
-
-
-@media (max-width: 768px) {
-    .text-container p {
-        right: -29px;
-        padding: 8px; /* زيادة الـ padding لتحسين المساحة على الشاشات الصغيرة */
-    }
-}
-
-
+                font-size: 14px;
+                font-family: Cairo, sans-serif;
+                background-color: #f0f0f0;
+                padding: 10px; /* يمكن تعديل هذه القيمة حسب الحاجة */
+                border-radius: 5px;
+                display: inline-block;
+                cursor: pointer;
+                margin: 0 10px 0 0;
+                flex-shrink: 0;
+                position: relative; /* تمكين التحريك */
+                right: -22px; /* تحريك النص مع الخلفية لليمين بمسافة -22px */
+                margin-bottom: 8px;
+                line-height: 1.5; /* تحسين تباعد الأسطر */
+                text-align: center; /* توسيط النص أفقيًا */
+                box-sizing: border-box; /* لجعل الـ padding جزء من العرض والارتفاع */
+            }
+            /* تأثير hover */
+            .text-container p:hover {
+                background-color: #e4e4e4; /* تغيير لون الخلفية عند تمرير الماوس */
+                transform: scale(1.02); /* تكبير العنصر بنسبة 5% */
+            }
+    
+            @media (max-width: 768px) {
+                .text-container p {
+                    right: -29px;
+                    padding: 8px; /* زيادة الـ padding لتحسين المساحة على الشاشات الصغيرة */
+                }
+            }
+    
             .text-container p + p {
                 margin-right: 0;
             }
@@ -1969,18 +1967,18 @@
         <div class="content">
             <h1>الأكثرُ طلبًا</h1>
             <div class="text-container">
-                <p onclick="redirectToSea('ساعدنا فى بناء مجتمع أفضل')">ساعدنا فى بناء مجتمع أفضل</p>
-                <p onclick="redirectToSea('نص إضافي مثال 1')">نص إضافي مثال 1</p>
-                <p onclick="redirectToSea('نص إضافي مثال 2')">نص إضافي مثال 2</p>
-                <p onclick="redirectToSea('نص إضافي مثال 3')">نص إضافي مثال 3</p>
-                <p onclick="redirectToSea('نص إضافي مثال 4')">نص إضافي مثال 4</p>
-                <p onclick="redirectToSea('نص إضافي مثال 5')">نص إضافي مثال 5</p>
+                <p onclick="redirectToPage(1)">ساعدنا فى بناء مجتمع أفضل</p>
+                <p onclick="redirectToPage(2)">نص إضافي مثال 1</p>
+                <p onclick="redirectToPage(3)">نص إضافي مثال 2</p>
+                <p onclick="redirectToPage(4)">نص إضافي مثال 3</p>
+                <p onclick="redirectToPage(5)">نص إضافي مثال 4</p>
+                <p onclick="redirectToPage(6)">نص إضافي مثال 5</p>
             </div>
         </div>
     
         <script>
-            function redirectToSea(categoryName) {
-                window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
+            function redirectToPage(pageNumber) {
+                window.location.href = `${pageNumber}.html`;
             }
     
             function performSearch(searchTerm) {
@@ -2011,7 +2009,6 @@
         </script>
     </body>
     </html>
-
 
 
 
