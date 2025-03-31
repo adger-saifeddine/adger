@@ -1349,19 +1349,19 @@
                     }
                 }
             
-                // دالة لإضافة المنتج إلى العربة (مع التعديلات المطلوبة)
+                // دالة لإضافة المنتج إلى العربة
                 function addToCart(element) {
                     event.stopPropagation();
                     event.preventDefault();
                     const productContainer = element.closest('.image-container');
                     const product = {
-                        id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
+                        id: productContainer.querySelector('img').src,
                         image: productContainer.querySelector('img').src,
                         name: productContainer.querySelector('h1').textContent,
                         sold: productContainer.querySelector('h2').textContent,
                         price: productContainer.querySelector('.number').textContent,
                         discount: productContainer.querySelector('h3').textContent,
-                        link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
+                        link: productContainer.querySelector('a').href
                     };
             
                     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -1371,7 +1371,6 @@
                         localStorage.setItem('cart', JSON.stringify(cart));
                         updateCartCount();
                     }
-                    // لا يتم تغيير الأيقونة ولا تظهر نافذة alert
                     return false;
                 }
             
@@ -1477,7 +1476,6 @@
             
                     if (searchBox) searchBox.value = searchTerm;
             
-                    // إظهار النقطتين وإخفاء الرسائل الأخرى
                     loadingSpinner.style.display = 'block';
                     noResultsMessage.style.display = 'none';
                     gallery.innerHTML = '';
@@ -1485,16 +1483,42 @@
                     fetch('products.json')
                         .then(response => response.json())
                         .then(products => {
-                            // تحقق إذا كان البحث يحتوي على "أقل من" متبوعة بسعر
                             const priceMatch = searchTerm.match(/أقل من (\d+)/);
                             
                             if (priceMatch) {
                                 const maxPrice = parseInt(priceMatch[1]);
-                                filteredProducts = products.filter(product => 
-                                    parseInt(product.price) <= maxPrice
-                                );
+                                let minPrice = 0;
+                                
+                                // نظام النطاقات السعرية الجديد
+                                const priceRanges = [
+                                    {max: 99, min: 0},
+                                    {max: 200, min: 100},
+                                    {max: 350, min: 201},
+                                    {max: 500, min: 351},
+                                    {max: 750, min: 501},
+                                    {max: 1000, min: 751},
+                                    {max: 1500, min: 1001},
+                                    {max: 2000, min: 1501},
+                                    {max: 3000, min: 2001},
+                                    {max: 5000, min: 3001},
+                                    {max: 7500, min: 5001},
+                                    {max: 10000, min: 7501},
+                                    {max: 15000, min: 10001},
+                                    {max: 20000, min: 15001},
+                                    {max: 30000, min: 20001},
+                                    {max: 50000, min: 30001},
+                                    {max: 75000, min: 50001},
+                                    {max: 100000, min: 75001}
+                                ];
+            
+                                const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                                minPrice = foundRange ? foundRange.min : 0;
+            
+                                filteredProducts = products.filter(product => {
+                                    const productPrice = parseInt(product.price);
+                                    return productPrice >= minPrice && productPrice <= maxPrice;
+                                });
                             } else {
-                                // البحث العادي بالاسم إذا لم يكن بحثًا بالسعر
                                 filteredProducts = products.filter(product => 
                                     product.dataName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                     product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -1505,7 +1529,6 @@
                             gallery.innerHTML = '';
                             loadedItems = 0;
             
-                            // إخفاء النقطتين بعد جلب البيانات
                             loadingSpinner.style.display = 'none';
             
                             if (filteredProducts.length > 0) {
@@ -1517,7 +1540,7 @@
                             }
                         })
                         .catch(error => {
-                            console.error('فشل جلب المنتجات من JSON:', error);
+                            console.error('فشل جلب المنتجات:', error);
                             gallery.innerHTML = '';
                             loadingSpinner.style.display = 'none';
                             noResultsMessage.style.display = 'block';
@@ -1572,7 +1595,7 @@
                     loadedItems = endIndex;
                     const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
                     lazyImages.forEach(img => observer.observe(img));
-                    startRotatingText(".rotating-text1212:not(.rotating)"); // تفعيل النصوص المتغيرة فقط على العناصر الجديدة
+                    startRotatingText(".rotating-text1212:not(.rotating)");
                 }
             
                 // مراقب التحميل الكسول
@@ -1616,7 +1639,7 @@
                 // دالة لتدوير النصوص
                 function startRotatingText(selector) {
                     document.querySelectorAll(selector).forEach(element => {
-                        element.classList.add('rotating'); // إضافة فئة للعنصر لمنع التكرار
+                        element.classList.add('rotating');
                         const texts = JSON.parse(element.getAttribute("data-texts"));
                         let currentIndex = 0;
                         setInterval(() => {
@@ -1655,18 +1678,10 @@
                     const searchBox = document.getElementById('search-box');
             
                     if (searchBox) {
-                        if (item === 'الكل') {
-                            searchBox.value = '';
-                        } else {
-                            searchBox.value = item;
-                        }
+                        searchBox.value = item === 'الكل' ? '' : item;
                     }
             
-                    if (item === 'الكل') {
-                        fetchAndFilterProducts('');
-                    } else if (item) {
-                        fetchAndFilterProducts(item);
-                    }
+                    fetchAndFilterProducts(item === 'الكل' ? '' : item);
             
                     const allItems = document.querySelectorAll('.sub-header nav a');
                     allItems.forEach(item => item.classList.remove('active'));
