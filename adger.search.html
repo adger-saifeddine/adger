@@ -1485,10 +1485,15 @@
                     fetch('products.json')
                         .then(response => response.json())
                         .then(products => {
-                            filteredProducts = products.filter(product => 
-                                product.dataName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                product.name.toLowerCase().includes(searchTerm.toLowerCase())
-                            );
+                            filteredProducts = products.filter(product => {
+                                const price = parseFloat(product.price);
+                                const searchTermNumber = parseFloat(searchTerm);
+                                return (
+                                    product.dataName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    (searchTermNumber && price < searchTermNumber && ((price < 200 && searchTermNumber < 200) || (price >= 200 && price < 2000 && searchTermNumber >= price)))
+                                );
+                            });
                             shuffleArray(filteredProducts);
                             gallery.innerHTML = '';
                             loadedItems = 0;
