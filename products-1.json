@@ -319,6 +319,14 @@
             {"question": "التردد", "answer": "2666 ميجاهرتز"}
         ],
         "desc": "رامة DDR4 4G تقدم أداءً عاليًا وسرعة استجابة فائقة، مما يجعلها مثالية للألعاب والتطبيقات الثقيلة. تتميز بتقنية متطورة لضمان الاستقرار والكفاءة في العمل.",
+      "groups": [
+        {
+            "type": "main",
+            "items": [
+                "https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg"
+            ]
+        }
+    ],
         "product": {
             "image": "https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg",
             "name": "رامة DDR4 4G",
@@ -357,6 +365,21 @@
             {"question": "الألوان المتوفرة", "answer": "بينك - لبني - أسود"}
         ],
         "desc": "علبة ألوان عملاقة مكونة من 168 قطعة تشمل جميع أنواع الألوان المطلوبة للرسم والتلوين، مع جودة عالية وحافظة أنيقة.",
+        "groups": [
+            {
+                "type": "main",
+                "items": [
+                    "https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg"
+                ]
+            },
+            {
+                "type": "additional",
+                "items": [
+                    "https://i.postimg.cc/tg869R78/1723529658temp5334132518065245271.jpg",
+                    "https://i.postimg.cc/05V8SW0y/1723529658temp2744594878737852055.jpg"
+                ]
+            }
+        ],
         "product": {
             "image": "https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg",
             "name": "علبة ألوان عملاقة 168 قطعة",
@@ -372,6 +395,7 @@
             "discountLabel": "خصم"
         }
     },
+    
     {
         "id": "8",
         "media": [
