@@ -1752,52 +1752,41 @@
 
 
 
-   
     <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض الصور والفيديوهات</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-        }
-        .container32 {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0;
-        }
-        .image32 {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            background-color: #f3f3f38c;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            margin: 0;
-            padding: 0;
-            border: none;
-            display: block;
-        }
-        .image32.loaded {
-            opacity: 1;
-        }
-        @media (min-width: 768px) {
+    <html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>عرض الصور والفيديوهات</title>
+        <style>
             .container32 {
-                max-width: 1200px;
+                width: 100%;
+                max-width: 900px;
+                margin: 0 auto;
+                padding-bottom: 5px;
             }
-        }
-        .group {
-            display: block;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
+            .image32 {
+                width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+                object-fit: cover;
+                background-color: #ccc;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+            .image32.loaded {
+                opacity: 1;
+            }
+            @media (min-width: 768px) {
+                .container32 {
+                    max-width: 1200px;
+                }
+            }
+            .group {
+                display: block;
+            }
+        </style>
+    </head>
     <body>
         <div class="container32">
             <!-- سيتم إضافة الصور والفيديوهات هنا ديناميكيًا -->
@@ -1885,6 +1874,7 @@
         </script>
     </body>
     </html>
+
 
 
     <div class="line3"></div>
