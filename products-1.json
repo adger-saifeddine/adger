@@ -298,7 +298,82 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+    {
+        "id": "6",
+        "media": [
+            {"src": "https://i.postimg.cc/28Sg4092/th.jpg", "type": "image"}
+        ],
+        "pri": "300",
+        "oldPrice": "400",
+        "dis": "خصم 25%",
+        "changingText": ["أداء عالي", "سرعة فائقة", "توافق مع العديد من الأجهزة"],
+        "longText": "رامة DDR4 4G توفر أداءً عاليًا وسرعة فائقة لتشغيل البرامج والألعاب بسلاسة. متوافقة مع العديد من الأجهزة وتعزز سرعة الحاسوب.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton6",
+        "commentId": "6",
+        "elementId": "commentCount6",
+        "tableData": [
+            {"question": "النوع", "answer": "رامة DDR4"},
+            {"question": "السعة", "answer": "4 جيجابايت"},
+            {"question": "التردد", "answer": "2666 ميجاهرتز"}
+        ],
+        "desc": "رامة DDR4 4G تقدم أداءً عاليًا وسرعة استجابة فائقة، مما يجعلها مثالية للألعاب والتطبيقات الثقيلة. تتميز بتقنية متطورة لضمان الاستقرار والكفاءة في العمل.",
+        "product": {
+            "image": "https://i.postimg.cc/28Sg4092/th.jpg",
+            "name": "رامة DDR4 4G",
+            "sold": "موثوق",
+            "price": "300",
+            "discount": "25",
+            "pageId": "6",
+            "productId": "6",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
+    },
+
+    {
+        "id": "7",
+        "media": [
+            {"src": "https://i.postimg.cc/tg869R78/1723529658temp5334132518065245271.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/05V8SW0y/1723529658temp2744594878737852055.jpg", "type": "image"}
+        ],
+        "pri": "270",
+        "oldPrice": "360",
+        "dis": "خصم 25%",
+        "changingText": ["مجموعة ألوان متكاملة", "ماتريال ممتاز", "168 قطعة"],
+        "longText": "علبة ألوان عملاقة تحتوي على 168 قطعة من الألوان المختلفة مثل الفلوماستر، الزيت، الشمع، والخشب. تأتي في علبة شيك للحفاظ عليها.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton7",
+        "commentId": "7",
+        "elementId": "commentCount7",
+        "tableData": [
+            {"question": "النوع", "answer": "علبة ألوان عملاقة"},
+            {"question": "عدد القطع", "answer": "168 قطعة"},
+            {"question": "الألوان المتوفرة", "answer": "بينك - لبني - أسود"}
+        ],
+        "desc": "علبة ألوان عملاقة مكونة من 168 قطعة تشمل جميع أنواع الألوان المطلوبة للرسم والتلوين، مع جودة عالية وحافظة أنيقة.",
+        "product": {
+            "image": "https://i.postimg.cc/tg869R78/1723529658temp5334132518065245271.jpg",
+            "name": "علبة ألوان عملاقة 168 قطعة",
+            "sold": "موثوق",
+            "price": "270",
+            "discount": "25",
+            "pageId": "7",
+            "productId": "7",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
+    
+    
    
 
 ]
