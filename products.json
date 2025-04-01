@@ -64,7 +64,17 @@
         "sold": "موثوق",
         "discountTexts": ["كان ب 360 جنيه", "خصم 25%"],
         "link": "prod.html?id=7"
+    },
+    {
+        "name": "شنطة كروس ميكي",
+        "dataName": "#8 شنطة كروس ميكي حقيبة كتف حقيبة ديزني زارا",
+        "price": "200.00",
+        "image": "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 250 جنيه", "خصم 20%"],
+        "link": "prod.html?id=8"
     }
+    
     
     
     

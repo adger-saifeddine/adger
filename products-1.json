@@ -371,7 +371,71 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+    {
+        "id": "8",
+        "media": [
+            {"src": "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/VkyVqDjX/1742285514temp4782755075381584722.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/GpKg1R6j/1742285515temp1421875361308745424.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/PxF6P4Xp/1742285515temp4650324654721698700.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/VvrKMCv7/1742285516temp8042123136537916200.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/gc1W7yV2/1742285516temp2398476623278561849.jpg", "type": "image"}
+        ],
+        "pri": "200",
+        "oldPrice": "250",
+        "dis": "خصم 20%",
+        "changingText": [
+            "تصميم مشترك بين زارا وديزني",
+            "شنطة كروس أنيقة",
+            "حزام كتف قابل للتعديل"
+        ],
+        "longText": "شنطة كروس ميكي جديدة مع العلامات، تتميز برسومات ميكي ماوس مع أرجل متدلية من القطيفة. تحتوي على فتحة بسحاب وحزام كتف قابل للتعديل. مثالية كهدية فريدة من نوعها.",
+        "sales": "مباع بواسطة متجر موثوق",
+        "buttonId": "commentButton8",
+        "commentId": "8",
+        "elementId": "commentCount8",
+        "tableData": [
+            {"question": "النوع", "answer": "شنطة كروس"},
+            {"question": "الماركة", "answer": "تصميم مشترك من زارا وديزني"},
+            {"question": "الألوان", "answer": "متوفر بألوان مختلفة"}
+        ],
+        "desc": "شنطة كروس ميكي بتصميم مشترك بين زارا وديزني، تتميز برسومات ميكي ماوس وأرجل متدلية. تحتوي على فتحة بسحاب، وحزام كتف قابل للتعديل، مما يجعلها مريحة وعملية.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg",
+                    "https://i.postimg.cc/VkyVqDjX/1742285514temp4782755075381584722.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/GpKg1R6j/1742285515temp1421875361308745424.jpg",
+                    "https://i.postimg.cc/PxF6P4Xp/1742285515temp4650324654721698700.jpg",
+                    "https://i.postimg.cc/VvrKMCv7/1742285516temp8042123136537916200.jpg",
+                    "https://i.postimg.cc/gc1W7yV2/1742285516temp2398476623278561849.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg",
+            "name": "شنطة كروس ميكي",
+            "sold": "موثوق",
+            "price": "200",
+            "discount": "20",
+            "pageId": "8",
+            "productId": "8",
+            "shippingPrice": "50",
+            "colors": ["متعدد الألوان"]
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
+    
     
     
    
