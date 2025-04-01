@@ -1754,63 +1754,77 @@
 
     <!DOCTYPE html>
     <html lang="ar">
+    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>عرض الصور والفيديوهات</title>
         <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+            }
+    
             .container32 {
                 width: 100%;
                 max-width: 900px;
                 margin: 0 auto;
-                padding-bottom: 5px;
+                padding: 0;
             }
+    
             .image32 {
                 width: 100%;
                 height: auto;
-                margin-bottom: 10px;
                 object-fit: cover;
-                background-color: #ccc;
+                background-color: #f3f3f38c;
                 opacity: 0;
                 transition: opacity 0.3s ease-in-out;
+                margin: 0;
+                padding: 0;
+                border: none;
+                display: block;
             }
+    
             .image32.loaded {
                 opacity: 1;
             }
+    
             @media (min-width: 768px) {
                 .container32 {
                     max-width: 1200px;
                 }
             }
+    
             .group {
                 display: block;
+                margin: 0;
+                padding: 0;
             }
         </style>
     </head>
+    
     <body>
         <div class="container32">
             <!-- سيتم إضافة الصور والفيديوهات هنا ديناميكيًا -->
         </div>
     
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // استخراج معرف المنتج من URL
+            document.addEventListener("DOMContentLoaded", function() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const productId = urlParams.get('id');
     
                 if (productId) {
-                    const productsPerFile = 100; // عدد المنتجات في كل ملف
+                    const productsPerFile = 100;
                     const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                     const jsonFile = `products-${fileIndex}.json`;
     
-                    // جلب ملف JSON
                     fetch(jsonFile)
                         .then(response => {
                             if (!response.ok) throw new Error('الملف غير موجود');
                             return response.json();
                         })
                         .then(products => {
-                            // البحث عن المنتج
                             const product = products.find(p => p.id === productId);
                             if (!product) {
                                 console.error('المنتج غير موجود');
@@ -1822,14 +1836,12 @@
                                 const groupDiv = document.createElement('div');
                                 groupDiv.classList.add('group');
     
-                                // إضافة الصور أو الفيديوهات
                                 group.items.forEach(item => {
                                     if (item.endsWith('.mp4')) {
                                         const video = document.createElement('video');
                                         video.classList.add('image32');
-                                        video.src = item;
+                                        video.dataset.src = item;
                                         video.muted = true;
-                                        video.autoplay = true;
                                         video.loop = true;
                                         video.loading = 'lazy';
                                         video.innerHTML = 'المتصفح لا يدعم الفيديو.';
@@ -1837,7 +1849,7 @@
                                     } else {
                                         const img = document.createElement('img');
                                         img.classList.add('image32');
-                                        img.src = item;
+                                        img.dataset.src = item;
                                         img.alt = 'صورة';
                                         img.loading = 'lazy';
                                         groupDiv.appendChild(img);
@@ -1847,23 +1859,33 @@
                                 container.appendChild(groupDiv);
                             });
     
-                            // تأثير التحميل التدريجي
-                            const allElements = document.querySelectorAll(".image32");
-                            allElements.forEach(element => {
-                                if (element.tagName === "IMG") {
-                                    element.onload = function() {
-                                        this.classList.add("loaded");
-                                    };
-                                    if (element.complete) {
-                                        element.classList.add("loaded");
+                            const observer = new IntersectionObserver((entries, observer) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        const element = entry.target;
+                                        if (element.tagName === 'IMG') {
+                                            element.src = element.dataset.src;
+                                            element.onload = () => {
+                                                element.classList.add('loaded');
+                                            };
+                                        } else if (element.tagName === 'VIDEO') {
+                                            element.src = element.dataset.src;
+                                            element.addEventListener('loadeddata', () => {
+                                                element.classList.add('loaded');
+                                            });
+                                            element.load();
+                                            element.play().catch(error => console.log("خطأ في تشغيل الفيديو:", error));
+                                        }
+                                        observer.unobserve(element);
                                     }
-                                } else if (element.tagName === "VIDEO") {
-                                    element.addEventListener("loadeddata", function() {
-                                        this.classList.add("loaded");
-                                    });
-                                    element.load();
-                                    element.play().catch(error => console.log("خطأ في تشغيل الفيديو:", error));
-                                }
+                                });
+                            }, {
+                                rootMargin: '0px 0px 50px 0px',
+                                threshold: 0.01
+                            });
+    
+                            document.querySelectorAll('.image32').forEach(element => {
+                                observer.observe(element);
                             });
                         })
                         .catch(error => console.error('خطأ في جلب البيانات:', error));
@@ -1873,8 +1895,8 @@
             });
         </script>
     </body>
+    
     </html>
-
 
 
     <div class="line3"></div>
