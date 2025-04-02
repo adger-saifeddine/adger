@@ -1143,16 +1143,24 @@
             margin-left: 22px;
             -webkit-tap-highlight-color: transparent;
             user-select: none; /* لمنع التحديد */
+            border: 2px solid #ccc; /* إضافة border دائري */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* إضافة ظل مثل باقي العناصر */
         }
         .show-more-item:hover {
-    background-color: #f3f3f396; /* لون مختلف عند تمرير الماوس */
-}
+            background-color: #f3f3f396; /* لون مختلف عند تمرير الماوس */
+        }
 
         
         .show-more-icon {
             width: 24px;
             height: 24px;
             margin-bottom: 10px;
+            border: 2px solid #363636; /* إضافة border للسهم */
+            border-radius: 50%; /* جعل السهم دائري */
+            padding: 8px; /* إضافة مساحة داخلية للسهم */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .show-more-text {
@@ -1195,7 +1203,7 @@
                 الخصم 38.6% 
                 </h1>
             </div>
-            
+
             <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
                 <img src="https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=2')" loading="lazy">
                 <h1 style="color: #363636; font-size: 16px;">حذاء جلد طبيعي عالي الجودة بمظهر أنيق</h1>
@@ -1265,6 +1273,8 @@
                     الخصم 20%
                 </h1>
             </div>
+            
+        
     
             <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
         </div>
