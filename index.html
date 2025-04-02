@@ -1007,6 +1007,7 @@
             overflow-x: auto;
             scroll-behavior: smooth;
             scrollbar-width: none;
+            direction: rtl; /* Ensure RTL direction */
         }
         .carousel::-webkit-scrollbar {
             display: none;
@@ -1123,11 +1124,69 @@
             width: 9px; /* Adjust spacing size */
             flex: 0 0 auto;
         }
+        
+        /* Style for the "Show More" item */
+        .show-more-item {
+            width: 220px;
+            margin: 0 7px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 35px;
+            padding: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            flex: 0 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            order: 999; /* Move to the end (left side in RTL) */
+            margin-left: 21px;
+        }
+        .show-more-item:hover {
+    background-color: #f3f3f3d8; /* لون مختلف عند تمرير الماوس */
+}
+
+        
+        .show-more-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .show-more-text {
+            font-family: 'Cairo', sans-serif;
+            color: #363636;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .show-more-item {
+                width: 150px;
+                margin: 0 2px;
+                margin-left: 11px;
+            }
+            
+            .show-more-text {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="carousel-container">
         <div class="carousel" id="carousel">
+            <!-- Show More Item - Now positioned to be on the left side -->
+            <div class="show-more-item" onclick="redirectToDiscounts()">
+                <svg class="show-more-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
+                </svg>
+                <div class="show-more-text">عرض المزيد</div>
+            </div>
+            
             <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
                 <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=1')" loading="lazy">
                 <h1 style="color: #363636; font-size: 16px;">ابقَ قوياً 365 يومًا في السنة ل ديمى لوفاتو</h1>
@@ -1207,9 +1266,7 @@
                     الخصم 20%
                 </h1>
             </div>
-            
-            
-            
+    
             <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
         </div>
     </div>
@@ -1217,17 +1274,28 @@
         // دالة لترتيب المنتجات عشوائياً
         function shuffleCarouselItems() {
             const carousel = document.getElementById('carousel');
-            const items = Array.from(carousel.getElementsByClassName('carousel-item'));
+            const items = Array.from(carousel.querySelectorAll('.carousel-item'));
             for (let i = items.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [items[i], items[j]] = [items[j], items[i]];
             }
             items.forEach(item => carousel.appendChild(item));
+            
+            // Make sure the "Show More" item stays at the end (left in RTL)
+            const showMoreItem = carousel.querySelector('.show-more-item');
+            if (showMoreItem) {
+                carousel.appendChild(showMoreItem);
+            }
         }
 
         function selectImage(path) {
             window.location.href = path;
         }
+        
+        function redirectToDiscounts() {
+            window.location.href = 'adger.search.html?search=خصومات';
+        }
+        
         function isDesktop() {
             const userAgent = navigator.userAgent.toLowerCase();
             const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
