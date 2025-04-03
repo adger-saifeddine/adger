@@ -539,7 +539,7 @@
         "commentId": "10",
         "elementId": "commentCount10",
         "tableData": [
-            {"question": "كيفية العمل", "answer": "USB"},
+            {"question": "كيفية العمل", "answer": "بلوتوث"},
             {"question": "الماركة", "answer": "أخرى"},
             {"question": "الفئة", "answer": "الطابعة"}
         ],
