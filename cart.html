@@ -403,6 +403,9 @@
                     const firstDigit = priceStr.charAt(0);
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
                     const letterMargin = specialDigits.includes(firstDigit) ? '-1px' : '-4px';
+                    
+                    // التحقق مما إذا كان الخصم يحتوي على أرقام أو لا
+                    const discountText = product.discount && /[0-9]/.test(product.discount) ? product.discount : '';
 
                     const productElement = document.createElement('div');
                     productElement.className = 'image-container';
@@ -422,7 +425,7 @@
                                     <div class="number">${product.price}</div>
                                     <div class="letter" style="margin-right: ${letterMargin};">EGP</div>
                                 </div>
-                                <h3>${product.discount}</h3>
+                                ${discountText ? `<h3>${discountText}</h3>` : ''}
                             </div>
                             <button class="remove-button" onclick="removeFromCart(${index})">
                                 <span>حذف</span>
