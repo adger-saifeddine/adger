@@ -404,8 +404,8 @@
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
                     const letterMargin = specialDigits.includes(firstDigit) ? '-1px' : '-4px';
                     
-                    // التحقق مما إذا كان الخصم يحتوي على أرقام أو لا
-                    const discountText = product.discount && /[0-9]/.test(product.discount) ? product.discount : '';
+                    // عرض نص الخصم كما هو سواء كان يحتوي على أرقام أو لا
+                    const discountText = product.discount || '';
 
                     const productElement = document.createElement('div');
                     productElement.className = 'image-container';
