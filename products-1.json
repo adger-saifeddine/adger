@@ -415,7 +415,7 @@
             "حزام كتف قابل للتعديل"
         ],
         "longText": "شنطة كروس ميكي جديدة مع العلامات، تتميز برسومات ميكي ماوس مع أرجل متدلية من القطيفة. تحتوي على فتحة بسحاب وحزام كتف قابل للتعديل. مثالية كهدية فريدة من نوعها.",
-        "sales": "مباع بواسطة متجر",
+        "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton8",
         "commentId": "8",
         "elementId": "commentCount8",
@@ -476,7 +476,7 @@
             "مثالي لصانعي المحتوى"
         ],
         "longText": "هولدر تصوير AY49",
-        "sales": "مباع بواسطة متجر",
+        "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton9",
         "commentId": "9",
         "elementId": "commentCount9",
@@ -516,7 +516,66 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+    {
+        "id": "10",
+        "media": [
+            {"src": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png", "type": "image"},
+            {"src": "https://i.postimg.cc/5NPZkxdZ/1740299608img-20250223-102859-813.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/Dfpg9m0d/1740299608img-20250223-102924-437-1.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/MGzVM8Xp/1740299608img-20250223-102936-054.jpg", "type": "image"}
+        ],
+        "pri": "999",
+        "oldPrice": "",
+        "dis": "",
+        "changingText": [
+            "طابعة محمولة USB",
+            "بدون الحاجة لحبر",
+            "إعادة شحن سهلة"
+        ],
+        "longText": "طابعة USB محمولة، قابلة لإعادة الشحن، تعمل بدون الحاجة لحبر. مثالية للطباعة أثناء التنقل وسهلة الاستخدام لجميع الفئات.",
+        "sales": "مباع بواسطة متجر",
+        "buttonId": "commentButton10",
+        "commentId": "10",
+        "elementId": "commentCount10",
+        "tableData": [
+            {"question": "الحالة", "answer": "جديد"},
+            {"question": "الماركة", "answer": "أخرى"},
+            {"question": "الفئة", "answer": "الطابعة"}
+        ],
+        "desc": "طابعة USB محمولة، قابلة لإعادة الشحن وتعمل بدون حبر، مثالية للطباعة أثناء التنقل.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
+                    "https://i.postimg.cc/5NPZkxdZ/1740299608img-20250223-102859-813.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/Dfpg9m0d/1740299608img-20250223-102924-437-1.jpg",
+                    "https://i.postimg.cc/MGzVM8Xp/1740299608img-20250223-102936-054.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
+            "name": "طابعة USB",
+            "sold": "موثوق",
+            "price": "999.00",
+            "discount": "",
+            "pageId": "10",
+            "productId": "10",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
+    
     
     
     

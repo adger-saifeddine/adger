@@ -82,7 +82,17 @@
         "sold": "موثوق",
         "discountTexts": ["كان ب 570 جنيه", "خصم 8.77%"],
         "link": "prod.html?id=9"
+    },
+    {
+        "name": "طابعة USB",
+        "dataName": "#10 طابعة محمولة بدون حبر قابلة لإعادة الشحن",
+        "price": "999.00",
+        "image": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
+        "sold": "موثوق",
+        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر لجميع المحافظات"],
+        "link": "prod.html?id=10"
     }
+    
     
     
     
