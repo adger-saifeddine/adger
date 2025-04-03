@@ -565,14 +565,14 @@
             "name": "طابعة USB",
             "sold": "موثوق",
             "price": "999.00",
-            "discount": "أفضل سعر متاح",
+            "discount": "",
             "pageId": "10",
             "productId": "10",
             "shippingPrice": "50"
         },
         "texts": {
             "currency": "جنيه",
-            "discountLabel": "افضل"
+            "discountLabel": "أفضل سعر متاح"
         }
     }
     
