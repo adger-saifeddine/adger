@@ -73,7 +73,17 @@
         "sold": "موثوق",
         "discountTexts": ["كان ب 250 جنيه", "خصم 20%"],
         "link": "prod.html?id=8"
-    } 
+    },
+    {
+        "name": "هولدر تصوير AY49",
+        "dataName": "#9 خصومات حامل تصوير ميكروفون إضاءة فيديو AY49",
+        "price": "520.00",
+        "image": "https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 570 جنيه", "خصم 8.77%"],
+        "link": "prod.html?id=9"
+    }
+    
     
     
     

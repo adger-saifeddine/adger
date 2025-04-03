@@ -458,7 +458,66 @@
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
+    },
+    {
+        "id": "9",
+        "media": [
+            {"src": "https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png", "type": "image"},
+            {"src": "https://i.postimg.cc/Fzy0dnrv/2025-04-03-13-30-56-e8ce1ed8.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/28x4CJ9F/2025-04-03-13-31-06-ee6d080a.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/y8b3dzm9/2025-04-03-13-31-14-76dab6ab.jpg", "type": "image"}
+        ],
+        "pri": "520",
+        "oldPrice": "570",
+        "dis": "خصم 8.77%",
+        "changingText": [
+            "حامل تصوير متكامل",
+            "إضاءة قابلة للتعديل",
+            "مثالي لصانعي المحتوى"
+        ],
+        "longText": "هل تبحث عن طريقة سهلة وبسيطة لبدء صنع الفيديوهات؟ حزمة أدوات صنع الفيديو AY-49U هي الحل الأمثل لك! تشمل الحزمة: حامل تثبيت محمول على شكل حرف U، ضوء، وميكروفون. الميزات: سهل الإعداد والاستخدام، مثالي للمبتدئين والمحترفين على حدٍ سواء، يمكن استخدامه لتسجيل الصوت أو الفيديو، الضوء قابل للتعديل، لذا يمكنك ضبط سطوع الضوء وفقًا لاحتياجاتك.",
+        "sales": "مباع بواسطة متجر",
+        "buttonId": "commentButton9",
+        "commentId": "9",
+        "elementId": "commentCount9",
+        "tableData": [
+            {"question": "النوع", "answer": "حامل تصوير"},
+            {"question": "الموديل", "answer": "AY-49U"},
+            {"question": "الإضاءة", "answer": "قابلة للتعديل"}
+        ],
+        "desc": "حامل تصوير AY-49U مع ضوء وميكروفون، مثالي لصانعي المحتوى، المدونين، والمؤثرين. يوفر ثباتًا عاليًا وجودة فيديو محسّنة.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png",
+                    "https://i.postimg.cc/Fzy0dnrv/2025-04-03-13-30-56-e8ce1ed8.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/28x4CJ9F/2025-04-03-13-31-06-ee6d080a.jpg",
+                    "https://i.postimg.cc/y8b3dzm9/2025-04-03-13-31-14-76dab6ab.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png",
+            "name": "هولدر تصوير AY49",
+            "sold": "موثوق",
+            "price": "520.00",
+            "discount": "8.77",
+            "pageId": "9",
+            "productId": "9",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
+    
     
     
     
