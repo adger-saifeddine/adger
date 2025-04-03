@@ -539,7 +539,7 @@
         "commentId": "10",
         "elementId": "commentCount10",
         "tableData": [
-            {"question": "الحالة", "answer": "جديد"},
+            {"question": "كيفية العمل", "answer": "USB"},
             {"question": "الماركة", "answer": "أخرى"},
             {"question": "الفئة", "answer": "الطابعة"}
         ],
@@ -565,7 +565,7 @@
             "name": "طابعة USB",
             "sold": "موثوق",
             "price": "999.00",
-            "discount": "",
+            "discount": "أفضل سعر متاح",
             "pageId": "10",
             "productId": "10",
             "shippingPrice": "50"
