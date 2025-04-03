@@ -89,7 +89,7 @@
         "price": "999.00",
         "image": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
         "sold": "موثوق",
-        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر لجميع المحافظات"],
+        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر للجميع"],
         "link": "prod.html?id=10"
     }
     
