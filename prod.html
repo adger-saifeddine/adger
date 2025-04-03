@@ -2373,13 +2373,13 @@
         const url = new URL(window.location.href);
         try {
             const productId = new URLSearchParams(window.location.search).get('id');
-            console.log('productId:', productId);
+            console.log('productId:', productId); // تحقق من القيمة
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error); // اطبع الخطأ إذا حدث
         }
-        
+    
         const pageNumber = url.searchParams.get('page') || '1';
-        
+    
         if (!productId) {
             alert('معرّف المنتج غير موجود في الرابط');
             throw new Error('معرّف المنتج مطلوب');
@@ -2399,11 +2399,11 @@
             .then(data => {
                 // البحث عن المنتج باستخدام المعرّف
                 const productData = data.find(item => item.product.productId === productId);
-                
+    
                 if (!productData) {
                     throw new Error('المنتج غير موجود في هذه الصفحة');
                 }
-                
+    
                 populateProduct(productData);
             })
             .catch(error => {
@@ -2418,7 +2418,7 @@
     
             // إظهار الإطار
             document.getElementById('product-frame').style.display = 'block';
-            
+    
             // تعبئة البيانات
             document.getElementById('product-link').href = `prod.html?id=${product.pageId}`;
             document.getElementById('product-image').src = product.image;
@@ -2427,11 +2427,13 @@
             document.getElementById('product-sold').textContent = product.sold;
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
-            
-            // التعديل الرئيسي هنا: عرض أي نص للخصم دون شروط
-            if (product.discount) {
+    
+            // عرض الخصم إذا كان موجوداً
+            if (product.discount && product.discount > 0) {
                 document.getElementById('product-discount').textContent = 
-                    `${texts.discountLabel} ${product.discount}`; // إزالة النسبة المئوية التلقائية
+                    `${texts.discountLabel} ${product.discount}%`;
+            } else if (texts.discountLabel) {
+                document.getElementById('product-discount').textContent = texts.discountLabel;
             } else {
                 document.getElementById('product-discount').style.display = 'none';
             }
@@ -2459,7 +2461,7 @@
                 colors: encodeURIComponent(JSON.stringify(colors)),
                 sizes: encodeURIComponent(JSON.stringify(sizes))
             });
-            
+    
             window.location.href = `buy.html?${params}`;
         }
     
@@ -2471,12 +2473,12 @@
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
-                
+    
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                
+    
                 // البحث عن المنتج في السلة
                 const existingProduct = cart.find(item => item.productId === productId);
-                
+    
                 if (existingProduct) {
                     existingProduct.quantity += 1;
                 } else {
@@ -2488,10 +2490,10 @@
                         quantity: 1
                     });
                 }
-                
+    
                 localStorage.setItem('cart', JSON.stringify(cart));
                 alert(`تمت إضافة "${productName}" إلى العربة!`);
-                
+    
                 // للتحقق فقط
                 console.log('سلة التسوق الحالية:', cart);
             } catch (error) {
@@ -2500,8 +2502,6 @@
             }
         }
     </script>
-    </body>
-    </html>
 
 
 
