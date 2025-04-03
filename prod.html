@@ -2367,16 +2367,16 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         // جلب معرّف المنتج ورقم الصفحة من URL
         const url = new URL(window.location.href);
         try {
-  const productId = new URLSearchParams(window.location.search).get('id');
-  console.log('productId:', productId); // تحقق من القيمة
-} catch (error) {
-  console.error('Error:', error); // اطبع الخطأ إذا حدث
-}
+            const productId = new URLSearchParams(window.location.search).get('id');
+            console.log('productId:', productId);
+        } catch (error) {
+            console.error('Error:', error);
+        }
         
         const pageNumber = url.searchParams.get('page') || '1';
         
@@ -2384,10 +2384,10 @@
             alert('معرّف المنتج غير موجود في الرابط');
             throw new Error('معرّف المنتج مطلوب');
         }
-
+    
         const jsonFile = `products-${pageNumber}.json`;
         const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-
+    
         // جلب بيانات JSON
         fetch(jsonUrl)
             .then(response => {
@@ -2410,12 +2410,12 @@
                 console.error('خطأ في جلب البيانات:', error);
                 alert(error.message);
             });
-
+    
         // تعبئة بيانات المنتج
         function populateProduct(data) {
             const product = data.product;
             const texts = data.texts;
-
+    
             // إظهار الإطار
             document.getElementById('product-frame').style.display = 'block';
             
@@ -2428,18 +2428,14 @@
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
             
-            // عرض الخصم إذا كان موجوداً
+            // التعديل الرئيسي هنا: عرض أي نص للخصم دون شروط
             if (product.discount) {
-                if (typeof product.discount === 'number' && product.discount > 0) {
-                    document.getElementById('product-discount').textContent = 
-                        `${texts.discountLabel} ${product.discount}%`;
-                } else if (typeof product.discount === 'string') {
-                    document.getElementById('product-discount').textContent = product.discount;
-                }
+                document.getElementById('product-discount').textContent = 
+                    `${texts.discountLabel} ${product.discount}`; // إزالة النسبة المئوية التلقائية
             } else {
                 document.getElementById('product-discount').style.display = 'none';
             }
-
+    
             // إعداد حدث الزر شراء الآن
             document.getElementById('buy-now-btn').onclick = function() {
                 buyNow(
@@ -2452,7 +2448,7 @@
                 );
             };
         }
-
+    
         // دالة شراء الآن
         function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
             const params = new URLSearchParams({
@@ -2466,7 +2462,7 @@
             
             window.location.href = `buy.html?${params}`;
         }
-
+    
         // دالة إضافة إلى العربة المعدلة
         function addToCart(element) {
             try {
@@ -2504,8 +2500,8 @@
             }
         }
     </script>
-</body>
-</html>
+    </body>
+    </html>
 
 
 
