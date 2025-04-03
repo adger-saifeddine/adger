@@ -2429,9 +2429,13 @@
             document.getElementById('currency').textContent = texts.currency;
             
             // عرض الخصم إذا كان موجوداً
-            if (product.discount && product.discount > 0) {
-                document.getElementById('product-discount').textContent = 
-                    `${texts.discountLabel} ${product.discount}%`;
+            if (product.discount) {
+                if (typeof product.discount === 'number' && product.discount > 0) {
+                    document.getElementById('product-discount').textContent = 
+                        `${texts.discountLabel} ${product.discount}%`;
+                } else if (typeof product.discount === 'string') {
+                    document.getElementById('product-discount').textContent = product.discount;
+                }
             } else {
                 document.getElementById('product-discount').style.display = 'none';
             }
