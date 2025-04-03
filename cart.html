@@ -398,7 +398,7 @@
                 cartItemsElement.style.display = 'flex';
                 cartItemsElement.innerHTML = '';
 
-                cart.reverse().forEach((product, index) => {
+                cart.forEach((product, index) => { // إزالة .reverse() للحفاظ على الترتيب
                     const priceStr = product.price.toString();
                     const firstDigit = priceStr.charAt(0);
                     const specialDigits = ['2', '3', '5', '6', '8', '9'];
