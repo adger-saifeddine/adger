@@ -1966,6 +1966,12 @@
                 line-height: 1.5; /* تحسين تباعد الأسطر */
                 text-align: center; /* توسيط النص أفقيًا */
                 box-sizing: border-box; /* لجعل الـ padding جزء من العرض والارتفاع */
+                 /* لإلغاء التحديد الأزرق */
+                -webkit-user-select: none; /* لأجهزة Android وSafari */
+                -moz-user-select: none;    /* لمتصفح Firefox */
+                -ms-user-select: none;     /* لمتصفح Internet Explorer */
+                 user-select: none;         /* للمتصفحات الحديثة */
+                -webkit-tap-highlight-color: transparent; /* لإزالة الوميض الأزرق عند اللمس */
             }
             /* تأثير hover */
             .text-container p:hover {
