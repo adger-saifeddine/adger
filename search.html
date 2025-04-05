@@ -131,17 +131,32 @@
         }
 
         .back-button {
-            position: fixed;
-            top: 10px;
-            right: 11px;
-            background-color: transparent;
-            color: black;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 3;
-        }
+    position: fixed;
+    top: 10px;
+    right: 11px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+    outline: none;
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق على الهواتف */
+    user-select: none;
+}
+
+/* إزالة التأثير عند الضغط */
+.back-button:focus {
+    outline: none;
+}
+
+/* تأثير hover دائري */
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
         @media (max-width: 499px) {
             .back-button {
                 right: 2px;
