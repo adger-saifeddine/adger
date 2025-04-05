@@ -98,7 +98,7 @@
         "price": "900.00",
         "image": "https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png",
         "sold": "موثوق",
-        "discountTexts": ["خصم 10%", "كان بـ 1000 جنيه"],
+        "discountTexts": ["كان بـ 1000 جنيه","خصم 10%"],
         "link": "prod.html?id=11"
     }
     
