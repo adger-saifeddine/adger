@@ -574,6 +574,71 @@
             "currency": "جنيه",
             "discountLabel": "أفضل سعر متاح"
         }
+    },
+    {
+        "id": "11",
+        "media": [
+            {"src": "https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png", "type": "image"},
+            {"src": "https://i.postimg.cc/pXVHJM51/1742354355temp8812475241775196718.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/6QZJp9FT/1742354355temp2223022774406187483.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/XJ0MZR0L/1742354355temp451549809535349377.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/Vsgy6ZZ9/1742354355temp3266306262267712281.jpg", "type": "image"}
+        ],
+        "pri": "900",
+        "oldPrice": "1000",
+        "dis": "خصم 10%",
+        "changingText": [
+            "أصغر كاميرا تصوير",
+            "دقة فيديو 640×480 بكسل",
+            "بطارية قابلة للشحن"
+        ],
+        "longText": "كاميرا Y2000 Original",
+        "sales": "موثوق",
+        "buttonId": "commentButton11",
+        "commentId": "11",
+        "elementId": "commentCount11",
+        "tableData": [
+            {"question": "الأبعاد", "answer": "27 × 26 × 26 ملم"},
+            {"question": "الوزن", "answer": "10 جرام"},
+            {"question": "دقة الفيديو", "answer": "640 × 480 بكسل"},
+            {"question": "صيغة الفيديو", "answer": "AVI (MJPEG)"},
+            {"question": "معدل الإطارات", "answer": "30 إطار/ثانية"},
+            {"question": "دقة الصور", "answer": "1280 × 720 بكسل (JPG)"},
+            {"question": "سعة البطارية", "answer": "230 مللي أمبير"},
+            {"question": "دعم الذاكرة", "answer": "MicroSD/TF حتى 32GB"}
+        ],
+        "desc": "كاميرا Y2000 Original مع كابل USB وحبل تعليق. المواصفات: أبعاد 27×26×26 ملم، وزن 10 جرام، دقة فيديو 640×480 بكسل، بطارية 230 مللي أمبير تعمل لمدة 30-70 دقيقة، تدعم بطاقات ذاكرة حتى 32 جيجابايت. تتوافق مع أنظمة Windows، MAC، Linux. تشمل المحتويات: الكاميرا، كابل USB، حبل تعليق.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png",
+                    "https://i.postimg.cc/pXVHJM51/1742354355temp8812475241775196718.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/6QZJp9FT/1742354355temp2223022774406187483.jpg",
+                    "https://i.postimg.cc/XJ0MZR0L/1742354355temp451549809535349377.jpg",
+                    "https://i.postimg.cc/Vsgy6ZZ9/1742354355temp3266306262267712281.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png",
+            "name": "كاميرا Y2000 Original",
+            "sold": "موثوق",
+            "price": "900.00",
+            "discount": "10",
+            "pageId": "11",
+            "productId": "11",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
     
     
