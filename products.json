@@ -100,6 +100,15 @@
         "sold": "موثوق",
         "discountTexts": ["كان بـ 1000 جنيه","خصم 10%"],
         "link": "prod.html?id=11"
+    },
+    {
+        "name": "بادة ماوس شعبي",
+        "dataName": "#12 بادة ماوس شعبي للكمبيوتر كمبيوتر إكسسوارات",
+        "price": "25.00",
+        "image": "https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png",
+        "sold": "موثوق",
+        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر للجميع"],
+        "link": "prod.html?id=12"
     }
     
     

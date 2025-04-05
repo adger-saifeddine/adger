@@ -593,7 +593,7 @@
             "بطارية قابلة للشحن"
         ],
         "longText": "كاميرا Y2000 Original",
-        "sales": "موثوق",
+        "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton11",
         "commentId": "11",
         "elementId": "commentCount11",
@@ -638,6 +638,64 @@
         "texts": {
             "currency": "جنيه",
             "discountLabel": "خصم"
+        }
+    },
+    {
+        "id": "12",
+        "media": [
+            {"src": "https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png", "type": "image"},
+            {"src": "https://i.postimg.cc/Pq137KCF/17211728695554.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/RFRPSFQ7/1721172869785454.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/3rtLzkw7/1721172869878787.jpg", "type": "image"}
+        ],
+        "pri": "25",
+        "oldPrice": "",
+        "dis": "",
+        "changingText": [
+            "بادة ماوس شعبي",
+            "مناسب لجميع أنواع الماوس",
+            "تصميم مريح"
+        ],
+        "longText": "بادة ماوس شعبي، تصميم مريح ومناسب لجميع أنواع الماوس. مثالية للاستخدام اليومي.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton12",
+        "commentId": "12",
+        "elementId": "commentCount12",
+        "tableData": [
+            {"question": "كيفية الاستخدام", "answer": "يدوي"},
+            {"question": "الماركة", "answer": "أخرى"},
+            {"question": "الفئة", "answer": "الإكسسوارات"}
+        ],
+        "desc": "بادة ماوس شعبي، تصميم مريح ومناسب لجميع أنواع الماوس. مثالية للاستخدام اليومي وسهلة الاستخدام.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png",
+                    "https://i.postimg.cc/Pq137KCF/17211728695554.jpg"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/RFRPSFQ7/1721172869785454.jpg",
+                    "https://i.postimg.cc/3rtLzkw7/1721172869878787.jpg"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png",
+            "name": "بادة ماوس شعبي",
+            "sold": "موثوق",
+            "price": "25.00",
+            "discount": "",
+            "pageId": "12",
+            "productId": "12",
+            "shippingPrice": "70"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "أفضل سعر متاح"
         }
     }
     
