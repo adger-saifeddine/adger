@@ -829,3 +829,27 @@
             displaySearchHistory();
         };
         </script>
+           <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('search-input');
+                
+                function showKeyboard() {
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        searchInput.focus();
+                        searchInput.click();
+                    }
+                }
+    
+                showKeyboard();
+    
+                setTimeout(showKeyboard, 100);
+                
+                searchInput.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    showKeyboard();
+                });
+            });
+    
+        </script>
+    </body>
+    </html>
