@@ -11,379 +11,979 @@
 
 
 
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>شريط تفاعلي</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+    
+            .sidebar {
+                width: 100px;
+                height: 100vh;
+                background-color: #333;
+                color: white;
+                text-align: center;
+                position: fixed;
+                top: 66px;
+                right: 0;
+            }
+    
+            .menu-item {
+                padding: 20px;
+                cursor: pointer;
+            }
+    
+            .menu-item:hover {
+                background-color: #7474743b;
+            }
+    
+            .menu-item.active {
+                background-color: #8c00ff;
+                border-radius: 1px;
+            }
+    
+            .content {
+                display: none;
+                position: fixed;
+                top: 66px;
+                right: 100px;
+                width: calc(100% - 100px);
+                height: 100vh;
+                background-color: #f4f4f4;
+                padding: 20px;
+                box-sizing: border-box;
+                overflow-y: auto;
+            }
+    
+            .circle-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                flex-direction: row-reverse;
+                margin-top: 0;
+            }
+    
+            .circle {
+                text-align: center;
+                margin: 10px;
+            }
+    
+            .circle img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin-bottom: 10px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+                background-color: rgba(255, 255, 255, 0.8); /* خلفية شبه بيضاء */
+                object-fit: cover;
+            }
+    
+            .circle img:hover {
+                transform: scale(1.05);
+            }
+    
+            .circle p {
+                margin: 0;
+                font-size: 16px;
+            }
+    
+            .producte {
+                font-size: 11px;
+                color: #000;
+                font-family: Cairo, sans-serif;
+                cursor: pointer; /* يجعل السعر قابلاً للنقر */
+            }
+    
+            @media (min-width: 1024px) {
+                .circle img {
+                    width: 150px;
+                    height: 150px;
+                }
+                .circle p, .circle h1 {
+                    font-size: 20px;
+                }
+            }
+    
+            @media (max-width: 499px) {
+                .circle-container {
+                    flex-direction: row;
+                    justify-content: space-around;
+                }
+    
+                .circle {
+                    width: 45%;
+                    margin: 10px 0;
+                }
+    
+                .circle img {
+                    width: 80px;
+                    height: 80px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <div class="menu">
+                <div class="menu-item active" onclick="showContent('tech')">التكنولوجيا</div>
+                <div class="menu-item" onclick="showContent('home')">البيت</div>
+                <div class="menu-item" onclick="showContent('fashion')">أزياء</div>
+                <div class="menu-item" onclick="showContent('books')">كتب</div>
+            </div>
+        </div>
+    
+      <!-- قسم التكنولوجيا -->
+      <div class="content" id="tech-content">
+        <div class="circle-container">
+            <div class="circle">
+                <img src="https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg" alt="ايربودز A-16 بلوتوث" onclick="window.location.href='prod.html?id=4'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=4'">400.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg" alt="رامة DDR4 4G" onclick="window.location.href='prod.html?id=6'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=6'">300.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png" alt="هولدر تصوير AY49" onclick="window.location.href='prod.html?id=9'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=9'">520.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png" alt="طابعة USB" onclick="window.location.href='prod.html?id=10'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=10'">999.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png" alt="كاميرا Y2000 Original" onclick="window.location.href='prod.html?id=11'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=11'">900.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png" alt="بادة ماوس شعبي" onclick="window.location.href='prod.html?id=12'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=12'">25.00 جنيه</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم البيت -->
+    <div class="content" id="home-content">
+        <div class="circle-container">
+            <div class="circle">
+                <img src="https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png" alt="مج حراري فاخر 500 مل مع كوبين" onclick="window.location.href='prod.html?id=3'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=3'">290.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg" alt="علبة ألوان عملاقة 168 قطعة" onclick="window.location.href='prod.html?id=7'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=7'">270.00 جنيه</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم أزياء -->
+    <div class="content" id="fashion-content">
+        <div class="circle-container">
+            <div class="circle">
+                <img src="https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg" alt="حذاء جلد - p30 سكاي مريح" onclick="window.location.href='prod.html?id=2'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=2'">360.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png" alt="شنطة كروس jeep" onclick="window.location.href='prod.html?id=5'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=5'">225.00 جنيه</h1>
+            </div>
+            <div class="circle">
+                <img src="https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg" alt="شنطة كروس ميكي" onclick="window.location.href='prod.html?id=8'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=8'">200.00 جنيه</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم كتب -->
+    <div class="content" id="books-content">
+        <div class="circle-container">
+            <div class="circle">
+                <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="كتاب ابقَ قويًا 365 يومًا في السنة" onclick="window.location.href='prod.html?id=1'">
+                <h1 class="producte" onclick="window.location.href='prod.html?id=1'">70.00 جنيه</h1>
+            </div>
+        </div>
+    </div>
+    
+        <script>
+            function showContent(contentId) {
+                document.querySelectorAll('.content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(contentId + '-content').style.display = 'block';
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[onclick="showContent('${contentId}')"]`).classList.add('active');
+            }
+    
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById('tech-content').style.display = 'block';
+            });
+        </script>
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شريط تفاعلي</title>
+    <title>الصفحة الرئيسية</title>
     <style>
-        /* CSS */
+        /* التنسيق العام */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            padding-top: 66px; /* تعديل الحشو الأعلى بعد إزالة الشريط */
         }
 
-        .sidebar {
-            width: 100px;
-            height: 100vh;
-            background-color: #333;
-            color: white;
-            text-align: center;
+        /* الشريط العلوي الثابت */
+        .header {
             position: fixed;
             top: 0;
+            left: 0;
             right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 66px;
+            background-color: white;
+            padding: 0 20px;
+            z-index: 1;
+            box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
         }
 
-        .menu-item {
-            padding: 20px;
-            cursor: pointer;
+        /* بقية التنسيقات كما هي */
+        .search-wrapper {
+            flex-grow: 1;
+            margin: 0 10px;
             position: relative;
         }
-
-        .menu-item:hover {
-            background-color: #7474743b;
+        @media (min-width: 768px) { /* تعديل المارغن فقط للشاشات الأكبر من الهواتف */
+            .search-wrapper {
+                margin-right: 6px;
+                margin-left: 11px;
+            }
         }
 
-        .menu-item.active {
-            background-color: #f50000; /* خلفية النص المحدد */
-            border-radius: 1px; /* حواف مستديرة */
+        #search-box {
+            width: 100%;
+            padding: 10px 12px 10px 53px;
+            font-size: 16px;
+            border: 1px solid #000000;
+            border-radius: 51px;
+            outline: none;
+            box-sizing: border-box;
+            text-align: right;
+            direction: rtl;
         }
 
-        .content {
+        #search-button {
+            position: absolute;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: black;
+            color: white;
+            width: 70px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 33px;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 1066px) {
+            #search-button {
+                width: 46px;
+            }
+        }
+
+        #search-button svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .right-elements {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .right-elements span {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .user-icon {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+            justify-content: center;
+        }
+
+        .user-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #333;
+            flex-shrink: 0;
+        }
+
+        .welcome-message {
+            font-size: 16px;
+            color: #007bff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .welcome-message span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .left-elements {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .menu-icon, .cart-icon, .message-button {
+            cursor: pointer;
+        }
+
+        .menu-icon svg, .cart-icon svg, .message-button svg {
+            width: 24px;
+            height: 24px;
+            color: #333;
+        }
+
+        .cart-icon {
+            position: relative;
+            user-select: none; /* منع تحديد النص */
+-webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+outline: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* إخفاء العنصر على الهواتف */
+        @media only screen and (max-width: 767px) {
+            .cart-icon {
+                margin-left: -10px;
+                margin-right: -8px;
+            }
+        }
+        @media only screen and (max-width: 767px) {
+            .cart-icon {
+                margin-left: -12px;
+            }
+        }
+
+        /* تعديلات النافذة الجانبية */
+        .menu-popup {
             display: none;
             position: fixed;
-            top: 0; /* تأكد من أن العنصر يبدأ من الأعلى */
-            right: 100px;
-            width: calc(100% - 100px);
+            top: 0;
+            left: -250px;
+            width: 250px;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: white;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto; /* تمكين التمرير العمودي */
+            z-index: 1000;
+            transition: left 0.3s ease-in-out;
+            overflow-y: auto;
         }
 
-        .circle-container {
-            display: flex;
-            flex-wrap: wrap; /* العناصر تنتقل إلى سطر جديد عند الضرورة */
-            justify-content: flex-end; /* يبدأ العناصر من اليمين */
-            flex-direction: row-reverse; /* عكس اتجاه العناصر */
-            margin-top: 0; /* إزالة الهامش العلوي ليبدأ المحتوى من الأعلى */
+        @keyframes slideIn {
+            from {
+                left: -250px;
+            }
+            to {
+                left: 0;
+            }
         }
 
-        .circle {
-            text-align: center;
-            margin: 10px; /* تباعد بين العناصر */
+        @keyframes slideOut {
+            from {
+                left: 0;
+            }
+            to {
+                left: -250px;
+            }
         }
 
-        .circle img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 10px;
+        .menu-popup.active {
+            display: block;
+            animation: slideIn 0.3s ease-in-out forwards;
+        }
+
+        .menu-popup.closing {
+            animation: slideOut 0.3s ease-in-out forwards;
+        }
+
+        .menu-popup .back-arrow {
             cursor: pointer;
-            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
         }
 
-        .circle img:hover {
-            transform: scale(1.05); /* تكبير بسيط عند التحويم */
+        .menu-popup .back-arrow:focus {
+            outline: none; /* منع ظهور التحديد عند التركيز */
         }
 
-        .circle p {
-            margin: 0;
-            font-size: 16px;
+        .menu-popup .back-arrow svg {
+            width: 24px;
+            height: 24px;
+            color: #333;
+            pointer-events: none; /* يمنع التأثير على الـ SVG */
         }
 
-        .producte {
-            font-size: 11px;
-            color: #000;
-            font-family: Cairo, sans-serif;
+        .menu-popup p {
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
         }
 
-        img {
-            color: #000000; /* لون النص الذهبي */
+        .menu-icon {
+            margin-left: 10px;
+            user-select: none; /* منع تحديد النص */
+-webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+outline: none;
         }
 
-
-        
-       @media (min-width: 1024px) {
-          .circle img {
-             width: 150px; /* زيادة حجم الصورة للشاشات الكبيرة */
-             height: 150px;
-              }
-             .circle p, .circle h1 {
-             font-size: 20px; /* زيادة حجم النص ليناسب حجم الصورة */
+        /* إخفاء العنصر على الهواتف */
+        @media only screen and (max-width: 767px) {
+            .menu-icon {
+                margin-left: -6px;
             }
-               }
+        }
 
+        .adger {
+            font-family: Arial, sans-serif;
+            font-size: 27px;
+            margin-left: 10px;
+            font-weight: bold;
+            background: linear-gradient(to right, #f37420, #ffc4c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            user-select: none;
+            user-select: none; /* منع تحديد النص */
+-webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+outline: none;
+        }
 
-        /* تعديل التصميم للشاشات الصغيرة */
-        @media (max-width: 499px) {
-            .circle-container {
-                flex-direction: row; /* العناصر في صفوف */
-                justify-content: space-around; /* توزيع العناصر بالتساوي */
+        @media (max-width: 767px) {
+            .adger {
+                font-size: 20px;
+            }
+        }
+
+        @media (min-width: 767px) {
+            .adger {
+                margin-left: 10px;
+            }
+        }
+
+        .container22 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .country-code {
+            display: inline-flex;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .flag {
+            width: 24px;
+            height: 16px;
+            margin-left: 8px;
+        }
+
+        /* تعديلات للهواتف */
+        @media only screen and (max-width: 767px) {
+            .search-wrapper {
+                width: 100%; /* Let the search bar take full width on mobile */
+                max-width: none;
+                margin: 0; /* Reset margin for mobile */
             }
 
-            .circle {
-                width: 45%; /* عرض العنصر ليكون عنصرين في الصف */
-                margin: 10px 0; /* تباعد عمودي بين العناصر */
+            #search-box {
+                padding: 10px 12px 10px 45px; /* Adjust padding for mobile, if needed */
+                font-size: 14px; /* Smaller font size for mobile */
             }
 
-            .circle img {
-                width: 80px; /* تصغير حجم الصورة في الشاشات الصغيرة */
-                height: 80px;
+            #search-button {
+                left: 3px;
+                width: 45px; /* Smaller button for mobile */
+                height: 32px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- الهيكل الرئيسي -->
+    <div class="header">
+        <!-- العناصر على اليمين -->
+        <div class="right-elements">
+            <style>
+                .adger-container {
+                    display: flex;
+                    align-items: center;
+                }
 
-    <!-- HTML -->
-    <div class="sidebar">
-        <div class="menu">
-            <div class="menu-item active" onclick="showContent('tech')">التكنولوجيا</div>
-            <div class="menu-item" onclick="showContent('home')">البيت</div>
-            <div class="menu-item" onclick="showContent('fashion')">أزياء</div>
-            <div class="menu-item" onclick="showContent('books')">كتب</div>
-            <div class="menu-item" onclick="showContent('sports')">رياضة</div>
-        </div>
-        <div class="content" id="tech-content">
-            <div class="circle-container">
-                <div class="circle" onclick="redirectToSea('نص 1')">
-                    <img src="1.jpg" alt="Tech 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-                
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+                .adger-container svg {
+                    margin-left: 15px; /* Space between text and arrow */
+                    margin-right: 5px; /* Adjust for better visibility */
+                    cursor: pointer; /* This makes the cursor change to a pointing hand */
+                    color: #1a1a1a;
+                    background-color: #f1f1f1; /* Black background */
+                    border-radius: 50%; /* Makes the background circular */
+                    padding: 4px; /* Adds some space around the SVG */
+                }
 
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+                /* For mobile devices, adjust the arrow's margins */
+                @media (max-width: 1167px) {
+                    .adger-container svg {
+                        margin-left: 7px; /* Space between text and arrow */
+                        margin-right: -13px;
+                    }
+                }
 
-                  <div class="circle" onclick="redirectToSea('نص 1')">
-                    <img src="1.jpg" alt="Tech 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-                
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+                /* Set cursor for both SVG and text within the container */
+                .adger-container svg, .adger-container h2 {
+                    cursor: pointer;
+                }
 
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+                /* Differentiate click areas */
+                .adger-container h2 {
+                    margin-left: 5px; /* To ensure space from the arrow */
+                }
+            </style>
 
-                <div class="circle" onclick="redirectToSea('نص 1')">
-                    <img src="1.jpg" alt="Tech 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-                
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+            <div class="adger-container">
+                <svg onclick="history.back()" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+                </svg>
+                <h2 class="adger" onclick="window.location.href='index.html';">Adger</h2>
+            </div>
 
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
+            <style>
+                /* إخفاء العنصر على الهواتف */
+                @media only screen and (max-width: 767px) {
+                    .element-to-hide {
+                        display: none;
+                    }
+                }
+            </style>
+            <div class="element-to-hide" style="font-family: Cairo, sans-serif;">
+                اللغه / <span style="color: red;">ar</span>
+            </div>
+            <style>
+                /* إخفاء العنصر على الهواتف */
+                @media only screen and (max-width: 767px) {
+                    .user-icon {
+                        display: none;
+                    }
+                }
+            </style>
+            <div class="user-icon" onclick="window.location.href='account.html'">
+                <div class="welcome-message" id="welcomeMessage">
+                    أهلاً <span id="usernameDisplay"></span>
                 </div>
-
-                <div class="circle" onclick="redirectToSea('نص 1')">
-                    <img src="1.jpg" alt="Tech 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-                
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
-
-                <div class="circle" onclick="redirectToSea('نص 2')">
-                    <img src="1.jpg" alt="Tech 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
-
-
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
             </div>
         </div>
 
-
-        <div class="content" id="home-content">
-            <div class="circle-container">
-                <div class="circle" onclick="redirectToSea('نص 24')">
-                    <img src="home1.jpg" alt="Home 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-
-                 <div class="circle" onclick="redirectToSea('نص 24')">
-                    <img src="home2.jpg" alt="Home 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
-
-               <div class="circle" onclick="redirectToSea('نص 24')">
-                    <img src="home3.jpg" alt="Home 3">
-                    <h1 class="producte">نص 3</h1>
-                </div>
-
-               <div class="circle" onclick="redirectToSea('نص 24')">
-                    <img src="home4.jpg" alt="Home 4">
-                    <h1 class="producte">نص 4</h1>
-                </div>
-            </div>
+        <!-- صندوق البحث -->
+        <div class="search-wrapper">
+            <input
+                type="text"
+                id="search-box"
+                placeholder="ابحث فى أدجر"
+                autocomplete="off"
+                readonly
+                onclick="redirectToSearch(event)">
+            <button id="search-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
         </div>
 
+        <script>
+            function redirectToSearch(event) {
+                // منع التركيز على صندوق الإدخال
+                event.preventDefault();
 
-        <div class="content" id="fashion-content">
-            <div class="circle-container">
-                <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="fashion1.jpg" alt="Fashion 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
+                // تنفيذ إعادة التوجيه إلى صفحة البحث
+                window.location.href = "search.html";
+            }
+        </script>
 
-               <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="fashion2.jpg" alt="Fashion 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
+        <!-- العناصر على اليسار -->
+        <div class="left-elements">
+            <style>
+                /* إخفاء العنصر على الهواتف */
+                @media only screen and (max-width: 767px) {
+                    .hide-on-mobile {
+                        display: none;
+                    }
+                }
 
-                <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="fashion3.jpg" alt="Fashion 3">
-                    <h1 class="producte">نص 3</h1>
-                </div>
+                /* منع النص من الانقسام */
+                .country-code {
+                    white-space: nowrap;
+                }
 
-              <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="fashion4.jpg" alt="Fashion 4">
-                    <h1 class="producte">نص 4</h1>
-                </div>
-            </div>
-        </div>
+                .flag {
+                    width: 20px;
+                    height: auto;
+                    margin-left: 5px;
+                }
 
-
-        <div class="content" id="books-content">
-            <div class="circle-container">
-             <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="books1.jpg" alt="Books 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
-                
-                <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="books2.jpg" alt="Books 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
-
-          <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="books3.jpg" alt="Books 3">
-                    <h1 class="producte">نص 3</h1>
-                </div>
-
-                <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="books4.jpg" alt="Books 4">
-                    <h1 class="producte">نص 4</h1>
+                /* إضافة مسافة بين العنصر والزر */
+                .country-code {
+                    margin-right: 20px;
+                }
+            </style>
+            <div class="container22">
+                <div class="country-code hide-on-mobile">
+                    <span>البلد / </span>
+                    <span style="color: #000000; width: 44px;">EGP</span>
+                    <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg" alt="علم مصر">
                 </div>
             </div>
-        </div>
 
+            <style>
+                /* إخفاء زر المراسلة على الهواتف */
+                @media only screen and (max-width: 767px) {
+                    .message-button {
+                        display: none;
+                    }
+                }
+            </style>
+            <div class="message-button" onclick="window.open('https://wa.me/201152366798', '_blank')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <span style="font-family: Cairo, sans-serif;">مراسلة</span>
+            </div>
 
-        <div class="content" id="sports-content">
-            <div class="circle-container">
-               <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="sports1.jpg" alt="Sports 1">
-                    <h1 class="producte">نص 1</h1>
-                </div>
+            <div class="cart-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </div>
 
-            <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="sports2.jpg" alt="Sports 2">
-                    <h1 class="producte">نص 2</h1>
-                </div>
-
-              <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="sports3.jpg" alt="Sports 3">
-                    <h1 class="producte">نص 3</h1>
-                </div>
-
-                <div class="circle"onclick="redirectToSea('نص 24')">
-                    <img src="sports4.jpg" alt="Sports 4">
-                    <h1 class="producte">نص 4</h1>
-                </div>
+            <div class="menu-icon" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </div>
         </div>
     </div>
 
-
-<script>
-    // JavaScript
-    function showContent(contentId) {
-        // إخفاء جميع المحتويات
-        document.querySelectorAll('.content').forEach(content => {
-            content.style.display = 'none';
-        });
-
-        // إظهار المحتوى المحدد
-        document.getElementById(contentId + '-content').style.display = 'block';
-
-        // إزالة الخلفية من جميع العناصر
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.classList.remove('active');
-        });
-
-        // إضافة الخلفية إلى العنصر المحدد
-        document.querySelector(`[onclick="showContent('${contentId}')"]`).classList.add('active');
-    }
-
-    // عند تحميل الصفحة، يتم تحديد "التكنولوجيا" تلقائيًا
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.content').forEach(content => {
-            content.style.display = 'none';
-        });
-        document.getElementById('tech-content').style.display = 'block';
-    });
-
-    // دالة لتوجيه المستخدم إلى صفحة sea.html وإضافة الاسم إلى صندوق البحث
-    function redirectToSea(categoryName) {
-        window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
-    }
-</script>
-</body>
-</html>
-
-
-
     <script>
-        // JavaScript
-        function showContent(contentId) {
-            // إخفاء جميع المحتويات
-            document.querySelectorAll('.content').forEach(content => {
-                content.style.display = 'none';
-            });
-
-            // إظهار المحتوى المحدد
-            document.getElementById(contentId + '-content').style.display = 'block';
-
-            // إزالة الخلفية من جميع العناصر
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // إضافة الخلفية إلى العنصر المحدد
-            document.querySelector(`[onclick="showContent('${contentId}')"]`).classList.add('active');
-        }
-
-        // عند تحميل الصفحة، يتم تحديد "التكنولوجيا" تلقائيًا
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.content').forEach(content => {
-                content.style.display = 'none';
-            });
-            document.getElementById('tech-content').style.display = 'block';
+        // تحديث عدد المنتجات عند تحميل الصفحة
+        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+    
+        // الاستماع إلى تغييرات localStorage
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'cartCount') {
+                document.getElementById('cartCount').textContent = event.newValue;
+            }
         });
     </script>
-</body>
-</html>
+
+    <!-- نافذة القائمة الجانبية -->
+    <div class="menu-popup" id="menuPopup">
+        <div class="back-arrow" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+        </div>
+        <p onclick="window.location.href='account.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">حسابي</span>
+     </p>
+     
+     <p onclick="window.location.href='about.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">سياسات وأحكام</span>
+     </p>
+     
+     <p onclick="window.location.href='return.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">طلب استرجاع</span>
+     </p>
+     
+     <p onclick="window.location.href='deals.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">صفقة رابحة</span>
+     </p>
+     
+     <p onclick="window.location.href='wholesale.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">شراء بالجملة</span>
+     </p>
+     
+     <p onclick="window.location.href='companies.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">شركات عالمية</span>
+     </p>
+     
+     <p onclick="window.location.href='categories.html'" 
+        style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+        onmouseover="this.style.color='#888'" 
+        onmouseout="this.style.color='black'"
+        ontouchstart="this.style.color='#888'" 
+        ontouchend="setTimeout(() => this.style.color='black', 300)">
+         <span style="pointer-events: none;">الفئات</span>
+     </p>
+    </div>
+
+    <script>
+        // استرجاع بيانات المستخدم من localStorage
+        const username = localStorage.getItem('username');
+        
+        // عرض "أهلاً" مع اسم المستخدم أو نص بديل
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        
+        if (username) {
+            usernameDisplay.textContent = truncateUsername(username);
+            window.addEventListener('resize', () => {
+                usernameDisplay.textContent = truncateUsername(username);
+            });
+        } else {
+            welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+        }
+        
+        // دالة للتحقق من النصوص العربية
+        function isArabic(text) {
+            return /[\u0600-\u06FF]/.test(text);
+        }
+        
+        // دالة لتقصير اسم المستخدم
+        function truncateUsername(name) {
+            const maxLength = isArabic(name) ? 12 : 7;
+            if (window.innerWidth < 966 && name.length > maxLength) {
+                if (isArabic(name)) {
+                    return name.substring(0, maxLength) + '..';
+                } else {
+                    return '..' + name.substring(0, maxLength);
+                }
+            }
+            return name;
+        }
+        
+        // دالة لإظهار أو إخفاء القائمة الجانبية
+        function toggleMenu() {
+            const menuPopup = document.getElementById('menuPopup');
+            if (menuPopup.classList.contains('active')) {
+                menuPopup.classList.add('closing');
+                setTimeout(() => {
+                    menuPopup.classList.remove('active', 'closing');
+                    menuPopup.style.display = 'none';
+                }, 300); // يتناسب مع مدة animation
+            } else {
+                menuPopup.style.display = 'block';
+                menuPopup.classList.add('active');
+            }
+        }
+        
+        // إغلاق النافذة بالنقر على الشاشة خارج النافذة
+        document.body.addEventListener('click', function(event) {
+            const menuPopup = document.getElementById('menuPopup');
+            if (menuPopup.classList.contains('active') && 
+                !menuPopup.contains(event.target) && 
+                !event.target.closest('.menu-icon')) {
+                toggleMenu();
+            }
+        });
+        
+        // إغلاق النافذة أثناء التمرير من اليمين إلى اليسار
+        let touchStartX = 0;
+        let touchCurrentX = 0;
+        let isSwiping = false;
+        
+        document.addEventListener('touchstart', function(event) {
+            const menuPopup = document.getElementById('menuPopup');
+            if (menuPopup.classList.contains('active')) {
+                touchStartX = event.touches[0].screenX;
+                isSwiping = true;
+            }
+        });
+        
+        document.addEventListener('touchmove', function(event) {
+            if (isSwiping) {
+                touchCurrentX = event.touches[0].screenX;
+                const swipeDistance = touchStartX - touchCurrentX;
+                if (swipeDistance > 50) {
+                    toggleMenu();
+                    isSwiping = false;
+                }
+            }
+        });
+        
+        document.addEventListener('touchend', function() {
+            isSwiping = false;
+        });
+        
+        // دالة لتحديث عدد العناصر في العربة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCountElement = document.querySelector('.cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = cart.length;
+            }
+        }
+        
+        // دالة لإضافة المنتج إلى العربة
+        function addToCart(button) {
+            const productContainer = button.closest('.image-container');
+            const product = {
+                id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
+                image: productContainer.querySelector('img').src,
+                name: productContainer.querySelector('h1').textContent,
+                sold: productContainer.querySelector('h2').textContent,
+                price: productContainer.querySelector('.number').textContent,
+                discount: productContainer.querySelector('h3').textContent,
+                link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
+            };
+        
+            // استرجاع العربة الحالية من localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            // التحقق مما إذا كان المنتج موجودًا بالفعل في العربة
+            const existingProduct = cart.find(item => item.id === product.id);
+            if (!existingProduct) {
+                cart.push(product); // إضافة المنتج الجديد
+                localStorage.setItem('cart', JSON.stringify(cart)); // تحديث العربة في localStorage
+                updateCartCount();
+            }
+        }
+        
+        // التنقل إلى صفحة العربة
+        function navigateToCart() {
+            window.location.href = 'cart.html';
+        }
+        
+        // ربط حدث النقر على أيقونة العربة
+        document.querySelector('.cart-icon')?.addEventListener('click', navigateToCart);
+        
+        // تحديث عدد المنتجات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    
+        // الاستماع إلى تغييرات localStorage من صفحات أخرى
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'cart') {
+                updateCartCount();
+            }
+        });
+    
+        // تحديث العدد عند تحميل الصفحة لأول مرة
+        updateCartCount();
+    </script>
+
