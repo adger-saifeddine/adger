@@ -486,350 +486,361 @@
             }
         }
     </style>
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-    <body>
-        <div class="header-background"></div>
-    
-        <button class="back-button" id="back-button">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
-            </svg>          
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    <style>
+        /* أضف هنا أسلوب CSS الخاص بك */
+    </style>
+</head>
+<body>
+    <div class="header-background"></div>
+
+    <button class="back-button" id="back-button">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+        </svg>          
+    </button>
+
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <p>هل أنت متأكد أنك تريد حذف الكل؟</p>
+            <div class="modal-buttons">
+                <button id="confirm-yes">نعم</button>
+                <button id="confirm-no">لا</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="ابحث هنا" autocomplete="off" autofocus inputmode="search">
+        <button class="clear-button" id="clear-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
         </button>
-    
-        <div id="confirmation-modal" class="modal">
-            <div class="modal-content">
-                <p>هل أنت متأكد أنك تريد حذف الكل؟</p>
-                <div class="modal-buttons">
-                    <button id="confirm-yes">نعم</button>
-                    <button id="confirm-no">لا</button>
-                </div>
-            </div>
+        <button class="search-button" id="search-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <circle cx="10" cy="10" r="7" fill="none" stroke="white" stroke-width="2" />
+                <path d="M15 15l4 4" stroke="white" stroke-width="2" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="search-history-header">
+        <h2>بحث المحفوظات</h2>
+        <button class="delete-all-button" id="delete-all-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#ff0000" stroke-width="2" fill="none"/>
+                <path d="M10 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
+                <path d="M14 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="last-search-item" id="last-search-item">
+        <span id="last-search-term">آخر نص كتبه المستخدم</span>
+    </div>
+
+    <div class="search-history-grid" id="search-history"></div>
+
+    <div class="discover-more-header">
+        <h2>استكشف المزيد</h2>
+    </div>
+    <div class="discover-more-grid" id="discover-more">
+        <div class="discover-item" onclick="redirectToSea('كتاب ابقَ قويًا 365 يومًا في السنة')">
+            <span>كتاب ابقَ قويًا 365 يومًا في السنة</span>
         </div>
-    
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="ابحث هنا" autocomplete="off" autofocus inputmode="search">
-            <button class="clear-button" id="clear-button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <button class="search-button" id="search-button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <circle cx="10" cy="10" r="7" fill="none" stroke="white" stroke-width="2" />
-                    <path d="M15 15l4 4" stroke="white" stroke-width="2" />
-                </svg>
-            </button>
+        <div class="discover-item" onclick="redirectToSea('حذاء جلد - p30 سكاي مريح')">
+            <span>حذاء جلد - p30 سكاي مريح</span>
         </div>
-    
-        <div class="search-history-header">
-            <h2>بحث المحفوظات</h2>
-            <button class="delete-all-button" id="delete-all-button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#ff0000" stroke-width="2" fill="none"/>
-                    <path d="M10 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M14 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </button>
+        <div class="discover-item" onclick="redirectToSea('مج حراري فاخر 500 مل مع كوبين')">
+            <span>مج حراري فاخر 500 مل مع كوبين</span>
         </div>
-    
-        <div class="last-search-item" id="last-search-item">
-            <span id="last-search-term">آخر نص كتبه المستخدم</span>
+        <div class="discover-item" onclick="redirectToSea('ايربودز A-16 بلوتوث')">
+            <span>ايربودز A-16 بلوتوث</span>
         </div>
-    
-        <div class="search-history-grid" id="search-history"></div>
-    
-        <div class="discover-more-header">
-            <h2>استكشف المزيد</h2>
+        <div class="discover-item" onclick="redirectToSea('طابعة USB')">
+            <span>طابعة USB</span>
         </div>
-        <div class="discover-more-grid" id="discover-more">
-            <div class="discover-item" onclick="redirectToSea('كتاب ابقَ قويًا 365 يومًا في السنة')">
-                <span>كتاب ابقَ قويًا 365 يومًا في السنة</span>
-            </div>
-            <div class="discover-item" onclick="redirectToSea('حذاء جلد - p30 سكاي مريح')">
-                <span>حذاء جلد - p30 سكاي مريح</span>
-            </div>
-            <div class="discover-item" onclick="redirectToSea('مج حراري فاخر 500 مل مع كوبين')">
-                <span>مج حراري فاخر 500 مل مع كوبين</span>
-            </div>
-            <div class="discover-item" onclick="redirectToSea('ايربودز A-16 بلوتوث')">
-                <span>ايربودز A-16 بلوتوث</span>
-            </div>
-            <div class="discover-item" onclick="redirectToSea('طابعة USB')">
-                <span>طابعة USB</span>
-            </div>
-            
-        </div>
-    
-        <div class="image-grid" id="image-grid">
-            <div class="image-item" data-term="إلكترونيات"><img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات"></div>
-            <div class="image-item" data-term="كمبيوتر"><img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر"></div>
-            <div class="image-item" data-term="سماعات"><img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات"></div>
-            <div class="image-item" data-term="كتب"><img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب"></div>
-            <div class="image-item" data-term="ألعاب"><img src="https://i.postimg.cc/PrvyC2dV/2025-04-05-09-45-39-9af96ab1.jpg" alt="ألعاب"></div>
-            <div class="image-item" data-term="كاميرات"><img src="https://i.postimg.cc/sgFc77Xj/2025-04-05-09-45-39-9ba6ff54.jpg" alt="كاميرات"></div>
-            <div class="image-item" data-term="ملابس"><img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس"></div>
-            <div class="image-item" data-term="أحذية"><img src="https://i.postimg.cc/zDsThYDm/2025-04-05-09-45-40-277b3610.jpg" alt="أحذية"></div>
-            
-            <div class="image-item" data-term="أثري"><img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري"></div>
-            <div class="image-item" data-term="ساعات"><img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات"></div>
-            <div class="image-item" data-term="إكسسوارات"><img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات"></div>
-            <div class="image-item" data-term="فن"><img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن"></div>
-            
-            
-        </div>
-    
-        <script>
-            const deleteAllButton = document.getElementById('delete-all-button');
-            const modal = document.getElementById('confirmation-modal');
-            const confirmYes = document.getElementById('confirm-yes');
-            const confirmNo = document.getElementById('confirm-no');
-            
-            let isAllHistoryShown = false; // متغير لتتبع ما إذا تم عرض جميع العناصر
-            
-            deleteAllButton.addEventListener('click', () => {
-                const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-                if (searchHistory.length > 0) {
-                    modal.style.display = 'flex';
-                }
-            });
-            
-            confirmYes.addEventListener('click', () => {
-                localStorage.removeItem('searchHistory');
-                isAllHistoryShown = false; // إعادة تعيين الحالة عند الحذف الكلي
-                displaySearchHistory();
-                modal.style.display = 'none';
-            });
-            
-            confirmNo.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-            
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            
-            const searchInput = document.getElementById('search-input');
-            const searchButton = document.getElementById('search-button');
-            const backButton = document.getElementById('back-button');
-            const searchHistoryGrid = document.getElementById('search-history');
-            const imageGrid = document.getElementById('image-grid');
-            const clearButton = document.getElementById('clear-button');
-            const lastSearchItem = document.getElementById('last-search-item');
-            const lastSearchTerm = document.getElementById('last-search-term');
-            
-            backButton.addEventListener('click', function () {
-                window.history.back();
-            });
-            
-            const searchTexts = [
-                "ابحث هنا",
-                "اكتشف العروض الجديدة",
-                "تصفح الفئات",
-                "ابحث عن العلامات التجارية",
-                "ابحث عن الكلمات الرئيسية"
-            ];
-            let currentTextIndex = 0;
-            let currentSearchText = searchTexts[currentTextIndex];
-            
-            function changeSearchText() {
-                currentTextIndex = (currentTextIndex + 1) % searchTexts.length;
-                currentSearchText = searchTexts[currentTextIndex];
-                searchInput.placeholder = currentSearchText;
+        
+    </div>
+
+    <div class="image-grid" id="image-grid">
+        <div class="image-item" data-term="إلكترونيات"><img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات"></div>
+        <div class="image-item" data-term="كمبيوتر"><img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر"></div>
+        <div class="image-item" data-term="سماعات"><img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات"></div>
+        <div class="image-item" data-term="كتب"><img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب"></div>
+        <div class="image-item" data-term="ألعاب"><img src="https://i.postimg.cc/PrvyC2dV/2025-04-05-09-45-39-9af96ab1.jpg" alt="ألعاب"></div>
+        <div class="image-item" data-term="كاميرات"><img src="https://i.postimg.cc/sgFc77Xj/2025-04-05-09-45-39-9ba6ff54.jpg" alt="كاميرات"></div>
+        <div class="image-item" data-term="ملابس"><img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس"></div>
+        <div class="image-item" data-term="أحذية"><img src="https://i.postimg.cc/zDsThYDm/2025-04-05-09-45-40-277b3610.jpg" alt="أحذية"></div>
+        
+        <div class="image-item" data-term="أثري"><img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري"></div>
+        <div class="image-item" data-term="ساعات"><img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات"></div>
+        <div class="image-item" data-term="إكسسوارات"><img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات"></div>
+        <div class="image-item" data-term="فن"><img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن"></div>
+        
+        
+    </div>
+
+    <script>
+        const deleteAllButton = document.getElementById('delete-all-button');
+        const modal = document.getElementById('confirmation-modal');
+        const confirmYes = document.getElementById('confirm-yes');
+        const confirmNo = document.getElementById('confirm-no');
+        
+        let isAllHistoryShown = false; // متغير لتتبع ما إذا تم عرض جميع العناصر
+        
+        deleteAllButton.addEventListener('click', () => {
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            if (searchHistory.length > 0) {
+                modal.style.display = 'flex';
             }
-            setInterval(changeSearchText, 5000);
-            
-            function isDefaultSearchText(searchTerm) {
-                return searchTerm === "ابحث هنا";
+        });
+        
+        confirmYes.addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            isAllHistoryShown = false; // إعادة تعيين الحالة عند الحذف الكلي
+            displaySearchHistory();
+            modal.style.display = 'none';
+        });
+        
+        confirmNo.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
-            
-            searchButton.addEventListener('click', function () {
-                const searchTerm = searchInput.value.trim() || currentSearchText;
+        });
+        
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const backButton = document.getElementById('back-button');
+        const searchHistoryGrid = document.getElementById('search-history');
+        const imageGrid = document.getElementById('image-grid');
+        const clearButton = document.getElementById('clear-button');
+        const lastSearchItem = document.getElementById('last-search-item');
+        const lastSearchTerm = document.getElementById('last-search-term');
+        
+        backButton.addEventListener('click', function () {
+            window.history.back();
+        });
+        
+        const searchTexts = [
+            "ابحث هنا",
+            "اكتشف العروض الجديدة",
+            "تصفح الفئات",
+            "ابحث عن العلامات التجارية",
+            "ابحث عن الكلمات الرئيسية"
+        ];
+        let currentTextIndex = 0;
+        let currentSearchText = searchTexts[currentTextIndex];
+        
+        function changeSearchText() {
+            currentTextIndex = (currentTextIndex + 1) % searchTexts.length;
+            currentSearchText = searchTexts[currentTextIndex];
+            searchInput.placeholder = currentSearchText;
+        }
+        setInterval(changeSearchText, 5000);
+        
+        function isDefaultSearchText(searchTerm) {
+            return searchTerm === "ابحث هنا";
+        }
+        
+        searchButton.addEventListener('click', function () {
+            const searchTerm = searchInput.value.trim() || currentSearchText;
+            if (searchTerm && !isDefaultSearchText(searchTerm)) {
+                saveSearchTerm(searchTerm);
+                saveLastSearchTerm(searchTerm);
+                window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+        
+        searchInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                const searchTerm = searchInput.value.trim();
                 if (searchTerm && !isDefaultSearchText(searchTerm)) {
                     saveSearchTerm(searchTerm);
                     saveLastSearchTerm(searchTerm);
                     window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
                 }
-            });
-            
-            searchInput.addEventListener('keydown', function (event) {
-                if (event.key === 'Enter') {
-                    const searchTerm = searchInput.value.trim();
-                    if (searchTerm && !isDefaultSearchText(searchTerm)) {
-                        saveSearchTerm(searchTerm);
-                        saveLastSearchTerm(searchTerm);
-                        window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
-                    }
-                }
-            });
-            
-            searchInput.addEventListener('input', function () {
-                clearButton.style.display = searchInput.value.trim() !== '' ? 'block' : 'none';
-            });
-            
-            clearButton.addEventListener('click', function () {
-                searchInput.value = '';
-                clearButton.style.display = 'none';
-                searchInput.focus();
-            });
-            
-            function saveSearchTerm(term) {
-                const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-                const existingIndex = searchHistory.findIndex(entry => entry.term === term);
-            
-                if (existingIndex !== -1) {
-                    searchHistory.splice(existingIndex, 1);
-                }
-            
-                const today = new Date();
-                const date = today.toLocaleDateString('ar-EG');
-                searchHistory.unshift({ term, date });
-            
-                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-                displaySearchHistory();
             }
-            
-            function saveLastSearchTerm(term) {
-                localStorage.setItem('lastSearchTerm', term);
-                displayLastSearchTerm();
+        });
+        
+        searchInput.addEventListener('input', function () {
+            clearButton.style.display = searchInput.value.trim() !== '' ? 'block' : 'none';
+        });
+        
+        clearButton.addEventListener('click', function () {
+            searchInput.value = '';
+            clearButton.style.display = 'none';
+            searchInput.focus();
+        });
+        
+        function saveSearchTerm(term) {
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const existingIndex = searchHistory.findIndex(entry => entry.term === term);
+        
+            if (existingIndex !== -1) {
+                searchHistory.splice(existingIndex, 1);
             }
-            
-            function displayLastSearchTerm() {
-                const lastTerm = localStorage.getItem('lastSearchTerm') || 'آخر نص كتبه المستخدم';
-                const displayTerm = (lastTerm.length > 26) ? lastTerm.slice(0, 26) + '...' : lastTerm;
-                lastSearchTerm.textContent = displayTerm;
-            }
-            
-            function displaySearchHistory() {
-                const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-                searchHistoryGrid.innerHTML = '';
-                const isMobile = window.matchMedia("(max-width: 1522px)").matches;
-                const maxItems = isMobile ? 12 : 22;
-            
-                searchHistory.forEach((entry, index) => {
-                    if (isAllHistoryShown || index < maxItems || searchHistory.length <= maxItems) {
-                        const searchItem = document.createElement('div');
-                        searchItem.className = 'search-item';
-                        const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
-                        searchItem.innerHTML = 
-                            `<span>${displayTerm}</span>
-                            <small>${entry.date}</small>
-                            <button class="delete-button">✖</button>`;
-            
-                        searchItem.addEventListener('click', function () {
-                            saveSearchTerm(entry.term);
-                            saveLastSearchTerm(entry.term);
-                            window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
-                        });
-            
-                        searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
+        
+            const today = new Date();
+            const date = today.toLocaleDateString('ar-EG');
+            searchHistory.unshift({ term, date });
+        
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            displaySearchHistory();
+        }
+        
+        function saveLastSearchTerm(term) {
+            localStorage.setItem('lastSearchTerm', term);
+            displayLastSearchTerm();
+        }
+        
+        function displayLastSearchTerm() {
+            const lastTerm = localStorage.getItem('lastSearchTerm') || 'آخر نص كتبه المستخدم';
+            const displayTerm = (lastTerm.length > 26) ? lastTerm.slice(0, 26) + '...' : lastTerm;
+            lastSearchTerm.textContent = displayTerm;
+        }
+        
+        function displaySearchHistory() {
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            searchHistoryGrid.innerHTML = '';
+            const isMobile = window.matchMedia("(max-width: 1522px)").matches;
+            const maxItems = isMobile ? 12 : 22;
+        
+            searchHistory.forEach((entry, index) => {
+                if (isAllHistoryShown || index < maxItems || searchHistory.length <= maxItems) {
+                    const searchItem = document.createElement('div');
+                    searchItem.className = 'search-item';
+                    const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
+                    searchItem.innerHTML = 
+                        `<span>${displayTerm}</span>
+                        <small>${entry.date}</small>
+                        <button class="delete-button">✖</button>`;
+        
+                    searchItem.addEventListener('click', function () {
+                        saveSearchTerm(entry.term);
+                        saveLastSearchTerm(entry.term);
+                        window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
+                    });
+        
+                    searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        searchItem.remove();
+                        removeSearchTermFromHistory(entry.term);
+                    });
+        
+                    searchHistoryGrid.appendChild(searchItem);
+        
+                    if (!isAllHistoryShown && index === maxItems - 1 && searchHistory.length > maxItems) {
+                        const itemWithArrow = document.createElement('div');
+                        itemWithArrow.className = 'search-item-with-arrow';
+                        itemWithArrow.appendChild(searchItem.cloneNode(true));
+        
+                        const arrow = document.createElement('div');
+                        arrow.id = 'show-more-arrow';
+                        arrow.innerHTML = 
+                            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>`;
+        
+                        arrow.addEventListener('click', function (event) {
                             event.stopPropagation();
-                            searchItem.remove();
-                            removeSearchTermFromHistory(entry.term);
+                            isAllHistoryShown = true;
+                            displaySearchHistory();
                         });
-            
-                        searchHistoryGrid.appendChild(searchItem);
-            
-                        if (!isAllHistoryShown && index === maxItems - 1 && searchHistory.length > maxItems) {
-                            const itemWithArrow = document.createElement('div');
-                            itemWithArrow.className = 'search-item-with-arrow';
-                            itemWithArrow.appendChild(searchItem.cloneNode(true));
-            
-                            const arrow = document.createElement('div');
-                            arrow.id = 'show-more-arrow';
-                            arrow.innerHTML = 
-                                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6" />
-                                </svg>`;
-            
-                            arrow.addEventListener('click', function (event) {
-                                event.stopPropagation();
-                                isAllHistoryShown = true;
-                                displaySearchHistory();
-                            });
-            
-                            itemWithArrow.appendChild(arrow);
-                            searchHistoryGrid.appendChild(itemWithArrow);
-                        }
-                    }
-                });
-            }
-            
-            function removeSearchTermFromHistory(term) {
-                const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-                const updatedHistory = searchHistory.filter(entry => entry.term !== term);
-                localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
-                displaySearchHistory();
-            }
-            
-            lastSearchItem.addEventListener('click', function () {
-                const lastTerm = localStorage.getItem('lastSearchTerm');
-                if (lastTerm) {
-                    searchInput.value = lastTerm + ' ';
-                    searchInput.focus();
-                    clearButton.style.display = 'block';
-                }
-            });
-            
-            imageGrid.addEventListener('click', function (event) {
-                const imageItem = event.target.closest('.image-item');
-                if (imageItem) {
-                    const searchTerm = imageItem.getAttribute('data-term');
-                    if (searchTerm) {
-                        saveSearchTerm(searchTerm);
-                        saveLastSearchTerm(searchTerm);
-                        window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+        
+                        itemWithArrow.appendChild(arrow);
+                        searchHistoryGrid.appendChild(itemWithArrow);
                     }
                 }
             });
-            
+        }
+        
+        function removeSearchTermFromHistory(term) {
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const updatedHistory = searchHistory.filter(entry => entry.term !== term);
+            localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+            displaySearchHistory();
+        }
+        
+        lastSearchItem.addEventListener('click', function () {
+            const lastTerm = localStorage.getItem('lastSearchTerm');
+            if (lastTerm) {
+                searchInput.value = lastTerm + ' ';
+                searchInput.focus();
+                clearButton.style.display = 'block';
+            }
+        });
+        
+        imageGrid.addEventListener('click', function (event) {
+            const imageItem = event.target.closest('.image-item');
+            if (imageItem) {
+                const searchTerm = imageItem.getAttribute('data-term');
+                if (searchTerm) {
+                    saveSearchTerm(searchTerm);
+                    saveLastSearchTerm(searchTerm);
+                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+                }
+            }
+        });
+        
+        displaySearchHistory();
+        displayLastSearchTerm();
+        
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.click();
+            }, 500);
+            if (window.matchMedia("(max-width: 1024px)").matches) {
+                searchInput.focus();
+                searchInput.click();
+            }
+        });
+        
+        window.addEventListener('resize', function () {
             displaySearchHistory();
             displayLastSearchTerm();
-            
-            window.addEventListener('load', function () {
-                setTimeout(() => {
-                    searchInput.focus();
-                    searchInput.click();
-                }, 500);
-                if (window.matchMedia("(max-width: 1024px)").matches) {
-                    searchInput.focus();
-                    searchInput.click();
+        });
+        
+        function redirectToSea(categoryName) {
+            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
+        }
+        
+        function performSearch(searchTerm) {
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchTerm.toLowerCase())) {
+                    product.classList.remove('hidden');
+                } else {
+                    product.classList.add('hidden');
                 }
             });
-            
-            window.addEventListener('resize', function () {
-                displaySearchHistory();
-                displayLastSearchTerm();
-            });
-            
-            function redirectToSea(categoryName) {
-                window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
-            }
-            
-            function performSearch(searchTerm) {
-                const products = document.querySelectorAll('.product');
-                products.forEach(product => {
-                    const productName = product.getAttribute('data-name').toLowerCase();
-                    if (productName.includes(searchTerm.toLowerCase())) {
-                        product.classList.remove('hidden');
-                    } else {
-                        product.classList.add('hidden');
-                    }
-                });
-            }
-            
-            window.onload = function () {
-                const urlParams = new URLSearchParams(window.location.search);
-                const searchTerm = urlParams.get('search');
-                if (searchTerm) {
-                    const searchBox = document.getElementById('search-box');
-                    if (searchBox) {
-                        searchBox.value = searchTerm;
-                        performSearch(searchTerm);
-                    }
+        }
+        
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('search');
+            if (searchTerm) {
+                const searchBox = document.getElementById('search-box');
+                if (searchBox) {
+                    searchBox.value = searchTerm;
+                    performSearch(searchTerm);
                 }
-                displaySearchHistory();
-            };
-        </script>
+            }
+            displaySearchHistory();
+        };
+    </script>
+</body>
+</html>
