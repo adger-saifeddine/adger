@@ -697,7 +697,69 @@
             "currency": "جنيه",
             "discountLabel": "أفضل سعر متاح"
         }
-    }
+    },
+    {
+        "id": "13",
+        "media": [
+          { "src": "https://i.postimg.cc/Pr4LT0kQ/Se6d5ca33f10945deab3dd7c243bfe272m-jpg-220x220q75-jpg.avif", "type": "image" },
+          { "src": "https://i.postimg.cc/jqfgg4rb/S7cda0c8f613c4ec9b572c3edf1dce860x-png-220x220-png.avif", "type": "image" },
+          { "src": "https://i.postimg.cc/Qt39XDVS/S77fd3912bb814bdba974741a03b16276-K-jpg-220x220q75-jpg.avif", "type": "image" },
+          { "src": "https://i.postimg.cc/GhCCqpVX/S0fa7a1a0c1cf4e18b55313700823a6e6h-jpg-220x220q75-jpg.avif", "type": "image" }
+        ],
+        "pri": "350",
+        "oldPrice": "450",
+        "dis": "22%",
+        "changingText": [
+          "حامل تابلت 720° قابل للدوران",
+          "قابل للطي والتعديل",
+          "سبائك الألومنيوم القوية"
+        ],
+        "longText": "720 تدوير حاملات الكمبيوتر اللوحي سبائك الألومنيوم لجهاز iPad قابل للتعديل للطي كسول سطح المكتب. مثالي للمكالمات ومشاهدة الفيديو.",
+        "sales": "مباع بواسطة OLOPKY",
+        "buttonId": "commentButton13",
+        "commentId": "13",
+        "elementId": "commentCount13",
+        "tableData": [
+          { "question": "Package", "answer": "نعم" },
+          { "question": "المادة", "answer": "سبائك الألومنيوم" },
+          { "question": "اسم العلامة التجارية", "answer": "OLOPKY" },
+          { "question": "المنشأ", "answer": "الصين (CN)" },
+          { "question": "النوع", "answer": "حامل مكتب / حامل كسول" },
+          { "question": "الميزات", "answer": "قابل للتكرار / قابل للتعديل / قابل للطي" }
+        ],
+        "desc": "720 تدوير حاملات الكمبيوتر اللوحي سبائك الألومنيوم لجهاز iPad قابل للتعديل للطي كسول سطح المكتب. حجم الهاتف المدعوم: 4 ~ 7.9 بوصة، الأجهزة اللوحية: 4 ~ 12 بوصة. تصميم أنيق وقابل للطي وخفيف الوزن. يدعم مؤتمرات الفيديو وتصفح الإنترنت.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/Pr4LT0kQ/Se6d5ca33f10945deab3dd7c243bfe272m-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/jqfgg4rb/S7cda0c8f613c4ec9b572c3edf1dce860x-png-220x220-png.avif"
+            ]
+          },
+          {
+            "type": "mixed",
+            "items": [
+              "https://i.postimg.cc/Qt39XDVS/S77fd3912bb814bdba974741a03b16276-K-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/GhCCqpVX/S0fa7a1a0c1cf4e18b55313700823a6e6h-jpg-220x220q75-jpg.avif"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/Pr4LT0kQ/Se6d5ca33f10945deab3dd7c243bfe272m-jpg-220x220q75-jpg.avif",
+          "name": "حامل تابلت 720° قابل للدوران",
+          "sold": "موثوق",
+          "price": "350.00",
+          "discount": "22%",
+          "pageId": "13",
+          "productId": "13",
+          "shippingPrice": "70"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم لفترة محدودة"
+        }
+      }
+      
     
     
     
