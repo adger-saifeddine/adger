@@ -1027,6 +1027,10 @@ function updateMainMedia(thumbnail) {
                         cursor: pointer;
                         padding: 1px 0;
                         transition: background-color 0.2s ease;
+
+                      -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+                       outline: none; /* إزالة الإطار عند النقر */
+                      -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
                     }
                     
                     .clickable-row:hover,
