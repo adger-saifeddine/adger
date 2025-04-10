@@ -1018,7 +1018,7 @@ function updateMainMedia(thumbnail) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>نافذة منبثقة حسب ملف JSON</title>
+                <title>نافذة منبثقة عند النقر</title>
                 <style>
                     /* تنسيق السطر القابل للنقر */
                     .clickable-row {
@@ -1045,10 +1045,10 @@ function updateMainMedia(thumbnail) {
                         align-items: center;
                         gap: 8px;
                         font-size: 18px;
-                        margin-bottom: 5px;
+                        margin-bottom: 5px; /* مسافة صغيرة ومتساوية */
                     }
                     .additional-text {
-                        margin-top: 5px;
+                        margin-top: 5px; /* مسافة علوية متساوية */
                         font-size: 14px;
                         color: #555;
                     }
@@ -1116,13 +1116,12 @@ function updateMainMedia(thumbnail) {
                 </div>
                 
                 <script>
-                    // تحديد الرقم الديناميكي من العنصر
                     document.querySelectorAll('.clickable-row').forEach(item => {
                         item.addEventListener('click', function() {
-                            const productId = this.getAttribute('data-product-id');
-                            const jsonFileName = `products-${productId}.json`; // بناء اسم الملف
+                            const productId = this.getAttribute('data-product-id'); // الحصول على رقم المنتج
+                            const jsonFileName = `products-${productId}.json`; // اسم ملف JSON
             
-                            // تحميل ملف JSON المناسب
+                            // تحميل ملف JSON
                             fetch(jsonFileName)
                                 .then(response => {
                                     if (!response.ok) {
@@ -1132,8 +1131,10 @@ function updateMainMedia(thumbnail) {
                                 })
                                 .then(data => {
                                     if (data && data.deliveryDuration) {
+                                        // تحديث النص بناءً على JSON
                                         document.getElementById('delivery-duration').textContent = data.deliveryDuration;
                                     } else {
+                                        // إذا لم يكن الحقل موجودًا
                                         document.getElementById('delivery-duration').textContent = 'مدة التوصيل غير متوفرة.';
                                     }
                                 })
@@ -1143,6 +1144,15 @@ function updateMainMedia(thumbnail) {
                                 });
                         });
                     });
+            
+                    function closePopup() {
+                        document.querySelectorAll('.clickable-row').forEach(row => row.classList.remove('active'));
+                        document.getElementById('popup-7896').classList.remove('show');
+                        setTimeout(() => {
+                            document.getElementById('popup-7896').style.display = 'none';
+                            document.getElementById('overlay-7896').style.display = 'none';
+                        }, 300);
+                    }
                 </script>
             </body>
             </html>
