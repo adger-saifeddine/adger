@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="style.css">
 
 
-
     <!DOCTYPE html>
     <html lang="ar" dir="rtl">
     <head>
@@ -82,7 +81,7 @@
                 margin-bottom: 10px;
                 cursor: pointer;
                 transition: transform 0.3s ease;
-                background-color: rgba(255, 255, 255, 0.8); /* خلفية شبه بيضاء */
+                background-color: rgba(255, 255, 255, 0.8);
                 object-fit: cover;
             }
     
@@ -99,8 +98,21 @@
                 font-size: 11px;
                 color: #000;
                 font-family: Cairo, sans-serif;
-                cursor: pointer; /* يجعل السعر قابلاً للنقر */
+                cursor: pointer;
             }
+    
+            .category-title {
+                font-size: 19px;
+                font-family: Cairo, sans-serif;
+                color: #333;
+                text-align: right;
+                margin: 10px 20px;
+                margin-top: -8px;
+            }
+            @media (max-width: 769px) {
+                .category-title {
+          font-size: 16px;
+                }}
     
             @media (min-width: 1024px) {
                 .circle img {
@@ -142,77 +154,81 @@
             </div>
         </div>
     
-      <!-- قسم التكنولوجيا -->
-      <div class="content" id="tech-content">
-        <div class="circle-container">
-            <div class="circle">
-                <img src="https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg" alt="ايربودز A-16 بلوتوث" onclick="window.location.href='prod.html?id=4'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=4'">400.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg" alt="رامة DDR4 4G" onclick="window.location.href='prod.html?id=6'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=6'">300.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png" alt="هولدر تصوير AY49" onclick="window.location.href='prod.html?id=9'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=9'">520.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png" alt="طابعة USB" onclick="window.location.href='prod.html?id=10'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=10'">999.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png" alt="كاميرا Y2000 Original" onclick="window.location.href='prod.html?id=11'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=11'">900.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png" alt="بادة ماوس شعبي" onclick="window.location.href='prod.html?id=12'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=12'">25.00 جنيه</h1>
-            </div>
-        </div>
-    </div>
-
-    <!-- قسم البيت -->
-    <div class="content" id="home-content">
-        <div class="circle-container">
-            <div class="circle">
-                <img src="https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png" alt="مج حراري فاخر 500 مل مع كوبين" onclick="window.location.href='prod.html?id=3'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=3'">290.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg" alt="علبة ألوان عملاقة 168 قطعة" onclick="window.location.href='prod.html?id=7'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=7'">270.00 جنيه</h1>
+        <!-- قسم التكنولوجيا -->
+        <div class="content" id="tech-content">
+            <div class="category-title">التسوق حسب الفئة</div>
+            <div class="circle-container">
+                <div class="circle">
+                    <img src="https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg" alt="ايربودز A-16 بلوتوث" onclick="window.location.href='prod.html?id=4'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=4'">400.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg" alt="رامة DDR4 4G" onclick="window.location.href='prod.html?id=6'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=6'">300.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png" alt="هولدر تصوير AY49" onclick="window.location.href='prod.html?id=9'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=9'">520.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png" alt="طابعة USB" onclick="window.location.href='prod.html?id=10'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=10'">999.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png" alt="كاميرا Y2000 Original" onclick="window.location.href='prod.html?id=11'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=11'">900.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png" alt="بادة ماوس شعبي" onclick="window.location.href='prod.html?id=12'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=12'">25.00 جنيه</h1>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- قسم أزياء -->
-    <div class="content" id="fashion-content">
-        <div class="circle-container">
-            <div class="circle">
-                <img src="https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg" alt="حذاء جلد - p30 سكاي مريح" onclick="window.location.href='prod.html?id=2'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=2'">360.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png" alt="شنطة كروس jeep" onclick="window.location.href='prod.html?id=5'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=5'">225.00 جنيه</h1>
-            </div>
-            <div class="circle">
-                <img src="https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg" alt="شنطة كروس ميكي" onclick="window.location.href='prod.html?id=8'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=8'">200.00 جنيه</h1>
+    
+        <!-- قسم البيت -->
+        <div class="content" id="home-content">
+            <div class="category-title">التسوق حسب الفئة</div>
+            <div class="circle-container">
+                <div class="circle">
+                    <img src="https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png" alt="مج حراري فاخر 500 مل مع كوبين" onclick="window.location.href='prod.html?id=3'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=3'">290.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg" alt="علبة ألوان عملاقة 168 قطعة" onclick="window.location.href='prod.html?id=7'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=7'">270.00 جنيه</h1>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- قسم كتب -->
-    <div class="content" id="books-content">
-        <div class="circle-container">
-            <div class="circle">
-                <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="كتاب ابقَ قويًا 365 يومًا في السنة" onclick="window.location.href='prod.html?id=1'">
-                <h1 class="producte" onclick="window.location.href='prod.html?id=1'">70.00 جنيه</h1>
+    
+        <!-- قسم أزياء -->
+        <div class="content" id="fashion-content">
+            <div class="category-title">التسوق حسب الفئة</div>
+            <div class="circle-container">
+                <div class="circle">
+                    <img src="https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg" alt="حذاء جلد - p30 سكاي مريح" onclick="window.location.href='prod.html?id=2'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=2'">360.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png" alt="شنطة كروس jeep" onclick="window.location.href='prod.html?id=5'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=5'">225.00 جنيه</h1>
+                </div>
+                <div class="circle">
+                    <img src="https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg" alt="شنطة كروس ميكي" onclick="window.location.href='prod.html?id=8'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=8'">200.00 جنيه</h1>
+                </div>
             </div>
         </div>
-    </div>
+    
+        <!-- قسم كتب -->
+        <div class="content" id="books-content">
+            <div class="category-title">التسوق حسب الفئة</div>
+            <div class="circle-container">
+                <div class="circle">
+                    <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="كتاب ابقَ قويًا 365 يومًا في السنة" onclick="window.location.href='prod.html?id=1'">
+                    <h1 class="producte" onclick="window.location.href='prod.html?id=1'">70.00 جنيه</h1>
+                </div>
+            </div>
+        </div>
     
         <script>
             function showContent(contentId) {
