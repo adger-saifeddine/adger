@@ -330,6 +330,55 @@
     </div>
 
     <script>
+        function updateMainMedia(thumbnail) {
+    const placeholderImage = document.querySelector('.placeholder-image');
+    const mainImage = document.getElementById('mainMedia');
+    const mainVideo = document.getElementById('mainVideo');
+    const shareButton = document.getElementById('shareButton');
+    const mediaCounter = document.querySelector('.media-counter');
+    const src = thumbnail.getAttribute('data-src');
+    const type = thumbnail.getAttribute('data-type');
+
+    // إخفاء جميع عناصر التحميل التي قد تكون مرئية
+    document.querySelectorAll('.thumbnail.loading').forEach(thumb => {
+        thumb.classList.remove('loading');
+    });
+
+    // تحديث حالة أيقونة التشغيل للفيديو السابق
+    if (videoIsPlaying) {
+        updateAllVideoThumbnails();
+    }
+
+    // إظهار الصورة الرمادية وإخفاء عداد الصور أثناء التحميل
+    placeholderImage.style.display = 'block';
+    mediaCounter.style.display = 'none';
+
+    if (type === 'image') {
+        mainImage.src = src;
+        mainImage.style.display = 'block';
+        mainVideo.style.display = 'none';
+        mainVideo.pause();
+        videoIsPlaying = false;
+        shareButton.style.display = 'flex';
+        
+        // إزالة الصورة الرمادية وإظهار عداد الصور بعد اكتمال التحميل
+        mainImage.onload = function() {
+            placeholderImage.style.display = 'none';
+            mediaCounter.style.display = 'flex';
+        };
+    } else if (type === 'video') {
+        mainVideo.querySelector('source').src = src;
+        mainVideo.load();
+        mainVideo.style.display = 'block';
+        mainImage.style.display = 'none';
+        shareButton.style.display = 'none';
+        
+        // إزالة الصورة الرمادية بعد اكتمال تحميل الفيديو
+        mainVideo.onloadedmetadata = function() {
+            placeholderImage.style.display = 'none';
+        };
+    }
+}
         let videoIsPlaying = false;
         // إنشاء مصغرات احتياطية فارغة فورًا
         function createPlaceholderThumbnails(count = 5) {
