@@ -385,7 +385,6 @@ function updateMainMedia(thumbnail) {
     }
 }
 
-
 //نهاية سكريبت اخفاء تحميل الصور المصغرة
 
 
@@ -1014,13 +1013,12 @@ function updateMainMedia(thumbnail) {
             </body>
             </html>
 
-
             <!DOCTYPE html>
             <html lang="ar">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>نافذة منبثقة عند النقر</title>
+                <title>نافذة منبثقة حسب ملف JSON</title>
                 <style>
                     /* تنسيق السطر القابل للنقر */
                     .clickable-row {
@@ -1047,10 +1045,10 @@ function updateMainMedia(thumbnail) {
                         align-items: center;
                         gap: 8px;
                         font-size: 18px;
-                        margin-bottom: 5px; /* مسافة صغيرة ومتساوية */
+                        margin-bottom: 5px;
                     }
                     .additional-text {
-                        margin-top: 5px; /* مسافة علوية متساوية */
+                        margin-top: 5px;
                         font-size: 14px;
                         color: #555;
                     }
@@ -1083,75 +1081,20 @@ function updateMainMedia(thumbnail) {
                     #popup-7896.show {
                         transform: translateY(0);
                     }
-                    
-                    .popup-content-7896 {
-                        display: none;
-                    }
-                    
-                    .overlay-7896 {
-                        display: none;
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background-color: rgba(0, 0, 0, 0.5);
-                        z-index: 999;
-                    }
-                    
-                    #popup-content-7896 {
-                        font-size: 16px;
-                        color: #333;
-                        width: 90%;
-                        max-width: 600px;
-                        margin: 0 auto;
-                        padding: 20px;
-                        box-sizing: border-box;
-                        text-align: right;
-                        margin-right: 1px;
-                    }
-                    #popup-content-7896 h3 {
-                        font-size: 1.5rem;
-                        margin-bottom: 1rem;
-                        text-align: right;
-                    }
-                    #popup-content-7896 p {
-                        font-size: 1rem;
-                        margin-bottom: 0.75rem;
-                        text-align: right;
-                    }
-                    
-                    @media (max-width: 768px) {
-                        #popup-7896 {
-                            padding: 0;
-                        }
-                        #popup-content-7896 {
-                            width: 100%;
-                            padding: 15px;
-                        }
-                        #popup-content-7896 h3 {
-                            font-size: 1.25rem;
-                        }
-                        #popup-content-7896 p {
-                            font-size: 0.9rem;
-                        }
-                    }
             
-                    /* Added handle styling */
                     .popup-handle {
-                        width: 90px;  /* Increased width */
+                        width: 90px;
                         height: 5px;
                         background-color: #ccc;
                         border-radius: 3px;
                         margin: 0 auto 15px auto;
-                        margin-top: 14px;  /* Changed to 14px as requested */
+                        margin-top: 14px;
                     }
                 </style>
             </head>
             <body dir="rtl">
-                <!-- البقية من الكود كما هو دون تغيير -->
-                     
-                <div class="clickable-row" data-popup-id="shipping-popup-7896" style="margin-top: 10px;">
+            
+                <div class="clickable-row" data-product-id="1234" style="margin-top: 10px;">
                     <div class="second-text-container-7896">
                         <div class="second-text">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1160,7 +1103,7 @@ function updateMainMedia(thumbnail) {
                             <span>الشحن , لكل المحافظات</span>
                         </div>
                         <div class="additional-text">
-                            <span id="delivery-duration">يتم التوصيل خلال 3-5 أيام عمل.</span>
+                            <span id="delivery-duration">يتم التوصيل خلال مدة غير معروفة.</span>
                         </div>
                     </div>
                 </div>
@@ -1172,74 +1115,37 @@ function updateMainMedia(thumbnail) {
                     <div id="popup-content-7896"></div>
                 </div>
                 
-                
                 <script>
-                    const productDataFile = 'products-7896.json';
-            
-                    // Load product data
-                    fetch(productDataFile)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.deliveryDuration) {
-                                document.getElementById('delivery-duration').textContent = data.deliveryDuration;
-                            }
-                        })
-                        .catch(error => console.error('Error fetching product data:', error));
-            
+                    // تحديد الرقم الديناميكي من العنصر
                     document.querySelectorAll('.clickable-row').forEach(item => {
                         item.addEventListener('click', function() {
-                            document.querySelectorAll('.clickable-row').forEach(row => row.classList.remove('active'));
-                
-                            const popupId = this.getAttribute('data-popup-id');
-                            if (popupId && document.getElementById(popupId)) {
-                                document.getElementById('popup-content-7896').innerHTML = document.getElementById(popupId).innerHTML;
-                                document.getElementById('popup-7896').style.display = 'block';
-                                document.getElementById('overlay-7896').style.display = 'block';
-                                setTimeout(() => {
-                                    document.getElementById('popup-7896').classList.add('show');
-                                    item.classList.add('active');
-                                }, 10);
-                            }
+                            const productId = this.getAttribute('data-product-id');
+                            const jsonFileName = `products-${productId}.json`; // بناء اسم الملف
+            
+                            // تحميل ملف JSON المناسب
+                            fetch(jsonFileName)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data && data.deliveryDuration) {
+                                        document.getElementById('delivery-duration').textContent = data.deliveryDuration;
+                                    } else {
+                                        document.getElementById('delivery-duration').textContent = 'مدة التوصيل غير متوفرة.';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error loading JSON:', error);
+                                    document.getElementById('delivery-duration').textContent = 'حدث خطأ أثناء تحميل البيانات.';
+                                });
                         });
                     });
-                
-                    function closePopup() {
-                        document.querySelectorAll('.clickable-row').forEach(row => row.classList.remove('active'));
-                        document.getElementById('popup-7896').classList.remove('show');
-                        setTimeout(() => {
-                            document.getElementById('popup-7896').style.display = 'none';
-                            document.getElementById('overlay-7896').style.display = 'none';
-                        }, 300);
-                    }
-                
-                    document.getElementById('overlay-7896').addEventListener('click', closePopup);
-                
-                    let startY = 0;
-                    const popup = document.getElementById('popup-7896');
-                
-                    popup.addEventListener('touchstart', (e) => {
-                        startY = e.touches[0].clientY;
-                        e.preventDefault();
-                    }, { passive: false });
-                
-                    popup.addEventListener('touchmove', (e) => {
-                        const currentY = e.touches[0].clientY;
-                        e.preventDefault();
-                        
-                        if (currentY > startY + 50) {
-                            closePopup();
-                        }
-                    }, { passive: false });
-                
-                    document.body.addEventListener('touchmove', (e) => {
-                        if (document.getElementById('popup-7896').classList.contains('show')) {
-                            e.preventDefault();
-                        }
-                    }, { passive: false });
                 </script>
             </body>
             </html>
-
 
 <br>
     <div class="line"></div>
