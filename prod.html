@@ -2586,21 +2586,23 @@
             }
     
             #search-button {
-                position: absolute;
-                left: 3px;
-                top: 50%;
-                transform: translateY(-50%);
-                background-color: black;
-                color: white;
-                width: 70px;
-                height: 34px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 33px;
-                border: none;
-                cursor: pointer;
-            }
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: black;
+    color: white;
+    width: 70px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 33px;
+    border: none;
+    cursor: pointer;
+    outline: none; /* إزالة التأثير الأزرق عند التركيز */
+    -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق على الأجهزة التي تستخدم WebKit */
+}
             @media (max-width: 1066px) {
                 #search-button {
                     width: 46px;
