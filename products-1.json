@@ -763,7 +763,6 @@
       {
         "id": "14",
         "media": [
-            {"src": "https://i.postimg.cc/DwYpY2BW/Sbc8aaf94ef0146189dbca79e80eef19c-B-jpg-220x220q75-jpg.avif", "type": "image", "color": "أبيض"},
             {"src": "https://i.postimg.cc/3NVWc04S/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif", "type": "image", "color": "أبيض"},
             {"src": "https://i.postimg.cc/wvYC0qjX/Sbb69a3f1597c4abda500af8b2ec2b8f0k-jpg-220x220q75-jpg.avif", "type": "image", "color": "أسود"},
             {"src": "https://i.postimg.cc/K8NJ3tKh/S7ced48e0e01a4c33b53741e4485a1df3h-jpg-220x220q75-jpg.avif", "type": "image", "color": "أسود"},
@@ -796,7 +795,6 @@
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/DwYpY2BW/Sbc8aaf94ef0146189dbca79e80eef19c-B-jpg-220x220q75-jpg.avif",
                     "https://i.postimg.cc/3NVWc04S/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif"
                 ]
             },
@@ -809,7 +807,7 @@
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/DwYpY2BW/Sbc8aaf94ef0146189dbca79e80eef19c-B-jpg-220x220q75-jpg.avif",
+            "image": "https://i.postimg.cc/3NVWc04S/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif",
             "name": "سماعات رأس Pro 6 TWS لاسلكية",
             "sold": "موثوق",
             "price": "350.00",
