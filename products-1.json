@@ -815,7 +815,7 @@
             "pageId": "14",
             "productId": "14",
             "shippingPrice": "70",
-            "availableColors": ["أبيض", "أسود"]
+            "colors": ["أبيض", "أسود"]
         },
         "texts": {
             "currency": "جنيه",
