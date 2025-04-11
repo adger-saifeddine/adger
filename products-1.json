@@ -754,7 +754,8 @@
             "discount": "22%",
             "pageId": "13",
             "productId": "13",
-            "shippingPrice": "70"
+            "shippingPrice": "70",
+            "colors": ["أرجواني", "فضي"]
         },
         "texts": {
             "currency": "جنيه",
