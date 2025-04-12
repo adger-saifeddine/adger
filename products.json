@@ -127,7 +127,16 @@
         "sold": "موثوق",
         "discountTexts": ["كان بـ 500 جنيه", "خصم 30%"],
         "link": "prod.html?id=14"
-      }
+      },
+      {
+        "name": "نصائح بديلة لقلم Apple Pencil",
+        "dataName": "#15 خصومات نصائح بديلة لقلم Apple Pencil 1st 2nd Generation iPencil Smooth Spare Nibs لأجهزة iPad Pro Pencil 1/2 Stylus Fine Nib",
+        "price": "1.00",
+        "image": "https://i.postimg.cc/L4vN0SSJ/Sb00017d314db4165b9074bfc4db19243v-jpg-220x220q75-jpg.avif",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 29 جنيه", "خصم 97%"],
+        "link": "prod.html?id=15"
+    }
       
       
     

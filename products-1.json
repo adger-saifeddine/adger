@@ -830,7 +830,69 @@
             "currency": "جنيه",
             "discountLabel": "أفضل سعر متاح"
         }
+    },
+    {
+        "id": "15",
+        "media": [
+            {"src": "https://i.postimg.cc/L4vN0SSJ/Sb00017d314db4165b9074bfc4db19243v-jpg-220x220q75-jpg.avif", "type": "image"},
+            {"src": "https://i.postimg.cc/rmDxhBNr/Sb54a0dfadd89479eb8411567b8aea0d4-Q-jpg-220x220q75-jpg.avif", "type": "image"},
+            {"src": "https://i.postimg.cc/Wz63S8CZ/S11379e549f8b48519f33b6c4f6a0ec7a6-jpg-220x220q75-jpg.avif", "type": "image"},
+            {"src": "https://i.postimg.cc/dt5dYQNy/S02b4aee5f87c451ba5e3e17a5481f436-J-jpg-220x220q75-jpg.avif", "type": "image"},
+            {"src": "https://i.postimg.cc/mDFfbrS2/Secc9d075de94401eb2747983c45bb8e5p-jpg-220x220q75-jpg.avif", "type": "image"}
+        ],
+        "pri": "1",
+        "oldPrice": "29",
+        "dis": "خصم 97%",
+        "changingText": [
+            "نصائح بديلة لقلم Apple Pencil",
+            "مقاومة للاهتراء وصامتة",
+            "ضربات حقيقية وسهلة التركيب"
+        ],
+        "longText": "نصائح بديلة لقلم Apple Pencil 1st 2nd Generation iPencil Smooth Spare Nibs لأجهزة iPad Pro Pencil 1/2 Stylus Fine Nib",
+        "sales": "مباع بواسطة متجر موثوق",
+        "buttonId": "commentButton15",
+        "commentId": "15",
+        "elementId": "commentCount15",
+        "tableData": [
+            {"question": "النوع", "answer": "نصائح بديلة للقلم"},
+            {"question": "المادة", "answer": "بلاستيك"},
+            {"question": "الميزات", "answer": "مقاومة للاهتراء، صامتة، ضربات حقيقية، سهلة التركيب"},
+            {"question": "متوافق مع", "answer": "Apple Pencil 1/2"}
+        ],
+        "desc": "الحجم الأصلي، ضعف الشعور بالاستخدام. يقلل الضوضاء بشكل فعال عند الكتابة، ويحول الشاشة إلى ورق، ويستعيد ملمس الورق حقًا. استبدال بسيط، عبوات بديلة سهلة الاستخدام حقًا، ملحقات بديلة في أي وقت وفي أي مكان.",
+        "groups": [
+            {
+                "type": "images",
+                "items": [
+                    "https://i.postimg.cc/L4vN0SSJ/Sb00017d314db4165b9074bfc4db19243v-jpg-220x220q75-jpg.avif",
+                    "https://i.postimg.cc/rmDxhBNr/Sb54a0dfadd89479eb8411567b8aea0d4-Q-jpg-220x220q75-jpg.avif"
+                ]
+            },
+            {
+                "type": "mixed",
+                "items": [
+                    "https://i.postimg.cc/Wz63S8CZ/S11379e549f8b48519f33b6c4f6a0ec7a6-jpg-220x220q75-jpg.avif",
+                    "https://i.postimg.cc/dt5dYQNy/S02b4aee5f87c451ba5e3e17a5481f436-J-jpg-220x220q75-jpg.avif",
+                    "https://i.postimg.cc/mDFfbrS2/Secc9d075de94401eb2747983c45bb8e5p-jpg-220x220q75-jpg.avif"
+                ]
+            }
+        ],
+        "product": {
+            "image": "https://i.postimg.cc/L4vN0SSJ/Sb00017d314db4165b9074bfc4db19243v-jpg-220x220q75-jpg.avif",
+            "name": "نصائح بديلة لقلم Apple Pencil",
+            "sold": "موثوق",
+            "price": "1.00",
+            "discount": "97",
+            "pageId": "15",
+            "productId": "15",
+            "shippingPrice": "50"
+        },
+        "texts": {
+            "currency": "جنيه",
+            "discountLabel": "خصم"
+        }
     }
+
     
       
     
