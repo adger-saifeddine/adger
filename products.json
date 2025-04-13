@@ -138,50 +138,143 @@
         "link": "prod.html?id=15"
     },
     {
-        "name": "شاحن مغناطيسي سريع Type-C",
-        "dataName": "#16 شاحن مغناطيسي سريع 3A USB C لشحن سريع لأجهزة Android وiPhone",
-        "price": "2.50",
-        "image": "https://i.postimg.cc/dVkXbFLm/charger.jpg",
-        "sold": "الأكثر مبيعاً",
-        "discountTexts": ["كان بـ 49 جنيه", "خصم 95%"],
-        "link": "prod.html?id=16"
-      },
-      {
-        "name": "كابل شحن مضيء LED",
-        "dataName": "#17 كابل شحن مضيء LED Type-C بطول 1 متر – تأثير إضاءة رائع",
-        "price": "1.70",
-        "image": "https://i.postimg.cc/nzZTYFF9/ledcable.jpg",
-        "sold": "مميز",
-        "discountTexts": ["كان بـ 39 جنيه", "خصم 94%"],
-        "link": "prod.html?id=17"
-      },
-      {
-        "name": "مسند موبايل مرن",
-        "dataName": "#18 مسند موبايل مرن للسرير والمكتب – قابل للتعديل",
-        "price": "3.00",
-        "image": "https://i.postimg.cc/vBXSnYV7/holder.jpg",
+        "name": "كتاب ابقَ قويًا 365 يومًا في السنة",
+        "dataName": "خصومات كتب كتاب ابق قوي كتب كتاب ابق قويا 365 يوما في السنه فى السنة #1",
+        "price": "70.00",
+        "image": "https://i.postimg.cc/k5BR8sS6/1.jpg",
         "sold": "موثوق",
-        "discountTexts": ["كان بـ 59 جنيه", "خصم 95%"],
-        "link": "prod.html?id=18"
+        "discountTexts": ["كان ب 114.00 جنيه", "خصم 38.6%"],
+        "link": "prod.html?id=1"
+    },
+   
+    {
+        "name": "حذاء جلد - p30 سكاي مريح",
+        "dataName": " خصومات حذاء جلد أحذيه أحذية #2",
+        "price": "360.00",
+        "image": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 450 جنيه", "خصم20%"],
+        "link": "prod.html?id=2"
+    },
+
+    {
+        "name": "مج حراري فاخر 500 مل مع كوبين",
+        "dataName": "#3 thermal_mug_500ml خصومات مج حراري للقهوة للقهوه",
+        "price": "290.00",
+        "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 350 جنيه", "خصم 17.14%"],
+        "link": "prod.html?id=3"
+    },
+
+    {
+        "name": "ايربودز A-16 بلوتوث",
+        "dataName": "#4 airpods_a16 خصومات سماعه بلوتوث لا سلكية سماعه سماعة سماعات",
+        "price": "400.00",
+        "image": "https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 500 جنيه", "خصم20%"],
+        "link": "prod.html?id=4"
+    },
+    {
+        "name": "شنطة كروس jeep",
+        "dataName": "#5 jeep خصومات شنطة كروس حقيبة حقيبه حقائب موضة يد",
+        "price": "225.00",
+        "image": "https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 300 جنيه", "خصم25%"],
+        "link": "prod.html?id=5"
+    },
+    {
+        "name": "رامة DDR4 4G",
+        "dataName": "#6 رامة DDR4 4G خصومات ذاكرة عشوائية كمبيوتر إلكترونيات",
+        "price": "300.00",
+        "image": "https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 400 جنيه", "خصم 25%"],
+        "link": "prod.html?id=6"
+    },
+    {
+        "name": "علبة ألوان عملاقة 168 قطعة",
+        "dataName": "#7 خصومات علبة ألوان خشب فلوماستر زيت فن شمع 168 قطعة",
+        "price": "270.00",
+        "image": "https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 360 جنيه", "خصم 25%"],
+        "link": "prod.html?id=7"
+    },
+    {
+        "name": "شنطة كروس ميكي",
+        "dataName": "#8 خصومات شنطة كروس ميكي حقيبة كتف حقيبة حقائب ديزني زارا",
+        "price": "200.00",
+        "image": "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 250 جنيه", "خصم 20%"],
+        "link": "prod.html?id=8"
+    },
+    {
+        "name": "هولدر تصوير AY49",
+        "dataName": "#9 خصومات حامل تصوير ميكروفون إضاءة فيديو AY49",
+        "price": "520.00",
+        "image": "https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png",
+        "sold": "موثوق",
+        "discountTexts": ["كان ب 570 جنيه", "خصم 8.77%"],
+        "link": "prod.html?id=9"
+    },
+    {
+        "name": "طابعة USB",
+        "dataName": "#10 طابعة محمولة بدون حبر قابلة لإعادة الشحن إلكترونيات",
+        "price": "999.00",
+        "image": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
+        "sold": "موثوق",
+        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر للجميع"],
+        "link": "prod.html?id=10"
+    },
+    {
+        "name": "كاميرا Y2000 Original",
+        "dataName": "#11 أصغر كاميرات تصوير Y2000 إلكترونيات",
+        "price": "900.00",
+        "image": "https://i.postimg.cc/B6W3T82x/1742354291temp3533940705814865608-removebg-preview-1.png",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 1000 جنيه","خصم 10%"],
+        "link": "prod.html?id=11"
+    },
+    {
+        "name": "بادة ماوس شعبي",
+        "dataName": "#12 بادة ماوس شعبي للكمبيوتر كمبيوتر إكسسوارات",
+        "price": "25.00",
+        "image": "https://i.postimg.cc/vHmKmWKc/1721172867600-removebg-preview-1.png",
+        "sold": "موثوق",
+        "discountTexts": ["أفضل سعر متاح", "الشحن متوفر للجميع"],
+        "link": "prod.html?id=12"
+    },
+    {
+        "name": "حامل تابلت و هاتف من الألمنيوم",
+        "dataName": "#13 خصومات 720 ستاند تدوير سبائك الألومنيوم اللوحي أصحاب لباد قابل للتعديل للطي كسول سطح  لايف حامل هاتف المحمول جبل",
+        "price": "350.00",
+        "image": "https://i.postimg.cc/t476F315/Se6d5ca33f10945deab3dd7c243bfe272m-jpg-220x220q75-jpg.avif",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 450 جنيه", "خصم 22%"],
+        "link": "prod.html?id=13"
       },
       {
-        "name": "قلم لمس للجوال والأجهزة اللوحية",
-        "dataName": "#19 قلم لمس دقيق للرسم والكتابة – متوافق مع جميع الشاشات",
-        "price": "1.20",
-        "image": "https://i.postimg.cc/mgkPf3mx/stylus.jpg",
-        "sold": "الأعلى تقييماً",
-        "discountTexts": ["كان بـ 25 جنيه", "خصم 96%"],
-        "link": "prod.html?id=19"
+        "name": "سماعات رأس Pro 6 TWS",
+        "dataName": "#14 خصومات سماعات رأس Pro 6 TWS لاسلكية مع ميكروفون سماعه سماعة بلوتوث وسماعات أذن رياضية لهواتف ios وشاومي وسامسونج وأندرويد أصلية Pro 2 1562 AE",
+        "price": "350.00",
+        "image": "https://i.postimg.cc/tTsvfZmt/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 500 جنيه", "خصم 30%"],
+        "link": "prod.html?id=14"
       },
       {
-        "name": "سماعة بلوتوث صغيرة",
-        "dataName": "#20 سماعة بلوتوث لاسلكية صغيرة الحجم – صوت نقي وتصميم مريح",
-        "price": "4.90",
-        "image": "https://i.postimg.cc/5NqkN6GZ/earbud.jpg",
-        "sold": "الأكثر شهرة",
-        "discountTexts": ["كان بـ 99 جنيه", "خصم 95%"],
-        "link": "prod.html?id=20"
-      }
+        "name": "نصائح بديلة لقلم Apple Pencil",
+        "dataName": "#15 خصومات نصائح بديلة لقلم Apple Pencil 1st 2nd Generation iPencil Smooth Spare Nibs لأجهزة iPad Pro Pencil 1/2 Stylus Fine Nib",
+        "price": "1.00",
+        "image": "https://i.postimg.cc/L4vN0SSJ/Sb00017d314db4165b9074bfc4db19243v-jpg-220x220q75-jpg.avif",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 29 جنيه", "خصم 97%"],
+        "link": "prod.html?id=15"
+    }
       
       
     
