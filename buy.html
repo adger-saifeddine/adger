@@ -475,17 +475,15 @@
 
     <script>
         // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+        document.getElementById('cartCount')?.textContent = localStorage.getItem('cartCount') || 0;
     
         // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
             if (event.key === 'cartCount') {
-                document.getElementById('cartCount').textContent = event.newValue;
+                document.getElementById('cartCount')?.textContent = event.newValue;
             }
         });
-    </script>
 
-    <script>
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -493,7 +491,7 @@
             projectId: "buy-from-adger",
             storageBucket: "buy-from-adger.appspot.com",
             messagingSenderId: "396020785601",
-            appId: "1:396020785601:web:yourWebAppID"
+            appId: "1:396020785601:web:yourWebAppID" // استبدل بـ appId الخاص بك
         });
         
         const database = firebase.database();
@@ -613,7 +611,6 @@
             const colorFieldVisible = document.getElementById('colorField').style.display === 'block';
             const sizeFieldVisible = document.getElementById('sizeField').style.display === 'block';
             const materialFieldVisible = document.getElementById('materialField').style.display === 'block';
-            
             const selectedColor = colorFieldVisible ? document.querySelector('.color-option.selected')?.dataset.color : null;
             const selectedSize = sizeFieldVisible ? document.querySelector('.size-option.selected')?.dataset.size : null;
             const selectedMaterial = materialFieldVisible ? document.querySelector('.material-option.selected')?.dataset.material : null;
@@ -703,18 +700,18 @@
         const shippingPrice = parseFloat(urlParams.get('shipping')) || 0;
         const colorsParam = urlParams.get('colors');
         const sizesParam = urlParams.get('sizes');
-        const materialsParam = urlParams.get('materials');
+        const materialParam = urlParams.get('material');
         
-        // تحليل الألوان والمقاسات والمواد بشكل صحيح
+        // تحليل الألوان والمقاسات والمادة بشكل صحيح
         let colors = [];
         let sizes = [];
         let materials = [];
         try {
             colors = colorsParam ? JSON.parse(decodeURIComponent(colorsParam)) : [];
             sizes = sizesParam ? JSON.parse(decodeURIComponent(sizesParam)) : [];
-            materials = materialsParam ? JSON.parse(decodeURIComponent(materialsParam)) : [];
+            materials = materialParam ? [decodeURIComponent(materialParam)] : []; // تحويل المادة إلى مصفوفة إذا كانت موجودة
         } catch (e) {
-            console.error('خطأ في تحليل الألوان أو المقاسات أو المواد:', e);
+            console.error('خطأ في تحليل الألوان أو المقاسات أو المادة:', e);
         }
         
         document.getElementById('productNameText').textContent = decodeURIComponent(productName);

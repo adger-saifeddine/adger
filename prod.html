@@ -2443,6 +2443,7 @@ function updateMainMedia(thumbnail) {
                     <div class="letter" id="currency"></div>
                 </div>
                 <h3 id="product-discount"></h3>
+                <h4 id="product-material"></h4>
             </div>
         </div>
         <div class="bottom-buttons">
@@ -2523,6 +2524,14 @@ function updateMainMedia(thumbnail) {
                 document.getElementById('product-discount').style.display = 'none';
             }
     
+            // عرض المادة إذا كانت موجودة
+            if (product.material) {
+                document.getElementById('product-material').textContent = 
+                    `${texts.materialLabel || 'المادة'}: ${product.material}`;
+            } else {
+                document.getElementById('product-material').style.display = 'none';
+            }
+    
             // إعداد حدث الزر شراء الآن
             document.getElementById('buy-now-btn').onclick = function() {
                 buyNow(
@@ -2532,13 +2541,13 @@ function updateMainMedia(thumbnail) {
                     product.shippingPrice,
                     product.colors,
                     product.sizes,
-                    product.materials // إضافة المواد
+                    product.material
                 );
             };
         }
     
         // دالة شراء الآن
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, materials) {
+        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, material) {
             const params = new URLSearchParams({
                 name: encodeURIComponent(productName),
                 id: encodeURIComponent(productId),
@@ -2546,7 +2555,7 @@ function updateMainMedia(thumbnail) {
                 shipping: encodeURIComponent(shippingPrice),
                 colors: encodeURIComponent(JSON.stringify(colors)),
                 sizes: encodeURIComponent(JSON.stringify(sizes)),
-                materials: encodeURIComponent(JSON.stringify(materials)) // إضافة المواد
+                material: encodeURIComponent(material)
             });
     
             window.location.href = `buy.html?${params}`;
@@ -2560,9 +2569,7 @@ function updateMainMedia(thumbnail) {
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
-                const productColors = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('colors') || '[]'));
-                const productSizes = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('sizes') || '[]'));
-                const productMaterials = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('materials') || '[]')); // إضافة المواد
+                const productMaterial = document.getElementById('product-material').textContent;
     
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
@@ -2577,9 +2584,7 @@ function updateMainMedia(thumbnail) {
                         name: productName,
                         price: productPrice,
                         image: productImage,
-                        colors: productColors,
-                        sizes: productSizes,
-                        materials: productMaterials, // إضافة المواد
+                        material: productMaterial,
                         quantity: 1
                     });
                 }
@@ -2595,6 +2600,7 @@ function updateMainMedia(thumbnail) {
             }
         }
     </script>
+</body>
 
 
 
