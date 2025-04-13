@@ -137,54 +137,51 @@
         "discountTexts": ["كان بـ 29 جنيه", "خصم 97%"],
         "link": "prod.html?id=15"
     },
-    [
-        {
-          "name": "شاحن مغناطيسي سريع Type-C",
-          "dataName": "#16 شاحن مغناطيسي سريع 3A USB C لشحن سريع لأجهزة Android وiPhone",
-          "price": "2.50",
-          "image": "https://i.postimg.cc/dVkXbFLm/charger.jpg",
-          "sold": "الأكثر مبيعاً",
-          "discountTexts": ["كان بـ 49 جنيه", "خصم 95%"],
-          "link": "prod.html?id=16"
-        },
-        {
-          "name": "كابل شحن مضيء LED",
-          "dataName": "#17 كابل شحن مضيء LED Type-C بطول 1 متر – تأثير إضاءة رائع",
-          "price": "1.70",
-          "image": "https://i.postimg.cc/nzZTYFF9/ledcable.jpg",
-          "sold": "مميز",
-          "discountTexts": ["كان بـ 39 جنيه", "خصم 94%"],
-          "link": "prod.html?id=17"
-        },
-        {
-          "name": "مسند موبايل مرن",
-          "dataName": "#18 مسند موبايل مرن للسرير والمكتب – قابل للتعديل",
-          "price": "3.00",
-          "image": "https://i.postimg.cc/vBXSnYV7/holder.jpg",
-          "sold": "موثوق",
-          "discountTexts": ["كان بـ 59 جنيه", "خصم 95%"],
-          "link": "prod.html?id=18"
-        },
-        {
-          "name": "قلم لمس للجوال والأجهزة اللوحية",
-          "dataName": "#19 قلم لمس دقيق للرسم والكتابة – متوافق مع جميع الشاشات",
-          "price": "1.20",
-          "image": "https://i.postimg.cc/mgkPf3mx/stylus.jpg",
-          "sold": "الأعلى تقييماً",
-          "discountTexts": ["كان بـ 25 جنيه", "خصم 96%"],
-          "link": "prod.html?id=19"
-        },
-        {
-          "name": "سماعة بلوتوث صغيرة",
-          "dataName": "#20 سماعة بلوتوث لاسلكية صغيرة الحجم – صوت نقي وتصميم مريح",
-          "price": "4.90",
-          "image": "https://i.postimg.cc/5NqkN6GZ/earbud.jpg",
-          "sold": "الأكثر شهرة",
-          "discountTexts": ["كان بـ 99 جنيه", "خصم 95%"],
-          "link": "prod.html?id=20"
-        }
-      ]
-      
+    {
+        "name": "شاحن مغناطيسي سريع Type-C",
+        "dataName": "#16 شاحن مغناطيسي سريع 3A USB C لشحن سريع لأجهزة Android وiPhone",
+        "price": "2.50",
+        "image": "https://i.postimg.cc/dVkXbFLm/charger.jpg",
+        "sold": "الأكثر مبيعاً",
+        "discountTexts": ["كان بـ 49 جنيه", "خصم 95%"],
+        "link": "prod.html?id=16"
+      },
+      {
+        "name": "كابل شحن مضيء LED",
+        "dataName": "#17 كابل شحن مضيء LED Type-C بطول 1 متر – تأثير إضاءة رائع",
+        "price": "1.70",
+        "image": "https://i.postimg.cc/nzZTYFF9/ledcable.jpg",
+        "sold": "مميز",
+        "discountTexts": ["كان بـ 39 جنيه", "خصم 94%"],
+        "link": "prod.html?id=17"
+      },
+      {
+        "name": "مسند موبايل مرن",
+        "dataName": "#18 مسند موبايل مرن للسرير والمكتب – قابل للتعديل",
+        "price": "3.00",
+        "image": "https://i.postimg.cc/vBXSnYV7/holder.jpg",
+        "sold": "موثوق",
+        "discountTexts": ["كان بـ 59 جنيه", "خصم 95%"],
+        "link": "prod.html?id=18"
+      },
+      {
+        "name": "قلم لمس للجوال والأجهزة اللوحية",
+        "dataName": "#19 قلم لمس دقيق للرسم والكتابة – متوافق مع جميع الشاشات",
+        "price": "1.20",
+        "image": "https://i.postimg.cc/mgkPf3mx/stylus.jpg",
+        "sold": "الأعلى تقييماً",
+        "discountTexts": ["كان بـ 25 جنيه", "خصم 96%"],
+        "link": "prod.html?id=19"
+      },
+      {
+        "name": "سماعة بلوتوث صغيرة",
+        "dataName": "#20 سماعة بلوتوث لاسلكية صغيرة الحجم – صوت نقي وتصميم مريح",
+        "price": "4.90",
+        "image": "https://i.postimg.cc/5NqkN6GZ/earbud.jpg",
+        "sold": "الأكثر شهرة",
+        "discountTexts": ["كان بـ 99 جنيه", "خصم 95%"],
+        "link": "prod.html?id=20"
+      }
       
       
     
