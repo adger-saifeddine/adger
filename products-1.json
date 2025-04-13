@@ -824,7 +824,7 @@
             "pageId": "14",
             "productId": "14",
             "shippingPrice": "70",
-          "materials": ["قطن", "صوف", "بوليستر"]
+            "colors": ["أبيض", "أسود"]
         },
         "texts": {
             "currency": "جنيه",
@@ -885,7 +885,8 @@
             "discount": "97",
             "pageId": "15",
             "productId": "15",
-            "shippingPrice": "50"
+            "shippingPrice": "50",
+      "materials": ["قطن", "بوليستر", "حرير"] 
         },
         "texts": {
             "currency": "جنيه",
