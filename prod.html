@@ -2531,20 +2531,22 @@ function updateMainMedia(thumbnail) {
                     product.price,
                     product.shippingPrice,
                     product.colors,
-                    product.sizes
+                    product.sizes,
+                    product.materials
                 );
             };
         }
     
         // دالة شراء الآن
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes) {
+        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, materials) {
             const params = new URLSearchParams({
                 name: encodeURIComponent(productName),
                 id: encodeURIComponent(productId),
                 price: encodeURIComponent(productPrice),
                 shipping: encodeURIComponent(shippingPrice),
                 colors: encodeURIComponent(JSON.stringify(colors)),
-                sizes: encodeURIComponent(JSON.stringify(sizes))
+                sizes: encodeURIComponent(JSON.stringify(sizes)),
+                materials: encodeURIComponent(JSON.stringify(materials || []))
             });
     
             window.location.href = `buy.html?${params}`;
