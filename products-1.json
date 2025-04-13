@@ -885,7 +885,9 @@
             "discount": "97",
             "pageId": "15",
             "productId": "15",
-            "shippingPrice": "50"
+            "shippingPrice": "50",
+            "materials": ["بلاستيك", "معدن"]
+
         },
         "texts": {
             "currency": "جنيه",
