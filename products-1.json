@@ -824,7 +824,8 @@
             "pageId": "14",
             "productId": "14",
             "shippingPrice": "70",
-            "colors": ["أبيض", "أسود"]
+            "colors": ["أبيض", "أسود"],
+            "materials": ["قطن", "بوليستر", "كتان"]
         },
         "texts": {
             "currency": "جنيه",
@@ -885,9 +886,7 @@
             "discount": "97",
             "pageId": "15",
             "productId": "15",
-            "shippingPrice": "50",
-            "materials": ["بلاستيك", "معدن"]
-
+            "shippingPrice": "50"
         },
         "texts": {
             "currency": "جنيه",
