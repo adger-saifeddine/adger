@@ -2532,7 +2532,7 @@ function updateMainMedia(thumbnail) {
                     product.shippingPrice,
                     product.colors,
                     product.sizes,
-                    product.materials
+                    product.materials // إضافة المواد
                 );
             };
         }
@@ -2546,7 +2546,7 @@ function updateMainMedia(thumbnail) {
                 shipping: encodeURIComponent(shippingPrice),
                 colors: encodeURIComponent(JSON.stringify(colors)),
                 sizes: encodeURIComponent(JSON.stringify(sizes)),
-                materials: encodeURIComponent(JSON.stringify(materials || []))
+                materials: encodeURIComponent(JSON.stringify(materials)) // إضافة المواد
             });
     
             window.location.href = `buy.html?${params}`;
@@ -2560,6 +2560,9 @@ function updateMainMedia(thumbnail) {
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
+                const productColors = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('colors') || '[]'));
+                const productSizes = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('sizes') || '[]'));
+                const productMaterials = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('materials') || '[]')); // إضافة المواد
     
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
@@ -2574,6 +2577,9 @@ function updateMainMedia(thumbnail) {
                         name: productName,
                         price: productPrice,
                         image: productImage,
+                        colors: productColors,
+                        sizes: productSizes,
+                        materials: productMaterials, // إضافة المواد
                         quantity: 1
                     });
                 }

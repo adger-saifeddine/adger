@@ -475,15 +475,17 @@
 
     <script>
         // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount') && (document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0);
-
+        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+    
         // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
-            if (event.key === 'cartCount' && document.getElementById('cartCount')) {
+            if (event.key === 'cartCount') {
                 document.getElementById('cartCount').textContent = event.newValue;
             }
         });
+    </script>
 
+    <script>
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -491,11 +493,11 @@
             projectId: "buy-from-adger",
             storageBucket: "buy-from-adger.appspot.com",
             messagingSenderId: "396020785601",
-            appId: "1:396020785601:web:yourWebAppID" // استبدل بـ appId الخاص بك
+            appId: "1:396020785601:web:yourWebAppID"
         });
-
+        
         const database = firebase.database();
-
+        
         function openModal() {
             const savedDeliveryInfo = localStorage.getItem('deliveryInfo');
             if (savedDeliveryInfo) {
@@ -511,12 +513,12 @@
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('deliveryModal').style.display = 'flex';
         }
-
+        
         function closeModal() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('deliveryModal').style.display = 'none';
         }
-
+        
         function saveDeliveryInfo() {
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -525,11 +527,11 @@
             const city = document.getElementById('city').value.trim();
             const street = document.getElementById('street').value.trim();
             const landmark = document.getElementById('landmark').value.trim();
-
+        
             document.querySelectorAll('.error-icon').forEach(error => error.style.display = 'none');
-
+        
             let isValid = true;
-
+        
             if (!name) {
                 document.getElementById('nameError').style.display = 'inline';
                 isValid = false;
@@ -558,19 +560,19 @@
                 document.getElementById('landmarkError').style.display = 'inline';
                 isValid = false;
             }
-
+        
             const phoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
             if (!phoneRegex.test(phone)) {
                 document.getElementById('phoneError').style.display = 'inline';
                 isValid = false;
             }
-
+        
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 document.getElementById('emailError').style.display = 'inline';
                 isValid = false;
             }
-
+        
             if (isValid) {
                 document.getElementById('displayName').textContent = name;
                 document.getElementById('displayPhone').textContent = phone;
@@ -579,42 +581,43 @@
                 document.getElementById('displayCity').textContent = city;
                 document.getElementById('displayStreet').textContent = street;
                 document.getElementById('displayLandmark').textContent = landmark;
-
+        
                 document.getElementById('deliveryInfoDisplay').style.display = 'block';
-
+        
                 const deliveryInfo = { name, phone, email, governorate, city, street, landmark };
                 localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
-
+        
                 closeModal();
             }
         }
-
+        
         function confirmPurchase() {
             const purchaseSuccess = document.getElementById('purchaseSuccess');
             const loadingDots = purchaseSuccess.querySelector('.loading-dots');
             const checkmark = purchaseSuccess.querySelector('.checkmark-circle');
             const successText = purchaseSuccess.querySelector('.success-text');
-
+        
             if (purchaseSuccess.classList.contains('visible')) {
                 alert('لقد تم إتمام الشراء بالفعل!');
                 return;
             }
-
+        
             const deliveryInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
-
+            
             if (!deliveryInfo.name || !deliveryInfo.phone || !deliveryInfo.email || !deliveryInfo.governorate || !deliveryInfo.city || !deliveryInfo.street || !deliveryInfo.landmark) {
                 alert('يرجى إدخال جميع معلومات التوصيل أولاً.');
                 openModal();
                 return;
             }
-
+        
             const colorFieldVisible = document.getElementById('colorField').style.display === 'block';
             const sizeFieldVisible = document.getElementById('sizeField').style.display === 'block';
             const materialFieldVisible = document.getElementById('materialField').style.display === 'block';
+            
             const selectedColor = colorFieldVisible ? document.querySelector('.color-option.selected')?.dataset.color : null;
             const selectedSize = sizeFieldVisible ? document.querySelector('.size-option.selected')?.dataset.size : null;
             const selectedMaterial = materialFieldVisible ? document.querySelector('.material-option.selected')?.dataset.material : null;
-
+        
             if (colorFieldVisible && !selectedColor) {
                 alert('يرجى اختيار اللون أولاً.');
                 return;
@@ -627,21 +630,21 @@
                 alert('يرجى اختيار المادة أولاً.');
                 return;
             }
-
+        
             const username = localStorage.getItem('username');
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً لإتمام الشراء.');
                 window.location.href = 'account.html';
                 return;
             }
-
+        
             const productName = document.getElementById('productNameText').textContent;
             const productId = document.getElementById('productIdText').textContent;
             const productPrice = parseFloat(document.getElementById('productPriceText').textContent);
             const shippingPrice = parseFloat(document.getElementById('shippingPriceText').textContent);
             const quantity = parseInt(document.getElementById('quantityValue').textContent);
             const totalPrice = parseFloat(document.getElementById('totalPriceValue').textContent);
-
+        
             const purchaseData = {
                 productName,
                 productId,
@@ -653,16 +656,16 @@
                 deliveryInfo,
                 timestamp: Date.now()
             };
-
+        
             if (colorFieldVisible) purchaseData.color = selectedColor;
             if (sizeFieldVisible) purchaseData.size = selectedSize;
             if (materialFieldVisible) purchaseData.material = selectedMaterial;
-
+        
             purchaseSuccess.classList.add('visible');
             loadingDots.style.display = 'flex';
             checkmark.style.display = 'none';
             successText.style.display = 'none';
-
+        
             database.ref('purchases').push(purchaseData)
                 .then(() => {
                     loadingDots.style.display = 'none';
@@ -670,7 +673,7 @@
                     successText.style.display = 'block';
                     document.getElementById('confirmButtonText').textContent = 'تم الشراء';
                     document.getElementById('confirmButton').disabled = true;
-
+        
                     const purchaseParams = new URLSearchParams({
                         productName: encodeURIComponent(productName),
                         productId: encodeURIComponent(productId),
@@ -691,7 +694,7 @@
                     loadingDots.style.display = 'none';
                 });
         }
-
+        
         // جلب البيانات من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productName = urlParams.get('name');
@@ -701,7 +704,7 @@
         const colorsParam = urlParams.get('colors');
         const sizesParam = urlParams.get('sizes');
         const materialsParam = urlParams.get('materials');
-
+        
         // تحليل الألوان والمقاسات والمواد بشكل صحيح
         let colors = [];
         let sizes = [];
@@ -713,17 +716,17 @@
         } catch (e) {
             console.error('خطأ في تحليل الألوان أو المقاسات أو المواد:', e);
         }
-
+        
         document.getElementById('productNameText').textContent = decodeURIComponent(productName);
         document.getElementById('productIdText').textContent = decodeURIComponent(productId);
         document.getElementById('productPriceText').textContent = productPrice.toFixed(2);
         document.getElementById('shippingPriceText').textContent = shippingPrice.toFixed(2);
-
+        
         const optionsContainer = document.getElementById('optionsContainer');
         if (colors.length > 0 || sizes.length > 0 || materials.length > 0) {
             optionsContainer.style.display = 'block';
         }
-
+        
         if (colors.length > 0) {
             const colorField = document.getElementById('colorField');
             colorField.style.display = 'block';
@@ -745,7 +748,7 @@
         } else {
             document.getElementById('colorField').style.display = 'none';
         }
-
+        
         if (sizes.length > 0) {
             const sizeField = document.getElementById('sizeField');
             sizeField.style.display = 'block';
@@ -767,7 +770,7 @@
         } else {
             document.getElementById('sizeField').style.display = 'none';
         }
-
+        
         if (materials.length > 0) {
             const materialField = document.getElementById('materialField');
             materialField.style.display = 'block';
@@ -789,7 +792,7 @@
         } else {
             document.getElementById('materialField').style.display = 'none';
         }
-
+        
         const savedDeliveryInfo = localStorage.getItem('deliveryInfo');
         if (savedDeliveryInfo) {
             const deliveryInfo = JSON.parse(savedDeliveryInfo);
@@ -802,15 +805,15 @@
             document.getElementById('displayLandmark').textContent = deliveryInfo.landmark;
             document.getElementById('deliveryInfoDisplay').style.display = 'block';
         }
-
+        
         let quantity = 1;
-
+        
         function increaseQuantity() {
             quantity++;
             document.getElementById('quantityValue').textContent = quantity;
             updateTotalPrice();
         }
-
+        
         function decreaseQuantity() {
             if (quantity > 1) {
                 quantity--;
@@ -818,14 +821,14 @@
                 updateTotalPrice();
             }
         }
-
+        
         function updateTotalPrice() {
             const productPrice = parseFloat(document.getElementById('productPriceText').textContent);
             const shippingPrice = parseFloat(document.getElementById('shippingPriceText').textContent);
             const totalPrice = (productPrice * quantity) + shippingPrice;
             document.getElementById('totalPriceValue').textContent = totalPrice.toFixed(2);
         }
-
+        
         updateTotalPrice();
     </script>
 </body>
