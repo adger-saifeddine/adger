@@ -320,14 +320,14 @@
             .buytext9 { font-size: 16px; margin-top: 6px; margin-right: 1px; }
         }
 
-        .color-options, .size-options {
+        .color-options, .size-options, .material-options {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 5px;
         }
 
-        .color-option, .size-option {
+        .color-option, .size-option, .material-option {
             padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
@@ -338,13 +338,13 @@
             transition: border-color 0.3s ease;
         }
 
-        .color-option.selected, .size-option.selected {
+        .color-option.selected, .size-option.selected, .material-option.selected {
             border-color: #008cff;
             border-width: 2px;
         }
     </style>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
     <div id="overlay"></div>
@@ -475,17 +475,15 @@
 
     <script>
         // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+        document.getElementById('cartCount') && (document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0);
 
         // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
-            if (event.key === 'cartCount') {
+            if (event.key === 'cartCount' && document.getElementById('cartCount')) {
                 document.getElementById('cartCount').textContent = event.newValue;
             }
         });
-    </script>
 
-    <script>
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -831,6 +829,11 @@
         updateTotalPrice();
     </script>
 </body>
+</html>
+
+
+
+
 
 
 
