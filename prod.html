@@ -2443,7 +2443,6 @@ function updateMainMedia(thumbnail) {
                     <div class="letter" id="currency"></div>
                 </div>
                 <h3 id="product-discount"></h3>
-                <h4 id="product-material"></h4> <!-- Added for material -->
             </div>
         </div>
         <div class="bottom-buttons">
@@ -2513,7 +2512,6 @@ function updateMainMedia(thumbnail) {
             document.getElementById('product-sold').textContent = product.sold;
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
-            document.getElementById('product-material').textContent = `Material: ${product.material || 'N/A'}`; // Populate material
     
             // عرض الخصم إذا كان موجوداً
             if (product.discount && product.discount > 0) {
@@ -2534,13 +2532,13 @@ function updateMainMedia(thumbnail) {
                     product.shippingPrice,
                     product.colors,
                     product.sizes,
-                    product.material // Added material
+                    product.materials // إضافة المادة هنا
                 );
             };
         }
     
-        // دالة شراء الآن
-        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, material) {
+        // دالة شراء الآن المعدلة لتشمل المادة
+        function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, materials) {
             const params = new URLSearchParams({
                 name: encodeURIComponent(productName),
                 id: encodeURIComponent(productId),
@@ -2548,7 +2546,7 @@ function updateMainMedia(thumbnail) {
                 shipping: encodeURIComponent(shippingPrice),
                 colors: encodeURIComponent(JSON.stringify(colors)),
                 sizes: encodeURIComponent(JSON.stringify(sizes)),
-                material: encodeURIComponent(material) // Added material
+                materials: encodeURIComponent(JSON.stringify(materials)) // إضافة المادة هنا
             });
     
             window.location.href = `buy.html?${params}`;
@@ -2562,7 +2560,6 @@ function updateMainMedia(thumbnail) {
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
-                const productMaterial = document.getElementById('product-material').textContent.replace('Material: ', ''); // Extract material
     
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
@@ -2577,7 +2574,6 @@ function updateMainMedia(thumbnail) {
                         name: productName,
                         price: productPrice,
                         image: productImage,
-                        material: productMaterial, // Added material
                         quantity: 1
                     });
                 }
