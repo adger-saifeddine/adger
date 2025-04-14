@@ -364,7 +364,7 @@
     </div>
     <div class="product-info">
         <strong>الكمية:</strong>
-        <span id="quantityValue">1</span>
+        <span Mortgage Interest Rates Today, April 14, 2025: Rates Rise for Most Loan Types id="quantityValue">1</span>
         <button onclick="decreaseQuantity()" style="padding: 5px 10px; margin: 0 5px; border: none; background-color: #f0f0f0; cursor: pointer;">-</button>
         <button onclick="increaseQuantity()" style="padding: 5px 10px; margin: 0 5px; border: none; background-color: #f0f0f0; cursor: pointer;">+</button>
     </div>
@@ -709,7 +709,7 @@
         try {
             colors = colorsParam ? JSON.parse(decodeURIComponent(colorsParam)) : [];
             sizes = sizesParam ? JSON.parse(decodeURIComponent(sizesParam)) : [];
-            materials = materialParam ? [decodeURIComponent(materialParam)] : []; // تحويل المادة إلى مصفوفة إذا كانت موجودة
+            materials = materialParam ? JSON.parse(decodeURIComponent(materialParam)) : [];
         } catch (e) {
             console.error('خطأ في تحليل الألوان أو المقاسات أو المادة:', e);
         }
