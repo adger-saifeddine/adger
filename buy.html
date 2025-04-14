@@ -364,7 +364,7 @@
     </div>
     <div class="product-info">
         <strong>الكمية:</strong>
-        <span Mortgage Interest Rates Today, April 14, 2025: Rates Rise for Most Loan Types id="quantityValue">1</span>
+        <span id="quantityValue">1</span>
         <button onclick="decreaseQuantity()" style="padding: 5px 10px; margin: 0 5px; border: none; background-color: #f0f0f0; cursor: pointer;">-</button>
         <button onclick="increaseQuantity()" style="padding: 5px 10px; margin: 0 5px; border: none; background-color: #f0f0f0; cursor: pointer;">+</button>
     </div>
@@ -475,15 +475,17 @@
 
     <script>
         // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount')?.textContent = localStorage.getItem('cartCount') || 0;
+        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
     
         // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
             if (event.key === 'cartCount') {
-                document.getElementById('cartCount')?.textContent = event.newValue;
+                document.getElementById('cartCount').textContent = event.newValue;
             }
         });
+    </script>
 
+    <script>
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -700,18 +702,18 @@
         const shippingPrice = parseFloat(urlParams.get('shipping')) || 0;
         const colorsParam = urlParams.get('colors');
         const sizesParam = urlParams.get('sizes');
-        const materialParam = urlParams.get('material');
+        const materialsParam = urlParams.get('materials');
         
-        // تحليل الألوان والمقاسات والمادة بشكل صحيح
+        // تحليل الألوان والمقاسات والمواد بشكل صحيح
         let colors = [];
         let sizes = [];
         let materials = [];
         try {
             colors = colorsParam ? JSON.parse(decodeURIComponent(colorsParam)) : [];
             sizes = sizesParam ? JSON.parse(decodeURIComponent(sizesParam)) : [];
-            materials = materialParam ? JSON.parse(decodeURIComponent(materialParam)) : [];
+            materials = materialsParam ? JSON.parse(decodeURIComponent(materialsParam)) : [];
         } catch (e) {
-            console.error('خطأ في تحليل الألوان أو المقاسات أو المادة:', e);
+            console.error('خطأ في تحليل الألوان أو المقاسات أو المواد:', e);
         }
         
         document.getElementById('productNameText').textContent = decodeURIComponent(productName);
