@@ -649,6 +649,7 @@
                 <p>السعر الإجمالي: ${purchase.totalPrice} جنيه</p>
                 ${purchase.color ? `<p>اللون: ${purchase.color}</p>` : ''}
                 ${purchase.size ? `<p>المقاس: ${purchase.size}</p>` : ''}
+                ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}  <!-- إضافة المادة هنا -->
                 <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
             `;
             return purchaseItem;
@@ -661,8 +662,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
