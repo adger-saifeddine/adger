@@ -320,14 +320,14 @@
             .buytext9 { font-size: 16px; margin-top: 6px; margin-right: 1px; }
         }
 
-        .color-options, .size-options {
+        .color-options, .size-options , .material-option {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 5px;
         }
 
-        .color-option, .size-option {
+        .color-option, .size-option , .material-option {
             padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
@@ -338,46 +338,11 @@
             transition: border-color 0.3s ease;
         }
 
-        .color-option.selected, .size-option.selected {
+        .color-option.selected, .size-option.selected, .material-option.selected   {
             border-color: #008cff;
             border-width: 2px;
         }
     </style>
-    <head>
-        <!-- Add this CSS to your stylesheet or in a style tag in the head -->
-        <style>
-            /* Common styling for all option types */
-            .color-option, .size-option, .material-option {
-                display: inline-block;
-                margin: 5px;
-                padding: 8px 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                cursor: pointer;
-                text-align: center;
-                transition: all 0.3s ease;
-            }
-    
-            .color-option.selected, .size-option.selected, .material-option.selected {
-                background-color: #f0f0f0;
-                border-color: #666;
-                font-weight: bold;
-            }
-            
-            /* Specific styling for material options to ensure they don't run into each other */
-            .material-options {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-top: 5px;
-            }
-            
-            .material-option {
-                flex: 0 0 auto;
-                min-width: 60px;
-            }
-        </style>
-    </head>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
