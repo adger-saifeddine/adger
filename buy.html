@@ -343,8 +343,6 @@
             border-width: 2px;
         }
     </style>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
     <div id="overlay"></div>
@@ -475,17 +473,16 @@
 
     <script>
         // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
-    
+        document.getElementById('cartCount') ? document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0 : null;
+
         // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
-            if (event.key === 'cartCount') {
+            if (event.key === 'cartCount' && document.getElementById('cartCount')) {
                 document.getElementById('cartCount').textContent = event.newValue;
             }
         });
-    </script>
 
-    <script>
+        // تهيئة Firebase
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -495,9 +492,9 @@
             messagingSenderId: "396020785601",
             appId: "1:396020785601:web:yourWebAppID" // استبدل بـ appId الخاص بك
         });
-        
+
         const database = firebase.database();
-        
+
         function openModal() {
             const savedDeliveryInfo = localStorage.getItem('deliveryInfo');
             if (savedDeliveryInfo) {
@@ -513,12 +510,12 @@
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('deliveryModal').style.display = 'flex';
         }
-        
+
         function closeModal() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('deliveryModal').style.display = 'none';
         }
-        
+
         function saveDeliveryInfo() {
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -527,11 +524,11 @@
             const city = document.getElementById('city').value.trim();
             const street = document.getElementById('street').value.trim();
             const landmark = document.getElementById('landmark').value.trim();
-        
+
             document.querySelectorAll('.error-icon').forEach(error => error.style.display = 'none');
-        
+
             let isValid = true;
-        
+
             if (!name) {
                 document.getElementById('nameError').style.display = 'inline';
                 isValid = false;
@@ -560,19 +557,19 @@
                 document.getElementById('landmarkError').style.display = 'inline';
                 isValid = false;
             }
-        
+
             const phoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
             if (!phoneRegex.test(phone)) {
                 document.getElementById('phoneError').style.display = 'inline';
                 isValid = false;
             }
-        
+
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 document.getElementById('emailError').style.display = 'inline';
                 isValid = false;
             }
-        
+
             if (isValid) {
                 document.getElementById('displayName').textContent = name;
                 document.getElementById('displayPhone').textContent = phone;
@@ -581,42 +578,42 @@
                 document.getElementById('displayCity').textContent = city;
                 document.getElementById('displayStreet').textContent = street;
                 document.getElementById('displayLandmark').textContent = landmark;
-        
+
                 document.getElementById('deliveryInfoDisplay').style.display = 'block';
-        
+
                 const deliveryInfo = { name, phone, email, governorate, city, street, landmark };
                 localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
-        
+
                 closeModal();
             }
         }
-        
+
         function confirmPurchase() {
             const purchaseSuccess = document.getElementById('purchaseSuccess');
             const loadingDots = purchaseSuccess.querySelector('.loading-dots');
             const checkmark = purchaseSuccess.querySelector('.checkmark-circle');
             const successText = purchaseSuccess.querySelector('.success-text');
-        
+
             if (purchaseSuccess.classList.contains('visible')) {
                 alert('لقد تم إتمام الشراء بالفعل!');
                 return;
             }
-        
+
             const deliveryInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
-            
+
             if (!deliveryInfo.name || !deliveryInfo.phone || !deliveryInfo.email || !deliveryInfo.governorate || !deliveryInfo.city || !deliveryInfo.street || !deliveryInfo.landmark) {
                 alert('يرجى إدخال جميع معلومات التوصيل أولاً.');
                 openModal();
                 return;
             }
-        
+
             const colorFieldVisible = document.getElementById('colorField').style.display === 'block';
             const sizeFieldVisible = document.getElementById('sizeField').style.display === 'block';
             const materialFieldVisible = document.getElementById('materialField').style.display === 'block';
             const selectedColor = colorFieldVisible ? document.querySelector('.color-option.selected')?.dataset.color : null;
             const selectedSize = sizeFieldVisible ? document.querySelector('.size-option.selected')?.dataset.size : null;
             const selectedMaterial = materialFieldVisible ? document.querySelector('.material-option.selected')?.dataset.material : null;
-        
+
             if (colorFieldVisible && !selectedColor) {
                 alert('يرجى اختيار اللون أولاً.');
                 return;
@@ -629,21 +626,21 @@
                 alert('يرجى اختيار المادة أولاً.');
                 return;
             }
-        
+
             const username = localStorage.getItem('username');
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً لإتمام الشراء.');
                 window.location.href = 'account.html';
                 return;
             }
-        
+
             const productName = document.getElementById('productNameText').textContent;
             const productId = document.getElementById('productIdText').textContent;
             const productPrice = parseFloat(document.getElementById('productPriceText').textContent);
             const shippingPrice = parseFloat(document.getElementById('shippingPriceText').textContent);
             const quantity = parseInt(document.getElementById('quantityValue').textContent);
             const totalPrice = parseFloat(document.getElementById('totalPriceValue').textContent);
-        
+
             const purchaseData = {
                 productName,
                 productId,
@@ -655,16 +652,16 @@
                 deliveryInfo,
                 timestamp: Date.now()
             };
-        
+
             if (colorFieldVisible) purchaseData.color = selectedColor;
             if (sizeFieldVisible) purchaseData.size = selectedSize;
             if (materialFieldVisible) purchaseData.material = selectedMaterial;
-        
+
             purchaseSuccess.classList.add('visible');
             loadingDots.style.display = 'flex';
             checkmark.style.display = 'none';
             successText.style.display = 'none';
-        
+
             database.ref('purchases').push(purchaseData)
                 .then(() => {
                     loadingDots.style.display = 'none';
@@ -672,7 +669,7 @@
                     successText.style.display = 'block';
                     document.getElementById('confirmButtonText').textContent = 'تم الشراء';
                     document.getElementById('confirmButton').disabled = true;
-        
+
                     const purchaseParams = new URLSearchParams({
                         productName: encodeURIComponent(productName),
                         productId: encodeURIComponent(productId),
@@ -693,18 +690,18 @@
                     loadingDots.style.display = 'none';
                 });
         }
-        
+
         // جلب البيانات من URL
         const urlParams = new URLSearchParams(window.location.search);
-        const productName = urlParams.get('name');
-        const productId = urlParams.get('id');
+        const productName = urlParams.get('name') || 'غير محدد';
+        const productId = urlParams.get('id') || 'غير محدد';
         const productPrice = parseFloat(urlParams.get('price')) || 0;
         const shippingPrice = parseFloat(urlParams.get('shipping')) || 0;
         const colorsParam = urlParams.get('colors');
         const sizesParam = urlParams.get('sizes');
         const materialsParam = urlParams.get('materials');
-        
-        // تحليل الألوان والمقاسات والمادة بشكل صحيح
+
+        // تحليل الألوان والمقاسات والمادة
         let colors = [];
         let sizes = [];
         let materials = [];
@@ -712,26 +709,34 @@
             colors = colorsParam ? JSON.parse(decodeURIComponent(colorsParam)) : [];
             sizes = sizesParam ? JSON.parse(decodeURIComponent(sizesParam)) : [];
             materials = materialsParam ? JSON.parse(decodeURIComponent(materialsParam)) : [];
+            console.log('الألوان المحملة:', colors);
+            console.log('المقاسات المحملة:', sizes);
+            console.log('المواد المحملة:', materials);
         } catch (e) {
             console.error('خطأ في تحليل الألوان أو المقاسات أو المادة:', e);
+            alert('حدث خطأ في تحميل خيارات المنتج. يرجى المحاولة مرة أخرى.');
         }
-        
+
+        // عرض بيانات المنتج
         document.getElementById('productNameText').textContent = decodeURIComponent(productName);
         document.getElementById('productIdText').textContent = decodeURIComponent(productId);
         document.getElementById('productPriceText').textContent = productPrice.toFixed(2);
         document.getElementById('shippingPriceText').textContent = shippingPrice.toFixed(2);
-        
+
+        // إظهار حاوية الخيارات إذا كانت هناك ألوان أو مقاسات أو مواد
         const optionsContainer = document.getElementById('optionsContainer');
         if (colors.length > 0 || sizes.length > 0 || materials.length > 0) {
             optionsContainer.style.display = 'block';
         }
-        
+
+        // عرض خيارات الألوان
         if (colors.length > 0) {
             const colorField = document.getElementById('colorField');
             colorField.style.display = 'block';
             const colorOptionsContainer = document.getElementById('colorOptions');
             let firstColorSpan = null;
             colors.forEach((color, index) => {
+                console.log('إنشاء خيار اللون:', color);
                 const colorSpan = document.createElement('span');
                 colorSpan.className = 'color-option';
                 colorSpan.textContent = color;
@@ -739,21 +744,27 @@
                 colorSpan.onclick = function() {
                     document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
                     colorSpan.classList.add('selected');
+                    console.log('اللون المحدد:', color);
                 };
                 colorOptionsContainer.appendChild(colorSpan);
                 if (index === 0) firstColorSpan = colorSpan;
             });
-            if (firstColorSpan) firstColorSpan.classList.add('selected');
+            if (firstColorSpan) {
+                firstColorSpan.classList.add('selected');
+                console.log('اللون الافتراضي:', firstColorSpan.textContent);
+            }
         } else {
             document.getElementById('colorField').style.display = 'none';
         }
-        
+
+        // عرض خيارات المقاسات
         if (sizes.length > 0) {
             const sizeField = document.getElementById('sizeField');
             sizeField.style.display = 'block';
             const sizeOptionsContainer = document.getElementById('sizeOptions');
             let firstSizeSpan = null;
             sizes.forEach((size, index) => {
+                console.log('إنشاء خيار المقاس:', size);
                 const sizeSpan = document.createElement('span');
                 sizeSpan.className = 'size-option';
                 sizeSpan.textContent = size;
@@ -761,21 +772,27 @@
                 sizeSpan.onclick = function() {
                     document.querySelectorAll('.size-option').forEach(option => option.classList.remove('selected'));
                     sizeSpan.classList.add('selected');
+                    console.log('المقاس المحدد:', size);
                 };
                 sizeOptionsContainer.appendChild(sizeSpan);
                 if (index === 0) firstSizeSpan = sizeSpan;
             });
-            if (firstSizeSpan) firstSizeSpan.classList.add('selected');
+            if (firstSizeSpan) {
+                firstSizeSpan.classList.add('selected');
+                console.log('المقاس الافتراضي:', firstSizeSpan.textContent);
+            }
         } else {
             document.getElementById('sizeField').style.display = 'none';
         }
-        
+
+        // عرض خيارات المواد
         if (materials.length > 0) {
             const materialField = document.getElementById('materialField');
             materialField.style.display = 'block';
             const materialOptionsContainer = document.getElementById('materialOptions');
             let firstMaterialSpan = null;
             materials.forEach((material, index) => {
+                console.log('إنشاء خيار المادة:', material);
                 const materialSpan = document.createElement('span');
                 materialSpan.className = 'material-option';
                 materialSpan.textContent = material;
@@ -783,15 +800,21 @@
                 materialSpan.onclick = function() {
                     document.querySelectorAll('.material-option').forEach(option => option.classList.remove('selected'));
                     materialSpan.classList.add('selected');
+                    console.log('المادة المحددة:', material);
                 };
                 materialOptionsContainer.appendChild(materialSpan);
                 if (index === 0) firstMaterialSpan = materialSpan;
             });
-            if (firstMaterialSpan) firstMaterialSpan.classList.add('selected');
+            if (firstMaterialSpan) {
+                firstMaterialSpan.classList.add('selected');
+                console.log('المادة الافتراضية:', firstMaterialSpan.textContent);
+            }
         } else {
             document.getElementById('materialField').style.display = 'none';
+            console.log('لا توجد مواد لعرضها');
         }
-        
+
+        // استعادة معلومات التوصيل المحفوظة
         const savedDeliveryInfo = localStorage.getItem('deliveryInfo');
         if (savedDeliveryInfo) {
             const deliveryInfo = JSON.parse(savedDeliveryInfo);
@@ -804,15 +827,16 @@
             document.getElementById('displayLandmark').textContent = deliveryInfo.landmark;
             document.getElementById('deliveryInfoDisplay').style.display = 'block';
         }
-        
+
+        // إدارة الكمية
         let quantity = 1;
-        
+
         function increaseQuantity() {
             quantity++;
             document.getElementById('quantityValue').textContent = quantity;
             updateTotalPrice();
         }
-        
+
         function decreaseQuantity() {
             if (quantity > 1) {
                 quantity--;
@@ -820,19 +844,19 @@
                 updateTotalPrice();
             }
         }
-        
+
         function updateTotalPrice() {
             const productPrice = parseFloat(document.getElementById('productPriceText').textContent);
             const shippingPrice = parseFloat(document.getElementById('shippingPriceText').textContent);
             const totalPrice = (productPrice * quantity) + shippingPrice;
             document.getElementById('totalPriceValue').textContent = totalPrice.toFixed(2);
         }
-        
+
+        // تحديث السعر الإجمالي عند التحميل
         updateTotalPrice();
     </script>
-
-
-
+</body>
+</html>
 
 
 
