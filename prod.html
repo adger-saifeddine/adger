@@ -2452,7 +2452,7 @@ function updateMainMedia(thumbnail) {
             </div>
         </div>
     </div>
-    
+
     <script>
         // جلب معرّف المنتج ورقم الصفحة من URL
         const url = new URL(window.location.href);
@@ -2462,17 +2462,17 @@ function updateMainMedia(thumbnail) {
         } catch (error) {
             console.error('Error:', error); // اطبع الخطأ إذا حدث
         }
-    
+
         const pageNumber = url.searchParams.get('page') || '1';
-    
+
         if (!productId) {
             alert('معرّف المنتج غير موجود في الرابط');
             throw new Error('معرّف المنتج مطلوب');
         }
-    
+
         const jsonFile = `products-${pageNumber}.json`;
         const jsonUrl = `${jsonFile}?t=${Date.now()}`;
-    
+
         // جلب بيانات JSON
         fetch(jsonUrl)
             .then(response => {
@@ -2484,27 +2484,27 @@ function updateMainMedia(thumbnail) {
             .then(data => {
                 // البحث عن المنتج باستخدام المعرّف
                 const productData = data.find(item => item.product.productId === productId);
-    
+
                 if (!productData) {
                     throw new Error('المنتج غير موجود في هذه الصفحة');
                 }
-    
+
                 populateProduct(productData);
             })
             .catch(error => {
                 console.error('خطأ في جلب البيانات:', error);
                 alert(error.message);
             });
-    
+
         // تعبئة بيانات المنتج
         function populateProduct(data) {
             const product = data.product;
             const texts = data.texts;
-    
+
             // إظهار الإطار
             document.getElementById('product-frame').style.display = 'block';
-    
-            // تعبئة البيانات
+
+            // تعبئة البيانات الأساسية
             document.getElementById('product-link').href = `prod.html?id=${product.pageId}`;
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-image').alt = product.name;
@@ -2512,7 +2512,7 @@ function updateMainMedia(thumbnail) {
             document.getElementById('product-sold').textContent = product.sold;
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
-    
+
             // عرض الخصم إذا كان موجوداً
             if (product.discount && product.discount > 0) {
                 document.getElementById('product-discount').textContent = 
@@ -2522,9 +2522,37 @@ function updateMainMedia(thumbnail) {
             } else {
                 document.getElementById('product-discount').style.display = 'none';
             }
-    
+
+            // إضافة خيارات المادة إذا كانت متاحة
+            const materialField = document.getElementById('materialField');
+            const materialOptionsContainer = document.getElementById('materialOptions');
+            materialOptionsContainer.innerHTML = ''; // مسح الخيارات السابقة
+
+            if (product.materials && product.materials.length > 0) {
+                materialField.style.display = 'block';
+                let firstMaterialSpan = null;
+
+                product.materials.forEach((material, index) => {
+                    const materialSpan = document.createElement('span');
+                    materialSpan.className = 'material-option';
+                    materialSpan.textContent = material;
+                    materialSpan.dataset.material = material;
+                    materialSpan.onclick = function() {
+                        document.querySelectorAll('.material-option').forEach(option => option.classList.remove('selected'));
+                        materialSpan.classList.add('selected');
+                    };
+                    materialOptionsContainer.appendChild(materialSpan);
+                    if (index === 0) firstMaterialSpan = materialSpan;
+                });
+
+                if (firstMaterialSpan) firstMaterialSpan.classList.add('selected');
+            } else {
+                materialField.style.display = 'none'; // إخفاء حقل المادة إذا لم تكن متاحة
+            }
+
             // إعداد حدث الزر شراء الآن
             document.getElementById('buy-now-btn').onclick = function() {
+                const selectedMaterial = document.querySelector('.material-option.selected')?.dataset.material || null;
                 buyNow(
                     product.name,
                     product.productId,
@@ -2532,12 +2560,12 @@ function updateMainMedia(thumbnail) {
                     product.shippingPrice,
                     product.colors,
                     product.sizes,
-                    product.materials // إضافة المادة هنا
+                    product.materials
                 );
             };
         }
-    
-        // دالة شراء الآن المعدلة لتشمل المادة
+
+        // دالة شراء الآن
         function buyNow(productName, productId, productPrice, shippingPrice, colors, sizes, materials) {
             const params = new URLSearchParams({
                 name: encodeURIComponent(productName),
@@ -2546,12 +2574,12 @@ function updateMainMedia(thumbnail) {
                 shipping: encodeURIComponent(shippingPrice),
                 colors: encodeURIComponent(JSON.stringify(colors)),
                 sizes: encodeURIComponent(JSON.stringify(sizes)),
-                materials: encodeURIComponent(JSON.stringify(materials)) // إضافة المادة هنا
+                materials: encodeURIComponent(JSON.stringify(materials)) // إضافة المواد
             });
-    
+
             window.location.href = `buy.html?${params}`;
         }
-    
+
         // دالة إضافة إلى العربة المعدلة
         function addToCart(element) {
             try {
@@ -2560,12 +2588,12 @@ function updateMainMedia(thumbnail) {
                 const productId = new URLSearchParams(window.location.search).get('id');
                 const productPrice = document.getElementById('product-price').textContent;
                 const productImage = document.getElementById('product-image').src;
-    
+
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
+
                 // البحث عن المنتج في السلة
                 const existingProduct = cart.find(item => item.productId === productId);
-    
+
                 if (existingProduct) {
                     existingProduct.quantity += 1;
                 } else {
@@ -2577,10 +2605,10 @@ function updateMainMedia(thumbnail) {
                         quantity: 1
                     });
                 }
-    
+
                 localStorage.setItem('cart', JSON.stringify(cart));
                 alert(`تمت إضافة "${productName}" إلى العربة!`);
-    
+
                 // للتحقق فقط
                 console.log('سلة التسوق الحالية:', cart);
             } catch (error) {
@@ -2589,6 +2617,7 @@ function updateMainMedia(thumbnail) {
             }
         }
     </script>
+</body>
 
 
 
