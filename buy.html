@@ -320,14 +320,14 @@
             .buytext9 { font-size: 16px; margin-top: 6px; margin-right: 1px; }
         }
 
-        .color-options, .size-options , .material-option {
+        .color-options, .size-options, .material-option {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 5px;
         }
 
-        .color-option, .size-option , .material-option {
+        .color-option, .size-option {
             padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
@@ -338,9 +338,20 @@
             transition: border-color 0.3s ease;
         }
 
-        .color-option.selected, .size-option.selected, .material-option  {
+        .color-option.selected, .size-option.selected, .material-option.selected   {
             border-color: #008cff;
             border-width: 2px;
+        }
+
+        .material-option {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
