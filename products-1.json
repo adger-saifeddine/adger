@@ -237,10 +237,7 @@
             "pageId": "4",
             "productId": "4",
             "shippingPrice": "70",
-            "colors": ["بينك", "لبني", "أسود", "أخضر"],
-            
-      "materials": ["قطن", "بوليستر", "حرير"]  
-
+            "colors": ["بينك", "لبني", "أسود", "أخضر"]
         },
         "texts": {
             "currency": "جنيه",
@@ -889,7 +886,8 @@
             "pageId": "15",
             "productId": "15",
             "shippingPrice": "50",
-      "materials": ["قطن", "بوليستر", "حرير"] 
+            "materials": ["قطن", "بوليستر"]
+
         },
         "texts": {
             "currency": "جنيه",
