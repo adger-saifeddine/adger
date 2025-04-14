@@ -320,14 +320,14 @@
             .buytext9 { font-size: 16px; margin-top: 6px; margin-right: 1px; }
         }
 
-        .color-options, .size-options, .material-options {
+        .color-options, .size-options {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 5px;
         }
 
-        .color-option, .size-option, .material-option {
+        .color-option, .size-option {
             padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
@@ -338,13 +338,13 @@
             transition: border-color 0.3s ease;
         }
 
-        .color-option.selected, .size-option.selected, .material-option.selected {
+        .color-option.selected, .size-option.selected {
             border-color: #008cff;
             border-width: 2px;
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
     <div id="overlay"></div>
@@ -704,7 +704,7 @@
         const sizesParam = urlParams.get('sizes');
         const materialsParam = urlParams.get('materials');
         
-        // تحليل الألوان والمقاسات والمواد بشكل صحيح
+        // تحليل الألوان والمقاسات والمادة بشكل صحيح
         let colors = [];
         let sizes = [];
         let materials = [];
@@ -713,7 +713,7 @@
             sizes = sizesParam ? JSON.parse(decodeURIComponent(sizesParam)) : [];
             materials = materialsParam ? JSON.parse(decodeURIComponent(materialsParam)) : [];
         } catch (e) {
-            console.error('خطأ في تحليل الألوان أو المقاسات أو المواد:', e);
+            console.error('خطأ في تحليل الألوان أو المقاسات أو المادة:', e);
         }
         
         document.getElementById('productNameText').textContent = decodeURIComponent(productName);
@@ -830,11 +830,6 @@
         
         updateTotalPrice();
     </script>
-</body>
-</html>
-
-
-
 
 
 
