@@ -320,32 +320,33 @@
             .buytext9 { font-size: 16px; margin-top: 6px; margin-right: 1px; }
         }
 
-        .color-options, .size-options, .material-options {
+        .color-options, .size-options {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 5px;
         }
 
-        .color-option, .size-option, .material-option {
-            padding: 8px 12px;
+        .color-option, .size-option {
+            padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-family: Cairo, sans-serif;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 60px;
-            text-align: center;
+            transition: border-color 0.3s ease;
         }
 
-        .color-option.selected, .size-option.selected, .material-option.selected {
+        .color-option.selected, .size-option.selected {
             border-color: #008cff;
             border-width: 2px;
-            background-color: #e6f2ff;
         }
-    </style> </head>
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+</head>
 <body>
     <div id="overlay"></div>
 
@@ -831,8 +832,6 @@
         updateTotalPrice();
     </script>
 </body>
-
-
 
 
 
