@@ -140,12 +140,22 @@
     {
         "name": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
         "dataName": "#16 خصومات حافظة هاتف Magsafe فاخرة للشحن اللاسلكي لهاتف جراب ايفون أيفون آيفون 15 14 13 12 11 16 Pro Max Plus",
-        "price": "150",
+        "price": "150.00",
         "image":   "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif",
         "sold": "vikcase",
         "discountTexts": ["كان بـ 180 جنيه", "خصم 17%"],
         "link": "prod.html?id=16"
+    },
+    {
+        "name": "قلم 2 في 1 لمس متوافق مع جميع الأجهزة",
+        "dataName": "#17 قلم 2 في 1 لمس متوافق مع جميع الأجهزة ستايلس خصومات إلكترونيات للأندرويد والآيفون والآيباد",
+        "price": "75.00",
+        "image": "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg",
+        "sold": "أدجر",
+        "discountTexts": ["كان بـ 400 جنيه", "خصم 81.25%"],
+        "link": "prod.html?id=17"
     }
+    
       
       
     

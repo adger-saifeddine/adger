@@ -939,7 +939,7 @@
           "image":   "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif",
           "name": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
           "sold": "vikcase",
-          "price": "150",
+          "price": "150.00",
           "discount": "17",
           "pageId": "16",
           "productId": "16",
@@ -973,7 +973,72 @@
           "currency": "جنيه",
           "discountLabel": "خصم"
         }
+      },
+      {
+        "id": "17",
+        "media": [
+          { "src": "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg", "type": "image" },
+          { "src": "https://i.postimg.cc/h4sCB7tm/2025-04-15-12-02-35-6a395689.jpg", "type": "image" },
+          { "src": "https://files.catbox.moe/3olcg0.mp4", "type": "video" }
+        ],
+        "pri": "75",
+        "oldPrice": "400",
+        "dis": "خصم 81.25%",
+        "changingText": [
+          "قلم لمس 2 في 1",
+          "متوافق مع جميع الأجهزة",
+          "تصميم مغناطيسي مريح"
+        ],
+        "longText": "قلم لمس 2 في 1 متوافق مع جميع الأجهزة الذكية، تصميم مريح ومغناطيسي سهل الحمل، مثالي للاستخدام على شاشات اللمس.",
+        "sales": "مباع بواسطة أدجر",
+        "buttonId": "commentButton17",
+        "commentId": "17",
+        "elementId": "commentCount17",
+        "tableData": [
+          { "question": "ال أحد", "answer": "الهندسة الكيميائية" },
+          { "question": "صافي الوزن", "answer": "نعم" },
+          { "question": "خاصية", "answer": "المغناطيسي شفحا" },
+          { "question": "Package", "answer": "نعم" },
+          { "question": "المادة", "answer": "أقراص، أجهزة المساعد الرقمي الشخصي" },
+          { "question": "Application", "answer": "شاشة فواشعية" },
+          { "question": "تطبيق الشاشة", "answer": "نعم" },
+          { "question": "علامة التطبيق", "answer": "dawndesslo" },
+          { "question": "اسم العلامة التجارية", "answer": "dawndesslo" },
+          { "question": "Origin", "answer": "Capacitive Screen" },
+          { "question": "Application Screen", "answer": "نعم" }
+        ],
+        "desc": "قلم لمس 2 في 1 متوافق مع جميع الأجهزة، يتميز بسهولة الاستخدام والدقة العالية، مناسب للهواتف، التابلت، والآيباد.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg",
+              "https://i.postimg.cc/h4sCB7tm/2025-04-15-12-02-35-6a395689.jpg"
+            ]
+          },
+          {
+            "type": "video",
+            "items": [
+              "https://files.catbox.moe/3olcg0.mp4"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg",
+          "name": "قلم 2 في 1 لمس متوافق مع جميع الأجهزة",
+          "sold": "موثوق",
+          "price": "75.00",
+          "discount": "81.25%",
+          "pageId": "17",
+          "productId": "17",
+          "shippingPrice": "70"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
       }
+      
     
       
     
