@@ -136,6 +136,15 @@
         "sold": "موثوق",
         "discountTexts": ["كان بـ 29 جنيه", "خصم 97%"],
         "link": "prod.html?id=15"
+    },
+    {
+        "name": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
+        "dataName": "#16 خصومات حافظة هاتف Magsafe فاخرة للشحن اللاسلكي لهاتف جراب ايفون أيفون آيفون 15 14 13 12 11 16 Pro Max Plus",
+        "price": "150",
+        "image": "https://ibb.co/RTbgXj4L",
+        "sold": "vikcase",
+        "discountTexts": ["كان بـ 180 جنيه", "خصم 17%"],
+        "link": "prod.html?id=16"
     }
       
       

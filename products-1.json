@@ -97,8 +97,7 @@
             "productId": "2",
             "shippingPrice": "70",
             "colors": ["أبيض", "أسود","كحلي","هافان"],
-            "sizes": ["41", "42", "43","44","45"],
-            "materials": ["قطtن", "بوليستر"]
+            "sizes": ["41", "42", "43","44","45"]
         },
         "texts": {
             "currency": "جنيه",
@@ -886,16 +885,100 @@
             "discount": "97",
             "pageId": "15",
             "productId": "15",
-            "shippingPrice": "50",
-            "materials": ["قطن", "بوليستر"]
-
+            "shippingPrice": "50"
         },
         "texts": {
             "currency": "جنيه",
             "discountLabel": "خصم"
         }
-    }
-
+    },
+    
+    {
+        "id": "16",
+        "media": [
+          {"src": "https://ibb.co/RTbgXj4L", "type": "image"},
+          {"src": "https://ibb.co/8nv2FGqj", "type": "image"},
+          {"src": "https://ibb.co/yBXVkJQ3", "type": "image"},
+          {"src": "https://ibb.co/HDXHcfHN", "type": "image"},
+          {"src": "https://ibb.co/xqkMv4nQ", "type": "image"}
+        ],
+        "pri": "150",
+        "oldPrice": "180",
+        "dis": "خصم 17%",
+        "changingText": [
+          "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
+          "ممتص للصدمات ومغناطيسي شفاف",
+          "متوافق مع جميع إصدارات آيفون"
+        ],
+        "longText": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي لهواتف آيفون 11/12/13/14/15/16 Pro Max Plus - غطاء ممتص للصدمات مغناطيسي شفاف",
+        "sales": "مباع بواسطة vikcase",
+        "buttonId": "commentButton16",
+        "commentId": "16",
+        "elementId": "commentCount16",
+        "tableData": [
+          {"question": "النوع", "answer": "حافظة هاتف مغناطيسية"},
+          {"question": "المادة", "answer": "بلاستيك عالي الجودة (شفاف)"},
+          {"question": "الميزات", "answer": "شحن لاسلكي، ممتص للصدمات، مغناطيسي قوي"},
+          {"question": "العلامة التجارية", "answer": "vikcase"},
+          {"question": "المنشأ", "answer": "CN (الصين)"}
+        ],
+        "desc": "حافظة Magsafe شفافة بمغناطيس قوي للشحن اللاسلكي السريع. تصميم رفيع يحمي هاتفك من الصدمات مع الحفاظ على المظهر الأصلي. متوافقة مع جميع إصدارات آيفون.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://ibb.co/RTbgXj4L",
+              "https://ibb.co/8nv2FGqj"
+            ]
+          },
+          {
+            "type": "mixed",
+            "items": [
+              "https://ibb.co/yBXVkJQ3",
+              "https://ibb.co/HDXHcfHN",
+              "https://ibb.co/xqkMv4nQ"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://ibb.co/RTbgXj4L",
+          "name": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
+          "sold": "vikcase",
+          "price": "150",
+          "discount": "17",
+          "pageId": "16",
+          "productId": "16",
+          "shippingPrice": "60",
+          "materials": [
+            "For iPhone 11",
+            "For iPhone 11Pro",
+            "For iPhone 11Pro Max",
+            "For iPhone 12",
+            "For iPhone 12Pro",
+            "For iPhone 12Pro Max",
+            "For iPhone 13",
+            "For iPhone 13Pro",
+            "For iPhone 13Pro Max",
+            "For iPhone 14",
+            "For iPhone 14Plus",
+            "For iPhone 14Pro",
+            "For iPhone 14Pro Max",
+            "For iPhone 15",
+            "For iPhone 15Plus",
+            "For iPhone 15Pro",
+            "For iPhone 15Pro Max",
+            "For iPhone 16",
+            "For iPhone 16Plus",
+            "For iPhone 16Pro",
+            "For iPhone 16Pro Max"
+          ],
+          "colors": ["وردي", "أسود", "سماء زرقاء", "ذهبي", "أخضر", "أرجواني", "فضي"]
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      }
     
       
     
