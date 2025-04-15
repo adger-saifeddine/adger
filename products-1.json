@@ -896,10 +896,8 @@
     {
         "id": "16",
         "media": [
-          {"src": "https://i.postimg.cc/xTP5f343/Affab8516d75d4e14a1b81c937f985dd35-jpg-220x220-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/XvrkgS7s/Af1ad9dd0090c49619e622aef41c39f1d7-jpg-220x220-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/fb1j22VD/A2d3fd9fb4b4b4e0bad59cf8b45ab24c1-M-jpg-220x220-jpg.avif", "type": "image"}
+          {"src":   "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif", "type": "image"},
+          {"src": "https://i.postimg.cc/XvrkgS7s/Af1ad9dd0090c49619e622aef41c39f1d7-jpg-220x220-jpg.avif", "type": "image"}
         ],
         "pri": "150",
         "oldPrice": "180",
@@ -927,20 +925,18 @@
           {
             "type": "images",
             "items": [
-              "https://i.postimg.cc/xTP5f343/Affab8516d75d4e14a1b81c937f985dd35-jpg-220x220-jpg.avif",
               "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif"
             ]
           },
           {
             "type": "mixed",
             "items": [
-              "https://i.postimg.cc/XvrkgS7s/Af1ad9dd0090c49619e622aef41c39f1d7-jpg-220x220-jpg.avif",
-              "https://i.postimg.cc/fb1j22VD/A2d3fd9fb4b4b4e0bad59cf8b45ab24c1-M-jpg-220x220-jpg.avif"
+       "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif"
             ]
           }
         ],
         "product": {
-          "image": "https://i.postimg.cc/xTP5f343/Affab8516d75d4e14a1b81c937f985dd35-jpg-220x220-jpg.avif",
+          "image":   "https://i.postimg.cc/XYHgF73Z/A3e9f74ce6043495eb1d1616caf93cbdb-B-jpg-220x220-jpg.avif",
           "name": "حافظة هاتف Magsafe فاخرة للشحن اللاسلكي",
           "sold": "vikcase",
           "price": "150",
