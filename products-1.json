@@ -1104,7 +1104,70 @@
           "currency": "جنيه",
           "discountLabel": "عرض خاص لفترة محدودة"
         }
+      },
+      {
+        "id": "19",
+        "media": [
+          {"src": "https://i.postimg.cc/j28YLJJ1/P1-UQs-QCZCwlwmiu4b-ZZo-Ykz-LMROa-WBVLk-IKSM5-G9-removebg-preview.png", "type": "image"},
+          {"src": "https://i.postimg.cc/CLQV0k0B/728174.jpg", "type": "image"},
+          {"src": "https://i.postimg.cc/4d5rShw3/T900-Ultra-2-design.png", "type": "image"},
+          {"src": "https://i.postimg.cc/Kc067BRq/th.jpg", "type": "image"},
+          {"src": "https://i.postimg.cc/cH4D6kMs/t900-ultra-smart-watch-49-mm.jpg", "type": "image"},
+          {"src": "https://i.postimg.cc/zG7251Kd/maxresdefault.jpg", "type": "image"},
+          {"src": "https://i.postimg.cc/g0BMXqM8/T800-Ultra-Smart-Watch-Series-8-Bluetooth-Call-Wireless-Charging-1-99-Inch-Waterproof-Men-Women-Sport.avif", "type": "image"}
+        ],
+        "pri": "600",
+        "oldPrice": "",
+        "dis": "",
+        "changingText": [
+          "T900 UITRA",
+          "شاشة كبيرة 49م + قفل استراب + شحن وايرليس",
+          "ساعة فضية بمزايا متعددة للمكالمات والتطبيقات"
+        ],
+        "longText": "T900 UITRA ساعة ذكية بشاشة كبيرة 49م، تصميم عصري مع 4 مسامير وقفل استراب للتحكم، شحن وايرليس مغناطيسي، لون فضي، تدعم المكالمات، التطبيقات، الخلفيات، وقياسات اللياقة والصحة.",
+        "sales": "موثوق",
+        "buttonId": "commentButton19",
+        "commentId": "19",
+        "elementId": "commentCount19",
+        "tableData": [
+          {"question": "طريقة الشحن", "answer": "شحن وايرليس مغناطيسي"},
+          {"question": "اللون", "answer": "فضي"},
+          {"question": "نوع الشاشة", "answer": "واسعة 2.05 بنوتش صغير"},
+          {"question": "اللغة", "answer": "العربية، الإنجليزية، الفرنسية"}
+        ],
+        "desc": "ساعة T900 UITRA الذكية مع شاشة كبيرة 49م، شحن وايرليس، دعم المكالمات، قفل استراب، قياسات طبية، دعم للتطبيقات، خلفيات متعددة، أداء عالي وسرعة في التنقل.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/j28YLJJ1/P1-UQs-QCZCwlwmiu4b-ZZo-Ykz-LMROa-WBVLk-IKSM5-G9-removebg-preview.png",
+              "https://i.postimg.cc/CLQV0k0B/728174.jpg"
+            ]
+          },
+          {
+            "type": "mixed",
+            "items": [
+              "https://i.postimg.cc/4d5rShw3/T900-Ultra-2-design.png",
+              "https://i.postimg.cc/Kc067BRq/th.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/j28YLJJ1/P1-UQs-QCZCwlwmiu4b-ZZo-Ykz-LMROa-WBVLk-IKSM5-G9-removebg-preview.png",
+          "name": "T900 UITRA",
+          "sold": "موثوق",
+          "price": "600.00",
+          "discount": "",
+          "pageId": "19",
+          "productId": "19",
+          "shippingPrice": "70"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "وفر الآن 100 جنيه"
+        }
       }
+      
       
       
     
