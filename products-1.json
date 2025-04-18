@@ -1170,13 +1170,13 @@
       {
         "id": "20",
         "media": [
+          { "src": "https://files.catbox.moe/ditoda.mp4", "type": "video" },
           { "src": "https://files.catbox.moe/y6nvu2.avif", "type": "image" },
           { "src": "https://files.catbox.moe/vg1te2.avif", "type": "image" },
           { "src": "https://files.catbox.moe/6q1mwf.avif", "type": "image" },
           { "src": "https://files.catbox.moe/smqbxb.avif", "type": "image" },
           { "src": "https://files.catbox.moe/050qjr.avif", "type": "image" },
-          { "src": "https://files.catbox.moe/s8b5ae.avif", "type": "image" },
-          { "src": "https://files.catbox.moe/ditoda.mp4", "type": "video" }
+          { "src": "https://files.catbox.moe/s8b5ae.avif", "type": "image" }
         ],
         "pri": "104",
         "oldPrice": "",
@@ -1204,14 +1204,17 @@
             "type": "images",
             "items": [
               "https://files.catbox.moe/y6nvu2.avif",
-              "https://files.catbox.moe/vg1te2.avif"
+              "https://files.catbox.moe/vg1te2.avif",
+              "https://files.catbox.moe/6q1mwf.avif",
+              "https://files.catbox.moe/050qjr.avif"
             ]
           },
           {
             "type": "mixed",
             "items": [
-              "https://files.catbox.moe/6q1mwf.avif",
-              "https://files.catbox.moe/050qjr.avif"
+              "https://files.catbox.moe/050qjr.avif",
+              "https://files.catbox.moe/s8b5ae.avif",
+              "https://files.catbox.moe/ditoda.mp4"
             ]
           }
         ],
