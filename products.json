@@ -172,7 +172,17 @@
         "sold": "ultra",
         "discountTexts": ["عرض حصري", "وفر الآن 150 جنيه"],
         "link": "prod.html?id=19"
+    },
+    {
+        "name": "2in1 منظف شاشة ستوكات مع زجاجة رذاذ",
+        "dataName": "#20 2in1 ستوكات منظف الشاشة للهاتف والكمبيوتر والنظارات - ألوان متعددة وتصميم عملي",
+        "price": "104.00",
+        "image": "https://files.catbox.moe/y6nvu2.avif",
+        "sold": "SONGFUL",
+        "discountTexts": ["تنظيف فعال بدون أثر", "3 ألوان متاحة: رمادي، وردي، أزرق"],
+        "link": "prod.html?id=20"
     }
+    
     
     
     
