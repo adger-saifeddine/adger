@@ -1110,8 +1110,6 @@
         "media": [
           {"src": "https://i.postimg.cc/j28YLJJ1/P1-UQs-QCZCwlwmiu4b-ZZo-Ykz-LMROa-WBVLk-IKSM5-G9-removebg-preview.png", "type": "image"},
           {"src": "https://i.postimg.cc/CLQV0k0B/728174.jpg", "type": "image"},
-          {"src": "https://i.postimg.cc/4d5rShw3/T900-Ultra-2-design.png", "type": "image"},
-          {"src": "https://i.postimg.cc/Kc067BRq/th.jpg", "type": "image"},
           {"src": "https://i.postimg.cc/cH4D6kMs/t900-ultra-smart-watch-49-mm.jpg", "type": "image"},
           {"src": "https://i.postimg.cc/zG7251Kd/maxresdefault.jpg", "type": "image"},
           {"src": "https://i.postimg.cc/g0BMXqM8/T800-Ultra-Smart-Watch-Series-8-Bluetooth-Call-Wireless-Charging-1-99-Inch-Waterproof-Men-Women-Sport.avif", "type": "image"}
@@ -1124,7 +1122,7 @@
           "شاشة كبيرة 49م + قفل استراب + شحن وايرليس",
           "ساعة فضية بمزايا متعددة للمكالمات والتطبيقات"
         ],
-        "longText": "T900 UITRA ساعة ذكية بشاشة كبيرة 49م، تصميم عصري مع 4 مسامير وقفل استراب للتحكم، شحن وايرليس مغناطيسي، لون فضي، تدعم المكالمات، التطبيقات، الخلفيات، وقياسات اللياقة والصحة.",
+        "longText": "T900 UITRA ساعة ذكية بشاشة كبيرة 49م",
         "sales": "موثوق",
         "buttonId": "commentButton19",
         "commentId": "19",
@@ -1148,7 +1146,9 @@
             "type": "mixed",
             "items": [
               "https://i.postimg.cc/4d5rShw3/T900-Ultra-2-design.png",
-              "https://i.postimg.cc/Kc067BRq/th.jpg"
+            "https://i.postimg.cc/cH4D6kMs/t900-ultra-smart-watch-49-mm.jpg",
+            "https://i.postimg.cc/zG7251Kd/maxresdefault.jpg",
+            "https://i.postimg.cc/g0BMXqM8/T800-Ultra-Smart-Watch-Series-8-Bluetooth-Call-Wireless-Charging-1-99-Inch-Waterproof-Men-Women-Sport.avif"
             ]
           }
         ],
