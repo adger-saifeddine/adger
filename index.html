@@ -2879,42 +2879,37 @@
         }
     
         // دالة لتحديث رسالة الترحيب
-        function updateWelcomeMessage() {
-            const username = localStorage.getItem('username');
+        function updateWelcomeMessage(username) {
             const welcomeMessage = document.getElementById('welcomeMessage');
             const usernameDisplay = document.getElementById('usernameDisplay');
     
             if (username && welcomeMessage && usernameDisplay) {
-                usernameDisplay.textContent = truncateUsername(username);
-                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
+                const truncatedName = truncateUsername(username);
+                usernameDisplay.textContent = truncatedName;
+                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncatedName}</span>`;
             } else if (welcomeMessage) {
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
         }
     
-        // تحديث رسالة الترحيب عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', updateWelcomeMessage);
-    
-        // الاستماع إلى تغييرات localStorage
-        window.addEventListener('storage', function(event) {
-            if (event.key === 'username') {
-                updateWelcomeMessage();
+        // الاستماع لرسائل من صفحة الحساب
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'authUpdate') {
+                updateWelcomeMessage(event.data.username);
             }
         });
     
-        // تحديث اسم المستخدم عند تغيير حجم النافذة
-        window.addEventListener('resize', () => {
+        // تحديث الترحيب عند تحميل الصفحة وعند الرجوع
+        document.addEventListener('DOMContentLoaded', function() {
+            // التحقق من حالة تسجيل الدخول
             const username = localStorage.getItem('username');
-            if (username && document.getElementById('usernameDisplay')) {
-                document.getElementById('usernameDisplay').textContent = truncateUsername(username);
-            }
-        });
-    
-        // التحقق من تحديث الاسم عند الرجوع من صفحة الحساب
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-                updateWelcomeMessage();
-            }
+            updateWelcomeMessage(username);
+            
+            // للتعامل مع متصفحات لا تدعم حدث pageshow
+            window.addEventListener('focus', function() {
+                const currentUsername = localStorage.getItem('username');
+                updateWelcomeMessage(currentUsername);
+            });
         });
     
         // تحريك الخط عند النقر على عناصر القائمة
@@ -3007,8 +3002,6 @@
         window.addEventListener('storage', function(event) {
             if (event.key === 'cart') {
                 updateCartCount();
-            } else if (event.key === 'username') {
-                updateWelcomeMessage();
             }
         });
     
