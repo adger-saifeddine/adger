@@ -2910,6 +2910,13 @@
             }
         });
     
+        // التحقق من تحديث الاسم عند الرجوع من صفحة الحساب
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                updateWelcomeMessage();
+            }
+        });
+    
         // تحريك الخط عند النقر على عناصر القائمة
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
@@ -3224,8 +3231,6 @@
             fetchAndFilterProducts(searchTerm || '');
         };
     </script>
-    </body>
-    </html>
 
 
 
