@@ -1315,46 +1315,88 @@
                 </div>
             </body>
             </html>
-            
             <script>
                 // استرجاع بيانات المستخدم من localStorage
                 const username = localStorage.getItem('username');
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 const usernameDisplay = document.getElementById('usernameDisplay');
             
+                // دالة للتحقق من النصوص العربية
+                function isArabic(text) {
+                    return /[\u0600-\u06FF]/.test(text);
+                }
+            
+                // دالة لتقصير اسم المستخدم
+                function truncateUsername(name) {
+                    if (!name) return '';
+                    const maxLength = isArabic(name) ? 12 : 7;
+                    if (window.innerWidth < 966 && name.length > maxLength) {
+                        return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
+                    }
+                    return name;
+                }
+            
+                // دالة لتحديث رسالة الترحيب (محدثة)
+                function updateWelcomeMessage() {
+                    const username = localStorage.getItem('username');
+                    
+                    if (!welcomeMessage) return;
+                    
+                    if (username) {
+                        const displayName = truncateUsername(username);
+                        welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
+                        
+                        // تحديث عند تغيير الحجم
+                        window.addEventListener('resize', () => {
+                            const usernameDisplay = document.getElementById('usernameDisplay');
+                            if (usernameDisplay) {
+                                usernameDisplay.textContent = truncateUsername(username);
+                            }
+                        });
+                    } else {
+                        welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+                    }
+                }
+            
+                // تهيئة أولية لرسالة الترحيب
                 if (username) {
-                    function isArabic(text) {
-                        return /[\u0600-\u06FF]/.test(text);
-                    }
-                    function truncateUsername(name) {
-                        const maxLength = isArabic(name) ? 12 : 7;
-                        if (window.innerWidth < 966 && name.length > maxLength) {
-                            return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
-                        }
-                        return name;
-                    }
-                    usernameDisplay.textContent = truncateUsername(username);
-                    window.addEventListener('resize', () => {
+                    if (usernameDisplay) {
                         usernameDisplay.textContent = truncateUsername(username);
+                    }
+                    window.addEventListener('resize', () => {
+                        if (usernameDisplay) {
+                            usernameDisplay.textContent = truncateUsername(username);
+                        }
                     });
                 } else if (welcomeMessage) {
                     welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
                 }
             
-                // دالة لتحديث رسالة الترحيب
-                function updateWelcomeMessage() {
-                    const username = localStorage.getItem('username');
-                    if (username && welcomeMessage && usernameDisplay) {
-                        usernameDisplay.textContent = truncateUsername(username);
-                        welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
-                        window.addEventListener('resize', () => {
-                            usernameDisplay.textContent = truncateUsername(username);
-                        });
-                    } else if (welcomeMessage) {
-                        welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+                // ========== حل تحديث الاسم عند العودة ==========
+                // 1. حدث التركيز عند العودة للصفحة
+                window.addEventListener('focus', updateWelcomeMessage);
+                
+                // 2. حدث عرض الصفحة (لصفحات الـ SPA)
+                window.addEventListener('pageshow', updateWelcomeMessage);
+                
+                // 3. حدث تخزين محلي (للتغييرات من صفحات أخرى)
+                window.addEventListener('storage', function(event) {
+                    if (event.key === 'username') {
+                        updateWelcomeMessage();
                     }
-                }
+                });
+                
+                // 4. حل احتياطي: التحقق كل ثانية
+                setInterval(() => {
+                    const currentUser = localStorage.getItem('username');
+                    const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+                    
+                    if (truncateUsername(currentUser) !== displayedUser) {
+                        updateWelcomeMessage();
+                    }
+                }, 1000);
             
+                // ========== باقي الكود الأصلي ==========
                 // تهيئة العربة
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 let cartCount = cart.length;
@@ -1508,7 +1550,7 @@
                                 const maxPrice = parseInt(priceMatch[1]);
                                 let minPrice = 0;
                                 
-                                // نظام النطاقات السعرية الجديد
+                                // نظام النطاقات السعرية
                                 const priceRanges = [
                                     {max: 99, min: 0},
                                     {max: 200, min: 100},
