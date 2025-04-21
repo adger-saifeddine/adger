@@ -2878,19 +2878,40 @@
             return name;
         }
     
-        // دالة لتحديث رسالة الترحيب
+        // دالة لتحديث رسالة الترحيب مع تأثير التحدث
         function updateWelcomeMessage() {
             const username = localStorage.getItem('username');
             const welcomeMessage = document.getElementById('welcomeMessage');
             const usernameDisplay = document.getElementById('usernameDisplay');
     
             if (username && welcomeMessage && usernameDisplay) {
-                usernameDisplay.textContent = truncateUsername(username);
-                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
+                const truncatedName = truncateUsername(username);
+                
+                // إضافة تأثير التحدث
+                usernameDisplay.style.animation = 'none';
+                void usernameDisplay.offsetWidth; // Trigger reflow
+                usernameDisplay.style.animation = 'pulse 0.5s ease-in-out';
+                
+                usernameDisplay.textContent = truncatedName;
+                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncatedName}</span>`;
             } else if (welcomeMessage) {
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
         }
+    
+        // إضافة أنيميشن التحدث إلى الستايل
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+            #usernameDisplay {
+                display: inline-block;
+            }
+        `;
+        document.head.appendChild(style);
     
         // تحديث رسالة الترحيب عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', updateWelcomeMessage);
@@ -2902,26 +2923,18 @@
             }
         });
     
-        // الاستماع إلى رسائل postMessage من صفحة الحساب
-        window.addEventListener('message', (event) => {
-            if (event.data.key === 'username') {
-                if (event.data.value) {
-                    localStorage.setItem('username', event.data.value);
-                    localStorage.setItem('isLoggedIn', true);
-                } else {
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('isLoggedIn');
-                    localStorage.removeItem('profileImage');
-                }
-                updateWelcomeMessage();
-            }
-        });
-    
         // تحديث اسم المستخدم عند تغيير حجم النافذة
         window.addEventListener('resize', () => {
             const username = localStorage.getItem('username');
             if (username && document.getElementById('usernameDisplay')) {
                 document.getElementById('usernameDisplay').textContent = truncateUsername(username);
+            }
+        });
+    
+        // الاستماع لحدث الرجوع من صفحة الحساب
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                updateWelcomeMessage();
             }
         });
     
