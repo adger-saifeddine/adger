@@ -71,23 +71,60 @@
             margin: 10px 0;
             padding: 10px;
         }
-        .comment-text {
-            text-align: right;
-            flex-grow: 1;
-            padding-right: 10px;
-        }
-        .comment-username {
+        
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-weight: bold;
-            margin-bottom: 5px;
+            color: white;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .comment-content {
+            flex-grow: 1;
+        }
+        
+        .comment-header {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
+            margin-bottom: 5px;
         }
+        
+        .comment-user {
+            display: flex;
+            align-items: center;
+        }
+        
+        .comment-username {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
         .comment-date {
             font-size: 12px;
             color: #666;
-            margin-right: 10px;
         }
+        
+        .comment-text {
+            text-align: right;
+            margin-top: 5px;
+        }
+        
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -96,6 +133,7 @@
             cursor: pointer;
             padding: 5px 10px;
             margin-right: 10px;
+            font-size: 12px;
         }
         .delete-button:hover {
             background-color: #ff1a1a;
@@ -334,6 +372,29 @@
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
 
+        // دالة لإنشاء صورة مستخدم افتراضية إذا لم تكن هناك صورة
+        function createUserAvatar(username, profileImage) {
+            const avatar = document.createElement('div');
+            avatar.className = 'comment-avatar';
+            
+            if (profileImage && profileImage !== 'default') {
+                const img = document.createElement('img');
+                img.src = profileImage;
+                img.alt = username;
+                avatar.appendChild(img);
+            } else {
+                // عرض الحرف الأول من اسم المستخدم إذا لم تكن هناك صورة
+                const initial = username.charAt(0).toUpperCase();
+                avatar.textContent = initial;
+                // لون عشوائي للخلفية
+                const colors = ['#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', '#20c997', '#17a2b8', '#ffc107'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                avatar.style.backgroundColor = randomColor;
+            }
+            
+            return avatar;
+        }
+
         // Send comment
         document.getElementById('submitButton').addEventListener('click', (e) => {
             e.preventDefault();
@@ -341,6 +402,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const commentId = Number(urlParams.get('commentId'));
             const username = localStorage.getItem('username');
+            const profileImage = localStorage.getItem('profileImage') || 'default';
 
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً!');
@@ -356,6 +418,7 @@
             push(commentsRef, {
                 text: commentText,
                 username: username,
+                profileImage: profileImage,
                 timestamp: Date.now(),
                 commentId: commentId
             }).then(() => {
@@ -400,35 +463,54 @@
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
 
-                const username = localStorage.getItem('username');
-                if (username === comment.username) {
+                // إنشاء عنصر الصورة
+                const avatar = createUserAvatar(comment.username, comment.profileImage);
+                commentElement.appendChild(avatar);
+
+                // إنشاء محتوى التعليق
+                const commentContent = document.createElement('div');
+                commentContent.className = 'comment-content';
+
+                // رأس التعليق (الاسم والتاريخ)
+                const commentHeader = document.createElement('div');
+                commentHeader.className = 'comment-header';
+
+                const userInfo = document.createElement('div');
+                userInfo.className = 'comment-user';
+
+                const usernameSpan = document.createElement('span');
+                usernameSpan.className = 'comment-username';
+                usernameSpan.textContent = comment.username;
+
+                userInfo.appendChild(usernameSpan);
+
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'comment-date';
+                const date = new Date(comment.timestamp);
+                dateSpan.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                commentHeader.appendChild(userInfo);
+                commentHeader.appendChild(dateSpan);
+
+                // نص التعليق
+                const commentText = document.createElement('div');
+                commentText.className = 'comment-text';
+                commentText.textContent = comment.text;
+
+                // زر الحذف (إذا كان التعليق للمستخدم الحالي)
+                const currentUser = localStorage.getItem('username');
+                if (currentUser === comment.username) {
                     const deleteButton = document.createElement('button');
                     deleteButton.className = 'delete-button';
                     deleteButton.textContent = 'حذف';
                     deleteButton.onclick = () => showConfirmDialog(comment.key);
-                    commentElement.appendChild(deleteButton);
+                    commentHeader.appendChild(deleteButton);
                 }
 
-                const commentTextElement = document.createElement('div');
-                commentTextElement.className = 'comment-text';
-                const commentUsernameElement = document.createElement('div');
-                commentUsernameElement.className = 'comment-username';
-
-                const commentDateElement = document.createElement('div');
-                commentDateElement.className = 'comment-date';
-                const date = new Date(comment.timestamp);
-                commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                const commentContentElement = document.createElement('div');
-                commentContentElement.textContent = comment.text;
-
-                commentUsernameElement.appendChild(commentDateElement);
-                commentUsernameElement.appendChild(document.createTextNode(comment.username));
-
-                commentTextElement.appendChild(commentUsernameElement);
-                commentTextElement.appendChild(commentContentElement);
-
-                commentElement.appendChild(commentTextElement);
+                // تجميع العناصر
+                commentContent.appendChild(commentHeader);
+                commentContent.appendChild(commentText);
+                commentElement.appendChild(commentContent);
 
                 commentsList.appendChild(commentElement);
                 commentsList.appendChild(document.createElement('div')).className = 'separator';
