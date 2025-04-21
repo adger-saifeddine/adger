@@ -359,9 +359,7 @@
                 animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
             }
             @keyframes stroke {
-                100% {
-                    stroke-dashoffset: 0;
-                }
+                100% { stroke-dashoffset: 0; }
             }
             #customAlertMessage {
                 font-family: Cairo, sans-serif;
@@ -436,10 +434,8 @@
         <!-- ملف تعريف المستخدم -->
         <div class="login-container" id="profileContainer" style="display: none;">
             <h2>حساب المستخدم</h2>
-            <div id="profilePictureDisplayContainer">
-                <!-- سيتم تعبئتها ديناميكيًا -->
-            </div>
-            <p id="usernameDisplay"></p>
+            <div id="profilePictureDisplayContainer"></div>
+            <p id="welcomeMessage"></p>
             <button class="purchases-btn" onclick="showPurchases()">مشترياتي (<span id="purchasesCount">0</span>)</button>
             <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
         </div>
@@ -491,6 +487,34 @@
             const database = firebase.database();
             let selectedProfileImage = null;
     
+            // دالة للتحقق من النصوص العربية
+            function isArabic(text) {
+                return /[\u0600-\u06FF]/.test(text);
+            }
+    
+            // دالة لتقصير اسم المستخدم
+            function truncateUsername(name) {
+                const maxLength = isArabic(name) ? 12 : 7;
+                if (window.innerWidth < 966 && name.length > maxLength) {
+                    return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
+                }
+                return name;
+            }
+    
+            // دالة لتحديث رسالة الترحيب
+            function updateWelcomeMessage() {
+                const username = localStorage.getItem('username');
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                const usernameDisplay = document.getElementById('usernameDisplay');
+    
+                if (username && welcomeMessage) {
+                    const truncatedName = truncateUsername(username);
+                    welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncatedName}</span>`;
+                } else if (welcomeMessage) {
+                    welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+                }
+            }
+    
             function showCustomAlert(message, isSuccess, callback) {
                 const alertIcon = document.getElementById('alertIcon');
                 document.getElementById('customAlertMessage').textContent = message;
@@ -499,7 +523,7 @@
                 if (isSuccess) {
                     alertIcon.innerHTML = `
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <circle class="checkmark-circle" cx="26" cy26" r="25" fill="none"/>
                             <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
                         </svg>
                     `;
@@ -522,36 +546,16 @@
                 document.getElementById('customAlert').style.display = 'none';
             }
     
-            function handleAuthSuccess(username, profileImage) {
-                localStorage.setItem('username', username);
-                localStorage.setItem('profileImage', profileImage);
-                localStorage.setItem('isLoggedIn', true);
-                
-                // إرسال رسالة إلى النافذة الأم لتحديث الترحيب
-                if (window.opener) {
-                    window.opener.postMessage({
-                        type: 'authUpdate',
-                        username: username
-                    }, '*');
-                }
-                
-                // الرجوع إلى الصفحة السابقة بعد ثانية
-                setTimeout(() => {
-                    window.history.back();
-                }, 1000);
-            }
-    
             window.addEventListener('load', () => {
                 document.getElementById('loaderOverlay').style.display = 'none';
                 
                 const isLoggedIn = localStorage.getItem('isLoggedIn');
                 if (isLoggedIn) {
                     document.getElementById('profileContainer').style.display = 'block';
+                    updateWelcomeMessage();
                     
                     const username = localStorage.getItem('username');
                     const profileImage = localStorage.getItem('profileImage');
-                    
-                    document.getElementById('usernameDisplay').textContent = username;
                     
                     // عرض صورة المستخدم أو الحرف الأول من اسم المستخدم إذا لم تكن هناك صورة
                     const profileContainer = document.getElementById('profilePictureDisplayContainer');
@@ -574,6 +578,23 @@
                     });
                 } else {
                     document.getElementById('loginContainer').style.display = 'block';
+                    updateWelcomeMessage();
+                }
+            });
+    
+            // الاستماع إلى رسائل postMessage لتحديث الاسم فور التسجيل أو تسجيل الخروج
+            window.addEventListener('message', (event) => {
+                if (event.data.key === 'username') {
+                    if (event.data.value) {
+                        localStorage.setItem('username', event.data.value);
+                        localStorage.setItem('isLoggedIn', true);
+                    } else {
+                        localStorage.removeItem('username');
+                        localStorage.removeItem('isLoggedIn');
+                        localStorage.removeItem('profileImage');
+                    }
+                    updateWelcomeMessage();
+                    location.reload(); // إعادة تحميل الصفحة لتحديث واجهة المستخدم
                 }
             });
     
@@ -602,7 +623,6 @@
             function showRegisterForm() {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('registerContainer').style.display = 'block';
-                // إعادة تعيين صورة الملف الشخصي عند عرض النموذج
                 document.getElementById('profilePicturePlaceholder').innerHTML = '<i class="fas fa-user"></i>';
                 selectedProfileImage = null;
             }
@@ -621,8 +641,36 @@
                                 password: password,
                                 profileImage: profileImage
                             });
-                            handleAuthSuccess(username, profileImage);
-                            showCustomAlert('تم إنشاء الحساب بنجاح!', true);
+                            localStorage.setItem('username', username);
+                            localStorage.setItem('profileImage', profileImage);
+                            localStorage.setItem('isLoggedIn', true);
+    
+                            // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                            if (window.opener) {
+                                window.opener.postMessage({ key: 'username', value: username }, '*');
+                            }
+    
+                            showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
+                                document.getElementById('registerContainer').style.display = 'none';
+                                document.getElementById('profileContainer').style.display = 'block';
+                                updateWelcomeMessage();
+                                
+                                const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                                if (profileImage && profileImage !== 'default') {
+                                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                                } else {
+                                    const initial = username.charAt(0).toUpperCase();
+                                    profileContainer.innerHTML = `
+                                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                                            ${initial}
+                                        </div>
+                                    `;
+                                }
+    
+                                setTimeout(() => {
+                                    history.back();
+                                }, 1000);
+                            });
                         }
                     });
                 } else {
@@ -639,8 +687,21 @@
                         if (snapshot.exists()) {
                             const userData = snapshot.val();
                             if (userData.password === password) {
-                                handleAuthSuccess(username, userData.profileImage || 'default');
-                                showCustomAlert('تم تسجيل الدخول بنجاح!', true);
+                                localStorage.setItem('username', username);
+                                localStorage.setItem('profileImage', userData.profileImage || 'default');
+                                localStorage.setItem('isLoggedIn', true);
+    
+                                // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                                if (window.opener) {
+                                    window.opener.postMessage({ key: 'username', value: username }, '*');
+                                }
+    
+                                showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
+                                    document.getElementById('loginContainer').style.display = 'none';
+                                    document.getElementById('profileContainer').style.display = 'block';
+                                    updateWelcomeMessage();
+                                    history.back();
+                                });
                             } else {
                                 showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
                             }
@@ -662,17 +723,17 @@
                 localStorage.removeItem('username');
                 localStorage.removeItem('profileImage');
                 localStorage.removeItem('isLoggedIn');
-                
-                // إرسال رسالة إلى النافذة الأم
+    
+                // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
                 if (window.opener) {
-                    window.opener.postMessage({
-                        type: 'authUpdate',
-                        username: null
-                    }, '*');
+                    window.opener.postMessage({ key: 'username', value: null }, '*');
                 }
-                
-                // الرجوع إلى الصفحة السابقة
-                window.history.back();
+    
+                document.getElementById('logoutModal').style.display = 'none';
+                document.getElementById('profileContainer').style.display = 'none';
+                document.getElementById('loginContainer').style.display = 'block';
+                updateWelcomeMessage();
+                history.back();
             });
     
             document.getElementById('cancelLogout').addEventListener('click', () => {

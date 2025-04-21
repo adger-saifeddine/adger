@@ -2879,37 +2879,50 @@
         }
     
         // دالة لتحديث رسالة الترحيب
-        function updateWelcomeMessage(username) {
+        function updateWelcomeMessage() {
+            const username = localStorage.getItem('username');
             const welcomeMessage = document.getElementById('welcomeMessage');
             const usernameDisplay = document.getElementById('usernameDisplay');
     
             if (username && welcomeMessage && usernameDisplay) {
-                const truncatedName = truncateUsername(username);
-                usernameDisplay.textContent = truncatedName;
-                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncatedName}</span>`;
+                usernameDisplay.textContent = truncateUsername(username);
+                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay">${truncateUsername(username)}</span>`;
             } else if (welcomeMessage) {
                 welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
             }
         }
     
-        // الاستماع لرسائل من صفحة الحساب
-        window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'authUpdate') {
-                updateWelcomeMessage(event.data.username);
+        // تحديث رسالة الترحيب عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', updateWelcomeMessage);
+    
+        // الاستماع إلى تغييرات localStorage
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'username') {
+                updateWelcomeMessage();
             }
         });
     
-        // تحديث الترحيب عند تحميل الصفحة وعند الرجوع
-        document.addEventListener('DOMContentLoaded', function() {
-            // التحقق من حالة تسجيل الدخول
+        // الاستماع إلى رسائل postMessage من صفحة الحساب
+        window.addEventListener('message', (event) => {
+            if (event.data.key === 'username') {
+                if (event.data.value) {
+                    localStorage.setItem('username', event.data.value);
+                    localStorage.setItem('isLoggedIn', true);
+                } else {
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('profileImage');
+                }
+                updateWelcomeMessage();
+            }
+        });
+    
+        // تحديث اسم المستخدم عند تغيير حجم النافذة
+        window.addEventListener('resize', () => {
             const username = localStorage.getItem('username');
-            updateWelcomeMessage(username);
-            
-            // للتعامل مع متصفحات لا تدعم حدث pageshow
-            window.addEventListener('focus', function() {
-                const currentUsername = localStorage.getItem('username');
-                updateWelcomeMessage(currentUsername);
-            });
+            if (username && document.getElementById('usernameDisplay')) {
+                document.getElementById('usernameDisplay').textContent = truncateUsername(username);
+            }
         });
     
         // تحريك الخط عند النقر على عناصر القائمة
@@ -3002,6 +3015,8 @@
         window.addEventListener('storage', function(event) {
             if (event.key === 'cart') {
                 updateCartCount();
+            } else if (event.key === 'username') {
+                updateWelcomeMessage();
             }
         });
     
