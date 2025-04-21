@@ -7,7 +7,6 @@
     <title>Adger</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-
     <!DOCTYPE html>
     <html lang="ar">
     <head>
@@ -607,9 +606,7 @@
                             localStorage.setItem('isLoggedIn', true);
     
                             // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
-                            if (window.opener) {
-                                window.opener.postMessage({ key: 'username', value: username }, '*');
-                            }
+                            sendUsernameUpdate(username);
     
                             showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
                                 document.getElementById('registerContainer').style.display = 'none';
@@ -655,9 +652,7 @@
                                 localStorage.setItem('isLoggedIn', true);
     
                                 // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
-                                if (window.opener) {
-                                    window.opener.postMessage({ key: 'username', value: username }, '*');
-                                }
+                                sendUsernameUpdate(username);
     
                                 showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
                                     // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
@@ -675,6 +670,28 @@
                 }
             }
     
+            // دالة جديدة لإرسال تحديث اسم المستخدم
+            function sendUsernameUpdate(username) {
+                // إرسال رسالة إلى الصفحة الأم (إذا كانت هذه نافذة منبثقة)
+                if (window.opener) {
+                    window.opener.postMessage({ 
+                        type: 'usernameUpdate',
+                        username: username 
+                    }, '*');
+                }
+                
+                // إرسال رسالة إلى جميع النوافذ الأخرى في نفس النطاق
+                if (window.parent) {
+                    window.parent.postMessage({
+                        type: 'usernameUpdate',
+                        username: username
+                    }, '*');
+                }
+                
+                // تخزين الاسم في localStorage للصفحات الأخرى في نفس النطاق
+                localStorage.setItem('currentUsername', username);
+            }
+    
             function logout() {
                 const modal = document.getElementById('logoutModal');
                 modal.style.display = 'flex';
@@ -686,9 +703,7 @@
                 localStorage.removeItem('isLoggedIn');
     
                 // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
-                if (window.opener) {
-                    window.opener.postMessage({ key: 'username', value: null }, '*');
-                }
+                sendUsernameUpdate(null);
     
                 // الرجوع إلى الصفحة السابقة بدلاً من إعادة تحميل صفحة الحساب
                 history.back();
