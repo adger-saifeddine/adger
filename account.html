@@ -522,6 +522,25 @@
                 document.getElementById('customAlert').style.display = 'none';
             }
     
+            function handleAuthSuccess(username, profileImage) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('profileImage', profileImage);
+                localStorage.setItem('isLoggedIn', true);
+                
+                // إرسال رسالة إلى النافذة الأم لتحديث الترحيب
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'authUpdate',
+                        username: username
+                    }, '*');
+                }
+                
+                // الرجوع إلى الصفحة السابقة بعد ثانية
+                setTimeout(() => {
+                    window.history.back();
+                }, 1000);
+            }
+    
             window.addEventListener('load', () => {
                 document.getElementById('loaderOverlay').style.display = 'none';
                 
@@ -602,38 +621,8 @@
                                 password: password,
                                 profileImage: profileImage
                             });
-                            localStorage.setItem('username', username);
-                            localStorage.setItem('profileImage', profileImage);
-                            localStorage.setItem('isLoggedIn', true);
-    
-                            // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
-                            if (window.opener) {
-                                window.opener.postMessage({ key: 'username', value: username }, '*');
-                            }
-    
-                            showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
-                                document.getElementById('registerContainer').style.display = 'none';
-                                document.getElementById('profileContainer').style.display = 'block';
-                                document.getElementById('usernameDisplay').textContent = username;
-                                
-                                // عرض صورة المستخدم أو الحرف الأول من اسمه
-                                const profileContainer = document.getElementById('profilePictureDisplayContainer');
-                                if (profileImage && profileImage !== 'default') {
-                                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-                                } else {
-                                    const initial = username.charAt(0).toUpperCase();
-                                    profileContainer.innerHTML = `
-                                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
-                                            ${initial}
-                                        </div>
-                                    `;
-                                }
-    
-                                // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
-                                setTimeout(() => {
-                                    history.back();
-                                }, 1000);
-                            });
+                            handleAuthSuccess(username, profileImage);
+                            showCustomAlert('تم إنشاء الحساب بنجاح!', true);
                         }
                     });
                 } else {
@@ -650,19 +639,8 @@
                         if (snapshot.exists()) {
                             const userData = snapshot.val();
                             if (userData.password === password) {
-                                localStorage.setItem('username', username);
-                                localStorage.setItem('profileImage', userData.profileImage || 'default');
-                                localStorage.setItem('isLoggedIn', true);
-    
-                                // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
-                                if (window.opener) {
-                                    window.opener.postMessage({ key: 'username', value: username }, '*');
-                                }
-    
-                                showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
-                                    // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
-                                    history.back();
-                                });
+                                handleAuthSuccess(username, userData.profileImage || 'default');
+                                showCustomAlert('تم تسجيل الدخول بنجاح!', true);
                             } else {
                                 showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
                             }
@@ -684,14 +662,17 @@
                 localStorage.removeItem('username');
                 localStorage.removeItem('profileImage');
                 localStorage.removeItem('isLoggedIn');
-    
-                // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
+                
+                // إرسال رسالة إلى النافذة الأم
                 if (window.opener) {
-                    window.opener.postMessage({ key: 'username', value: null }, '*');
+                    window.opener.postMessage({
+                        type: 'authUpdate',
+                        username: null
+                    }, '*');
                 }
-    
-                // الرجوع إلى الصفحة السابقة بدلاً من إعادة تحميل صفحة الحساب
-                history.back();
+                
+                // الرجوع إلى الصفحة السابقة
+                window.history.back();
             });
     
             document.getElementById('cancelLogout').addEventListener('click', () => {
@@ -773,7 +754,7 @@
             }
         </script>
     </body>
-    </html> 
+    </html>
 
 
 
