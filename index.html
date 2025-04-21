@@ -2902,6 +2902,22 @@
             }
         });
     
+        // الاستماع إلى رسائل postMessage من صفحة الحساب
+        window.addEventListener('message', function(event) {
+            if (event.data.key === 'userData') {
+                if (event.data.isLoggedIn) {
+                    localStorage.setItem('username', event.data.username);
+                    localStorage.setItem('profileImage', event.data.profileImage);
+                    localStorage.setItem('isLoggedIn', event.data.isLoggedIn);
+                } else {
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('profileImage');
+                    localStorage.removeItem('isLoggedIn');
+                }
+                updateWelcomeMessage();
+            }
+        });
+    
         // تحديث اسم المستخدم عند تغيير حجم النافذة
         window.addEventListener('resize', () => {
             const username = localStorage.getItem('username');
