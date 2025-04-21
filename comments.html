@@ -65,37 +65,8 @@
         }
 
         .comment {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
             margin: 10px 0;
             padding: 10px;
-        }
-        
-        .comment-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            color: white;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        
-        .comment-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        
-        .comment-content {
-            flex-grow: 1;
         }
         
         .comment-header {
@@ -105,14 +76,9 @@
             margin-bottom: 5px;
         }
         
-        .comment-user {
-            display: flex;
-            align-items: center;
-        }
-        
         .comment-username {
             font-weight: bold;
-            margin-left: 5px;
+            color: #333;
         }
         
         .comment-date {
@@ -123,6 +89,7 @@
         .comment-text {
             text-align: right;
             margin-top: 5px;
+            padding-right: 5px;
         }
         
         .delete-button {
@@ -372,29 +339,6 @@
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
 
-        // دالة لإنشاء صورة مستخدم افتراضية إذا لم تكن هناك صورة
-        function createUserAvatar(username, profileImage) {
-            const avatar = document.createElement('div');
-            avatar.className = 'comment-avatar';
-            
-            if (profileImage && profileImage !== 'default') {
-                const img = document.createElement('img');
-                img.src = profileImage;
-                img.alt = username;
-                avatar.appendChild(img);
-            } else {
-                // عرض الحرف الأول من اسم المستخدم إذا لم تكن هناك صورة
-                const initial = username.charAt(0).toUpperCase();
-                avatar.textContent = initial;
-                // لون عشوائي للخلفية
-                const colors = ['#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', '#20c997', '#17a2b8', '#ffc107'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                avatar.style.backgroundColor = randomColor;
-            }
-            
-            return avatar;
-        }
-
         // Send comment
         document.getElementById('submitButton').addEventListener('click', (e) => {
             e.preventDefault();
@@ -402,7 +346,6 @@
             const urlParams = new URLSearchParams(window.location.search);
             const commentId = Number(urlParams.get('commentId'));
             const username = localStorage.getItem('username');
-            const profileImage = localStorage.getItem('profileImage') || 'default';
 
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً!');
@@ -418,7 +361,6 @@
             push(commentsRef, {
                 text: commentText,
                 username: username,
-                profileImage: profileImage,
                 timestamp: Date.now(),
                 commentId: commentId
             }).then(() => {
@@ -463,39 +405,21 @@
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
 
-                // إنشاء عنصر الصورة
-                const avatar = createUserAvatar(comment.username, comment.profileImage);
-                commentElement.appendChild(avatar);
-
-                // إنشاء محتوى التعليق
-                const commentContent = document.createElement('div');
-                commentContent.className = 'comment-content';
-
                 // رأس التعليق (الاسم والتاريخ)
                 const commentHeader = document.createElement('div');
                 commentHeader.className = 'comment-header';
 
-                const userInfo = document.createElement('div');
-                userInfo.className = 'comment-user';
-
                 const usernameSpan = document.createElement('span');
                 usernameSpan.className = 'comment-username';
                 usernameSpan.textContent = comment.username;
-
-                userInfo.appendChild(usernameSpan);
 
                 const dateSpan = document.createElement('span');
                 dateSpan.className = 'comment-date';
                 const date = new Date(comment.timestamp);
                 dateSpan.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
 
-                commentHeader.appendChild(userInfo);
+                commentHeader.appendChild(usernameSpan);
                 commentHeader.appendChild(dateSpan);
-
-                // نص التعليق
-                const commentText = document.createElement('div');
-                commentText.className = 'comment-text';
-                commentText.textContent = comment.text;
 
                 // زر الحذف (إذا كان التعليق للمستخدم الحالي)
                 const currentUser = localStorage.getItem('username');
@@ -507,10 +431,14 @@
                     commentHeader.appendChild(deleteButton);
                 }
 
+                // نص التعليق
+                const commentText = document.createElement('div');
+                commentText.className = 'comment-text';
+                commentText.textContent = comment.text;
+
                 // تجميع العناصر
-                commentContent.appendChild(commentHeader);
-                commentContent.appendChild(commentText);
-                commentElement.appendChild(commentContent);
+                commentElement.appendChild(commentHeader);
+                commentElement.appendChild(commentText);
 
                 commentsList.appendChild(commentElement);
                 commentsList.appendChild(document.createElement('div')).className = 'separator';
