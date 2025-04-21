@@ -522,6 +522,42 @@
                 document.getElementById('customAlert').style.display = 'none';
             }
     
+            window.addEventListener('load', () => {
+                document.getElementById('loaderOverlay').style.display = 'none';
+                
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (isLoggedIn) {
+                    document.getElementById('profileContainer').style.display = 'block';
+                    
+                    const username = localStorage.getItem('username');
+                    const profileImage = localStorage.getItem('profileImage');
+                    
+                    document.getElementById('usernameDisplay').textContent = username;
+                    
+                    // عرض صورة المستخدم أو الحرف الأول من اسم المستخدم إذا لم تكن هناك صورة
+                    const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                    if (profileImage && profileImage !== 'default') {
+                        profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                    } else {
+                        const initial = username.charAt(0).toUpperCase();
+                        profileContainer.innerHTML = `
+                            <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                                ${initial}
+                            </div>
+                        `;
+                    }
+    
+                    database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                        const purchases = snapshot.val();
+                        const purchasesCount = purchases ? Object.keys(purchases).length : 0;
+                        document.getElementById('purchasesCount').textContent = purchasesCount;
+                        document.getElementById('modalPurchasesCount').textContent = purchasesCount;
+                    });
+                } else {
+                    document.getElementById('loginContainer').style.display = 'block';
+                }
+            });
+    
             function getRandomColor() {
                 const colors = [
                     '#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', 
@@ -547,34 +583,9 @@
             function showRegisterForm() {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('registerContainer').style.display = 'block';
+                // إعادة تعيين صورة الملف الشخصي عند عرض النموذج
                 document.getElementById('profilePicturePlaceholder').innerHTML = '<i class="fas fa-user"></i>';
                 selectedProfileImage = null;
-            }
-    
-            function showProfile(username, profileImage) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('registerContainer').style.display = 'none';
-                document.getElementById('profileContainer').style.display = 'block';
-                document.getElementById('usernameDisplay').textContent = username;
-    
-                const profileContainer = document.getElementById('profilePictureDisplayContainer');
-                if (profileImage && profileImage !== 'default') {
-                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-                } else {
-                    const initial = username.charAt(0).toUpperCase();
-                    profileContainer.innerHTML = `
-                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
-                            ${initial}
-                        </div>
-                    `;
-                }
-    
-                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
-                    const purchases = snapshot.val();
-                    const purchasesCount = purchases ? Object.keys(purchases).length : 0;
-                    document.getElementById('purchasesCount').textContent = purchasesCount;
-                    document.getElementById('modalPurchasesCount').textContent = purchasesCount;
-                });
             }
     
             function register() {
@@ -595,11 +606,33 @@
                             localStorage.setItem('profileImage', profileImage);
                             localStorage.setItem('isLoggedIn', true);
     
-                            // إرسال رسالة إلى جميع النوافذ المفتوحة
-                            window.parent.postMessage({ key: 'username', value: username }, '*');
+                            // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                            if (window.opener) {
+                                window.opener.postMessage({ key: 'username', value: username }, '*');
+                            }
     
                             showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
-                                showProfile(username, profileImage);
+                                document.getElementById('registerContainer').style.display = 'none';
+                                document.getElementById('profileContainer').style.display = 'block';
+                                document.getElementById('usernameDisplay').textContent = username;
+                                
+                                // عرض صورة المستخدم أو الحرف الأول من اسمه
+                                const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                                if (profileImage && profileImage !== 'default') {
+                                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                                } else {
+                                    const initial = username.charAt(0).toUpperCase();
+                                    profileContainer.innerHTML = `
+                                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                                            ${initial}
+                                        </div>
+                                    `;
+                                }
+    
+                                // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
+                                setTimeout(() => {
+                                    history.back();
+                                }, 1000);
                             });
                         }
                     });
@@ -621,11 +654,14 @@
                                 localStorage.setItem('profileImage', userData.profileImage || 'default');
                                 localStorage.setItem('isLoggedIn', true);
     
-                                // إرسال رسالة إلى جميع النوافذ المفتوحة
-                                window.parent.postMessage({ key: 'username', value: username }, '*');
+                                // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+                                if (window.opener) {
+                                    window.opener.postMessage({ key: 'username', value: username }, '*');
+                                }
     
                                 showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
-                                    showProfile(username, userData.profileImage || 'default');
+                                    // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
+                                    history.back();
                                 });
                             } else {
                                 showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
@@ -649,12 +685,13 @@
                 localStorage.removeItem('profileImage');
                 localStorage.removeItem('isLoggedIn');
     
-                // إرسال رسالة إلى جميع النوافذ المفتوحة
-                window.parent.postMessage({ key: 'username', value: null }, '*');
+                // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
+                if (window.opener) {
+                    window.opener.postMessage({ key: 'username', value: null }, '*');
+                }
     
-                document.getElementById('logoutModal').style.display = 'none';
-                document.getElementById('profileContainer').style.display = 'none';
-                document.getElementById('loginContainer').style.display = 'block';
+                // الرجوع إلى الصفحة السابقة بدلاً من إعادة تحميل صفحة الحساب
+                history.back();
             });
     
             document.getElementById('cancelLogout').addEventListener('click', () => {
@@ -734,22 +771,9 @@
                 document.getElementById('purchasesModal').style.display = 'none';
                 document.body.classList.remove('no-scroll');
             }
-    
-            window.addEventListener('load', () => {
-                document.getElementById('loaderOverlay').style.display = 'none';
-                
-                const isLoggedIn = localStorage.getItem('isLoggedIn');
-                if (isLoggedIn) {
-                    const username = localStorage.getItem('username');
-                    const profileImage = localStorage.getItem('profileImage');
-                    showProfile(username, profileImage);
-                } else {
-                    document.getElementById('loginContainer').style.display = 'block';
-                }
-            });
         </script>
     </body>
-    </html>
+    </html> 
 
 
 
