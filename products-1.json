@@ -1091,20 +1091,20 @@
           }
         ],
         "product": {
-          "image": "https://i.postimg.cc/4xKBhNds/2025-04-15-19-11-59-058a98d4.jpg",
-          "name": "قلم Earldom ET-P2 للرسم واللمس",
-          "sold": "Earldom",
-          "price": "300.00",
-          "discount": "25%",
-          "pageId": "18",
-          "productId": "18",
-          "shippingPrice": "70"
-        },
-        "texts": {
+            "image": "https://i.postimg.cc/4xKBhNds/2025-04-15-19-11-59-058a98d4.jpg",
+            "name": "قلم Earldom ET-P2 للرسم واللمس",
+            "sold": "Earldom",
+            "price": "300.00",
+            "discount": "25%",
+            "pageId": "18",
+            "productId": "18",
+            "shippingPrice": "70"
+          },
+          "texts": {
             "currency": "جنيه",
-            "discountLabel": "خصم"
-        }
-    },
+            "discountLabel": "عرض خاص"
+          }
+        },
       {
         "id": "19",
         "media": [
