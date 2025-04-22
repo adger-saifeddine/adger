@@ -1038,7 +1038,7 @@
         },
         "texts": {
           "currency": "جنيه",
-          "discountLabel": ""
+          "discountLabel": "مميز"
         }
       },
       {
@@ -1102,7 +1102,7 @@
         },
         "texts": {
           "currency": "جنيه",
-          "discountLabel": "عرض خاص لفترة محدودة"
+          "discountLabel": "عرض خاص"
         }
       },
       {
