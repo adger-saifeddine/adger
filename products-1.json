@@ -1020,7 +1020,7 @@
             ]
           },
           {
-            "type": "mixed",
+            "type": "video",
             "items": [
               "https://files.catbox.moe/3olcg0.mp4"
             ]
@@ -1091,20 +1091,21 @@
           }
         ],
         "product": {
-          "image": "https://i.postimg.cc/4xKBhNds/2025-04-15-19-11-59-058a98d4.jpg",
-          "name": "قلم Earldom ET-P2 للرسم واللمس",
-          "sold": "Earldom",
-          "price": "300.00",
-          "discount": "25%",
-          "pageId": "18",
-          "productId": "18",
-          "shippingPrice": "70"
+            "image": "https://i.postimg.cc/tTsvfZmt/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif",
+            "name": "سماعات رأس Pro 6 TWS لاسلكية",
+            "sold": "موثوق",
+            "price": "350.00",
+            "discount": "خصم 30%",
+            "pageId": "14",
+            "productId": "14",
+            "shippingPrice": "70",
+            "colors": ["أبيض", "أسود"]
         },
         "texts": {
-          "currency": "جنيه",
-          "discountLabel": "عرض خاص"
+            "currency": "جنيه",
+            "discountLabel": "أفضل سعر متاح"
         }
-      },
+    },
       {
         "id": "19",
         "media": [
