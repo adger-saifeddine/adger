@@ -1091,19 +1091,19 @@
           }
         ],
         "product": {
-            "image": "https://i.postimg.cc/tTsvfZmt/Sf9ab821542a04fd8b688512de6b6749d-N-jpg-220x220q75-jpg.avif",
-            "name": "سماعات رأس Pro 6 TWS لاسلكية",
+            "image": "https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg",
+            "name": "شنطة كروس ميكي",
             "sold": "موثوق",
-            "price": "350.00",
-            "discount": "خصم 30%",
-            "pageId": "14",
-            "productId": "14",
-            "shippingPrice": "70",
-            "colors": ["أبيض", "أسود"]
+            "price": "200.00",
+            "discount": "20",
+            "pageId": "8",
+            "productId": "8",
+            "shippingPrice": "50",
+            "colors": ["متعدد الألوان"]
         },
         "texts": {
             "currency": "جنيه",
-            "discountLabel": "أفضل سعر متاح"
+            "discountLabel": "خصم"
         }
     },
       {
