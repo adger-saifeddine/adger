@@ -1027,20 +1027,20 @@
           }
         ],
         "product": {
-          "image": "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg",
-          "name": "قلم 2 في 1 لمس متوافق مع جميع الأجهزة",
-          "sold": "موثوق",
-          "price": "75.00",
-          "discount": "81.25%",
-          "pageId": "17",
-          "productId": "17",
-          "shippingPrice": "70"
+            "image": "https://i.postimg.cc/V6jVMGwZ/2025-04-15-12-02-26-534e3de8.jpg",
+            "name":"قلم 2 في 1 لمس متوافق مع جميع الأجهزة",
+            "sold": "موثوق",
+            "price": "75.00",
+            "discount": "81.25%",
+            "pageId": "17",
+            "productId": "17",
+            "shippingPrice": "70"
         },
         "texts": {
-          "currency": "جنيه",
-          "discountLabel": "خصم"
+            "currency": "جنيه",
+            "discountLabel": "خصم"
         }
-      },
+    },
       {
         "id": "18",
        "media": [
