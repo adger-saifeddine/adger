@@ -593,6 +593,11 @@
                 const password = document.getElementById('newPassword').value;
                 const profileImage = selectedProfileImage || 'default';
     
+                if (username.length < 9) {
+                    showCustomAlert('اسم المستخدم يجب أن يكون 9 حروف أو أكثر!', false, function() {});
+                    return;
+                }
+    
                 if (username && password) {
                     database.ref('users/' + username).once('value', (snapshot) => {
                         if (snapshot.exists()) {
@@ -774,8 +779,6 @@
         </script>
     </body>
     </html> 
-
-
 
 
 
