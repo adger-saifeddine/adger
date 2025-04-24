@@ -71,11 +71,13 @@
             margin: 10px 0;
             padding: 10px;
         }
+        
         .comment-text {
             text-align: right;
             flex-grow: 1;
             padding-right: 10px;
         }
+        
         .comment-username {
             font-weight: bold;
             margin-bottom: 5px;
@@ -83,11 +85,13 @@
             align-items: center;
             justify-content: flex-end;
         }
+        
         .comment-date {
             font-size: 12px;
             color: #666;
             margin-right: 10px;
         }
+        
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -97,9 +101,11 @@
             padding: 5px 10px;
             margin-right: 10px;
         }
+        
         .delete-button:hover {
             background-color: #ff1a1a;
         }
+        
         .separator {
             width: 100%;
             height: 1px;
@@ -107,12 +113,23 @@
             margin: 10px 0;
         }
         
+        .comment-image {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
         #field2 {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: white;
             display: flex;
+            flex-wrap: wrap;
+            align-items: center;
             padding: 15px;
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
@@ -121,7 +138,7 @@
         
         #field2 textarea {
             flex: 1;
-            padding: 0 15px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 25px;
             margin-right: 10px;
@@ -131,34 +148,26 @@
             text-align: right;
             resize: none;
             height: 40px;
-            line-height: 40px;
-            overflow: hidden;
-            white-space: nowrap;
         }
 
         #field2 textarea::placeholder {
             direction: rtl;
             text-align: right;
-            line-height: 40px;
+        }
+
+        #field2 input[type="file"] {
+            margin-right: 10px;
         }
         
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: 25px;
+            margin-right: 10px;
             border: none;
             background-color: #000;
             color: white;
             border-radius: 25px;
             cursor: pointer;
-            transition: opacity 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #field2 button:active {
-            opacity: 0.8;
         }
 
         #loadingSpinner {
@@ -185,98 +194,33 @@
             to { transform: rotate(360deg); }
         }
 
-        .empty-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: calc(100vh - 44px);
-            text-align: center;
-        }
-
-        .empty-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-
-        #emptyContent {
-            display: none;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
-        .no-more-comments {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 700;
-            color: #304766;
-            margin: 20px 0;
-            animation: fadeIn 1s ease-in-out;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .confirm-overlay {
+        .image-modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            z-index: 2000;
         }
 
-        .confirm-box {
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+
+        .image-modal .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 300px;
-            width: 90%;
-        }
-
-        .confirm-box p {
-            margin: 0 0 20px;
-            font-size: 16px;
-        }
-
-        .confirm-buttons {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .confirm-buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
-        }
-
-        .confirm-yes {
-            background-color: #ff4d4d;
-            color: white;
-        }
-
-        .confirm-yes:hover {
-            background-color: #ff1a1a;
-        }
-
-        .confirm-no {
-            background-color: #ccc;
-            color: black;
-        }
-
-        .confirm-no:hover {
-            background-color: #aaa;
         }
     </style>
 </head>
@@ -291,181 +235,96 @@
             </div>
         </div>
         <div id="commentsList"></div>
-        <div id="emptyContent" class="empty-content">
-            <span class="empty-icon">📭</span>
-            <div>التعليقات فارغة</div>
-        </div>
     </div>
 
     <div id="field2">
-        <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
+        <textarea id="commentText" placeholder="اكتب تعليقك هنا..."></textarea>
+        <input type="file" id="commentImage" accept="image/*">
         <button id="submitButton">إرسال</button>
     </div>
 
-    <div id="loadingSpinner" style="display: block;">
+    <div id="loadingSpinner" style="display: none;">
         <div class="spinner"></div>
     </div>
 
-    <div id="confirmOverlay" class="confirm-overlay">
-        <div class="confirm-box">
-            <p>هل أنت متأكد أنك تريد الحذف؟</p>
-            <div class="confirm-buttons">
-                <button id="confirmNo" class="confirm-no">لا</button>
-                <button id="confirmYes" class="confirm-yes">نعم</button>
-            </div>
-        </div>
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">✖</span>
+        <img id="modalImage">
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
             authDomain: "adger-ddb84.firebaseapp.com",
             databaseURL: "https://adger-ddb84-default-rtdb.firebaseio.com",
             projectId: "adger-ddb84",
-            storageBucket: "adger-ddb84.firebasestorage.app",
+            storageBucket: "adger-ddb84.appspot.com",
             messagingSenderId: "767665511626",
             appId: "1:767665511626:web:0ed485898001cdf4a02833"
         };
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const storage = getStorage(app);
+
         const commentsRef = ref(database, 'comments');
+        const submitButton = document.getElementById('submitButton');
+        const commentText = document.getElementById('commentText');
+        const commentImage = document.getElementById('commentImage');
+        const commentsList = document.getElementById('commentsList');
 
-        // Send comment
-        document.getElementById('submitButton').addEventListener('click', (e) => {
-            e.preventDefault();
-            const commentText = document.getElementById('commentText').value;
-            const urlParams = new URLSearchParams(window.location.search);
-            const commentId = Number(urlParams.get('commentId'));
-            const username = localStorage.getItem('username');
+        submitButton.addEventListener('click', async () => {
+            const text = commentText.value;
+            const file = commentImage.files[0];
 
-            if (!username) {
-                alert('يرجى تسجيل الدخول أولاً!');
-                window.location.href = 'account.html';
+            if (!text || !file) {
+                alert('يرجى إضافة تعليق وصورة!');
                 return;
             }
 
-            if (commentText.trim() === '') {
-                alert('يرجى كتابة تعليق قبل الإرسال!');
-                return;
-            }
+            const fileRef = storageRef(storage, `images/${Date.now()}_${file.name}`);
+            await uploadBytes(fileRef, file);
+            const imageUrl = await getDownloadURL(fileRef);
 
-            push(commentsRef, {
-                text: commentText,
-                username: username,
-                timestamp: Date.now(),
-                commentId: commentId
-            }).then(() => {
-                document.getElementById('commentText').value = '';
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }).catch((error) => {
-                console.error('حدث خطأ أثناء إرسال التعليق:', error);
-                alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
-            });
+            push(commentsRef, { text, imageUrl, timestamp: Date.now() });
+            commentText.value = '';
+            commentImage.value = null;
         });
 
-        // Display comments
-        const commentsList = document.getElementById('commentsList');
-        const urlParams = new URLSearchParams(window.location.search);
-        const commentId = Number(urlParams.get('commentId'));
-        
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
-            let hasComments = false;
-            const commentsArray = [];
-
-            // جمع التعليقات في مصفوفة
-            snapshot.forEach((childSnapshot) => {
-                const comment = childSnapshot.val();
-                if (comment.commentId === commentId) {
-                    commentsArray.push({
-                        key: childSnapshot.key,
-                        ...comment
-                    });
-                }
+            snapshot.forEach((child) => {
+                const { text, imageUrl } = child.val();
+                const comment = document.createElement('div');
+                comment.className = 'comment';
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.className = 'comment-image';
+                img.onclick = () => openImageModal(imageUrl);
+                comment.appendChild(img);
+                const p = document.createElement('p');
+                p.textContent = text;
+                comment.appendChild(p);
+                commentsList.appendChild(comment);
             });
-
-            // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
-            commentsArray.sort((a, b) => b.timestamp - a.timestamp);
-
-            // عرض التعليقات
-            commentsArray.forEach((comment) => {
-                hasComments = true;
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-
-                const username = localStorage.getItem('username');
-                if (username === comment.username) {
-                    const deleteButton = document.createElement('button');
-                    deleteButton.className = 'delete-button';
-                    deleteButton.textContent = 'حذف';
-                    deleteButton.onclick = () => showConfirmDialog(comment.key);
-                    commentElement.appendChild(deleteButton);
-                }
-
-                const commentTextElement = document.createElement('div');
-                commentTextElement.className = 'comment-text';
-                const commentUsernameElement = document.createElement('div');
-                commentUsernameElement.className = 'comment-username';
-
-                const commentDateElement = document.createElement('div');
-                commentDateElement.className = 'comment-date';
-                const date = new Date(comment.timestamp);
-                commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
-
-                const commentContentElement = document.createElement('div');
-                commentContentElement.textContent = comment.text;
-
-                commentUsernameElement.appendChild(commentDateElement);
-                commentUsernameElement.appendChild(document.createTextNode(comment.username));
-
-                commentTextElement.appendChild(commentUsernameElement);
-                commentTextElement.appendChild(commentContentElement);
-
-                commentElement.appendChild(commentTextElement);
-
-                commentsList.appendChild(commentElement);
-                commentsList.appendChild(document.createElement('div')).className = 'separator';
-            });
-
-            if (hasComments) {
-                const noMoreCommentsElement = document.createElement('div');
-                noMoreCommentsElement.className = 'no-more-comments';
-                noMoreCommentsElement.textContent = 'لا توجد تعليقات أخرى';
-                commentsList.appendChild(noMoreCommentsElement);
-            }
-
-            document.getElementById('emptyContent').style.display = hasComments ? 'none' : 'flex';
-            commentsList.style.display = hasComments ? 'block' : 'none';
-            document.getElementById('loadingSpinner').style.display = 'none';
         });
 
-        // دالة لإظهار نافذة التأكيد
-        function showConfirmDialog(commentKey) {
-            const confirmOverlay = document.getElementById('confirmOverlay');
-            confirmOverlay.style.display = 'flex';
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
 
-            document.getElementById('confirmYes').onclick = () => {
-                remove(ref(database, `comments/${commentKey}`))
-                    .then(() => {
-                        confirmOverlay.style.display = 'none';
-                    })
-                    .catch((error) => {
-                        console.error('حدث خطأ أثناء الحذف:', error);
-                        alert('حدث خطأ أثناء الحذف، حاول مرة أخرى.');
-                    });
-            };
-
-            document.getElementById('confirmNo').onclick = () => {
-                confirmOverlay.style.display = 'none';
-            };
+        function openImageModal(imageUrl) {
+            modalImage.src = imageUrl;
+            imageModal.style.display = 'flex';
         }
+
+        closeModal.addEventListener('click', () => {
+            imageModal.style.display = 'none';
+        });
     </script>
 </body>
 </html>
