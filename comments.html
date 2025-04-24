@@ -142,6 +142,10 @@
             line-height: 40px;
         }
         
+        #field2 input[type="file"] {
+            margin-right: 10px;
+        }
+        
         #field2 button {
             padding: 0 30px;
             height: 40px;
@@ -202,6 +206,8 @@
         #emptyContent {
             display: none;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
         .no-more-comments {
             text-align: center;
@@ -277,11 +283,26 @@
             background-color: #aaa;
         }
 
-        /* تنسيق النافذة المودال لتكبير الصورة */
+        .comment-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .comment-images img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 10000;
+            padding-top: 60px;
             left: 0;
             top: 0;
             width: 100%;
@@ -291,17 +312,21 @@
         }
 
         .modal-content {
-            margin: 50px auto 20px auto;
+            margin: auto;
             display: block;
             width: 80%;
             max-width: 700px;
         }
 
-        .modal-text {
-            color: white;
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
             text-align: center;
-            margin-top: 10px;
-            font-size: 16px;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
         }
 
         .close {
@@ -311,24 +336,40 @@
             color: #f1f1f1;
             font-size: 40px;
             font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        .navigation {
+        .prev,
+        .next {
+            cursor: pointer;
             position: absolute;
             top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
         }
 
-        .nav-button {
-            background-color: transparent;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -351,7 +392,7 @@
 
     <div id="field2">
         <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
-        <input type="file" id="commentImages" accept="image/*" multiple required />
+        <input type="file" id="commentImages" multiple accept="image/*" required>
         <button id="submitButton">إرسال</button>
     </div>
 
@@ -372,17 +413,15 @@
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="modalImage">
-        <div id="modalText" class="modal-text"></div>
-        <div class="navigation">
-            <button id="prevButton" class="nav-button">❮</button>
-            <button id="nextButton" class="nav-button">❯</button>
-        </div>
+        <div id="caption"></div>
+        <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+        <a class="next" onclick="changeImage(1)">&#10095;</a>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
-        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js";
+        import { getDatabase, ref, push, onValue, remove, get } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
@@ -396,9 +435,10 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const storage = getStorage(app);
         const commentsRef = ref(database, 'comments');
 
-        // إرسال التعليق مع الصور
+        // Send comment with images
         document.getElementById('submitButton').addEventListener('click', async (e) => {
             e.preventDefault();
             const commentText = document.getElementById('commentText').value;
@@ -413,52 +453,54 @@
                 return;
             }
 
-            if (commentImages.length === 0) {
-                alert('يرجى رفع صورة واحدة على الأقل مع التعليق!');
+            if (commentText.trim() === '') {
+                alert('يرجى كتابة تعليق قبل الإرسال!');
                 return;
             }
 
-            const imageUrls = [];
-            const storage = getStorage(app);
-            for (const image of commentImages) {
-                const imageRef = storageRef(storage, `comments/${Date.now()}_${image.name}`);
-                await uploadBytes(imageRef, image);
-                const imageUrl = await getDownloadURL(imageRef);
-                imageUrls.push(imageUrl);
+            if (commentImages.length === 0) {
+                alert('يرجى إضافة صورة واحدة على الأقل مع التعليق!');
+                return;
             }
 
-            push(commentsRef, {
-                text: commentText,
-                username: username,
-                timestamp: Date.now(),
-                commentId: commentId,
-                imageUrls: imageUrls
-            }).then(() => {
+            try {
+                const imageUrls = [];
+                for (const image of commentImages) {
+                    const imageRef = storageRef(storage, `comments/${Date.now()}_${image.name}`);
+                    await uploadBytes(imageRef, image);
+                    const imageUrl = await getDownloadURL(imageRef);
+                    imageUrls.push(imageUrl);
+                }
+
+                await push(commentsRef, {
+                    text: commentText,
+                    username: username,
+                    timestamp: Date.now(),
+                    commentId: commentId,
+                    images: imageUrls
+                });
+
                 document.getElementById('commentText').value = '';
                 document.getElementById('commentImages').value = '';
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
-            }).catch((error) => {
+            } catch (error) {
                 console.error('حدث خطأ أثناء إرسال التعليق:', error);
                 alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
-            });
+            }
         });
 
-        // عرض التعليقات
+        // Display comments
         const commentsList = document.getElementById('commentsList');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
-        let imageUrls = [];
-        let commentsData = [];
-
+        
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
             let hasComments = false;
             const commentsArray = [];
-            imageUrls = [];
-            commentsData = [];
 
             snapshot.forEach((childSnapshot) => {
                 const comment = childSnapshot.val();
@@ -467,10 +509,6 @@
                         key: childSnapshot.key,
                         ...comment
                     });
-                    if (comment.imageUrls) {
-                        imageUrls = imageUrls.concat(comment.imageUrls);
-                        commentsData.push({ text: comment.text, imageUrls: comment.imageUrls });
-                    }
                 }
             });
 
@@ -501,7 +539,7 @@
                 commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
 
                 const commentContentElement = document.createElement('div');
-                commentContentElement.textContent = comment.text;
+                commentContentElement.textContent = comment.text || '';
 
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
@@ -509,19 +547,21 @@
                 commentTextElement.appendChild(commentUsernameElement);
                 commentTextElement.appendChild(commentContentElement);
 
-                if (comment.imageUrls && comment.imageUrls.length > 0) {
-                    comment.imageUrls.forEach((imageUrl) => {
-                        const commentImageElement = document.createElement('img');
-                        commentImageElement.src = imageUrl;
-                        commentImageElement.alt = 'صورة التعليق';
-                        commentImageElement.style.maxWidth = '100%';
-                        commentImageElement.style.cursor = 'pointer';
-                        commentImageElement.onclick = () => showImageModal(imageUrl, comment.text);
-                        commentTextElement.appendChild(commentImageElement);
+                if (comment.images && comment.images.length > 0) {
+                    const imagesContainer = document.createElement('div');
+                    imagesContainer.className = 'comment-images';
+                    comment.images.forEach((imageUrl, index) => {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = `صورة ${index + 1}`;
+                        img.onclick = () => openImageModal(comment.images, index, comment.text);
+                        imagesContainer.appendChild(img);
                     });
+                    commentTextElement.appendChild(imagesContainer);
                 }
 
                 commentElement.appendChild(commentTextElement);
+
                 commentsList.appendChild(commentElement);
                 commentsList.appendChild(document.createElement('div')).className = 'separator';
             });
@@ -538,20 +578,27 @@
             document.getElementById('loadingSpinner').style.display = 'none';
         });
 
-        // دالة لإظهار نافذة التأكيد
+        // Show confirmation dialog for deletion
         function showConfirmDialog(commentKey) {
             const confirmOverlay = document.getElementById('confirmOverlay');
             confirmOverlay.style.display = 'flex';
 
-            document.getElementById('confirmYes').onclick = () => {
-                remove(ref(database, `comments/${commentKey}`))
-                    .then(() => {
-                        confirmOverlay.style.display = 'none';
-                    })
-                    .catch((error) => {
-                        console.error('حدث خطأ أثناء الحذف:', error);
-                        alert('حدث خطأ أثناء الحذف، حاول مرة أخرى.');
-                    });
+            document.getElementById('confirmYes').onclick = async () => {
+                try {
+                    const commentSnapshot = await get(ref(database, `comments/${commentKey}`));
+                    const comment = commentSnapshot.val();
+                    if (comment.images) {
+                        for (const imageUrl of comment.images) {
+                            const imageRef = storageRef(storage, imageUrl);
+                            await deleteObject(imageRef);
+                        }
+                    }
+                    await remove(ref(database, `comments/${commentKey}`));
+                    confirmOverlay.style.display = 'none';
+                } catch (error) {
+                    console.error('حدث خطأ أثناء الحذف:', error);
+                    alert('حدث خطأ أثناء الحذف، حاول مرة أخرى.');
+                }
             };
 
             document.getElementById('confirmNo').onclick = () => {
@@ -559,46 +606,37 @@
             };
         }
 
-        // دالة لعرض الصورة مكبرة مع التعليق والتنقل بين الصور
-        let currentImageIndex = 0;
+        // Open image modal with comment text
+        let currentImages = [];
+        let currentIndex = 0;
+        let currentCommentText = '';
 
-        function showImageModal(imageUrl, commentText) {
+        function openImageModal(images, index, commentText) {
+            currentImages = images;
+            currentIndex = index;
+            currentCommentText = commentText;
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
-            const modalText = document.getElementById('modalText');
+            const captionText = document.getElementById('caption');
             modal.style.display = 'block';
-            modalImg.src = imageUrl;
-            modalText.textContent = commentText;
-            currentImageIndex = imageUrls.indexOf(imageUrl);
+            modalImg.src = images[index];
+            captionText.innerHTML = `${currentCommentText}<br>صورة ${index + 1} من ${images.length}`;
 
             const span = document.getElementsByClassName('close')[0];
-            span.onclick = () => {
+            span.onclick = function() {
                 modal.style.display = 'none';
             };
+        }
 
-            modal.onclick = (event) => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            };
-
-            document.getElementById('prevButton').onclick = () => {
-                if (currentImageIndex > 0) {
-                    currentImageIndex--;
-                    modalImg.src = imageUrls[currentImageIndex];
-                    const comment = commentsData.find(c => c.imageUrls.includes(imageUrls[currentImageIndex]));
-                    modalText.textContent = comment ? comment.text : '';
-                }
-            };
-
-            document.getElementById('nextButton').onclick = () => {
-                if (currentImageIndex < imageUrls.length - 1) {
-                    currentImageIndex++;
-                    modalImg.src = imageUrls[currentImageIndex];
-                    const comment = commentsData.find(c => c.imageUrls.includes(imageUrls[currentImageIndex]));
-                    modalText.textContent = comment ? comment.text : '';
-                }
-            };
+        function changeImage(n) {
+            currentIndex += n;
+            if (currentIndex >= currentImages.length) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = currentImages.length - 1;
+            }
+            document.getElementById('modalImage').src = currentImages[currentIndex];
+            document.getElementById('caption').innerHTML = `${currentCommentText}<br>صورة ${currentIndex + 1} من ${currentImages.length}`;
         }
     </script>
 </body>
