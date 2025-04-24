@@ -1285,6 +1285,7 @@
           "discountLabel": "خصم"
         }
       },
+      
       {
         "id": "22",
         "media": [
@@ -1292,13 +1293,33 @@
           {"src": "https://files.catbox.moe/lr5k22.avif", "type": "image"},
           {"src": "https://files.catbox.moe/rrsm6z.avif", "type": "image"},
           {"src": "https://files.catbox.moe/a6141s.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/rmhcj1.avif", "type": "image"}
+          {"src": "https://files.catbox.moe/rmhcj1.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/ljpb21.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/ngxkd6.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/g8dj8w.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/ssjyhs.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/4hhggr.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/wcxr64.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/uy9shb.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/3tnno3.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/5bd7vr.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/pmf2wd.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/wl4kx7.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/yuzbqh.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/mhufor.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/lm8c0c.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/jcwxnp.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/7cu69i.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/1iwas4.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/7whh1b.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/4az1fn.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/roxx4m.avif", "type": "image"}
         ],
         "pri": "240",
         "oldPrice": "340",
         "dis": "خصم 29%",
-        "changingText": ["تصميم رجعي", "حماية من الأشعة فوق البنفسجية", "عدسات مستقطبة"],
-        "longText": "نظارات شمسية فاخرة بتصميم مربع وأسلوب خمر، تناسب الرجال والنساء. مثالية للقيادة والصيد، توفر حماية UV400 وعدسات مستقطبة مريحة للعين.",
+        "changingText": ["تصميم رجعي", "عدسات مستقطبة", "حماية من الأشعة فوق البنفسجية"],
+        "longText": "نظارات شمسية مربعة بتصميم خمر للرجال والنساء، مثالية للقيادة والصيد، عدسات مستقطبة UV400 من ماركة فاخرة بتصميم أنيق.",
         "sales": "موثوق",
         "buttonId": "commentButton22",
         "commentId": "22",
@@ -1312,7 +1333,7 @@
           {"question": "الوزن", "answer": "30 جرام"},
           {"question": "مقاس", "answer": "14.5 سم × 5 سم"}
         ],
-        "desc": "نظارات شمسية بتصميم مربع خمر وعدسات مستقطبة، توفر رؤية واضحة في الضوء الساطع وتضيف لمسة أناقة لأي مظهر.",
+        "desc": "نظارات شمسية من ماركة مصمم فاخرة بعدسات مستقطبة UV400 تحمي العينين وتضيف لمسة أناقة فريدة.",
         "groups": [
           {
             "type": "images",
@@ -1321,27 +1342,46 @@
               "https://files.catbox.moe/lr5k22.avif",
               "https://files.catbox.moe/rrsm6z.avif",
               "https://files.catbox.moe/a6141s.avif",
-              "https://files.catbox.moe/rmhcj1.avif"
+              "https://files.catbox.moe/rmhcj1.avif",
+              "https://files.catbox.moe/ljpb21.avif",
+              "https://files.catbox.moe/ngxkd6.avif",
+              "https://files.catbox.moe/g8dj8w.avif",
+              "https://files.catbox.moe/ssjyhs.avif",
+              "https://files.catbox.moe/4hhggr.avif",
+              "https://files.catbox.moe/wcxr64.avif",
+              "https://files.catbox.moe/uy9shb.avif",
+              "https://files.catbox.moe/3tnno3.avif",
+              "https://files.catbox.moe/5bd7vr.avif",
+              "https://files.catbox.moe/pmf2wd.avif",
+              "https://files.catbox.moe/wl4kx7.avif",
+              "https://files.catbox.moe/yuzbqh.avif",
+              "https://files.catbox.moe/mhufor.avif",
+              "https://files.catbox.moe/lm8c0c.avif",
+              "https://files.catbox.moe/jcwxnp.avif",
+              "https://files.catbox.moe/7cu69i.avif",
+              "https://files.catbox.moe/1iwas4.avif",
+              "https://files.catbox.moe/7whh1b.avif",
+              "https://files.catbox.moe/4az1fn.avif",
+              "https://files.catbox.moe/roxx4m.avif"
             ]
           }
         ],
         "product": {
           "image": "https://i.postimg.cc/4xZmRK2R/S7249109b8ea14026a08f01a10cfb4018q-jpg-220x220q75-jpg.avif",
-          "name": "نظارات شمسية خمر رجالية نسائية UV400",
+          "name": "أزياء مربع خمر الاستقطاب النظارات الشمسية الرجال النساء الرجعية القيادة الصيد الفاخرة العلامة التجارية مصمم نظارات شمسية UV400 نظارات",
           "sold": "موثوق",
           "price": "240.00",
           "discount": "29",
           "pageId": "22",
           "productId": "22",
           "shippingPrice": "70",
-          "colors": ["أخضر", "أسود", "أبيض", "أزرق", "رصاصي", "أحمر شفاف", "أزرق شفاف", "أحمر فاشون", "بني"]
+          "colors": [ "يرتقالي","أحمر","أخضر", "أسود", "أبيض", "أزرق", "رصاصي", "أحمر شفاف", "أزرق شفاف", "أحمر", "أحمر فاشون", "بني"]
         },
         "texts": {
           "currency": "جنيه",
           "discountLabel": "خصم"
         }
       }
-       
       
       
       
