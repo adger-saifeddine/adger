@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -71,13 +71,11 @@
             margin: 10px 0;
             padding: 10px;
         }
-        
         .comment-text {
             text-align: right;
             flex-grow: 1;
             padding-right: 10px;
         }
-        
         .comment-username {
             font-weight: bold;
             margin-bottom: 5px;
@@ -85,13 +83,11 @@
             align-items: center;
             justify-content: flex-end;
         }
-        
         .comment-date {
             font-size: 12px;
             color: #666;
             margin-right: 10px;
         }
-        
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -101,11 +97,9 @@
             padding: 5px 10px;
             margin-right: 10px;
         }
-        
         .delete-button:hover {
             background-color: #ff1a1a;
         }
-        
         .separator {
             width: 100%;
             height: 1px;
@@ -113,32 +107,22 @@
             margin: 10px 0;
         }
         
-        .comment-image {
-            max-width: 100%;
-            max-height: 200px;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        #field2 {
+        #commentForm {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: white;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
+            flex-direction: column;
             padding: 15px;
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
         }
         
-        #field2 textarea {
+        #commentForm textarea {
             flex: 1;
-            padding: 10px;
+            padding: 10px 15px;
             border: 1px solid #ccc;
             border-radius: 25px;
             margin-right: 10px;
@@ -147,26 +131,96 @@
             direction: rtl;
             text-align: right;
             resize: none;
-            height: 40px;
+            min-height: 40px;
+            line-height: 1.5;
         }
 
-        #field2 textarea::placeholder {
+        #commentForm textarea::placeholder {
             direction: rtl;
             text-align: right;
         }
-
-        #field2 input[type="file"] {
-            margin-right: 10px;
+        
+        .form-actions {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
         }
         
-        #field2 button {
+        #submitButton {
             padding: 0 30px;
             height: 40px;
-            margin-right: 10px;
+            margin-right: 25px;
             border: none;
             background-color: #000;
             color: white;
             border-radius: 25px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #submitButton:active {
+            opacity: 0.8;
+        }
+        
+        #imageUpload {
+            display: none;
+        }
+        
+        .upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .upload-label svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .preview-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .preview-image {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
         }
 
@@ -194,33 +248,192 @@
             to { transform: rotate(360deg); }
         }
 
-        .image-modal {
+        .empty-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 44px);
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        #emptyContent {
+            display: none;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        .no-more-comments {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: #304766;
+            margin: 20px 0;
+            animation: fadeIn 1s ease-in-out;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .confirm-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
         }
 
-        .image-modal img {
+        .confirm-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .confirm-box p {
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .confirm-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .confirm-yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .confirm-yes:hover {
+            background-color: #ff1a1a;
+        }
+
+        .confirm-no {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .confirm-no:hover {
+            background-color: #aaa;
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .lightbox-content {
+            position: relative;
             max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
+            max-height: 80%;
         }
-
-        .image-modal .close-modal {
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-comment {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            padding: 0 20px;
+            max-width: 600px;
+        }
+        
+        .lightbox-close {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: white;
-            padding: 10px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        
+        .lightbox-nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        .lightbox-nav button {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-nav button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .comment-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .comment-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .comment-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -235,26 +448,55 @@
             </div>
         </div>
         <div id="commentsList"></div>
+        <div id="emptyContent" class="empty-content">
+            <span class="empty-icon">📭</span>
+            <div>التعليقات فارغة</div>
+        </div>
     </div>
 
-    <div id="field2">
-        <textarea id="commentText" placeholder="اكتب تعليقك هنا..."></textarea>
-        <input type="file" id="commentImage" accept="image/*">
-        <button id="submitButton">إرسال</button>
-    </div>
+    <form id="commentForm">
+        <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
+        <div class="form-actions">
+            <label for="imageUpload" class="upload-label">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" multiple>
+            <button type="submit" id="submitButton">إرسال</button>
+        </div>
+        <div class="preview-images" id="previewContainer"></div>
+    </form>
 
-    <div id="loadingSpinner" style="display: none;">
+    <div id="loadingSpinner" style="display: block;">
         <div class="spinner"></div>
     </div>
 
-    <div id="imageModal" class="image-modal">
-        <span class="close-modal">✖</span>
-        <img id="modalImage">
+    <div id="confirmOverlay" class="confirm-overlay">
+        <div class="confirm-box">
+            <p>هل أنت متأكد أنك تريد الحذف؟</p>
+            <div class="confirm-buttons">
+                <button id="confirmNo" class="confirm-no">لا</button>
+                <button id="confirmYes" class="confirm-yes">نعم</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-nav">
+            <button id="prevBtn">&#10094;</button>
+            <button id="nextBtn">&#10095;</button>
+        </div>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImage" src="" alt="">
+            <div class="lightbox-comment" id="lightboxComment"></div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js";
 
         const firebaseConfig = {
@@ -262,7 +504,7 @@
             authDomain: "adger-ddb84.firebaseapp.com",
             databaseURL: "https://adger-ddb84-default-rtdb.firebaseio.com",
             projectId: "adger-ddb84",
-            storageBucket: "adger-ddb84.appspot.com",
+            storageBucket: "adger-ddb84.firebasestorage.app",
             messagingSenderId: "767665511626",
             appId: "1:767665511626:web:0ed485898001cdf4a02833"
         };
@@ -270,60 +512,285 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const storage = getStorage(app);
-
         const commentsRef = ref(database, 'comments');
-        const submitButton = document.getElementById('submitButton');
-        const commentText = document.getElementById('commentText');
-        const commentImage = document.getElementById('commentImage');
-        const commentsList = document.getElementById('commentsList');
+        
+        // متغيرات للعرض الضوئي
+        let currentLightboxImages = [];
+        let currentLightboxIndex = 0;
+        let currentLightboxComment = '';
 
-        submitButton.addEventListener('click', async () => {
-            const text = commentText.value;
-            const file = commentImage.files[0];
+        // إدارة تحميل الصور
+        const imageUpload = document.getElementById('imageUpload');
+        const previewContainer = document.getElementById('previewContainer');
+        let selectedImages = [];
+        
+        imageUpload.addEventListener('change', function(e) {
+            const files = e.target.files;
+            previewContainer.innerHTML = '';
+            selectedImages = [];
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.type.startsWith('image/')) {
+                    selectedImages.push(file);
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const previewDiv = document.createElement('div');
+                        previewDiv.className = 'preview-image';
+                        
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-image';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.onclick = function() {
+                            previewDiv.remove();
+                            selectedImages = selectedImages.filter(f => f !== file);
+                        };
+                        
+                        previewDiv.appendChild(img);
+                        previewDiv.appendChild(removeBtn);
+                        previewContainer.appendChild(previewDiv);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
 
-            if (!text || !file) {
-                alert('يرجى إضافة تعليق وصورة!');
+        // إرسال التعليق مع الصور
+        document.getElementById('commentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const commentText = document.getElementById('commentText').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const commentId = Number(urlParams.get('commentId'));
+            const username = localStorage.getItem('username');
+
+            if (!username) {
+                alert('يرجى تسجيل الدخول أولاً!');
+                window.location.href = 'account.html';
                 return;
             }
 
-            const fileRef = storageRef(storage, `images/${Date.now()}_${file.name}`);
-            await uploadBytes(fileRef, file);
-            const imageUrl = await getDownloadURL(fileRef);
+            if (commentText.trim() === '' && selectedImages.length === 0) {
+                alert('يرجى كتابة تعليق أو إضافة صورة قبل الإرسال!');
+                return;
+            }
 
-            push(commentsRef, { text, imageUrl, timestamp: Date.now() });
-            commentText.value = '';
-            commentImage.value = null;
+            try {
+                // تحميل الصور أولاً
+                const imageUrls = [];
+                for (const imageFile of selectedImages) {
+                    const imageName = Date.now() + '-' + imageFile.name;
+                    const imageRef = storageRef(storage, `comment_images/${imageName}`);
+                    await uploadBytes(imageRef, imageFile);
+                    const downloadURL = await getDownloadURL(imageRef);
+                    imageUrls.push(downloadURL);
+                }
+
+                // إرسال التعليق مع روابط الصور
+                await push(commentsRef, {
+                    text: commentText,
+                    username: username,
+                    timestamp: Date.now(),
+                    commentId: commentId,
+                    images: imageUrls
+                });
+
+                // إعادة تعيين النموذج
+                document.getElementById('commentText').value = '';
+                previewContainer.innerHTML = '';
+                selectedImages = [];
+                imageUpload.value = '';
+                
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } catch (error) {
+                console.error('حدث خطأ أثناء إرسال التعليق:', error);
+                alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
+            }
         });
 
+        // عرض التعليقات
+        const commentsList = document.getElementById('commentsList');
+        const urlParams = new URLSearchParams(window.location.search);
+        const commentId = Number(urlParams.get('commentId'));
+        
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
-            snapshot.forEach((child) => {
-                const { text, imageUrl } = child.val();
-                const comment = document.createElement('div');
-                comment.className = 'comment';
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                img.className = 'comment-image';
-                img.onclick = () => openImageModal(imageUrl);
-                comment.appendChild(img);
-                const p = document.createElement('p');
-                p.textContent = text;
-                comment.appendChild(p);
-                commentsList.appendChild(comment);
+            let hasComments = false;
+            const commentsArray = [];
+
+            // جمع التعليقات في مصفوفة
+            snapshot.forEach((childSnapshot) => {
+                const comment = childSnapshot.val();
+                if (comment.commentId === commentId) {
+                    commentsArray.push({
+                        key: childSnapshot.key,
+                        ...comment
+                    });
+                }
             });
+
+            // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
+            commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            // عرض التعليقات
+            commentsArray.forEach((comment) => {
+                hasComments = true;
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+
+                const username = localStorage.getItem('username');
+                if (username === comment.username) {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-button';
+                    deleteButton.textContent = 'حذف';
+                    deleteButton.onclick = () => showConfirmDialog(comment.key);
+                    commentElement.appendChild(deleteButton);
+                }
+
+                const commentTextElement = document.createElement('div');
+                commentTextElement.className = 'comment-text';
+                const commentUsernameElement = document.createElement('div');
+                commentUsernameElement.className = 'comment-username';
+
+                const commentDateElement = document.createElement('div');
+                commentDateElement.className = 'comment-date';
+                const date = new Date(comment.timestamp);
+                commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                const commentContentElement = document.createElement('div');
+                commentContentElement.textContent = comment.text;
+
+                commentUsernameElement.appendChild(commentDateElement);
+                commentUsernameElement.appendChild(document.createTextNode(comment.username));
+
+                commentTextElement.appendChild(commentUsernameElement);
+                commentTextElement.appendChild(commentContentElement);
+                
+                // عرض الصور إذا وجدت
+                if (comment.images && comment.images.length > 0) {
+                    const imagesContainer = document.createElement('div');
+                    imagesContainer.className = 'comment-images';
+                    
+                    comment.images.forEach((imageUrl, index) => {
+                        const imageDiv = document.createElement('div');
+                        imageDiv.className = 'comment-image';
+                        
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'صورة التعليق';
+                        img.onclick = () => openLightbox(comment.images, index, comment.text);
+                        
+                        imageDiv.appendChild(img);
+                        imagesContainer.appendChild(imageDiv);
+                    });
+                    
+                    commentTextElement.appendChild(imagesContainer);
+                }
+
+                commentElement.appendChild(commentTextElement);
+
+                commentsList.appendChild(commentElement);
+                commentsList.appendChild(document.createElement('div')).className = 'separator';
+            });
+
+            if (hasComments) {
+                const noMoreCommentsElement = document.createElement('div');
+                noMoreCommentsElement.className = 'no-more-comments';
+                noMoreCommentsElement.textContent = 'لا توجد تعليقات أخرى';
+                commentsList.appendChild(noMoreCommentsElement);
+            }
+
+            document.getElementById('emptyContent').style.display = hasComments ? 'none' : 'flex';
+            commentsList.style.display = hasComments ? 'block' : 'none';
+            document.getElementById('loadingSpinner').style.display = 'none';
         });
 
-        const imageModal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
-        const closeModal = document.querySelector('.close-modal');
+        // دالة لإظهار نافذة التأكيد
+        function showConfirmDialog(commentKey) {
+            const confirmOverlay = document.getElementById('confirmOverlay');
+            confirmOverlay.style.display = 'flex';
 
-        function openImageModal(imageUrl) {
-            modalImage.src = imageUrl;
-            imageModal.style.display = 'flex';
+            document.getElementById('confirmYes').onclick = () => {
+                remove(ref(database, `comments/${commentKey}`))
+                    .then(() => {
+                        confirmOverlay.style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error('حدث خطأ أثناء الحذف:', error);
+                        alert('حدث خطأ أثناء الحذف، حاول مرة أخرى.');
+                    });
+            };
+
+            document.getElementById('confirmNo').onclick = () => {
+                confirmOverlay.style.display = 'none';
+            };
         }
-
-        closeModal.addEventListener('click', () => {
-            imageModal.style.display = 'none';
+        
+        // وظائف العرض الضوئي للصور
+        function openLightbox(images, index, comment) {
+            currentLightboxImages = images;
+            currentLightboxIndex = index;
+            currentLightboxComment = comment;
+            
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxComment = document.getElementById('lightboxComment');
+            
+            lightboxImage.src = images[index];
+            lightboxComment.textContent = comment;
+            lightbox.style.display = 'flex';
+            
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = currentLightboxImages.length - 1;
+            } else if (currentLightboxIndex >= currentLightboxImages.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            document.getElementById('lightboxImage').src = currentLightboxImages[currentLightboxIndex];
+        }
+        
+        // إضافة معالجات الأحداث للعرض الضوئي
+        document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('prevBtn').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => navigateLightbox(1));
+        
+        // إغلاق العرض الضوئي عند النقر خارج الصورة
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // التنقل بين الصور باستخدام مفاتيح الأسهم
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox(1);
+                }
+            }
         });
     </script>
 </body>
