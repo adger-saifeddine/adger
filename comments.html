@@ -16,7 +16,7 @@
         .comments-container {
             margin-top: 40px;
             text-align: right;
-            padding-bottom: 80px;
+            padding-bottom: 120px;
         }
         
         .comments-header {
@@ -578,15 +578,22 @@
                 return;
             }
 
+            // إظهار مؤشر التحميل
+            document.getElementById('loadingSpinner').style.display = 'flex';
+
             try {
-                // تحميل الصور أولاً
-                const imageUrls = [];
-                for (const imageFile of selectedImages) {
-                    const imageName = Date.now() + '-' + imageFile.name;
-                    const imageRef = storageRef(storage, `comment_images/${imageName}`);
-                    await uploadBytes(imageRef, imageFile);
-                    const downloadURL = await getDownloadURL(imageRef);
-                    imageUrls.push(downloadURL);
+                let imageUrls = [];
+                
+                // إذا كانت هناك صور محددة، قم بتحميلها أولاً
+                if (selectedImages.length > 0) {
+                    const uploadPromises = selectedImages.map(async (imageFile) => {
+                        const imageName = Date.now() + '-' + imageFile.name;
+                        const imageRef = storageRef(storage, `comment_images/${imageName}`);
+                        await uploadBytes(imageRef, imageFile);
+                        return getDownloadURL(imageRef);
+                    });
+                    
+                    imageUrls = await Promise.all(uploadPromises);
                 }
 
                 // إرسال التعليق مع روابط الصور
@@ -604,6 +611,10 @@
                 selectedImages = [];
                 imageUpload.value = '';
                 
+                // إخفاء مؤشر التحميل
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                // التمرير إلى الأعلى
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -611,6 +622,7 @@
             } catch (error) {
                 console.error('حدث خطأ أثناء إرسال التعليق:', error);
                 alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
+                document.getElementById('loadingSpinner').style.display = 'none';
             }
         });
 
@@ -661,7 +673,13 @@
                 const commentDateElement = document.createElement('div');
                 commentDateElement.className = 'comment-date';
                 const date = new Date(comment.timestamp);
-                commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                commentDateElement.textContent = date.toLocaleDateString('ar-EG', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
 
                 const commentContentElement = document.createElement('div');
                 commentContentElement.textContent = comment.text;
@@ -694,7 +712,6 @@
                 }
 
                 commentElement.appendChild(commentTextElement);
-
                 commentsList.appendChild(commentElement);
                 commentsList.appendChild(document.createElement('div')).className = 'separator';
             });
