@@ -1231,8 +1231,117 @@
           "currency": "جنيه",
           "discountLabel": "مذهل"
         }
-      }
+      },
       
+      {
+        "id": "21",
+        "media": [
+          {"src": "https://i.postimg.cc/Zn7y5JWx/S096c6c5998444484a761e0331e3a5451-Y-jpg-220x220q75-jpg.avif", "type": "image"},
+          {"src": "https://i.postimg.cc/zD0hjFxH/Saf51ebec5ed74b2cb4bcb095d2971fcf-P-jpg-220x220q75-jpg.avif", "type": "image"},
+          {"src": "https://i.postimg.cc/3JqvMJ5K/S1ef7ecc799c845b0bcf07d66c22e8e27f-jpg-220x220q75-jpg.avif", "type": "image"},
+          {"src": "https://i.postimg.cc/bw22qcp1/Saa212d128f02420fb0acac4e5280c94eq-jpg-220x220q75-jpg.avif", "type": "image"},
+          {"src": "https://i.postimg.cc/wBXysXtv/Sb4ba5714badc48cca5717c6cde3ab909b-jpg-220x220q75-jpg.avif", "type": "image"}
+        ],
+        "pri": "230",
+        "oldPrice": "500",
+        "dis": "خصم 54%",
+        "changingText": ["سعة ضخمة", "نقل سريع", "مقاوم للماء"],
+        "longText": "منتج Xiaomi Pen Drive الأصلي بسعة 2 تيرا بايت وواجهة USB 3.0، يوفر سرعة نقل عالية مع تصميم معدني مقاوم للماء لتخزين آمن وموثوق.",
+        "sales": "موثوق",
+        "buttonId": "commentButton21",
+        "commentId": "21",
+        "elementId": "commentCount21",
+        "tableData": [
+          {"question": "اللون", "answer": "فضي"},
+          {"question": "المادة", "answer": "معدن"},
+          {"question": "السعة", "answer": "2 تيرا بايت"},
+          {"question": "الواجهة", "answer": "USB 3.0"}
+        ],
+        "desc": "فلاشة Xiaomi الأصلية بسعة 2TB عالية السرعة، مقاومة للماء ومصنوعة من المعدن، مثالية لنقل وتخزين الملفات الكبيرة بسرعة وأمان.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/Zn7y5JWx/S096c6c5998444484a761e0331e3a5451-Y-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/zD0hjFxH/Saf51ebec5ed74b2cb4bcb095d2971fcf-P-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/3JqvMJ5K/S1ef7ecc799c845b0bcf07d66c22e8e27f-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/bw22qcp1/Saa212d128f02420fb0acac4e5280c94eq-jpg-220x220q75-jpg.avif",
+              "https://i.postimg.cc/wBXysXtv/Sb4ba5714badc48cca5717c6cde3ab909b-jpg-220x220q75-jpg.avif"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/Zn7y5JWx/S096c6c5998444484a761e0331e3a5451-Y-jpg-220x220q75-jpg.avif",
+          "name": "Xiaomi Pen Drive 2 TB USB 3.0",
+          "sold": "موثوق",
+          "price": "230.00",
+          "discount": "54",
+          "pageId": "21",
+          "productId": "21",
+          "shippingPrice": "70"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      },
+      {
+        "id": "22",
+        "media": [
+          {"src": "https://i.postimg.cc/4xZmRK2R/S7249109b8ea14026a08f01a10cfb4018q-jpg-220x220q75-jpg.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/lr5k22.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/rrsm6z.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/a6141s.avif", "type": "image"},
+          {"src": "https://files.catbox.moe/rmhcj1.avif", "type": "image"}
+        ],
+        "pri": "240",
+        "oldPrice": "340",
+        "dis": "خصم 29%",
+        "changingText": ["تصميم رجعي", "حماية من الأشعة فوق البنفسجية", "عدسات مستقطبة"],
+        "longText": "نظارات شمسية فاخرة بتصميم مربع وأسلوب خمر، تناسب الرجال والنساء. مثالية للقيادة والصيد، توفر حماية UV400 وعدسات مستقطبة مريحة للعين.",
+        "sales": "موثوق",
+        "buttonId": "commentButton22",
+        "commentId": "22",
+        "elementId": "commentCount22",
+        "tableData": [
+          {
+            "question": "الألوان",
+            "answer": ["متعدد"]
+          },
+          {"question": "المادة", "answer": "بلاستيك + معدن"},
+          {"question": "الوزن", "answer": "30 جرام"},
+          {"question": "مقاس", "answer": "14.5 سم × 5 سم"}
+        ],
+        "desc": "نظارات شمسية بتصميم مربع خمر وعدسات مستقطبة، توفر رؤية واضحة في الضوء الساطع وتضيف لمسة أناقة لأي مظهر.",
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/4xZmRK2R/S7249109b8ea14026a08f01a10cfb4018q-jpg-220x220q75-jpg.avif",
+              "https://files.catbox.moe/lr5k22.avif",
+              "https://files.catbox.moe/rrsm6z.avif",
+              "https://files.catbox.moe/a6141s.avif",
+              "https://files.catbox.moe/rmhcj1.avif"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/4xZmRK2R/S7249109b8ea14026a08f01a10cfb4018q-jpg-220x220q75-jpg.avif",
+          "name": "نظارات شمسية خمر رجالية نسائية UV400",
+          "sold": "موثوق",
+          "price": "240.00",
+          "discount": "29",
+          "pageId": "22",
+          "productId": "22",
+          "shippingPrice": "70",
+          "colors": ["أخضر", "أسود", "أبيض", "أزرق", "رصاصي", "أحمر شفاف", "أزرق شفاف", "أحمر فاشون", "بني"]
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      }
+       
       
       
       
