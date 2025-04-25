@@ -428,117 +428,124 @@
         }
 
         .cart-icon {
-            position: relative;
-            user-select: none; /* منع تحديد النص */
--webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
-outline: none;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: red;
-            color: white;
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 50%;
-        }
-
-        /* إخفاء العنصر على الهواتف */
-        @media only screen and (max-width: 767px) {
-            .cart-icon {
-                margin-left: -10px;
-                margin-right: -8px;
+                position: relative;
+                user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none;
             }
-        }
-        @media only screen and (max-width: 767px) {
-            .cart-icon {
-                margin-left: -12px;
+    
+            .cart-count {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: red;
+                color: white;
+                font-size: 12px;
+                padding: 2px 6px;
+                border-radius: 50%;
             }
-        }
-
-        /* تعديلات النافذة الجانبية */
-        .menu-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100vh;
-            background-color: white;
-            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            z-index: 1000;
-            transition: left 0.3s ease-in-out;
-            overflow-y: auto;
-        }
-
-        @keyframes slideIn {
-            from {
+    
+            /* إخفاء العنصر على الهواتف */
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                }
+            }
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -12px;
+                }
+            }
+    
+            /* تعديلات النافذة الجانبية */
+            .menu-popup {
+                display: none;
+                position: fixed;
+                top: 0;
                 left: -250px;
+                width: 250px;
+                height: 100vh;
+                background-color: white;
+                box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                z-index: 1000;
+                transition: left 0.3s ease-in-out;
+                overflow-y: auto;
             }
-            to {
-                left: 0;
+    
+            @keyframes slideIn {
+                from {
+                    left: -250px;
+                }
+                to {
+                    left: 0;
+                }
             }
-        }
-
-        @keyframes slideOut {
-            from {
-                left: 0;
+    
+            @keyframes slideOut {
+                from {
+                    left: 0;
+                }
+                to {
+                    left: -250px;
+                }
             }
-            to {
-                left: -250px;
+    
+            .menu-popup.active {
+                display: block;
+                animation: slideIn 0.3s ease-in-out forwards;
             }
-        }
-
-        .menu-popup.active {
-            display: block;
-            animation: slideIn 0.3s ease-in-out forwards;
-        }
-
-        .menu-popup.closing {
-            animation: slideOut 0.3s ease-in-out forwards;
-        }
-
-        .menu-popup .back-arrow {
-            cursor: pointer;
-            margin-bottom: 20px;
-            -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
-        }
-
-        .menu-popup .back-arrow:focus {
-            outline: none; /* منع ظهور التحديد عند التركيز */
-        }
-
-        .menu-popup .back-arrow svg {
-            width: 24px;
-            height: 24px;
-            color: #333;
-            pointer-events: none; /* يمنع التأثير على الـ SVG */
-        }
-
-        .menu-popup p {
-            font-size: 18px;
-            color: #333;
-            cursor: pointer;
-        }
-
-        .menu-icon {
-            margin-left: 10px;
-            user-select: none; /* منع تحديد النص */
--webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
-outline: none;
-        }
-
-        /* إخفاء العنصر على الهواتف */
-        @media only screen and (max-width: 767px) {
+    
+            .menu-popup.closing {
+                animation: slideOut 0.3s ease-in-out forwards;
+            }
+    
+            .menu-popup .back-arrow {
+                cursor: pointer;
+                margin-bottom: 20px;
+                -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
+            }
+    
+            .menu-popup .back-arrow:focus {
+                outline: none; /* منع ظهور التحديد عند التركيز */
+            }
+    
+            .menu-popup .back-arrow svg {
+                width: 24px;
+                height: 24px;
+                color: #333;
+                pointer-events: none; /* يمنع التأثير على الـ SVG */
+            }
+    
+            .menu-popup p {
+                font-size: 18px;
+                color: #333;
+                cursor: pointer;
+            }
+    
             .menu-icon {
-                margin-left: -6px;
+                margin-left: 10px;
+                user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none;
             }
-        }
+    
+            /* إخفاء العنصر على الهواتف */
+            @media only screen and (max-width: 767px) {
+                .menu-icon {
+                    margin-left: -6px;
+                    margin-right: -4px;
+                }
+            }
 
-        .adger {
+            @media only screen and (min-width: 767px) {
+                .menu-icon {
+               margin-right: -7px;
+                }
+            }
+    
+            .adger {
             font-family: Arial, sans-serif;
             font-size: 27px;
             margin-left: 10px;

@@ -1012,34 +1012,21 @@
                 border-radius: 50%;
             }
     
-
-            #usernameDisplay {
-            white-space: nowrap; /* منع النص من الانتقال إلى سطر جديد */
-            overflow: hidden; /* إخفاء النص الزائد */
-            text-overflow: ellipsis; /* إضافة نقاط (...) للنص الزائد */
-            max-width: 150px; /* تحديد عرض أقصى للعنصر (يمكن تعديله حسب الحاجة) */
-            display: inline-block; /* لجعل العنصر يتصرف كعنصر inline مع إمكانية تحديد عرض */
-        }
-
-    
-         /* إخفاء العنصر على الهواتف */
-@media only screen and (max-width: 767px) {
-    .cart-icon {
-        margin-left: -10px;
-        margin-right: -8px;
-    }
-
-}
-@media only screen and (max-width: 767px) {
-    .cart-icon {
-        margin-left: -12px;
-    }
-
-}
+            /* إخفاء العنصر على الهواتف */
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                }
+            }
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -12px;
+                }
+            }
     
             /* تعديلات النافذة الجانبية */
-  /* تعديلات النافذة الجانبية */
-  .menu-popup {
+            .menu-popup {
                 display: none;
                 position: fixed;
                 top: 0;
@@ -1049,13 +1036,12 @@
                 background-color: white;
                 box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
                 padding: 20px;
-                z-index: 100000000000;
+                z-index: 1000;
                 transition: left 0.3s ease-in-out;
                 overflow-y: auto;
             }
     
-            /* أنيميشن مخصصة للنافذة الأولى */
-            @keyframes slideIn1 {
+            @keyframes slideIn {
                 from {
                     left: -250px;
                 }
@@ -1064,7 +1050,7 @@
                 }
             }
     
-            @keyframes slideOut1 {
+            @keyframes slideOut {
                 from {
                     left: 0;
                 }
@@ -1073,59 +1059,31 @@
                 }
             }
     
-            /* أنيميشن مخصصة للنافذة الثانية */
-            @keyframes slideIn2 {
-                from {
-                    left: -250px;
-                }
-                to {
-                    left: 0;
-                }
+            .menu-popup.active {
+                display: block;
+                animation: slideIn 0.3s ease-in-out forwards;
             }
     
-            @keyframes slideOut2 {
-                from {
-                    left: 0;
-                }
-                to {
-                    left: -250px;
-                }
-            }
-                /* تطبيق الأنيميشن على النافذة الأولى */
-                .menu-popup-1.active {
-                animation: slideIn1 0.3s ease-in-out forwards;
-            }
-    
-            .menu-popup-1.closing {
-                animation: slideOut1 0.3s ease-in-out forwards;
-            }
-    
-            /* تطبيق الأنيميشن على النافذة الثانية */
-            .menu-popup-2.active {
-                animation: slideIn2 0.3s ease-in-out forwards;
-            }
-    
-            .menu-popup-2.closing {
-                animation: slideOut2 0.3s ease-in-out forwards;
+            .menu-popup.closing {
+                animation: slideOut 0.3s ease-in-out forwards;
             }
     
             .menu-popup .back-arrow {
-    cursor: pointer;
-    margin-bottom: 20px;
-    -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
-}
-
-.menu-popup .back-arrow:focus {
-    outline: none; /* منع ظهور التحديد عند التركيز */
-}
-
-.menu-popup .back-arrow svg {
-    width: 24px;
-    height: 24px;
-    color: #333;
-    pointer-events: none; /* يمنع التأثير على الـ SVG */
-}
-
+                cursor: pointer;
+                margin-bottom: 20px;
+                -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
+            }
+    
+            .menu-popup .back-arrow:focus {
+                outline: none; /* منع ظهور التحديد عند التركيز */
+            }
+    
+            .menu-popup .back-arrow svg {
+                width: 24px;
+                height: 24px;
+                color: #333;
+                pointer-events: none; /* يمنع التأثير على الـ SVG */
+            }
     
             .menu-popup p {
                 font-size: 18px;
@@ -1144,6 +1102,13 @@
             @media only screen and (max-width: 767px) {
                 .menu-icon {
                     margin-left: -6px;
+                    margin-right: -4px;
+                }
+            }
+
+            @media only screen and (min-width: 767px) {
+                .menu-icon {
+               margin-right: -7px;
                 }
             }
     
