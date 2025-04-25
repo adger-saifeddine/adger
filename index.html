@@ -2907,8 +2907,8 @@
                     }
                 });
             } else {
-                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-            }
+    welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+}
         }
     
         // تحديث رسالة الترحيب عند تحميل الصفحة
@@ -3041,7 +3041,7 @@
         const itemsPerLoad = 20;
         let loadedItems = 0;
     
-        async function fetchAndFilterProducts(searchTerm) {
+        function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
             const searchTermDisplay = document.getElementById('search-term-display');
@@ -3052,49 +3052,32 @@
             gallery.innerHTML = '';
             showLoadingAnimation();
     
-            try {
-                let allProducts = [];
-                let fileIndex = 1;
-                let moreFilesExist = true;
-                
-                while (moreFilesExist) {
-                    try {
-                        const response = await fetch(`products-${fileIndex}.json`);
-                        if (!response.ok) {
-                            moreFilesExist = false;
-                            break;
-                        }
-                        const products = await response.json();
-                        allProducts = allProducts.concat(products);
-                        fileIndex++;
-                    } catch (error) {
-                        moreFilesExist = false;
-                        break;
-                    }
-                }
-                
-                removeLoadingAnimation();
-                filteredProducts = allProducts.filter(product => 
-                    product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-                shuffleArray(filteredProducts);
-                gallery.innerHTML = '';
-                loadedItems = 0;
+            fetch('products.json')
+                .then(response => response.json())
+                .then(products => {
+                    removeLoadingAnimation();
+                    filteredProducts = products.filter(product => 
+                        product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                    shuffleArray(filteredProducts);
+                    gallery.innerHTML = '';
+                    loadedItems = 0;
     
-                if (filteredProducts.length > 0) {
-                    loadProducts(0, itemsPerLoad);
-                    noResultsMessage.style.display = 'none';
-                } else {
+                    if (filteredProducts.length > 0) {
+                        loadProducts(0, itemsPerLoad);
+                        noResultsMessage.style.display = 'none';
+                    } else {
+                        noResultsMessage.style.display = 'block';
+                        searchTermDisplay.textContent = searchTerm;
+                    }
+                })
+                .catch(error => {
+                    removeLoadingAnimation();
+                    console.error('فشل جلب المنتجات من JSON:', error);
+                    gallery.innerHTML = '';
                     noResultsMessage.style.display = 'block';
                     searchTermDisplay.textContent = searchTerm;
-                }
-            } catch (error) {
-                removeLoadingAnimation();
-                console.error('فشل جلب المنتجات من JSON:', error);
-                gallery.innerHTML = '';
-                noResultsMessage.style.display = 'block';
-                searchTermDisplay.textContent = searchTerm;
-            }
+                });
         }
     
         function loadProducts(startIndex, count) {
