@@ -454,16 +454,6 @@
                 localStorage.setItem('cart', JSON.stringify(cart));
             }
     
-            function removeFromCart(index) {
-                // تأكيد الحذف
-                if (confirm('هل أنت متأكد من حذف هذا المنتج من العربة؟')) {
-                    cart.splice(index, 1);
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    updateCartDisplay();
-                    window.dispatchEvent(new Event('storage'));
-                }
-            }
-    
             function calculateTotalPrice() {
                 let totalPrice = 0;
                 cart.forEach(product => {
