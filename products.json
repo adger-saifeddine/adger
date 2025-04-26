@@ -199,8 +199,28 @@
         "sold": "Fashion",
         "discountTexts": ["كان بـ 340 جنيه", "خصم 29%"],
         "link": "prod.html?id=22"
-    }
+    },
     
+    {
+        "name": "باور بانك سريع 20000mAh بشاشة رقمية",
+        "dataName": "#23 باور بانك محمول بسعة كبيرة 20000 ملي أمبير - شاشة رقمية - شحن سريع لأجهزة خصومات للهاتف للهواتف إكسسوارات إلكترونيات شحن شاحن",
+        "price": "230.00",
+        "image": "https://i.postimg.cc/v84tZcMh/powerbank23-main.jpg",
+        "sold": "إلكترونيات",
+        "discountTexts": ["كان بـ 290 جنيه", "خصم 21%"],
+        "link": "prod.html?id=23"
+      },
+      {
+        "name": "حامل قابل للطي لشاحن MagSafe اللاسلكي",
+        "dataName": "#24 إكسسوارات MagSafe قابل للطي - متوافق مع هواتف iOS 14/13/12 - ألوان: أسود، رصاصي، أبيض",
+        "price": "130.00",
+        "image": "https://i.postimg.cc/jSq71LwD/S4dbd86ef23ee49848ea992f26052c03dp-jpg-220x220q75-jpg.avif",
+        "sold": "للهواتف",
+        "discountTexts": ["لا مثيل له", "منتج عملي"],
+        "link": "prod.html?id=24"
+      }
+      
+      
     
     
     
