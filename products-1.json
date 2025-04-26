@@ -1509,7 +1509,214 @@
           "currency": "جنيه",
           "discountLabel": "مذهل"
         }
+      },
+      {
+        "id": "25",
+        "media": [
+          {"src": "https://i.postimg.cc/2jtgN7LY/aefb9bc52eb1c9c5d190899706152885ac077ce5ae8b12948d30bcb6e6bb3ec8.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/o0e1ak.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/iyanec.webp", "type": "image"},
+          {"src": "https://files.catbox.moe/ufyb5q.jpg", "type": "image"}
+        ],
+        "pri": "30",
+        "oldPrice": "150",
+        "dis": "خصم 80%",
+        "changingText": ["إضاءة قوية", "تحكم بدرجات الإضاءة", "مثالي للتصوير وصناعة المحتوى"],
+        "longText": "رينج لايت مقاس 26 سم",
+        "desc": "حل مثالي لإضاءة احترافية في التصوير وصناعة المحتوى، يأتي مع تحكم بدرجات الإضاءة ليناسب كل احتياجاتك.",
+        "sales": "الأضائة",
+        "buttonId": "commentButton25",
+        "commentId": "25",
+        "elementId": "commentCount25",
+        "tableData": [
+          {"question": "مقاس", "answer": "26 سم"},
+          {"question": "الإضاءة", "answer": "3 أوضاع إضاءة (أبيض - دافئ - محايد)"},
+          {"question": "التحكم", "answer": "تحكم بدرجات السطوع"},
+          {"question": "الاستخدام", "answer": "تصوير، مكالمات فيديو، بث مباشر"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/2jtgN7LY/aefb9bc52eb1c9c5d190899706152885ac077ce5ae8b12948d30bcb6e6bb3ec8.jpg",
+              "https://files.catbox.moe/o0e1ak.jpg",
+              "https://files.catbox.moe/iyanec.webp",
+              "https://files.catbox.moe/ufyb5q.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/2jtgN7LY/aefb9bc52eb1c9c5d190899706152885ac077ce5ae8b12948d30bcb6e6bb3ec8.jpg",
+          "name": "رينج لايت مقاس 26 سم",
+          "sold": "الأضائة",
+          "price": "30.00",
+          "discount": "80",
+          "pageId": "25",
+          "productId": "25",
+          "shippingPrice": "50"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      },
+      {
+        "id": "26",
+        "media": [
+          {"src": "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png", "type": "image"},
+          {"src": "https://i.postimg.cc/Bb5hFHpY/1716925997temp1917554784501431199-removebg-preview.png", "type": "image"},
+          {"src": "https://i.postimg.cc/sf5HbCzY/1716925997temp5959839030718364077-removebg-preview.png", "type": "image"},
+          {"src": "https://i.postimg.cc/9FVghgXv/1716925997temp946219167006555484-removebg-preview.png", "type": "image"}
+        ],
+        "pri": "340",
+        "oldPrice": "350",
+        "dis": "خصم 3%",
+        "changingText": ["مستشعر دقيق", "إضاءة RGB قابلة للتخصيص", "تصميم مريح وأزرار قابلة للبرمجة"],
+        "longText": "ماوس جيمينج CW905",
+        "desc": "ماوس أونيكوما CW905 مع مستشعر PixArt عالي الدقة، وإضاءة RGB مذهلة، و6 أزرار قابلة للتخصيص لتجربة ألعاب احترافية ومريحة.",
+        "sales": "أجهزة الألعاب",
+        "buttonId": "commentButton26",
+        "commentId": "26",
+        "elementId": "commentCount26",
+        "tableData": [
+          {"question": "نوع الاتصال", "answer": "سلكي"},
+          {"question": "مستشعر", "answer": "PixArt PMW3360"},
+          {"question": "معدل DPI", "answer": "100-6400 نقطة في البوصة"},
+          {"question": "الإضاءة", "answer": "RGB قابلة للتخصيص"},
+          {"question": "عدد الأزرار", "answer": "6 أزرار قابلة للبرمجة"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png",
+              "https://i.postimg.cc/Bb5hFHpY/1716925997temp1917554784501431199-removebg-preview.png",
+              "https://i.postimg.cc/sf5HbCzY/1716925997temp5959839030718364077-removebg-preview.png",
+              "https://i.postimg.cc/9FVghgXv/1716925997temp946219167006555484-removebg-preview.png"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png",
+          "name": "ماوس جيمينج CW905",
+          "sold": "أجهزة الألعاب",
+          "price": "340.00",
+          "discount": "3",
+          "pageId": "26",
+          "productId": "26",
+          "shippingPrice": "50"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      },
+      {
+        "id": "27",
+        "media": [
+          {"src": "https://i.postimg.cc/vHNnzDK3/2025-04-26-21-05-26-92348bce.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/d8znkj.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/sqft0m.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/6mase8.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/qkz042.jpg", "type": "image"}
+        ],
+        "pri": "20",
+        "oldPrice": "50",
+        "dis": "خصم 60%",
+        "changingText": ["تصميم كرتوني لطيف", "سطح ناعم لتحريك الماوس بسهولة", "مناسبة للمكاتب والدراسة"],
+        "longText": "بادة ماوس صغيرة برسمة كرتون",
+        "desc": "بادة ماوس صغيرة مميزة برسومات كرتونية جذابة، مصنوعة من خامة ناعمة توفر تحكمًا دقيقًا في حركة الماوس. مثالية للاستخدام اليومي سواء في العمل أو الدراسة.",
+        "sales": "إكسسوارات الكمبيوتر",
+        "buttonId": "commentButton27",
+        "commentId": "27",
+        "elementId": "commentCount27",
+        "tableData": [
+          {"question": "الأبعاد", "answer": "تقريباً 22×18 سم"},
+          {"question": "الخامة", "answer": "سطح قماشي وقاعدة مطاطية مانعة للانزلاق"},
+          {"question": "الاستعمال", "answer": "مناسب لجميع أنواع الماوس"},
+          {"question": "التصميم", "answer": "رسمة كرتونية جذابة"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/vHNnzDK3/2025-04-26-21-05-26-92348bce.jpg",
+              "https://files.catbox.moe/d8znkj.jpg",
+              "https://files.catbox.moe/sqft0m.jpg",
+              "https://files.catbox.moe/6mase8.jpg",
+              "https://files.catbox.moe/qkz042.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/vHNnzDK3/2025-04-26-21-05-26-92348bce.jpg",
+          "name": "بادة ماوس صغيرة برسمة كرتون",
+          "sold": "إكسسوارات الكمبيوتر",
+          "price": "20.00",
+          "discount": "60",
+          "pageId": "27",
+          "productId": "27",
+          "shippingPrice": "50"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      },
+      {
+        "id": "28",
+        "media": [
+          {"src": "https://i.postimg.cc/02bMbPNm/2025-04-26-21-06-07-48e64101.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/lcje0n.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/jpbiud.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/d34t4m.jpg", "type": "image"}
+        ],
+        "pri": "5",
+        "oldPrice": "60",
+        "dis": "خصم 92%",
+        "changingText": ["محفظة بنك القاهرة اللون بني", "تصميم عصري وعالي الجودة"],
+        "longText": "محفظة بنك القاهرة اللون بني - تصميم عصري وعالي الجودة",
+        "desc": "محفظة أنيقة وعملية مصنوعة من مواد عالية الجودة، مثالية للاستخدام اليومي.",
+        "sold": "محافظ",
+        "buttonId": "commentButton28",
+        "commentId": "28",
+        "elementId": "commentCount28",
+        "tableData": [
+          {"question": "اللون", "answer": "بني"},
+          {"question": "المواد", "answer": "جلد عالي الجودة"},
+          {"question": "الحجم", "answer": "مناسب للاستخدام اليومي"},
+          {"question": "الاستخدام", "answer": "حمل النقود، البطاقات"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/02bMbPNm/2025-04-26-21-06-07-48e64101.jpg",
+              "https://files.catbox.moe/lcje0n.jpg",
+              "https://files.catbox.moe/jpbiud.jpg",
+              "https://files.catbox.moe/d34t4m.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/02bMbPNm/2025-04-26-21-06-07-48e64101.jpg",
+          "name": "محفظة بنك القاهرة اللون بني",
+          "sold": "محافظ",
+          "price": "5.00",
+          "discount": "92",
+          "pageId": "28",
+          "productId": "28",
+          "shippingPrice": "50"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
       }
+      
+      
+      
+      
       
       
       
