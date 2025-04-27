@@ -1710,7 +1710,104 @@
           "currency": "جنيه",
           "discountLabel": "خصم"
         }
+      },
+      {
+        "id": "29",
+        "media": [
+          {"src": "https://i.postimg.cc/0NRqFscJ/2025-04-27-13-17-18-feb372c0.jpg", "type": "image"},
+          {"src": "https://i.postimg.cc/q7sdd55D/2025-04-27-13-16-52-279237a8.jpg", "type": "image"}
+        ],
+        "pri": "350",
+        "oldPrice": "",
+        "dis": "",
+        "changingText": ["ساعة كاسيو أصلية", "تصميم أنيق وجودة عالية"],
+        "longText": "ساعة كاسيو مميزة بتصميم كلاسيكي أنيق وجودة يابانية موثوقة.",
+        "desc": "ساعة كلاسيكية من كاسيو تجمع بين الأناقة والمتانة، مثالية للاستخدام اليومي والمناسبات الخاصة.",
+        "sales":  "casio",
+        "buttonId": "commentButton29",
+        "commentId": "29",
+        "elementId": "commentCount29",
+        "tableData": [
+          {"question": "العلامة التجارية", "answer": "كاسيو"},
+          {"question": "الموديل", "answer": "موديل كلاسيكي"},
+          {"question": "اللون", "answer": "متعدد"},
+          {"question": "الاستخدام", "answer": "يومي ورسمي"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/0NRqFscJ/2025-04-27-13-17-18-feb372c0.jpg",
+              "https://i.postimg.cc/q7sdd55D/2025-04-27-13-16-52-279237a8.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/0NRqFscJ/2025-04-27-13-17-18-feb372c0.jpg",
+          "name": "ساعة كاسيو مميزة",
+          "sold":  "casio",
+          "price": "350.00",
+          "discount": "",
+          "pageId": "29",
+          "productId": "29",
+          "shippingPrice": "50",
+          "colors": ["فضي مع أبيض", "فضي مع أسود", "فضي مع كحلي"]
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
+      },
+      {
+        "id": "30",
+        "media": [
+          {"src": "https://i.postimg.cc/d3x0Tfvm/1718732570temp8392620097470367338-removebg-preview.png", "type": "image"},
+          {"src": "https://files.catbox.moe/ty2p9s.jpg", "type": "image"},
+          {"src": "https://files.catbox.moe/x4vuxr.jpg", "type": "image"}
+        ],
+        "pri": "100",
+        "oldPrice": "150",
+        "dis": "خصم 33%",
+        "changingText": ["طبعة أصلية بغلاف مقوى", "70 مقالاً مشوقاً في مجالات متعددة"],
+        "longText": "كتاب حول العالم - فهد عامر الأحمدي",
+        "desc": "كتاب 'حول العالم' للكاتب فهد عامر الأحمدي، يضم 70 مقالاً في مجالات متنوعة بأسلوب مشوق لا يبعث على الملل. يأخذك في رحلة عبر العصور، من الديناصورات إلى المستقبل، مروراً بالحضارات القديمة مثل الفراعنة والإغريق وشعوب أمريكا الأصلية.",
+        "sales": "كتب",
+        "buttonId": "commentButton30",
+        "commentId": "30",
+        "elementId": "commentCount30",
+        "tableData": [
+          {"question": "المؤلف", "answer": "فهد عامر الأحمدي"},
+          {"question": "عدد الصفحات", "answer": "354 صفحة"},
+          {"question": "الناشر", "answer": "دار الحضارة للنشر والتوزيع"},
+          {"question": "الطبعة", "answer": "طبعة أصلية بغلاف مقوى"}
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/d3x0Tfvm/1718732570temp8392620097470367338-removebg-preview.png",
+              "https://files.catbox.moe/ty2p9s.jpg",
+              "https://files.catbox.moe/x4vuxr.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/d3x0Tfvm/1718732570temp8392620097470367338-removebg-preview.png",
+          "name": "كتاب حول العالم - فهد عامر الأحمدي",
+          "sold": "كتب",
+          "price": "100.00",
+          "discount": "33",
+          "pageId": "30",
+          "productId": "30",
+          "shippingPrice": "50"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
       }
+      
+      
       
       
       

@@ -254,7 +254,28 @@
         "sold": "محافظ",
         "discountTexts": ["كان بـ60 جنيه", "خصم 92%"],
         "link": "prod.html?id=28"
+      },
+      {
+        "name": "ساعة كاسيو أصلية",
+        "dataName": "#29 ساعة كاسيو أصلية - تصميم أنيق وجودة عالية",
+        "price": "350.00",
+        "image": "https://i.postimg.cc/0NRqFscJ/2025-04-27-13-17-18-feb372c0.jpg",
+        "sold": "casio",
+        "discountTexts": ["للرجال و النساء", "بطارية تدوم طويلاً"],
+        "link": "prod.html?id=29"
+      },
+      {
+        "name": "كتاب حول العالم - فهد عامر الأحمدي",
+        "dataName": "#30 كتاب حول العالم - فهد عامر الأحمدي - 70 مقالًا في مجالات متنوعة",
+        "price": "100.00",
+        "image": "https://i.postimg.cc/d3x0Tfvm/1718732570temp8392620097470367338-removebg-preview.png",
+        "sold": "كتب",
+        "discountTexts": ["خصم 33%", "كان بـ150 جنيه"],
+        "link": "prod.html?id=30"
       }
+      
+      
+
       
       
       
