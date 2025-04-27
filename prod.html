@@ -991,7 +991,7 @@ function updateMainMedia(thumbnail) {
                         overflow-x: hidden; /* منع التمرير الأفقي */
                     }
                     .gradient-background {
-    background: linear-gradient(to bottom, #ff3300, #f1f1f1); /* التدرج من الأعلى إلى الأسفل */
+    background: linear-gradient(to bottom, #00aeff, #f1f1f1); /* التدرج من الأعلى إلى الأسفل */
     color: white; /* لون النص */
     height: 44px; /* ارتفاع الخلفية */
     display: flex;
@@ -2304,7 +2304,6 @@ function updateMainMedia(thumbnail) {
 
 
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2316,6 +2315,7 @@ function updateMainMedia(thumbnail) {
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
+            position: relative;
         }
 
         .image-container {
@@ -2391,9 +2391,9 @@ function updateMainMedia(thumbnail) {
             display: flex;
             padding: 8px;
             gap: 10px;
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
 
         .add-to-cart-text, .buy-now-text {
@@ -2410,9 +2410,9 @@ function updateMainMedia(thumbnail) {
             border-radius: 45px;
             user-select: none;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
 
         .add-to-cart-text {
@@ -2432,7 +2432,57 @@ function updateMainMedia(thumbnail) {
         .buy-now-text:hover {
             background-color: #ff5100;
         }
+
+        /* رسالة التأكيد */
+        .confirmation-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .confirmation-message.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .confirmation-text {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .close-btn {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #ff5100;
+        }
     </style>
+</head>
 <body>
     <div class="image-container product" id="product-container">
         <div class="image-frame" id="product-frame" style="display: none;">
@@ -2453,9 +2503,15 @@ function updateMainMedia(thumbnail) {
         <div class="bottom-buttons">
             <div class="buttons-wrapper">
                 <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
-                <div class="add-to-cart-text" id="add-to-cart-btn" onclick="addToCart(this)">أضف إلى السلة</div>
+                <div class="add-to-cart-text" id="add-to-cart-btn">أضف إلى السلة</div>
             </div>
         </div>
+    </div>
+    
+    <!-- رسالة التأكيد -->
+    <div class="confirmation-message" id="confirmation-message">
+        <div class="confirmation-text" id="confirmation-text"></div>
+        <button class="close-btn" id="close-btn">موافق</button>
     </div>
     
     <script>
@@ -2540,6 +2596,11 @@ function updateMainMedia(thumbnail) {
                     product.materials
                 );
             };
+            
+            // إعداد حدث الزر إضافة إلى العربة
+            document.getElementById('add-to-cart-btn').onclick = function() {
+                addToCart();
+            };
         }
     
         // دالة شراء الآن
@@ -2558,7 +2619,7 @@ function updateMainMedia(thumbnail) {
         }
     
         // دالة إضافة إلى العربة المعدلة
-        function addToCart(element) {
+        function addToCart() {
             try {
                 // الحصول على بيانات المنتج من العنصر
                 const productName = document.getElementById('product-name').textContent;
@@ -2584,19 +2645,40 @@ function updateMainMedia(thumbnail) {
                 }
     
                 localStorage.setItem('cart', JSON.stringify(cart));
-                alert(`تمت إضافة "${productName}" إلى العربة!`);
+                
+                // عرض رسالة التأكيد
+                showConfirmation(`تمت إضافة "${productName}" إلى العربة بنجاح!`);
     
                 // للتحقق فقط
                 console.log('سلة التسوق الحالية:', cart);
             } catch (error) {
                 console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
-                alert('حدث خطأ أثناء إضافة المنتج إلى العربة');
+                showConfirmation('حدث خطأ أثناء إضافة المنتج إلى العربة');
             }
+        }
+        
+        // دالة لعرض رسالة التأكيد
+        function showConfirmation(message) {
+            const confirmationMessage = document.getElementById('confirmation-message');
+            const confirmationText = document.getElementById('confirmation-text');
+            const closeBtn = document.getElementById('close-btn');
+            
+            confirmationText.textContent = message;
+            confirmationMessage.classList.add('show');
+            
+            // إغلاق الرسالة عند النقر على الزر
+            closeBtn.onclick = function() {
+                confirmationMessage.classList.remove('show');
+            };
+            
+            // إغلاق الرسالة تلقائياً بعد 5 ثوانٍ
+            setTimeout(() => {
+                confirmationMessage.classList.remove('show');
+            }, 5000);
         }
     </script>
 </body>
-
-
+</html>
 
 
 
