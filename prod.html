@@ -65,7 +65,6 @@
             border: none;
         }
 
-        /* الصورة الرمادية البديلة أثناء التحميل */
         .placeholder-image {
             width: 400px;
             height: 400px;
@@ -315,6 +314,9 @@
             position: relative;
             max-width: 90%;
             max-height: 90%;
+            background-color: white; /* خلفية بيضاء للصور */
+            padding: 10px;
+            border-radius: 10px;
         }
 
         .lightbox-content img {
@@ -339,6 +341,14 @@
             font-size: 35px;
             font-weight: bold;
             cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
         }
 
         .lightbox-nav {
@@ -358,12 +368,32 @@
             user-select: none;
         }
 
-        .lightbox-prev {
-            left: 20px;
+        .lightbox-thumbnails {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            max-width: 90%;
+            overflow-x: auto;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            z-index: 1001;
         }
 
-        .lightbox-next {
-            right: 20px;
+        .lightbox-thumbnails .thumbnail {
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .lightbox-thumbnails .thumbnail.active {
+            border-color: #ff0000;
         }
 
         @media (max-width: 556px) {
@@ -413,21 +443,25 @@
 
     <!-- Lightbox HTML -->
     <div id="lightbox" class="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
         <div class="lightbox-content">
             <img id="lightboxImage" style="display: none;">
             <video id="lightboxVideo" controls style="display: none;">
                 <source type="video/mp4">
             </video>
         </div>
+        <div class="lightbox-thumbnails">
+            <!-- المصغرات ستُضاف هنا ديناميكيًا -->
+        </div>
         <div class="lightbox-nav">
-            <span class="lightbox-prev" onclick="lightboxPrev()">&#10094;</span>
-            <span class="lightbox-next" onclick="lightboxNext()">&#10095;</span>
+            <span class="lightbox-prev" onclick="lightboxPrev()">❮</span>
+            <span class="lightbox-next" onclick="lightboxNext()">❯</span>
         </div>
     </div>
 
     <script>
         let videoIsPlaying = false;
+        let isSwiping = false;
         let currentMediaIndex = 0;
         let mediaItems = [];
         
@@ -441,7 +475,6 @@
                 thumbnailsContainer.appendChild(thumbnail);
             }
             
-            // تحديث العداد بالقيم الافتراضية
             document.getElementById('totalMedia').textContent = count;
             document.getElementById('currentMedia').textContent = '1';
         }
@@ -485,12 +518,10 @@
             const src = thumbnail.getAttribute('data-src');
             const type = thumbnail.getAttribute('data-type');
 
-            // تحديث حالة أيقونة التشغيل للفيديو السابق
             if (videoIsPlaying) {
                 updateAllVideoThumbnails();
             }
 
-            // إظهار الصورة الرمادية وإخفاء عداد الصور أثناء التحميل
             placeholderImage.style.display = 'block';
             mediaCounter.style.display = 'none';
 
@@ -502,7 +533,6 @@
                 videoIsPlaying = false;
                 shareButton.style.display = 'flex';
                 
-                // إزالة الصورة الرمادية وإظهار عداد الصور بعد اكتمال التحميل
                 mainImage.onload = function() {
                     placeholderImage.style.display = 'none';
                     mediaCounter.style.display = 'flex';
@@ -514,7 +544,6 @@
                 mainImage.style.display = 'none';
                 shareButton.style.display = 'none';
                 
-                // إزالة الصورة الرمادية بعد اكتمال تحميل الفيديو
                 mainVideo.onloadedmetadata = function() {
                     placeholderImage.style.display = 'none';
                 };
@@ -522,7 +551,6 @@
         }
 
         function updateAllVideoThumbnails() {
-            // تحديث جميع المصغرات الفيديو وفقًا لحالة التشغيل
             const videoThumbnails = document.querySelectorAll('.thumbnail[data-type="video"]');
             videoThumbnails.forEach(thumb => {
                 updatePlayIcon(thumb, videoIsPlaying);
@@ -563,6 +591,23 @@
                 lightboxImage.style.display = 'none';
                 lightboxVideo.play();
             }
+            
+            // إضافة المصغرات في الـ lightbox
+            const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
+            lightboxThumbnails.innerHTML = '';
+            mediaItems.forEach((mediaItem, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = mediaItem.type === 'image' ? mediaItem.src : mediaItem.thumbnail || mediaItem.src;
+                thumbnail.classList.add('thumbnail');
+                if (index === currentMediaIndex) thumbnail.classList.add('active');
+                thumbnail.addEventListener('click', () => {
+                    document.querySelectorAll('.lightbox-thumbnails .thumbnail').forEach(t => t.classList.remove('active'));
+                    thumbnail.classList.add('active');
+                    currentMediaIndex = index;
+                    updateLightboxContent();
+                });
+                lightboxThumbnails.appendChild(thumbnail);
+            });
         }
 
         function closeLightbox() {
@@ -619,9 +664,18 @@
             }
         }
 
+        // إعداد Hammer.js للتمرير باللمس في الـ lightbox
+        const lightboxContent = document.querySelector('.lightbox-content');
+        const lightboxHammer = new Hammer(lightboxContent);
+        lightboxHammer.on('swipeleft', function() {
+            lightboxNext();
+        });
+        lightboxHammer.on('swiperight', function() {
+            lightboxPrev();
+        });
+
         // إنشاء مصغرات احتياطية فورًا عندما يتم تحميل المستند
         document.addEventListener('DOMContentLoaded', function() {
-            // عرض المصغرات الاحتياطية فورًا
             createPlaceholderThumbnails();
             
             const urlParams = new URLSearchParams(window.location.search);
@@ -644,10 +698,8 @@
                             return;
                         }
 
-                        // حفظ عناصر الوسائط للمرجع
                         mediaItems = product.media;
 
-                        // مسح المصغرات الاحتياطية
                         const thumbnailsContainer = document.querySelector('.thumbnails');
                         thumbnailsContainer.innerHTML = '';
                         
@@ -671,7 +723,6 @@
                                 thumbnail.appendChild(video);
                                 thumbnail.appendChild(playIcon);
                                 
-                                // إزالة فئة التحميل فور تحميل بيانات الفيديو
                                 video.onloadedmetadata = function() {
                                     thumbnail.classList.remove('loading');
                                 };
@@ -681,7 +732,6 @@
                                 img.alt = 'صورة';
                                 thumbnail.appendChild(img);
                                 
-                                // إزالة فئة التحميل فور تحميل الصورة
                                 img.onload = function() {
                                     thumbnail.classList.remove('loading');
                                 };
@@ -696,7 +746,6 @@
                             });
                         });
 
-                        // إضافة حدث النقر على الصورة الرئيسية لفتح اللايت بوكس
                         document.getElementById('mainMedia').addEventListener('click', openLightbox);
                         
                         calculateTotalMedia();
@@ -714,7 +763,6 @@
                             updateAllVideoThumbnails();
                         });
 
-                        // إعداد Hammer.js للتمرير من اليسار إلى اليمين
                         const mainMediaContainer = document.querySelector('.main-media');
                         const hammer = new Hammer(mainMediaContainer);
                         hammer.on('swipeleft', function() {
@@ -804,7 +852,6 @@
             }
         }
 
-        // إضافة أحداث لوحة المفاتيح للتنقل في اللايت بوكس
         document.addEventListener('keydown', function(e) {
             const lightbox = document.getElementById('lightbox');
             if (lightbox.style.display === 'flex') {
