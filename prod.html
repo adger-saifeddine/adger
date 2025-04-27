@@ -2315,7 +2315,6 @@ function updateMainMedia(thumbnail) {
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            position: relative;
         }
 
         .image-container {
@@ -2433,57 +2432,46 @@ function updateMainMedia(thumbnail) {
             background-color: #ff5100;
         }
 
-        /* رسالة التأكيد */
-        .confirmation-message {
+        /* تنسيق التنبيه */
+        #alert {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid black;
             z-index: 1000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
             text-align: center;
-            max-width: 80%;
         }
 
-        .confirmation-message.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
+        #alert-message {
+            margin: 0 0 10px 0;
+            font-size: 16px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .confirmation-text {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .close-btn {
-            background-color: #ff6600;
+        #close-alert {
+            background-color: #ff0000;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 5px 10px;
             cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
+            border-radius: 5px;
         }
 
-        .close-btn:hover {
-            background-color: #ff5100;
+        #close-alert:hover {
+            background-color: #cc0000;
         }
     </style>
 </head>
 <body>
+    <!-- عنصر التنبيه -->
+    <div id="alert">
+        <p id="alert-message"></p>
+        <button id="close-alert">إغلاق</button>
+    </div>
+
     <div class="image-container product" id="product-container">
         <div class="image-frame" id="product-frame" style="display: none;">
             <a id="product-link" href="">
@@ -2503,15 +2491,9 @@ function updateMainMedia(thumbnail) {
         <div class="bottom-buttons">
             <div class="buttons-wrapper">
                 <div class="buy-now-text" id="buy-now-btn">اشتري الآن</div>
-                <div class="add-to-cart-text" id="add-to-cart-btn">أضف إلى السلة</div>
+                <div class="add-to-cart-text" id="add-to-cart-btn" onclick="addToCart(this)">أضف إلى السلة</div>
             </div>
         </div>
-    </div>
-    
-    <!-- رسالة التأكيد -->
-    <div class="confirmation-message" id="confirmation-message">
-        <div class="confirmation-text" id="confirmation-text"></div>
-        <button class="close-btn" id="close-btn">موافق</button>
     </div>
     
     <script>
@@ -2519,9 +2501,9 @@ function updateMainMedia(thumbnail) {
         const url = new URL(window.location.href);
         try {
             const productId = new URLSearchParams(window.location.search).get('id');
-            console.log('productId:', productId); // تحقق من القيمة
+            console.log('productId:', productId);
         } catch (error) {
-            console.error('Error:', error); // اطبع الخطأ إذا حدث
+            console.error('Error:', error);
         }
     
         const pageNumber = url.searchParams.get('page') || '1';
@@ -2543,7 +2525,6 @@ function updateMainMedia(thumbnail) {
                 return response.json();
             })
             .then(data => {
-                // البحث عن المنتج باستخدام المعرّف
                 const productData = data.find(item => item.product.productId === productId);
     
                 if (!productData) {
@@ -2562,10 +2543,8 @@ function updateMainMedia(thumbnail) {
             const product = data.product;
             const texts = data.texts;
     
-            // إظهار الإطار
             document.getElementById('product-frame').style.display = 'block';
     
-            // تعبئة البيانات
             document.getElementById('product-link').href = `prod.html?id=${product.pageId}`;
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-image').alt = product.name;
@@ -2574,7 +2553,6 @@ function updateMainMedia(thumbnail) {
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
     
-            // عرض الخصم إذا كان موجوداً
             if (product.discount && product.discount > 0) {
                 document.getElementById('product-discount').textContent = 
                     `${texts.discountLabel} ${product.discount}%`;
@@ -2584,7 +2562,6 @@ function updateMainMedia(thumbnail) {
                 document.getElementById('product-discount').style.display = 'none';
             }
     
-            // إعداد حدث الزر شراء الآن
             document.getElementById('buy-now-btn').onclick = function() {
                 buyNow(
                     product.name,
@@ -2595,11 +2572,6 @@ function updateMainMedia(thumbnail) {
                     product.sizes,
                     product.materials
                 );
-            };
-            
-            // إعداد حدث الزر إضافة إلى العربة
-            document.getElementById('add-to-cart-btn').onclick = function() {
-                addToCart();
             };
         }
     
@@ -2618,8 +2590,8 @@ function updateMainMedia(thumbnail) {
             window.location.href = `buy.html?${params}`;
         }
     
-        // دالة إضافة إلى العربة المعدلة
-        function addToCart() {
+        // دالة إضافة إلى العربة مع التنبيه
+        function addToCart(element) {
             try {
                 // الحصول على بيانات المنتج من العنصر
                 const productName = document.getElementById('product-name').textContent;
@@ -2629,7 +2601,6 @@ function updateMainMedia(thumbnail) {
     
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-                // البحث عن المنتج في السلة
                 const existingProduct = cart.find(item => item.productId === productId);
     
                 if (existingProduct) {
@@ -2646,35 +2617,26 @@ function updateMainMedia(thumbnail) {
     
                 localStorage.setItem('cart', JSON.stringify(cart));
                 
-                // عرض رسالة التأكيد
-                showConfirmation(`تمت إضافة "${productName}" إلى العربة بنجاح!`);
+                // إظهار التنبيه
+                const alertMessage = `تم حفظ المنتج "${productName}" بنجاح!`;
+                document.getElementById('alert-message').textContent = alertMessage;
+                document.getElementById('alert').style.display = 'block';
     
-                // للتحقق فقط
+                // إخفاء التنبيه بعد 5 ثوانٍ
+                setTimeout(() => {
+                    document.getElementById('alert').style.display = 'none';
+                }, 5000);
+    
+                // إضافة حدث لزر الإغلاق
+                document.getElementById('close-alert').onclick = function() {
+                    document.getElementById('alert').style.display = 'none';
+                };
+    
                 console.log('سلة التسوق الحالية:', cart);
             } catch (error) {
                 console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
-                showConfirmation('حدث خطأ أثناء إضافة المنتج إلى العربة');
+                alert('حدث خطأ أثناء إضافة المنتج إلى العربة');
             }
-        }
-        
-        // دالة لعرض رسالة التأكيد
-        function showConfirmation(message) {
-            const confirmationMessage = document.getElementById('confirmation-message');
-            const confirmationText = document.getElementById('confirmation-text');
-            const closeBtn = document.getElementById('close-btn');
-            
-            confirmationText.textContent = message;
-            confirmationMessage.classList.add('show');
-            
-            // إغلاق الرسالة عند النقر على الزر
-            closeBtn.onclick = function() {
-                confirmationMessage.classList.remove('show');
-            };
-            
-            // إغلاق الرسالة تلقائياً بعد 5 ثوانٍ
-            setTimeout(() => {
-                confirmationMessage.classList.remove('show');
-            }, 5000);
         }
     </script>
 </body>
