@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض المنتجات</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,6 +50,7 @@
             border: 2px solid #ccc;
             border-radius: 10px;
             display: block;
+            cursor: pointer;
         }
 
         .main-media img {
@@ -62,13 +69,13 @@
         .placeholder-image {
             width: 400px;
             height: 400px;
-            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+            background-color: #fafafa;
             border: 2px solid #ccc;
             border-radius: 10px;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 5; /* لتظهر فوق الصورة الأصلية أثناء التحميل */
+            z-index: 5;
         }
 
         .thumbnails {
@@ -98,7 +105,7 @@
         }
 
         .thumbnail.loading {
-            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+            background-color: #fafafa;
         }
         
         .thumbnail img, .thumbnail video {
@@ -237,11 +244,11 @@
             font-size: 13px;
             direction: rtl;
             cursor: pointer;
-            display: none; /* مخفية افتراضيًا */
+            display: none;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق عند اللمس */
+            -webkit-tap-highlight-color: transparent;
         }
 
         @media (max-width: 555px) {
@@ -290,9 +297,83 @@
             cursor: not-allowed;
         }
 
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-prev, .lightbox-next {
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
         @media (max-width: 556px) {
             .arrow {
                 display: none;
+            }
+            
+            .lightbox-prev, .lightbox-next {
+                font-size: 30px;
+                padding: 10px;
             }
         }
     </style>
@@ -330,75 +411,26 @@
         </div>
     </div>
 
+    <!-- Lightbox HTML -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightboxImage" style="display: none;">
+            <video id="lightboxVideo" controls style="display: none;">
+                <source type="video/mp4">
+            </video>
+        </div>
+        <div class="lightbox-nav">
+            <span class="lightbox-prev" onclick="lightboxPrev()">&#10094;</span>
+            <span class="lightbox-next" onclick="lightboxNext()">&#10095;</span>
+        </div>
+    </div>
+
     <script>
-
-
-
-//سكريبت اخفاء الصور المصغرة
-
-function updateMainMedia(thumbnail) {
-    const placeholderImage = document.querySelector('.placeholder-image');
-    const mainImage = document.getElementById('mainMedia');
-    const mainVideo = document.getElementById('mainVideo');
-    const shareButton = document.getElementById('shareButton');
-    const mediaCounter = document.querySelector('.media-counter');
-    const src = thumbnail.getAttribute('data-src');
-    const type = thumbnail.getAttribute('data-type');
-
-    // إخفاء جميع عناصر التحميل التي قد تكون مرئية
-    document.querySelectorAll('.thumbnail.loading').forEach(thumb => {
-        thumb.classList.remove('loading');
-    });
-
-    // تحديث حالة أيقونة التشغيل للفيديو السابق
-    if (videoIsPlaying) {
-        updateAllVideoThumbnails();
-    }
-
-    // إظهار الصورة الرمادية وإخفاء عداد الصور أثناء التحميل
-    placeholderImage.style.display = 'block';
-    mediaCounter.style.display = 'none';
-
-    if (type === 'image') {
-        mainImage.src = src;
-        mainImage.style.display = 'block';
-        mainVideo.style.display = 'none';
-        mainVideo.pause();
-        videoIsPlaying = false;
-        shareButton.style.display = 'flex';
-        
-        // إزالة الصورة الرمادية وإظهار عداد الصور بعد اكتمال التحميل
-        mainImage.onload = function() {
-            placeholderImage.style.display = 'none';
-            mediaCounter.style.display = 'flex';
-        };
-    } else if (type === 'video') {
-        mainVideo.querySelector('source').src = src;
-        mainVideo.load();
-        mainVideo.style.display = 'block';
-        mainImage.style.display = 'none';
-        shareButton.style.display = 'none';
-        
-        // إزالة الصورة الرمادية بعد اكتمال تحميل الفيديو
-        mainVideo.onloadedmetadata = function() {
-            placeholderImage.style.display = 'none';
-        };
-    }
-}
-
-//نهاية سكريبت اخفاء تحميل الصور المصغرة
-
-
-
-
-
-
-
-
-
-
-
         let videoIsPlaying = false;
+        let currentMediaIndex = 0;
+        let mediaItems = [];
+        
         // إنشاء مصغرات احتياطية فارغة فورًا
         function createPlaceholderThumbnails(count = 5) {
             const thumbnailsContainer = document.getElementById('thumbnailsContainer');
@@ -425,6 +457,7 @@ function updateMainMedia(thumbnail) {
             thumbnails.forEach((thumb, index) => {
                 if (thumb.classList.contains('active')) {
                     currentIndex = index + 1;
+                    currentMediaIndex = index;
                 }
             });
             document.getElementById('currentMedia').textContent = currentIndex;
@@ -507,6 +540,85 @@ function updateMainMedia(thumbnail) {
             }
         }
 
+        // Lightbox Functions
+        function openLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxVideo = document.getElementById('lightboxVideo');
+            const activeThumbnail = document.querySelector('.thumbnail.active');
+            const type = activeThumbnail.getAttribute('data-type');
+            const src = activeThumbnail.getAttribute('data-src');
+            
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            if (type === 'image') {
+                lightboxImage.src = src;
+                lightboxImage.style.display = 'block';
+                lightboxVideo.style.display = 'none';
+            } else if (type === 'video') {
+                lightboxVideo.querySelector('source').src = src;
+                lightboxVideo.load();
+                lightboxVideo.style.display = 'block';
+                lightboxImage.style.display = 'none';
+                lightboxVideo.play();
+            }
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxVideo = document.getElementById('lightboxVideo');
+            
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            lightboxVideo.pause();
+        }
+
+        function lightboxPrev() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            if (currentMediaIndex > 0) {
+                thumbnails[currentMediaIndex].classList.remove('active');
+                thumbnails[currentMediaIndex - 1].classList.add('active');
+                currentMediaIndex--;
+                updateMainMedia(thumbnails[currentMediaIndex]);
+                updateCurrentMedia();
+                updateLightboxContent();
+            }
+        }
+
+        function lightboxNext() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            if (currentMediaIndex < thumbnails.length - 1) {
+                thumbnails[currentMediaIndex].classList.remove('active');
+                thumbnails[currentMediaIndex + 1].classList.add('active');
+                currentMediaIndex++;
+                updateMainMedia(thumbnails[currentMediaIndex]);
+                updateCurrentMedia();
+                updateLightboxContent();
+            }
+        }
+
+        function updateLightboxContent() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxVideo = document.getElementById('lightboxVideo');
+            const activeThumbnail = document.querySelector('.thumbnail.active');
+            const type = activeThumbnail.getAttribute('data-type');
+            const src = activeThumbnail.getAttribute('data-src');
+            
+            if (type === 'image') {
+                lightboxImage.src = src;
+                lightboxImage.style.display = 'block';
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            } else if (type === 'video') {
+                lightboxVideo.querySelector('source').src = src;
+                lightboxVideo.load();
+                lightboxVideo.style.display = 'block';
+                lightboxImage.style.display = 'none';
+                lightboxVideo.play();
+            }
+        }
+
         // إنشاء مصغرات احتياطية فورًا عندما يتم تحميل المستند
         document.addEventListener('DOMContentLoaded', function() {
             // عرض المصغرات الاحتياطية فورًا
@@ -531,6 +643,9 @@ function updateMainMedia(thumbnail) {
                             console.error('المنتج أو الوسائط غير موجودة');
                             return;
                         }
+
+                        // حفظ عناصر الوسائط للمرجع
+                        mediaItems = product.media;
 
                         // مسح المصغرات الاحتياطية
                         const thumbnailsContainer = document.querySelector('.thumbnails');
@@ -581,6 +696,9 @@ function updateMainMedia(thumbnail) {
                             });
                         });
 
+                        // إضافة حدث النقر على الصورة الرئيسية لفتح اللايت بوكس
+                        document.getElementById('mainMedia').addEventListener('click', openLightbox);
+                        
                         calculateTotalMedia();
                         updateCurrentMedia();
                         const initialThumbnail = document.querySelector('.thumbnail.active');
@@ -596,20 +714,20 @@ function updateMainMedia(thumbnail) {
                             updateAllVideoThumbnails();
                         });
 
-                        // إعداد Hammer.js للتمرير من اليسار إلى اليمين - تم تعديل هذا الجزء
+                        // إعداد Hammer.js للتمرير من اليسار إلى اليمين
                         const mainMediaContainer = document.querySelector('.main-media');
                         const hammer = new Hammer(mainMediaContainer);
                         hammer.on('swipeleft', function() {
                             if (!isSwiping) {
                                 isSwiping = true;
-                                prevMedia(); // تم تغيير هذا من nextMedia إلى prevMedia
+                                prevMedia();
                                 setTimeout(() => { isSwiping = false; }, 300);
                             }
                         });
                         hammer.on('swiperight', function() {
                             if (!isSwiping) {
                                 isSwiping = true;
-                                nextMedia(); // تم تغيير هذا من prevMedia إلى nextMedia
+                                nextMedia();
                                 setTimeout(() => { isSwiping = false; }, 300);
                             }
                         });
@@ -685,6 +803,20 @@ function updateMainMedia(thumbnail) {
                 rightArrow.classList.remove('disabled');
             }
         }
+
+        // إضافة أحداث لوحة المفاتيح للتنقل في اللايت بوكس
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    lightboxPrev();
+                } else if (e.key === 'ArrowRight') {
+                    lightboxNext();
+                }
+            }
+        });
     </script>
 </body>
 </html>
