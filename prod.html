@@ -2304,6 +2304,7 @@ function updateMainMedia(thumbnail) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -2390,9 +2391,9 @@ function updateMainMedia(thumbnail) {
             display: flex;
             padding: 8px;
             gap: 10px;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-focus-ring-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+            outline: none; /* إزالة الإطار عند النقر */
+            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
         }
 
         .add-to-cart-text, .buy-now-text {
@@ -2409,9 +2410,9 @@ function updateMainMedia(thumbnail) {
             border-radius: 45px;
             user-select: none;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-focus-ring-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+            outline: none; /* إزالة الإطار عند النقر */
+            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
         }
 
         .add-to-cart-text {
@@ -2431,47 +2432,8 @@ function updateMainMedia(thumbnail) {
         .buy-now-text:hover {
             background-color: #ff5100;
         }
-
-        /* تنسيق التنبيه */
-        #alert {
-            display: none;
-            position: fixed;
-            top: 5%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid black;
-            z-index: 1000;
-            text-align: center;
-        }
-
-        #alert-message {
-            margin: 0 0 10px 0;
-            font-size: 16px;
-        }
-
-        #close-alert {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        #close-alert:hover {
-            background-color: #cc0000;
-        }
     </style>
-</head>
 <body>
-    <!-- عنصر التنبيه -->
-    <div id="alert">
-        <p id="alert-message">اتم</p>
-        <button id="close-alert">إغلاق</button>
-    </div>
-
     <div class="image-container product" id="product-container">
         <div class="image-frame" id="product-frame" style="display: none;">
             <a id="product-link" href="">
@@ -2501,9 +2463,9 @@ function updateMainMedia(thumbnail) {
         const url = new URL(window.location.href);
         try {
             const productId = new URLSearchParams(window.location.search).get('id');
-            console.log('productId:', productId);
+            console.log('productId:', productId); // تحقق من القيمة
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error); // اطبع الخطأ إذا حدث
         }
     
         const pageNumber = url.searchParams.get('page') || '1';
@@ -2525,6 +2487,7 @@ function updateMainMedia(thumbnail) {
                 return response.json();
             })
             .then(data => {
+                // البحث عن المنتج باستخدام المعرّف
                 const productData = data.find(item => item.product.productId === productId);
     
                 if (!productData) {
@@ -2543,8 +2506,10 @@ function updateMainMedia(thumbnail) {
             const product = data.product;
             const texts = data.texts;
     
+            // إظهار الإطار
             document.getElementById('product-frame').style.display = 'block';
     
+            // تعبئة البيانات
             document.getElementById('product-link').href = `prod.html?id=${product.pageId}`;
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-image').alt = product.name;
@@ -2553,6 +2518,7 @@ function updateMainMedia(thumbnail) {
             document.getElementById('product-price').textContent = product.price;
             document.getElementById('currency').textContent = texts.currency;
     
+            // عرض الخصم إذا كان موجوداً
             if (product.discount && product.discount > 0) {
                 document.getElementById('product-discount').textContent = 
                     `${texts.discountLabel} ${product.discount}%`;
@@ -2562,6 +2528,7 @@ function updateMainMedia(thumbnail) {
                 document.getElementById('product-discount').style.display = 'none';
             }
     
+            // إعداد حدث الزر شراء الآن
             document.getElementById('buy-now-btn').onclick = function() {
                 buyNow(
                     product.name,
@@ -2590,7 +2557,7 @@ function updateMainMedia(thumbnail) {
             window.location.href = `buy.html?${params}`;
         }
     
-        // دالة إضافة إلى العربة مع التنبيه
+        // دالة إضافة إلى العربة المعدلة
         function addToCart(element) {
             try {
                 // الحصول على بيانات المنتج من العنصر
@@ -2601,6 +2568,7 @@ function updateMainMedia(thumbnail) {
     
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
+                // البحث عن المنتج في السلة
                 const existingProduct = cart.find(item => item.productId === productId);
     
                 if (existingProduct) {
@@ -2616,22 +2584,9 @@ function updateMainMedia(thumbnail) {
                 }
     
                 localStorage.setItem('cart', JSON.stringify(cart));
-                
-                // إظهار التنبيه
-                const alertMessage = `تم حفظ المنتج "${productName}" بنجاح!`;
-                document.getElementById('alert-message').textContent = alertMessage;
-                document.getElementById('alert').style.display = 'block';
+                alert(`تمت إضافة "${productName}" إلى العربة!`);
     
-                // إخفاء التنبيه بعد 5 ثوانٍ
-                setTimeout(() => {
-                    document.getElementById('alert').style.display = 'none';
-                }, 5000);
-    
-                // إضافة حدث لزر الإغلاق
-                document.getElementById('close-alert').onclick = function() {
-                    document.getElementById('alert').style.display = 'none';
-                };
-    
+                // للتحقق فقط
                 console.log('سلة التسوق الحالية:', cart);
             } catch (error) {
                 console.error('حدث خطأ في إضافة المنتج إلى العربة:', error);
@@ -2640,7 +2595,8 @@ function updateMainMedia(thumbnail) {
         }
     </script>
 </body>
-</html>
+
+
 
 
 
