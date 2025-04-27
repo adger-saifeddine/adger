@@ -313,8 +313,11 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
+            width: 90%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: white;
             padding: 10px;
             border-radius: 5px;
@@ -323,24 +326,26 @@
 
         .lightbox-content img {
             max-width: 100%;
-            max-height: 80vh;
+            max-height: 100%;
             display: block;
             margin: 0 auto;
             background-color: white;
+            object-fit: contain;
         }
 
         .lightbox-content video {
             max-width: 100%;
-            max-height: 80vh;
+            max-height: 100%;
             display: block;
             margin: 0 auto;
             background-color: white;
+            object-fit: contain;
         }
 
         .lightbox-close {
             position: absolute;
-            top: 99px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             color: #333;
             font-size: 35px;
             font-weight: bold;
@@ -385,22 +390,44 @@
         }
 
         /* Lightbox thumbnails */
-        .lightbox-thumbnails {
+        .lightbox-thumbnails-container {
             position: absolute;
             bottom: 20px;
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
-            gap: 10px;
             padding: 10px;
+        }
+
+        .lightbox-thumbnails {
+            display: flex;
+            gap: 10px;
             overflow-x: auto;
-            max-width: 100%;
+            max-width: 90%;
+            padding: 5px;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #f1f1f1;
+        }
+
+        .lightbox-thumbnails::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .lightbox-thumbnails::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .lightbox-thumbnails::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
         }
 
         .lightbox-thumbnail {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
             cursor: pointer;
             border: 2px solid transparent;
             border-radius: 3px;
@@ -423,6 +450,19 @@
             object-fit: cover;
         }
 
+        @media (max-width: 768px) {
+            .lightbox-content {
+                width: 95%;
+                height: 70vh;
+            }
+            
+            .lightbox-thumbnail {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+            }
+        }
+
         @media (max-width: 556px) {
             .arrow {
                 display: none;
@@ -433,13 +473,19 @@
                 padding: 10px;
             }
 
-            .lightbox-thumbnails {
+            .lightbox-content {
+                width: 98%;
+                height: 60vh;
+            }
+
+            .lightbox-thumbnails-container {
                 bottom: 10px;
             }
 
             .lightbox-thumbnail {
                 width: 40px;
                 height: 40px;
+                min-width: 40px;
             }
         }
     </style>
@@ -490,8 +536,10 @@
             <span class="lightbox-prev" onclick="lightboxPrev()">&#10094;</span>
             <span class="lightbox-next" onclick="lightboxNext()">&#10095;</span>
         </div>
-        <div class="lightbox-thumbnails" id="lightboxThumbnails">
-            <!-- سيتم إضافة مصغرات اللايت بوكس هنا -->
+        <div class="lightbox-thumbnails-container">
+            <div class="lightbox-thumbnails" id="lightboxThumbnails">
+                <!-- سيتم إضافة مصغرات اللايت بوكس هنا -->
+            </div>
         </div>
     </div>
 
@@ -737,6 +785,12 @@
                 thumb.classList.remove('active');
                 if (index === currentMediaIndex) {
                     thumb.classList.add('active');
+                    // جعل الصورة المصغرة النشطة في المنتصف عند التمرير
+                    thumb.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
                 }
             });
         }
@@ -840,18 +894,10 @@
                         const mainMediaContainer = document.querySelector('.main-media');
                         const hammer = new Hammer(mainMediaContainer);
                         hammer.on('swipeleft', function() {
-                            if (!isSwiping) {
-                                isSwiping = true;
-                                prevMedia();
-                                setTimeout(() => { isSwiping = false; }, 300);
-                            }
+                            prevMedia();
                         });
                         hammer.on('swiperight', function() {
-                            if (!isSwiping) {
-                                isSwiping = true;
-                                nextMedia();
-                                setTimeout(() => { isSwiping = false; }, 300);
-                            }
+                            nextMedia();
                         });
                     })
                     .catch(error => console.error('خطأ في جلب البيانات:', error));
@@ -861,8 +907,6 @@
         });
 
         function nextMedia() {
-            if (isSwiping) return;
-            isSwiping = true;
             const thumbnails = document.querySelectorAll('.thumbnail');
             let currentIndex = -1;
             thumbnails.forEach((thumb, index) => {
@@ -876,12 +920,9 @@
                 updateMainMedia(thumbnails[currentIndex + 1]);
                 setTimeout(updateCurrentMedia, 100);
             }
-            setTimeout(() => { isSwiping = false; }, 300);
         }
 
         function prevMedia() {
-            if (isSwiping) return;
-            isSwiping = true;
             const thumbnails = document.querySelectorAll('.thumbnail');
             let currentIndex = -1;
             thumbnails.forEach((thumb, index) => {
@@ -895,7 +936,6 @@
                 updateMainMedia(thumbnails[currentIndex - 1]);
                 setTimeout(updateCurrentMedia, 100);
             }
-            setTimeout(() => { isSwiping = false; }, 300);
         }
 
         function sharePage() {
