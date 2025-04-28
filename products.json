@@ -10,22 +10,22 @@
     },
    
     {
-        "name": "حذاء جلد - p30 سكاي مريح",
+        "name": "حذاء جلد مشحم رجالي",
         "dataName": " خصومات حذاء جلد أحذيه أحذية #2",
         "price": "360.00",
-        "image": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
-        "sold": "موثوق",
+        "image": "https://i.postimg.cc/KcCswJkX/1706446990temp3407183421533236264-removebg-preview.png",
+        "sold": "أحذية",
         "discountTexts": ["كان ب 450 جنيه", "خصم20%"],
         "link": "prod.html?id=2"
     },
 
     {
-        "name": "مج حراري فاخر 500 مل مع كوبين",
-        "dataName": "#3 thermal_mug_500ml خصومات مج حراري للقهوة للقهوه",
-        "price": "290.00",
-        "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
+        "name": "هيد فون SONY HW-PM860 RGBبلوتوث",
+        "dataName": "#3    خصومات سماعات سماعه سماعة   ",
+        "price": "450.00",
+        "image": "https://i.postimg.cc/4NB8g95G/1737396820temp8539412350845467235-removebg-preview.png",
         "sold": "موثوق",
-        "discountTexts": ["كان ب 350 جنيه", "خصم 17.14%"],
+        "discountTexts": ["كان ب 548 جنيه", "خصم 18%"],
         "link": "prod.html?id=3"
     },
 
@@ -39,12 +39,12 @@
         "link": "prod.html?id=4"
     },
     {
-        "name": "شنطة كروس jeep",
+        "name": "شنطة كروس jeep 3 قطع",
         "dataName": "#5 jeep خصومات شنطة كروس حقيبة حقيبه حقائب موضة يد",
-        "price": "225.00",
-        "image": "https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png",
+        "price": "520.00",
+        "image": "https://i.postimg.cc/j506JbY9/1745746083temp1014429155113836232-removebg-preview.png",
         "sold": "موثوق",
-        "discountTexts": ["كان ب 300 جنيه", "خصم25%"],
+        "discountTexts": ["كان ب 600 جنيه", "خصم 13.33%"],
         "link": "prod.html?id=5"
     },
     {

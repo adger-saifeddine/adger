@@ -54,17 +54,13 @@
     {
         "id": "2",
         "media": [
-            {"src": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/HnWBC6Rj/1725537660232853146.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/vHkLP8Y4/1725537665956521323.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/J4DjBwNM/1725537667833380929.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/1trJTkWL/1725537668073565813.jpg", "type": "image"}
+            {"src": "https://i.postimg.cc/KcCswJkX/1706446990temp3407183421533236264-removebg-preview.png", "type": "image"}
         ],
         "pri": "360",
         "oldPrice": "450",
         "dis": "خصم20%",
         "changingText": ["ابداع", "أناقة", "جودة"],
-        "longText": "حذاء جلد - p30 سكاي مريح",
+        "longText": "حذاء جلد مشحم رجالي",
         "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton2",
         "commentId": "2",
@@ -75,28 +71,25 @@
             {"question": "الماركة", "answer": "p30"},
             {"question": "المقاس", "answer": "متعدد"}
         ],
-        "desc": "خامه جلد سكاي، مبطن مع تطعيم جلد سكاي عالي الجوده والبطانه مزوده بماش ميكرو فايبر لمنع التعرق، فرش ايفا طبي، نعل PVC بيور طري وخفيف، الألوان (أبيض - هافان - كحلي - أسود)، المقاسات من 41 إلى 45.",
+        "desc": "خامه جلد سكاي، مبطن مع تطعيم جلد سكاي عالي الجوده والبطانه مزوده بماش ميكرو فايبر لمنع التعرق، فرش ايفا طبي، نعل PVC بيور طري وخفيف، الألوان (أسود - زيتي - بني - هافان)، المقاسات من 41 إلى 45.",
         "groups": [
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
-                    "https://i.postimg.cc/HnWBC6Rj/1725537660232853146.jpg",
-                    "https://i.postimg.cc/vHkLP8Y4/1725537665956521323.jpg",
-                    "https://i.postimg.cc/1trJTkWL/1725537668073565813.jpg"
+                    "https://i.postimg.cc/KcCswJkX/1706446990temp3407183421533236264-removebg-preview.png"
                 ]
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/2y4mPSpC/1725537528881551623.jpg",
-            "name": "حذاء جلد - p30 سكاي مريح",
+            "image": "https://i.postimg.cc/KcCswJkX/1706446990temp3407183421533236264-removebg-preview.png",
+            "name": "حذاء جلد مشحم رجالي",
             "sold": "موثوق",
             "price": "360,00",
             "discount": "20",
             "pageId": "2",
             "productId": "2",
             "shippingPrice": "70",
-            "colors": ["أبيض", "أسود","كحلي","هافان"],
+            "colors": ["هافان", "بني","زيتي","أسود"],
             "sizes": ["41", "42", "43","44","45"]
         },
         "texts": {
@@ -108,68 +101,48 @@
     {
         "id": "3",
         "media": [
-            {"src": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png", "type": "image"},
-            {"src": "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg", "type": "image"},
-            {"src": "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg", "type": "image"}
+            {"src": "https://i.postimg.cc/4NB8g95G/1737396820temp8539412350845467235-removebg-preview.png", "type": "image"},
+            {"src": "https://files.catbox.moe/kjgimu.jpg", "type": "image"},
+            {"src": "https://files.catbox.moe/f8zfl4.jpg", "type": "image"},
+            {"src": "https://files.catbox.moe/8we0f0.jpg", "type": "image"},
+            {"src": "https://files.catbox.moe/szc6y9.jpg", "type": "image"}
         ],
-        "pri": "290",
-        "oldPrice": "350",
-        "dis": "خصم 17%",
+        "pri": "450",
+        "oldPrice": "548",
+        "dis": "خصم 18%",
         "changingText": ["أناقة", "جودة", "هدية رائعة"],
-        "longText": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة. يحافظ على مشروبك ساخناً أو بارداً لأكثر من 10 ساعات. يأتيك مع شنطة هدية أنيقة، الهدية المثالية لكل مناسبة!",
+        "longText": "هيد فون SONY HW-PM860 RGBبلوتوث",
         "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton3",
         "commentId": "3",
         "elementId": "commentCount3",
         "tableData": [
-            {"question": "السعة", "answer": "500 مل"},
-            {"question": "المادة", "answer": "ستانلستيل 304"},
-            {"question": "الجدار", "answer": "مزدوج العزل"},
-            {"question": "مدة الحفظ", "answer": "أكثر من 10 ساعات"},
-            {"question": "الألوان", "answer": "مينت جرين - أزرق - بينك - أسود - رصاصي - فضي"}
+            {"question": "الصنف", "answer": "سوني"},
+            {"question": "الأضائة", "answer": "RGP"},
+            {"question": "نوع الميكروفون", "answer": "مزدوج العزل"}
         ],
-        "desc": "مج عازل حراري 500 مل مع 2 كوب مصنوع من ستانلستيل 304 الآمن غذائياً ومختوم. ترمس مزدوج الجدار يحفظ المشروبات باردة وساخنة لأكثر من 10 ساعات. متوفر بألوان متعددة.",
+        "desc": "سوني سماعة رأس للالعاب RGB محاطة افتراضية - مشغلات مزدوجة - صوت جهوري عميق - ميكروفون لتقليل الضوضاء - تحكم مدمج للكمبيوتر",
         "groups": [
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
-                    "https://i.postimg.cc/qMvSLc5b/1730281147312732178.jpg",
-                    "https://i.postimg.cc/SNjkgYTr/1730281149178969902.jpg",
-                    "https://i.postimg.cc/XvYRYTRg/1730281148385400775.jpg"
-                ]
-            },
-            {
-                "type": "mixed",
-                "items": [
-                    "https://i.postimg.cc/4NvqbfZ5/1730281149517783687.jpg",
-                    "https://i.postimg.cc/NjfJ6Rds/1730281149481982357.jpg",
-                    "https://i.postimg.cc/d3wmqKXs/1730281149736637201.jpg",
-                    "https://i.postimg.cc/zXdS16kN/1730281149565770391.jpg",
-                    "https://i.postimg.cc/y8kh6jfZ/1730281149908050201.jpg",
-                    "https://i.postimg.cc/YCZ6vFVy/1730281149879514635.jpg",
-                    "https://i.postimg.cc/TPbrgwv2/1730281149948943981.jpg"
+                    "https://i.postimg.cc/4NB8g95G/1737396820temp8539412350845467235-removebg-preview.png",
+                    "https://files.catbox.moe/w8btlz.jpg",
+                    "https://files.catbox.moe/f8zfl4.jpg",
+                    "https://files.catbox.moe/8we0f0.jpg",
+                     "https://files.catbox.moe/szc6y9.jpg"
                 ]
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/BbV8Rcc5/1730281084711651511.png",
-            "name": "مج حراري فاخر 500 مل مع كوبين، مصنوع من ستيل 304 عالي الجودة",
+            "image": "https://i.postimg.cc/4NB8g95G/1737396820temp8539412350845467235-removebg-preview.png",
+            "name": "هيد فون SONY HW-PM860 RGBبلوتوث",
             "sold": "موثوق",
-            "price": "290.00",
-            "discount": "17",
+            "price": "450.00",
+            "discount": "18",
             "pageId": "3",
             "productId": "3",
-            "shippingPrice": "70",
-            "colors": ["مينت جرين", "أزرق", "بينك", "أسود", "رصاصي", "فضي"]
+            "shippingPrice": "70"
         },
         "texts": {
             "currency": "جنيه",
@@ -247,16 +220,17 @@
     {
         "id": "5",
         "media": [
+          {"src": "https://i.postimg.cc/j506JbY9/1745746083temp1014429155113836232-removebg-preview.png", "type": "image"},
             {"src": "https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png", "type": "image"},
             {"src": "https://i.postimg.cc/ydVCS3Q2/1726421815695017513.jpg", "type": "image"},
             {"src": "https://i.postimg.cc/V67prGbb/1726421832419519968.png", "type": "image"},
             {"src": "https://i.postimg.cc/2yVJ4Q49/1726421833273076890.png", "type": "image"}
         ],
-        "pri": "225",
-        "oldPrice": "300",
-        "dis": "خصم 25%",
+        "pri": "520",
+        "oldPrice": "600",
+        "dis": "خصم 13.33%",
         "changingText": ["تصميم عصري", "مواد عالية الجودة", "راحة في الحمل"],
-        "longText": "شنطة كروس jeep مصنوعة من مواد عالية الجودة وتصميم عصري يتناسب مع جميع الأذواق. مثالية للاستخدام اليومي وتوفر راحة في الحمل.",
+        "longText": "شنطة كروس jeep مصنوعة من مواد عالية الجودة وتصميم عصري يتناسب مع جميع الأذواق. مثالية للاستخدام اليومي وتوفر راحة في الحمل. 3 قطع",
         "sales": "مباع بواسطة أدجر",
         "buttonId": "commentButton5",
         "commentId": "5",
@@ -264,6 +238,7 @@
         "tableData": [
             {"question": "النوع", "answer": "شنطة كروس"},
             {"question": "الماركة", "answer": "jeep"},
+            {"question": "عدد القطع", "answer": "3"},
             {"question": "الألوان", "answer": "أسود - بني"}
         ],
         "desc": "شنطة كروس jeep تجمع بين التصميم العصري والمواد عالية الجودة لضمان المتانة والأناقة. تحتوي على مساحة واسعة لتخزين جميع احتياجاتك اليومية بسهولة وأمان.\n\nتتميز بجيوب متعددة لتنظيم الأشياء بشكل مثالي وسحاب قوي لضمان الأمان.",
@@ -271,6 +246,7 @@
             {
                 "type": "images",
                 "items": [
+                  "https://i.postimg.cc/j506JbY9/1745746083temp1014429155113836232-removebg-preview.png",
                     "https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png",
                     "https://i.postimg.cc/ydVCS3Q2/1726421815695017513.jpg"
                 ]
@@ -284,8 +260,8 @@
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png",
-            "name": "شنطة كروس jeep",
+            "image": "https://i.postimg.cc/j506JbY9/1745746083temp1014429155113836232-removebg-preview.png",
+            "name": "شنطة كروس jeep 3 قطع",
             "sold": "موثوق",
             "price": "225.00",
             "discount": "25",
