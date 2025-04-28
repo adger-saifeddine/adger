@@ -414,14 +414,7 @@
                 border-radius: 50%;
             }
     
-            /* إخفاء العنصر على الهواتف */
-            @media only screen and (max-width: 767px) {
-                .cart-icon {
-                    margin-left: -10px;
-                    margin-right: -8px;
-                    display: none;
-                }
-            }
+        
             @media only screen and (max-width: 767px) {
                 .cart-icon {
                     margin-left: -12px;
@@ -1019,6 +1012,9 @@
                         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                         transition: background-color 0.3s;
                     }
+                    .add-to-cart:hover {
+    background-color: #000000;
+}
             
                     @media (max-width: 1268px) {
                         .add-to-cart {
@@ -1039,6 +1035,9 @@
                         height: 24px;
                         color: #000000;
                     }
+                    .add-to-cart:hover svg {
+    color: #ffffff;
+}
             
                     .add-to-cart.checked {
                         background-color: #28a745;
