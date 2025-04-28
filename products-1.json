@@ -54,7 +54,12 @@
     {
         "id": "2",
         "media": [
-            {"src": "https://i.postimg.cc/wMW0NGVm/2025-04-28-15-52-00-7bc88b0c-removebg-preview.png", "type": "image"}
+            {"src": "https://i.postimg.cc/nVmJf8kW/1703917864-DSC04765.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/G2sZRYkD/1703917865-DSC04763.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/28xgCCB0/1703917865-DSC04767.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/GmhV26Fd/1703917866-DSC04769.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/L8C7ZvDf/1703917866-DSC04773.jpg", "type": "image"},
+            {"src": "https://i.postimg.cc/HLrN05vN/1703917867-DSC04778.jpg", "type": "image"}
         ],
         "pri": "360",
         "oldPrice": "450",
@@ -76,12 +81,19 @@
             {
                 "type": "images",
                 "items": [
-                    "https://i.postimg.cc/KcCswJkX/1706446990temp3407183421533236264-removebg-preview.png"
+                    "https://i.postimg.cc/nVmJf8kW/1703917864-DSC04765.jpg",
+                    "https://i.postimg.cc/G2sZRYkD/1703917865-DSC04763.jpg",
+                    "https://i.postimg.cc/28xgCCB0/1703917865-DSC04767.jpg", 
+                    "https://i.postimg.cc/GmhV26Fd/1703917866-DSC04769.jpg", 
+                    "https://i.postimg.cc/L8C7ZvDf/1703917866-DSC04773.jpg", 
+                    "https://i.postimg.cc/HLrN05vN/1703917867-DSC04778.jpg", 
+                    "https://i.postimg.cc/43jSWdrx/1703917864dsc04784.jpg"
+
                 ]
             }
         ],
         "product": {
-            "image": "https://i.postimg.cc/wMW0NGVm/2025-04-28-15-52-00-7bc88b0c-removebg-preview.png",
+            "image": "https://i.postimg.cc/nVmJf8kW/1703917864-DSC04765.jpg",
             "name": "حذاء جلد مشحم رجالي",
             "sold": "موثوق",
             "price": "360,00",
