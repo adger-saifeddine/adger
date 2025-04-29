@@ -2081,8 +2081,6 @@
 
 
 
-
-
     <!DOCTYPE html>
     <html lang="ar">
     <head>
@@ -2144,10 +2142,16 @@
                 text-align: center;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 flex: 1; /* لجعل المنتجات متساوية في العرض */
-
+                transition: transform 0.3s ease, box-shadow 0.3s ease; /* إضافة انتقال سلس */
                 -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+                outline: none; /* إزالة الإطار عند النقر */
+                -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            }
+    
+            /* تأثير التكبير عند التمرير */
+            .promda:hover {
+                transform: scale(1.05); /* تكبير العنصر بنسبة 5% */
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* زيادة الظل */
             }
     
             .promda img {
@@ -2156,10 +2160,11 @@
                 border-radius: 10px;
                 object-fit: cover; /* لجعل الصورة تملأ المساحة دون تشويه */
                 cursor: pointer; /* تغيير المؤشر إلى يد عند التمرير فوق الصورة */
+                transition: transform 0.3s ease; /* إضافة انتقال سلس للصورة */
 
                 -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+                outline: none; /* إزالة الإطار عند النقر */
+                -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
             }
     
             .promda p {
@@ -2270,7 +2275,6 @@
         </div>
     </body>
     </html>
-
 <br>
 
 
