@@ -1859,7 +1859,64 @@
           "currency": "جنيه",
           "discountLabel": "خصم"
         }
+      },
+      {
+        "id": "32",
+        "media": [
+          { "src": "https://i.postimg.cc/NjySm4sf/1744752825temp2679216310105117556.jpg", "type": "image" },
+          { "src": "https://files.catbox.moe/ve4hvd.avif", "type": "image" },
+          { "src": "https://files.catbox.moe/5og3aq.jpg", "type": "image" },
+          { "src": "https://files.catbox.moe/6qxedu.jpg", "type": "image" },
+          { "src": "https://files.catbox.moe/s40zt3.jpg", "type": "image" },
+          { "src": "https://files.catbox.moe/7o3dvn.jpg", "type": "image" }
+        ],
+        "pri": "900",
+        "oldPrice": "1100",
+        "dis": "خصم 18%",
+        "changingText": ["شاشة لمس كاملة", "مقاومة للماء IP68", "تدعم NFC والمساعد الصوتي"],
+        "longText": "ساعة X Gold الذكية - شاشة لمس بالكامل ومميزات احترافية",
+        "desc": "احصل على ساعة X Gold الآن! شاشة FULL HD، مقاومة للماء، NFC، بطارية قوية، Always On Display، دعم اللغة العربية والمساعد الصوتي، وتتبع رياضي دقيق. تصميم أنيق وشحن مجاني وضمان 6 شهور.",
+        "sales": "ساعات ذكية",
+        "buttonId": "commentButton32",
+        "commentId": "32",
+        "elementId": "commentCount32",
+        "tableData": [
+          { "question": "الشاشة", "answer": "FULL HD - تقنية IPS + RGB" },
+          { "question": "الحجم", "answer": "49MM" },
+          { "question": "البطارية", "answer": "380mAh" },
+          { "question": "المميزات", "answer": "NFC، مقاومة للماء IP68، Always On Display" },
+          { "question": "اللغة", "answer": "العربية + عدة لغات" },
+          { "question": "الضمان", "answer": "6 شهور" }
+        ],
+        "groups": [
+          {
+            "type": "images",
+            "items": [
+              "https://i.postimg.cc/NjySm4sf/1744752825temp2679216310105117556.jpg",
+              "https://files.catbox.moe/ve4hvd.avif",
+              "https://files.catbox.moe/5og3aq.jpg",
+              "https://files.catbox.moe/6qxedu.jpg",
+              "https://files.catbox.moe/s40zt3.jpg",
+              "https://files.catbox.moe/7o3dvn.jpg"
+            ]
+          }
+        ],
+        "product": {
+          "image": "https://i.postimg.cc/NjySm4sf/1744752825temp2679216310105117556.jpg",
+          "name": "ساعة X Gold الذكية",
+          "sold": "ساعات ذكية",
+          "price": "900.00",
+          "discount": "18",
+          "pageId": "32",
+          "productId": "32",
+          "shippingPrice": "80"
+        },
+        "texts": {
+          "currency": "جنيه",
+          "discountLabel": "خصم"
+        }
       }
+      
       
       
       

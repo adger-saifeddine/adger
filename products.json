@@ -281,7 +281,17 @@
         "sold": "أوعية تخزين",
         "discountTexts": ["كان ب 350 جنيه", "خصم 54.29%"],
         "link": "prod.html?id=31"
-    }
+    },
+    {
+        "name": "ساعة X Gold الذكية",
+        "dataName": "#32 ساعة X Gold - شاشة FULL HD، مقاومة للماء، دعم NFC وSiri",
+        "price": "900.00",
+        "image": "https://i.postimg.cc/NjySm4sf/1744752825temp2679216310105117556.jpg",
+        "sold": "ساعات ذكية",
+        "discountTexts": ["كان بـ1100 جنيه", "خصم 18%"],
+        "link": "prod.html?id=32"
+      }
+      
       
       
 
