@@ -804,10 +804,22 @@ function updateMainMedia(thumbnail) {
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
             <div class="zero" style="margin-top: 15px; margin-left: -4px; font-size: 16px; margin-right: 22px;">00.</div>
             <div class="number" id="productPri" style="font-size: 28px; color: #ff004c;">44</div>
-            <div class="letter" style="margin-top: 15px; margin-right: -1px; font-size: 16px;">جنيه</div>
+            <div class="letter" id="currencyText" style="margin-top: 15px; margin-right: -1px; font-size: 16px;">جنيه</div>
             <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
             <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            const priceElement = document.getElementById('productPri');
+            const currencyElement = document.getElementById('currencyText');
+            
+            if (priceElement.textContent.trim().startsWith('1')) {
+                currencyElement.style.marginRight = '-4px';
+            }
+        };
+    </script>
         <div id="text-container" class="text-style">
             النص الأول
         </div>
@@ -818,15 +830,6 @@ function updateMainMedia(thumbnail) {
             5 مباع
         </div>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const priceElement = document.getElementById('productPri');
-    const letterElement = document.querySelector('.letter');
-    if (priceElement.textContent.startsWith('1')) {
-        letterElement.style.marginRight = '-4px';
-    }
-});
-
-
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
