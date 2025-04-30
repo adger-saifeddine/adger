@@ -818,6 +818,15 @@ function updateMainMedia(thumbnail) {
             5 مباع
         </div>
     <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const priceElement = document.getElementById('productPri');
+    const letterElement = document.querySelector('.letter');
+    if (priceElement.textContent.startsWith('1')) {
+        letterElement.style.marginRight = '-4px';
+    }
+});
+
+
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
