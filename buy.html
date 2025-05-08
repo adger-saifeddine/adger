@@ -1042,46 +1042,33 @@
             }
     
             @keyframes slideIn {
-    from {
-        transform: translateX(-100%);
-        opacity: 0.7;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
+                from {
+                    left: -250px;
+                }
+                to {
+                    left: 0;
+                }
+            }
+    
+            @keyframes slideOut {
+                from {
+                    left: 0;
+                }
+                to {
+                    left: -250px;
+                }
+            }
 
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(-100%);
-        opacity: 0.7;
-    }
-}
-
-/* مثال للتطبيق */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #f8f8f8;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    transform: translateX(-100%); /* مخفي افتراضيًا */
-}
-
-.sidebar.show {
-    animation: slideIn 0.3s forwards;
-}
-
-.sidebar.hide {
-    animation: slideOut 0.3s forwards;
-}
+            @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     
             .menu-popup.active {
                 display: block;
