@@ -862,6 +862,25 @@
         <title>الصفحة الرئيسية</title>
         <style>
             /* التنسيق العام */
+
+            @keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* تعطيل الحركة للمستخدمين الذين يفضلون تقليلها */
+@media (prefers-reduced-motion: reduce) {
+    .your-element {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+}
             body {
                 margin: 21px;
                 font-family: Arial, sans-serif;
