@@ -39,12 +39,12 @@
 
         @keyframes slideIn {
             from {
-                transform: translateY(-50px);
-                opacity: 0;
+                transform: translateY(-50px) !important;
+                opacity: 0 !important;
             }
             to {
-                transform: translateY(0);
-                opacity: 1;
+                transform: translateY(0) !important;
+                opacity: 1 !important;
             }
         }
 
@@ -1042,22 +1042,22 @@
             }
     
             @keyframes slideIn {
-    from {
-        transform: translateX(-250px);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-250px);
-    }
-}
+                from {
+                    left: -250px;
+                }
+                to {
+                    left: 0;
+                }
+            }
+    
+            @keyframes slideOut {
+                from {
+                    left: 0;
+                }
+                to {
+                    left: -250px;
+                }
+            }
     
             .menu-popup.active {
                 display: block;
