@@ -361,20 +361,40 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                padding: 15px;
-                margin-top: 10px;
+            }
+            .image-item {
+                padding: 8px; /* Reduced padding for smaller white box */
             }
             .image-item img {
                 width: 80px;
                 max-height: 80px;
             }
             .image-item span {
-                font-size: 16px;
-                max-width: 100px;
-                margin-right: 10px;
+                font-size: 14px; /* Smaller font size */
+                margin-right: 6px; /* Closer to image */
+                max-width: 110px; /* Adjusted to fit text */
             }
             .search-item small {
                 display: none;
+            }
+        }
+
+        @media (max-width: 499px) {
+            .image-grid {
+                gap: 5px; /* Smaller gap between items and blue background */
+                padding: 10px; /* Reduced padding for the grid container */
+            }
+            .image-item {
+                padding: 6px; /* Further reduced padding for smaller white box */
+            }
+            .image-item img {
+                width: 80px;
+                max-height: 80px;
+            }
+            .image-item span {
+                font-size: 13px; /* Even smaller font size for very small screens */
+                margin-right: 4px; /* Even closer to image */
+                max-width: 120px; /* Increased to ensure full text visibility */
             }
         }
 
@@ -596,7 +616,7 @@
     <div class="search-history-header">
         <h2>بحث المحفوظات</h2>
         <button class="delete-all-button" id="delete-all-button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox=" насчет 0 24">
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#ff0000" stroke-width="2" fill="none"/>
                 <path d="M10 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
                 <path d="M14 11v6" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
