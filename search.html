@@ -18,25 +18,6 @@
             body {
                 font-family: Arial, sans-serif !important;
             }
-            .image-grid {
-                gap: 5px; /* تقليل الفجوة بين العناصر */
-                padding: 10px; /* تقليل الحشوة الداخلية */
-            }
-            .image-item {
-                padding: 8px; /* تقليل الحشوة حول المنتج */
-            }
-            .image-item img {
-                width: 70px; /* تقليل حجم الصورة */
-                max-height: 70px;
-            }
-            .image-item span {
-                font-size: 14px; /* تقليل حجم النص */
-                max-width: 100%; /* السماح للنص بالتمدد */
-                white-space: normal; /* السماح بتكسير النص */
-                overflow: visible; /* إظهار النص بالكامل */
-                text-overflow: clip; /* إزالة النقاط عند القص */
-                margin-right: 5px; /* تقريب النص من الصورة */
-            }
         }
         @media (max-width: 999px) {
             body {
@@ -380,6 +361,8 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
+                padding: 15px;
+                margin-top: 10px;
             }
             .image-item img {
                 width: 80px;
@@ -388,6 +371,7 @@
             .image-item span {
                 font-size: 16px;
                 max-width: 100px;
+                margin-right: 10px;
             }
             .search-item small {
                 display: none;
