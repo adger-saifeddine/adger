@@ -354,16 +354,13 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        @media (max-width: 499px) {
+        @media (max-width: 767px) {
             .search-history-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 5px;
-            }
-            .image-item {
-                padding: 6px;
+                gap: 10px;
             }
             .image-item img {
                 width: 80px;
@@ -371,11 +368,29 @@
             }
             .image-item span {
                 font-size: 16px;
-                max-width: 120px;
-                margin-right: 5px;
+                max-width: 100px;
             }
             .search-item small {
                 display: none;
+            }
+        }
+
+        @media (max-width: 499px) {
+            .image-grid {
+                gap: 5px; /* Smaller gap between items and blue background */
+                padding: 10px; /* Reduced padding for the grid container */
+            }
+            .image-item {
+                padding: 8px; /* Reduced padding inside the white background */
+            }
+            .image-item img {
+                width: 80px;
+                max-height: 80px;
+            }
+            .image-item span {
+                font-size: 16px;
+                margin-right: 8px; /* Reduced margin to bring text closer to image */
+                max-width: 120px; /* Increased max-width to show full text */
             }
         }
 
