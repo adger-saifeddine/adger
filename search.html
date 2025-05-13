@@ -18,6 +18,25 @@
             body {
                 font-family: Arial, sans-serif !important;
             }
+            .image-grid {
+                gap: 5px; /* تقليل الفجوة بين العناصر */
+                padding: 10px; /* تقليل الحشوة الداخلية */
+            }
+            .image-item {
+                padding: 8px; /* تقليل الحشوة حول المنتج */
+            }
+            .image-item img {
+                width: 70px; /* تقليل حجم الصورة */
+                max-height: 70px;
+            }
+            .image-item span {
+                font-size: 14px; /* تقليل حجم النص */
+                max-width: 100%; /* السماح للنص بالتمدد */
+                white-space: normal; /* السماح بتكسير النص */
+                overflow: visible; /* إظهار النص بالكامل */
+                text-overflow: clip; /* إزالة النقاط عند القص */
+                margin-right: 5px; /* تقريب النص من الصورة */
+            }
         }
         @media (max-width: 999px) {
             body {
@@ -372,25 +391,6 @@
             }
             .search-item small {
                 display: none;
-            }
-        }
-
-        @media (max-width: 499px) {
-            .image-grid {
-                gap: 5px; /* Smaller gap between items and blue background */
-                padding: 10px; /* Reduced padding for the grid container */
-            }
-            .image-item {
-                padding: 8px; /* Reduced padding inside the white background */
-            }
-            .image-item img {
-                width: 80px;
-                max-height: 80px;
-            }
-            .image-item span {
-                font-size: 16px;
-                margin-right: 8px; /* Reduced margin to bring text closer to image */
-                max-width: 120px; /* Increased max-width to show full text */
             }
         }
 
