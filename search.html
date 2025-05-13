@@ -88,8 +88,8 @@
             border-radius: 33px;
             border: none;
             cursor: pointer;
-            outline: none; /* إزالة التأثير الأزرق عند التركيز */
-    -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق على الأجهزة التي تستخدم WebKit */
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
         @media (max-width: 768px) {
             .search-container .search-button {
@@ -108,25 +108,23 @@
         }
 
         .search-container .clear-button {
-    position: absolute;
-    left: 80px;
-    top: 54%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    display: none;
-    color: #000000;
-}
+            position: absolute;
+            left: 80px;
+            top: 54%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            color: #000000;
+        }
 
-/* تطبيق left: 15px على الشاشات الصغيرة (الهواتف) */
-@media (max-width: 768px) {
-    .search-container .clear-button {
-        left: 55px;
-    }
-}
-
+        @media (max-width: 768px) {
+            .search-container .clear-button {
+                left: 55px;
+            }
+        }
 
         .search-container .clear-button:hover {
             color: #000000;
@@ -138,20 +136,20 @@
         }
 
         .back-button {
-    position: fixed;
-    top: 10px;
-    right: 11px;
-    background-color: transparent;
-    color: black;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 3;
-    outline: none;
-    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق على الهواتف */
-    user-select: none;
-}
+            position: fixed;
+            top: 10px;
+            right: 11px;
+            background-color: transparent;
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 3;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
         @media (max-width: 499px) {
             .back-button {
@@ -187,23 +185,21 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: #000000; 
+            color: #000000;
             font-size: 16px;
             padding: 0;
             height: 24px;
             width: 24px;
-
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
-            .search-history-header .delete-all-button{
+            .search-history-header .delete-all-button {
                 height: 20px;
                 width: 20px;
             }
         }
-        
 
         .search-history-grid {
             display: flex;
@@ -222,10 +218,9 @@
             justify-content: space-between;
             gap: 10px;
             max-width: 300px;
-
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .search-item {
@@ -255,25 +250,25 @@
         }
 
         .search-item .delete-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #585858;
-    font-size: 13px;
-    padding: 0;
-    flex: 0 0 auto;
-    margin-left: 5px;
-}
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #585858;
+            font-size: 13px;
+            padding: 0;
+            flex: 0 0 auto;
+            margin-left: 5px;
+        }
 
-.delete-button:hover {
-    color: #000000;
-}
+        .delete-button:hover {
+            color: #000000;
+        }
 
-@media (max-width: 499px) {
-    .search-item .delete-button {
-        display: none !important;
-    }
-}
+        @media (max-width: 499px) {
+            .search-item .delete-button {
+                display: none !important;
+            }
+        }
 
         .last-search-item {
             background-color: #0077ff1c;
@@ -286,10 +281,9 @@
             gap: 10px;
             margin: 1px 40px 0 20px;
             max-width: 300px;
-
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .last-search-item {
@@ -314,37 +308,50 @@
         .image-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
+            gap: 15px;
             padding: 20px;
             margin-top: 20px;
             background-color: #0044ffa4;
         }
 
         .image-item {
-            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
-
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            background-color: #ffffff;
+            padding: 12px;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
 
         .image-item img {
-            width: 100%;
-            height: 100%;
+            width: 120px;
+            max-height: 120px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 12px;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
+        }
 
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+        .image-item span {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+            margin-right: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
         }
 
         .image-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 767px) {
@@ -352,29 +359,51 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             .image-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             .image-item img {
-                width: 100%;
-                height: auto;
-                max-width: 100%;
+                width: 80px;
+                max-height: 80px;
+            }
+            .image-item span {
+                font-size: 16px;
+                max-width: 100px;
             }
             .search-item small {
                 display: none;
             }
         }
 
-        @media (min-width: 768px) and (max-width: 1024px) {
+        @media (min-width: 768px) and (max-width: 1500px) {
             .image-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
             .image-item img {
-                max-width: 90%;
+                width: 100px;
+                max-height: 100px;
+            }
+            .image-item span {
+                font-size: 16px;
+                max-width: 120px;
             }
         }
 
-        @media (min-width: 1025px) {
+        @media (min-width: 1501px) and (max-width: 1800px) {
+            .image-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .image-item img {
+                width: 100px;
+                max-height: 100px;
+            }
+            .image-item span {
+                font-size: 16px;
+                max-width: 120px;
+            }
+        }
+
+        @media (min-width: 2001px) {
             .image-grid {
                 grid-template-columns: repeat(6, 1fr);
             }
@@ -436,8 +465,8 @@
         }
         @media (max-width: 555px) {
             .discover-more-header {
-             margin-top: -20px;
-             margin-bottom: -24px;
+                margin-top: -20px;
+                margin-bottom: -24px;
             }
         }
 
@@ -468,10 +497,9 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-
-            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
-            outline: none; /* إزالة الإطار عند النقر */
-            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .discover-item {
@@ -506,7 +534,7 @@
             transition: background-color 0.3s;
         }
         @media (max-width: 555px) {
-            #show-more-arrow  {
+            #show-more-arrow {
                 padding: 4px 5px;
             }
         }
@@ -520,7 +548,7 @@
             height: 24px;
         }
         @media (max-width: 555px) {
-            #show-more-arrow svg  {
+            #show-more-arrow svg {
                 width: 21px;
                 height: 21px;
             }
@@ -598,27 +626,60 @@
         <div class="discover-item" onclick="redirectToSea('طابعة USB')">
             <span>طابعة USB</span>
         </div>
-        
     </div>
 
     <div class="image-grid" id="image-grid">
-        <div class="image-item" data-term="إلكترونيات"><img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات"></div>
-        <div class="image-item" data-term="كمبيوتر"><img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر"></div>
-        <div class="image-item" data-term="سماعات"><img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات"></div>
-        <div class="image-item" data-term="كتب"><img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب"></div>
-        <div class="image-item" data-term="ألعاب"><img src="https://i.postimg.cc/Y0Qpgh25/2025-04-10-07-24-51-b2ba5d7c.jpg" alt="ألعاب"></div>
-        <div class="image-item" data-term="كاميرات"><img src="https://i.postimg.cc/vBRknX1m/2025-04-10-07-24-45-facc6757.jpg" alt="كاميرات"></div>
-        <div class="image-item" data-term="ملابس"><img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس"></div>
-        <div class="image-item" data-term="أحذية"><img src="https://i.postimg.cc/zGZzJw7q/2025-04-10-07-24-37-93a3f62f.jpg" alt="أحذية"></div>
-        
-        <div class="image-item" data-term="أثري"><img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري"></div>
-        <div class="image-item" data-term="ساعات"><img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات"></div>
-        <div class="image-item" data-term="إكسسوارات"><img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات"></div>
-        <div class="image-item" data-term="فن"><img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن"></div>
-        
-        
+        <div class="image-item" data-term="إلكترونيات">
+            <img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات">
+            <span>إلكترونيات</span>
+        </div>
+        <div class="image-item" data-term="كمبيوتر">
+            <img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر">
+            <span>كمبيوتر</span>
+        </div>
+        <div class="image-item" data-term="سماعات">
+            <img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات">
+            <span>سماعات</span>
+        </div>
+        <div class="image-item" data-term="كتب">
+            <img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب">
+            <span>كتب</span>
+        </div>
+        <div class="image-item" data-term="ألعاب">
+            <img src="https://i.postimg.cc/Y0Qpgh25/2025-04-10-07-24-51-b2ba5d7c.jpg" alt="ألعاب">
+            <span>ألعاب</span>
+        </div>
+        <div class="image-item" data-term="كاميرات">
+            <img src="https://i.postimg.cc/vBRknX1m/2025-04-10-07-24-45-facc6757.jpg" alt="كاميرات">
+            <span>كاميرات</span>
+        </div>
+        <div class="image-item" data-term="ملابس">
+            <img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس">
+            <span>ملابس</span>
+        </div>
+        <div class="image-item" data-term="أحذية">
+            <img src="https://i.postimg.cc/zGZzJw7q/2025-04-10-07-24-37-93a3f62f.jpg" alt="أحذية">
+            <span>أحذية</span>
+        </div>
+        <div class="image-item" data-term="أثري">
+            <img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري">
+            <span>أثري</span>
+        </div>
+        <div class="image-item" data-term="ساعات">
+            <img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات">
+            <span>ساعات</span>
+        </div>
+        <div class="image-item" data-term="إكسسوارات">
+            <img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات">
+            <span>إكسسوارات</span>
+        </div>
+        <div class="image-item" data-term="فن">
+            <img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن">
+            <span>فن</span>
+        </div>
     </div>
-
+</body>
+</html>
     <script>
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
