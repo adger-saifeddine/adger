@@ -356,29 +356,9 @@
             transition: border-color 0.3s ease;
         }
     </style>
- <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شراء المنتج</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <style>
-        body { font-family: Cairo, sans-serif; direction: rtl; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 5px; width: 300px; }
-        .close-btn { cursor: pointer; float: left; }
-        .error-icon { color: red; margin-right: 5px; display: none; }
-        .purchase-success { display: none; text-align: center; }
-        .loading-dots { display: flex; justify-content: center; }
-        .dot { width: 10px; height: 10px; background: black; border-radius: 50%; margin: 0 5px; }
-        .checkmark-circle { display: none; font-size: 50px; color: green; }
-        .success-text { display: none; font-size: 20px; color: green; }
-        .color-option, .size-option, .material-option { cursor: pointer; margin: 5px; padding: 5px; border: 1px solid #ccc; }
-        .selected { background-color: #e0e0e0; }
-    </style>
+</head>
 </head>
 <body>
     <div id="overlay"></div>
@@ -441,8 +421,7 @@
     ">
         موقع التوصيل
     </button>
-    <br>
-
+<br>
     <div id="deliveryModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
@@ -488,8 +467,7 @@
         <p><strong>المدينة:</strong> <span id="displayCity"></span></p>
         <p><strong>الشارع/الحي:</strong> <span id="displayStreet"></span></p>
         <p><strong>أقرب معلم:</strong> <span id="displayLandmark"></span></p>
-    </div>
-    <br><br><br><br>
+    </div> <br><br><br><br>
 
     <div id="purchaseSuccess" class="purchase-success">
         <div class="loading-dots">
@@ -510,10 +488,18 @@
     </div>
 
     <script>
-        // تهيئة EmailJS مع معرف المستخدم الخاص بك
-        emailjs.init('YOUR_USER_ID'); // استبدل YOUR_USER_ID بمعرف المستخدم الخاص بك من EmailJS
+        // تحديث عدد المنتجات عند تحميل الصفحة
+        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
 
-        // تهيئة Firebase
+        // الاستماع إلى تغييرات localStorage
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'cartCount') {
+                document.getElementById('cartCount').textContent = event.newValue;
+            }
+        });
+    </script>
+
+    <script>
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -695,27 +681,6 @@
 
             database.ref('purchases').push(purchaseData)
                 .then(() => {
-                    // إرسال بريد إلكتروني باستخدام EmailJS
-                    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-                        to_email: 'adger.shop@gmail.com',
-                        productName: purchaseData.productName,
-                        productId: purchaseData.productId,
-                        quantity: purchaseData.quantity,
-                        totalPrice: purchaseData.totalPrice,
-                        username: purchaseData.username,
-                        deliveryInfo: JSON.stringify(purchaseData.deliveryInfo),
-                        timestamp: new Date(purchaseData.timestamp).toLocaleString(),
-                        color: purchaseData.color || 'غير محدد',
-                        size: purchaseData.size || 'غير محدد',
-                        material: purchaseData.material || 'غير محدد'
-                    })
-                    .then(() => {
-                        console.log('تم إرسال البريد الإلكتروني بنجاح');
-                    })
-                    .catch((error) => {
-                        console.error('خطأ في إرسال البريد الإلكتروني:', error);
-                    });
-
                     loadingDots.style.display = 'none';
                     checkmark.style.display = 'flex';
                     successText.style.display = 'block';
@@ -880,7 +845,6 @@
         updateTotalPrice();
     </script>
 </body>
-</html>
 
 
 
