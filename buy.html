@@ -356,9 +356,15 @@
             transition: border-color 0.3s ease;
         }
     </style>
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>شراء المنتج</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-</head>
+    <!-- إضافة مكتبة EmailJS -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
     <div id="overlay"></div>
@@ -421,7 +427,8 @@
     ">
         موقع التوصيل
     </button>
-<br>
+    <br>
+
     <div id="deliveryModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">×</span>
@@ -467,7 +474,8 @@
         <p><strong>المدينة:</strong> <span id="displayCity"></span></p>
         <p><strong>الشارع/الحي:</strong> <span id="displayStreet"></span></p>
         <p><strong>أقرب معلم:</strong> <span id="displayLandmark"></span></p>
-    </div> <br><br><br><br>
+    </div>
+    <br><br><br><br>
 
     <div id="purchaseSuccess" class="purchase-success">
         <div class="loading-dots">
@@ -488,18 +496,10 @@
     </div>
 
     <script>
-        // تحديث عدد المنتجات عند تحميل الصفحة
-        document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+        // تهيئة EmailJS مع معرف المستخدم الخاص بك
+        emailjs.init('YOUR_USER_ID'); // استبدل YOUR_USER_ID بمعرف المستخدم الخاص بك من EmailJS
 
-        // الاستماع إلى تغييرات localStorage
-        window.addEventListener('storage', function(event) {
-            if (event.key === 'cartCount') {
-                document.getElementById('cartCount').textContent = event.newValue;
-            }
-        });
-    </script>
-
-    <script>
+        // تهيئة Firebase
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -681,6 +681,27 @@
 
             database.ref('purchases').push(purchaseData)
                 .then(() => {
+                    // إرسال بريد إلكتروني باستخدام EmailJS
+                    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                        to_email: 'adger.shop@gmail.com',
+                        productName: purchaseData.productName,
+                        productId: purchaseData.productId,
+                        quantity: purchaseData.quantity,
+                        totalPrice: purchaseData.totalPrice,
+                        username: purchaseData.username,
+                        deliveryInfo: JSON.stringify(purchaseData.deliveryInfo),
+                        timestamp: new Date(purchaseData.timestamp).toLocaleString(),
+                        color: purchaseData.color || 'غير محدد',
+                        size: purchaseData.size || 'غير محدد',
+                        material: purchaseData.material || 'غير محدد'
+                    })
+                    .then(() => {
+                        console.log('تم إرسال البريد الإلكتروني بنجاح');
+                    })
+                    .catch((error) => {
+                        console.error('خطأ في إرسال البريد الإلكتروني:', error);
+                    });
+
                     loadingDots.style.display = 'none';
                     checkmark.style.display = 'flex';
                     successText.style.display = 'block';
@@ -845,6 +866,7 @@
         updateTotalPrice();
     </script>
 </body>
+</html>
 
 
 
