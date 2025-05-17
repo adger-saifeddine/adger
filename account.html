@@ -53,6 +53,7 @@
             height: 100vh;
             margin: 0;
             direction: rtl;
+            position: relative;
         }
         body.no-scroll {
             overflow: hidden;
@@ -396,17 +397,18 @@
             margin: 0 auto 15px auto;
         }
         #totalPurchasesPrice {
-            position: fixed;
-            top: 80px; /* تم تعديله من -66px ليكون مرئيًا بشكل أفضل */
+            position: absolute;
+            top: 80px;
             right: 10px;
-            background-color: #078fffbb;
+            background-color: #fff;
             padding: 5px 10px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
+            z-index: 1;
             font-family: Cairo, sans-serif;
-            font-size: 15px;
-            color: #ffffff;
+            font-size: 16px;
+            color: #333;
+            display: none; /* إخفاء العنصر افتراضيًا */
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -416,7 +418,7 @@
 <body>
     <!-- عنصر عرض سعر المشتريات -->
     <div id="totalPurchasesPrice">
-        قيمة مشترياتي: <span id="totalPrice">0.00</span> جنيه
+        أسعار مشترياتي: <span id="totalPrice">0.00</span> جنيه
     </div>
 
     <div class="loader-overlay" id="loaderOverlay">
@@ -565,10 +567,9 @@
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             if (isLoggedIn) {
                 document.getElementById('profileContainer').style.display = 'block';
-                
+                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
                 const username = localStorage.getItem('username');
                 const profileImage = localStorage.getItem('profileImage');
-                
                 document.getElementById('usernameDisplay').textContent = username;
                 
                 const profileContainer = document.getElementById('profilePictureDisplayContainer');
@@ -590,10 +591,10 @@
                     document.getElementById('modalPurchasesCount').textContent = purchasesCount;
                 });
 
-                updateTotalPurchasesPrice(); // تحديث سعر المشتريات عند تحميل الصفحة
+                updateTotalPurchasesPrice();
             } else {
                 document.getElementById('loginContainer').style.display = 'block';
-                updateTotalPurchasesPrice(); // عرض 0 إذا لم يكن مسجل الدخول
+                document.getElementById('totalPurchasesPrice').style.display = 'none'; // إخفاء العنصر
             }
         });
 
@@ -672,7 +673,8 @@
 
                             setTimeout(() => {
                                 history.back();
-                                updateTotalPurchasesPrice(); // تحديث سعر المشتريات بعد التسجيل
+                                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
+                                updateTotalPurchasesPrice();
                             }, 1000);
                         });
                     }
@@ -701,7 +703,8 @@
 
                             showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
                                 history.back();
-                                updateTotalPurchasesPrice(); // تحديث سعر المشتريات بعد تسجيل الدخول
+                                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
+                                updateTotalPurchasesPrice();
                             });
                         } else {
                             showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
@@ -730,7 +733,8 @@
             }
 
             history.back();
-            updateTotalPurchasesPrice(); // تحديث السعر ليصبح 0 بعد تسجيل الخروج
+            document.getElementById('totalPurchasesPrice').style.display = 'none'; // إخفاء العنصر
+            updateTotalPurchasesPrice();
         });
 
         document.getElementById('cancelLogout').addEventListener('click', () => {
