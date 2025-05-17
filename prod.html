@@ -1591,8 +1591,6 @@ function updateMainMedia(thumbnail) {
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -1620,28 +1618,37 @@ function updateMainMedia(thumbnail) {
         .product-table tr:hover {
             background-color: #f1f1f1;
         }
+        .product-table td:first-child {
+            background-color: #e0e0e0; /* الطرف الأيمن للجدول بلون رصاصي */
+            color: #222;
+            font-weight: bold;
+        }
+        .product-table td:last-child {
+            background-color: #fff; /* الطرف الأيسر (الإجابة) بلون أبيض */
+            color: #222;
+        }
         .description {
-    color: #5e5e5e;
-    font-size: 15px;
-    font-family: Cairo, sans-serif;
-    margin-top: -4px;
-    padding: 0 15px;
-}
-
-@media only screen and (max-width: 768px) {
-    .description {
-        margin-top: -8px;
-    }
-}
+            color: #5e5e5e;
+            font-size: 15px;
+            font-family: Cairo, sans-serif;
+            margin-top: -4px;
+            padding: 0 15px;
+        }
+        @media only screen and (max-width: 768px) {
+            .description {
+                margin-top: -8px;
+            }
+        }
     </style>
 </head>
 <body>
     <table class="product-table" id="productTable">
-     
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
-
     <p id="productDesc" class="description"></p>
+    <!-- اكتبه كما هو مع جعل الطرف الاين للجدول بلون رصاصي و الطرف اليسار اي الاجابه بلون ابيض مع الحفاظ علي الخطوط و الهيكل -->
+</body>
+</html>
 
     <script>
         // جلب معرف المنتج من URL
