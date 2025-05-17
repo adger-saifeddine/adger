@@ -1592,6 +1592,7 @@ function updateMainMedia(thumbnail) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -1620,42 +1621,28 @@ function updateMainMedia(thumbnail) {
             background-color: #f1f1f1;
         }
         .description {
-            color: #5e5e5e;
-            font-size: 15px;
-            font-family: Cairo, sans-serif;
-            margin-top: -4px;
-            padding: 0 15px;
-        }
-        
-        /* New styles for question and answer */
-        .question {
-            color: #5e5e5e; /* Gray color for question */
-            font-weight: bold;
-        }
-        .answer {
-            color: #000000; /* Black color for answer */
-            background-color: #ffffff; /* White background */
-        }
+    color: #5e5e5e;
+    font-size: 15px;
+    font-family: Cairo, sans-serif;
+    margin-top: -4px;
+    padding: 0 15px;
+}
 
-        @media only screen and (max-width: 768px) {
-            .description {
-                margin-top: -8px;
-            }
-        }
+@media only screen and (max-width: 768px) {
+    .description {
+        margin-top: -8px;
+    }
+}
     </style>
 </head>
 <body>
     <table class="product-table" id="productTable">
-        <tr>
-            <th>السؤال</th>
-            <th>الإجابة</th>
-        </tr>
+     
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
 
     <p id="productDesc" class="description"></p>
-</body>
-</html>
+
     <script>
         // جلب معرف المنتج من URL
        function getProductId() {
