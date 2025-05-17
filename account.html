@@ -8,777 +8,811 @@
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
-    <!DOCTYPE html>
-    <html lang="ar">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>حساب المستخدم</title>
-        <style>
-            @font-face {
-                font-family: 'Cairo';
-                src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-                font-display: swap;
+   <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب المستخدم</title>
+    <style>
+        @font-face {
+            font-family: 'Cairo';
+            src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+            font-display: swap;
+        }
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #0051ff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff, #d8eeffd3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            direction: rtl;
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            position: relative;
+            margin-top: -84px;
+        }
+        @media (max-width: 499px) {
+            .login-container { margin-top: -122px; width: 300px; }
+        }
+        .login-container h2 {
+            font-family: Cairo, sans-serif;
+            font-size: 17px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .login-container button.register-btn {
+            background-color: #28a745;
+        }
+        .login-container button.register-btn:hover {
+            background-color: #218838;
+        }
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            position: relative;
+            background-color: #f1f1f1;
+        }
+        .profile-picture-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .profile-picture-placeholder {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-size: 40px;
+            cursor: pointer;
+            border: 2px dashed #ccc;
+        }
+        .camera-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: #007bff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .hidden-file-input {
+            display: none;
+        }
+        .logout-button {
+            background-color: #e6e6e63d !important;
+            margin-top: 5px;
+            color: #000 !important;
+            border: 1px solid #000000 !important;
+        }
+        .logout-button:hover {
+            background-color: #9b9b9b1e !important;
+        }
+        .purchases-btn {
+            background-color: #292929 !important;
+            color: white !important;
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .purchases-btn:hover {
+            background-color: #1a1a1a !important;
+        }
+        #usernameDisplay {
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            margin-top: -3px;
+            color: #333;
+        }
+        .purchases-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .purchases-modal-content {
+            background-color: #fff;
+            width: 400px;
+            max-height: 80vh;
+            min-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            direction: rtl;
+        }
+        .purchases-header {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1;
+        }
+        .purchases-header h3 {
+            font-family: Cairo, sans-serif;
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        .purchases-list {
+            padding: 15px;
+            font-family: Cairo, sans-serif;
+            font-size: 14px;
+            text-align: right;
+            min-height: calc(300px - 60px);
+        }
+        .purchase-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .purchase-item:last-child {
+            border-bottom: none;
+        }
+        .purchase-item.latest {
+            border-bottom: none;
+        }
+        .loading-text {
+            text-align: center;
+            margin-top: 70px;
+            padding: 20px;
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            color: #666;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .modal-buttons {
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #confirmLogout {
+            margin-left: 11px;
+            background-color: #ff0000;
+            color: white;
+        }
+        #confirmLogout:hover {
+            background-color: #cc0000;
+        }
+        #cancelLogout {
+            background-color: #e4e4e4;
+            color: #333;
+        }
+        #cancelLogout:hover {
+            background-color: #d8d8d8;
+        }
+        .colorful-divider {
+            margin-top: -15px;
+            width: 100%;
+            height: 2.5px;
+            background: repeating-linear-gradient(90deg,
+                rgb(0, 183, 255) 0 15px,
+                white 15px 30px,
+                red 30px 45px,
+                rgb(0, 183, 255) 45px 60px,
+                white 60px 75px,
+                rgb(255, 0, 0) 75px 90px
+            );
+            background-size: 90px 100%;
+        }
+        .purchase-item .date-time {
+            color: rgb(65, 65, 65);
+        }
+        .custom-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .custom-alert-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .checkmark-circle {
+            stroke: #4CAF50;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            stroke: #4CAF50;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        .error-circle {
+            stroke: #ff0000;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .error-x {
+            stroke: #ff0000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
             }
-            .loader-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.3);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 999;
-            }
-            .loader {
-                width: 50px;
-                height: 50px;
-                border: 5px solid #0051ff;
-                border-top-color: transparent;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            body {
-                font-family: Arial, sans-serif;
-                background: linear-gradient(135deg, #ffffff, #d8eeffd3);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                direction: rtl;
-            }
-            body.no-scroll {
-                overflow: hidden;
-            }
-            .login-container {
-                background-color: white;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                width: 350px;
-                position: relative;
-                margin-top: -84px;
-            }
-            @media (max-width: 499px) {
-                .login-container { margin-top: -122px; width: 300px; }
-            }
-            .login-container h2 {
-                font-family: Cairo, sans-serif;
-                font-size: 17px;
-                margin-bottom: 20px;
-                color: #333;
-            }
-            .login-container input {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-sizing: border-box;
-            }
-            .login-container button {
-                width: 100%;
-                padding: 10px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                margin-bottom: 10px;
-            }
-            .login-container button.register-btn {
-                background-color: #28a745;
-            }
-            .login-container button.register-btn:hover {
-                background-color: #218838;
-            }
-            .profile-picture {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                margin-bottom: 10px;
-                object-fit: cover;
-                position: relative;
-                background-color: #f1f1f1;
-            }
-            .profile-picture-container {
-                position: relative;
-                display: inline-block;
-                margin-bottom: 15px;
-            }
-            .profile-picture-placeholder {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                background-color: #f1f1f1;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #888;
-                font-size: 40px;
-                cursor: pointer;
-                border: 2px dashed #ccc;
-            }
-            .camera-icon {
-                position: absolute;
-                bottom: 5px;
-                right: 5px;
-                background-color: #007bff;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: white;
-                cursor: pointer;
-                z-index: 2;
-            }
-            .hidden-file-input {
-                display: none;
-            }
-            .logout-button {
-                background-color: #e6e6e63d !important;
-                margin-top: 5px;
-                color: #000 !important;
-                border: 1px solid #000000 !important;
-            }
-            .logout-button:hover {
-                background-color: #9b9b9b1e !important;
-            }
-            .purchases-btn {
-                background-color: #292929 !important;
-                color: white !important;
-                margin-top: 10px;
-                width: 100%;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            .purchases-btn:hover {
-                background-color: #1a1a1a !important;
-            }
-            #usernameDisplay {
-                font-family: Cairo, sans-serif;
-                font-size: 16px;
-                margin-top: -3px;
-                color: #333;
-            }
-            .purchases-modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            }
-            .purchases-modal-content {
-                background-color: #fff;
-                width: 400px;
-                max-height: 80vh;
-                min-height: 300px;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                overflow-y: auto;
-                direction: rtl;
-            }
-            .purchases-header {
-                position: sticky;
-                top: 0;
-                background-color: #fff;
-                padding: 15px;
-                border-bottom: 1px solid #ddd;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                z-index: 1;
-            }
-            .purchases-header h3 {
-                font-family: Cairo, sans-serif;
-                font-size: 18px;
-                margin: 0;
-                color: #333;
-            }
-            .purchases-list {
-                padding: 15px;
-                font-family: Cairo, sans-serif;
-                font-size: 14px;
-                text-align: right;
-                min-height: calc(300px - 60px);
-            }
-            .purchase-item {
-                margin-bottom: 15px;
-                padding-bottom: 15px;
-                border-bottom: 1px solid #ddd;
-            }
-            .purchase-item:last-child {
-                border-bottom: none;
-            }
-            .purchase-item.latest {
-                border-bottom: none;
-            }
-            .loading-text {
-                text-align: center;
-                margin-top: 70px;
-                padding: 20px;
-                font-family: Cairo, sans-serif;
-                font-size: 16px;
-                color: #666;
-            }
-            .modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            }
-            .modal-content {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                width: 300px;
-            }
-            .modal-buttons {
-                margin-top: 20px;
-            }
-            .modal-buttons button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-            #confirmLogout {
-                margin-left: 11px;
-                background-color: #ff0000;
-                color: white;
-            }
-            #confirmLogout:hover {
-                background-color: #cc0000;
-            }
-            #cancelLogout {
-                background-color: #e4e4e4;
-                color: #333;
-            }
-            #cancelLogout:hover {
-                background-color: #d8d8d8;
-            }
-            .colorful-divider {
-                margin-top: -15px;
-                width: 100%;
-                height: 2.5px;
-                background: repeating-linear-gradient(90deg,
-                    rgb(0, 183, 255) 0 15px,
-                    white 15px 30px,
-                    red 30px 45px,
-                    rgb(0, 183, 255) 45px 60px,
-                    white 60px 75px,
-                    rgb(255, 0, 0) 75px 90px
-                );
-                background-size: 90px 100%;
-            }
-            .purchase-item .date-time {
-                color: rgb(65, 65, 65);
-            }
-            .custom-alert {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            }
-            .custom-alert-content {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                width: 300px;
-            }
-            .icon {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 10px;
-            }
-            .checkmark-circle {
-                stroke: #4CAF50;
-                stroke-width: 2;
-                stroke-miterlimit: 10;
-                stroke-dasharray: 166;
-                stroke-dashoffset: 166;
-                animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-            }
-            .checkmark-check {
-                stroke: #4CAF50;
-                stroke-width: 2;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                stroke-dasharray: 48;
-                stroke-dashoffset: 48;
-                animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-            }
-            .error-circle {
-                stroke: #ff0000;
-                stroke-width: 2;
-                stroke-miterlimit: 10;
-                stroke-dasharray: 166;
-                stroke-dashoffset: 166;
-                animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-            }
-            .error-x {
-                stroke: #ff0000;
-                stroke-width: 2;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                stroke-dasharray: 48;
-                stroke-dashoffset: 48;
-                animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-            }
-            @keyframes stroke {
-                100% {
-                    stroke-dashoffset: 0;
-                }
-            }
-            #customAlertMessage {
-                font-family: Cairo, sans-serif;
-                font-size: 16px;
-                margin-bottom: 20px;
-            }
-            .custom-alert-content button {
-                padding: 10px 20px;
-                background-color: #00b7ff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-family: Cairo, sans-serif;
-                font-size: 16px;
-                transition: background-color 0.3s;
-            }
-            .custom-alert-content button:hover {
-                background-color: #00c3ff;
-            }
-            .initial-avatar {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                background-color: #007bff;
-                color: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 40px;
-                font-weight: bold;
-                margin: 0 auto 15px auto;
-            }
-        </style>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    </head>
-    <body>
-        <div class="loader-overlay" id="loaderOverlay">
-            <div class="loader" id="loader"></div>
-        </div>
-    
-        <!-- نموذج تسجيل الدخول -->
-        <div class="login-container" id="loginContainer" style="display: none;">
-            <h2>تسجيل الدخول</h2>
-            <input type="text" id="username" placeholder="اسم المستخدم">
-            <input type="password" id="password" placeholder="كلمة المرور">
-            <button onclick="login()">تسجيل الدخول</button>
-            <button class="register-btn" onclick="showRegisterForm()">إنشاء حساب جديد</button>
-        </div>
-    
-        <!-- نموذج إنشاء حساب -->
-        <div class="login-container" id="registerContainer" style="display: none;">
-            <h2>إنشاء حساب</h2>
-            <input type="text" id="newUsername" placeholder="اسم المستخدم">
-            <input type="password" id="newPassword" placeholder="كلمة المرور">
-            
-            <div class="profile-picture-container">
-                <div id="profilePicturePlaceholder" class="profile-picture-placeholder">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="camera-icon" onclick="document.getElementById('profileImage').click()">
-                    <i class="fas fa-camera"></i>
-                </div>
-                <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
+        }
+        #customAlertMessage {
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .custom-alert-content button {
+            padding: 10px 20px;
+            background-color: #00b7ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .custom-alert-content button:hover {
+            background-color: #00c3ff;
+        }
+        .initial-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+        #totalPurchasesPrice {
+            position: fixed;
+            top: 80px; /* تم تعديله من -66px ليكون مرئيًا بشكل أفضل */
+            right: 10px;
+            background-color: #078fffbb;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            font-family: Cairo, sans-serif;
+            font-size: 15px;
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- عنصر عرض سعر المشتريات -->
+    <div id="totalPurchasesPrice">
+        قيمة مشترياتي: <span id="totalPrice">0.00</span> جنيه
+    </div>
+
+    <div class="loader-overlay" id="loaderOverlay">
+        <div class="loader" id="loader"></div>
+    </div>
+
+    <!-- نموذج تسجيل الدخول -->
+    <div class="login-container" id="loginContainer" style="display: none;">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" id="username" placeholder="اسم المستخدم">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="login()">تسجيل الدخول</button>
+        <button class="register-btn" onclick="showRegisterForm()">إنشاء حساب جديد</button>
+    </div>
+
+    <!-- نموذج إنشاء حساب -->
+    <div class="login-container" id="registerContainer" style="display: none;">
+        <h2>إنشاء حساب</h2>
+        <input type="text" id="newUsername" placeholder="اسم المستخدم">
+        <input type="password" id="newPassword" placeholder="كلمة المرور">
+        
+        <div class="profile-picture-container">
+            <div id="profilePicturePlaceholder" class="profile-picture-placeholder">
+                <i class="fas fa-user"></i>
             </div>
-            
-            <button onclick="register()">إنشاء حساب</button>
-        </div>
-    
-        <!-- ملف تعريف المستخدم -->
-        <div class="login-container" id="profileContainer" style="display: none;">
-            <h2>حساب المستخدم</h2>
-            <div id="profilePictureDisplayContainer">
-                <!-- سيتم تعبئتها ديناميكيًا -->
+            <div class="camera-icon" onclick="document.getElementById('profileImage').click()">
+                <i class="fas fa-camera"></i>
             </div>
-            <p id="usernameDisplay"></p>
-            <button class="purchases-btn" onclick="showPurchases()">مشترياتي (<span id="purchasesCount">0</span>)</button>
-            <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
+            <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
         </div>
-    
-        <!-- نافذة المشتريات -->
-        <div id="purchasesModal" class="purchases-modal">
-            <div class="purchases-modal-content">
-                <div class="purchases-header">
-                    <h3>المشتريات (<span id="modalPurchasesCount">0</span>)</h3>
-                    <svg onclick="closePurchasesModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </div>
-                <div class="purchases-list" id="purchasesList"></div>
+        
+        <button onclick="register()">إنشاء حساب</button>
+    </div>
+
+    <!-- ملف تعريف المستخدم -->
+    <div class="login-container" id="profileContainer" style="display: none;">
+        <h2>حساب المستخدم</h2>
+        <div id="profilePictureDisplayContainer">
+            <!-- سيتم تعبئتها ديناميكيًا -->
+        </div>
+        <p id="usernameDisplay"></p>
+        <button class="purchases-btn" onclick="showPurchases()">مشترياتي (<span id="purchasesCount">0</span>)</button>
+        <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
+    </div>
+
+    <!-- نافذة المشتريات -->
+    <div id="purchasesModal" class="purchases-modal">
+        <div class="purchases-modal-content">
+            <div class="purchases-header">
+                <h3>المشتريات (<span id="modalPurchasesCount">0</span>)</h3>
+                <svg onclick="closePurchasesModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
             </div>
+            <div class="purchases-list" id="purchasesList"></div>
         </div>
-    
-        <!-- نافذة التأكيد لتسجيل الخروج -->
-        <div id="logoutModal" class="modal">
-            <div class="modal-content">
-                <p style="font-family: Cairo, sans-serif;">أأنت متأكد من الإستكمال؟</p>
-                <div class="modal-buttons">
-                    <button id="confirmLogout">نعم</button>
-                    <button id="cancelLogout">لا</button>
-                </div>
-            </div>
-        </div>
-    
-        <!-- نافذة مخصصة للرسائل -->
-        <div id="customAlert" class="custom-alert">
-            <div class="custom-alert-content">
-                <div id="alertIcon"></div>
-                <p id="customAlertMessage"></p>
-                <button>حسنًا</button>
+    </div>
+
+    <!-- نافذة التأكيد لتسجيل الخروج -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p style="font-family: Cairo, sans-serif;">أأنت متأكد من الإستكمال؟</p>
+            <div class="modal-buttons">
+                <button id="confirmLogout">نعم</button>
+                <button id="cancelLogout">لا</button>
             </div>
         </div>
-    
-        <script>
-            firebase.initializeApp({
-                apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
-                authDomain: "buy-from-adger.firebaseapp.com",
-                databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
-                projectId: "buy-from-adger",
-                storageBucket: "buy-from-adger.appspot.com",
-                messagingSenderId: "396020785601",
-                appId: "1:396020785601:web:yourWebAppID"
-            });
-    
-            const database = firebase.database();
-            let selectedProfileImage = null;
-    
-            function showCustomAlert(message, isSuccess, callback) {
-                const alertIcon = document.getElementById('alertIcon');
-                document.getElementById('customAlertMessage').textContent = message;
-                document.getElementById('customAlert').style.display = 'flex';
-    
-                if (isSuccess) {
-                    alertIcon.innerHTML = `
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                        </svg>
-                    `;
-                } else {
-                    alertIcon.innerHTML = `
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                            <circle class="error-circle" cx="26" cy="26" r="25" fill="none"/>
-                            <path class="error-x" fill="none" d="M18 18l16 16M34 18l-16 16"/>
-                        </svg>
-                    `;
-                }
-    
-                document.getElementById('customAlert').querySelector('button').onclick = function() {
-                    closeCustomAlert();
-                    if (callback) callback();
-                };
-            }
-    
-            function closeCustomAlert() {
-                document.getElementById('customAlert').style.display = 'none';
-            }
-    
-            window.addEventListener('load', () => {
-                document.getElementById('loaderOverlay').style.display = 'none';
-                
-                const isLoggedIn = localStorage.getItem('isLoggedIn');
-                if (isLoggedIn) {
-                    document.getElementById('profileContainer').style.display = 'block';
-                    
-                    const username = localStorage.getItem('username');
-                    const profileImage = localStorage.getItem('profileImage');
-                    
-                    document.getElementById('usernameDisplay').textContent = username;
-                    
-                    // عرض صورة المستخدم أو الحرف الأول من اسم المستخدم إذا لم تكن هناك صورة
-                    const profileContainer = document.getElementById('profilePictureDisplayContainer');
-                    if (profileImage && profileImage !== 'default') {
-                        profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-                    } else {
-                        const initial = username.charAt(0).toUpperCase();
-                        profileContainer.innerHTML = `
-                            <div class="initial-avatar" style="background-color: ${getRandomColor()}">
-                                ${initial}
-                            </div>
-                        `;
+    </div>
+
+    <!-- نافذة مخصصة للرسائل -->
+    <div id="customAlert" class="custom-alert">
+        <div class="custom-alert-content">
+            <div id="alertIcon"></div>
+            <p id="customAlertMessage"></p>
+            <button>حسنًا</button>
+        </div>
+    </div>
+
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+            authDomain: "buy-from-adger.firebaseapp.com",
+            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+            projectId: "buy-from-adger",
+            storageBucket: "buy-from-adger.appspot.com",
+            messagingSenderId: "396020785601",
+            appId: "1:396020785601:web:yourWebAppID"
+        });
+
+        const database = firebase.database();
+        let selectedProfileImage = null;
+
+        // دالة تحديث سعر المشتريات
+        function updateTotalPurchasesPrice() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                    const purchases = snapshot.val();
+                    let total = 0;
+                    if (purchases) {
+                        Object.values(purchases).forEach(purchase => {
+                            total += parseFloat(purchase.totalPrice);
+                        });
                     }
-    
-                    database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
-                        const purchases = snapshot.val();
-                        const purchasesCount = purchases ? Object.keys(purchases).length : 0;
-                        document.getElementById('purchasesCount').textContent = purchasesCount;
-                        document.getElementById('modalPurchasesCount').textContent = purchasesCount;
-                    });
+                    document.getElementById('totalPrice').textContent = total.toFixed(2);
+                });
+            } else {
+                document.getElementById('totalPrice').textContent = '0';
+            }
+        }
+
+        function showCustomAlert(message, isSuccess, callback) {
+            const alertIcon = document.getElementById('alertIcon');
+            document.getElementById('customAlertMessage').textContent = message;
+            document.getElementById('customAlert').style.display = 'flex';
+
+            if (isSuccess) {
+                alertIcon.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                `;
+            } else {
+                alertIcon.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="error-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="error-x" fill="none" d="M18 18l16 16M34 18l-16 16"/>
+                    </svg>
+                `;
+            }
+
+            document.getElementById('customAlert').querySelector('button').onclick = function() {
+                closeCustomAlert();
+                if (callback) callback();
+            };
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
+
+        window.addEventListener('load', () => {
+            document.getElementById('loaderOverlay').style.display = 'none';
+            
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                document.getElementById('profileContainer').style.display = 'block';
+                
+                const username = localStorage.getItem('username');
+                const profileImage = localStorage.getItem('profileImage');
+                
+                document.getElementById('usernameDisplay').textContent = username;
+                
+                const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                if (profileImage && profileImage !== 'default') {
+                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
                 } else {
-                    document.getElementById('loginContainer').style.display = 'block';
+                    const initial = username.charAt(0).toUpperCase();
+                    profileContainer.innerHTML = `
+                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                            ${initial}
+                        </div>
+                    `;
                 }
-            });
-    
-            function getRandomColor() {
-                const colors = [
-                    '#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', 
-                    '#20c997', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c'
-                ];
-                return colors[Math.floor(Math.random() * colors.length)];
+
+                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                    const purchases = snapshot.val();
+                    const purchasesCount = purchases ? Object.keys(purchases).length : 0;
+                    document.getElementById('purchasesCount').textContent = purchasesCount;
+                    document.getElementById('modalPurchasesCount').textContent = purchasesCount;
+                });
+
+                updateTotalPurchasesPrice(); // تحديث سعر المشتريات عند تحميل الصفحة
+            } else {
+                document.getElementById('loginContainer').style.display = 'block';
+                updateTotalPurchasesPrice(); // عرض 0 إذا لم يكن مسجل الدخول
             }
-    
-            function previewImage(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        selectedProfileImage = e.target.result;
-                        document.getElementById('profilePicturePlaceholder').innerHTML = `
-                            <img src="${e.target.result}" alt="صورة المستخدم" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-                        `;
-                    };
-                    reader.readAsDataURL(file);
-                }
+        });
+
+        function getRandomColor() {
+            const colors = [
+                '#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', 
+                '#20c997', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedProfileImage = e.target.result;
+                    document.getElementById('profilePicturePlaceholder').innerHTML = `
+                        <img src="${e.target.result}" alt="صورة المستخدم" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    `;
+                };
+                reader.readAsDataURL(file);
             }
-    
-            function showRegisterForm() {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('registerContainer').style.display = 'block';
-                // إعادة تعيين صورة الملف الشخصي عند عرض النموذج
-                document.getElementById('profilePicturePlaceholder').innerHTML = '<i class="fas fa-user"></i>';
-                selectedProfileImage = null;
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+            document.getElementById('profilePicturePlaceholder').innerHTML = '<i class="fas fa-user"></i>';
+            selectedProfileImage = null;
+        }
+
+        function register() {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const profileImage = selectedProfileImage || 'default';
+
+            if (username.length < 9) {
+                showCustomAlert('اسم المستخدم يجب أن يكون 9 حروف أو أكثر!', false, function() {});
+                return;
             }
-    
-            function register() {
-                const username = document.getElementById('newUsername').value;
-                const password = document.getElementById('newPassword').value;
-                const profileImage = selectedProfileImage || 'default';
-    
-                if (username.length < 9) {
-                    showCustomAlert('اسم المستخدم يجب أن يكون 9 حروف أو أكثر!', false, function() {});
-                    return;
-                }
-    
-                if (username && password) {
-                    database.ref('users/' + username).once('value', (snapshot) => {
-                        if (snapshot.exists()) {
-                            showCustomAlert('اسم المستخدم موجود بالفعل! يرجى اختيار اسم آخر.', false, function() {});
-                        } else {
-                            database.ref('users/' + username).set({
-                                password: password,
-                                profileImage: profileImage
-                            });
+
+            if (username && password) {
+                database.ref('users/' + username).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        showCustomAlert('اسم المستخدم موجود بالفعل! يرجى اختيار اسم آخر.', false, function() {});
+                    } else {
+                        database.ref('users/' + username).set({
+                            password: password,
+                            profileImage: profileImage
+                        });
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('profileImage', profileImage);
+                        localStorage.setItem('isLoggedIn', true);
+
+                        if (window.opener) {
+                            window.opener.postMessage({ key: 'username', value: username }, '*');
+                        }
+
+                        showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
+                            document.getElementById('registerContainer').style.display = 'none';
+                            document.getElementById('profileContainer').style.display = 'block';
+                            document.getElementById('usernameDisplay').textContent = username;
+                            
+                            const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                            if (profileImage && profileImage !== 'default') {
+                                profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                            } else {
+                                const initial = username.charAt(0).toUpperCase();
+                                profileContainer.innerHTML = `
+                                    <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                                        ${initial}
+                                    </div>
+                                `;
+                            }
+
+                            setTimeout(() => {
+                                history.back();
+                                updateTotalPurchasesPrice(); // تحديث سعر المشتريات بعد التسجيل
+                            }, 1000);
+                        });
+                    }
+                });
+            } else {
+                showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                database.ref('users/' + username).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.password === password) {
                             localStorage.setItem('username', username);
-                            localStorage.setItem('profileImage', profileImage);
+                            localStorage.setItem('profileImage', userData.profileImage || 'default');
                             localStorage.setItem('isLoggedIn', true);
-    
-                            // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
+
                             if (window.opener) {
                                 window.opener.postMessage({ key: 'username', value: username }, '*');
                             }
-    
-                            showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
-                                document.getElementById('registerContainer').style.display = 'none';
-                                document.getElementById('profileContainer').style.display = 'block';
-                                document.getElementById('usernameDisplay').textContent = username;
-                                
-                                // عرض صورة المستخدم أو الحرف الأول من اسمه
-                                const profileContainer = document.getElementById('profilePictureDisplayContainer');
-                                if (profileImage && profileImage !== 'default') {
-                                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-                                } else {
-                                    const initial = username.charAt(0).toUpperCase();
-                                    profileContainer.innerHTML = `
-                                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
-                                            ${initial}
-                                        </div>
-                                    `;
-                                }
-    
-                                // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
-                                setTimeout(() => {
-                                    history.back();
-                                }, 1000);
+
+                            showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
+                                history.back();
+                                updateTotalPurchasesPrice(); // تحديث سعر المشتريات بعد تسجيل الدخول
                             });
-                        }
-                    });
-                } else {
-                    showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
-                }
-            }
-    
-            function login() {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-    
-                if (username && password) {
-                    database.ref('users/' + username).once('value', (snapshot) => {
-                        if (snapshot.exists()) {
-                            const userData = snapshot.val();
-                            if (userData.password === password) {
-                                localStorage.setItem('username', username);
-                                localStorage.setItem('profileImage', userData.profileImage || 'default');
-                                localStorage.setItem('isLoggedIn', true);
-    
-                                // إرسال رسالة إلى الصفحات الأخرى لتحديث الاسم فورًا
-                                if (window.opener) {
-                                    window.opener.postMessage({ key: 'username', value: username }, '*');
-                                }
-    
-                                showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
-                                    // الرجوع إلى الصفحة السابقة بدلاً من الرئيسية
-                                    history.back();
-                                });
-                            } else {
-                                showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
-                            }
                         } else {
-                            showCustomAlert('اسم المستخدم غير موجود!', false, function() {});
-                        }
-                    });
-                } else {
-                    showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
-                }
-            }
-    
-            function logout() {
-                const modal = document.getElementById('logoutModal');
-                modal.style.display = 'flex';
-            }
-    
-            document.getElementById('confirmLogout').addEventListener('click', () => {
-                localStorage.removeItem('username');
-                localStorage.removeItem('profileImage');
-                localStorage.removeItem('isLoggedIn');
-    
-                // إرسال رسالة لإزالة الاسم من الصفحات الأخرى
-                if (window.opener) {
-                    window.opener.postMessage({ key: 'username', value: null }, '*');
-                }
-    
-                // الرجوع إلى الصفحة السابقة بدلاً من إعادة تحميل صفحة الحساب
-                history.back();
-            });
-    
-            document.getElementById('cancelLogout').addEventListener('click', () => {
-                document.getElementById('logoutModal').style.display = 'none';
-            });
-    
-            function showPurchases() {
-                const modal = document.getElementById('purchasesModal');
-                const purchasesList = document.getElementById('purchasesList');
-                purchasesList.innerHTML = '<p class="loading-text">جاري التحميل...</p>';
-    
-                document.body.classList.add('no-scroll');
-                modal.style.display = 'flex';
-    
-                const username = localStorage.getItem('username');
-    
-                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
-                    purchasesList.innerHTML = '';
-                    const purchases = snapshot.val();
-    
-                    if (purchases) {
-                        const purchasesArray = Object.values(purchases);
-                        purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
-    
-                        if (purchasesArray.length > 0) {
-                            const latestPurchase = purchasesArray[0];
-                            const latestPurchaseItem = createPurchaseItem(latestPurchase, true);
-                            purchasesList.innerHTML += '<h4 style="margin-top: 3px;">تفاصيل آخر منتج تم شراؤه</h4>';
-                            purchasesList.appendChild(latestPurchaseItem);
-    
-                            if (purchasesArray.length > 1) {
-                                const divider = document.createElement('div');
-                                divider.className = 'colorful-divider';
-                                purchasesList.appendChild(divider);
-                                purchasesList.innerHTML += '<h4>المنتجات القديمة</h4>';
-                                for (let i = 1; i < purchasesArray.length; i++) {
-                                    const purchaseItem = createPurchaseItem(purchasesArray[i], false);
-                                    purchasesList.appendChild(purchaseItem);
-                                }
-                            }
+                            showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
                         }
                     } else {
-                        purchasesList.innerHTML = '<p>لا توجد مشتريات بعد.</p>';
+                        showCustomAlert('اسم المستخدم غير موجود!', false, function() {});
                     }
                 });
+            } else {
+                showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
             }
-    
-            function createPurchaseItem(purchase, isLatest) {
-                const purchaseItem = document.createElement('div');
-                purchaseItem.className = 'purchase-item';
-                if (isLatest) {
-                    purchaseItem.classList.add('latest');
+        }
+
+        function logout() {
+            const modal = document.getElementById('logoutModal');
+            modal.style.display = 'flex';
+        }
+
+        document.getElementById('confirmLogout').addEventListener('click', () => {
+            localStorage.removeItem('username');
+            localStorage.removeItem('profileImage');
+            localStorage.removeItem('isLoggedIn');
+
+            if (window.opener) {
+                window.opener.postMessage({ key: 'username', value: null }, '*');
+            }
+
+            history.back();
+            updateTotalPurchasesPrice(); // تحديث السعر ليصبح 0 بعد تسجيل الخروج
+        });
+
+        document.getElementById('cancelLogout').addEventListener('click', () => {
+            document.getElementById('logoutModal').style.display = 'none';
+        });
+
+        function showPurchases() {
+            const modal = document.getElementById('purchasesModal');
+            const purchasesList = document.getElementById('purchasesList');
+            purchasesList.innerHTML = '<p class="loading-text">جاري التحميل...</p>';
+
+            document.body.classList.add('no-scroll');
+            modal.style.display = 'flex';
+
+            const username = localStorage.getItem('username');
+
+            database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                purchasesList.innerHTML = '';
+                const purchases = snapshot.val();
+
+                if (purchases) {
+                    const purchasesArray = Object.values(purchases);
+                    purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
+
+                    if (purchasesArray.length > 0) {
+                        const latestPurchase = purchasesArray[0];
+                        const latestPurchaseItem = createPurchaseItem(latestPurchase, true);
+                        purchasesList.innerHTML += '<h4 style="margin-top: 3px;">تفاصيل آخر منتج تم شراؤه</h4>';
+                        purchasesList.appendChild(latestPurchaseItem);
+
+                        if (purchasesArray.length > 1) {
+                            const divider = document.createElement('div');
+                            divider.className = 'colorful-divider';
+                            purchasesList.appendChild(divider);
+                            purchasesList.innerHTML += '<h4>المنتجات القديمة</h4>';
+                            for (let i = 1; i < purchasesArray.length; i++) {
+                                const purchaseItem = createPurchaseItem(purchasesArray[i], false);
+                                purchasesList.appendChild(purchaseItem);
+                            }
+                        }
+                    }
+                } else {
+                    purchasesList.innerHTML = '<p>لا توجد مشتريات بعد.</p>';
                 }
-                let purchaseDate = 'غير محدد';
-                let purchaseTime = 'غير محدد';
-                if (purchase.timestamp) {
-                    const dateObj = new Date(purchase.timestamp);
-                    purchaseDate = dateObj.toLocaleDateString('ar-EG');
-                    purchaseTime = dateObj.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-                }
-                purchaseItem.innerHTML = `
-                    <p>اسم المنتج: ${purchase.productName}</p>
-                    <p>رقم المنتج: ${purchase.productId}</p>
-                    <p>الكمية: ${purchase.quantity}</p>
-                    <p>سعر المنتج: ${purchase.productPrice} جنيه</p>
-                    <p>سعر الشحن: ${purchase.shippingPrice} جنيه</p>
-                    <p>السعر الإجمالي: ${purchase.totalPrice} جنيه</p>
-                    ${purchase.color ? `<p>اللون: ${purchase.color}</p>` : ''}
-                    ${purchase.size ? `<p>المقاس: ${purchase.size}</p>` : ''}
-                    ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
-                    <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
-                `;
-                return purchaseItem;
+            });
+        }
+
+        function createPurchaseItem(purchase, isLatest) {
+            const purchaseItem = document.createElement('div');
+            purchaseItem.className = 'purchase-item';
+            if (isLatest) {
+                purchaseItem.classList.add('latest');
             }
-    
-            function closePurchasesModal() {
-                document.getElementById('purchasesModal').style.display = 'none';
-                document.body.classList.remove('no-scroll');
+            let purchaseDate = 'غير محدد';
+            let purchaseTime = 'غير محدد';
+            if (purchase.timestamp) {
+                const dateObj = new Date(purchase.timestamp);
+                purchaseDate = dateObj.toLocaleDateString('ar-EG');
+                purchaseTime = dateObj.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
             }
-        </script>
-    </body>
-    </html> 
+            purchaseItem.innerHTML = `
+                <p>اسم المنتج: ${purchase.productName}</p>
+                <p>رقم المنتج: ${purchase.productId}</p>
+                <p>الكمية: ${purchase.quantity}</p>
+                <p>سعر المنتج: ${purchase.productPrice} جنيه</p>
+                <p>سعر الشحن: ${purchase.shippingPrice} جنيه</p>
+                <p>السعر الإجمالي: ${purchase.totalPrice} جنيه</p>
+                ${purchase.color ? `<p>اللون: ${purchase.color}</p>` : ''}
+                ${purchase.size ? `<p>المقاس: ${purchase.size}</p>` : ''}
+                ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
+                <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
+            `;
+            return purchaseItem;
+        }
+
+        function closePurchasesModal() {
+            document.getElementById('purchasesModal').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
+</body>
+</html>
 
 
 
