@@ -7,6 +7,9 @@
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
+
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -25,27 +28,32 @@
         .gradient-header {
             background: linear-gradient(to left, #4b6cb7, #182848);
             color: white;
-            height: 40px;
+            min-height: 40px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 0 20px;
+            padding: 8px 15px;
             box-sizing: border-box;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: relative;
+            gap: 10px;
         }
         .header-items {
             display: flex;
-            gap: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            row-gap: 5px;
         }
         .header-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            gap: 6px;
+            font-size: clamp(12px, 2.5vw, 14px);
             cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
         .header-item:hover {
             transform: translateY(-2px);
@@ -55,7 +63,7 @@
             background-color: #ff4757;
             color: white;
             border-radius: 12px;
-            padding: 2px 8px;
+            padding: 2px 6px;
             font-size: 10px;
             margin-right: 5px;
             animation: pulse 2s infinite;
@@ -67,15 +75,49 @@
         }
         .download-btn {
             background-color: #25D366;
-            padding: 5px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-weight: bold;
+            font-size: clamp(12px, 2.5vw, 14px);
+            white-space: nowrap;
         }
         .download-btn:hover {
             background-color: #128C7E;
+        }
+
+        /* تعديلات للهواتف */
+        @media (max-width: 600px) {
+            .gradient-header {
+                flex-direction: column;
+                padding: 10px;
+                min-height: auto;
+            }
+            .header-items {
+                justify-content: center;
+                width: 100%;
+                gap: 10px 15px;
+            }
+            .download-btn {
+                margin-top: 5px;
+                width: 100%;
+                justify-content: center;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header-items {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            .header-item {
+                white-space: normal;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -102,6 +144,9 @@
     </div>
 </body>
 </html>
+
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
