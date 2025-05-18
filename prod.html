@@ -10,7 +10,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -81,18 +80,46 @@
         .download-btn:hover {
             background-color: #128C7E;
         }
-        
-        @media (max-width: 768px) {
-     .download-btn  {
-      padding: 4px 10px;
-  }
-}
 
+        /* التعديلات للهواتف */
         @media (max-width: 768px) {
-  .fas fa-bolt {
-    display: none;
-  }
-}
+            .gradient-header {
+                height: 35px;
+                padding: 0 10px;
+            }
+            .header-items {
+                gap: 15px;
+            }
+            .header-item {
+                font-size: 12px;
+                gap: 5px;
+            }
+            .header-item:nth-child(3) {
+                display: none; /* إخفاء "شحن سريع" */
+            }
+            .download-btn {
+                padding: 3px 8px;
+                font-size: 12px;
+            }
+            .badge {
+                font-size: 8px;
+                padding: 1px 6px;
+            }
+        }
+
+        /* تعديلات إضافية للشاشات الصغيرة جدًا */
+        @media (max-width: 480px) {
+            .gradient-header {
+                height: 30px;
+            }
+            .header-item {
+                font-size: 10px;
+            }
+            .download-btn {
+                padding: 2px 6px;
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
