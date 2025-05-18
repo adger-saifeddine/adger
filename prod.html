@@ -53,16 +53,19 @@
             transform: translateY(-2px);
             color: #a8edea;
         }
-        .badge {
-            background-color: #ff4757;
-            color: white;
-            border-radius: 12px;
-            padding: 1px 6px; /* تقليل padding */
-            font-size: 9px; /* تقليل font-size */
-            margin-right: 3px; /* تقليل margin-right */
-            animation: pulse 2s infinite;
-            line-height: 1px;
-        }
+   .badge {
+    background-color: #ff4757;
+    color: white;
+    border-radius: 12px;
+    padding: 1px 6px; /* تقليل padding */
+    font-size: 9px; /* تقليل font-size */
+    margin-right: 3px; /* تقليل margin-right */
+    animation: pulse 2s infinite;
+
+    display: flex;
+    align-items: center; /* لتوسيط النص عموديًا */
+}
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
