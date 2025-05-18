@@ -26,7 +26,7 @@
         .gradient-header {
             background: linear-gradient(to left, #4b6cb7, #182848);
             color: white;
-            height: 35px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -38,7 +38,7 @@
         }
         .header-items {
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
         .header-item {
             display: flex;
@@ -57,24 +57,25 @@
             background-color: #ff4757;
             color: white;
             border-radius: 12px;
-            padding: 1px 6px;
-            font-size: 9px;
-            margin-right: 3px;
+            padding: 0 8px;
+            font-size: 10px;
+            margin-right: 5px;
             animation: pulse 2s infinite;
-            display: inline-flex; /* أضف هذا */
-            align-items: center; /* أضف هذا */
-            justify-content: center; /* أضف هذا */
-            height: 16px; /* يمكنك ضبط الارتفاع حسب الحاجة */
-            line-height: 1; /* إلغاء أي line-height قد يؤثر */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 18px;
+            line-height: 1;
+            transform: translateY(-1px);
         }
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: translateY(-1px) scale(1); }
+            50% { transform: translateY(-1px) scale(1.05); }
+            100% { transform: translateY(-1px) scale(1); }
         }
         .download-btn {
             background-color: #25D366;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -82,50 +83,58 @@
             font-weight: bold;
             text-decoration: none;
             color: white;
-            font-size: 13px;
+            font-size: 14px;
         }
         .download-btn:hover {
             background-color: #128C7E;
             color: white;
         }
 
+        /* التعديلات للهواتف */
         @media (max-width: 768px) {
+            .gradient-header {
+                height: 35px;
+                padding: 0 15px;
+            }
+            .header-items {
+                gap: 20px;
+            }
+            .header-item {
+                font-size: 12px;
+            }
+            .badge {
+                font-size: 9px;
+                height: 16px;
+                padding: 0 6px;
+            }
+            .download-btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* تعديلات إضافية للشاشات الصغيرة جدًا */
+        @media (max-width: 480px) {
             .gradient-header {
                 height: 30px;
                 padding: 0 10px;
             }
             .header-items {
-                gap: 15px;
+                gap: 12px;
             }
             .header-item {
-                font-size: 12px;
-                gap: 5px;
-            }
-            .download-btn {
-                padding: 3px 8px;
-                font-size: 12px;
+                font-size: 10px;
+                gap: 4px;
             }
             .badge {
                 font-size: 8px;
-                padding: 1px 6px;
                 height: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .gradient-header {
-                height: 25px;
-            }
-            .header-item {
-                font-size: 10px;
+                padding: 0 5px;
+                margin-right: 3px;
             }
             .download-btn {
-                padding: 2px 6px;
+                padding: 3px 8px;
                 font-size: 10px;
-            }
-            .badge {
-                height: 12px;
-                font-size: 7px;
             }
         }
     </style>
