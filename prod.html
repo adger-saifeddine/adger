@@ -26,7 +26,7 @@
         .gradient-header {
             background: linear-gradient(to left, #4b6cb7, #182848);
             color: white;
-            height: 40px;
+            height: 35px; /* تغيير الارتفاع من 40px إلى 35px */
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -38,7 +38,7 @@
         }
         .header-items {
             display: flex;
-            gap: 25px;
+            gap: 20px; /* تقليل المسافة من 25px إلى 20px */
         }
         .header-item {
             display: flex;
@@ -47,7 +47,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            white-space: nowrap;
+            white-space: nowrap; /* إضافة لمنع انقسام النص */
         }
         .header-item:hover {
             transform: translateY(-2px);
@@ -57,25 +57,20 @@
             background-color: #ff4757;
             color: white;
             border-radius: 12px;
-            padding: 0 8px;
-            font-size: 10px;
-            margin-right: 5px;
+            padding: 1px 6px; /* تقليل padding */
+            font-size: 9px; /* تقليل font-size */
+            margin-right: 3px; /* تقليل margin-right */
             animation: pulse 2s infinite;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 18px;
-            line-height: 1;
-            transform: translateY(-1px);
+            line-height: 2px;
         }
         @keyframes pulse {
-            0% { transform: translateY(-1px) scale(1); }
-            50% { transform: translateY(-1px) scale(1.05); }
-            100% { transform: translateY(-1px) scale(1); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         .download-btn {
             background-color: #25D366;
-            padding: 6px 12px;
+            padding: 4px 10px; /* تقليل padding */
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -83,7 +78,7 @@
             font-weight: bold;
             text-decoration: none;
             color: white;
-            font-size: 14px;
+            font-size: 13px; /* تحديد font-size */
         }
         .download-btn:hover {
             background-color: #128C7E;
@@ -93,47 +88,36 @@
         /* التعديلات للهواتف */
         @media (max-width: 768px) {
             .gradient-header {
-                height: 35px;
-                padding: 0 15px;
+                height: 30px; /* تقليل الارتفاع أكثر للشاشات الصغيرة */
+                padding: 0 10px;
             }
             .header-items {
-                gap: 20px;
+                gap: 15px;
             }
             .header-item {
                 font-size: 12px;
-            }
-            .badge {
-                font-size: 9px;
-                height: 16px;
-                padding: 0 6px;
+                gap: 5px;
             }
             .download-btn {
-                padding: 5px 10px;
+                padding: 3px 8px;
                 font-size: 12px;
+            }
+            .badge {
+                font-size: 8px;
+                padding: 1px 6px;
             }
         }
 
         /* تعديلات إضافية للشاشات الصغيرة جدًا */
         @media (max-width: 480px) {
             .gradient-header {
-                height: 30px;
-                padding: 0 10px;
-            }
-            .header-items {
-                gap: 12px;
+                height: 25px; /* تقليل الارتفاع أكثر */
             }
             .header-item {
                 font-size: 10px;
-                gap: 4px;
-            }
-            .badge {
-                font-size: 8px;
-                height: 14px;
-                padding: 0 5px;
-                margin-right: 3px;
             }
             .download-btn {
-                padding: 3px 8px;
+                padding: 2px 6px;
                 font-size: 10px;
             }
         }
@@ -161,7 +145,7 @@
         </a>
     </div>
 </body>
-</html>
+</html> 
 
 
 
