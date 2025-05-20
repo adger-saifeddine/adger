@@ -38,8 +38,7 @@
         }
         .header-items {
             display: flex;
-            gap: 15px; /* تقليل المسافة بين العناصر */
-            flex-wrap: wrap; /* السماح للعناصر بالانتقال إلى السطر التالي */
+            gap: 20px;
         }
         .header-item {
             display: flex;
@@ -87,50 +86,46 @@
             color: white;
         }
 
-        /* التعديلات للشاشات المتوسطة */
+        /* التعديلات للهواتف */
         @media (max-width: 768px) {
             .gradient-header {
                 height: 40px;
                 padding: 0 15px;
             }
             .header-items {
-                gap: 10px;
-                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .header-item {
+                font-size: 14px;
+                gap: 6px;
+            }
+            .download-btn {
+                padding: 5px 10px;
+                font-size: 13px;
+            }
+            .badge {
+                padding: 3px 6px;
+                font-size: 9px;
+            }
+        }
+
+        /* تعديلات إضافية للشاشات الصغيرة جدًا */
+        @media (max-width: 480px) {
+            .gradient-header {
+                height: 35px;
+                padding: 0 10px;
             }
             .header-item {
                 font-size: 12px;
                 gap: 5px;
             }
             .download-btn {
-                padding: 3px 8px;
-                font-size: 12px;
+                padding: 4px 8px;
+                font-size: 11px;
             }
             .badge {
                 padding: 2px 5px;
                 font-size: 8px;
-            }
-        }
-
-        /* التعديلات للشاشات الصغيرة جدًا */
-        @media (max-width: 480px) {
-            .gradient-header {
-                height: 50px;
-                padding: 0 10px;
-            }
-            .header-items {
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            .header-item {
-                font-size: 10px;
-            }
-            .download-btn {
-                padding: 2px 6px;
-                font-size: 10px;
-            }
-            .badge {
-                padding: 1px 4px;
-                font-size: 7px;
             }
         }
     </style>
