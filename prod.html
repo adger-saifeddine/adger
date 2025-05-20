@@ -38,7 +38,8 @@
         }
         .header-items {
             display: flex;
-            gap: 20px;
+            gap: 15px; /* تقليل المسافة بين العناصر */
+            flex-wrap: wrap; /* السماح للعناصر بالانتقال إلى السطر التالي */
         }
         .header-item {
             display: flex;
@@ -86,46 +87,50 @@
             color: white;
         }
 
-        /* التعديلات للهواتف */
+        /* التعديلات للشاشات المتوسطة */
         @media (max-width: 768px) {
             .gradient-header {
-                height: 40px; /* زيادة الارتفاع */
+                height: 40px;
                 padding: 0 15px;
             }
             .header-items {
-                gap: 15px;
+                gap: 10px;
+                flex-wrap: wrap;
             }
             .header-item {
-                font-size: 14px; /* زيادة حجم الخط */
+                font-size: 12px;
                 gap: 5px;
             }
             .download-btn {
-                padding: 5px 10px; /* زيادة الحشو */
-                font-size: 14px; /* زيادة حجم الخط */
+                padding: 3px 8px;
+                font-size: 12px;
             }
             .badge {
-                padding: 3px 7px; /* زيادة الحشو */
-                font-size: 10px; /* زيادة حجم الخط */
-                display: inline-flex;
-                align-items: center;
+                padding: 2px 5px;
+                font-size: 8px;
             }
         }
 
-        /* تعديلات إضافية للشاشات الصغيرة جدًا */
+        /* التعديلات للشاشات الصغيرة جدًا */
         @media (max-width: 480px) {
             .gradient-header {
-                height: 35px; /* زيادة الارتفاع */
+                height: 50px;
+                padding: 0 10px;
+            }
+            .header-items {
+                gap: 8px;
+                flex-wrap: wrap;
             }
             .header-item {
-                font-size: 12px; /* زيادة حجم الخط */
+                font-size: 10px;
             }
             .download-btn {
-                padding: 4px 8px; /* زيادة الحشو */
-                font-size: 12px; /* زيادة حجم الخط */
+                padding: 2px 6px;
+                font-size: 10px;
             }
             .badge {
-                padding: 2px 6px;
-                font-size: 9px;
+                padding: 1px 4px;
+                font-size: 7px;
             }
         }
     </style>
