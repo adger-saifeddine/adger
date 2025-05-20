@@ -31,7 +31,7 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 0 10px; /* تعديل الحشوة الأساسية للشاشات الكبيرة */
+            padding: 0 20px;
             box-sizing: border-box;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: relative;
@@ -71,7 +71,7 @@
         }
         .download-btn {
             background-color: #25D366;
-            padding: 4px 10px;
+            padding: 6px 10px;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -82,15 +82,19 @@
             font-size: 13px;
         }
         .download-btn:hover {
-            background-color: #128C7E;
+            background-color: #00ff4c;
             color: white;
         }
+         @media (max-width: 1368px) {
+           .download-btn{
+                padding: 4px 10px;
+            }}
 
-        /* التعديلات للتابلتات والهواتف */
+        /* التعديلات للهواتف */
         @media (max-width: 768px) {
             .gradient-header {
                 height: 40px;
-                padding: 0 15px; /* الحشوة للتابلتات والهواتف */
+                padding: 0 15px;
             }
             .header-items {
                 gap: 15px;
@@ -109,11 +113,11 @@
             }
         }
 
-        /* تعديلات للشاشات الصغيرة جدًا */
+        /* تعديلات إضافية للشاشات الصغيرة جدًا */
         @media (max-width: 480px) {
             .gradient-header {
                 height: 35px;
-                padding: 0 10px; /* الحشوة للهواتف الصغيرة */
+                padding: 0 10px;
             }
             .header-item {
                 font-size: 12px;
