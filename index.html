@@ -1801,109 +1801,93 @@
     -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
     outline: none; /* إزالة أي إطار تحديد عند التركيز */
 }
+    
+            @media (max-width: 767px) {
+                .adger {
+                    font-size: 24px;
+                    margin-right: -4px !important;
+                }
+            }
+    
+            @media (min-width: 767px) {
+                .adger {
+                    margin-left: 10px;
+                }
+            }
+    
+            .container22 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+    
+            .country-code {
+                display: inline-flex;
+                align-items: center;
+                font-size: 18px;
+            }
+    
+            .flag {
+                width: 24px;
+                height: 16px;
+                margin-left: 8px;
+            }
+    
+            /* تعديلات للهواتف */
+            @media only screen and (max-width: 767px) {
+                .search-wrapper {
+                    width: 100%; /* Let the search bar take full width on mobile */
+                    max-width: none;
+                    margin: 0; /* Reset margin for mobile */
+                }
+    
+                #search-box {
+                    padding: 10px 12px 10px 45px; /* Adjust padding for mobile, if needed */
+                    font-size: 14px; /* Smaller font size for mobile */
+                }
+    
+                #search-button {
+                    left: 3px;
+                    width: 45px; /* Smaller button for mobile */
+                    height: 32px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- الهيكل الرئيسي -->
+        <div class="header">
+            <!-- العناصر على اليمين -->
+            <div class="right-elements">
+                <style>
+                    .adger-container {
+                      display: flex;
+                      align-items: center;
+                    }
+            
+                    
+                    /* Set cursor for both SVG and text within the container */
+                    .adger-container svg, .adger-container h2 {
+                      cursor: pointer;
+                    }
+                    
+                    /* Differentiate click areas */
+                    .adger-container h2 {
+                      margin-left: 5px; /* To ensure space from the arrow */
+                    }
 
-@media (max-width: 767px) {
-    .adger {
-        font-size: 19px;
-        margin-right: -12px !important;
-    }
-}
-
-@media (min-width: 767px) {
-    .adger {
-        margin-left: 10px;
-    }
-}
-
-.container22 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.country-code {
-    display: inline-flex;
-    align-items: center;
-    font-size: 18px;
-}
-
-.flag {
-    width: 24px;
-    height: 16px;
-    margin-left: 8px;
-}
-
-/* تعديلات للهواتف */
-@media only screen and (max-width: 767px) {
-    .search-wrapper {
-        width: 100%; /* Let the search bar take full width on mobile */
-        max-width: none;
-        margin: 0; /* Reset margin for mobile */
-    }
-
-    #search-box {
-        padding: 10px 12px 10px 45px; /* Adjust padding for mobile, if needed */
-        font-size: 14px; /* Smaller font size for mobile */
-    }
-
-    #search-button {
-        left: 3px;
-        width: 45px; /* Smaller button for mobile */
-        height: 32px;
-    }
-}
-
-/* Adger container styles */
-.adger-container {
-    display: flex;
-    align-items: center;
-}
-
-/* Set cursor for both SVG and text within the container */
-.adger-container img,
-.adger-container h2 {
-    cursor: pointer;
-}
-
-/* Differentiate click areas */
-.adger-container h2 {
-    margin-left: 5px; /* To ensure space from the logo */
-}
-
-@media only screen and (max-width: 767px) {
-    .adger-container h2 {
-        margin-left: 9px;
-        margin-right: -7px;
-    }
-    .adger-container img {
-        margin-right: -9px;
-        margin-left: 2px;
-        width: 28px;
-        height: 28px;
-        margin-top: -2px;
-    }
-    .adger-container {
-        flex-direction: row-reverse; /* Logo on the left of text */
-    }
-}
-@media only screen and (min-width: 768px) {
-    .adger-container img {
-        display: none;
-    }
-}
-</style>
-</head>
-<body>
-    <!-- الهيكل الرئيسي -->
-    <div class="header">
-        <!-- العناصر على اليمين -->
-        <div class="right-elements">
-            <div class="adger-container">
-                <img src="logo.png" alt="Logo" />
-                <h2 class="adger" onclick="window.location.href='index.html';">Adger</h2>
-            </div>
-   
+                    @media only screen and (max-width: 767px) {
+                        .adger-container h2 {
+                            margin-left: 9px;
+                            margin-right: -7px;
+                        }
+                    }
+                </style>
+                
+                <div class="adger-container">
+                    <h2 class="adger" onclick="window.location.href='index.html';">Adger</h2>
+                </div>
                 
                 <style>
                     /* إخفاء العنصر على الهواتف */
