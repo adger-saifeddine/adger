@@ -759,17 +759,24 @@
                     purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
 
                     if (purchasesArray.length > 0) {
+                        const latestHeader = document.createElement('h4');
+                        latestHeader.textContent = 'تفاصيل آخر منتج تم شراؤه';
+                        latestHeader.style.marginTop = '3px';
+                        purchasesList.appendChild(latestHeader);
+
                         const latestPurchase = purchasesArray[0];
-                        // لنضع جميع العناصر بنفس الكود حتى تفاصيل آخر منتج
                         const latestPurchaseItem = createPurchaseItem(latestPurchase, true);
-                        purchasesList.innerHTML += '<h4 style="margin-top: 3px;">تفاصيل آخر منتج تم شراؤه</h4>';
                         purchasesList.appendChild(latestPurchaseItem);
 
                         if (purchasesArray.length > 1) {
                             const divider = document.createElement('div');
                             divider.className = 'colorful-divider';
                             purchasesList.appendChild(divider);
-                            purchasesList.innerHTML += '<h4>المنتجات القديمة</h4>';
+
+                            const oldHeader = document.createElement('h4');
+                            oldHeader.textContent = 'المنتجات القديمة';
+                            purchasesList.appendChild(oldHeader);
+
                             for (let i = 1; i < purchasesArray.length; i++) {
                                 const purchaseItem = createPurchaseItem(purchasesArray[i], false);
                                 purchasesList.appendChild(purchaseItem);
@@ -782,7 +789,6 @@
             });
         }
 
-        // التوجه لصفحة المنتج عند الضغط على تفاصيل أي منتج (سواء الأحدث أو القديمة)
         function createPurchaseItem(purchase, isLatest) {
             const purchaseItem = document.createElement('div');
             purchaseItem.className = 'purchase-item';
@@ -808,7 +814,7 @@
                 ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
                 <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
             `;
-            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج (لكل العناصر!)
+            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج
             purchaseItem.style.cursor = 'pointer';
             purchaseItem.onclick = function() {
                 window.location.href = `prod.html?id=${purchase.productId}`;
