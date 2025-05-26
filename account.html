@@ -223,6 +223,11 @@
             margin-bottom: 15px;
             padding-bottom: 15px;
             border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .purchase-item:hover {
+            background: #f1f8ff;
         }
         .purchase-item:last-child {
             border-bottom: none;
@@ -781,6 +786,7 @@
             });
         }
 
+        // تم التعديل هنا لجعل كل عنصر purchase-item يوجه إلى صفحة المنتج عند النقر
         function createPurchaseItem(purchase, isLatest) {
             const purchaseItem = document.createElement('div');
             purchaseItem.className = 'purchase-item';
@@ -806,10 +812,11 @@
                 ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
                 <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
             `;
-            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج
-            purchaseItem.style.cursor = 'pointer';
+            // اجعل العنصر يوجه للمنتج عند النقر عليه
             purchaseItem.onclick = function() {
-                window.location.href = `prod.html?id=${purchase.productId}`;
+                if (purchase.productId) {
+                    window.location.href = 'prod.html?id=' + encodeURIComponent(purchase.productId);
+                }
             };
             return purchaseItem;
         }
