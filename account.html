@@ -7,8 +7,7 @@
     <title>Adger</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -807,6 +806,11 @@
                 ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
                 <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
             `;
+            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج
+            purchaseItem.style.cursor = 'pointer';
+            purchaseItem.onclick = function() {
+                window.location.href = `prod.html?id=${purchase.productId}`;
+            };
             return purchaseItem;
         }
 
