@@ -760,6 +760,7 @@
 
                     if (purchasesArray.length > 0) {
                         const latestPurchase = purchasesArray[0];
+                        // لنضع جميع العناصر بنفس الكود حتى تفاصيل آخر منتج
                         const latestPurchaseItem = createPurchaseItem(latestPurchase, true);
                         purchasesList.innerHTML += '<h4 style="margin-top: 3px;">تفاصيل آخر منتج تم شراؤه</h4>';
                         purchasesList.appendChild(latestPurchaseItem);
@@ -781,6 +782,7 @@
             });
         }
 
+        // التوجه لصفحة المنتج عند الضغط على تفاصيل أي منتج (سواء الأحدث أو القديمة)
         function createPurchaseItem(purchase, isLatest) {
             const purchaseItem = document.createElement('div');
             purchaseItem.className = 'purchase-item';
@@ -806,17 +808,11 @@
                 ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
                 <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
             `;
-            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج
+            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج (لكل العناصر!)
             purchaseItem.style.cursor = 'pointer';
             purchaseItem.onclick = function() {
-                if (purchase.productId) {
-                    window.location.href = `prod.html?id=${purchase.productId}`;
-                } else {
-                    console.error('معرف المنتج غير موجود لهذا العنصر:', purchase);
-                }
+                window.location.href = `prod.html?id=${purchase.productId}`;
             };
-            // تسجيل productId للتحقق
-            console.log('Product ID for this purchase:', purchase.productId);
             return purchaseItem;
         }
 
