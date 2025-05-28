@@ -1590,8 +1590,7 @@ function updateMainMedia(thumbnail) {
 
 
 
-
-<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;  margin-bottom: -10px;">المواصفات</h2>
+<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
 
 <!DOCTYPE html>
 <html lang="ar">
@@ -1648,59 +1647,60 @@ function updateMainMedia(thumbnail) {
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-    <!-- اكتبه كما هو مع جعل الطرف الاين للجدول بلون رصاصي و الطرف اليسار اي الاجابه بلون ابيض مع الحفاظ علي الخطوط و الهيكل -->
+    <!-- اكتبه كما هو مع جعل الطرف الأيمن للجدول بلون رصاصي و الطرف اليسار أي الإجابة بلون أبيض مع الحفاظ على الخطوط والهيكل -->
 </body>
 </html>
 
-    <script>
-        // جلب معرف المنتج من URL
-       function getProductId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-    return productId;
-}
+<script>
+    // جلب معرف المنتج من URL
+    function getProductId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        return productId;
+    }
 
-        if (productId) {
-            // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
-            const jsonFile = `products-${fileIndex}.json`;
 
-            fetch(jsonFile)
-                .then(response => {
-                    if (!response.ok) throw new Error('الملف غير موجود');
-                    return response.json();
-                })
-                .then(products => {
-                    const product = products.find(p => p.id === productId);
-                    if (!product) {
-                        document.getElementById('productDescription').textContent = 'المنتج غير موجود';
-                        return;
-                    }
+    if (productId) {
+        // تحديد اسم ملف JSON بناءً على معرف المنتج
+        const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
+        const jsonFile = `products-${fileIndex}.json`;
 
-                    // تحديث الجدول
-                    const table = document.getElementById('productTable');
-                    product.tableData.forEach(item => {
-                        const row = document.createElement('tr');
-                        const questionCell = document.createElement('td');
-                        const answerCell = document.createElement('td');
-                        questionCell.textContent = item.question;
-                        answerCell.textContent = item.answer;
-                        row.appendChild(questionCell);
-                        row.appendChild(answerCell);
-                        table.appendChild(row);
-                    });
+        fetch(jsonFile)
+            .then(response => {
+                if (!response.ok) throw new Error('الملف غير موجود');
+                return response.json();
+            })
+            .then(products => {
+                const product = products.find(p => p.id === productId);
+                if (!product) {
+                    document.getElementById('productDesc').textContent = 'المنتج غير موجود';
+                    return;
+                }
 
-                    // تحديث النص الوصفي
-                    document.getElementById('productDescription').textContent = product.description;
-                })
-                .catch(error => {
-                    console.error('خطأ في جلب البيانات:', error);
-                    document.getElementById('productDescription').textContent = 'حدث خطأ أثناء تحميل البيانات';
+                // تحديث الجدول
+                const table = document.getElementById('productTable');
+                product.tableData.forEach(item => {
+                    const row = document.createElement('tr');
+                    const questionCell = document.createElement('td');
+                    const answerCell = document.createElement('td');
+                    questionCell.textContent = item.question;
+                    answerCell.textContent = item.answer;
+                    row.appendChild(questionCell);
+                    row.appendChild(answerCell);
+                    table.appendChild(row);
                 });
-        } else {
-            document.getElementById('productDescription').textContent = 'يرجى تحديد معرف المنتج في URL';
-        }
-    </script>
+
+                // تحديث النص الوصفي
+                document.getElementById('productDesc').textContent = product.description;
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+                document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل البيانات';
+            });
+    } else {
+        document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
+    }
+</script>
 </body>
 </html>
 
