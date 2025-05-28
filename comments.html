@@ -128,11 +128,22 @@
         .delete-button:hover {
             background-color: #ff1a1a;
         }
+        .comment-rating-row {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 2px;
+        }
         .comment-rating {
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
             gap:2px;
+        }
+        .comment-rating-label {
+            color: #304766;
+            font-size: 12px;
+            margin-right: 5px;
         }
         .separator {
             width: 100%;
@@ -147,12 +158,19 @@
             width: 100%;
             background: white;
             display: flex;
+            flex-direction: column;
             padding: 15px;
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
+            right: 0;
         }
-        
+        #inputRow {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+        }
         #field2 textarea {
             flex: 1;
             padding: 0 15px;
@@ -195,10 +213,16 @@
             opacity: 0.8;
         }
 
+        .rating-stars-input-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 8px;
+            width: 100%;
+        }
         .rating-stars-input {
             display: flex;
             align-items: center;
-            margin-left: 15px;
             flex-direction: row-reverse;
             gap:2px;
         }
@@ -362,17 +386,20 @@
     </div>
 
     <div id="field2">
-        <form id="commentForm" style="display:flex; width:100%; align-items:center;">
+        <div class="rating-stars-input-row">
             <div class="rating-stars-input" id="starsInput">
-                <!-- Stars will be rendered here -->
                 <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 نجوم">★</label>
                 <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 نجوم">★</label>
                 <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 نجوم">★</label>
                 <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 نجوم">★</label>
                 <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="نجمة واحدة">★</label>
             </div>
-            <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
-            <button type="submit" id="submitButton">إرسال</button>
+        </div>
+        <form id="commentForm" style="display:flex; width:100%; align-items:center;" autocomplete="off">
+            <div id="inputRow" style="width:100%;display:flex;">
+                <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
+                <button type="submit" id="submitButton">إرسال</button>
+            </div>
         </form>
     </div>
 
@@ -520,11 +547,22 @@
                 const commentTextElement = document.createElement('div');
                 commentTextElement.className = 'comment-text';
 
-                // Stars
+                // Stars + label row
+                const ratingRow = document.createElement('div');
+                ratingRow.className = 'comment-rating-row';
                 const commentRatingElement = document.createElement('div');
                 commentRatingElement.className = 'comment-rating';
-                commentRatingElement.innerHTML = renderStars(comment.rating,true);
+                commentRatingElement.innerHTML = renderStars(comment.rating, true);
 
+                // النص: "X من 5"
+                const ratingLabel = document.createElement('span');
+                ratingLabel.className = 'comment-rating-label';
+                ratingLabel.textContent = `${comment.rating} من 5`;
+
+                ratingRow.appendChild(ratingLabel);
+                ratingRow.appendChild(commentRatingElement);
+
+                // اسم المستخدم والتاريخ
                 const commentUsernameElement = document.createElement('div');
                 commentUsernameElement.className = 'comment-username';
 
@@ -533,14 +571,15 @@
                 const date = new Date(comment.timestamp);
                 commentDateElement.textContent = date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
 
-                const commentContentElement = document.createElement('div');
-                commentContentElement.textContent = comment.text;
-
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
 
-                commentTextElement.appendChild(commentRatingElement);
+                commentTextElement.appendChild(ratingRow);
                 commentTextElement.appendChild(commentUsernameElement);
+
+                // نص التعليق
+                const commentContentElement = document.createElement('div');
+                commentContentElement.textContent = comment.text;
                 commentTextElement.appendChild(commentContentElement);
 
                 commentElement.appendChild(commentTextElement);
