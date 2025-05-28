@@ -12,13 +12,13 @@
             padding: 0;
             overflow-x: hidden;
         }
-
+    
         .comments-container {
             margin-top: 80px;
             text-align: right;
             padding-bottom: 80px;
         }
-
+        
         .comments-header {
             background-color: #f5f5f5;
             width: 100%;
@@ -61,7 +61,7 @@
         .avg-rating-section {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
             margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
@@ -75,7 +75,7 @@
         .avg-rating-stars {
             display: flex;
             align-items: center;
-            direction: ltr;
+            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
         }
 
         .star {
@@ -139,8 +139,8 @@
         .comment-rating {
             display: flex;
             align-items: center;
-            gap:2px;
-            direction: ltr;
+            gap: 2px;
+            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
         }
         .comment-rating-value {
             margin-left: 5px;
@@ -156,7 +156,7 @@
             background-color: #ccc;
             margin: 10px 0;
         }
-
+        
         #field2 {
             position: fixed;
             bottom: 0;
@@ -178,9 +178,9 @@
         }
         #field2 textarea {
             flex: 1;
-            padding: 0 20px;
+            padding: 0 20px; /* زيادة الحشوة على اليمين واليسار */
             border: 1px solid #ccc;
-            border-radius: 20px;
+            border-radius: 20px; /* تعديل border-radius لمظهر أكثر حداثة */
             margin-right: 10px;
             font-size: 14px;
             outline: none;
@@ -191,7 +191,7 @@
             line-height: 40px;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box;
+            box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
             margin-left: 25px;
         }
 
@@ -200,11 +200,11 @@
             text-align: right;
             line-height: 40px;
         }
-
+        
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: 10px;
+            margin-right: 10px; /* تقليل المسافة بين الزر وحقل الإدخال */
             border: none;
             background-color: #000;
             color: white;
@@ -231,7 +231,7 @@
             display: flex;
             align-items: center;
             flex-direction: row-reverse;
-            gap:2px;
+            gap: 2px;
         }
         .rating-stars-input label {
             cursor: pointer;
@@ -381,10 +381,9 @@
             </div>
         </div>
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
-            <div id="avgRatingValue"></div>
+            <div id="commentsCount"></div>
             <div class="avg-rating-stars" id="avgStars"></div>
-            <!-- العدد يسار النجوم -->
-            <div id="commentsCount" style="margin-left:8px;font-size:13px;color:#856404;background:transparent;padding:2px 9px 2px 9px;border-radius:10px;"></div>
+            <div id="avgRatingValue">من 5</div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -493,7 +492,7 @@
         const commentsList = document.getElementById('commentsList');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
-
+        
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
             let hasComments = false;
@@ -513,7 +512,7 @@
             // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
             commentsArray.sort((a, b) => b.timestamp - a.timestamp);
 
-            // حساب المتوسط
+            // حساب المتوسط وعدد التعليقات
             let avgRating = 0;
             let totalRating = 0;
             let countRating = 0;
@@ -527,18 +526,14 @@
                 avgRating = totalRating / countRating;
             }
 
-            // عرض المتوسط وعدد التعليقات (العدد على يسار النجوم وبدون خلفية)
+            // عرض المتوسط
             const avgRatingSection = document.getElementById('avgRatingSection');
-            const commentsCountDiv = document.getElementById('commentsCount');
             if (countRating > 0) {
                 avgRatingSection.style.display = "flex";
-                document.getElementById('avgRatingValue').textContent = `(${avgRating.toFixed(2)} / 5)`;
+                document.getElementById('commentsCount').textContent = `(${countRating})`;
                 document.getElementById('avgStars').innerHTML = renderStars(avgRating);
-                commentsCountDiv.textContent = countRating;
-                commentsCountDiv.style.display = "inline-block";
             } else {
                 avgRatingSection.style.display = "none";
-                commentsCountDiv.style.display = "none";
             }
 
             // عرض التعليقات
@@ -614,24 +609,17 @@
         });
 
         // دالة لعرض النجوم
-        function renderStars(rating, isIntOnly) {
+        function renderStars(rating) {
             let html = '';
-            if (isIntOnly) {
-                for (let i = 1; i <= 5; i++) {
-                    html += `<span class="star${i <= rating ? '' : ' star-empty'}">★</span>`;
-                }
-            } else {
-                // للمتوسط (قد يكون كسري)
-                let full = Math.floor(rating);
-                let half = rating - full >= 0.5;
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= full) {
-                        html += `<span class="star">★</span>`;
-                    } else if (i === full + 1 && half) {
-                        html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
-                    } else {
-                        html += `<span class="star star-empty">★</span>`;
-                    }
+            let full = Math.floor(rating);
+            let half = rating - full >= 0.5;
+            for (let i = 1; i <= 5; i++) {
+                if (i <= full) {
+                    html += `<span class="star">★</span>`;
+                } else if (i === full + 1 && half) {
+                    html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
+                } else {
+                    html += `<span class="star star-empty">★</span>`;
                 }
             }
             return html;
