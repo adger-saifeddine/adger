@@ -368,15 +368,6 @@
         .confirm-no:hover {
             background-color: #aaa;
         }
-
-        .comments-count {
-            background-color: #304766;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-right: 5px;
-        }
     </style>
 </head>
 <body>
@@ -392,7 +383,7 @@
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
             <div id="avgRatingValue"></div>
             <div class="avg-rating-stars" id="avgStars"></div>
-            <div id="commentsCount" class="comments-count"></div>
+            <div id="commentsCount" style="margin-right:8px;font-size:13px;color:#856404;background:#ffeeba;padding:2px 9px 2px 9px;border-radius:10px;"></div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -537,13 +528,16 @@
 
             // عرض المتوسط وعدد التعليقات
             const avgRatingSection = document.getElementById('avgRatingSection');
+            const commentsCountDiv = document.getElementById('commentsCount');
             if (countRating > 0) {
                 avgRatingSection.style.display = "flex";
                 document.getElementById('avgRatingValue').textContent = `(${avgRating.toFixed(2)} / 5)`;
                 document.getElementById('avgStars').innerHTML = renderStars(avgRating);
-                document.getElementById('commentsCount').textContent = commentsArray.length;
+                commentsCountDiv.textContent = countRating;
+                commentsCountDiv.style.display = "inline-block";
             } else {
                 avgRatingSection.style.display = "none";
+                commentsCountDiv.style.display = "none";
             }
 
             // عرض التعليقات
