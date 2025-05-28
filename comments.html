@@ -62,7 +62,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
-            margin-top: -19px;
+            margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
             padding: 10px 20px 10px 10px;
@@ -534,11 +534,11 @@
 
             // عرض التعليقات
             commentsArray.forEach((comment) => {
+                                const username = localStorage.getItem('username');
                 hasComments = true;
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
 
-                const username = localStorage.getItem('username');
                 if (username === comment.username) {
                     const deleteButton = document.createElement('button');
                     deleteButton.className = 'delete-button';
