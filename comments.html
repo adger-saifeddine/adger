@@ -61,7 +61,7 @@
         .avg-rating-section {
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
+            justify-content: flex-end;
             margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
@@ -75,7 +75,7 @@
         .avg-rating-stars {
             display: flex;
             align-items: center;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
 
         .star {
@@ -140,7 +140,7 @@
             display: flex;
             align-items: center;
             gap: 2px;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
         .comment-rating-value {
             margin-left: 5px;
@@ -178,9 +178,9 @@
         }
         #field2 textarea {
             flex: 1;
-            padding: 0 20px; /* زيادة الحشوة على اليمين واليسار */
+            padding: 0 20px;
             border: 1px solid #ccc;
-            border-radius: 20px; /* تعديل border-radius لمظهر أكثر حداثة */
+            border-radius: 20px;
             margin-right: 10px;
             font-size: 14px;
             outline: none;
@@ -191,7 +191,7 @@
             line-height: 40px;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
+            box-sizing: border-box;
             margin-left: 25px;
         }
 
@@ -204,7 +204,7 @@
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: 10px; /* تقليل المسافة بين الزر وحقل الإدخال */
+            margin-right: 10px;
             border: none;
             background-color: #000;
             color: white;
@@ -383,7 +383,7 @@
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
             <div id="commentsCount"></div>
             <div class="avg-rating-stars" id="avgStars"></div>
-            <div id="avgRatingValue">من 5</div>
+            <div id="avgRatingValue"></div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -442,7 +442,6 @@
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
 
-        // Send comment
         document.getElementById('commentForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const commentText = document.getElementById('commentText').value;
@@ -488,7 +487,6 @@
             });
         });
 
-        // Display comments
         const commentsList = document.getElementById('commentsList');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
@@ -498,7 +496,6 @@
             let hasComments = false;
             const commentsArray = [];
 
-            // جمع التعليقات في مصفوفة
             snapshot.forEach((childSnapshot) => {
                 const comment = childSnapshot.val();
                 if (comment.commentId === commentId) {
@@ -509,10 +506,8 @@
                 }
             });
 
-            // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
             commentsArray.sort((a, b) => b.timestamp - a.timestamp);
 
-            // حساب المتوسط وعدد التعليقات
             let avgRating = 0;
             let totalRating = 0;
             let countRating = 0;
@@ -526,17 +521,16 @@
                 avgRating = totalRating / countRating;
             }
 
-            // عرض المتوسط
             const avgRatingSection = document.getElementById('avgRatingSection');
             if (countRating > 0) {
                 avgRatingSection.style.display = "flex";
                 document.getElementById('commentsCount').textContent = `(${countRating})`;
                 document.getElementById('avgStars').innerHTML = renderStars(avgRating);
+                document.getElementById('avgRatingValue').textContent = `${avgRating.toFixed(2)} كم نجمة / 5`;
             } else {
                 avgRatingSection.style.display = "none";
             }
 
-            // عرض التعليقات
             commentsArray.forEach((comment) => {
                 hasComments = true;
                 const commentElement = document.createElement('div');
@@ -554,22 +548,19 @@
                 const commentTextElement = document.createElement('div');
                 commentTextElement.className = 'comment-text';
 
-                // Stars + label row
                 const ratingRow = document.createElement('div');
                 ratingRow.className = 'comment-rating-row';
                 const commentRatingElement = document.createElement('div');
                 commentRatingElement.className = 'comment-rating';
                 commentRatingElement.innerHTML = renderStars(comment.rating, true);
 
-                // النص: "X من 5"
                 const ratingLabel = document.createElement('span');
                 ratingLabel.className = 'comment-rating-label';
-                ratingLabel.textContent = `${comment.rating} من 5  `;
+                ratingLabel.textContent = `${comment.rating} كم نجمة / 5  `;
 
                 ratingRow.appendChild(ratingLabel);
                 ratingRow.appendChild(commentRatingElement);
 
-                // اسم المستخدم والتاريخ
                 const commentUsernameElement = document.createElement('div');
                 commentUsernameElement.className = 'comment-username';
 
@@ -581,11 +572,9 @@
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
 
-                // ترتيب العناصر: اسم المستخدم أولاً، ثم النجوم، ثم نص التعليق
                 commentTextElement.appendChild(commentUsernameElement);
                 commentTextElement.appendChild(ratingRow);
 
-                // نص التعليق
                 const commentContentElement = document.createElement('div');
                 commentContentElement.textContent = comment.text;
                 commentTextElement.appendChild(commentContentElement);
@@ -608,24 +597,28 @@
             document.getElementById('loadingSpinner').style.display = 'none';
         });
 
-        // دالة لعرض النجوم
-        function renderStars(rating) {
+        function renderStars(rating, isIntOnly) {
             let html = '';
-            let full = Math.floor(rating);
-            let half = rating - full >= 0.5;
-            for (let i = 1; i <= 5; i++) {
-                if (i <= full) {
-                    html += `<span class="star">★</span>`;
-                } else if (i === full + 1 && half) {
-                    html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
-                } else {
-                    html += `<span class="star star-empty">★</span>`;
+            if (isIntOnly) {
+                for (let i = 1; i <= 5; i++) {
+                    html += `<span class="star${i <= rating ? '' : ' star-empty'}">★</span>`;
+                }
+            } else {
+                let full = Math.floor(rating);
+                let half = rating - full >= 0.5;
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= full) {
+                        html += `<span class="star">★</span>`;
+                    } else if (i === full + 1 && half) {
+                        html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
+                    } else {
+                        html += `<span class="star star-empty">★</span>`;
+                    }
                 }
             }
             return html;
         }
 
-        // دالة لإظهار نافذة التأكيد
         function showConfirmDialog(commentKey) {
             const confirmOverlay = document.getElementById('confirmOverlay');
             confirmOverlay.style.display = 'flex';
