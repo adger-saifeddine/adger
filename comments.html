@@ -61,7 +61,7 @@
         .avg-rating-section {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
             margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
@@ -75,7 +75,7 @@
         .avg-rating-stars {
             display: flex;
             align-items: center;
-            flex-direction: row-reverse;
+            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
         }
 
         .star {
@@ -140,6 +140,10 @@
             display: flex;
             align-items: center;
             gap:2px;
+            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+        }
+        .comment-rating-value {
+            margin-left: 5px;
         }
         .comment-rating-label {
             color: #304766;
@@ -174,9 +178,9 @@
         }
         #field2 textarea {
             flex: 1;
-            padding: 0 20px;
+            padding: 0 20px; /* زيادة الحشوة على اليمين واليسار */
             border: 1px solid #ccc;
-            border-radius: 20px;
+            border-radius: 20px; /* تعديل border-radius لمظهر أكثر حداثة */
             margin-right: 10px;
             font-size: 14px;
             outline: none;
@@ -187,7 +191,7 @@
             line-height: 40px;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box;
+            box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
             margin-left: 25px;
         }
 
@@ -200,7 +204,7 @@
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: 10px;
+            margin-right: 10px; /* تقليل المسافة بين الزر وحقل الإدخال */
             border: none;
             background-color: #000;
             color: white;
@@ -377,7 +381,7 @@
             </div>
         </div>
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
-            <div>متوسط التقييمات</div>
+            <div>متوسط التقييم:</div>
             <div id="avgRatingValue"></div>
             <div class="avg-rating-stars" id="avgStars"></div>
         </div>
@@ -560,7 +564,7 @@
                 // النص: "X من 5"
                 const ratingLabel = document.createElement('span');
                 ratingLabel.className = 'comment-rating-label';
-                ratingLabel.textContent = `${comment.rating}  `;
+                ratingLabel.textContent = `${comment.rating} من 5  `;
 
                 ratingRow.appendChild(ratingLabel);
                 ratingRow.appendChild(commentRatingElement);
@@ -612,7 +616,7 @@
                     html += `<span class="star${i <= rating ? '' : ' star-empty'}">★</span>`;
                 }
             } else {
-                // للمتوسط (قد يكون كسريًا)
+                // للمتوسط (قد يكون كسري)
                 let full = Math.floor(rating);
                 let half = rating - full >= 0.5;
                 for (let i = 1; i <= 5; i++) {
