@@ -381,8 +381,8 @@
             </div>
         </div>
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
-            <div>عدد التعليقات:</div>
-            <div id="commentsCount"></div>
+            <div id="avgRatingValue"></div>
+            <div class="avg-rating-stars" id="avgStars"></div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -511,11 +511,26 @@
             // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
             commentsArray.sort((a, b) => b.timestamp - a.timestamp);
 
-            // عرض عدد التعليقات
+            // حساب المتوسط
+            let avgRating = 0;
+            let totalRating = 0;
+            let countRating = 0;
+            commentsArray.forEach(comment => {
+                if (comment.rating) {
+                    totalRating += comment.rating;
+                    countRating++;
+                }
+            });
+            if (countRating > 0) {
+                avgRating = totalRating / countRating;
+            }
+
+            // عرض المتوسط
             const avgRatingSection = document.getElementById('avgRatingSection');
-            if (commentsArray.length > 0) {
+            if (countRating > 0) {
                 avgRatingSection.style.display = "flex";
-                document.getElementById('commentsCount').textContent = commentsArray.length;
+                document.getElementById('avgRatingValue').textContent = `(${avgRating.toFixed(2)} / 5)`;
+                document.getElementById('avgStars').innerHTML = renderStars(avgRating);
             } else {
                 avgRatingSection.style.display = "none";
             }
