@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التعليقات</title>
+    <title>التعليقات والتقييمات</title>
     <style>
         body {
             font-family: 'Cairo', sans-serif;
@@ -14,7 +14,7 @@
         }
     
         .comments-container {
-            margin-top: 40px;
+            margin-top: 80px;
             text-align: right;
             padding-bottom: 80px;
         }
@@ -22,7 +22,7 @@
         .comments-header {
             background-color: #f5f5f5;
             width: 100%;
-            height: 44px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -35,7 +35,7 @@
 
         .comments-header h2 {
             margin: 0;
-            font-size: 15px;
+            font-size: 18px;
             margin-right: 1px;
         }
 
@@ -56,6 +56,34 @@
 
         .back-arrow:hover svg {
             fill: none;
+        }
+
+        .avg-rating-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            background: #fff3cd;
+            padding: 10px 20px 10px 10px;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            color: #304766;
+            gap: 10px;
+        }
+        .avg-rating-stars {
+            display: flex;
+            align-items: center;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 24px;
+            margin-left: 2px;
+        }
+        .star-empty {
+            color: #ccc;
         }
 
         #commentsList {
@@ -100,6 +128,12 @@
         .delete-button:hover {
             background-color: #ff1a1a;
         }
+        .comment-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            gap:2px;
+        }
         .separator {
             width: 100%;
             height: 1px;
@@ -117,7 +151,6 @@
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
-            flex-direction: column;
         }
         
         #field2 textarea {
@@ -162,6 +195,31 @@
             opacity: 0.8;
         }
 
+        .rating-stars-input {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            flex-direction: row-reverse;
+            gap:2px;
+        }
+        .rating-stars-input label {
+            cursor: pointer;
+            font-size: 24px;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+        .rating-stars-input input[type="radio"] {
+            display: none;
+        }
+        .rating-stars-input input[type="radio"]:checked ~ label,
+        .rating-stars-input label.checked {
+            color: #ffd700;
+        }
+        .rating-stars-input label:hover,
+        .rating-stars-input label:hover ~ label {
+            color: #ffd700;
+        }
+
         #loadingSpinner {
             display: flex;
             justify-content: center;
@@ -203,6 +261,8 @@
         #emptyContent {
             display: none;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
         .no-more-comments {
             text-align: center;
@@ -277,29 +337,6 @@
         .confirm-no:hover {
             background-color: #aaa;
         }
-
-        .star-rating {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .star {
-            font-size: 24px;
-            color: #ccc;
-            cursor: pointer;
-        }
-
-        .star.selected {
-            color: #FFD700;
-        }
-
-        .average-rating {
-            text-align: center;
-            margin: 10px 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -312,7 +349,11 @@
                 </svg>
             </div>
         </div>
-        <div class="average-rating" id="averageRating"></div>
+        <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
+            <div>متوسط التقييم:</div>
+            <div class="avg-rating-stars" id="avgStars"></div>
+            <div id="avgRatingValue"></div>
+        </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
             <span class="empty-icon">📭</span>
@@ -321,17 +362,18 @@
     </div>
 
     <div id="field2">
-        <div class="star-rating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <div style="display: flex;">
+        <form id="commentForm" style="display:flex; width:100%; align-items:center;">
+            <div class="rating-stars-input" id="starsInput">
+                <!-- Stars will be rendered here -->
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 نجوم">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 نجوم">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 نجوم">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 نجوم">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="نجمة واحدة">★</label>
+            </div>
             <textarea id="commentText" placeholder="اكتب تعليقك هنا..." required></textarea>
-            <button id="submitButton">إرسال</button>
-        </div>
+            <button type="submit" id="submitButton">إرسال</button>
+        </form>
     </div>
 
     <div id="loadingSpinner" style="display: block;">
@@ -366,28 +408,16 @@
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
 
-        let selectedRating = 0;
-
-        // اختيار التقييم بالنجوم
-        document.querySelectorAll('.star').forEach(star => {
-            star.addEventListener('click', () => {
-                selectedRating = star.getAttribute('data-value');
-                document.querySelectorAll('.star').forEach(s => {
-                    s.classList.remove('selected');
-                    if (s.getAttribute('data-value') <= selectedRating) {
-                        s.classList.add('selected');
-                    }
-                });
-            });
-        });
-
-        // إرسال التعليق
-        document.getElementById('submitButton').addEventListener('click', (e) => {
+        // Send comment
+        document.getElementById('commentForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const commentText = document.getElementById('commentText').value;
             const urlParams = new URLSearchParams(window.location.search);
             const commentId = Number(urlParams.get('commentId'));
             const username = localStorage.getItem('username');
+            const rating = document.querySelector('input[name="rating"]:checked') 
+                ? Number(document.querySelector('input[name="rating"]:checked').value)
+                : 0;
 
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً!');
@@ -400,8 +430,8 @@
                 return;
             }
 
-            if (selectedRating === 0) {
-                alert('يرجى اختيار تقييم قبل الإرسال!');
+            if (rating === 0) {
+                alert('يرجى اختيار عدد النجوم لتقييم المنتج!');
                 return;
             }
 
@@ -410,11 +440,10 @@
                 username: username,
                 timestamp: Date.now(),
                 commentId: commentId,
-                rating: selectedRating
+                rating: rating
             }).then(() => {
                 document.getElementById('commentText').value = '';
-                selectedRating = 0;
-                document.querySelectorAll('.star').forEach(s => s.classList.remove('selected'));
+                document.querySelectorAll('input[name="rating"]').forEach(radio => radio.checked = false);
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -425,9 +454,8 @@
             });
         });
 
-        // عرض التعليقات
+        // Display comments
         const commentsList = document.getElementById('commentsList');
-        const averageRatingElement = document.getElementById('averageRating');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
         
@@ -435,8 +463,6 @@
             commentsList.innerHTML = '';
             let hasComments = false;
             const commentsArray = [];
-            let totalRating = 0;
-            let ratingCount = 0;
 
             // جمع التعليقات في مصفوفة
             snapshot.forEach((childSnapshot) => {
@@ -446,13 +472,35 @@
                         key: childSnapshot.key,
                         ...comment
                     });
-                    totalRating += parseInt(comment.rating);
-                    ratingCount++;
                 }
             });
 
             // ترتيب التعليقات حسب الوقت (الأحدث أولاً)
             commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            // حساب المتوسط
+            let avgRating = 0;
+            let totalRating = 0;
+            let countRating = 0;
+            commentsArray.forEach(comment => {
+                if (comment.rating) {
+                    totalRating += comment.rating;
+                    countRating++;
+                }
+            });
+            if (countRating > 0) {
+                avgRating = totalRating / countRating;
+            }
+
+            // عرض المتوسط
+            const avgRatingSection = document.getElementById('avgRatingSection');
+            if (countRating > 0) {
+                avgRatingSection.style.display = "flex";
+                document.getElementById('avgRatingValue').textContent = `(${avgRating.toFixed(2)} / 5)`;
+                document.getElementById('avgStars').innerHTML = renderStars(avgRating);
+            } else {
+                avgRatingSection.style.display = "none";
+            }
 
             // عرض التعليقات
             commentsArray.forEach((comment) => {
@@ -471,6 +519,12 @@
 
                 const commentTextElement = document.createElement('div');
                 commentTextElement.className = 'comment-text';
+
+                // Stars
+                const commentRatingElement = document.createElement('div');
+                commentRatingElement.className = 'comment-rating';
+                commentRatingElement.innerHTML = renderStars(comment.rating,true);
+
                 const commentUsernameElement = document.createElement('div');
                 commentUsernameElement.className = 'comment-username';
 
@@ -482,15 +536,12 @@
                 const commentContentElement = document.createElement('div');
                 commentContentElement.textContent = comment.text;
 
-                const commentRatingElement = document.createElement('div');
-                commentRatingElement.textContent = 'تقييم: ' + '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
-
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
 
+                commentTextElement.appendChild(commentRatingElement);
                 commentTextElement.appendChild(commentUsernameElement);
                 commentTextElement.appendChild(commentContentElement);
-                commentTextElement.appendChild(commentRatingElement);
 
                 commentElement.appendChild(commentTextElement);
 
@@ -505,18 +556,34 @@
                 commentsList.appendChild(noMoreCommentsElement);
             }
 
-            // حساب وعرض متوسط التقييم
-            if (ratingCount > 0) {
-                const averageRating = (totalRating / ratingCount).toFixed(1);
-                averageRatingElement.textContent = `متوسط التقييم: ${averageRating} ★`;
-            } else {
-                averageRatingElement.textContent = 'لا توجد تقييمات بعد';
-            }
-
             document.getElementById('emptyContent').style.display = hasComments ? 'none' : 'flex';
             commentsList.style.display = hasComments ? 'block' : 'none';
             document.getElementById('loadingSpinner').style.display = 'none';
         });
+
+        // دالة لعرض النجوم
+        function renderStars(rating, isIntOnly) {
+            let html = '';
+            if (isIntOnly) {
+                for (let i = 1; i <= 5; i++) {
+                    html += `<span class="star${i <= rating ? '' : ' star-empty'}">★</span>`;
+                }
+            } else {
+                // للمتوسط (قد يكون كسري)
+                let full = Math.floor(rating);
+                let half = rating - full >= 0.5;
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= full) {
+                        html += `<span class="star">★</span>`;
+                    } else if (i === full + 1 && half) {
+                        html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
+                    } else {
+                        html += `<span class="star star-empty">★</span>`;
+                    }
+                }
+            }
+            return html;
+        }
 
         // دالة لإظهار نافذة التأكيد
         function showConfirmDialog(commentKey) {
