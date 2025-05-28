@@ -71,7 +71,6 @@
             font-size: 16px;
             color: #304766;
             gap: 10px;
-            flex-direction: row-reverse; /* حتى يكون العدد على يسار النجوم */
         }
         .avg-rating-stars {
             display: flex;
@@ -365,36 +364,6 @@
         .confirm-no:hover {
             background-color: #aaa;
         }
-
-        /* نجمة النصف: التلوين من البداية */
-        .half-star {
-            position: relative;
-            display: inline-block;
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-            direction: ltr;
-        }
-        .half-star .half-star-left {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            color: #ffd700;
-            z-index: 2;
-        }
-        .half-star .half-star-right {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            color: #ccc;
-            z-index: 1;
-        }
     </style>
 </head>
 <body>
@@ -408,9 +377,9 @@
             </div>
         </div>
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
-            <span>متوسط التقييمات:</span>
-            <span id="avgStars" class="avg-rating-stars"></span>
-            <span id="avgRatingValue"></span>
+            <div>متوسط التقييمات</div>
+            <div id="avgRatingValue"></div>
+            <div class="avg-rating-stars" id="avgStars"></div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -557,8 +526,8 @@
             const avgRatingSection = document.getElementById('avgRatingSection');
             if (countRating > 0) {
                 avgRatingSection.style.display = "flex";
-                document.getElementById('avgRatingValue').textContent = `( ${avgRating.toFixed(2)} / 5 )`;
-                document.getElementById('avgStars').innerHTML = renderAvgStars(avgRating);
+                document.getElementById('avgRatingValue').textContent = `(${avgRating.toFixed(2)} / 5)`;
+                document.getElementById('avgStars').innerHTML = renderStars(avgRating);
             } else {
                 avgRatingSection.style.display = "none";
             }
@@ -635,7 +604,7 @@
             document.getElementById('loadingSpinner').style.display = 'none';
         });
 
-        // دالة لعرض النجوم للتعليقات (عدد صحيح فقط)
+        // دالة لعرض النجوم
         function renderStars(rating, isIntOnly) {
             let html = '';
             if (isIntOnly) {
@@ -643,30 +612,17 @@
                     html += `<span class="star${i <= rating ? '' : ' star-empty'}">★</span>`;
                 }
             } else {
-                html = renderAvgStars(rating);
-            }
-            return html;
-        }
-
-        // دالة لعرض النجوم لمتوسط التقييم (نص نجمة من البداية)
-        function renderAvgStars(rating) {
-            let html = '';
-            let full = Math.floor(rating);
-            let half = rating - full >= 0.25 && rating - full < 0.75; // لعرض نصف نجمة حقيقية فقط إذا بين 0.25-0.75
-            let ceil = Math.round(rating);
-
-            for (let i = 1; i <= 5; i++) {
-                if (i <= full) {
-                    html += `<span class="star">★</span>`;
-                } else if (i === full + 1 && half) {
-                    html += `
-                        <span class="half-star" aria-label="نصف نجمة">
-                            <span class="half-star-left">★</span>
-                            <span class="half-star-right">★</span>
-                        </span>
-                    `;
-                } else {
-                    html += `<span class="star star-empty">★</span>`;
+                // للمتوسط (قد يكون كسريًا)
+                let full = Math.floor(rating);
+                let half = rating - full >= 0.5;
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= full) {
+                        html += `<span class="star">★</span>`;
+                    } else if (i === full + 1 && half) {
+                        html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
+                    } else {
+                        html += `<span class="star star-empty">★</span>`;
+                    }
                 }
             }
             return html;
