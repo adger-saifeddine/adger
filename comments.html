@@ -63,7 +63,7 @@
         .avg-rating-section {
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
+            justify-content: flex-end;
             margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
@@ -73,11 +73,12 @@
             font-size: 16px;
             color: #304766;
             gap: 10px;
+            cursor: pointer;
         }
         .avg-rating-stars {
             display: flex;
             align-items: center;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
 
         .star {
@@ -142,7 +143,7 @@
             display: flex;
             align-items: center;
             gap: 2px;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
         .comment-rating-value {
             margin-left: 5px;
@@ -180,9 +181,9 @@
         }
         #field2 textarea {
             flex: 1;
-            padding: 0 20px; /* زيادة الحشوة على اليمين واليسار */
+            padding: 0 20px;
             border: 1px solid #ccc;
-            border-radius: 20px; /* تعديل border-radius لمظهر أكثر حداثة */
+            border-radius: 20px;
             margin-right: 10px;
             font-size: 14px;
             outline: none;
@@ -193,7 +194,7 @@
             line-height: 40px;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
+            box-sizing: border-box;
             margin-left: 25px;
         }
 
@@ -206,7 +207,7 @@
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: -5px; /* تقليل المسافة بين الزر وحقل الإدخال */
+            margin-right: -5px;
             border: none;
             background-color: #000;
             color: white;
@@ -228,38 +229,33 @@
             align-items: center;
             margin-bottom: 8px;
             width: 100%;
-
-               /* لإلغاء التحديد الأزرق */
-                -webkit-user-select: none; /* لأجهزة Android وSafari */
-                -moz-user-select: none;    /* لمتصفح Firefox */
-                -ms-user-select: none;     /* لمتصفح Internet Explorer */
-                 user-select: none;         /* للمتصفحات الحديثة */
-                -webkit-tap-highlight-color: transparent; /* لإزالة الوميض الأزرق عند اللمس */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .rating-stars-input {
             display: flex;
             align-items: center;
             flex-direction: row-reverse;
             gap: 2px;
-
-               /* لإلغاء التحديد الأزرق */
-                -webkit-user-select: none; /* لأجهزة Android وSafari */
-                -moz-user-select: none;    /* لمتصفح Firefox */
-                -ms-user-select: none;     /* لمتصفح Internet Explorer */
-                 user-select: none;         /* للمتصفحات الحديثة */
-                -webkit-tap-highlight-color: transparent; /* لإزالة الوميض الأزرق عند اللمس */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .rating-stars-input label {
             cursor: pointer;
             font-size: 24px;
             color: #ccc;
             transition: color 0.2s;
-               /* لإلغاء التحديد الأزرق */
-                -webkit-user-select: none; /* لأجهزة Android وSafari */
-                -moz-user-select: none;    /* لمتصفح Firefox */
-                -ms-user-select: none;     /* لمتصفح Internet Explorer */
-                 user-select: none;         /* للمتصفحات الحديثة */
-                -webkit-tap-highlight-color: transparent; /* لإزالة الوميض الأزرق عند اللمس */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .rating-stars-input input[type="radio"] {
             display: none;
@@ -328,11 +324,10 @@
             margin-bottom: 68px;
         }
         @media (max-width: 768px) {
-    .no-more-comments {
-        margin-bottom: 62px;
-    }
-}
-
+            .no-more-comments {
+                margin-bottom: 62px;
+            }
+        }
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(10px); }
@@ -403,6 +398,124 @@
             align-items: center;
             gap: 5px;
         }
+
+        /* ستايلات النافذة الجديدة */
+        .rating-stats-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rating-stats-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .rating-stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .rating-stats-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rating-stats-close {
+            cursor: pointer;
+            font-size: 24px;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .rating-stats-close:hover {
+            color: #333;
+        }
+
+        .rating-stats-avg {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .rating-stats-avg-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .rating-stats-avg-stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .rating-stats-avg-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .rating-stats-bars {
+            margin-top: 15px;
+        }
+
+        .rating-stats-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .rating-stats-bar-label {
+            width: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-stats-bar-stars {
+            direction: ltr;
+            margin-left: 5px;
+        }
+
+        .rating-stats-bar-container {
+            flex-grow: 1;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+
+        .rating-stats-bar-fill {
+            height: 100%;
+            background: #ffd700;
+            border-radius: 10px;
+        }
+
+        .rating-stats-bar-percent {
+            width: 40px;
+            text-align: left;
+            color: #666;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -455,6 +568,24 @@
             <div class="confirm-buttons">
                 <button id="confirmNo" class="confirm-no">لا</button>
                 <button id="confirmYes" class="confirm-yes">نعم</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نافذة إحصائيات التقييمات الجديدة -->
+    <div id="ratingStatsOverlay" class="rating-stats-overlay">
+        <div class="rating-stats-box">
+            <div class="rating-stats-header">
+                <div class="rating-stats-title">تفاصيل التقييمات</div>
+                <button class="rating-stats-close" id="ratingStatsClose">&times;</button>
+            </div>
+            <div class="rating-stats-avg">
+                <div class="rating-stats-avg-value" id="statsAvgValue">0.0</div>
+                <div class="rating-stats-avg-stars" id="statsAvgStars"></div>
+                <div class="rating-stats-avg-count" id="statsTotalCount">0 تقييم</div>
+            </div>
+            <div class="rating-stats-bars" id="ratingStatsBars">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
             </div>
         </div>
     </div>
@@ -551,12 +682,16 @@
             let avgRating = 0;
             let totalRating = 0;
             let countRating = 0;
+            const ratingCounts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+            
             commentsArray.forEach(comment => {
                 if (comment.rating) {
                     totalRating += comment.rating;
                     countRating++;
+                    ratingCounts[comment.rating]++;
                 }
             });
+            
             if (countRating > 0) {
                 avgRating = totalRating / countRating;
             }
@@ -574,6 +709,11 @@
                     <span>${avgRating.toFixed(1)}</span>
                     <span>/ 5</span>
                 `;
+                
+                // إضافة حدث النقر لعرض الإحصائيات
+                avgRatingSection.onclick = () => {
+                    showRatingStats(avgRating, countRating, ratingCounts);
+                };
             } else {
                 avgRatingSection.style.display = "none";
             }
@@ -651,17 +791,28 @@
         });
 
         // دالة لعرض النجوم
-        function renderStars(rating) {
+        function renderStars(rating, fullStarsOnly = false) {
             let html = '';
             let full = Math.floor(rating);
             let half = rating - full >= 0.5;
-            for (let i = 1; i <= 5; i++) {
-                if (i <= full) {
-                    html += `<span class="star">★</span>`;
-                } else if (i === full + 1 && half) {
-                    html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
-                } else {
-                    html += `<span class="star star-empty">★</span>`;
+            
+            if (fullStarsOnly) {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= rating) {
+                        html += `<span class="star">★</span>`;
+                    } else {
+                        html += `<span class="star star-empty">★</span>`;
+                    }
+                }
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= full) {
+                        html += `<span class="star">★</span>`;
+                    } else if (i === full + 1 && half) {
+                        html += `<span class="star" style="position:relative;"><span style="position:absolute;overflow:hidden;width:50%;">★</span><span class="star-empty">★</span></span>`;
+                    } else {
+                        html += `<span class="star star-empty">★</span>`;
+                    }
                 }
             }
             return html;
@@ -685,6 +836,58 @@
 
             document.getElementById('confirmNo').onclick = () => {
                 confirmOverlay.style.display = 'none';
+            };
+        }
+        
+        // دالة لعرض إحصائيات التقييمات
+        function showRatingStats(avgRating, totalCount, ratingCounts) {
+            const overlay = document.getElementById('ratingStatsOverlay');
+            const avgValueElement = document.getElementById('statsAvgValue');
+            const avgStarsElement = document.getElementById('statsAvgStars');
+            const totalCountElement = document.getElementById('statsTotalCount');
+            const barsContainer = document.getElementById('ratingStatsBars');
+            
+            // تعبئة البيانات
+            avgValueElement.textContent = avgRating.toFixed(1);
+            avgStarsElement.innerHTML = renderStars(avgRating);
+            totalCountElement.textContent = `${totalCount} ${totalCount === 1 ? 'تقييم' : 'تقييمات'}`;
+            
+            // إنشاء أشرطة التقييمات
+            barsContainer.innerHTML = '';
+            for (let i = 5; i >= 1; i--) {
+                const count = ratingCounts[i] || 0;
+                const percent = totalCount > 0 ? (count / totalCount) * 100 : 0;
+                
+                const barElement = document.createElement('div');
+                barElement.className = 'rating-stats-bar';
+                
+                barElement.innerHTML = `
+                    <div class="rating-stats-bar-label">
+                        <span>${i}</span>
+                        <div class="rating-stats-bar-stars">${renderStars(i, true)}</div>
+                    </div>
+                    <div class="rating-stats-bar-container">
+                        <div class="rating-stats-bar-fill" style="width: ${percent}%"></div>
+                    </div>
+                    <div class="rating-stats-bar-percent">${Math.round(percent)}%</div>
+                `;
+                
+                barsContainer.appendChild(barElement);
+            }
+            
+            // عرض النافذة
+            overlay.style.display = 'flex';
+            
+            // إغلاق النافذة عند النقر على الزر X
+            document.getElementById('ratingStatsClose').onclick = () => {
+                overlay.style.display = 'none';
+            };
+            
+            // إغلاق النافذة عند النقر خارجها
+            overlay.onclick = (e) => {
+                if (e.target === overlay) {
+                    overlay.style.display = 'none';
+                }
             };
         }
     </script>
