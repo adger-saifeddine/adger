@@ -188,7 +188,7 @@
             overflow: hidden;
             white-space: nowrap;
             box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
-            margin-left: 22px;
+            margin-left: 25px;
         }
 
         #field2 textarea::placeholder {
@@ -560,6 +560,7 @@
                 // النص: "X من 5"
                 const ratingLabel = document.createElement('span');
                 ratingLabel.className = 'comment-rating-label';
+                ratingLabel.textContent = `${comment.rating}  `;
 
                 ratingRow.appendChild(ratingLabel);
                 ratingRow.appendChild(commentRatingElement);
