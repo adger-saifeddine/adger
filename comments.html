@@ -534,11 +534,11 @@
 
             // عرض التعليقات
             commentsArray.forEach((comment) => {
-                                const username = localStorage.getItem('username');
                 hasComments = true;
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
 
+                const username = localStorage.getItem('username');
                 if (username === comment.username) {
                     const deleteButton = document.createElement('button');
                     deleteButton.className = 'delete-button';
@@ -577,8 +577,9 @@
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
 
-                commentTextElement.appendChild(ratingRow);
+                // ترتيب العناصر: اسم المستخدم أولاً، ثم النجوم، ثم نص التعليق
                 commentTextElement.appendChild(commentUsernameElement);
+                commentTextElement.appendChild(ratingRow);
 
                 // نص التعليق
                 const commentContentElement = document.createElement('div');
