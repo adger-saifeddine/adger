@@ -12,13 +12,13 @@
             padding: 0;
             overflow-x: hidden;
         }
-    
+
         .comments-container {
             margin-top: 80px;
             text-align: right;
             padding-bottom: 80px;
         }
-        
+
         .comments-header {
             background-color: #f5f5f5;
             width: 100%;
@@ -61,7 +61,7 @@
         .avg-rating-section {
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* محاذاة من اليمين للغة العربية */
+            justify-content: flex-end;
             margin-top: -20px;
             margin-bottom: 8px;
             background: #fff3cd;
@@ -75,7 +75,7 @@
         .avg-rating-stars {
             display: flex;
             align-items: center;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
 
         .star {
@@ -140,7 +140,7 @@
             display: flex;
             align-items: center;
             gap:2px;
-            direction: ltr; /* لجعل النجوم تبدأ من اليسار */
+            direction: ltr;
         }
         .comment-rating-value {
             margin-left: 5px;
@@ -156,7 +156,7 @@
             background-color: #ccc;
             margin: 10px 0;
         }
-        
+
         #field2 {
             position: fixed;
             bottom: 0;
@@ -178,9 +178,9 @@
         }
         #field2 textarea {
             flex: 1;
-            padding: 0 20px; /* زيادة الحشوة على اليمين واليسار */
+            padding: 0 20px;
             border: 1px solid #ccc;
-            border-radius: 20px; /* تعديل border-radius لمظهر أكثر حداثة */
+            border-radius: 20px;
             margin-right: 10px;
             font-size: 14px;
             outline: none;
@@ -191,7 +191,7 @@
             line-height: 40px;
             overflow: hidden;
             white-space: nowrap;
-            box-sizing: border-box; /* لضمان احتساب الحشوة ضمن العرض */
+            box-sizing: border-box;
             margin-left: 25px;
         }
 
@@ -200,11 +200,11 @@
             text-align: right;
             line-height: 40px;
         }
-        
+
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            margin-right: 10px; /* تقليل المسافة بين الزر وحقل الإدخال */
+            margin-right: 10px;
             border: none;
             background-color: #000;
             color: white;
@@ -383,7 +383,8 @@
         <div class="avg-rating-section" id="avgRatingSection" style="display:none;">
             <div id="avgRatingValue"></div>
             <div class="avg-rating-stars" id="avgStars"></div>
-            <div id="commentsCount" style="margin-right:8px;font-size:13px;color:#856404;background:#ffeeba;padding:2px 9px 2px 9px;border-radius:10px;"></div>
+            <!-- العدد يسار النجوم -->
+            <div id="commentsCount" style="margin-left:8px;font-size:13px;color:#856404;background:transparent;padding:2px 9px 2px 9px;border-radius:10px;"></div>
         </div>
         <div id="commentsList"></div>
         <div id="emptyContent" class="empty-content">
@@ -492,7 +493,7 @@
         const commentsList = document.getElementById('commentsList');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
-        
+
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
             let hasComments = false;
@@ -526,7 +527,7 @@
                 avgRating = totalRating / countRating;
             }
 
-            // عرض المتوسط وعدد التعليقات
+            // عرض المتوسط وعدد التعليقات (العدد على يسار النجوم وبدون خلفية)
             const avgRatingSection = document.getElementById('avgRatingSection');
             const commentsCountDiv = document.getElementById('commentsCount');
             if (countRating > 0) {
