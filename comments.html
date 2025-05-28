@@ -861,10 +861,11 @@
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
                 
+                // عدل هنا: بدلاً من وضع عدد النجوم، ضع العدد مع نجمة واحدة فقط
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
-                        <div class="rating-stats-bar-stars">${renderStars(i, true)}</div>
+                        <div class="rating-stats-bar-stars"><span class="star">★</span></div>
                     </div>
                     <div class="rating-stats-bar-container">
                         <div class="rating-stats-bar-fill" style="width: ${percent}%"></div>
