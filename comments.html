@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التعليقات والتقييمات</title>
     <style>
@@ -53,11 +53,12 @@
             height: 16px;
             margin-top: 4px;
             fill: none;
-            stroke: #ffffff;
+            stroke: black;
+            color: #ffffff;
         }
 
         .back-arrow:hover svg {
-            stroke: #ffffff;
+            fill: none;
         }
 
         .avg-rating-section {
@@ -80,7 +81,6 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
         .avg-rating-stars {
             display: flex;
             align-items: center;
@@ -92,7 +92,6 @@
             font-size: 24px;
             margin-left: 2px;
         }
-
         .star-empty {
             color: #ccc;
         }
@@ -110,13 +109,11 @@
             margin: 10px 0;
             padding: 10px;
         }
-
         .comment-text {
             text-align: right;
             flex-grow: 1;
             padding-right: 10px;
         }
-
         .comment-username {
             font-weight: bold;
             margin-bottom: 5px;
@@ -124,13 +121,11 @@
             align-items: center;
             justify-content: flex-end;
         }
-
         .comment-date {
             font-size: 12px;
             color: #666;
             margin-right: 10px;
         }
-
         .delete-button {
             background-color: #ff4d4d;
             color: white;
@@ -140,11 +135,9 @@
             padding: 5px 10px;
             margin-right: 10px;
         }
-
         .delete-button:hover {
             background-color: #ff1a1a;
         }
-
         .comment-rating-row {
             display: flex;
             flex-direction: row-reverse;
@@ -152,33 +145,33 @@
             gap: 5px;
             margin-bottom: 2px;
         }
-
         .comment-rating {
             display: flex;
             align-items: center;
             gap: 2px;
             direction: ltr;
         }
-
+        .comment-rating-value {
+            margin-left: 5px;
+        }
         .comment-rating-label {
             color: #304766;
             font-size: 12px;
             margin-right: 5px;
         }
-
         .separator {
             width: 100%;
             height: 1px;
             background-color: #ccc;
             margin: 10px 0;
         }
-
+        
         #field2 {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: white;
-            display: none; /* مخفي افتراضيًا حتى يتم التحقق من الشراء */
+            display: flex;
             flex-direction: column;
             padding: 15px;
             border-top: 1px solid #ddd;
@@ -186,14 +179,12 @@
             z-index: 1000;
             right: 0;
         }
-
         #inputRow {
             display: flex;
             flex-direction: row;
             align-items: center;
             width: 100%;
         }
-
         #field2 textarea {
             flex: 1;
             padding: 0 20px;
@@ -218,7 +209,7 @@
             text-align: right;
             line-height: 40px;
         }
-
+        
         #field2 button {
             padding: 0 30px;
             height: 40px;
@@ -250,7 +241,6 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
         .rating-stars-input {
             display: flex;
             align-items: center;
@@ -262,7 +252,6 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
         .rating-stars-input label {
             cursor: pointer;
             font-size: 24px;
@@ -274,16 +263,13 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
         .rating-stars-input input[type="radio"] {
             display: none;
         }
-
         .rating-stars-input input[type="radio"]:checked ~ label,
         .rating-stars-input label.checked {
             color: #ffd700;
         }
-
         .rating-stars-input label:hover,
         .rating-stars-input label:hover ~ label {
             color: #ffd700;
@@ -331,6 +317,8 @@
             display: none;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
         .no-more-comments {
             text-align: center;
             font-size: 16px;
@@ -341,7 +329,6 @@
             font-family: 'Tajawal', sans-serif;
             margin-bottom: 68px;
         }
-
         @media (max-width: 768px) {
             .no-more-comments {
                 margin-bottom: 62px;
@@ -411,13 +398,14 @@
         .confirm-no:hover {
             background-color: #aaa;
         }
-
+        
         .avg-rating-value {
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
+        /* ستايلات النافذة الجديدة */
         .rating-stats-overlay {
             display: none;
             position: fixed;
@@ -534,14 +522,6 @@
             color: #666;
             font-size: 14px;
         }
-
-        .purchase-message {
-            text-align: center;
-            font-size: 16px;
-            color: #ff4d4d;
-            margin: 20px;
-            font-family: 'Cairo', sans-serif;
-        }
     </style>
 </head>
 <body>
@@ -550,7 +530,7 @@
             <h2>التعليقات</h2>
             <div class="back-arrow" onclick="history.back()">
                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
                 </svg>
             </div>
         </div>
@@ -563,9 +543,6 @@
         <div id="emptyContent" class="empty-content">
             <span class="empty-icon">📭</span>
             <div>التعليقات فارغة</div>
-        </div>
-        <div id="purchaseMessage" class="purchase-message" style="display: none;">
-            يجب شراء المنتج أولاً لتتمكن من كتابة تعليق.
         </div>
     </div>
 
@@ -600,7 +577,8 @@
             </div>
         </div>
     </div>
-
+    
+    <!-- نافذة إحصائيات التقييمات الجديدة -->
     <div id="ratingStatsOverlay" class="rating-stats-overlay">
         <div class="rating-stats-box">
             <div class="rating-stats-header">
@@ -612,13 +590,15 @@
                 <div class="rating-stats-avg-stars" id="statsAvgStars"></div>
                 <div class="rating-stats-avg-count" id="statsTotalCount">0 تقييم</div>
             </div>
-            <div class="rating-stats-bars" id="ratingStatsBars"></div>
+            <div class="rating-stats-bars" id="ratingStatsBars">
+                <!-- سيتم ملؤها بالجافاسكريبت -->
+            </div>
         </div>
     </div>
-
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
@@ -633,52 +613,51 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
-        const purchasesRef = ref(database, 'purchases');
 
-        // التحقق من شراء المنتج
-        function checkPurchaseStatus(username, commentId, callback) {
-            onValue(purchasesRef, (snapshot) => {
+        // دالة للتحقق مما إذا كان المستخدم قد اشترى المنتج
+        async function hasPurchasedProduct(username, productId) {
+            const purchasesRef = ref(database, 'purchases');
+            const purchasesQuery = query(purchasesRef, orderByChild('productId'), equalTo(productId));
+            const snapshot = await get(purchasesQuery);
+            if (snapshot.exists()) {
                 let hasPurchased = false;
                 snapshot.forEach((childSnapshot) => {
                     const purchase = childSnapshot.val();
-                    if (purchase.username === username && Number(purchase.productId) === Number(commentId)) {
+                    if (purchase.username === username) {
                         hasPurchased = true;
                     }
                 });
-                callback(hasPurchased);
-            }, {
-                onlyOnce: true
-            });
+                return hasPurchased;
+            } else {
+                return false;
+            }
         }
 
-        // تحميل الصفحة والتحقق من حالة الشراء
-        const urlParams = new URLSearchParams(window.location.search);
-        const commentId = Number(urlParams.get('commentId'));
-        const username = localStorage.getItem('username');
-        const field2 = document.getElementById('field2');
-        const purchaseMessage = document.getElementById('purchaseMessage');
+        // تهيئة الصفحة لإخفاء حقل الإدخال إذا لم يكن المستخدم قد اشترى المنتج
+        window.addEventListener('load', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const commentId = Number(urlParams.get('commentId'));
+            const username = localStorage.getItem('username');
+            const field2 = document.getElementById('field2');
+            
+            if (!username) {
+                field2.style.display = 'none';
+                return;
+            }
+            
+            const hasPurchased = await hasPurchasedProduct(username, commentId);
+            if (!hasPurchased) {
+                field2.style.display = 'none';
+            }
+        });
 
-        if (!username) {
-            field2.style.display = 'none';
-            purchaseMessage.style.display = 'block';
-            purchaseMessage.textContent = 'يرجى تسجيل الدخول لتتمكن من كتابة تعليق.';
-        } else {
-            checkPurchaseStatus(username, commentId, (hasPurchased) => {
-                if (hasPurchased) {
-                    field2.style.display = 'flex';
-                    purchaseMessage.style.display = 'none';
-                } else {
-                    field2.style.display = 'none';
-                    purchaseMessage.style.display = 'block';
-                    purchaseMessage.textContent = 'يجب شراء المنتج أولاً لتتمكن من كتابة تعليق.';
-                }
-            });
-        }
-
-        // إرسال تعليق
-        document.getElementById('commentForm').addEventListener('submit', (e) => {
+        // إرسال التعليق مع التحقق من الشراء
+        document.getElementById('commentForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const commentText = document.getElementById('commentText').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const commentId = Number(urlParams.get('commentId'));
+            const username = localStorage.getItem('username');
             const rating = document.querySelector('input[name="rating"]:checked') 
                 ? Number(document.querySelector('input[name="rating"]:checked').value)
                 : 0;
@@ -686,6 +665,12 @@
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً!');
                 window.location.href = 'account.html';
+                return;
+            }
+
+            const hasPurchased = await hasPurchasedProduct(username, commentId);
+            if (!hasPurchased) {
+                alert('يجب شراء المنتج أولاً لكتابة تعليق!');
                 return;
             }
 
@@ -699,35 +684,30 @@
                 return;
             }
 
-            // التحقق من الشراء قبل إرسال التعليق
-            checkPurchaseStatus(username, commentId, (hasPurchased) => {
-                if (!hasPurchased) {
-                    alert('يجب شراء المنتج أولاً لتتمكن من كتابة تعليق.');
-                    return;
-                }
-
-                push(commentsRef, {
-                    text: commentText,
-                    username: username,
-                    timestamp: Date.now(),
-                    commentId: commentId,
-                    rating: rating
-                }).then(() => {
-                    document.getElementById('commentText').value = '';
-                    document.querySelectorAll('input[name="rating"]').forEach(radio => radio.checked = false);
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                }).catch((error) => {
-                    console.error('حدث خطأ أثناء إرسال التعليق:', error);
-                    alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
+            push(commentsRef, {
+                text: commentText,
+                username: username,
+                timestamp: Date.now(),
+                commentId: commentId,
+                rating: rating
+            }).then(() => {
+                document.getElementById('commentText').value = '';
+                document.querySelectorAll('input[name="rating"]').forEach(radio => radio.checked = false);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
+            }).catch((error) => {
+                console.error('حدث خطأ أثناء إرسال التعليق:', error);
+                alert('حدث خطأ أثناء إرسال التعليق، حاول مرة أخرى.');
             });
         });
 
         // عرض التعليقات
         const commentsList = document.getElementById('commentsList');
+        const urlParams = new URLSearchParams(window.location.search);
+        const commentId = Number(urlParams.get('commentId'));
+        
         onValue(commentsRef, (snapshot) => {
             commentsList.innerHTML = '';
             let hasComments = false;
@@ -752,7 +732,7 @@
             let totalRating = 0;
             let countRating = 0;
             const ratingCounts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
-
+            
             commentsArray.forEach(comment => {
                 if (comment.rating) {
                     totalRating += comment.rating;
@@ -760,7 +740,7 @@
                     ratingCounts[comment.rating]++;
                 }
             });
-
+            
             if (countRating > 0) {
                 avgRating = totalRating / countRating;
             }
@@ -768,16 +748,23 @@
             // عرض المتوسط
             const avgRatingSection = document.getElementById('avgRatingSection');
             if (countRating > 0) {
-                avgRatingSection.style.display = 'flex';
+                avgRatingSection.style.display = "flex";
                 document.getElementById('commentsCount').textContent = `(${countRating})`;
                 document.getElementById('avgStars').innerHTML = renderStars(avgRating);
-                document.getElementById('avgRatingValue').innerHTML = `
+                
+                // عرض متوسط التقييم كـ "X.X/5"
+                const avgRatingValueElement = document.getElementById('avgRatingValue');
+                avgRatingValueElement.innerHTML = `
                     <span>${avgRating.toFixed(1)}</span>
                     <span>/ 5</span>
                 `;
-                avgRatingSection.onclick = () => showRatingStats(avgRating, countRating, ratingCounts);
+                
+                // إضافة حدث النقر لعرض الإحصائيات
+                avgRatingSection.onclick = () => {
+                    showRatingStats(avgRating, countRating, ratingCounts);
+                };
             } else {
-                avgRatingSection.style.display = 'none';
+                avgRatingSection.style.display = "none";
             }
 
             // عرض التعليقات
@@ -786,6 +773,7 @@
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
 
+                const username = localStorage.getItem('username');
                 if (username === comment.username) {
                     const deleteButton = document.createElement('button');
                     deleteButton.className = 'delete-button';
@@ -797,12 +785,14 @@
                 const commentTextElement = document.createElement('div');
                 commentTextElement.className = 'comment-text';
 
+                // Stars + label row
                 const ratingRow = document.createElement('div');
                 ratingRow.className = 'comment-rating-row';
                 const commentRatingElement = document.createElement('div');
                 commentRatingElement.className = 'comment-rating';
                 commentRatingElement.innerHTML = renderStars(comment.rating, true);
 
+                // النص: "X من 5"
                 const ratingLabel = document.createElement('span');
                 ratingLabel.className = 'comment-rating-label';
                 ratingLabel.textContent = `${comment.rating}   `;
@@ -810,6 +800,7 @@
                 ratingRow.appendChild(ratingLabel);
                 ratingRow.appendChild(commentRatingElement);
 
+                // اسم المستخدم والتاريخ
                 const commentUsernameElement = document.createElement('div');
                 commentUsernameElement.className = 'comment-username';
 
@@ -821,9 +812,11 @@
                 commentUsernameElement.appendChild(commentDateElement);
                 commentUsernameElement.appendChild(document.createTextNode(comment.username));
 
+                // ترتيب العناصر: اسم المستخدم أولاً، ثم النجوم، ثم نص التعليق
                 commentTextElement.appendChild(commentUsernameElement);
                 commentTextElement.appendChild(ratingRow);
 
+                // نص التعليق
                 const commentContentElement = document.createElement('div');
                 commentContentElement.textContent = comment.text;
                 commentTextElement.appendChild(commentContentElement);
@@ -851,7 +844,7 @@
             let html = '';
             let full = Math.floor(rating);
             let half = rating - full >= 0.5;
-
+            
             if (fullStarsOnly) {
                 for (let i = 1; i <= 5; i++) {
                     if (i <= rating) {
@@ -894,7 +887,7 @@
                 confirmOverlay.style.display = 'none';
             };
         }
-
+        
         // دالة لعرض إحصائيات التقييمات
         function showRatingStats(avgRating, totalCount, ratingCounts) {
             const overlay = document.getElementById('ratingStatsOverlay');
@@ -902,19 +895,21 @@
             const avgStarsElement = document.getElementById('statsAvgStars');
             const totalCountElement = document.getElementById('statsTotalCount');
             const barsContainer = document.getElementById('ratingStatsBars');
-
+            
+            // تعبئة البيانات
             avgValueElement.textContent = avgRating.toFixed(1);
             avgStarsElement.innerHTML = renderStars(avgRating);
             totalCountElement.textContent = `${totalCount} ${totalCount === 1 ? 'تقييم' : 'تقييمات'}`;
-
+            
+            // إنشاء أشرطة التقييمات
             barsContainer.innerHTML = '';
             for (let i = 5; i >= 1; i--) {
                 const count = ratingCounts[i] || 0;
                 const percent = totalCount > 0 ? (count / totalCount) * 100 : 0;
-
+                
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
-
+                
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
@@ -925,16 +920,19 @@
                     </div>
                     <div class="rating-stats-bar-percent">${Math.round(percent)}%</div>
                 `;
-
+                
                 barsContainer.appendChild(barElement);
             }
-
+            
+            // عرض النافذة
             overlay.style.display = 'flex';
-
+            
+            // إغلاق النافذة عند النقر على الزر X
             document.getElementById('ratingStatsClose').onclick = () => {
                 overlay.style.display = 'none';
             };
-
+            
+            // إغلاق النافذة عند النقر خارجها
             overlay.onclick = (e) => {
                 if (e.target === overlay) {
                     overlay.style.display = 'none';
