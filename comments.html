@@ -399,7 +399,7 @@
             gap: 5px;
         }
 
-        /* ستايلات النافذة الجديدة */
+        /* نافذة إحصائيات التقييمات */
         .rating-stats-overlay {
             display: none;
             position: fixed;
@@ -482,27 +482,28 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            gap: 5px;
         }
 
         .rating-stats-bar-label {
-            width: 60px; /* تم تصغير العرض من 80px إلى 60px */
             display: flex;
             align-items: center;
+            width: 50px;
             justify-content: space-between;
         }
 
         .rating-stats-bar-stars {
             direction: ltr;
-            margin-left: 2px; /* تم تصغير المسافة من 5px إلى 2px */
+            margin-left: 2px;
         }
 
         .rating-stats-bar-container {
-            flex-grow: 1;
+            flex: 1;
             height: 20px;
             background: #f0f0f0;
             border-radius: 10px;
             overflow: hidden;
-            margin: 0 5px; /* تم تصغير المسافة من 10px إلى 5px */
+            margin: 0 5px;
         }
 
         .rating-stats-bar-fill {
@@ -573,7 +574,7 @@
         </div>
     </div>
     
-    <!-- نافذة إحصائيات التقييمات الجديدة -->
+    <!-- نافذة إحصائيات التقييمات -->
     <div id="ratingStatsOverlay" class="rating-stats-overlay">
         <div class="rating-stats-box">
             <div class="rating-stats-header">
@@ -865,7 +866,7 @@
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
-                        <div class="rating-stats-bar-stars"><span class="star">★</span></div>
+                        <div class="rating-stats-bar-stars">★</div>
                     </div>
                     <div class="rating-stats-bar-container">
                         <div class="rating-stats-bar-fill" style="width: ${percent}%"></div>
