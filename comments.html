@@ -70,12 +70,13 @@
             background: #fff3cd;
             padding: 10px 20px 10px 10px;
             border-radius: 1px;
-            font-family: 'Cairo', sans-serif;
+             font-family: 'Cairo', sans-serif;
             font-size: 16px;
             color: #304766;
             gap: 10px;
             cursor: pointer;
-            -webkit-user-select: none;
+
+              -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
@@ -583,7 +584,7 @@
         <div class="rating-stats-box">
             <div class="rating-stats-header">
                 <div class="rating-stats-title">تفاصيل التقييمات</div>
-                <button class="rating-stats-close" id="ratingStatsClose">×</button>
+                <button class="rating-stats-close" id="ratingStatsClose">&times;</button>
             </div>
             <div class="rating-stats-avg">
                 <div class="rating-stats-avg-value" id="statsAvgValue">0.0</div>
@@ -598,7 +599,7 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBHJkJA0d6h27iLnO0s3e37OpfMNUxC3qQ",
@@ -614,45 +615,8 @@
         const database = getDatabase(app);
         const commentsRef = ref(database, 'comments');
 
-        // دالة للتحقق مما إذا كان المستخدم قد اشترى المنتج
-        async function hasPurchasedProduct(username, productId) {
-            const purchasesRef = ref(database, 'purchases');
-            const purchasesQuery = query(purchasesRef, orderByChild('productId'), equalTo(productId));
-            const snapshot = await get(purchasesQuery);
-            if (snapshot.exists()) {
-                let hasPurchased = false;
-                snapshot.forEach((childSnapshot) => {
-                    const purchase = childSnapshot.val();
-                    if (purchase.username === username) {
-                        hasPurchased = true;
-                    }
-                });
-                return hasPurchased;
-            } else {
-                return false;
-            }
-        }
-
-        // تهيئة الصفحة لإخفاء حقل الإدخال إذا لم يكن المستخدم قد اشترى المنتج
-        window.addEventListener('load', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const commentId = Number(urlParams.get('commentId'));
-            const username = localStorage.getItem('username');
-            const field2 = document.getElementById('field2');
-            
-            if (!username) {
-                field2.style.display = 'none';
-                return;
-            }
-            
-            const hasPurchased = await hasPurchasedProduct(username, commentId);
-            if (!hasPurchased) {
-                field2.style.display = 'none';
-            }
-        });
-
-        // إرسال التعليق مع التحقق من الشراء
-        document.getElementById('commentForm').addEventListener('submit', async (e) => {
+        // Send comment
+        document.getElementById('commentForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const commentText = document.getElementById('commentText').value;
             const urlParams = new URLSearchParams(window.location.search);
@@ -665,12 +629,6 @@
             if (!username) {
                 alert('يرجى تسجيل الدخول أولاً!');
                 window.location.href = 'account.html';
-                return;
-            }
-
-            const hasPurchased = await hasPurchasedProduct(username, commentId);
-            if (!hasPurchased) {
-                alert('يجب شراء المنتج أولاً لكتابة تعليق!');
                 return;
             }
 
@@ -703,7 +661,7 @@
             });
         });
 
-        // عرض التعليقات
+        // Display comments
         const commentsList = document.getElementById('commentsList');
         const urlParams = new URLSearchParams(window.location.search);
         const commentId = Number(urlParams.get('commentId'));
@@ -910,6 +868,7 @@
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
                 
+                // عدل هنا: بدلاً من وضع عدد النجوم، ضع العدد مع نجمة واحدة فقط
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
