@@ -482,6 +482,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            gap: 5px; /* تم إضافة هذا لتقليل المسافة بين العناصر */
         }
 
         .rating-stats-bar-label {
@@ -501,7 +502,7 @@
             background: #f0f0f0;
             border-radius: 10px;
             overflow: hidden;
-            margin: 0 10px;
+            /* تم إزالة margin: 0 10px; لتقليل المسافة */
         }
 
         .rating-stats-bar-fill {
@@ -577,7 +578,7 @@
         <div class="rating-stats-box">
             <div class="rating-stats-header">
                 <div class="rating-stats-title">تفاصيل التقييمات</div>
-                <button class="rating-stats-close" id="ratingStatsClose">&times;</button>
+                <button class="rating-stats-close" id="ratingStatsClose">×</button>
             </div>
             <div class="rating-stats-avg">
                 <div class="rating-stats-avg-value" id="statsAvgValue">0.0</div>
@@ -861,7 +862,6 @@
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
                 
-                // عدل هنا: بدلاً من وضع عدد النجوم، ضع العدد مع نجمة واحدة فقط
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
