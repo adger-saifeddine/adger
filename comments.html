@@ -482,18 +482,18 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            gap: 5px; /* تم إضافة هذا لتقليل المسافة بين العناصر */
         }
 
         .rating-stats-bar-label {
-            width: 80px;
+            width: 60px; /* تم تصغير العرض من 80px إلى 60px */
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
         .rating-stats-bar-stars {
             direction: ltr;
-            margin-left: 5px;
+            margin-left: 2px; /* تم تصغير المسافة من 5px إلى 2px */
         }
 
         .rating-stats-bar-container {
@@ -502,7 +502,7 @@
             background: #f0f0f0;
             border-radius: 10px;
             overflow: hidden;
-            /* تم إزالة margin: 0 10px; لتقليل المسافة */
+            margin: 0 5px; /* تم تصغير المسافة من 10px إلى 5px */
         }
 
         .rating-stats-bar-fill {
@@ -578,7 +578,7 @@
         <div class="rating-stats-box">
             <div class="rating-stats-header">
                 <div class="rating-stats-title">تفاصيل التقييمات</div>
-                <button class="rating-stats-close" id="ratingStatsClose">×</button>
+                <button class="rating-stats-close" id="ratingStatsClose">&times;</button>
             </div>
             <div class="rating-stats-avg">
                 <div class="rating-stats-avg-value" id="statsAvgValue">0.0</div>
