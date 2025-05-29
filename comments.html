@@ -256,6 +256,7 @@
             -ms-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            margin-left: -22px;
         }
         .rating-stars-input input[type="radio"] {
             display: none;
@@ -399,7 +400,7 @@
             gap: 5px;
         }
 
-        /* نافذة إحصائيات التقييمات */
+        /* ستايلات النافذة الجديدة */
         .rating-stats-overlay {
             display: none;
             position: fixed;
@@ -482,28 +483,26 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            gap: 5px;
         }
 
         .rating-stats-bar-label {
+            width: 80px;
             display: flex;
             align-items: center;
-            width: 50px;
-            justify-content: space-between;
         }
 
         .rating-stats-bar-stars {
             direction: ltr;
-            margin-left: 2px;
+            margin-left: 5px;
         }
 
         .rating-stats-bar-container {
-            flex: 1;
+            flex-grow: 1;
             height: 20px;
             background: #f0f0f0;
             border-radius: 10px;
             overflow: hidden;
-            margin: 0 5px;
+            margin: 0 10px;
         }
 
         .rating-stats-bar-fill {
@@ -574,7 +573,7 @@
         </div>
     </div>
     
-    <!-- نافذة إحصائيات التقييمات -->
+    <!-- نافذة إحصائيات التقييمات الجديدة -->
     <div id="ratingStatsOverlay" class="rating-stats-overlay">
         <div class="rating-stats-box">
             <div class="rating-stats-header">
@@ -863,10 +862,11 @@
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
                 
+                // عدل هنا: بدلاً من وضع عدد النجوم، ضع العدد مع نجمة واحدة فقط
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
-                        <div class="rating-stats-bar-stars">★</div>
+                        <div class="rating-stats-bar-stars"><span class="star">★</span></div>
                     </div>
                     <div class="rating-stats-bar-container">
                         <div class="rating-stats-bar-fill" style="width: ${percent}%"></div>
