@@ -337,7 +337,6 @@
         .confirm-overlay {
             display: none;
             position: fixed;
-            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
@@ -482,6 +481,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            gap: 2px; /* تعديل المسافة بين النجمة وشريط النسبة */
         }
 
         .rating-stats-bar-label {
@@ -492,7 +492,7 @@
 
         .rating-stats-bar-stars {
             direction: ltr;
-            margin-left: 2px; /* تعديل المسافة بين النجمة وشريط النسبة */
+            /* تمت إزالة margin-left: 5px; لتقليل المسافة */
         }
 
         .rating-stats-bar-container {
@@ -501,7 +501,7 @@
             background: #f0f0f0;
             border-radius: 10px;
             overflow: hidden;
-            margin: 0 5px; /* تعديل الهامش لتقليل المسافة */
+            margin: 0 10px;
         }
 
         .rating-stats-bar-fill {
@@ -861,7 +861,6 @@
                 const barElement = document.createElement('div');
                 barElement.className = 'rating-stats-bar';
                 
-                // عدل هنا: بدلاً من وضع عدد النجوم، ضع العدد مع نجمة واحدة فقط
                 barElement.innerHTML = `
                     <div class="rating-stats-bar-label">
                         <span>${i}</span>
