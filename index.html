@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adger</title>
-    <!-- الأيقونة الافتراضية للكمبيوتر -->
-    <link id="favicon" rel="icon" href="logo.png" type="image/x-icon">
+    <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
     <!-- بيانات Open Graph -->
@@ -24,29 +23,6 @@
       "url": "https://adger-saifeddine.github.io/adger/",
       "logo": "https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg"
     }
-    </script>
-    
-    <script>
-        // دالة محسنة للكشف عن نوع الجهاز
-        function detectDevice() {
-            // تحسين كشف الهاتف
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // للكشف عن أجهزة iPad التي تستخدم متصفح Safari
-            
-            const favicon = document.getElementById('favicon');
-            
-            if (isMobile) {
-                favicon.href = 'logo.jpg';
-                console.log('تم تحميل أيقونة الهاتف: logo.png');
-            } else {
-                favicon.href = 'logo.png';
-                console.log('تم تحميل أيقونة الكمبيوتر: logo.png');
-            }
-        }
-        
-        // استدعاء الدالة عند تحميل الصفحة ومع تغيير حجم النافذة
-        window.addEventListener('load', detectDevice);
-        window.addEventListener('resize', detectDevice);
     </script>
 </head>
 <body>
