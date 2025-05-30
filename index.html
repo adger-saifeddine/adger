@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adger</title>
-    <link rel="icon" href="logo.png" type="image/x-icon">
+    <link id="favicon" rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
     <!-- بيانات Open Graph -->
@@ -26,12 +26,28 @@
       "logo": "https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg"
     }
     </script>
+    
+    <script>
+        // دالة للكشف عن نوع الجهاز
+        function detectDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const favicon = document.getElementById('favicon');
+            
+            if (isMobile) {
+                favicon.href = 'logo.jpg';
+            } else {
+                favicon.href = 'logo.png';
+            }
+        }
+        
+        // استدعاء الدالة عند تحميل الصفحة
+        window.onload = detectDevice;
+    </script>
 </head>
 <body>
 
 </body>
 </html>
-
 
 
 
