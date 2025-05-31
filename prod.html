@@ -6,7 +6,39 @@
     <title>Adger</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-</head>
+
+  <!-- Primary Meta Tags -->
+<title>Adger | متجرك الإلكتروني لـ [تخصص المتجر]</title>
+<meta name="description" content="اشتري [منتجاتك] بأسعار تنافسية ✓ شحن سريع ✓ دفع عند الاستلام ✓ تصفح الآن!">
+
+<!-- Open Graph / Facebook Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adger-shop.vercel.app/prod.html">
+<meta property="og:title" content="Adger | متجرك الإلكتروني لـ [تخصص المتجر]">
+<meta property="og:description" content="اشتري [منتجاتك] بأسعار تنافسية ✓ شحن سريع ✓ دفع عند الاستلام ✓ تصفح الآن!">
+<meta property="og:image" content="logo.png">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://adger-shop.vercel.app/prod.html">
+<meta name="twitter:title" content="Adger | متجرك الإلكتروني لـ [تخصص المتجر]">
+<meta name="twitter:description" content="اشتري [منتجاتك] بأسعار تنافسية ✓ شحن سريع ✓ دفع عند الاستلام ✓ تصفح الآن!">
+<meta name="twitter:image" content="logo.png">
+
+<!-- Schema.org Markup -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Adger",
+  "url": "https://adger-shop.vercel.app/prod.html",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://adger-shop.vercel.app/prod.html/search?q={search_term}",
+    "query-input": "required name=search_term"
+  }
+}
+</script>
 
     <style>
         body {
@@ -1590,7 +1622,8 @@ function updateMainMedia(thumbnail) {
 
 
 
-<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
+
+<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;  margin-bottom: -10px;">المواصفات</h2>
 
 <!DOCTYPE html>
 <html lang="ar">
@@ -1647,60 +1680,59 @@ function updateMainMedia(thumbnail) {
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-    <!-- اكتبه كما هو مع جعل الطرف الأيمن للجدول بلون رصاصي و الطرف اليسار أي الإجابة بلون أبيض مع الحفاظ على الخطوط والهيكل -->
+    <!-- اكتبه كما هو مع جعل الطرف الاين للجدول بلون رصاصي و الطرف اليسار اي الاجابه بلون ابيض مع الحفاظ علي الخطوط و الهيكل -->
 </body>
 </html>
 
-<script>
-    // جلب معرف المنتج من URL
-    function getProductId() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        return productId;
-    }
+    <script>
+        // جلب معرف المنتج من URL
+       function getProductId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    return productId;
+}
 
+        if (productId) {
+            // تحديد اسم ملف JSON بناءً على معرف المنتج
+            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
+            const jsonFile = `products-${fileIndex}.json`;
 
-    if (productId) {
-        // تحديد اسم ملف JSON بناءً على معرف المنتج
-        const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
-        const jsonFile = `products-${fileIndex}.json`;
+            fetch(jsonFile)
+                .then(response => {
+                    if (!response.ok) throw new Error('الملف غير موجود');
+                    return response.json();
+                })
+                .then(products => {
+                    const product = products.find(p => p.id === productId);
+                    if (!product) {
+                        document.getElementById('productDescription').textContent = 'المنتج غير موجود';
+                        return;
+                    }
 
-        fetch(jsonFile)
-            .then(response => {
-                if (!response.ok) throw new Error('الملف غير موجود');
-                return response.json();
-            })
-            .then(products => {
-                const product = products.find(p => p.id === productId);
-                if (!product) {
-                    document.getElementById('productDesc').textContent = 'المنتج غير موجود';
-                    return;
-                }
+                    // تحديث الجدول
+                    const table = document.getElementById('productTable');
+                    product.tableData.forEach(item => {
+                        const row = document.createElement('tr');
+                        const questionCell = document.createElement('td');
+                        const answerCell = document.createElement('td');
+                        questionCell.textContent = item.question;
+                        answerCell.textContent = item.answer;
+                        row.appendChild(questionCell);
+                        row.appendChild(answerCell);
+                        table.appendChild(row);
+                    });
 
-                // تحديث الجدول
-                const table = document.getElementById('productTable');
-                product.tableData.forEach(item => {
-                    const row = document.createElement('tr');
-                    const questionCell = document.createElement('td');
-                    const answerCell = document.createElement('td');
-                    questionCell.textContent = item.question;
-                    answerCell.textContent = item.answer;
-                    row.appendChild(questionCell);
-                    row.appendChild(answerCell);
-                    table.appendChild(row);
+                    // تحديث النص الوصفي
+                    document.getElementById('productDescription').textContent = product.description;
+                })
+                .catch(error => {
+                    console.error('خطأ في جلب البيانات:', error);
+                    document.getElementById('productDescription').textContent = 'حدث خطأ أثناء تحميل البيانات';
                 });
-
-                // تحديث النص الوصفي
-                document.getElementById('productDesc').textContent = product.description;
-            })
-            .catch(error => {
-                console.error('خطأ في جلب البيانات:', error);
-                document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل البيانات';
-            });
-    } else {
-        document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
-    }
-</script>
+        } else {
+            document.getElementById('productDescription').textContent = 'يرجى تحديد معرف المنتج في URL';
+        }
+    </script>
 </body>
 </html>
 
