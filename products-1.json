@@ -1228,59 +1228,78 @@
         }
       },
       
-      {
-        "id": "21",
-        "media": [
-          {"src": "https://i.postimg.cc/vB3HpQmj/2025-04-25-08-56-29-ed4dba71.jpg", "type": "image"},
-          {"src": "https://i.postimg.cc/zD0hjFxH/Saf51ebec5ed74b2cb4bcb095d2971fcf-P-jpg-220x220q75-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/3JqvMJ5K/S1ef7ecc799c845b0bcf07d66c22e8e27f-jpg-220x220q75-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/bw22qcp1/Saa212d128f02420fb0acac4e5280c94eq-jpg-220x220q75-jpg.avif", "type": "image"},
-          {"src": "https://i.postimg.cc/wBXysXtv/Sb4ba5714badc48cca5717c6cde3ab909b-jpg-220x220q75-jpg.avif", "type": "image"}
-        ],
-        "pri": "230",
-        "oldPrice": "500",
-        "dis": "خصم 54%",
-        "changingText": ["سعة ضخمة", "نقل سريع", "مقاوم للماء"],
-        "longText": "فلاشة Xiaomi الأصلية بسعة 2TB عالية السرعة، مقاومة للماء ومصنوعة من المعدن، مثالية لنقل وتخزين الملفات الكبيرة بسرعة وأمان.",
-        "sales": "Xiaomi",
-        "buttonId": "commentButton21",
-        "commentId": "21",
-        "elementId": "commentCount21",
-        "tableData": [
-          {"question": "اللون", "answer": "فضي"},
-          {"question": "المادة", "answer": "معدن"},
-          {"question": "السعة", "answer": "2 تيرا بايت"},
-          {"question": "الواجهة", "answer": "USB 3.0"}
-        ],
-        "desc": "منتج Xiaomi Pen Drive الأصلي بسعة 2 تيرا بايت وواجهة USB 3.0، يوفر سرعة نقل عالية مع تصميم معدني مقاوم للماء لتخزين آمن وموثوق.", 
-        "groups": [
-          {
-            "type": "images",
-            "items": [
-              "https://i.postimg.cc/vB3HpQmj/2025-04-25-08-56-29-ed4dba71.jpg",
-              "https://i.postimg.cc/zD0hjFxH/Saf51ebec5ed74b2cb4bcb095d2971fcf-P-jpg-220x220q75-jpg.avif",
-              "https://i.postimg.cc/3JqvMJ5K/S1ef7ecc799c845b0bcf07d66c22e8e27f-jpg-220x220q75-jpg.avif",
-              "https://i.postimg.cc/bw22qcp1/Saa212d128f02420fb0acac4e5280c94eq-jpg-220x220q75-jpg.avif",
-              "https://i.postimg.cc/wBXysXtv/Sb4ba5714badc48cca5717c6cde3ab909b-jpg-220x220q75-jpg.avif"
-            ]
-          }
-        ],
-        "product": {
-          "image": "https://i.postimg.cc/vB3HpQmj/2025-04-25-08-56-29-ed4dba71.jpg",
-          "name": "Xiaomi Pen Drive 2 TB USB 3.0",
-          "sold": "Xiaomi",
-          "price": "230.00",
-          "discount": "54",
-          "pageId": "21",
-          "productId": "21",
-          "shippingPrice": "70"
-        },
-        "texts": {
-          "currency": "جنيه",
-          "discountLabel": "خصم"
-        }
-      },
-      
+    {
+  "id": "21",
+  "media": [
+    { "src": "https://files.catbox.moe/8ksrqa.webp", "type": "image" },
+    { "src": "https://files.catbox.moe/lbjedv.webp", "type": "image" },
+    { "src": "https://files.catbox.moe/2ubepl.webp", "type": "image" },
+    { "src": "https://files.catbox.moe/h8xj1v.webp", "type": "image" },
+    { "src": "https://files.catbox.moe/da85pg.webp", "type": "image" },
+    { "src": "https://files.catbox.moe/g2tzgl.webp", "type": "image" }
+  ],
+  "pri": "420",
+  "oldPrice": "650",
+  "dis": "35%",
+  "changingText": [
+    "TWS Pro60 سماعات بلوتوث",
+    "لاسلكية مع إلغاء الضوضاء",
+    "HiFi سماعات أذن رياضية"
+  ],
+  "longText": "TWS Pro60 سماعات بلوتوث لاسلكية مع ميكروفون وإلغاء ضوضاء HiFi.",
+  "sales": "موثوق",
+  "buttonId": "commentButton21",
+  "commentId": "21",
+  "elementId": "commentCount21",
+  "tableData": [
+    { "question": "المادة", "answer": "ABS، بلاستيك" },
+    { "question": "الأبعاد", "answer": "الطول 60 × العرض 40 × الارتفاع 28 مم" },
+    { "question": "الوزن", "answer": "46 جم" },
+    { "question": "سعة البطارية", "answer": "200 مللي أمبير" },
+    { "question": "عمر البطارية", "answer": "يصل إلى 6 ساعات" },
+    { "question": "نطاق البلوتوث", "answer": "10-20 متر" },
+    { "question": "نسخة البلوتوث", "answer": "5.0" },
+    { "question": "العزل الصوتي", "answer": "نعم" },
+    { "question": "ضد للماء", "answer": "نعم" },
+    { "question": "طريقة الشحن", "answer": "غشاء الشحن" },
+    { "question": "الاتصال", "answer": "لاسلكي، Type-C" },
+    { "question": "الوظائف", "answer": "للألعاب، سماعة عادية، دعم Siri" },
+    { "question": "الميكروفون", "answer": "نعم" },
+    { "question": "التحكم في الحجم", "answer": "نعم" },
+    { "question": "العلامة التجارية", "answer": "vbpbsql" }
+  ],
+  "desc": "سماعة رأس بلوتوث لاسلكية TWS Pro60 بتصميم أنيق وصوت عالي الجودة. تحتوي على ميكروفون مدمج وميزة إلغاء الضوضاء لعزل الأصوات الخارجية أثناء الاستماع للموسيقى أو أثناء المكالمات. مزودة ببلوتوث 5.0 لاتصال ثابت، وسعة بطارية تصل إلى 200mAh لعمر طويل يصل حتى 6 ساعات. مقاومة للماء وخفيفة الوزن، مثالية للألعاب، الرياضة، والاستخدام اليومي.",
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/8ksrqa.webp",
+        "https://files.catbox.moe/lbjedv.webp"
+      ]
+    },
+    {
+      "type": "mixed",
+      "items": [
+        "https://files.catbox.moe/2ubepl.webp",
+        "https://files.catbox.moe/h8xj1v.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/8ksrqa.webp",
+    "name": "سماعات بلوتوث TWS Pro60",
+    "sold": "موثوق",
+    "price": "420.00",
+    "discount": "35%",
+    "pageId": "21",
+    "productId": "21",
+    "shippingPrice": "70"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
       {
         "id": "22",
         "media": [

@@ -182,15 +182,16 @@
         "discountTexts": ["تنظيف فعال بدون أثر", "جودة لا مثيل لها"],
         "link": "prod.html?id=20"
     },
-    {
-        "name": "Xiaomi Pen Drive 2 TB USB 3.0",
-        "dataName": "#21 فلاشة خصومات فلاشه كمبيوترات Xiaomi أصلية 2 تيرا - USB 3.0 - معدن مقاوم للماء وسرعة نقل عالية",
-        "price": "230.00",
-        "image": "https://i.postimg.cc/vB3HpQmj/2025-04-25-08-56-29-ed4dba71.jpg",
-        "sold": "Xiaomi",
-        "discountTexts": ["كان بـ 500 جنيه", "خصم 54%"],
-        "link": "prod.html?id=21"
-    },
+   {
+  "name": "TWS Pro60 سماعات بلوتوث",
+  "dataName": "#22 سماعات لاسلكية رياضية HiFi إلغاء ضوضاء - بلوتوث 5.0 - مقاومة للماء",
+  "price": "420.00",
+  "image": "https://i.postimg.cc/8zcCbwT1/S1c06f902da394c85a608a1d543564e89-F.webp",
+  "sold": "موثوق",
+  "discountTexts": ["كان بـ 650 جنيه", "خصم 35%"],
+  "link": "prod.html?id=22"
+},
+
     {
         "name": "نظارات شمسية رجالية ونسائية فاخرة UV400",
         "dataName": "#22 نظارات شمسية استقطابية فاخرة بتصميم رجعي - خصومات نظاره نظارة UV400 - للرجال والنساء",
