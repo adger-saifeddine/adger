@@ -1460,70 +1460,62 @@
           "discountLabel": "خصم"
         }
       },
-      {
-        "id": "24",
-        "media": [
-          {"src": "https://i.postimg.cc/jSq71LwD/S4dbd86ef23ee49848ea992f26052c03dp-jpg-220x220q75-jpg.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/4kzkwz.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/6ri8o9.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/mleogn.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/4e580c.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/9v10ih.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/3mn7v0.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/xwf4td.avif", "type": "image"},
-          {"src": "https://files.catbox.moe/zmuw26.avif", "type": "image"}
-        ],
-        "pri": "130",
-        "oldPrice": "",
-        "dis": "",
-        "changingText": ["تصميم عملي", "قابل للطي", "مناسب لشحن MagSafe"],
-        "longText": "حامل قابل للطي لشاحن MagSafe اللاسلكي بتصميم عملي ومريح يناسب الهواتف الحديثة ويوفر شحن لاسلكي سريع.",
-        "sales": "للهواتف",
-        "buttonId": "commentButton24",
-        "commentId": "24",
-        "elementId": "commentCount24",
-        "tableData": [
-          {
-            "question": "الألوان",
-            "answer": ["أسود", "رصاصي", "أبيض"]
-          },
-          {"question": "المادة", "answer": "بلاستيك + سيليكون"},
-          {"question": "الوزن", "answer": "70 جرام"},
-          {"question": "مقاس", "answer": "8 سم × 8 سم × 2 سم"}
-        ],
-        "desc": "حامل قابل للطي لشاحن MagSafe اللاسلكي مع تصميم مدمج وقابلية حمل ممتازة. مناسب لهواتف iPhone iOS 14, 13, 12 ويدعم الشحن اللاسلكي بشكل ممتاز.",
-        "groups": [
-          {
-            "type": "images",
-            "items": [
-              "https://i.postimg.cc/jSq71LwD/S4dbd86ef23ee49848ea992f26052c03dp-jpg-220x220q75-jpg.avif",
-              "https://files.catbox.moe/4kzkwz.avif",
-              "https://files.catbox.moe/6ri8o9.avif",
-              "https://files.catbox.moe/mleogn.avif",
-              "https://files.catbox.moe/4e580c.avif",
-              "https://files.catbox.moe/9v10ih.avif",
-              "https://files.catbox.moe/3mn7v0.avif",
-              "https://files.catbox.moe/xwf4td.avif",
-              "https://files.catbox.moe/zmuw26.avif"
-            ]
-          }
-        ],
-        "product": {
-          "image": "https://i.postimg.cc/jSq71LwD/S4dbd86ef23ee49848ea992f26052c03dp-jpg-220x220q75-jpg.avif",
-          "name": "حامل قابل للطي لشاحن MagSafe اللاسلكي لهواتف iOS 14 13 12",
-          "sold": "للهواتف",
-          "price": "130.00",
-          "discount": "",
-          "pageId": "24",
-          "productId": "24",
-          "shippingPrice": "50",
-          "colors": ["أسود", "رصاصي", "أبيض"]
-        },
-        "texts": {
-          "currency": "جنيه",
-          "discountLabel": "مذهل"
-        }
-      },
+{
+  "id": "24",
+  "media": [
+    { "src": "https://i.postimg.cc/Gt1pbC0K/H01c8dd490b9143c087da68b7cf24a1f04-jpg-220x220q75-jpg.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/pmjfoa.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/es60gj.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/7c88u4.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/f4oq8s.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/e40zz8.avif", "type": "image" }
+  ],
+  "pri": "100",
+  "oldPrice": "150",
+  "dis": "وفر 50 جنيه",
+  "changingText": ["تصميم صغير", "تناسب عالمي", "مصاصة شفط قابلة للغسل"],
+  "longText": "عصا تحكم Q8 Mini صغيرة الحجم قابلة للغسل بمصاصة شفط، مناسبة لمعظم الهواتف والأجهزة اللوحية. مثالية للألعاب وتوفر تحكم دقيق وسريع.",
+  "sales": "BLUELANS",
+  "buttonId": "commentButton24",
+  "commentId": "24",
+  "elementId": "commentCount24",
+  "tableData": [
+    { "question": "الألوان", "answer": ["أزرق", "برتقالي", "أحمر", "أبيض", "أخضر"] },
+    { "question": "المادة", "answer": "ABS + سيليكون" },
+    { "question": "الوزن", "answer": "15 جرام" },
+    { "question": "مقاس", "answer": "القطر 3.5 سم × السُمك 0.5 سم" }
+  ],
+  "desc": "زر تحكم للألعاب صغير الحجم، سهل التركيب على الشاشة باستخدام مصاصة شفط، ويوفر تجربة لعب دقيقة وسريعة الاستجابة.",
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/Gt1pbC0K/H01c8dd490b9143c087da68b7cf24a1f04-jpg-220x220q75-jpg.avif",
+        "https://files.catbox.moe/pmjfoa.avif",
+        "https://files.catbox.moe/es60gj.avif",
+        "https://files.catbox.moe/7c88u4.avif",
+        "https://files.catbox.moe/f4oq8s.avif",
+        "https://files.catbox.moe/e40zz8.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/Gt1pbC0K/H01c8dd490b9143c087da68b7cf24a1f04-jpg-220x220q75-jpg.avif",
+    "name": "عصا تحكم صغيرة Q8 Mini قابلة للغسل للهواتف والأجهزة اللوحية",
+    "sold": "BLUELANS",
+    "price": "100.00",
+    "discount": "وفر 50 جنيه",
+    "pageId": "24",
+    "productId": "24",
+    "shippingPrice": "50",
+    "colors": ["أزرق", "برتقالي", "أحمر", "أبيض", "أخضر"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جديد"
+  }
+},
+
       {
         "id": "25",
         "media": [
@@ -1574,57 +1566,51 @@
           "discountLabel": "خصم"
         }
       },
-      {
-        "id": "26",
-        "media": [
-          {"src": "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png", "type": "image"},
-          {"src": "https://i.postimg.cc/Bb5hFHpY/1716925997temp1917554784501431199-removebg-preview.png", "type": "image"},
-          {"src": "https://i.postimg.cc/sf5HbCzY/1716925997temp5959839030718364077-removebg-preview.png", "type": "image"},
-          {"src": "https://i.postimg.cc/9FVghgXv/1716925997temp946219167006555484-removebg-preview.png", "type": "image"}
-        ],
-        "pri": "340",
-        "oldPrice": "350",
-        "dis": "خصم 3%",
-        "changingText": ["مستشعر دقيق", "إضاءة RGB قابلة للتخصيص", "تصميم مريح وأزرار قابلة للبرمجة"],
-        "longText": "ماوس جيمينج CW905",
-        "desc": "ماوس أونيكوما CW905 مع مستشعر PixArt عالي الدقة، وإضاءة RGB مذهلة، و6 أزرار قابلة للتخصيص لتجربة ألعاب احترافية ومريحة.",
-        "sales": "أجهزة الألعاب",
-        "buttonId": "commentButton26",
-        "commentId": "26",
-        "elementId": "commentCount26",
-        "tableData": [
-          {"question": "نوع الاتصال", "answer": "سلكي"},
-          {"question": "مستشعر", "answer": "PixArt PMW3360"},
-          {"question": "معدل DPI", "answer": "100-6400 نقطة في البوصة"},
-          {"question": "الإضاءة", "answer": "RGB قابلة للتخصيص"},
-          {"question": "عدد الأزرار", "answer": "6 أزرار قابلة للبرمجة"}
-        ],
-        "groups": [
-          {
-            "type": "images",
-            "items": [
-              "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png",
-              "https://i.postimg.cc/Bb5hFHpY/1716925997temp1917554784501431199-removebg-preview.png",
-              "https://i.postimg.cc/sf5HbCzY/1716925997temp5959839030718364077-removebg-preview.png",
-              "https://i.postimg.cc/9FVghgXv/1716925997temp946219167006555484-removebg-preview.png"
-            ]
-          }
-        ],
-        "product": {
-          "image": "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png",
-          "name": "ماوس جيمينج CW905",
-          "sold": "أجهزة الألعاب",
-          "price": "340.00",
-          "discount": "3",
-          "pageId": "26",
-          "productId": "26",
-          "shippingPrice": "50"
-        },
-        "texts": {
-          "currency": "جنيه",
-          "discountLabel": "خصم"
-        }
-      },
+{
+  "id": "26",
+  "media": [
+    { "src": "https://i.postimg.cc/HsnP278w/2025-05-31-224044.png", "type": "image" },
+    { "src": "https://i.postimg.cc/T1Vnxxwq/2025-05-31-224044-removebg-preview.png", "type": "image" }
+  ],
+  "pri": "300",
+  "oldPrice": "600",
+  "dis": "خصم 50%",
+  "changingText": ["إضاءة رائعة", "برمجة ماكرو", "مصمم للألعاب"],
+  "longText": "ماوس الألعاب AULA VANGUARD II 9022 بلون أبيض، يتميز بإضاءة رائعة وإمكانية برمجة الماكرو، ومناسب لتجربة لعب احترافية. يدعم إعدادات DPI متعددة (800-1200-1600-2400-3000-3500) لتناسب مختلف الاستخدامات.",
+  "sales": "AULA",
+  "buttonId": "commentButton26",
+  "commentId": "26",
+  "elementId": "commentCount26",
+  "tableData": [
+    { "question": "المادة", "answer": "بلاستيك + مكونات إلكترونية" },
+    { "question": "الوزن", "answer": "130 جرام" },
+    { "question": "مقاس", "answer": "13.2 سم × 7.2 سم × 4.1 سم" }
+  ],
+  "desc": "ماوس أولى VANGUARD II 9022 جيمينج بلون أبيض، تصميم مميز مع إعدادات DPI متعددة، مثالي للألعاب والمهام الدقيقة.",
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/HsnP278w/2025-05-31-224044.png",
+        "https://i.postimg.cc/T1Vnxxwq/2025-05-31-224044-removebg-preview.png"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/HsnP278w/2025-05-31-224044.png",
+    "name": "ماوس أولى VANGUARD II 9022 جيمينج أبيض",
+    "sold": "AULA",
+    "price": "300.00",
+    "discount": "50",
+    "pageId": "26",
+    "productId": "26",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم مذهل"
+  }
+},
       {
         "id": "27",
         "media": [
@@ -1835,9 +1821,9 @@
           { "src": "https://files.catbox.moe/479zpi.jpg", "type": "image" },
           { "src": "https://files.catbox.moe/5q2fq7.jpg", "type": "image" }
         ],
-        "pri": "160",
+        "pri": "280",
         "oldPrice": "350",
-        "dis": "خصم 54.29%",
+        "dis": "خصم 20%",
         "changingText": ["مج حراري + 3 كوب", "طقم هدية شيك جدًا "],
         "longText": "مج حراري فاخر مع 3 أكواب - طقم هدية أنيق يناسب جميع المناسبات",
         "desc": "مج حراري أنيق مع 3 أكواب، مثالي للاستخدام اليومي أو كهدية فاخرة. تصميم جذاب وألوان متعددة، سعة ممتازة للحفاظ على حرارة المشروبات.",
@@ -1868,8 +1854,8 @@
           "image": "https://i.postimg.cc/DyvytY8n/1730281084711651511-removebg-preview-removebg-preview.png",
           "name": "مج حراري مع 3 كوب",
           "sold": "أوعية تخزين",
-          "price": "160.00",
-          "discount": "54.29",
+          "price": "280.00",
+          "discount": "20",
           "pageId": "31",
           "productId": "31",
           "shippingPrice": "50",

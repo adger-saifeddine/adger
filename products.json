@@ -211,15 +211,16 @@
         "discountTexts": ["كان بـ 290 جنيه", "خصم 21%"],
         "link": "prod.html?id=23"
       },
-      {
-        "name": "حامل قابل للطي لشاحن MagSafe اللاسلكي",
-        "dataName": "#24 إكسسوارات MagSafe قابل للطي - متوافق مع هواتف iOS 14/13/12 - ألوان: أسود، رصاصي، أبيض",
-        "price": "130.00",
-        "image": "https://i.postimg.cc/jSq71LwD/S4dbd86ef23ee49848ea992f26052c03dp-jpg-220x220q75-jpg.avif",
-        "sold": "للهواتف",
-        "discountTexts": ["لا مثيل له", "منتج عملي"],
-        "link": "prod.html?id=24"
-      },
+    {
+  "name": "عصا تحكم لعبة للهاتف Q8 Mini",
+  "dataName": "#24 عصا تحكم جولة صغيرة شفط قابلة للغسل - مناسبة للهواتف والأجهزة اللوحية",
+  "price": "100.00",
+  "image": "https://i.postimg.cc/Gt1pbC0K/H01c8dd490b9143c087da68b7cf24a1f04-jpg-220x220q75-jpg.avif",
+  "sold": "BLUELANS",
+  "discountTexts": ["جديد في السوق", "شحن سريع متاح"],
+  "link": "prod.html?id=24"
+},
+
       {
         "name": "رينج لايت مقاس 26 سم",
         "dataName": "#25 إضاءة تصوير خصومات احترافية - رينج لايت قطر 26 سم - مناسب للتصوير الشخصي والبث المباشر - سعر مخفض من 150 إلى 30",
@@ -229,15 +230,15 @@
         "discountTexts": ["كان بـ150 جنيه", "خصم 80%"],
         "link": "prod.html?id=25"
       },
-      {
-        "name": "ماوس جيمينج CW905",
-        "dataName": "#26 ماوس أونيكوما CW905 - مستشعر دقيق وإضاءة RGB - معدل DPI خصومات حتي 6400 - تصميم مريح وأزرار قابلة للتخصيص",
-        "price": "340.00",
-        "image": "https://i.postimg.cc/wMDrkSqk/1716925988temp7694039825200268627-removebg-preview.png",
-        "sold": "أجهزة الألعاب",
-        "discountTexts": ["كان بـ350 جنيه", "خصم 3%"],
-        "link": "prod.html?id=26"
-      },
+     {
+  "name": "AULA VANGUARD II 9022 Gaming Mouse",
+  "dataName": "#26 ماوس أولى VANGUARD II 9022 جيمينج أبيض - إضاءة رائعة - برمجة ماكرو - مخصص للألعاب DPI : 800-1200-1600-2400-3000-3500",
+  "price": "300.00",
+  "image": "https://i.postimg.cc/T1Vnxxwq/2025-05-31-224044-removebg-preview.png",
+  "sold": "أجهزة الألعاب",
+  "discountTexts": ["كان بـ600 جنيه", "خصم 50%"],
+  "link": "prod.html?id=26"
+},
       {
         "name": "بادة ماوس صغيرة برسمة كرتون",
         "dataName": "#27 خصومات بادة ماوس صغيرة برسمة كرتون - تصميم جذاب وسطح ناعم لتحريك الماوس بسهولة",
@@ -277,10 +278,10 @@
       {
         "name": "مج حراري فاخر 500 مل مع 3 كوب",
         "dataName": "#31 thermal_mug_500ml مج حراري للقهوة للقهوه",
-        "price": "160.00",
+        "price": "280.00",
         "image": "https://i.postimg.cc/DyvytY8n/1730281084711651511-removebg-preview-removebg-preview.png",
         "sold": "أوعية تخزين",
-        "discountTexts": ["كان ب 350 جنيه", "خصم 54.29%"],
+        "discountTexts": ["كان ب 350 جنيه", "خصم 20%"],
         "link": "prod.html?id=31"
     },
     {
