@@ -292,7 +292,16 @@
         "sold": "ساعات ذكية",
         "discountTexts": ["كان بـ1100 جنيه", "خصم 18%"],
         "link": "prod.html?id=32"
-      }
+      },
+      {
+  "name": "حلقة Xpro الذكية للأزواج",
+  "dataName": "#32 إكسسوارات ذكية خصومات حلقة ذكية smart ring - تغيير ألوان، قياس حرارة الجسم، مقاومة للماء IP68",
+  "price": "80.00",
+  "image": "https://files.catbox.moe/cieadz.avif",
+  "sold": "إكسسوارات ذكية",
+  "discountTexts": ["كان بـ140 جنيه", "خصم 42%"],
+  "link": "prod.html?id=32"
+}
       
       
       

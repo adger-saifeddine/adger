@@ -1921,7 +1921,66 @@
           "currency": "جنيه",
           "discountLabel": "خصم"
         }
-      }
+      },
+      {
+  "id": "32",
+  "media": [
+    { "src": "https://files.catbox.moe/cieadz.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/zw5fib.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/0tygqf.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/lns8eg.avif", "type": "image" }
+  ],
+  "pri": "80",
+  "oldPrice": "140",
+  "dis": "خصم 42%",
+  "changingText": [
+    "تغيير لون حسب المزاج",
+    "قياس حرارة الجسم",
+    "مقاومة للماء IP68"
+  ],
+  "longText": "حلقة ذكية متعددة الوظائف من الفولاذ المقاوم للصدأ - هدية مثالية للأزواج",
+  "desc": "حلقة ذكية بتقنيات متطورة: تغيير ألوان حسب المزاج، قياس درجة حرارة الجسم، مقاومة للماء، تصميم أنيق من الفولاذ المقاوم للصدأ بضمان 12 شهرًا.",
+  "sales": "إكسسوارات ذكية",
+  "buttonId": "commentButton32",
+  "commentId": "32",
+  "elementId": "commentCount32",
+  "tableData": [
+    { "question": "المادة", "answer": "فولاذ مقاوم للصدأ (مقاسات: 6-13)" },
+    { "question": "المقاومة", "answer": "ماء (IP68)" },
+    { "question": "الوظائف", "answer": "قياس الحرارة - تغيير الألوان - إشعارات ذكية" },
+    { "question": "الضمان", "answer": "12 شهرًا" },
+    { "question": "المنشأ", "answer": "الصين" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/cieadz.avif",
+        "https://files.catbox.moe/zw5fib.avif",
+        "https://files.catbox.moe/0tygqf.avif",
+        "https://files.catbox.moe/lns8eg.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/cieadz.avif",
+    "name": "حلقة Xpro الذكية للأزواج",
+    "sold": "إكسسوارات ذكية",
+    "price": "80.00",
+    "oldPrice": "140.00",
+    "discount": "42",
+    "pageId": "32",
+    "productId": "32",
+    "shippingPrice": "30",
+    "colors": ["فضي", "ذهبي", "وردي", "أسود", "أزرق"],
+    "materials": ["فولاذ مقاوم للصدأ (مقاسات: 6, 7, 8, 9, 10, 11, 12, 13)"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+}
+      
       
       
       
