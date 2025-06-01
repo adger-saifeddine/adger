@@ -2028,7 +2028,120 @@
     "currency": "جنيه",
     "discountLabel": "مضاد للسرقة"
   }
+},
+{
+  "id": "35",
+  "media": [
+    { "src": "https://files.catbox.moe/rm98ik.png", "type": "image" },
+    { "src": "https://files.catbox.moe/ul90yv.jpg", "type": "image" }
+  ],
+  "pri": "230",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": ["صوت نقي وعزل ضوضاء", "تصميم مريح للاستعمال الطويل"],
+  "longText": "هدفون P9 اللاسلكي - جودة صوت عالية وتصميم أنيق",
+  "desc": "استمتع بتجربة صوت مذهلة مع هدفون P9 اللاسلكي. يتميز بجودة صوت استثنائية، وعزل ضوضاء فعال، وتصميم مريح يجعل استخدامه ممتعًا لفترات طويلة. مثالي للمكالمات، الموسيقى، والألعاب.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton35",
+  "commentId": "35",
+  "elementId": "commentCount35",
+  "tableData": [
+    { "question": "النوع", "answer": "هدفون لاسلكي" },
+    { "question": "الاتصال", "answer": "بلوتوث" },
+    { "question": "مدة التشغيل", "answer": "حتى 10 ساعات" },
+    { "question": "المميزات", "answer": "ميكروفون مدمج، عزل ضوضاء، تصميم مريح" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/rm98ik.png",
+        "https://files.catbox.moe/ul90yv.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/rm98ik.png",
+    "name": "هدفون P9",
+    "sold": "إلكترونيات",
+    "price": "230.00",
+    "discount": "",
+    "pageId": "35",
+    "productId": "35",
+    "shippingPrice": "50",
+    "colors": ["أسود"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "36",
+  "media": [
+    { "src": "https://files.catbox.moe/1k9x3a.mp4", "type": "mp4" },
+    { "src": "https://files.catbox.moe/b5gu3j.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/ab77wz.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/v3kg55.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/ik76mk.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/l539ty.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/rya2gp.avif", "type": "image" }
+  ],
+  "pri": "450",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "شحن فائق السرعة بتقنية GaN",
+    "6 منافذ (3 USB + 3 USB-C)"
+  ],
+  "longText": "شاحن سطح مكتب بقدرة 200 واط - 6 منافذ USB-C - شحن سريع PD3.0",
+  "desc": "شاحن فائق السرعة متعدد المنافذ يدعم جميع بروتوكولات الشحن السريع مثل PD، VOOC، QC وغيرها. مثالي لشحن أجهزة آيفون وسامسونج وشاومي وآيباد وغيرها بسرعة وكفاءة. تصميم أنيق وخفيف مع دعم لتقنية GaN.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton36",
+  "commentId": "36",
+  "elementId": "commentCount36",
+  "tableData": [
+    { "question": "النوع", "answer": "شاحن سطح المكتب" },
+    { "question": "عدد المنافذ", "answer": "6 منافذ (3 USB + 3 USB-C)" },
+    { "question": "القوة القصوى", "answer": "200 واط" },
+    { "question": "التقنية", "answer": "GaN" },
+    { "question": "البروتوكولات المدعومة", "answer": "PD، VOOC، QC، FCP، وغيرها" },
+    { "question": "اللون", "answer": "أسود، أبيض" },
+    { "question": "المادة", "answer": "قابس ثنائي، قابس ثلاثي" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/b5gu3j.avif",
+        "https://files.catbox.moe/ab77wz.avif",
+        "https://files.catbox.moe/v3kg55.avif",
+        "https://files.catbox.moe/ik76mk.avif",
+        "https://files.catbox.moe/l539ty.avif",
+        "https://files.catbox.moe/rya2gp.avif",
+        "https://files.catbox.moe/1k9x3a.mp4"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/b5gu3j.avif",
+    "name": "شاحن 200 واط - 6 منافذ USB-C",
+    "sold": "إلكترونيات",
+    "price": "450.00",
+    "discount": "",
+    "pageId": "36",
+    "productId": "36",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أبيض"],
+    "materials": ["قابس ثنائي", "قابس ثلاثي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
+
+
 
       
       

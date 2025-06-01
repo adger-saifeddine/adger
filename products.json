@@ -310,7 +310,27 @@
   "sold": "مستلزمات السفر",
   "discountTexts": ["مضاد للسرقة", "مقاوم للماء"],
   "link": "prod.html?id=34"
+},
+{
+  "name": "هدفون P9",
+  "dataName": "#35 هدفون P9 لاسلكي - صوت عالي الجودة - تصميم مريح - لون أسود",
+  "price": "230.00",
+  "image": "https://files.catbox.moe/rm98ik.png",
+  "sold": "إلكترونيات",
+  "discountTexts": ["تصميم مريح", "صوت عالي الجودة"],
+  "link": "prod.html?id=35"
+},
+{
+  "name": "شاحن سوبر سريع 200 واط - 6 منافذ USB-C",
+  "dataName": "#36 شاحن سطح مكتب بقوة 200 واط - 6 منافذ (3 USB + 3 USB-C) - شحن فائق السرعة - متوافق مع جميع الأجهزة - GaN - لون أسود أو أبيض - قابس ثنائي أو ثلاثي",
+  "price": "450.00",
+  "image": "https://files.catbox.moe/b5gu3j.avif",
+  "sold": "إلكترونيات",
+  "discountTexts": ["شحن فائق السرعة", "GaN تقنية"],
+  "link": "prod.html?id=36"
 }
+
+
 
       
       
