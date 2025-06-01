@@ -2079,7 +2079,7 @@
 {
   "id": "36",
   "media": [
-    { "src": "https://files.catbox.moe/1k9x3a.mp4", "type": "mp4" },
+    { "src": "https://files.catbox.moe/1k9x3a.mp4", "type": "video" },
     { "src": "https://files.catbox.moe/b5gu3j.avif", "type": "image" },
     { "src": "https://files.catbox.moe/ab77wz.avif", "type": "image" },
     { "src": "https://files.catbox.moe/v3kg55.avif", "type": "image" },
@@ -2118,8 +2118,7 @@
         "https://files.catbox.moe/v3kg55.avif",
         "https://files.catbox.moe/ik76mk.avif",
         "https://files.catbox.moe/l539ty.avif",
-        "https://files.catbox.moe/rya2gp.avif",
-        "https://files.catbox.moe/1k9x3a.mp4"
+        "https://files.catbox.moe/rya2gp.avif"
       ]
     }
   ],
@@ -2137,9 +2136,10 @@
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "خصم"
+    "discountLabel": "سرعة خرافية"
   }
 }
+
 
 
 
