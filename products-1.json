@@ -1240,7 +1240,7 @@
   ],
   "pri": "420",
   "oldPrice": "650",
-  "dis": "35%",
+  "dis": "خصم 35%",
   "changingText": [
     "TWS Pro60 سماعات بلوتوث",
     "لاسلكية مع إلغاء الضوضاء",
@@ -1290,7 +1290,7 @@
     "name": "سماعات بلوتوث TWS Pro60",
     "sold": "موثوق",
     "price": "420.00",
-    "discount": "35%",
+    "discount": "35",
     "pageId": "21",
     "productId": "21",
     "shippingPrice": "70"
@@ -1610,7 +1610,7 @@
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "خصم مذهل"
+    "discountLabel": "خصم"
   }
 },
       {
@@ -1757,7 +1757,7 @@
         },
         "texts": {
           "currency": "جنيه",
-          "discountLabel": "خصم"
+          "discountLabel": "مميز"
         }
       },
       {
