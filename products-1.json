@@ -2140,7 +2140,123 @@
     "currency": "جنيه",
     "discountLabel": "سرعة خرافية"
   }
+},
+{
+  "id": "37",
+  "media": [
+    { "src": "https://files.catbox.moe/835qjx.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/gf07oy.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/o4r1yz.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/xaxwhl.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/av4vvw.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/q2f78l.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/eakh1f.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/69ugx3.avif", "type": "image" }
+  ],
+  "pri": "40",
+  "oldPrice": "150",
+  "dis": "خصم 73%",
+  "changingText": [
+    "قلم لمس ثلاثي الوظائف للرسم والكتابة",
+    "متوافق مع iOS وأندرويد والتابلت"
+  ],
+  "longText": "قلم لمس 3 في 1 - رسم، كتابة، امتصاص مغناطيسي",
+  "desc": "استمتع بالدقة والراحة مع قلم اللمس 3 في 1، مثالي للكتابة والرسم على أجهزة iOS، أندرويد، آيباد، سامسونج، شاومي والهواتف الذكية. تصميمه المغناطيسي يسهل حمله وتخزينه. يأتي بلونين: الأبيض والأسود.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton37",
+  "commentId": "37",
+  "elementId": "commentCount37",
+  "tableData": [
+    { "question": "النوع", "answer": "ستيلوس سلبي" },
+    { "question": "الدقة", "answer": "Hign-المعنية الكيميائية" },
+    { "question": "الشحن", "answer": "لا أحد" },
+    { "question": "المادة", "answer": "RUBBER" },
+    { "question": "المنشأ", "answer": "CN (المنشأ)" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/835qjx.avif",
+        "https://files.catbox.moe/gf07oy.avif",
+        "https://files.catbox.moe/o4r1yz.avif",
+        "https://files.catbox.moe/xaxwhl.avif",
+        "https://files.catbox.moe/av4vvw.avif",
+        "https://files.catbox.moe/q2f78l.avif",
+        "https://files.catbox.moe/eakh1f.avif",
+        "https://files.catbox.moe/69ugx3.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/835qjx.avif",
+    "name": "قلم لمس 3 في 1",
+    "sold": "إلكترونيات",
+    "price": "40.00",
+    "discount": "73",
+    "pageId": "37",
+    "productId": "37",
+    "shippingPrice": "50",
+    "colors": ["أبيض", "أسود"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "38",
+  "media": [
+    { "src": "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg", "type": "image" },
+    { "src": "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg", "type": "image" }
+  ],
+  "pri": "10",
+  "oldPrice": "50",
+  "dis": "خصم 80%",
+  "changingText": [
+    "كابل AUX بجودة صوت عالية",
+    "تصميم أنيق أحمر شفاف"
+  ],
+  "longText": "كابل صوت 3.5mm بجودة عالية – تصميم أحمر شفاف",
+  "desc": "استمتع بنقاء الصوت مع كابل AUX بتصميمه المتين والجذاب، متوافق مع الهواتف، اللابتوبات، السماعات وأنظمة صوت السيارات. يتميز بطول 1 متر وطبقة عازلة تحميه من التشابك والتلف.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton38",
+  "commentId": "38",
+  "elementId": "commentCount38",
+  "tableData": [
+    { "question": "النوع", "answer": "كابل صوت AUX (3.5mm)" },
+    { "question": "اللون", "answer": "أحمر شفاف" },
+    { "question": "الطول", "answer": "حوالي 1 متر" },
+    { "question": "الاستخدام", "answer": "نقل صوت بجودة عالية" },
+    { "question": "المتوافق", "answer": "الهواتف، السماعات، أنظمة السيارة، اللابتوبات" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg",
+        "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg",
+    "name": "كابل AUX 3.5mm",
+    "sold": "إلكترونيات",
+    "price": "10.00",
+    "discount": "50",
+    "pageId": "38",
+    "productId": "38",
+    "shippingPrice": "30",
+    "colors": ["أحمر شفاف"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
+
+
 
 
 
