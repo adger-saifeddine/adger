@@ -2207,8 +2207,8 @@
 {
   "id": "38",
   "media": [
-    { "src": "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg", "type": "image" },
-    { "src": "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg", "type": "image" }
+      { "src": "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg", "type": "image" },
+    { "src": "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg", "type": "image" }
   ],
   "pri": "10",
   "oldPrice": "50",
@@ -2226,7 +2226,6 @@
   "tableData": [
     { "question": "النوع", "answer": "كابل صوت AUX (3.5mm)" },
     { "question": "اللون", "answer": "أحمر شفاف" },
-    { "question": "الطول", "answer": "حوالي 1 متر" },
     { "question": "الاستخدام", "answer": "نقل صوت بجودة عالية" },
     { "question": "المتوافق", "answer": "الهواتف، السماعات، أنظمة السيارة، اللابتوبات" }
   ],
@@ -2234,13 +2233,13 @@
     {
       "type": "images",
       "items": [
-        "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg",
-        "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg"
+         "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg",
+        "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg"
       ]
     }
   ],
   "product": {
-    "image": "https://i.postimg.cc/YqvxYmYn/2025-06-01-20-25-25-fa44503f.jpg",
+    "image": "https://i.postimg.cc/N0c83JVS/2025-06-01-20-25-21-95a385b8.jpg",
     "name": "كابل AUX 3.5mm",
     "sold": "إلكترونيات",
     "price": "10.00",
@@ -2254,7 +2253,121 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "39",
+  "media": [
+    { "src": "https://files.catbox.moe/u8v60l.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/230fs4.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/327noc.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/lh3wu7.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/ym2xzw.jpg", "type": "image" }
+  ],
+  "pri": "30",
+  "oldPrice": "50",
+  "dis": "خصم 40%",
+  "changingText": [
+    "مجموعة دبابيس دباسة صغيرة",
+    "10 عبوات مناسبة للمكاتب والمدارس"
+  ],
+  "longText": "مجموعة دبابيس دباسة صغيرة – 10 عبوات",
+  "desc": "احصل على مجموعة من 10 عبوات دبابيس دباسة صغيرة عالية الجودة، مثالية للاستخدام اليومي في المكتب أو المدرسة أو المنزل. مصممة لتناسب معظم أنواع الدباسات الصغيرة، وتتميز بقوة تثبيت ممتازة.",
+  "sales": "مستلزمات مكتبية",
+  "buttonId": "commentButton39",
+  "commentId": "39",
+  "elementId": "commentCount39",
+  "tableData": [
+    { "question": "النوع", "answer": "دبابيس دباسة صغيرة" },
+    { "question": "العدد", "answer": "10 عبوات" },
+    { "question": "الاستخدام", "answer": "مكاتب، مدارس، استخدام منزلي" },
+    { "question": "المقاس", "answer": "مناسب للدباسات الصغيرة" },
+    { "question": "المادة", "answer": "معدن عالي الجودة" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/u8v60l.jpg",
+        "https://files.catbox.moe/230fs4.jpg",
+        "https://files.catbox.moe/327noc.jpg",
+        "https://files.catbox.moe/lh3wu7.jpg",
+        "https://files.catbox.moe/ym2xzw.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/u8v60l.jpg",
+    "name": "دبابيس دباسة صغيرة - 10 عبوات",
+    "sold": "مستلزمات مكتبية",
+    "price": "30.00",
+    "discount": "50",
+    "pageId": "39",
+    "productId": "39",
+    "shippingPrice": "20",
+    "colors": ["فضي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "40",
+  "media": [
+    { "src": "https://files.catbox.moe/bkfie3.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/1d9dkr.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/utjoru.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/c1r0vo.avif", "type": "image" }
+  ],
+  "pri": "450",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "سماعات أذن لاسلكية Xiaomi Redmi A98",
+    "بلوتوث 5.4 - إلغاء الضوضاء - مقاومة للماء"
+  ],
+  "longText": "سماعات أذن لاسلكية Xiaomi Redmi A98 مزودة بتقنية البلوتوث 5.4 مع خاصية إلغاء الضوضاء ENC، مقاومة للماء، مزودة بميكروفون عالي الجودة.",
+  "desc": "استمتع بصوت عالي الجودة مع سماعات Xiaomi Redmi A98 اللاسلكية. تدعم البلوتوث 5.4، مزودة بخاصية إلغاء الضوضاء داخل الأذن، ومقاومة للماء. مثالية للمكالمات والاستماع للموسيقى بسلاسة. متوفرة بألوان الأزرق، الأسود، والرصاصي.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton40",
+  "commentId": "40",
+  "elementId": "commentCount40",
+  "tableData": [
+    { "question": "التقنية", "answer": "بلوتوث 5.4" },
+    { "question": "خاصية", "answer": "إلغاء الضوضاء ENC" },
+    { "question": "المقاومة", "answer": "مقاومة للماء" },
+    { "question": "الميكروفون", "answer": "مدمج عالي الجودة" },
+    { "question": "الألوان", "answer": "أزرق، أسود، رصاصي" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/bkfie3.avif",
+        "https://files.catbox.moe/1d9dkr.avif",
+        "https://files.catbox.moe/utjoru.avif",
+        "https://files.catbox.moe/c1r0vo.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/bkfie3.avif",
+    "name": "سماعات أذن لاسلكية Xiaomi Redmi A98",
+    "sold": "إلكترونيات",
+    "price": "450.00",
+    "discount": "",
+    "pageId": "40",
+    "productId": "40",
+    "shippingPrice": "30",
+    "colors": ["أزرق", "أسود", "رصاصي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مقاومة للماء"
+  }
 }
+
+
 
 
 
