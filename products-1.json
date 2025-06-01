@@ -1982,9 +1982,10 @@
   "id": "34",
   "media": [
     { "src": "https://files.catbox.moe/w7qm91.avif", "type": "image" },
-    { "src": "https://files.catbox.moe/4xsmtd.jpg", "type": "image" },
-    { "src": "https://files.catbox.moe/hv8eiw.jpg", "type": "image" },
-    { "src": "https://files.catbox.moe/u2m7ek.jpg", "type": "image" }
+    { "src": "https://i.postimg.cc/Gt0DKP7j/Sdbadf842910f41baa42dca32732f91b0-A-jpeg-220x220q75-jpeg.avif", "type": "image" },
+    { "src": "https://i.postimg.cc/jS8JmY32/Se9a14a253e6e49e3ae920c4f36644d3al-jpeg-220x220q75-jpeg.avif", "type": "image" },
+    { "src": "https://i.postimg.cc/hvqJTDvy/S817ea4bf69d342d695e9cdbab8879358-Z-jpeg-220x220q75-jpeg.avif", "type": "image" },
+     { "src": "https://i.postimg.cc/sDsQ2gt1/S55d0135949fb4eb4a6e9344c80330904-I-jpeg-220x220q75-jpeg.avif", "type": "image" }
   ],
   "pri": "265",
   "oldPrice": "330",
@@ -2007,9 +2008,10 @@
       "type": "images",
       "items": [
         "https://files.catbox.moe/w7qm91.avif",
-        "https://files.catbox.moe/4xsmtd.jpg",
-        "https://files.catbox.moe/hv8eiw.jpg",
-        "https://files.catbox.moe/u2m7ek.jpg"
+       "https://i.postimg.cc/Gt0DKP7j/Sdbadf842910f41baa42dca32732f91b0-A-jpeg-220x220q75-jpeg.avif", 
+      "https://i.postimg.cc/jS8JmY32/Se9a14a253e6e49e3ae920c4f36644d3al-jpeg-220x220q75-jpeg.avif", 
+       "https://i.postimg.cc/hvqJTDvy/S817ea4bf69d342d695e9cdbab8879358-Z-jpeg-220x220q75-jpeg.avif", 
+       "https://i.postimg.cc/sDsQ2gt1/S55d0135949fb4eb4a6e9344c80330904-I-jpeg-220x220q75-jpeg.avif"
       ]
     }
   ],
