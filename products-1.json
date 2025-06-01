@@ -1923,7 +1923,7 @@
         }
       },
       {
-  "id": "32",
+  "id": "33",
   "media": [
     { "src": "https://files.catbox.moe/cieadz.avif", "type": "image" },
     { "src": "https://files.catbox.moe/zw5fib.avif", "type": "image" },
@@ -1941,9 +1941,9 @@
   "longText": "حلقة ذكية متعددة الوظائف من الفولاذ المقاوم للصدأ - هدية مثالية للأزواج",
   "desc": "حلقة ذكية بتقنيات متطورة: تغيير ألوان حسب المزاج، قياس درجة حرارة الجسم، مقاومة للماء، تصميم أنيق من الفولاذ المقاوم للصدأ بضمان 12 شهرًا.",
   "sales": "إكسسوارات ذكية",
-  "buttonId": "commentButton32",
-  "commentId": "32",
-  "elementId": "commentCount32",
+  "buttonId": "commentButton33",
+  "commentId": "33",
+  "elementId": "commentCount33",
   "tableData": [
     { "question": "المادة", "answer": "فولاذ مقاوم للصدأ (مقاسات: 6-13)" },
     { "question": "المقاومة", "answer": "ماء (IP68)" },
@@ -1969,8 +1969,8 @@
     "price": "80.00",
     "oldPrice": "140.00",
     "discount": "42",
-    "pageId": "32",
-    "productId": "32",
+    "pageId": "33",
+    "productId": "33",
     "shippingPrice": "30",
     "colors": ["فضي", "ذهبي", "وردي", "أسود", "أزرق"],
     "materials": ["فولاذ مقاوم للصدأ (مقاسات: 6, 7, 8, 9, 10, 11, 12, 13)"]
