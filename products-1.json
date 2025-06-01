@@ -1977,7 +1977,59 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "34",
+  "media": [
+    { "src": "https://files.catbox.moe/w7qm91.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/4xsmtd.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/hv8eiw.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/u2m7ek.jpg", "type": "image" }
+  ],
+  "pri": "265",
+  "oldPrice": "330",
+  "dis": "خصم 20%",
+  "changingText": ["مضاد للسرقة", "مقاوم للماء"],
+  "longText": "قفل ذكي بكلمة مرور 8 أرقام - سبائك الزنك - مقاوم للماء ومضاد للسرقة",
+  "desc": "قفل بكلمة مرور مكون من 8 أرقام، مصنوع من سبائك الزنك، مقاوم للماء ومتين، مثالي للخزائن، والأبواب، والسفر. تصميم عملي يوفر أمانًا عاليًا وسهولة في الاستخدام.",
+  "sales": "مستلزمات السفر",
+  "buttonId": "commentButton34",
+  "commentId": "34",
+  "elementId": "commentCount34",
+  "tableData": [
+    { "question": "نوع القفل", "answer": "كلمة مرور رقمية" },
+    { "question": "عدد الأرقام", "answer": "8 أرقام" },
+    { "question": "الخامة", "answer": "سبائك الزنك" },
+    { "question": "الاستخدام", "answer": "خزائن، أبواب، شنط، السفر" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/w7qm91.avif",
+        "https://files.catbox.moe/4xsmtd.jpg",
+        "https://files.catbox.moe/hv8eiw.jpg",
+        "https://files.catbox.moe/u2m7ek.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/w7qm91.avif",
+    "name": "قفل بكلمة مرور 8 أرقام",
+    "sold": "مستلزمات السفر",
+    "price": "265.00",
+    "discount": "20",
+    "pageId": "34",
+    "productId": "34",
+    "shippingPrice": "50",
+    "colors": ["أسود", "فضي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مضاد للسرقة"
+  }
 }
+
       
       
       
