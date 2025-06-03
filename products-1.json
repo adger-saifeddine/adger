@@ -513,7 +513,7 @@
             {"src": "https://i.postimg.cc/Dfpg9m0d/1740299608img-20250223-102924-437-1.jpg", "type": "image"},
             {"src": "https://i.postimg.cc/MGzVM8Xp/1740299608img-20250223-102936-054.jpg", "type": "image"}
         ],
-        "pri": "999",
+        "pri": "750",
         "oldPrice": "",
         "dis": "",
         "changingText": [
@@ -552,7 +552,7 @@
             "image": "https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png",
             "name": "طابعة USB",
             "sold": "موثوق",
-            "price": "999.00",
+            "price": "750.00",
             "discount": "",
             "pageId": "10",
             "productId": "10",
@@ -696,9 +696,9 @@
             { "src": "https://i.postimg.cc/d0P0DrGD/S77fd3912bb814bdba974741a03b16276-K-jpg-220x220q75-jpg.avif", "type": "image" },
             { "src": "https://i.postimg.cc/Fz7vTH02/S0fa7a1a0c1cf4e18b55313700823a6e6h-jpg-220x220q75-jpg.avif", "type": "image" }
         ],
-        "pri": "350",
-        "oldPrice": "450",
-        "dis": "خصم 22%",
+        "pri": "200",
+        "oldPrice": "350",
+        "dis": "خصم 42%",
         "changingText": [
             "حامل تابلت 720° قابل للدوران",
             "قابل للطي والتعديل",
@@ -738,8 +738,8 @@
             "image": "https://i.postimg.cc/t476F315/Se6d5ca33f10945deab3dd7c243bfe272m-jpg-220x220q75-jpg.avif",
             "name": "حامل تابلت 720° قابل للدوران",
             "sold": "موثوق",
-            "price": "350.00",
-            "discount": "22%",
+            "price": "200.00",
+            "discount": "42",
             "pageId": "13",
             "productId": "13",
             "shippingPrice": "70",
@@ -2020,7 +2020,7 @@
     "name": "قفل بكلمة مرور 8 أرقام",
     "sold": "مستلزمات السفر",
     "price": "265.00",
-    "discount": "20",
+    "discount": "",
     "pageId": "34",
     "productId": "34",
     "shippingPrice": "50",
@@ -2365,7 +2365,225 @@
     "currency": "جنيه",
     "discountLabel": "مقاومة للماء"
   }
+},
+{
+  "id": "41",
+  "media": [
+    { "src": "https://i.postimg.cc/bYZnd9yw/2-removebg-preview.png", "type": "image" },
+    { "src": "https://i.postimg.cc/ZRBqYj8k/images.jpg", "type": "image" },
+    { "src": "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png", "type": "image" },
+    { "src": "https://i.postimg.cc/RCwHcVHk/61-GMEzk-QBML-AC-SL1500.jpg", "type": "image" }
+  ],
+  "pri": "800",
+  "oldPrice": "1300",
+  "dis": "خصم 38%",
+  "changingText": [
+    "قلم JR-X9S الرقمي الاحترافي",
+    "بديل رائع لأبل بينسل – متوافق مع أجهزة Apple فقط"
+  ],
+  "longText": "قلم JR-X9S الرقمي الاحترافي – بديل أبل بينسل بسعر لُقطة!",
+  "desc": "لو بتدور على قلم يشتغل مع الآيباد كأنه أبل بينسل، بس بسعر أقل؟ JR-X9S هو اختيارك! يتميز بخاصية Palm Rejection للكتابة بدون تأثير اليد، وحساسية ميلان لرسم احترافي، بجانب خامة ألومنيوم أنيقة، و3 لمبات لعرض البطارية. يأتي معه 2 رأس إضافية ويعمل مع أجهزة iPad من 2018 فما بعد.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton41",
+  "commentId": "41",
+  "elementId": "commentCount41",
+  "tableData": [
+    { "question": "النوع", "answer": "قلم رقمي لاسلكي" },
+    { "question": "الموديل", "answer": "JR-X9S" },
+    { "question": "التوافق", "answer": "iPads من 2018 فما بعد فقط" },
+    { "question": "الميزات", "answer": "Palm Rejection، حساسية ميلان، مغناطيسي" },
+    { "question": "الخامة", "answer": "ألومنيوم بملمس مطفي" },
+    { "question": "الملحقات", "answer": "2 رؤوس إضافية" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/bYZnd9yw/2-removebg-preview.png",
+        "https://i.postimg.cc/ZRBqYj8k/images.jpg",
+        "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png",
+        "https://i.postimg.cc/RCwHcVHk/61-GMEzk-QBML-AC-SL1500.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/bYZnd9yw/2-removebg-preview.png",
+    "name": "قلم JR-X9S الرقمي الاحترافي",
+    "sold": "إلكترونيات",
+    "price": "800.00",
+    "discount": "38",
+    "pageId": "41",
+    "productId": "41",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "42",
+  "media": [
+    { "src": "https://files.catbox.moe/wxbvlu.jpg", "type": "image" },
+    { "src": "https://files.catbox.moe/8gpzuq.jpg", "type": "image" }
+  ],
+  "pri": "100",
+  "oldPrice": "",
+  "dis": " ",
+  "changingText": [
+    "لاصق Sticky Patch متعدد الاستخدام",
+    "مثالي للملابس، الحقائب، والأقمشة"
+  ],
+  "longText": "لاصق Sticky Patch عالي الجودة – قوي، سهل التركيب، وقابل لإعادة الاستخدام. مثالي لتثبيت القماش أو الجلد أو غيرها من المواد بشكل آمن دون إتلافها.",
+  "desc": "لاصق Sticky Patch مصمم خصيصًا لتوفير تثبيت قوي ومرن على مختلف الأسطح، مثل الملابس، الحقائب، الأقمشة، والأغطية. يأتي بألوان جذابة (أحمر وبرتقالي) ويمكن إعادة استخدامه بسهولة، مما يجعله مثاليًا للاستخدامات اليومية أو السفر.",
+  "sales": "مستلزمات عامة",
+  "buttonId": "commentButton42",
+  "commentId": "42",
+  "elementId": "commentCount42",
+  "tableData": [
+    { "question": "النوع", "answer": "لاصق متعدد الاستخدام" },
+    { "question": "الألوان", "answer": "أحمر، برتقالي" },
+    { "question": "الميزات", "answer": "قابل للغسل، يعاد استخدامه، لا يترك أثرًا" },
+    { "question": "الاستخدام", "answer": "الملابس، الأقمشة، الحقائب، الأسطح المختلفة" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/wxbvlu.jpg",
+        "https://files.catbox.moe/8gpzuq.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/wxbvlu.jpg",
+    "name": "لاصق Sticky Patch متعدد الاستخدام",
+    "sold": "مستلزمات عامة",
+    "price": "100.00",
+    "discount": "",
+    "pageId": "42",
+    "productId": "42",
+    "shippingPrice": "50",
+    "colors": ["أحمر", "برتقالي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "عرض"
+  }
+},
+{
+  "id": "43",
+  "media": [
+    { "src": "https://i.postimg.cc/DzP4GxDt/ifa3986e5-3d2a-450c-b333-9849e31954c8.webp", "type": "image" },
+    { "src": "https://i.postimg.cc/CxFRgGd7/a81ef7c37-9b20-4e37-9080-c1c6aa66bf89.webp", "type": "image" },
+    { "src": "https://i.postimg.cc/63G30z1W/a6deb8a4c-d680-4291-843a-11ed91686cf7.webp", "type": "image" },
+    { "src": "https://i.postimg.cc/MKYGdntQ/S024ca6fac80a4048945db849e1f85d52r-jpg-220x220q75-jpg.avif", "type": "image" },
+    { "src": "https://i.postimg.cc/vB9Y9TcD/S83288f74886c4b19b92be19b30273df9u-jpg-220x220q75-jpg.avif", "type": "image" },
+    { "src": "https://i.postimg.cc/FsG902sb/Sb0a8bb1a7bbd46acace2545685c1013dk-jpg-220x220q75-jpg.avif", "type": "image" }
+  ],
+  "pri": "375",
+  "oldPrice": "",
+  "dis": " ",
+  "changingText": [
+    "شاحن طاقة خارجي 200W متعدد المنافذ",
+    "شحن فائق السرعة لأجهزة متعددة بلون أصفر عصري"
+  ],
+  "longText": "شاحن طاقة خارجي قوي بقدرة 200 واط، يقدم أداءً ممتازًا لشحن الحواسيب المحمولة والهواتف الذكية والأجهزة اللوحية في وقت قياسي، مع تصميم أنيق باللون الأصفر الجذاب.",
+  "desc": "استمتع بشحن فائق السرعة مع شاحن 200W متعدد المنافذ، مزود بتقنية الشحن الذكي لتوزيع الطاقة بذكاء بين الأجهزة. يحتوي على منافذ USB-C وUSB-A لشحن الهواتف، الحواسيب المحمولة، التابلت، وغيرها. التصميم باللون الأصفر الجذاب يجعله مثاليًا للسفر والاستخدام المكتبي والمنزلي.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton43",
+  "commentId": "43",
+  "elementId": "commentCount43",
+  "tableData": [
+    { "question": "النوع", "answer": "شاحن طاقة متعدد المنافذ" },
+    { "question": "القدرة", "answer": "200 واط" },
+    { "question": "اللون", "answer": "أصفر" },
+    { "question": "المنافذ", "answer": "USB-C ×2، USB-A ×2" },
+    { "question": "الميزات", "answer": "شحن سريع، تصميم متنقل، حماية من الحرارة والجهد الزائد" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/DzP4GxDt/ifa3986e5-3d2a-450c-b333-9849e31954c8.webp",
+        "https://i.postimg.cc/CxFRgGd7/a81ef7c37-9b20-4e37-9080-c1c6aa66bf89.webp",
+        "https://i.postimg.cc/63G30z1W/a6deb8a4c-d680-4291-843a-11ed91686cf7.webp",
+        "https://i.postimg.cc/MKYGdntQ/S024ca6fac80a4048945db849e1f85d52r-jpg-220x220q75-jpg.avif",
+        "https://i.postimg.cc/vB9Y9TcD/S83288f74886c4b19b92be19b30273df9u-jpg-220x220q75-jpg.avif",
+        "https://i.postimg.cc/FsG902sb/Sb0a8bb1a7bbd46acace2545685c1013dk-jpg-220x220q75-jpg.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/DzP4GxDt/ifa3986e5-3d2a-450c-b333-9849e31954c8.webp",
+    "name": "شاحن طاقة خارجي 200 واط - أصفر",
+    "sold": "إلكترونيات",
+    "price": "375.00",
+    "discount": "",
+    "pageId": "43",
+    "productId": "43",
+    "shippingPrice": "50",
+    "colors": ["أصفر"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "عرض"
+  }
+},
+{
+  "id": "44",
+  "media": [
+    { "src": "https://i.postimg.cc/bJvWbNLk/Universal-USB-Mobile-Charger-for-i-Phone-Samsung-Pixel-Portable-Power-Supply-Charger-USB-Battery-Char.avif", "type": "image" },
+    { "src": "https://i.postimg.cc/zGrJhKhh/Universal-USB-Mobile-Charger-for-i-Phone-Samsung-Pixel-Portable-Power-Supply-Charger-USB-Battery-Char.avif", "type": "image" }
+  ],
+  "pri": "55",
+  "oldPrice": "",
+  "dis": "رأس شحن USB بقدرة 1 أمبير، مثالي للأجهزة الصغيرة مثل الساعات والسماعات",
+  "changingText": [
+    "رأس شحن USB 1A",
+    "صغير الحجم، سهل الحمل"
+  ],
+  "longText": "شاحن حائط USB بقدرة 1 أمبير – مثالي لشحن الساعات الذكية والسماعات اللاسلكية، يأتي بتصميم مدمج وخفيف الوزن، مما يجعله مناسبًا للاستخدام المنزلي أو أثناء السفر.",
+  "desc": "إذا كنت تبحث عن شاحن بسيط وفعال لشحن أجهزتك الصغيرة مثل الساعة أو السماعة، فـ رأس الشحن هذا هو الخيار المثالي. بقدرة 1 أمبير وتصميم مدمج يجعله مثاليًا في كل مكان.",
+  "sales": "إكسسوارات إلكترونية",
+  "buttonId": "commentButton44",
+  "commentId": "44",
+  "elementId": "commentCount44",
+  "tableData": [
+    { "question": "النوع", "answer": "شاحن حائط USB" },
+    { "question": "القدرة", "answer": "1 أمبير" },
+    { "question": "الاستخدام", "answer": "شحن الساعات، السماعات، الأجهزة الصغيرة" },
+    { "question": "اللون", "answer": "أبيض" },
+    { "question": "الوزن", "answer": "خفيف ومناسب للسفر" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://i.postimg.cc/bJvWbNLk/Universal-USB-Mobile-Charger-for-i-Phone-Samsung-Pixel-Portable-Power-Supply-Charger-USB-Battery-Char.avif",
+        "https://i.postimg.cc/zGrJhKhh/Universal-USB-Mobile-Charger-for-i-Phone-Samsung-Pixel-Portable-Power-Supply-Charger-USB-Battery-Char.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://i.postimg.cc/bJvWbNLk/Universal-USB-Mobile-Charger-for-i-Phone-Samsung-Pixel-Portable-Power-Supply-Charger-USB-Battery-Char.avif",
+    "name": "رأس شحن USB 1 أمبير",
+    "sold": "إكسسوارات إلكترونية",
+    "price": "55.00",
+    "discount": "",
+    "pageId": "44",
+    "productId": "44",
+    "shippingPrice": "25",
+    "colors": ["أبيض","أسود"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
+
+
+
 
 
 
