@@ -9,146 +9,165 @@
     <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شريط تفاعلي</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>شريط تفاعلي</title>
-        <style>
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-            }
-    
-            .sidebar {
-                width: 100px;
-                height: 100vh;
-                background-color: #333;
-                color: white;
-                text-align: center;
-                position: fixed;
-                top: 66px;
-                right: 0;
-            }
-    
-            .menu-item {
-                padding: 20px;
-                cursor: pointer;
-            }
-    
-            .menu-item:hover {
-                background-color: #7474743b;
-            }
-    
-            .menu-item.active {
-                background-color: #8c00ff;
-                border-radius: 1px;
-            }
-    
-            .content {
-                display: none;
-                position: fixed;
-                top: 66px;
-                right: 100px;
-                width: calc(100% - 100px);
-                height: 100vh;
-                background-color: #f4f4f4;
-                padding: 20px;
-                box-sizing: border-box;
-                overflow-y: auto;
-            }
-    
-            .circle-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-end;
-                flex-direction: row-reverse;
-                margin-top: 0;
-                margin-bottom: 66px;
-            }
-    
-            .circle {
-                text-align: center;
-                margin: 10px;
-            }
-    
-            .circle img {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                margin-bottom: 10px;
-                cursor: pointer;
-                transition: transform 0.3s ease;
-                background-color: rgba(255, 255, 255, 0.8);
-                object-fit: cover;
-            }
-    
-            .circle img:hover {
-                transform: scale(1.05);
-            }
-    
-            .circle p {
-                margin: 0;
-                font-size: 16px;
-            }
-    
-            .producte {
-                font-size: 11px;
-                color: #000;
-                font-family: Cairo, sans-serif;
-                cursor: pointer;
-            }
-    
+        .sidebar {
+            width: 100px;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            position: fixed;
+            top: 66px;
+            right: 0;
+        }
+
+        .menu-item {
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: #7474743b;
+        }
+
+        .menu-item.active {
+            background-color: #8c00ff;
+            border-radius: 1px;
+        }
+
+        .content {
+            display: none;
+            position: fixed;
+            top: 66px;
+            right: 100px;
+            width: calc(100% - 100px);
+            height: 100vh;
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .circle-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            flex-direction: row-reverse;
+            margin-top: 0;
+            margin-bottom: 66px;
+        }
+
+        .circle {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .circle img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            object-fit: cover;
+        }
+
+        .circle img:hover {
+            transform: scale(1.05);
+        }
+
+        .circle p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .producte {
+            font-size: 11px;
+            color: #000;
+            font-family: Cairo, sans-serif;
+            cursor: pointer;
+        }
+
+        .category-title {
+            font-size: 19px;
+            font-family: Cairo, sans-serif;
+            color: #333;
+            text-align: right;
+            margin: 10px 20px;
+            margin-top: -8px;
+            margin-right: 1px;
+        }
+        @media (max-width: 769px) {
             .category-title {
-                font-size: 19px;
-                font-family: Cairo, sans-serif;
-                color: #333;
-                text-align: right;
-                margin: 10px 20px;
-                margin-top: -8px;
-                margin-right: 1px;
+                font-size: 16px;
+                margin-right: -4px;
             }
-            @media (max-width: 769px) {
-                .category-title {
-          font-size: 16px;
-          margin-right: -4px;
-                }}
-    
-            @media (min-width: 1024px) {
-                .circle img {
-                    width: 150px;
-                    height: 150px;
-                }
-                .circle p, .circle h1 {
-                    font-size: 20px;
-                }
+        }
+
+        @media (min-width: 1024px) {
+            .circle img {
+                width: 150px;
+                height: 150px;
             }
-    
-            @media (max-width: 499px) {
-                .circle-container {
-                    flex-direction: row;
-                    justify-content: space-around;
-                }
-    
-                .circle {
-                    width: 45%;
-                    margin: 10px 0;
-                }
-    
-                .circle img {
-                    width: 80px;
-                    height: 80px;
-                }
+            .circle p, .circle h1 {
+                font-size: 20px;
             }
-        </style>
-    </head>
-    <body>
-    
-        <!-- الشريط الجانبي -->
-       <div class="sidebar">
+        }
+
+        /* تعديل جديد لشاشات بين 500 و600 بكسل */
+        @media (min-width: 500px) and (max-width: 600px) {
+            .circle-container {
+                justify-content: center;
+            }
+            
+            .circle {
+                width: calc(33.33% - 20px);
+                margin: 10px;
+                box-sizing: border-box;
+            }
+            
+            .circle img {
+                width: 100%;
+                height: auto;
+                margin: 0 auto 10px;
+            }
+        }
+
+        @media (max-width: 499px) {
+            .circle-container {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .circle {
+                width: 45%;
+                margin: 10px 0;
+            }
+
+            .circle img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط الجانبي -->
+    <div class="sidebar">
         <div class="menu">
             <div class="menu-item active" onclick="showContent('tech')">التكنولوجيا</div>
             <div class="menu-item" onclick="showContent('home')">البيت</div>
@@ -400,28 +419,28 @@
             </div>
         </div>
     </div>
-    
-        <script>
-            function showContent(contentId) {
-                document.querySelectorAll('.content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                document.getElementById(contentId + '-content').style.display = 'block';
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.querySelector(`[onclick="showContent('${contentId}')"]`).classList.add('active');
-            }
-    
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                document.getElementById('tech-content').style.display = 'block';
+
+    <script>
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.style.display = 'none';
             });
-        </script>
-    </body>
-    </html>
+            document.getElementById(contentId + '-content').style.display = 'block';
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[onclick="showContent('${contentId}')"]`).classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById('tech-content').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
 
 
 
