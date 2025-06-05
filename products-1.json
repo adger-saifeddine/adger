@@ -2371,8 +2371,7 @@
   "media": [
     { "src": "https://i.postimg.cc/bYZnd9yw/2-removebg-preview.png", "type": "image" },
     { "src": "https://i.postimg.cc/ZRBqYj8k/images.jpg", "type": "image" },
-    { "src": "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png", "type": "image" },
-    { "src": "https://i.postimg.cc/RCwHcVHk/61-GMEzk-QBML-AC-SL1500.jpg", "type": "image" }
+    { "src": "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png", "type": "image" }
   ],
   "pri": "800",
   "oldPrice": "1300",
@@ -2401,7 +2400,8 @@
       "items": [
         "https://i.postimg.cc/bYZnd9yw/2-removebg-preview.png",
         "https://i.postimg.cc/ZRBqYj8k/images.jpg",
-        "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png"
+        "https://i.postimg.cc/d11y28Gn/141259646-400x300-removebg-preview.png",
+        "https://i.postimg.cc/RCwHcVHk/61-GMEzk-QBML-AC-SL1500.jpg"
       ]
     }
   ],
