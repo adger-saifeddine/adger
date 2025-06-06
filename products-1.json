@@ -2592,7 +2592,7 @@
   ],
   "pri": "280",
   "oldPrice": "",
-  "dis": "ميزان المطبخ الإلكتروني 500 جرام بدقة 0.1 جرام، شاشة LCD لقياس دقيق للقهوة والحليب",
+  "dis": "لقياس دقيق للقهوة والحليب",
   "changingText": [
     "تحويل وحدات القياس بين ملعقة كبيرة وغرام",
     "شاشة LCD كبيرة لقراءة سهلة",
@@ -2653,13 +2653,12 @@
   "media": [
     {"src": "https://files.catbox.moe/gr1314.avif", "type": "image"},
     {"src": "https://files.catbox.moe/m2afp1.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/ryuph6.avif", "type": "image"},
     {"src": "https://files.catbox.moe/0xq14n.avif", "type": "image"},
     {"src": "https://files.catbox.moe/g5hqs7.avif", "type": "image"}
   ],
   "pri": "120",
   "oldPrice": "",
-  "dis": "حافظة سيليكون ناعمة مقاومة للصدمات لآيفون",
+  "dis": "حافظة سيليكون ناعمة",
   "changingText": [
     "متوافقة مع جميع إصدارات آيفون",
     "حماية كاملة من الصدمات"
