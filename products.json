@@ -400,6 +400,24 @@
   "sold": "إكسسوارات إلكترونية",
   "discountTexts": ["للساعات والسماعات", "تصميم مدمج"],
   "link": "prod.html?id=44"
+},
+{
+  "name": "ميزان المطبخ الإلكتروني 500 جرام - دقة 0.1 جرام",
+  "dataName": "#45 ميزان رقمي بدقة 0.1 جرام مع شاشة LCD - مثالي للقهوة والحليب",
+  "price": "280.00",
+  "image": "https://files.catbox.moe/7nzidk.avif",
+  "sold": "أدوات المطبخ",
+  "discountTexts": ["دقة قياس 0.1 جرام", "شاشة LCD كبيرة"],
+  "link": "prod.html?id=45"
+},
+{
+  "name": "حافظة آيفون سيليكون - مقاومة للصدمات",
+  "dataName": "#46 حافظة سيليكون لجميع إصدارات آيفون X إلى 16 Pro Max",
+  "price": "120.00",
+  "image": "https://files.catbox.moe/gr1314.avif",
+  "sold": "إكسسوارات آيفون",
+  "discountTexts": ["مقاومة للصدمات", "حماية كاملة"],
+  "link": "prod.html?id=46"
 }
 
 

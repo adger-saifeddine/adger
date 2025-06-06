@@ -2579,8 +2579,161 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
-}
+},
 
+{
+  "id": "45",
+  "media": [
+    { "src": "https://files.catbox.moe/7nzidk.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/javfnb.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/g8f5k0.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/a8gzsc.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/rmo8rg.mp4", "type": "video" }
+  ],
+  "pri": "280",
+  "oldPrice": "",
+  "dis": "ميزان المطبخ الإلكتروني 500 جرام بدقة 0.1 جرام، شاشة LCD لقياس دقيق للقهوة والحليب",
+  "changingText": [
+    "تحويل وحدات القياس بين ملعقة كبيرة وغرام",
+    "شاشة LCD كبيرة لقراءة سهلة",
+    "مثالي للقهوة والحليب والطهي"
+  ],
+  "longText": "ميزان المطبخ الإلكتروني 500 جرام 0.1 جرام LCD الرقمية قياس دقيق الطعام ملعقة رقمية مقياس أداة المطبخ الصغيرة لقياس القهوة والحليب",
+  "desc": "ميزان مطبخ إلكتروني بدقة 0.1 جرام مع شاشة LCD، مصمم لقياس المكونات الصغيرة مثل القهوة والحليب والدقيق. يتميز بقدرته على تحويل الوحدات بين الجرام والأونصة، وتصميمه الصغير الذي يناسب جميع أنواع المطابخ. مصنوع من بلاستيك PP المتين، مع مقبض سهل الإمساك والتنظيف. يعمل ببطارية CR2032 (غير متضمنة) ويتوقف تلقائيًا بعد دقيقتين من عدم الاستخدام. متوفر بعدة ألوان: أسود، أخضر فاتح، أبيض، أحمر، أخضر غامق، وردي.",
+  "sales": "أدوات المطبخ",
+  "buttonId": "commentButton45",
+  "commentId": "45",
+  "elementId": "commentCount45",
+  "tableData": [
+    { "question": "النوع", "answer": "ميزان مطبخ إلكتروني" },
+    { "question": "السعة", "answer": "500 جرام" },
+    { "question": "الدقة", "answer": "0.1 جرام" },
+    { "question": "البطارية", "answer": "CR2032 (غير متضمنة)" },
+    { "question": "الوحدة", "answer": "جرام / أونصة" },
+    { "question": "المواد", "answer": "بلاستيك PP" },
+    { "question": "الألوان", "answer": "أسود، أخضر فاتح، أبيض، أحمر، أخضر غامق، وردي" },
+    { "question": "العلامة التجارية", "answer": "kitchya" },
+    { "question": "المنشأ", "answer": "CN (الصين)" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/7nzidk.avif",
+        "https://files.catbox.moe/javfnb.avif",
+        "https://files.catbox.moe/g8f5k0.avif",
+        "https://files.catbox.moe/a8gzsc.avif"
+      ]
+    },
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/rmo8rg.mp4"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/7nzidk.avif",
+    "name": "ميزان المطبخ الإلكتروني 500 جرام",
+    "sold": "أدوات المطبخ",
+    "price": "280.00",
+    "discount": "",
+    "pageId": "45",
+    "productId": "45",
+    "shippingPrice": "25",
+    "colors": ["أسود", "أخضر فاتح", "أبيض", "أحمر", "أخضر غامق", "وردي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ميزان إلكتروني"
+  }
+},
+{
+  "id": "46",
+  "media": [
+    {"src": "https://files.catbox.moe/gr1314.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/m2afp1.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ryuph6.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/0xq14n.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/g5hqs7.avif", "type": "image"}
+  ],
+  "pri": "120",
+  "oldPrice": "",
+  "dis": "حافظة سيليكون ناعمة مقاومة للصدمات لآيفون",
+  "changingText": [
+    "متوافقة مع جميع إصدارات آيفون",
+    "حماية كاملة من الصدمات"
+  ],
+  "longText": "حافظة آيفون من السيليكون - مقاومة للصدمات والخدوش",
+  "desc": "حماية مثالية لهاتفك الآيفون مع هذه الحافظة المصنوعة من السيليكون عالي الجودة. تتميز بمقاومة الصدمات ومنع البصمات مع تصميم أنيق يناسب جميع إصدارات آيفون الحديثة.",
+  "sales": "إكسسوارات آيفون",
+  "buttonId": "commentButton46",
+  "commentId": "46",
+  "elementId": "commentCount46",
+  "tableData": [
+    {"question": "المادة", "answer": "سيليكون عالي الجودة"},
+    {"question": "الأنواع المتوافقة", "answer": "iPhone X/XS/11/12/13/14/15/16 بجميع إصداراتها (Pro Max, Plus, Pro)"},
+    {"question": "الخصائص", "answer": "مقاوم للصدمات، مضاد للبصمات، مضاد للخدش"},
+    {"question": "اللون", "answer": "بني"},
+    {"question": "العلامة التجارية", "answer": "vikcase"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/gr1314.avif",
+        "https://files.catbox.moe/m2afp1.avif",
+        "https://files.catbox.moe/ryuph6.avif",
+        "https://files.catbox.moe/0xq14n.avif",
+        "https://files.catbox.moe/g5hqs7.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/gr1314.avif",
+    "name": "حافظة آيفون سيليكون مقاومة للصدمات",
+    "sold": "إكسسوارات آيفون",
+    "price": "120.00",
+    "discount": "",
+    "pageId": "46",
+    "productId": "46",
+    "shippingPrice": "50",
+    "colors": ["بني"],
+    "materials": [
+      "iPhone X", 
+      "iPhone XS", 
+      "iPhone XR",
+      "iPhone 11",
+      "iPhone 11 Pro",
+      "iPhone 11 Pro Max",
+      "iPhone 12",
+      "iPhone 12 mini",
+      "iPhone 12 Pro",
+      "iPhone 12 Pro Max",
+      "iPhone 13",
+      "iPhone 13 mini",
+      "iPhone 13 Pro",
+      "iPhone 13 Pro Max",
+      "iPhone 14",
+      "iPhone 14 Plus",
+      "iPhone 14 Pro",
+      "iPhone 14 Pro Max",
+      "iPhone 15",
+      "iPhone 15 Plus",
+      "iPhone 15 Pro",
+      "iPhone 15 Pro Max",
+      "iPhone 16",
+      "iPhone 16 Plus",
+      "iPhone 16 Pro",
+      "iPhone 16 Pro Max"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مصنوع من السيليكون"
+  }
+}
 
 
 
