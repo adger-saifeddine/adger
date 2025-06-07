@@ -2745,6 +2745,138 @@
     "currency": "جنيه",
     "discountLabel": "مصنوع من السيليكون"
   }
+},
+{
+  "id": "47",
+  "media": [
+    {"src": "https://files.catbox.moe/ea66j2.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/o5x1is.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/nulw6b.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/5q9cgq.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/l3n6jx.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ms89qb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/g3xjcw.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/u861rs.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/j7qlks.avif", "type": "image"}
+  ],
+  "pri": "260",
+  "oldPrice": "",
+  "dis": "زجاجة مياه دمبل للتمارين الرياضية - سعة 550 مل",
+  "changingText": [
+    "مصنوعة من بلاستيك خال من BPA",
+    "مناسبة للرياضات المختلفة"
+  ],
+  "longText": "زجاجة مياه على شكل دمبل للتمارين الرياضية - سعة 550 مل",
+  "desc": "زجاجة مياه مبتكرة على شكل دمبل للتمارين الرياضية. مصنوعة من بلاستيك عالي الجودة خال من مادة BPA، مع غطاء مانع للتسرب. مناسبة للكروسفيت، اللياقة البدنية، والتدريبات المختلفة. تتوفر بعدة ألوان.",
+  "sales": "معدات رياضية",
+  "buttonId": "commentButton47",
+  "commentId": "47",
+  "elementId": "commentCount47",
+  "tableData": [
+    {"question": "السعة", "answer": "550 مل"},
+    {"question": "المواد", "answer": "بلاستيك عالي الجودة خال من BPA"},
+    {"question": "الألوان", "answer": "أحمر، أخضر، أزرق، أسود"},
+    {"question": "الأبعاد", "answer": "3.1*3.1*8.3 بوصة"},
+    {"question": "الاستخدام", "answer": "التمارين الرياضية، اللياقة البدنية، الكروسفيت"},
+    {"question": "المميزات", "answer": "مقاومة للرائحة، مضادة للانفجار، صديقة للبيئة"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/ea66j2.avif",
+        "https://files.catbox.moe/o5x1is.avif",
+        "https://files.catbox.moe/nulw6b.avif",
+        "https://files.catbox.moe/5q9cgq.avif",
+        "https://files.catbox.moe/l3n6jx.avif",
+        "https://files.catbox.moe/ms89qb.avif",
+        "https://files.catbox.moe/g3xjcw.avif",
+        "https://files.catbox.moe/u861rs.avif",
+        "https://files.catbox.moe/j7qlks.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/ea66j2.avif",
+    "name": "زجاجة مياه دمبل للتمارين",
+    "sold": "معدات رياضية",
+    "price": "260.00",
+    "discount": "",
+    "pageId": "47",
+    "productId": "47",
+    "shippingPrice": "50",
+    "colors": ["أحمر", "أخضر", "أزرق", "أسود"],
+    "materials": ["بلاستيك خال من BPA"],
+    "dimensions": "3.1*3.1*8.3 بوصة",
+    "capacity": "550 مل"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مصنوع من البلاستيك"
+  }
+},
+{
+  "id": "48",
+  "media": [
+    {"src": "https://files.catbox.moe/n7atdk.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/5pdc38.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/tmnz2a.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/zd62ji.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/1hgymf.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/tlltur.webp", "type": "image"}
+  ],
+  "pri": "350",
+  "oldPrice": "",
+  "dis": "هدفون P9 MAX - بطارية تدوم 5 ساعات",
+  "changingText": [
+    "تشغيل مستمر 4-5 ساعات",
+    "ألوان متعددة تناسب الجميع"
+  ],
+  "longText": "هدفون P9 MAX اللاسلكي - تجربة صوتية فائقة",
+  "desc": "تمتع بتجربة صوتية استثنائية مع هدفون P9 MAX الذي يوفر صوتًا قويًا وواضحًا مع تصميم مريح للاستخدام الطويل. يتميز ببطارية تدوم من 4 إلى 5 ساعات تشغيل مستمر، وتصميم أنيق متوفر بعدة ألوان تناسب جميع الأذواق.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton48",
+  "commentId": "48",
+  "elementId": "commentCount48",
+  "tableData": [
+    {"question": "النوع", "answer": "هدفون لاسلكي"},
+    {"question": "مدة البطارية", "answer": "4-5 ساعات تشغيل مستمر"},
+    {"question": "الألوان", "answer": "أحمر، أبيض، كحلي، أخضر"},
+    {"question": "التوصيل", "answer": "بلوتوث"},
+    {"question": "الميزات", "answer": "تحكم باللمس، عزل الضوضاء"},
+    {"question": "الضمان", "answer": "سنة واحدة"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/n7atdk.jpg",
+        "https://files.catbox.moe/5pdc38.jpg",
+        "https://files.catbox.moe/tmnz2a.jpg",
+        "https://files.catbox.moe/zd62ji.jpg",
+        "https://files.catbox.moe/1hgymf.jpg",
+        "https://files.catbox.moe/tlltur.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/n7atdk.jpg",
+    "name": "هدفون P9 MAX",
+    "sold": "إلكترونيات",
+    "price": "350.00",
+    "discount": "",
+    "pageId": "48",
+    "productId": "48",
+    "shippingPrice": "50",
+    "colors": ["أحمر", "أبيض", "كحلي", "أخضر"],
+    "batteryLife": "4-5 ساعات",
+    "connectivity": "بلوتوث 5.0"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "هدفون تعمل بالبلوتوث"
+  }
 }
 
 

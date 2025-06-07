@@ -418,6 +418,24 @@
   "sold": "إكسسوارات آيفون",
   "discountTexts": ["مقاومة للصدمات", "حماية كاملة"],
   "link": "prod.html?id=46"
+},
+{
+  "name": "زجاجة مياه دمبل للتمارين - 550 مل",
+  "dataName": "#47 زجاجة مياه رياضية على شكل دمبل - صديقة للبيئة",
+  "price": "260.00",
+  "image": "https://files.catbox.moe/ea66j2.avif",
+  "sold": "معدات رياضية",
+  "discountTexts": ["خالية من BPA", "متعددة الألوان"],
+  "link": "prod.html?id=47"
+},
+{
+  "name": "هدفون P9 MAX - لاسلكي",
+  "dataName": "#48 هدفون لاسلكي ببطارية تدوم 5 ساعات",
+  "price": "350.00",
+  "image": "https://files.catbox.moe/n7atdk.jpg",
+  "sold": "إلكترونيات",
+  "discountTexts": ["تشغيل 5 ساعات", "ألوان متعددة"],
+  "link": "prod.html?id=48"
 }
 
 
