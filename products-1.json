@@ -2434,8 +2434,20 @@
 {
   "id": "42",
   "media": [
-    { "src": "https://files.catbox.moe/wxbvlu.jpg", "type": "image" },
-    { "src": "https://files.catbox.moe/8gpzuq.jpg", "type": "image" }
+    { "src": "https://files.catbox.moe/qgpkny.mp4", "type": "image" },
+    { "src": "https://files.catbox.moe/8sdeow.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/rmklnm.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/wtufgj.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/4656mk.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/qwdbjs.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/93b182.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/e3rt0l.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/ntmdx3.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/l8f4tx.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/qamu48.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/4c9hit.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/5auc6f.avif", "type": "image" },
+    { "src": "https://files.catbox.moe/trgjyh.avif", "type": "image" }
   ],
   "pri": "100",
   "oldPrice": "",
@@ -2452,7 +2464,7 @@
   "elementId": "commentCount42",
   "tableData": [
     { "question": "النوع", "answer": "لاصق متعدد الاستخدام" },
-    { "question": "الألوان", "answer": "أحمر، برتقالي" },
+    { "question": "الألوان", "answer": "أحمر، برتقالي، أسود، أبيض، وردي، رصاصي، أخضر، أزرق، أزرق سماوي، بنفسجي" },
     { "question": "الميزات", "answer": "قابل للغسل، يعاد استخدامه، لا يترك أثرًا" },
     { "question": "الاستخدام", "answer": "الملابس، الأقمشة، الحقائب، الأسطح المختلفة" }
   ],
@@ -2460,13 +2472,25 @@
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/wxbvlu.jpg",
-        "https://files.catbox.moe/8gpzuq.jpg"
+        "https://files.catbox.moe/qgpkny.mp4",
+        "https://files.catbox.moe/8sdeow.avif",
+        "https://files.catbox.moe/rmklnm.avif",
+        "https://files.catbox.moe/wtufgj.avif",
+        "https://files.catbox.moe/4656mk.avif",
+        "https://files.catbox.moe/qwdbjs.avif",
+        "https://files.catbox.moe/93b182.avif",
+        "https://files.catbox.moe/e3rt0l.avif",
+        "https://files.catbox.moe/ntmdx3.avif",
+        "https://files.catbox.moe/l8f4tx.avif",
+        "https://files.catbox.moe/qamu48.avif",
+        "https://files.catbox.moe/4c9hit.avif",
+        "https://files.catbox.moe/5auc6f.avif",
+        "https://files.catbox.moe/trgjyh.avif"
       ]
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/wxbvlu.jpg",
+    "image": "https://i.postimg.cc/fT1NxNsb/S41416243ca244ee4b5ff2e8618f0371f-K-jpg-220x220q75-jpg.avif",
     "name": "لاصق Sticky Patch متعدد الاستخدام",
     "sold": "مستلزمات عامة",
     "price": "100.00",
@@ -2474,13 +2498,14 @@
     "pageId": "42",
     "productId": "42",
     "shippingPrice": "50",
-    "colors": ["أحمر", "برتقالي"]
+    "colors": ["أحمر", "برتقالي", "أسود", "أبيض", "وردي", "رصاصي", "أخضر", "أزرق", "أزرق سماوي", "بنفسجي","وردي أحمر"]
   },
   "texts": {
     "currency": "جنيه",
     "discountLabel": "عرض"
   }
 },
+
 {
   "id": "43",
   "media": [
