@@ -436,6 +436,24 @@
   "sold": "إلكترونيات",
   "discountTexts": ["تشغيل 5 ساعات", "ألوان متعددة"],
   "link": "prod.html?id=48"
+},
+{
+  "name": "بوكس بلومير فارغ - لتغليف الهدايا",
+  "dataName": "#49 صندوق تغليف هدايا وملابس جاهز للتزيين",
+  "price": "60.00",
+  "image": "https://files.catbox.moe/m8f5b9.jpg",
+  "sold": "مستلزمات التغليف",
+  "discountTexts": ["تصميم أنيق", "قابل للتخصيص"],
+  "link": "prod.html?id=49"
+},
+{
+  "name": "ساعة ذكية 1.83 بوصة - مراقبة الصحة",
+  "dataName": "#50 ساعة ذكية متطورة بشاشة IPS كبيرة",
+  "price": "1250.00",
+  "image": "https://files.catbox.moe/89d9gu.avif",
+  "sold": "الساعات الذكية",
+  "discountTexts": ["شاشة IPS كبيرة", "ساعة رياضية"],
+  "link": "prod.html?id=50"
 }
 
 

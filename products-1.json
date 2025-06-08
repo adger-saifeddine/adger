@@ -1576,7 +1576,7 @@
   "oldPrice": "600",
   "dis": "خصم 50%",
   "changingText": ["إضاءة رائعة", "برمجة ماكرو", "مصمم للألعاب"],
-  "longText": "ماوس الألعاب AULA VANGUARD II 9022 بلون أبيض، يتميز بإضاءة رائعة وإمكانية برمجة الماكرو، ومناسب لتجربة لعب احترافية. يدعم إعدادات DPI متعددة (800-1200-1600-2400-3000-3500) لتناسب مختلف الاستخدامات.",
+  "longText": "ماوس أولى VANGUARD II 9022 جيمينج بلون أبيض، تصميم مميز مع إعدادات DPI متعددة، مثالي للألعاب والمهام الدقيقة.",
   "sales": "AULA",
   "buttonId": "commentButton26",
   "commentId": "26",
@@ -1586,7 +1586,7 @@
     { "question": "الوزن", "answer": "130 جرام" },
     { "question": "مقاس", "answer": "13.2 سم × 7.2 سم × 4.1 سم" }
   ],
-  "desc": "ماوس أولى VANGUARD II 9022 جيمينج بلون أبيض، تصميم مميز مع إعدادات DPI متعددة، مثالي للألعاب والمهام الدقيقة.",
+  "desc": "ماوس الألعاب AULA VANGUARD II 9022 بلون أبيض، يتميز بإضاءة رائعة وإمكانية برمجة الماكرو، ومناسب لتجربة لعب احترافية. يدعم إعدادات DPI متعددة (800-1200-1600-2400-3000-3500) لتناسب مختلف الاستخدامات.",
   "groups": [
     {
       "type": "images",
@@ -2434,7 +2434,7 @@
 {
   "id": "42",
   "media": [
-    { "src": "https://files.catbox.moe/qgpkny.mp4", "type": "image" },
+    { "src": "https://files.catbox.moe/qgpkny.mp4", "type": "video" },
     { "src": "https://i.postimg.cc/yN2KTCcj/Whats-App-Image-2025-02-26-at-10-26-29-1e8de24c.jpg", "type": "image" },
     { "src": "https://files.catbox.moe/rmklnm.avif", "type": "image" },
     { "src": "https://files.catbox.moe/wtufgj.avif", "type": "image" },
@@ -2901,6 +2901,139 @@
   "texts": {
     "currency": "جنيه",
     "discountLabel": "هدفون تعمل بالبلوتوث"
+  }
+},
+{
+  "id": "49",
+  "media": [
+    {"src": "https://files.catbox.moe/m8f5b9.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ff6nc1.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/4yt29t.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/hu286n.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/jl113a.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/aex54y.jpg", "type": "image"}
+  ],
+  "pri": "60",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تصميم أنيق وعملي",
+    "مقاسات مناسبة لجميع الهدايا"
+  ],
+  "longText": "بوكس بلومير فارغ لتغليف الهدايا والملابس",
+  "desc": "بوكس بلومير فارغ عالي الجودة، مثالي لتغليف الهدايا والملابس باحترافية. يتميز بتصميمه الأنيق والمتين الذي يحافظ على محتوياته، مع إمكانية إضافة اللمسات الشخصية والتزيين حسب الرغبة. مناسب للمحلات التجارية والأفراد الذين يبحثون عن تغليف مميز لهداياهم.",
+  "sales": "مستلزمات التغليف",
+  "buttonId": "commentButton49",
+  "commentId": "49",
+  "elementId": "commentCount49",
+  "tableData": [
+    {"question": "النوع", "answer": "بوكس بلومير فارغ"},
+    {"question": "الاستخدام", "answer": "تغليف الهدايا والملابس"},
+    {"question": "المادة", "answer": "ورق مقوى عالي الجودة"},
+    {"question": "المقاسات", "answer": "متوسطة (تناسب معظم الهدايا)"},
+    {"question": "الميزات", "answer": "قابل للتخصيص والزينة"},
+    {"question": "اللون", "answer": "أبيض/جاهز للتلوين والتزيين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/m8f5b9.jpg",
+        "https://files.catbox.moe/ff6nc1.jpg",
+        "https://files.catbox.moe/4yt29t.jpg",
+        "https://files.catbox.moe/hu286n.jpg",
+        "https://files.catbox.moe/jl113a.jpg",
+        "https://files.catbox.moe/aex54y.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/m8f5b9.jpg",
+    "name": "بوكس بلومير فارغ",
+    "sold": "مستلزمات التغليف",
+    "price": "60.00",
+    "discount": "",
+    "pageId": "49",
+    "productId": "49",
+    "shippingPrice": "15",
+    "colors": ["أبيض"],
+    "materials": ["ورق مقوى"],
+    "sizes": ["كبيرة"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "صندوق هدايا"
+  }
+},
+{
+  "id": "50",
+  "media": [
+    {"src": "https://files.catbox.moe/89d9gu.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/6rvm8g.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/8ft4hb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/jr06r3.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/0p7jvs.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/cemetz.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/b8bcwe.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/36upt2.avif", "type": "image"}
+  ],
+  "pri": "1250",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "شاشة IPS 1.83 بوصة بدقة 240*286",
+    "تتبع معدل ضربات القلب وضغط الدم",
+    "مقاوم للماء بتصميم أنيق"
+  ],
+  "longText": "ساعة ذكية 1.83 بوصة - مراقبة الصحة واللياقة البدنية",
+  "desc": "ساعة ذكية متطورة بشاشة IPS واضحة مقاس 1.83 بوصة، تدعم تتبع معدل ضربات القلب وضغط الدم ومستوى الأكسجين في الدم. تتميز بمقاومة للماء وتصميم أنيق يناسب الرجال والنساء، مع توافق كامل مع أنظمة Android وiOS. تدعم البلوتوث 5.1 وتشغيل الموسيقى، مع بطارية تدوم حتى 5 أيام.",
+  "sales": "الساعات الذكية",
+  "buttonId": "commentButton50",
+  "commentId": "50",
+  "elementId": "commentCount50",
+  "tableData": [
+    {"question": "حجم الشاشة", "answer": "1.83 بوصة IPS"},
+    {"question": "الدقة", "answer": "240*286 بكسل"},
+    {"question": "الميزات الصحية", "answer": "تتبع معدل ضربات القلب، ضغط الدم، الأكسجين، النوم"},
+    {"question": "التوافق", "answer": "Android و iOS"},
+    {"question": "البلوتوث", "answer": "5.1 BLE"},
+    {"question": "مقاومة الماء", "answer": "مقاوم للماء IP67"},
+    {"question": "عمر البطارية", "answer": "حتى 5 أيام"},
+    {"question": "الألوان", "answer": "فضي، ذهبي، وردي، أسود"},
+    {"question": "المواد", "answer": "سبيكة معدنية + سوار فولاذي"},
+    {"question": "اللغات المدعومة", "answer": "متعددة (الإنجليزية، العربية، الفرنسية وغيرها)"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/89d9gu.avif",
+        "https://files.catbox.moe/6rvm8g.avif",
+        "https://files.catbox.moe/8ft4hb.avif",
+        "https://files.catbox.moe/jr06r3.avif",
+        "https://files.catbox.moe/0p7jvs.avif",
+        "https://files.catbox.moe/cemetz.avif",
+        "https://files.catbox.moe/b8bcwe.avif",
+        "https://files.catbox.moe/36upt2.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/89d9gu.avif",
+    "name": "ساعة ذكية 1.83 بوصة - CRTORRS",
+    "sold": "الساعات الذكية",
+    "price": "1250.00",
+    "discount": "",
+    "pageId": "50",
+    "productId": "50",
+    "shippingPrice": "50",
+    "colors": ["فضي", "ذهبي", "وردي", "أسود"],
+    "sizes": "1.83 بوصة"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ساعة سمارت"
   }
 }
 
