@@ -2956,7 +2956,6 @@
     "pageId": "49",
     "productId": "49",
     "shippingPrice": "15",
-    "colors": ["أبيض"],
     "materials": ["ورق مقوى"],
     "sizes": ["كبيرة"]
   },
@@ -2968,76 +2967,70 @@
 {
   "id": "50",
   "media": [
-    {"src": "https://files.catbox.moe/89d9gu.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/6rvm8g.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/8ft4hb.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/jr06r3.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/0p7jvs.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/cemetz.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/b8bcwe.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/36upt2.avif", "type": "image"}
+    {"src": "https://files.catbox.moe/89d9gu.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/6rvm8g.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/8ft4hb.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/jr06r3.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/0p7jvs.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/cemetz.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/b8bcwe.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/36upt2.avif",  "type": "image"}
   ],
   "pri": "1250",
   "oldPrice": "",
   "dis": "",
   "changingText": [
-    "شاشة IPS 1.83 بوصة بدقة 240*286",
-    "تتبع معدل ضربات القلب وضغط الدم",
-    "مقاوم للماء بتصميم أنيق"
+    "شاشة IPS عالية الدقة",
+    "مراقبة الصحة المتقدمة"
   ],
-  "longText": "ساعة ذكية 1.83 بوصة - مراقبة الصحة واللياقة البدنية",
-  "desc": "ساعة ذكية متطورة بشاشة IPS واضحة مقاس 1.83 بوصة، تدعم تتبع معدل ضربات القلب وضغط الدم ومستوى الأكسجين في الدم. تتميز بمقاومة للماء وتصميم أنيق يناسب الرجال والنساء، مع توافق كامل مع أنظمة Android وiOS. تدعم البلوتوث 5.1 وتشغيل الموسيقى، مع بطارية تدوم حتى 5 أيام.",
-  "sales": "الساعات الذكية",
+  "longText": "ساعة ذكية CRTORRS Y13 للياقة والصحة مع شاشة 1.83 بوصة ومقاومة للماء",
+  "desc": "ساعة ذكية متطورة من CRTORRS بقياس 1.83 بوصة بشاشة IPS واضحة بدقة 240*286، تدعم تتبع اللياقة البدنية ومستوى ضربات القلب، الأكسجين في الدم، النوم، والضغط. مقاومة للماء مدى الحياة، تدعم البلوتوث للإتصال الهاتفي، تشغيل الموسيقى، وتذكير بالرسائل والمكالمات. متوافقة مع أجهزة Android وiOS، مناسبة للرجال والنساء بمظهر أنيق وألوان جذابة.",
+  "sales": "الإلكترونيات",
   "buttonId": "commentButton50",
   "commentId": "50",
   "elementId": "commentCount50",
   "tableData": [
-    {"question": "حجم الشاشة", "answer": "1.83 بوصة IPS"},
-    {"question": "الدقة", "answer": "240*286 بكسل"},
-    {"question": "الميزات الصحية", "answer": "تتبع معدل ضربات القلب، ضغط الدم، الأكسجين، النوم"},
-    {"question": "التوافق", "answer": "Android و iOS"},
-    {"question": "البلوتوث", "answer": "5.1 BLE"},
-    {"question": "مقاومة الماء", "answer": "مقاوم للماء IP67"},
-    {"question": "عمر البطارية", "answer": "حتى 5 أيام"},
-    {"question": "الألوان", "answer": "فضي، ذهبي، وردي، أسود"},
-    {"question": "المواد", "answer": "سبيكة معدنية + سوار فولاذي"},
-    {"question": "اللغات المدعومة", "answer": "متعددة (الإنجليزية، العربية، الفرنسية وغيرها)"},
-    {"question": "المنشأ", "answer": "الصين"}
+    {"question": "النوع", "answer": "ساعة ذكية"},
+    {"question": "الشاشة", "answer": "IPS 1.83 بوصة بدقة 240*286"},
+    {"question": "الوظائف الأساسية", "answer": "مكالمات بلوتوث، تتبع صحي، إشعارات، عد الخطوات، تتبع النوم"},
+    {"question": "التوافق", "answer": "Android وiOS"},
+    {"question": "البطارية", "answer": "220-300 مللي أمبير، عمر 5 أيام"},
+    {"question": "المقاومة", "answer": "مقاوم للماء مدى الحياة"},
+    {"question": "الألوان المتوفرة", "answer": "فضي، ذهبي، وردي، أسود"},
+    {"question": "العلامة التجارية", "answer": "CRTORRS"},
+    {"question": "الضمان", "answer": "نعم - حسب البائع"}
   ],
   "groups": [
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/89d9gu.avif",
-        "https://files.catbox.moe/6rvm8g.avif",
-        "https://files.catbox.moe/8ft4hb.avif",
-        "https://files.catbox.moe/jr06r3.avif",
-        "https://files.catbox.moe/0p7jvs.avif",
-        "https://files.catbox.moe/cemetz.avif",
-        "https://files.catbox.moe/b8bcwe.avif",
-        "https://files.catbox.moe/36upt2.avif"
+        "https://files.catbox.moe/89d9gu.avif", 
+        "https://files.catbox.moe/6rvm8g.avif", 
+        "https://files.catbox.moe/8ft4hb.avif", 
+        "https://files.catbox.moe/jr06r3.avif", 
+        "https://files.catbox.moe/0p7jvs.avif", 
+        "https://files.catbox.moe/cemetz.avif", 
+        "https://files.catbox.moe/b8bcwe.avif", 
+        "https://files.catbox.moe/36upt2.avif" 
       ]
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/89d9gu.avif",
-    "name": "ساعة ذكية 1.83 بوصة - CRTORRS",
-    "sold": "الساعات الذكية",
+    "image": "https://files.catbox.moe/89d9gu.avif", 
+    "name": "ساعة CRTORRS Y13 الذكية",
+    "sold": "الإلكترونيات",
     "price": "1250.00",
     "discount": "",
     "pageId": "50",
     "productId": "50",
     "shippingPrice": "50",
-    "colors": ["فضي", "ذهبي", "وردي", "أسود"],
-    "sizes": "1.83 بوصة"
+    "colors": ["فضي", "ذهبي", "وردي", "أسود"]
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "ساعة سمارت"
+    "discountLabel": "ساعة ذكية"
   }
 }
-
-
 
 
 
