@@ -3030,7 +3030,274 @@
     "currency": "جنيه",
     "discountLabel": "ساعة ذكية"
   }
+},
+{
+  "id": "51",
+  "media": [
+    {"src": "https://files.catbox.moe/nokqqd.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/7bo5p5.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/8knght.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/nokqqd.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/yrkp35.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/268a4v.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/dnf2kk.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/sad21f.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/800okx.avif", "type": "image"}
+  ],
+  "pri": "85",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تصميم بومة فريد",
+    "ستايل قوطية أنيق"
+  ],
+  "longText": "خاتم سحر الموضة بشكل بومة بتصميم خمر، مثالي للرجال والنساء بأسلوب قوطية لطيف. مناسب للهدايا والمناسبات الخاصة.",
+  "desc": "خاتم بومة بتصميم فني عصري ومميز، يأتي بمقاسات متعددة وألوان جذابة تشمل الأزرق، الأخضر، الأحمر، الأصفر، الوردي، والأرجواني. مصنوع بدقة ويُعد خياراً مثالياً لمحبي الإكسسوارات ذات الطابع الفريد. مناسب كهدية أو للاستخدام اليومي.",
+  "sales": "إكسسوارات",
+  "buttonId": "commentButton51",
+  "commentId": "51",
+  "elementId": "commentCount51",
+  "tableData": [
+    {"question": "النوع", "answer": "خاتم للرجال والنساء"},
+    {"question": "التصميم", "answer": "شكل بومة بطابع خمر وقوطي"},
+    {"question": "المواد", "answer": "معدن عالي الجودة"},
+    {"question": "الألوان المتوفرة", "answer": "أزرق، أخضر، أحمر، أصفر، وردي، أرجواني"},
+    {"question": "الحجم", "answer": "متغير"},
+    {"question": "الاستخدام", "answer": "مناسب كهدية، للزينة اليومية"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/nokqqd.avif",
+        "https://files.catbox.moe/7bo5p5.avif",
+        "https://files.catbox.moe/8knght.avif",
+        "https://files.catbox.moe/nokqqd.avif",
+        "https://files.catbox.moe/yrkp35.avif",
+        "https://files.catbox.moe/268a4v.avif",
+        "https://files.catbox.moe/dnf2kk.avif",
+        "https://files.catbox.moe/sad21f.avif",
+        "https://files.catbox.moe/800okx.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/nokqqd.avif",
+    "name": "خاتم بومة سحر الموضة",
+    "sold": "إكسسوارات",
+    "price": "85.00",
+    "discount": "",
+    "pageId": "51",
+    "productId": "51",
+    "shippingPrice": "60",
+    "sizes":"يتغير",
+    "colors": ["أزرق", "أخضر", "أحمر", "أصفر", "وردي", "أرجواني"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خاتم مميز"
+  }
+},
+{
+  "id": "52",
+  "media": [
+    {"src": "https://files.catbox.moe/i0ir6m.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/96i65x.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/hcept6.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/mdg6jf.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/33sk3k.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/0vm3oj.avif",  "type": "image"}
+  ],
+  "pri": "85",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "يضيء في الظلام",
+    "ذاتي اللصق ومقاوم للماء"
+  ],
+  "longText": "شريط مضيء ذاتي اللصق مضاد للماء يتوهج في الظلام للسلامة وتزيين المنزل والممرات",
+  "desc": "شريط PVC مضيء باللون الأخضر، ذاتي اللصق وسهل الإزالة، مقاوم للماء، طوله 3 متر وعرضه 3 سم. يمتص ضوء الشمس أو الإضاءة ويضيء في الظلام. مثالي للسلالم، الأبواب، الممرات، الألواح ومسارات الخروج. صديق للبيئة وسهل الاستخدام.",
+  "sales": "مستلزمات السلامة",
+  "buttonId": "commentButton52",
+  "commentId": "52",
+  "elementId": "commentCount52",
+  "tableData": [
+    {"question": "النوع", "answer": "شريط مضيء"},
+    {"question": "اللون الباعث", "answer": "أخضر مضيء"},
+    {"question": "المادة", "answer": "PVC"},
+    {"question": "الأبعاد", "answer": "العرض: 3 سم، الطول: 3 متر"},
+    {"question": "الميزات", "answer": "يتوهج في الظلام، مقاوم للماء، ذاتي اللصق"},
+    {"question": "الاستخدام", "answer": "السلالم، الأبواب، الممرات، التزيين"},
+    {"question": "البلد المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/i0ir6m.avif", 
+        "https://files.catbox.moe/96i65x.avif", 
+        "https://files.catbox.moe/hcept6.avif", 
+        "https://files.catbox.moe/mdg6jf.avif", 
+        "https://files.catbox.moe/33sk3k.avif", 
+        "https://files.catbox.moe/0vm3oj.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/i0ir6m.avif", 
+    "name": "شريط مضيء أخضر ذاتي اللصق",
+    "sold": "مستلزمات السلامة",
+    "price": "85.00",
+    "discount": "",
+    "pageId": "52",
+    "productId": "52",
+    "shippingPrice": "20",
+    "sizes":"3*3 سم",
+    "colors": ["أخضر"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "شريط مضيء"
+  }
+},
+{
+  "id": "53",
+  "media": [
+    {"src": "https://files.catbox.moe/bp3ty6.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/onn8zb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/vxjm96.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ld26m4.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/a6pkdx.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/iql3ds.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/q2masc.avif", "type": "image"}
+  ],
+  "pri": "430",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "سماعة بلوتوث X15 لاسلكية",
+    "إلغاء ضوضاء، ضد الماء"
+  ],
+  "longText": "سماعة X15 TWS لاسلكية بتقنية البلوتوث داخل الأذن - مزودة بميكروفون، مقاومة للماء، مناسبة للرياضة والألعاب، مزودة بوظيفة إلغاء الضوضاء. متوافقة مع الهواتف المحمولة وتدعم التحكم في الحجم واللمس.",
+  "desc": "سماعة X15 TWS اللاسلكية من EOENKK بتصميم داخل الأذن، تتميز بإلغاء الضجيج، مقاومة للماء، وميكروفون مدمج. مثالية للألعاب، المكالمات، والأنشطة الرياضية. تأتي مع كابل شحن ودليل المستخدم، وتعمل بتقنية بلوتوث حقيقية بدون أسلاك.",
+  "sales": "الإلكترونيات",
+  "buttonId": "commentButton53",
+  "commentId": "53",
+  "elementId": "commentCount53",
+  "tableData": [
+    {"question": "النوع", "answer": "سماعة بلوتوث لاسلكية"},
+    {"question": "العلامة التجارية", "answer": "EOENKK"},
+    {"question": "التوصيل", "answer": "بلوتوث لاسلكي حقيقي"},
+    {"question": "إلغاء الضوضاء", "answer": "نعم"},
+    {"question": "مقاومة للماء", "answer": "نعم"},
+    {"question": "مع ميكروفون", "answer": "نعم"},
+    {"question": "الدعم", "answer": "لا تدعم تطبيق"},
+    {"question": "الاستخدام", "answer": "رياضة، ألعاب، مكالمات"},
+    {"question": "محتوى العبوة", "answer": "دليل المستخدم، كابل شحن، غشاء الشحن"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/bp3ty6.avif",
+        "https://files.catbox.moe/onn8zb.avif",
+        "https://files.catbox.moe/vxjm96.avif",
+        "https://files.catbox.moe/ld26m4.avif",
+        "https://files.catbox.moe/a6pkdx.avif",
+        "https://files.catbox.moe/iql3ds.avif",
+        "https://files.catbox.moe/q2masc.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/bp3ty6.avif",
+    "name": "سماعة X15 TWS لاسلكية",
+    "sold": "الإلكترونيات",
+    "price": "430.00",
+    "discount": "",
+    "pageId": "53",
+    "productId": "53",
+    "shippingPrice": "50",
+    "colors": ["X15"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "سماعة بلوتوث"
+  }
+},
+{
+  "id": "54",
+  "media": [
+    {"src": "https://files.catbox.moe/bmuevt.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/aslg5d.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/a9ihhc.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/v1k9y5.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/rthh04.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/mbrsyo.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ecinuw.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/bosill.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ju7cfd.avif", "type": "image"}
+  ],
+  "pri": "300",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تصميم عائم مبتكر لعرض المجوهرات",
+    "متوفر بمقاسين مختلفين"
+  ],
+  "longText": "حامل عرض مجوهرات من غشاء PET - إطار صورة عائم",
+  "desc": "إطار عرض مجوهرات مبتكر من مادة PET الرقيقة، مصمم لعرض القطع الثمينة مثل الخواتم والأقراط والساعات بطريقة عائمة وجذابة. يتميز بغشاء شفاف يحفظ القطعة بشكل آمن مع إبراز جمالها. مثالي للمحلات التجارية أو هواة الجمع أو لعرض الهدايا الثمينة.",
+  "sales": "مستلزمات عرض المجوهرات",
+  "buttonId": "commentButton54",
+  "commentId": "54",
+  "elementId": "commentCount54",
+  "tableData": [
+    {"question": "المادة", "answer": "بلاستيك PET"},
+    {"question": "الألوان", "answer": "أسود، أبيض"},
+    {"question": "المقاسات", "answer": "110*110mm أو 230*90mm"},
+    {"question": "الوزن", "answer": "100 جرام"},
+    {"question": "المحتويات", "answer": "1 صندوق + موطئ قدم (بدون مجوهرات)"},
+    {"question": "الاستخدام", "answer": "عرض الخواتم، الأقراط، الساعات، الأحجار الكريمة"},
+    {"question": "الميزات", "answer": "قابل لإعادة الاستخدام، سهل الفتح والإغلاق"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/bmuevt.jpg",
+        "https://files.catbox.moe/aslg5d.jpg",
+        "https://files.catbox.moe/a9ihhc.jpg",
+        "https://files.catbox.moe/v1k9y5.jpg",
+        "https://files.catbox.moe/rthh04.jpg",
+        "https://files.catbox.moe/mbrsyo.avif",
+        "https://files.catbox.moe/ecinuw.avif",
+        "https://files.catbox.moe/bosill.avif",
+        "https://files.catbox.moe/ju7cfd.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/bmuevt.jpg",
+    "name": "حامل عرض مجوهرات PET",
+    "sold": "مستلزمات عرض المجوهرات",
+    "price": "300.00",
+    "discount": "",
+    "pageId": "54",
+    "productId": "54",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أبيض"],
+    "sizes": ["110*110mm", "230*90mm"],
+    "materials": ["بلاستيك PET"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "تصميم عائم"
+  }
 }
+
+
+
 
 
 

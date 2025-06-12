@@ -454,7 +454,46 @@
   "sold": "الساعات الذكية",
   "discountTexts": ["شاشة IPS كبيرة", "ساعة رياضية"],
   "link": "prod.html?id=50"
+},
+{
+  "name": "سحر الموضة - خاتم بومة خمر",
+  "dataName": "#51 خاتم بومة شبابي لطيف - ستايل قوطي",
+  "price": "55.00",
+  "image": "https://files.catbox.moe/nokqqd.avif",
+  "sold": "اكسسوارات",
+  "discountTexts": ["تصميم بومة جذاب", "مقاس قابل للتعديل"],
+  "link": "prod.html?id=51"
+},
+{
+  "name": "شريط أخضر مضيء يتوهج في الظلام",
+  "dataName": "#52 شريط مضيء ذاتي اللصق للرؤية الليلية",
+  "price": "65.00",
+  "image": "https://files.catbox.moe/i0ir6m.avif",
+  "sold": "معدات السلامة",
+  "discountTexts": ["يتوهج في الظلام", "مقاوم للماء"],
+  "link": "prod.html?id=52"
+},
+{
+  "name": "X15 TWS سماعة بلوتوث لاسلكية داخل الأذن",
+  "dataName": "#53 سماعات بلوتوث مساعدات للسمع ألعاب رياضية",
+  "price": "430",
+  "image": "https://files.catbox.moe/bp3ty6.avif",
+  "sold": "سماعات وسماعات",
+  "discountTexts": ["إلغاء الضوضاء", "اتصال مزدوج"],
+  "link": "prod.html?id=53"
+},
+{
+  "name": "حامل عرض مجوهرات PET - إطار عائم",
+  "dataName": "#54 صندوق عرض مجوهرات بتصميم مبتكر",
+  "price": "300.00",
+  "image": "https://files.catbox.moe/bmuevt.jpg",
+  "sold": "مستلزمات عرض المجوهرات",
+  "discountTexts": ["تصميم عائم", "متوفر بمقاسين"],
+  "link": "prod.html?id=54"
 }
+
+
+
 
 
 
