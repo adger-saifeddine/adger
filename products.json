@@ -467,7 +467,7 @@
 {
   "name": "شريط أخضر مضيء يتوهج في الظلام",
   "dataName": "#52 شريط مضيء ذاتي اللصق للرؤية الليلية",
-  "price": "65.00",
+  "price": "210.00",
   "image": "https://files.catbox.moe/i0ir6m.avif",
   "sold": "معدات السلامة",
   "discountTexts": ["يتوهج في الظلام", "مقاوم للماء"],
@@ -487,7 +487,7 @@
   "dataName": "#54 صندوق عرض مجوهرات بتصميم مبتكر",
   "price": "300.00",
   "image": "https://files.catbox.moe/bmuevt.jpg",
-  "sold": "مستلزمات عرض المجوهرات",
+  "sold": "مستلزمات المجوهرات",
   "discountTexts": ["تصميم عائم", "متوفر بمقاسين"],
   "link": "prod.html?id=54"
 }

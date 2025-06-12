@@ -3108,7 +3108,7 @@
     {"src": "https://files.catbox.moe/33sk3k.avif",  "type": "image"},
     {"src": "https://files.catbox.moe/0vm3oj.avif",  "type": "image"}
   ],
-  "pri": "85",
+  "pri": "210",
   "oldPrice": "",
   "dis": "",
   "changingText": [
@@ -3147,11 +3147,11 @@
     "image": "https://files.catbox.moe/i0ir6m.avif", 
     "name": "شريط مضيء أخضر ذاتي اللصق",
     "sold": "مستلزمات السلامة",
-    "price": "85.00",
+    "price": "210.00",
     "discount": "",
     "pageId": "52",
     "productId": "52",
-    "shippingPrice": "20",
+    "shippingPrice": "50",
     "sizes":["3*3سم"],
     "colors": ["أخضر"]
   },
