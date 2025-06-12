@@ -3090,7 +3090,7 @@
     "pageId": "51",
     "productId": "51",
     "shippingPrice": "60",
-    "sizes":"يتغير",
+    "sizes":["يتغير"],
     "colors": ["أزرق", "أخضر", "أحمر", "أصفر", "وردي", "أرجواني"]
   },
   "texts": {
@@ -3152,7 +3152,7 @@
     "pageId": "52",
     "productId": "52",
     "shippingPrice": "20",
-    "sizes":"3*3 سم",
+    "sizes":["3*3سم"],
     "colors": ["أخضر"]
   },
   "texts": {
