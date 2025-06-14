@@ -3300,7 +3300,7 @@
 {
   "id": "55",
   "media": [
-    { "src": "https://files.catbox.moe/wjeuju.mp4",  "type": "mp4" },
+    {"src": "https://files.catbox.moe/wjeuju.mp4", "type": "mp4"},
     { "src": "https://i.postimg.cc/mDCj4Xzy/O1-CN01xe4-VIy1-Qshr-IKdc-Rw-2218070352032-0-cib.jpg",  "type": "image" },
     { "src": "https://files.catbox.moe/hlvpup.avif",  "type": "image" },
     { "src": "https://files.catbox.moe/ecsdq9.avif",  "type": "image" },
@@ -3442,7 +3442,7 @@
 {
   "id": "57",
   "media": [
-    {"src": "https://files.catbox.moe/01d19k.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/01d19k.mp4", "type": "mp4"},
     {"src": "https://files.catbox.moe/9fkdag.avif", "type": "image"},
     {"src": "https://files.catbox.moe/odpuas.avif", "type": "image"},
     {"src": "https://files.catbox.moe/25tnfh.avif", "type": "image"},
@@ -3555,7 +3555,7 @@
     {
       "type": "images",
       "items": [
-                "https://files.catbox.moe/0l2uh4.mp4",
+          "https://files.catbox.moe/0l2uh4.mp4",
         "https://files.catbox.moe/gpsmvp.avif",
         "https://files.catbox.moe/nwtpsb.avif",
         "https://files.catbox.moe/xavgjq.avif",
@@ -3626,14 +3626,9 @@
   ],
   "groups": [
     {
-      "type": "videos",
-      "items": [
-        "https://files.catbox.moe/4t2sxz.mp4"
-      ]
-    },
-    {
       "type": "images",
       "items": [
+        "https://files.catbox.moe/4t2sxz.mp4",
         "https://files.catbox.moe/cfi62h.png",
         "https://files.catbox.moe/crc2qu.avif",
         "https://files.catbox.moe/kwtx3l.avif",
