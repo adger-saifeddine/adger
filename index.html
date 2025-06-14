@@ -2799,30 +2799,27 @@
         </div>
     
         <div id="gallery" class="gallery"></div>
-    
-        <!-- رسالة "لا توجد نتائج" -->
-        <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px;">
-            <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    <line x1="8" y1="8" x2="14" y2="14"></line>
-                    <line x1="14" y1="8" x2="8" y2="14"></line>
-                </svg>
-            </div>
-            <p style="font-size: 24px; margin-top: 10px;">
-                لا توجد نتائج لـ "<span id="search-term-display"></span>"
-            </p>
-        </div>
-    </body>
-    </html>
-
     <!DOCTYPE html>
 <html>
 <head>
     <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
 </head>
 <body>
+    <!-- رسالة "لا توجد نتائج" -->
+    <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px; display: none;">
+        <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="8" x2="14" y2="14"></line>
+                <line x1="14" y1="8" x2="8" y2="14"></line>
+            </svg>
+        </div>
+        <p style="font-size: 24px; margin-top: 10px;">
+            لا توجد نتائج لـ "<span id="search-term-display"></span>"
+        </p>
+    </div>
+
     <script>
         // إظهار وإزالة أداة التحميل
         function showLoadingAnimation() {
@@ -2920,8 +2917,8 @@
                     }
                 });
             } else {
-    welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-}
+                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+            }
         }
     
         // تحديث رسالة الترحيب عند تحميل الصفحة
@@ -3069,9 +3066,16 @@
                 .then(response => response.json())
                 .then(products => {
                     removeLoadingAnimation();
-                    filteredProducts = products.filter(product => 
-                        product.dataName.toLowerCase().includes(searchTerm.toLowerCase())
-                    );
+                    // تحسين عملية التصفية لتشمل البحث في name و data-name و sold
+                    filteredProducts = products.filter(product => {
+                        const searchLower = searchTerm.toLowerCase();
+                        return (
+                            (product.name && product.name.toLowerCase().includes(searchLower)) ||
+                            (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
+                            (product.sold && product.sold.toLowerCase().includes(searchLower))
+                        );
+                    });
+                    
                     shuffleArray(filteredProducts);
                     gallery.innerHTML = '';
                     loadedItems = 0;
@@ -3254,6 +3258,8 @@
             fetchAndFilterProducts(searchTerm || '');
         };
     </script>
+</body>
+</html>
 
 
 
