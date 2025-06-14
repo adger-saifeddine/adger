@@ -3442,7 +3442,7 @@
 {
   "id": "57",
   "media": [
-    {"src": "https://files.catbox.moe/01d19k.mp4", "type": "mp4"},
+    { "src": "https://files.catbox.moe/01d19k.mp4",  "type": "video" },
     {"src": "https://files.catbox.moe/9fkdag.avif", "type": "image"},
     {"src": "https://files.catbox.moe/odpuas.avif", "type": "image"},
     {"src": "https://files.catbox.moe/25tnfh.avif", "type": "image"},
