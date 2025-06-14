@@ -1315,7 +1315,7 @@
                     </div>
                 </div>
             
-            <!DOCTYPE html>
+        <!DOCTYPE html>
 <html>
 <head>
     <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
@@ -1394,35 +1394,25 @@
         }
     
         // ========== حل تحديث الاسم عند العودة ==========
-        // 1. حدث التركيز عند العودة للصفحة
         window.addEventListener('focus', updateWelcomeMessage);
-        
-        // 2. حدث عرض الصفحة (لصفحات الـ SPA)
         window.addEventListener('pageshow', updateWelcomeMessage);
-        
-        // 3. حدث تخزين محلي (للتغييرات من صفحات أخرى)
         window.addEventListener('storage', function(event) {
             if (event.key === 'username') {
                 updateWelcomeMessage();
             }
         });
-        
-        // 4. حل احتياطي: التحقق كل ثانية
         setInterval(() => {
             const currentUser = localStorage.getItem('username');
             const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
-            
             if (truncateUsername(currentUser) !== displayedUser) {
                 updateWelcomeMessage();
             }
         }, 1000);
     
         // ========== باقي الكود الأصلي ==========
-        // تهيئة العربة
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let cartCount = cart.length;
     
-        // دالة لتحديث عدد العناصر في العربة
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartCountElement = document.querySelector('.cart-count');
@@ -1431,7 +1421,6 @@
             }
         }
     
-        // دالة لإضافة المنتج إلى العربة
         function addToCart(element) {
             event.stopPropagation();
             event.preventDefault();
@@ -1456,12 +1445,10 @@
             return false;
         }
     
-        // التنقل إلى صفحة العربة
         function navigateToCart() {
             window.location.href = 'cart.html';
         }
     
-        // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
             if (event.key === 'cart') {
                 updateCartCount();
@@ -1470,7 +1457,6 @@
             }
         });
     
-        // الاستماع إلى الرسائل من صفحة الحساب
         window.addEventListener('message', function(event) {
             if (event.data.key === 'username') {
                 localStorage.setItem('username', event.data.value);
@@ -1478,24 +1464,20 @@
             }
         });
     
-        // تحديث العرض عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
             updateWelcomeMessage();
         });
     
-        // ربط حدث النقر على أيقونة العربة
         if (document.querySelector('.cart-icon')) {
             document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
     
-        // دالة لتحريك الخط عند النقر على عناصر القائمة
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
             item.addEventListener('click', () => window.scrollTo(0, 0));
         });
     
-        // دالة لإظهار أو إخفاء القائمة الجانبية
         function toggleMenu() {
             const menuPopup = document.getElementById('menuPopup');
             if (menuPopup.classList.contains('active')) {
@@ -1511,7 +1493,6 @@
             }
         }
     
-        // متغيرات ودوال لتتبع السحب
         let startX = 0, currentX = 0, isDragging = false;
         const menuPopup = document.getElementById('menuPopup');
     
@@ -1543,12 +1524,11 @@
             if (menuPopup.classList.contains('active')) event.preventDefault();
         }, { passive: false });
     
-        // متغيرات عالمية لتتبع المنتجات
         let filteredProducts = [];
         const itemsPerLoad = 20;
         let loadedItems = 0;
     
-        // دالة لجلب وتصفية المنتجات مع التعديل ليشمل البحث في sold
+        // دالة لجلب وتصفية المنتجات مع بحث متقدم
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
@@ -1571,7 +1551,6 @@
                         const maxPrice = parseInt(priceMatch[1]);
                         let minPrice = 0;
                         
-                        // نظام النطاقات السعرية
                         const priceRanges = [
                             {max: 99, min: 0},
                             {max: 200, min: 100},
@@ -1601,13 +1580,15 @@
                             return productPrice >= minPrice && productPrice <= maxPrice;
                         });
                     } else {
-                        // التعديل الرئيسي: البحث في name و data-name و sold
-                        const searchLower = searchTerm.toLowerCase();
-                        filteredProducts = products.filter(product => 
-                            (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
-                            (product.name && product.name.toLowerCase().includes(searchLower)) ||
-                            (product.sold && product.sold.toLowerCase().includes(searchLower))
-                        );
+                        // البحث عن الكلمات الكاملة فقط
+                        const searchTerms = searchTerm.toLowerCase().split(/\s+/);
+                        filteredProducts = products.filter(product => {
+                            const text = `${product.dataName || ''} ${product.name || ''} ${product.sold || ''}`.toLowerCase();
+                            return searchTerms.every(term => {
+                                const regex = new RegExp(`\\b${term}\\b`, 'i');
+                                return regex.test(text);
+                            });
+                        });
                     }
                     
                     shuffleArray(filteredProducts);
@@ -1633,7 +1614,6 @@
                 });
         }
     
-        // دالة لتحميل المنتجات
         function loadProducts(startIndex, count) {
             const gallery = document.getElementById('gallery');
             const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -1683,7 +1663,6 @@
             startRotatingText(".rotating-text1212:not(.rotating)");
         }
     
-        // مراقب التحميل الكسول
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1700,7 +1679,6 @@
             });
         }, { rootMargin: "0px 0px 200px 0px" });
     
-        // دالة للتحقق من خلفية الصورة البيضاء
         function isWhiteBackground(img) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -1721,7 +1699,6 @@
             return (whitePixelCount / totalPixelCount) > 0.9;
         }
     
-        // دالة لتدوير النصوص
         function startRotatingText(selector) {
             document.querySelectorAll(selector).forEach(element => {
                 element.classList.add('rotating');
@@ -1741,13 +1718,11 @@
             });
         }
     
-        // دالة لقراءة معلمة البحث من URL
         function getSearchTermFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('search') || '';
         }
     
-        // تحميل المنتجات عند التمرير
         document.addEventListener('scroll', function () {
             const gallery = document.getElementById('gallery');
             const triggerHeight = window.innerHeight * 1.5;
@@ -1758,7 +1733,6 @@
             }
         });
     
-        // دالة لتحريك الخط وتنفيذ البحث
         function selectItem(item, element) {
             const searchBox = document.getElementById('search-box');
     
@@ -1786,7 +1760,6 @@
             });
         }
     
-        // دالة لخلط مصفوفة عشوائيًا
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1794,7 +1767,6 @@
             }
         }
     
-        // عند تحميل الصفحة
         window.onload = function () {
             const defaultItem = document.querySelector('.sub-header nav a');
             const underline = document.querySelector('.underline');
@@ -1816,11 +1788,6 @@
     </script>
 </body>
 </html>
-
-
-
-
-
 
 
 
