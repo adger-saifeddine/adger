@@ -490,6 +490,62 @@
   "sold": "مستلزمات المجوهرات",
   "discountTexts": ["تصميم عائم", "متوفر بمقاسين"],
   "link": "prod.html?id=54"
+},
+{
+  "name": "لوحة طاقة شمسية محمولة 2 واط 5 فولت",
+  "dataName": "#55 لوحة شمسية USB محمولة",
+  "price": "250.00",
+  "image": "https://files.catbox.moe/2higer.avif", 
+  "sold": "الكترونيات",
+  "discountTexts": ["شحن USB", "خفيفة الوزن"],
+  "link": "prod.html?id=55"
+},
+{
+  "name": "صندوق قفل الهاتف الخليوي مع مؤقت",
+  "dataName": "#56 صندوق قفل الهاتف لزيادة التركيز",
+  "price": "320.00",
+  "image": "https://files.catbox.moe/9enqy5.avif", 
+  "sold": "إلكترونيات",
+  "discountTexts": ["مؤقت تلقائي", "شاحن داخلي"],
+  "link": "prod.html?id=56"
+},
+{
+  "name": "مفتاح إضاءة لاسلكي Q81C",
+  "dataName": "#57 نظام تحكم إضاءة عن بعد بدون أسلاك",
+  "price": "600.00",
+  "image": "https://files.catbox.moe/9fkdag.avif",
+  "sold": "أدوات كهربائية",
+  "discountTexts": ["مدى 20 متر", "سهل التركيب"],
+  "link": "prod.html?id=57"
+},
+{
+  "name": "لعبة طائر تحلق بالتحكم عن بعد",
+  "dataName": "#58 طائر كهربائي يحلق في الهواء الطلق",
+  "price": "950.00",
+  "image": "https://files.catbox.moe/gpsmvp.avif",
+  "sold": "ألعاب الأطفال",
+  "discountTexts": ["تحليق واقعي", "تحكم لاسلكي"],
+  "link": "prod.html?id=58"
+},
+{
+  "name": "حافظة مغناطيسية جلدية Magsafe",
+  "dataName": "#59 حافظة بطاقات مغناطيسية لآيفون - جلد طبيعي فاخر متوافق مع Magsafe",
+  "price": "200.00",
+  "oldPrice": "300.00",
+  "image": "https://files.catbox.moe/crc2qu.avif",
+  "sold": "إكسسوارات آيفون",
+  "discountTexts": ["كان بـ300 جنيه", "خصم 33%"],
+  "link": "prod.html?id=59"
+},
+{
+  "name": "قلم ستايلس عالمي للشاشات السعوية",
+  "dataName": "#60 قلم رقمي متوافق مع Android وiOS",
+  "price": "200.00",
+  "oldPrice": "600.00",
+  "image": "https://files.catbox.moe/na0o0h.avif",
+  "sold": "إكسسوارات إلكترونية",
+  "discountTexts": ["كان بـ600 جنيه", "خصم 67%"],
+  "link": "prod.html?id=60"
 }
 
 

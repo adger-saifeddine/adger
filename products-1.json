@@ -3294,6 +3294,445 @@
     "currency": "جنيه",
     "discountLabel": "تصميم عائم"
   }
+},
+{
+  "id": "55",
+  "media": [
+    { "src": "https://files.catbox.moe/6xsegv.mp4",  "type": "mp4" },
+    { "src": "https://files.catbox.moe/2higer.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/hlvpup.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/ecsdq9.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/izk5xu.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/364owi.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/ous1fi.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/x2g7aw.avif",  "type": "image" }
+  ],
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "لوحة طاقة شمسية محمولة 2 واط 5 فولت - تدعم الشحن عبر USB للهواتف والبنوك الطاقة",
+  "changingText": [
+    "لوحة شمسية محمولة",
+    "شحن USB آمن ومستقر"
+  ],
+  "longText": "لوحة طاقة شمسية مدمجة بقدرة 2 واط ونظام شحن USB يوفر شحنًا آمنًا ومستقرًا في الهواء الطلق أو المنزل. مثالية للتخييم أو السفر أو حالات الطوارئ.",
+  "desc": "لوحة شمسية خفيفة الوزن (55 جرام) بجهد 5 فولت وتبلغ قدرتها 2 واط، مزودة بمنفذ USB لشحن الأجهزة الإلكترونية بسهولة. تحتوي على رقاقة بولي سيليكون عالية الجودة ومغلفة بـ EVA لضمان المتانة.",
+  "sales": "الإلكترونيات",
+  "buttonId": "commentButton55",
+  "commentId": "55",
+  "elementId": "commentCount55",
+  "tableData": [
+    { "question": "اسم المنتج", "answer": "لوحة طاقة شمسية محمولة" },
+    { "question": "العلامة التجارية", "answer": "KASHIRINA" },
+    { "question": "النوع", "answer": "لوح شمسي" },
+    { "question": "القدرة", "answer": "2 واط" },
+    { "question": "الجهد", "answer": "5 فولت" },
+    { "question": "التيار", "answer": "0 - 400 مللي أمبير" },
+    { "question": "الإخراج", "answer": "USB" },
+    { "question": "طول الكابل", "answer": "50 سم" },
+    { "question": "المواد", "answer": "بولي سيليكون من الدرجة الأولى + EVA" },
+    { "question": "الأبعاد", "answer": "157 × 94 ملم (6.18 × 3.7 إنش)" },
+    { "question": "الوزن", "answer": "55 غرام" },
+    { "question": "المنشأ", "answer": "CN (الصين)" },
+    { "question": "المحتوى", "answer": "1 × لوحة شمسية" },
+    { "question": "قابلة للطي", "answer": "لا" },
+    { "question": "مرنة", "answer": "لا" },
+    { "question": "عدد اللوحات", "answer": "1" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/2higer.avif", 
+        "https://files.catbox.moe/hlvpup.avif", 
+        "https://files.catbox.moe/ecsdq9.avif", 
+        "https://files.catbox.moe/izk5xu.avif", 
+        "https://files.catbox.moe/364owi.avif", 
+        "https://files.catbox.moe/ous1fi.avif", 
+        "https://files.catbox.moe/x2g7aw.avif" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/2higer.avif", 
+    "name": "لوحة طاقة شمسية محمولة 2 واط 5 فولت",
+    "sold": "الإلكترونيات",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "55",
+    "productId": "55",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "56",
+  "media": [
+    { "src": "https://files.catbox.moe/54i0wh.mp4",  "type": "video" },
+    { "src": "https://files.catbox.moe/9enqy5.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/5lvndh.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/pwrk4s.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/bhrydh.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/7ridj7.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/nao6iq.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/1vw3v6.avif",  "type": "image" },
+    { "src": "https://files.catbox.moe/aqiv0x.avif",  "type": "image" }
+  ],
+  "pri": "320",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مؤقت تلقائي للإغلاق",
+    "شاحن داخلي 400 مللي أمبير"
+  ],
+  "longText": "صندوق قفل هاتف محمول مع مؤقت - يعزز الانضباط الذاتي والتركيز ويعزز الإنتاجية أثناء الدراسة أو العمل.",
+  "desc": "صندوق قفل الهاتف المحمول ذاتي التنظيم - إذا كانت عادات هاتفك المحمول تتداخل مع صحتك وعلاقاتك ومسؤولياتك، فقد حان الوقت لإجراء بعض التغييرات. أظهرت الدراسات أن حافظة سلك الهاتف المحمول المزودة بمؤقت يمكن أن تزيد من وقتك بعيدًا عن هاتفك بشكل فعال للتركيز على العمل والدراسة والحياة! يحتوي على بطارية داخلية 400 مللي أمبير، ويصلح لمعظم هواتف iPhone و Android بدون غطاء سميك.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton56",
+  "commentId": "56",
+  "elementId": "commentCount56",
+  "tableData": [
+    { "question": "الاسم", "answer": "صندوق قفل الهاتف المحمول ذاتي التنظيم" },
+    { "question": "سعة البطارية", "answer": "400 مللي أمبير" },
+    { "question": "الأبعاد", "answer": "21 × 9.3 × 2.3 سم" },
+    { "question": "الأبعاد الداخلية", "answer": "6.77 × 3.35 × 0.63 بوصة" },
+    { "question": "المواد", "answer": "بلاستيك ABS" },
+    { "question": "الوظائف", "answer": "مؤقت إغلاق، شحن USB، منع الإشعارات" },
+    { "question": "متوافق مع", "answer": "iPhone 14/13/12/11/XR/XS/X/8/7/6 Plus، وأجهزة Android" },
+    { "question": "المزايا", "answer": "غير شفاف، منفذ للمكالمات، خفيف الوزن، طويل الاستعداد" },
+    { "question": "المنشأ", "answer": "CN (الصين)" },
+    { "question": "المحتوى", "answer": "1 × صندوق قفل الهاتف" }
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/9enqy5.avif", 
+        "https://files.catbox.moe/5lvndh.avif", 
+        "https://files.catbox.moe/pwrk4s.avif", 
+        "https://files.catbox.moe/bhrydh.avif", 
+        "https://files.catbox.moe/7ridj7.avif", 
+        "https://files.catbox.moe/nao6iq.avif", 
+        "https://files.catbox.moe/1vw3v6.avif", 
+        "https://files.catbox.moe/aqiv0x.avif" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/9enqy5.avif", 
+    "name": "صندوق قفل الهاتف الخليوي مع مؤقت",
+    "sold": "إلكترونيات",
+    "price": "320.00",
+    "discount": "",
+    "pageId": "56",
+    "productId": "56",
+    "shippingPrice": "50",
+    "colors": ["أخضر", "أزرق", "وردي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "قفل الهاتف "
+  }
+},
+{
+  "id": "57",
+  "media": [
+    {"src": "https://files.catbox.moe/01d19k.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/9fkdag.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/odpuas.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/25tnfh.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/4o7okb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/cbrxjb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/eutzdq.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/gaw2jn.webp", "type": "image"}
+  ],
+  "pri": "600",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تحكم لاسلكي حتى 20 مترًا",
+    "لا يحتاج إلى أسلاك",
+    "سهل التركيب"
+  ],
+  "longText": "مفتاح إضاءة لاسلكي Q81C - تحكم عن بعد لتعزيز الراحة المنزلية",
+  "desc": "مفتاح إضاءة لاسلكي متطور يمكن التحكم فيه عن بعد حتى مسافة 20 مترًا مع قدرة على اختراق الجدران. يتميز بسهولة التركيب بدون حاجة إلى أسلاك، وبطارية عالية السعة تدوم طويلاً. مثالي لغرف النوم، غرف المعيشة والمطابخ، حيث يمكنك التحكم في الإضاءة دون الحاجة إلى النهوض من مكانك. مصنوع من مواد بلاستيكية متينة بتصميم أنيق، ويعد حلاً مثالياً لكبار السن وذوي الاحتياجات الخاصة لتحسين إدارة الإضاءة المنزلية اليومية.",
+  "sales": "أدوات كهربائية",
+  "buttonId": "commentButton57",
+  "commentId": "57",
+  "elementId": "commentCount57",
+  "tableData": [
+    {"question": "النوع", "answer": "مفتاح إضاءة لاسلكي"},
+    {"question": "الموديل", "answer": "Q81C7ES100364"},
+    {"question": "المدى", "answer": "10-20 متر (يمكنه اختراق الجدران)"},
+    {"question": "المادة", "answer": "بلاستيك"},
+    {"question": "الأبعاد", "answer": "3.8x2.6x5.3 سم"},
+    {"question": "التركيب", "answer": "لا يحتاج إلى أسلاك - سهل التركيب"},
+    {"question": "البطارية", "answer": "مدمجة عالية السعة"},
+    {"question": "الاستخدام", "answer": "غرف النوم، المعيشة، المطابخ"},
+    {"question": "المحتويات", "answer": "1 × مفتاح تحكم عن بعد"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/01d19k.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/9fkdag.avif",
+        "https://files.catbox.moe/odpuas.avif",
+        "https://files.catbox.moe/25tnfh.avif",
+        "https://files.catbox.moe/4o7okb.avif",
+        "https://files.catbox.moe/cbrxjb.avif",
+        "https://files.catbox.moe/eutzdq.webp",
+        "https://files.catbox.moe/gaw2jn.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/9fkdag.avif",
+    "name": "مفتاح إضاءة لاسلكي Q81C",
+    "sold": "أدوات كهربائية",
+    "price": "600.00",
+    "discount": "",
+    "pageId": "57",
+    "productId": "57",
+    "shippingPrice": "60"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مفتاح ذكي"
+  }
+},
+{
+  "id": "58",
+  "media": [
+    {"src": "https://files.catbox.moe/0l2uh4.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/gpsmvp.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/nwtpsb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/xavgjq.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ts3o0p.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/0e5txa.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/685q1t.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/pahvoy.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/bno4jt.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/iimrcy.jpg", "type": "image"}
+  ],
+  "pri": "950",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تحليق واقعي يشبه الطيور الحقيقية",
+    "تحكم عن بعد لسهولة الاستخدام",
+    "مناسب للأطفال من 3 سنوات فما فوق"
+  ],
+  "longText": "لعبة طائر كهربائي تحلق بالتحكم عن بعد - محاكاة واقعية للطيران",
+  "desc": "لعبة طائر كهربائي متطورة تحلق في الهواء الطلق بتقنية محاكاة حركة الطيور الحقيقية. تعمل بالتحكم عن بعد لسهولة الاستخدام، وتتميز بتصميم خفيف الوزن وبطارية قابلة للشحن. مثالية للأطفال من سن 3 سنوات فما فوق، وتأتي بلونين جذابين (أزرق وأحمر) مع شهادة سلامة CE. مناسبة للعب في الحدائق والأماكن المفتوحة، وتوفر تجربة طيران واقعية وممتعة.",
+  "sales": "ألعاب الأطفال",
+  "buttonId": "commentButton58",
+  "commentId": "58",
+  "elementId": "commentCount58",
+  "tableData": [
+    {"question": "النوع", "answer": "لعبة طائر تحلق بالتحكم عن بعد"},
+    {"question": "الفئة العمرية", "answer": "3-12 سنة وما فوق"},
+    {"question": "الألوان", "answer": "أزرق، أحمر"},
+    {"question": "مصدر الطاقة", "answer": "بطارية قابلة للشحن"},
+    {"question": "المادة", "answer": "بلاستيك خفيف الوزن"},
+    {"question": "نطاق التحكم", "answer": "يصل إلى 50 متر (في الأماكن المفتوحة)"},
+    {"question": "مدة الشحن", "answer": "حوالي 30-40 دقيقة طيران"},
+    {"question": "السلامة", "answer": "شهادة CE، غير قابلة للبلع"},
+    {"question": "المنشأ", "answer": "الصين (Guangdong)"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/0l2uh4.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/gpsmvp.avif",
+        "https://files.catbox.moe/nwtpsb.avif",
+        "https://files.catbox.moe/xavgjq.avif",
+        "https://files.catbox.moe/ts3o0p.avif",
+        "https://files.catbox.moe/0e5txa.avif",
+        "https://files.catbox.moe/685q1t.avif",
+        "https://files.catbox.moe/pahvoy.avif",
+        "https://files.catbox.moe/bno4jt.avif",
+        "https://files.catbox.moe/iimrcy.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/gpsmvp.avif",
+    "name": "لعبة طائر تحلق بالتحكم عن بعد",
+    "sold": "ألعاب الأطفال",
+    "price": "950.00",
+    "discount": "",
+    "pageId": "58",
+    "productId": "58",
+    "shippingPrice": "50",
+    "colors": ["أزرق", "أحمر"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "59",
+  "media": [
+    {"src": "https://files.catbox.moe/4t2sxz.mp4", "type": "mp4"},
+    {"src": "https://files.catbox.moe/cfi62h.png", "type": "image"},
+    {"src": "https://files.catbox.moe/crc2qu.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/kwtx3l.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/qde49u.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/nimwl9.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/jfb8i5.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/cbogny.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/si104q.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ewff9b.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/krts0b.avif", "type": "image"}
+  ],
+  "pri": "200",
+  "oldPrice": "300",
+  "dis": "خصم 33%",
+  "changingText": [
+    "تصميم مغناطيسي متوافق مع Magsafe",
+    "جلد فاخر ومتين",
+    "متعدد الاستخدامات لحمل البطاقات"
+  ],
+  "longText": "حافظة مغناطيسية جلدية فاخرة لآيفون مع حامل بطاقات",
+  "desc": "حافظة مغناطيسية جلدية عالية الجودة متوافقة مع نظام Magsafe لآيفون 12/13/14 برو ماكس. تتميز بتصميم رفيع يحتوي على حافظة بطاقات متكاملة يمكنها حمل البطاقات المصرفية والنقود. مصنوعة من الجلد الطبيعي الفاخر مع مغناطيس قوي يثبت الحافظة بإحكام على الهاتف. تأتي بألوان متعددة تناسب جميع الأذواق وتضيف لمسة أنيقة لهاتفك مع الحفاظ على وظيفة الشحن اللاسلكي.",
+  "sales": "إكسسوارات آيفون",
+  "buttonId": "commentButton59",
+  "commentId": "59",
+  "elementId": "commentCount59",
+  "tableData": [
+    {"question": "النوع", "answer": "حافظة مغناطيسية مع حامل بطاقات"},
+    {"question": "الموديلات المتوافقة", "answer": "آيفون 12/13/14 برو ماكس"},
+    {"question": "الأبعاد", "answer": "9.5 × 6.5 × 0.2 سم"},
+    {"question": "المادة", "answer": "جلد طبيعي + مغناطيس"},
+    {"question": "السعة", "answer": "2-3 بطاقات أو أوراق نقدية"},
+    {"question": "الميزات", "answer": "شحن لاسلكي متوافق، تصميم رفيع"},
+    {"question": "الألوان", "answer": "أسود، أزرق، أصفر، برتقالي، ذهبي، سماوي، بني، وردي، بني دهبي، كرز أسود، أخضر غامق، بنفسجي، دهبي روز، أحمر، بنفسجي فاتح"},
+    {"question": "العلامة التجارية", "answer": "Aocoda-RC"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/4t2sxz.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/cfi62h.png",
+        "https://files.catbox.moe/crc2qu.avif",
+        "https://files.catbox.moe/kwtx3l.avif",
+        "https://files.catbox.moe/qde49u.avif",
+        "https://files.catbox.moe/nimwl9.avif",
+        "https://files.catbox.moe/jfb8i5.avif",
+        "https://files.catbox.moe/cbogny.avif",
+        "https://files.catbox.moe/si104q.avif",
+        "https://files.catbox.moe/ewff9b.avif",
+        "https://files.catbox.moe/krts0b.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/crc2qu.avif",
+    "name": "حافظة مغناطيسية جلدية Magsafe",
+    "sold": "إكسسوارات آيفون",
+    "price": "200.00",
+    "discount": "33",
+    "pageId": "59",
+    "productId": "59",
+    "shippingPrice": "60",
+    "colors": ["أسود", "أزرق", "أصفر", "برتقالي", "ذهبي", "سماوي", "بني", "وردي", "بني دهبي", "كرز أسود", "أخضر غامق", "بنفسجي", "دهبي روز", "أحمر", "بنفسجي فاتح"],
+    "compatibility": ["iPhone 12", "iPhone 13", "iPhone 14 Pro Max"],
+    "material": "جلد طبيعي"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جلد فاخر"
+  }
+},
+{
+  "id": "60",
+  "media": [
+    {"src": "https://files.catbox.moe/na0o0h.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/bnvz9f.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/mpgrmb.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/r3lxr1.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/dnmwr2.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/wxw2z4.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/54n91n.avif", "type": "image"}
+  ],
+  "pri": "200",
+  "oldPrice": "600",
+  "dis": "خصم 67%",
+  "changingText": [
+    "متوافق مع أجهزة Android وiOS",
+    "حساسية عالية للكتابة والرسم",
+    "تصميم معدني متين"
+  ],
+  "longText": "قلم ستايلس عالمي للشاشات السعوية - متوافق مع معظم الأجهزة اللوحية والهواتف",
+  "desc": "قلم ستايلس احترافي مصنوع من الألومنيوم عالي الجودة، متوافق مع معظم الأجهزة ذات الشاشات السعوية بما في ذلك هواتف Android وiPhone وأجهزة Huawei وXiaomi. يتميز بحساسية عالية للكتابة والرسم، مع طرف ألياف ناعم لا يخدش الشاشات. يعمل بدون بطارية ولا يحتاج لشحن أو اتصال بلوتوث، مع عمر افتراضي يصل إلى 4 سنوات. مثالي للملاحظات والرسم الرقمي.",
+  "sales": "إكسسوارات إلكترونية",
+  "buttonId": "commentButton60",
+  "commentId": "60",
+  "elementId": "commentCount60",
+  "tableData": [
+    {"question": "النوع", "answer": "قلم ستايلس عالمي"},
+    {"question": "اللون", "answer": "أبيض"},
+    {"question": "المادة", "answer": "ألومنيوم"},
+    {"question": "الطول", "answer": "6.5 بوصة"},
+    {"question": "الوزن", "answer": "10-20 جرام"},
+    {"question": "التوافق", "answer": "Android, iOS, Huawei, Xiaomi, Samsung"},
+    {"question": "نوع الشاشة", "answer": "شاشات سعوية"},
+    {"question": "المميزات", "answer": "لا يحتاج لشحن - لا يخدش الشاشات"},
+    {"question": "الشهادات", "answer": "CE, FCC, ROHS, UL"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/na0o0h.avif",
+        "https://files.catbox.moe/bnvz9f.avif",
+        "https://files.catbox.moe/mpgrmb.avif",
+        "https://files.catbox.moe/r3lxr1.avif",
+        "https://files.catbox.moe/dnmwr2.avif",
+        "https://files.catbox.moe/wxw2z4.avif",
+        "https://files.catbox.moe/54n91n.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/na0o0h.avif",
+    "name": "قلم ستايلس عالمي للشاشات السعوية",
+    "sold": "إكسسوارات إلكترونية",
+    "price": "200.00",
+    "discount": "67",
+    "pageId": "60",
+    "productId": "60",
+    "shippingPrice": "50",
+    "colors": ["أبيض"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
 
 
