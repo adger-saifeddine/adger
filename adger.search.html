@@ -1316,13 +1316,322 @@
                 </div>
             
         <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج البحث</title>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .image-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .image-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .image-frame {
+            position: relative;
+        }
+        
+        .image-wrapper {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+        }
+        
+        .image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s;
+        }
+        
+        .image-wrapper img.white-bg {
+            background-color: white;
+        }
+        
+        .image-wrapper img.loaded {
+            opacity: 1;
+        }
+        
+        .text-under {
+            padding: 10px;
+        }
+        
+        .text-under h1 {
+            font-size: 14px;
+            margin: 0;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .text-under h2 {
+            font-size: 13px;
+            color: #ffa600;
+            margin: 5px 0;
+            font-family: Cairo, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .letter {
+            font-size: 17px;
+            color: #666;
+            margin-right: -4px;
+        }
+        
+        .product1212 h3 {
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0 0;
+            height: 18px;
+            overflow: hidden;
+        }
+        
+        .add-to-cart {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .image-container:hover .add-to-cart {
+            opacity: 1;
+        }
+        
+        .add-to-cart svg {
+            width: 18px;
+            height: 18px;
+            color: #333;
+        }
+        
+        #no-results-message {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 500px;
+            padding: 20px;
+        }
+        
+        #no-results-message svg {
+            color: #ccc;
+        }
+        
+        #no-results-message p {
+            font-size: 24px;
+            color: #666;
+            margin-top: 20px;
+        }
+        
+        #search-term-display {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        #loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #333;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .sub-header {
+            background: white;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .sub-header nav {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .sub-header nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .sub-header nav a {
+            padding: 8px 15px;
+            margin: 0 5px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .sub-header nav a.active {
+            color: #333;
+        }
+        
+        .underline {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container {
+            padding: 15px;
+            background: white;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: #333;
+        }
+        
+        .similar-results {
+            padding: 15px;
+            background: white;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .similar-results h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .similar-terms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .similar-term {
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .similar-term:hover {
+            background: #e0e0e0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- رسالة "لا توجد نتائج" -->
-    <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px;">
+    <div class="search-container">
+        <input type="text" id="search-box" class="search-box" placeholder="ابحث عن منتجات..." autocomplete="off">
+    </div>
+    
+    <div class="sub-header">
+        <nav>
+            <a href="#" onclick="selectItem('الكل', this)">الكل</a>
+            <a href="#" onclick="selectItem('أجهزة', this)">أجهزة</a>
+            <a href="#" onclick="selectItem('ملابس', this)">ملابس</a>
+            <a href="#" onclick="selectItem('أثاث', this)">أثاث</a>
+            <a href="#" onclick="selectItem('إلكترونيات', this)">إلكترونيات</a>
+            <a href="#" onclick="selectItem('أدوات', this)">أدوات</a>
+            <a href="#" onclick="selectItem('ألعاب', this)">ألعاب</a>
+            <a href="#" onclick="selectItem('كتب', this)">كتب</a>
+            <a href="#" onclick="selectItem('أطعمة', this)">أطعمة</a>
+            <div class="underline"></div>
+        </nav>
+    </div>
+    
+    <div id="similar-results" class="similar-results" style="display: none;">
+        <h3>هل تقصد:</h3>
+        <div class="similar-terms" id="similar-terms"></div>
+    </div>
+    
+    <div id="gallery"></div>
+    
+    <div id="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+    
+    <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px; display: none;">
         <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -1357,7 +1666,7 @@
             return name;
         }
     
-        // دالة لتحديث رسالة الترحيب (محدثة)
+        // دالة لتحديث رسالة الترحيب
         function updateWelcomeMessage() {
             const username = localStorage.getItem('username');
             
@@ -1367,7 +1676,6 @@
                 const displayName = truncateUsername(username);
                 welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
                 
-                // تحديث عند تغيير الحجم
                 window.addEventListener('resize', () => {
                     const usernameDisplay = document.getElementById('usernameDisplay');
                     if (usernameDisplay) {
@@ -1393,7 +1701,7 @@
             welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
         }
     
-        // ========== حل تحديث الاسم عند العودة ==========
+        // أحداث تحديث الاسم عند العودة
         window.addEventListener('focus', updateWelcomeMessage);
         window.addEventListener('pageshow', updateWelcomeMessage);
         window.addEventListener('storage', function(event) {
@@ -1401,18 +1709,21 @@
                 updateWelcomeMessage();
             }
         });
+        
         setInterval(() => {
             const currentUser = localStorage.getItem('username');
             const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+            
             if (truncateUsername(currentUser) !== displayedUser) {
                 updateWelcomeMessage();
             }
         }, 1000);
     
-        // ========== باقي الكود الأصلي ==========
+        // تهيئة العربة
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let cartCount = cart.length;
     
+        // دالة لتحديث عدد العناصر في العربة
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartCountElement = document.querySelector('.cart-count');
@@ -1421,6 +1732,7 @@
             }
         }
     
+        // دالة لإضافة المنتج إلى العربة
         function addToCart(element) {
             event.stopPropagation();
             event.preventDefault();
@@ -1445,10 +1757,12 @@
             return false;
         }
     
+        // التنقل إلى صفحة العربة
         function navigateToCart() {
             window.location.href = 'cart.html';
         }
     
+        // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
             if (event.key === 'cart') {
                 updateCartCount();
@@ -1457,6 +1771,7 @@
             }
         });
     
+        // الاستماع إلى الرسائل من صفحة الحساب
         window.addEventListener('message', function(event) {
             if (event.data.key === 'username') {
                 localStorage.setItem('username', event.data.value);
@@ -1464,20 +1779,24 @@
             }
         });
     
+        // تحديث العرض عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
             updateWelcomeMessage();
         });
     
+        // ربط حدث النقر على أيقونة العربة
         if (document.querySelector('.cart-icon')) {
             document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
     
+        // دالة لتحريك الخط عند النقر على عناصر القائمة
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
             item.addEventListener('click', () => window.scrollTo(0, 0));
         });
     
+        // دالة لإظهار أو إخفاء القائمة الجانبية
         function toggleMenu() {
             const menuPopup = document.getElementById('menuPopup');
             if (menuPopup.classList.contains('active')) {
@@ -1493,59 +1812,136 @@
             }
         }
     
-        let startX = 0, currentX = 0, isDragging = false;
-        const menuPopup = document.getElementById('menuPopup');
-    
-        function startDrag(event) {
-            if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
-                startX = event.touches[0].clientX;
-                isDragging = true;
-            }
-        }
-        function drag(event) {
-            if (!isDragging) return;
-            currentX = event.touches[0].clientX;
-            if (currentX - startX < -50) {
-                toggleMenu();
-                isDragging = false;
-            }
-        }
-        function endDrag() {
-            isDragging = false;
-        }
-        function handleClickOutside(event) {
-            if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
-        }
-        document.addEventListener('touchstart', startDrag);
-        document.addEventListener('touchmove', drag);
-        document.addEventListener('touchend', endDrag);
-        document.addEventListener('click', handleClickOutside);
-        menuPopup.addEventListener('touchmove', (event) => {
-            if (menuPopup.classList.contains('active')) event.preventDefault();
-        }, { passive: false });
-    
+        // متغيرات عالمية لتتبع المنتجات
         let filteredProducts = [];
         const itemsPerLoad = 20;
         let loadedItems = 0;
-    
-        // دالة لجلب وتصفية المنتجات مع بحث متقدم
+        
+        // قاموس للكلمات المتشابهة في المعنى
+        const similarWords = {
+            'مدرسة': ['مدرسه', 'مدرسي', 'تعليم', 'تعليمي', 'صف', 'فصل'],
+            'كتاب': ['كتب', 'مكتب', 'مكتبة', 'قراءة', 'ورق', 'صفحات'],
+            'سيارة': ['سياره', 'عربية', 'مركبة', 'تنقل', 'مواصلات'],
+            'هاتف': ['موبايل', 'جوال', 'تليفون', 'اتصال', 'شاشة'],
+            'حاسوب': ['كمبيوتر', 'لابتوب', 'كومبيوتر', 'حاسب', 'جهاز']
+        };
+        
+        // دالة لتحسين البحث وتصحيح الأخطاء
+        function enhanceSearchTerm(term) {
+            if (!term) return term;
+            
+            // إزالة التشكيل
+            term = term.replace(/[\u064B-\u065F]/g, '');
+            
+            // تصحيح الأخطاء الشائعة
+            const corrections = {
+                'هاذه': 'هذه',
+                'هذة': 'هذه',
+                'هاذي': 'هذه',
+                'اذه': 'هذا',
+                'مثلا': 'مثالاً',
+                'لان': 'لأن',
+                'ولاكن': 'ولكن',
+                'الئ': 'الذي',
+                'الئي': 'التي'
+            };
+            
+            Object.keys(corrections).forEach(wrong => {
+                if (term.includes(wrong)) {
+                    term = term.replace(wrong, corrections[wrong]);
+                }
+            });
+            
+            return term;
+        }
+        
+        // دالة للبحث عن كلمات متشابهة
+        function findSimilarTerms(term) {
+            if (!term || term.length < 3) return [];
+            
+            const similar = [];
+            const normalizedTerm = term.normalize('NFKD').replace(/[\u064B-\u065F]/g, '');
+            
+            // البحث في قاموس الكلمات المتشابهة
+            Object.keys(similarWords).forEach(key => {
+                if (key.includes(normalizedTerm) || normalizedTerm.includes(key)) {
+                    similar.push(key);
+                    similarWords[key].forEach(word => similar.push(word));
+                } else {
+                    similarWords[key].forEach(word => {
+                        if (word.includes(normalizedTerm) || normalizedTerm.includes(word)) {
+                            similar.push(key);
+                            similar.push(word);
+                        }
+                    });
+                }
+            });
+            
+            // إزالة التكرارات
+            return [...new Set(similar)].slice(0, 5);
+        }
+        
+        // دالة لتقدير التشابه بين الكلمات
+        function similarity(s1, s2) {
+            const longer = s1.length > s2.length ? s1 : s2;
+            const shorter = s1.length > s2.length ? s2 : s1;
+            
+            if (longer.length === 0) return 1.0;
+            
+            return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
+        }
+        
+        // دالة لحساب مسافة التحرير بين الكلمات
+        function editDistance(s1, s2) {
+            s1 = s1.toLowerCase();
+            s2 = s2.toLowerCase();
+            
+            const costs = [];
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else {
+                        if (j > 0) {
+                            let newValue = costs[j - 1];
+                            if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                                newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                            }
+                            costs[j - 1] = lastValue;
+                            lastValue = newValue;
+                        }
+                    }
+                }
+                if (i > 0) costs[s2.length] = lastValue;
+            }
+            return costs[s2.length];
+        }
+
+        // دالة لجلب وتصفية المنتجات مع البحث المتقدم
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
             const loadingSpinner = document.getElementById('loading-spinner');
             const searchTermDisplay = document.getElementById('search-term-display');
             const searchBox = document.getElementById('search-box');
-    
+            const similarResults = document.getElementById('similar-results');
+            const similarTermsContainer = document.getElementById('similar-terms');
+            
             if (searchBox) searchBox.value = searchTerm;
-    
+            
             loadingSpinner.style.display = 'block';
             noResultsMessage.style.display = 'none';
+            similarResults.style.display = 'none';
             gallery.innerHTML = '';
-    
+            
+            // تحسين مصطلح البحث
+            const enhancedTerm = enhanceSearchTerm(searchTerm);
+            
             fetch('products.json')
                 .then(response => response.json())
                 .then(products => {
-                    const priceMatch = searchTerm.match(/أقل من (\d+)/);
+                    const priceMatch = enhancedTerm.match(/أقل من (\d+)/);
                     
                     if (priceMatch) {
                         const maxPrice = parseInt(priceMatch[1]);
@@ -1580,14 +1976,33 @@
                             return productPrice >= minPrice && productPrice <= maxPrice;
                         });
                     } else {
-                        // البحث عن الكلمات الكاملة فقط
-                        const searchTerms = searchTerm.toLowerCase().split(/\s+/);
+                        // البحث المتقدم مع مراعاة التشابه الدلالي
+                        const searchLower = enhancedTerm.toLowerCase();
                         filteredProducts = products.filter(product => {
-                            const text = `${product.dataName || ''} ${product.name || ''} ${product.sold || ''}`.toLowerCase();
-                            return searchTerms.every(term => {
-                                const regex = new RegExp(`\\b${term}\\b`, 'i');
-                                return regex.test(text);
-                            });
+                            // البحث الأساسي
+                            const basicMatch = 
+                                (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
+                                (product.name && product.name.toLowerCase().includes(searchLower)) ||
+                                (product.sold && product.sold.toLowerCase().includes(searchLower));
+                            
+                            if (basicMatch) return true;
+                            
+                            // البحث المتقدم بالتشابه الدلالي
+                            if (searchLower.length > 3) {
+                                const productName = product.name ? product.name.toLowerCase() : '';
+                                const productDataName = product.dataName ? product.dataName.toLowerCase() : '';
+                                const productSold = product.sold ? product.sold.toLowerCase() : '';
+                                
+                                // حساب التشابه مع مختلف حقول المنتج
+                                const nameSimilarity = similarity(searchLower, productName);
+                                const dataNameSimilarity = similarity(searchLower, productDataName);
+                                const soldSimilarity = similarity(searchLower, productSold);
+                                
+                                // إذا كان التشابه أعلى من 70%
+                                return nameSimilarity > 0.7 || dataNameSimilarity > 0.7 || soldSimilarity > 0.7;
+                            }
+                            
+                            return false;
                         });
                     }
                     
@@ -1600,9 +2015,27 @@
                     if (filteredProducts.length > 0) {
                         loadProducts(0, itemsPerLoad);
                         noResultsMessage.style.display = 'none';
+                        similarResults.style.display = 'none';
                     } else {
                         noResultsMessage.style.display = 'block';
-                        searchTermDisplay.textContent = searchTerm;
+                        searchTermDisplay.textContent = enhancedTerm;
+                        
+                        // عرض اقتراحات بحث مشابهة
+                        const similarTerms = findSimilarTerms(enhancedTerm);
+                        if (similarTerms.length > 0) {
+                            similarTermsContainer.innerHTML = '';
+                            similarTerms.forEach(term => {
+                                const termElement = document.createElement('div');
+                                termElement.className = 'similar-term';
+                                termElement.textContent = term;
+                                termElement.onclick = () => {
+                                    searchBox.value = term;
+                                    fetchAndFilterProducts(term);
+                                };
+                                similarTermsContainer.appendChild(termElement);
+                            });
+                            similarResults.style.display = 'block';
+                        }
                     }
                 })
                 .catch(error => {
@@ -1610,10 +2043,12 @@
                     gallery.innerHTML = '';
                     loadingSpinner.style.display = 'none';
                     noResultsMessage.style.display = 'block';
-                    searchTermDisplay.textContent = searchTerm;
+                    searchTermDisplay.textContent = enhancedTerm;
+                    similarResults.style.display = 'none';
                 });
         }
     
+        // دالة لتحميل المنتجات
         function loadProducts(startIndex, count) {
             const gallery = document.getElementById('gallery');
             const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -1663,6 +2098,7 @@
             startRotatingText(".rotating-text1212:not(.rotating)");
         }
     
+        // مراقب التحميل الكسول
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1679,6 +2115,7 @@
             });
         }, { rootMargin: "0px 0px 200px 0px" });
     
+        // دالة للتحقق من خلفية الصورة البيضاء
         function isWhiteBackground(img) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -1699,6 +2136,7 @@
             return (whitePixelCount / totalPixelCount) > 0.9;
         }
     
+        // دالة لتدوير النصوص
         function startRotatingText(selector) {
             document.querySelectorAll(selector).forEach(element => {
                 element.classList.add('rotating');
@@ -1718,11 +2156,13 @@
             });
         }
     
+        // دالة لقراءة معلمة البحث من URL
         function getSearchTermFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('search') || '';
         }
     
+        // تحميل المنتجات عند التمرير
         document.addEventListener('scroll', function () {
             const gallery = document.getElementById('gallery');
             const triggerHeight = window.innerHeight * 1.5;
@@ -1733,6 +2173,7 @@
             }
         });
     
+        // دالة لتحريك الخط وتنفيذ البحث
         function selectItem(item, element) {
             const searchBox = document.getElementById('search-box');
     
@@ -1760,6 +2201,7 @@
             });
         }
     
+        // دالة لخلط مصفوفة عشوائيًا
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1767,6 +2209,7 @@
             }
         }
     
+        // عند تحميل الصفحة
         window.onload = function () {
             const defaultItem = document.querySelector('.sub-header nav a');
             const underline = document.querySelector('.underline');
@@ -1783,6 +2226,24 @@
             if (searchBox && searchTerm) {
                 searchBox.value = searchTerm;
             }
+            
+            // إضافة حدث البحث عند الكتابة في صندوق البحث
+            if (searchBox) {
+                let searchTimeout;
+                searchBox.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        fetchAndFilterProducts(this.value);
+                    }, 500);
+                });
+                
+                searchBox.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        fetchAndFilterProducts(this.value);
+                    }
+                });
+            }
+            
             fetchAndFilterProducts(searchTerm || '');
         };
     </script>
