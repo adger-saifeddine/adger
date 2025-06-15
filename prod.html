@@ -1718,16 +1718,18 @@ function updateMainMedia(thumbnail) {
             margin-bottom: 10px;
         }
         #toggleTable svg {
-            transition: transform 0.3s ease;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
     <div id="toggleTable">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    
+        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 5px; margin-bottom: 0;">المواصفات</h2>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(180deg);">
             <path d="M10 15L5 10L10 5" stroke="black" stroke-width="2"/>
         </svg>
-        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 5px; margin-bottom: 0;">المواصفات</h2>
+        
     </div>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
@@ -1779,22 +1781,20 @@ function updateMainMedia(thumbnail) {
 
                     // إضافة وظيفة التبديل عند النقر على "المواصفات"
                     const toggleTable = document.getElementById('toggleTable');
+                    let isExpanded = false;
+
                     toggleTable.addEventListener('click', () => {
                         const rows = table.querySelectorAll('tr');
-                        let isExpanded = false;
                         rows.forEach((row, index) => {
                             if (index >= 6) {
-                                if (row.style.display === 'none') {
+                                if (!isExpanded) {
                                     row.style.display = '';
-                                    isExpanded = true;
                                 } else {
                                     row.style.display = 'none';
                                 }
                             }
                         });
-                        // تغيير اتجاه السهم
-                        const svg = toggleTable.querySelector('svg');
-                        svg.style.transform = isExpanded ? 'rotate(180deg)' : '';
+                        isExpanded = !isExpanded;
                     });
                 })
                 .catch(error => {
