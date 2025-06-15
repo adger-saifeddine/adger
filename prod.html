@@ -1663,9 +1663,7 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
-    
- <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;  margin-bottom: -10px;">المواصفات</h2>
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -1770,6 +1768,8 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
             return productId;
         }
+
+
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
             const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
