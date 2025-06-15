@@ -1612,9 +1612,6 @@ function updateMainMedia(thumbnail) {
 
 
 
-
-<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;  margin-bottom: -10px;">المواصفات</h2>
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -1666,21 +1663,20 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
+    <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" id="specificationsTitle">المواصفات</h2>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-    <!-- اكتبه كما هو مع جعل الطرف الاين للجدول بلون رصاصي و الطرف اليسار اي الاجابه بلون ابيض مع الحفاظ علي الخطوط و الهيكل -->
-</body>
-</html>
 
     <script>
         // جلب معرف المنتج من URL
-       function getProductId() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-    return productId;
-}
+        function getProductId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            return productId;
+        }
+
 
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
@@ -1695,7 +1691,7 @@ function updateMainMedia(thumbnail) {
                 .then(products => {
                     const product = products.find(p => p.id === productId);
                     if (!product) {
-                        document.getElementById('productDescription').textContent = 'المنتج غير موجود';
+                        document.getElementById('productDesc').textContent = 'المنتج غير موجود';
                         return;
                     }
 
@@ -1712,20 +1708,32 @@ function updateMainMedia(thumbnail) {
                         table.appendChild(row);
                     });
 
+                    // إخفاء الصفوف الزائدة إذا كان العدد أكثر من 6
+                    const rows = table.querySelectorAll('tr');
+                    if (rows.length > 6) {
+                        for (let i = 6; i < rows.length; i++) {
+                            rows[i].style.display = 'none';
+                        }
+                    }
+
+                    // جعل نص "المواصفات" قابلاً للنقر لإظهار الجدول كاملاً
+                    document.getElementById('specificationsTitle').addEventListener('click', () => {
+                        rows.forEach(row => row.style.display = '');
+                    });
+
                     // تحديث النص الوصفي
-                    document.getElementById('productDescription').textContent = product.description;
+                    document.getElementById('productDesc').textContent = product.description;
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    document.getElementById('productDescription').textContent = 'حدث خطأ أثناء تحميل البيانات';
+                    document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل البيانات';
                 });
         } else {
-            document.getElementById('productDescription').textContent = 'يرجى تحديد معرف المنتج في URL';
+            document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
         }
     </script>
 </body>
 </html>
-
 
     <br>
 
