@@ -1612,7 +1612,7 @@ function updateMainMedia(thumbnail) {
 
 
 
-<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" id="specsTitle">المواصفات</h2>
+<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" onclick="toggleTable()">المواصفات</h2>
 
 <!DOCTYPE html>
 <html lang="ar">
@@ -1630,7 +1630,6 @@ function updateMainMedia(thumbnail) {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            transition: all 0.4s ease;
         }
         .product-table th, .product-table td {
             border: 1px solid #ddd;
@@ -1643,12 +1642,12 @@ function updateMainMedia(thumbnail) {
             background-color: #f1f1f1;
         }
         .product-table td:first-child {
-            background-color: #f0f0f093;
+            background-color: #f0f0f093; /* الطرف الأيمن للجدول بلون رصاصي */
             color: #222;
             font-weight: bold;
         }
         .product-table td:last-child {
-            background-color: #fff;
+            background-color: #fff; /* الطرف الأيسر (الإجابة) بلون أبيض */
             color: #222;
         }
         .description {
@@ -1658,21 +1657,9 @@ function updateMainMedia(thumbnail) {
             margin-top: -4px;
             padding: 0 15px;
         }
-        
-        /* أنيميشن الانتشار من الأسفل */
-        .full-specs {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+        .hidden-rows {
+            display: none;
         }
-        .full-specs.show {
-            max-height: 1000px; /* يمكن تعديلها حسب الحاجة */
-        }
-        .full-specs-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
         @media only screen and (max-width: 768px) {
             .description {
                 margin-top: -8px;
@@ -1685,13 +1672,6 @@ function updateMainMedia(thumbnail) {
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-    
-    <!-- قسم المواصفات الكاملة -->
-    <div id="fullSpecs" class="full-specs">
-        <table class="full-specs-table" id="fullSpecsTable">
-            <!-- سيتم ملؤها ديناميكيًا -->
-        </table>
-    </div>
 
     <script>
         // جلب معرف المنتج من URL
@@ -1700,11 +1680,26 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
             return productId;
         }
-        
-        
+
+        // دالة لعرض/إخفاء الصفوف الإضافية
+        function toggleTable() {
+            const hiddenRows = document.querySelectorAll('.hidden-rows');
+            const specTitle = document.querySelector('h2');
+            
+            hiddenRows.forEach(row => {
+                if (row.style.display === 'none' || row.style.display === '') {
+                    row.style.display = 'table-row';
+                    specTitle.textContent = 'إخفاء المواصفات';
+                } else {
+                    row.style.display = 'none';
+                    specTitle.textContent = 'المواصفات';
+                }
+            });
+        }
+
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 100);
+            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -1719,31 +1714,26 @@ function updateMainMedia(thumbnail) {
                         return;
                     }
 
-                    // تحديث الجدول الرئيسي (5 صفوف فقط)
+                    // تحديث الجدول
                     const table = document.getElementById('productTable');
-                    const fullTable = document.getElementById('fullSpecsTable');
-                    const maxRowsToShow = 5;
-                    
                     product.tableData.forEach((item, index) => {
                         const row = document.createElement('tr');
+                        if (index >= 6) {
+                            row.classList.add('hidden-rows');
+                        }
                         const questionCell = document.createElement('td');
                         const answerCell = document.createElement('td');
                         questionCell.textContent = item.question;
                         answerCell.textContent = item.answer;
                         row.appendChild(questionCell);
                         row.appendChild(answerCell);
-                        
-                        // إضافة للجدول الكامل
-                        fullTable.appendChild(row.cloneNode(true));
-                        
-                        // إضافة للجدول الرئيسي (5 صفوف فقط)
-                        if (index < maxRowsToShow) {
-                            table.appendChild(row);
-                        }
+                        table.appendChild(row);
                     });
 
                     // تحديث النص الوصفي
-                    document.getElementById('productDesc').textContent = product.description;
+                    if (product.description) {
+                        document.getElementById('productDesc').textContent = product.description;
+                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
@@ -1752,27 +1742,6 @@ function updateMainMedia(thumbnail) {
         } else {
             document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
         }
-        
-        // إدارة عرض المواصفات الكاملة
-        const specsTitle = document.getElementById('specsTitle');
-        const fullSpecs = document.getElementById('fullSpecs');
-        
-        specsTitle.addEventListener('click', () => {
-            fullSpecs.classList.toggle('show');
-            
-            // تأثير سلس للانتشار من الأسفل
-            if (fullSpecs.classList.contains('show')) {
-                fullSpecs.style.display = 'block';
-                setTimeout(() => {
-                    fullSpecs.style.opacity = '1';
-                }, 10);
-            } else {
-                fullSpecs.style.opacity = '0';
-                setTimeout(() => {
-                    fullSpecs.style.display = 'none';
-                }, 500);
-            }
-        });
     </script>
 </body>
 </html>
