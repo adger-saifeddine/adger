@@ -1711,65 +1711,36 @@ function updateMainMedia(thumbnail) {
                 margin-top: -8px;
             }
         }
-        .specifications-header {
+        #toggleTable {
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            margin-bottom: 10px;
         }
-        .specifications-header svg {
-            margin-left: 10px;
-        }
-        .hidden-rows {
-            display: none;
+        #toggleTable svg {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <div class="specifications-header" onclick="toggleTable()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <div id="toggleTable">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 15L5 10L10 5" stroke="black" stroke-width="2"/>
         </svg>
-        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
+        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 5px; margin-bottom: 0;">المواصفات</h2>
     </div>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
+
     <script>
-        let isExpanded = false;
-
-        function toggleTable() {
-            const table = document.getElementById('productTable');
-            const rows = table.querySelectorAll('tr');
-            const svg = document.querySelector('.specifications-header svg');
-
-            if (!isExpanded) {
-                rows.forEach((row, index) => {
-                    if (index >= 6) {
-                        row.classList.remove('hidden-rows');
-                    }
-                });
-                svg.style.transform = 'rotate(180deg)';
-            } else {
-                rows.forEach((row, index) => {
-                    if (index >= 6) {
-                        row.classList.add('hidden-rows');
-                    }
-                });
-                svg.style.transform = 'rotate(0deg)';
-            }
-            isExpanded = !isExpanded;
-        }
-
         // جلب معرف المنتج من URL
         function getProductId() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             return productId;
         }
-
-
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
             const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
@@ -1791,20 +1762,40 @@ function updateMainMedia(thumbnail) {
                     const table = document.getElementById('productTable');
                     product.tableData.forEach((item, index) => {
                         const row = document.createElement('tr');
-                        if (index >= 6) {
-                            row.classList.add('hidden-rows');
-                        }
                         const questionCell = document.createElement('td');
                         const answerCell = document.createElement('td');
                         questionCell.textContent = item.question;
                         answerCell.textContent = item.answer;
                         row.appendChild(questionCell);
                         row.appendChild(answerCell);
+                        if (index >= 6) {
+                            row.style.display = 'none'; // إخفاء الصفوف التي تزيد عن 6
+                        }
                         table.appendChild(row);
                     });
 
                     // تحديث النص الوصفي
                     document.getElementById('productDesc').textContent = product.description;
+
+                    // إضافة وظيفة التبديل عند النقر على "المواصفات"
+                    const toggleTable = document.getElementById('toggleTable');
+                    toggleTable.addEventListener('click', () => {
+                        const rows = table.querySelectorAll('tr');
+                        let isExpanded = false;
+                        rows.forEach((row, index) => {
+                            if (index >= 6) {
+                                if (row.style.display === 'none') {
+                                    row.style.display = '';
+                                    isExpanded = true;
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                        });
+                        // تغيير اتجاه السهم
+                        const svg = toggleTable.querySelector('svg');
+                        svg.style.transform = isExpanded ? 'rotate(180deg)' : '';
+                    });
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
