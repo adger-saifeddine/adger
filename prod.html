@@ -1630,6 +1630,7 @@ function updateMainMedia(thumbnail) {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            transition: all 0.4s ease;
         }
         .product-table th, .product-table td {
             border: 1px solid #ddd;
@@ -1658,45 +1659,23 @@ function updateMainMedia(thumbnail) {
             padding: 0 15px;
         }
         
-        /* نافذة المواصفات */
-        .specs-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+        /* أنيميشن الانتشار من الأسفل */
+        .full-specs {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .full-specs.show {
+            max-height: 1000px; /* يمكن تعديلها حسب الحاجة */
+        }
+        .full-specs-table {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .close-btn {
-            color: #aaa;
-            float: left;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close-btn:hover {
-            color: black;
+            border-collapse: collapse;
         }
         
         @media only screen and (max-width: 768px) {
             .description {
                 margin-top: -8px;
-            }
-            .modal-content {
-                width: 95%;
-                margin: 10% auto;
             }
         }
     </style>
@@ -1707,14 +1686,11 @@ function updateMainMedia(thumbnail) {
     </table>
     <p id="productDesc" class="description"></p>
     
-    <!-- نافذة المواصفات الكاملة -->
-    <div id="specsModal" class="specs-modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <table class="product-table" id="fullSpecsTable">
-                <!-- سيتم ملؤها ديناميكيًا -->
-            </table>
-        </div>
+    <!-- قسم المواصفات الكاملة -->
+    <div id="fullSpecs" class="full-specs">
+        <table class="full-specs-table" id="fullSpecsTable">
+            <!-- سيتم ملؤها ديناميكيًا -->
+        </table>
     </div>
 
     <script>
@@ -1728,7 +1704,7 @@ function updateMainMedia(thumbnail) {
         
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(parseInt(productId) / 100);
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -1765,22 +1741,6 @@ function updateMainMedia(thumbnail) {
                             table.appendChild(row);
                         }
                     });
-                    
-                    // إضافة صف "عرض المزيد" إذا كان هناك أكثر من 5 صفوف
-                    if (product.tableData.length > maxRowsToShow) {
-                        const moreRow = document.createElement('tr');
-                        const moreCell = document.createElement('td');
-                        moreCell.colSpan = 2;
-                        moreCell.textContent = `عرض ${product.tableData.length - maxRowsToShow} مواصفات أخرى`;
-                        moreCell.style.color = '#0066cc';
-                        moreCell.style.cursor = 'pointer';
-                        moreCell.style.textAlign = 'center';
-                        moreCell.addEventListener('click', () => {
-                            document.getElementById('specsModal').style.display = 'block';
-                        });
-                        moreRow.appendChild(moreCell);
-                        table.appendChild(moreRow);
-                    }
 
                     // تحديث النص الوصفي
                     document.getElementById('productDesc').textContent = product.description;
@@ -1793,22 +1753,24 @@ function updateMainMedia(thumbnail) {
             document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
         }
         
-        // إدارة نافذة المواصفات
+        // إدارة عرض المواصفات الكاملة
         const specsTitle = document.getElementById('specsTitle');
-        const modal = document.getElementById('specsModal');
-        const closeBtn = document.querySelector('.close-btn');
+        const fullSpecs = document.getElementById('fullSpecs');
         
         specsTitle.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
+            fullSpecs.classList.toggle('show');
+            
+            // تأثير سلس للانتشار من الأسفل
+            if (fullSpecs.classList.contains('show')) {
+                fullSpecs.style.display = 'block';
+                setTimeout(() => {
+                    fullSpecs.style.opacity = '1';
+                }, 10);
+            } else {
+                fullSpecs.style.opacity = '0';
+                setTimeout(() => {
+                    fullSpecs.style.display = 'none';
+                }, 500);
             }
         });
     </script>
