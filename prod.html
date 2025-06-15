@@ -1612,6 +1612,9 @@ function updateMainMedia(thumbnail) {
 
 
 
+
+<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif;  margin-right: 11px;  margin-bottom: -10px;">المواصفات</h2>
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -1655,16 +1658,6 @@ function updateMainMedia(thumbnail) {
             margin-top: -4px;
             padding: 0 15px;
         }
-        .show-more {
-            cursor: pointer;
-            color: #0a78d1;
-            text-decoration: underline;
-            font-size: 17px;
-            font-family: Cairo, sans-serif;
-            margin-right: 11px;
-            margin-bottom: -10px;
-            display: inline-block;
-        }
         @media only screen and (max-width: 768px) {
             .description {
                 margin-top: -8px;
@@ -1673,38 +1666,21 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
-    <h2 id="specHeader" class="show-more" style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
-    <p id="productDescription" class="description"></p>
+    <p id="productDesc" class="description"></p>
+    <!-- اكتبه كما هو مع جعل الطرف الاين للجدول بلون رصاصي و الطرف اليسار اي الاجابه بلون ابيض مع الحفاظ علي الخطوط و الهيكل -->
+</body>
+</html>
 
     <script>
         // جلب معرف المنتج من URL
-        function getProductId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            return productId;
-        }
-
-        let fullTableData = [];
-        let showingAll = false;
-
-        function renderTable(data, limitRows = 6) {
-            const table = document.getElementById('productTable');
-            table.innerHTML = '';
-            const rowsToShow = (limitRows && data.length > limitRows && !showingAll) ? data.slice(0, limitRows) : data;
-            rowsToShow.forEach(item => {
-                const row = document.createElement('tr');
-                const questionCell = document.createElement('td');
-                const answerCell = document.createElement('td');
-                questionCell.textContent = item.question;
-                answerCell.textContent = item.answer;
-                row.appendChild(questionCell);
-                row.appendChild(answerCell);
-                table.appendChild(row);
-            });
-        }
+       function getProductId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    return productId;
+}
 
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
@@ -1723,26 +1699,21 @@ function updateMainMedia(thumbnail) {
                         return;
                     }
 
-                    // حفظ البيانات الكاملة للجدول
-                    fullTableData = product.tableData || [];
-
                     // تحديث الجدول
-                    renderTable(fullTableData, 6);
+                    const table = document.getElementById('productTable');
+                    product.tableData.forEach(item => {
+                        const row = document.createElement('tr');
+                        const questionCell = document.createElement('td');
+                        const answerCell = document.createElement('td');
+                        questionCell.textContent = item.question;
+                        answerCell.textContent = item.answer;
+                        row.appendChild(questionCell);
+                        row.appendChild(answerCell);
+                        table.appendChild(row);
+                    });
 
                     // تحديث النص الوصفي
                     document.getElementById('productDescription').textContent = product.description;
-
-                    // إذا كان هنالك أكثر من 6 صفوف، أضف حدث النقر
-                    if (fullTableData.length > 6) {
-                        const specHeader = document.getElementById('specHeader');
-                        specHeader.style.cursor = 'pointer';
-                        specHeader.title = 'اضغط لعرض جميع المواصفات';
-                        specHeader.onclick = function () {
-                            showingAll = !showingAll;
-                            renderTable(fullTableData, 6);
-                            specHeader.textContent = showingAll ? 'إخفاء المواصفات الإضافية' : 'المواصفات';
-                        };
-                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
@@ -1754,6 +1725,7 @@ function updateMainMedia(thumbnail) {
     </script>
 </body>
 </html>
+
 
     <br>
 
