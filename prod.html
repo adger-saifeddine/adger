@@ -1715,11 +1715,10 @@ function updateMainMedia(thumbnail) {
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* السهم الآن على اليسار */
+            justify-content: flex-end;
         }
         .specifications-header svg {
-            margin-left: 10px;
-            transition: transform 0.3s ease;
+            margin-right: 11px;
         }
         .hidden-rows {
             display: none;
@@ -1727,23 +1726,22 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
-    <div class="specifications-header" id="toggleButton" onclick="toggleTable()">
+    <div class="specifications-header" onclick="toggleTable()">
+        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-bottom: -10px;">المواصفات</h2>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin: 0;">المواصفات</h2>
     </div>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-
     <script>
         let isExpanded = false;
 
         function toggleTable() {
             const table = document.getElementById('productTable');
-            const rows = Array.from(table.querySelectorAll('tr')).filter(r => r.cells.length > 0); // تجاهل الصفوف الفارغة
+            const rows = table.querySelectorAll('tr');
             const svg = document.querySelector('.specifications-header svg');
 
             if (!isExpanded) {
@@ -1770,7 +1768,6 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
             return productId;
         }
-
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
             const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
@@ -1790,7 +1787,6 @@ function updateMainMedia(thumbnail) {
 
                     // تحديث الجدول
                     const table = document.getElementById('productTable');
-                    const totalRows = product.tableData.length;
                     product.tableData.forEach((item, index) => {
                         const row = document.createElement('tr');
                         if (index >= 6) {
@@ -1805,10 +1801,9 @@ function updateMainMedia(thumbnail) {
                         table.appendChild(row);
                     });
 
-                    // إخفاء الزر إذا كانت الصفوف <= 6
-                    const toggleBtn = document.getElementById('toggleButton');
-                    if (totalRows <= 6) {
-                        toggleBtn.style.display = 'none';
+                    // إخفاء السهم إذا كان عدد الصفوف 6 أو أقل
+                    if (product.tableData.length <= 6) {
+                        document.querySelector('.specifications-header svg').style.display = 'none';
                     }
 
                     // تحديث النص الوصفي
