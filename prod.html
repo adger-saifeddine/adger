@@ -1663,14 +1663,105 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
-    
-    <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" id="specificationsTitle">المواصفات</h2>
+    <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول معلومات المنتج</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .product-table th {
+            background-color: #f2f2f2;
+        }
+        .product-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .product-table td:first-child {
+            background-color: #f0f0f093; /* الطرف الأيمن للجدول بلون رصاصي */
+            color: #222;
+            font-weight: bold;
+        }
+        .product-table td:last-child {
+            background-color: #fff; /* الطرف الأيسر (الإجابة) بلون أبيض */
+            color: #222;
+        }
+        .description {
+            color: #575757;
+            font-size: 15px;
+            font-family: Cairo, sans-serif;
+            margin-top: -4px;
+            padding: 0 15px;
+        }
+        @media only screen and (max-width: 768px) {
+            .description {
+                margin-top: -8px;
+            }
+        }
+        .specifications-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .specifications-header svg {
+            margin-left: 10px;
+        }
+        .hidden-rows {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="specifications-header" onclick="toggleTable()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
+    </div>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
-
     <script>
+        let isExpanded = false;
+
+        function toggleTable() {
+            const table = document.getElementById('productTable');
+            const rows = table.querySelectorAll('tr');
+            const svg = document.querySelector('.specifications-header svg');
+
+            if (!isExpanded) {
+                rows.forEach((row, index) => {
+                    if (index >= 6) {
+                        row.classList.remove('hidden-rows');
+                    }
+                });
+                svg.style.transform = 'rotate(180deg)';
+            } else {
+                rows.forEach((row, index) => {
+                    if (index >= 6) {
+                        row.classList.add('hidden-rows');
+                    }
+                });
+                svg.style.transform = 'rotate(0deg)';
+            }
+            isExpanded = !isExpanded;
+        }
+
         // جلب معرف المنتج من URL
         function getProductId() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1698,8 +1789,11 @@ function updateMainMedia(thumbnail) {
 
                     // تحديث الجدول
                     const table = document.getElementById('productTable');
-                    product.tableData.forEach(item => {
+                    product.tableData.forEach((item, index) => {
                         const row = document.createElement('tr');
+                        if (index >= 6) {
+                            row.classList.add('hidden-rows');
+                        }
                         const questionCell = document.createElement('td');
                         const answerCell = document.createElement('td');
                         questionCell.textContent = item.question;
@@ -1707,19 +1801,6 @@ function updateMainMedia(thumbnail) {
                         row.appendChild(questionCell);
                         row.appendChild(answerCell);
                         table.appendChild(row);
-                    });
-
-                    // إخفاء الصفوف الزائدة إذا كان العدد أكثر من 6
-                    const rows = table.querySelectorAll('tr');
-                    if (rows.length > 6) {
-                        for (let i = 6; i < rows.length; i++) {
-                            rows[i].style.display = 'none';
-                        }
-                    }
-
-                    // جعل نص "المواصفات" قابلاً للنقر لإظهار الجدول كاملاً
-                    document.getElementById('specificationsTitle').addEventListener('click', () => {
-                        rows.forEach(row => row.style.display = '');
                     });
 
                     // تحديث النص الوصفي
@@ -1735,7 +1816,6 @@ function updateMainMedia(thumbnail) {
     </script>
 </body>
 </html>
-
     <br>
 
 </div>
