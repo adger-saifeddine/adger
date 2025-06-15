@@ -1660,15 +1660,26 @@ function updateMainMedia(thumbnail) {
                 margin-top: -8px;
             }
         }
+.arrow {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px; /* مسافة بين السهم والنص */
+    vertical-align: middle; /* محاذاة السهم مع النص */
+}
+
     </style>
 </head>
 <body>
-    <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" id="specificationsTitle">المواصفات</h2>
-    <table class="product-table" id="productTable">
-        <!-- الصفوف سيتم إضافتها ديناميكيًا -->
-    </table>
-    <p id="productDesc" class="description"></p>
-
+<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" id="specificationsTitle">
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+        <path d="M7 10l5 5 5-5H7z" fill="#202020"/>
+    </svg>
+    المواصفات
+</h2>
+<table class="product-table" id="productTable">
+    <!-- الصفوف سيتم إضافتها ديناميكيًا -->
+</table>
+<p id="productDesc" class="description"></p>
     <script>
         // جلب معرف المنتج من URL
         function getProductId() {
