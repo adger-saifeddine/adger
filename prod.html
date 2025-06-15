@@ -1612,8 +1612,6 @@ function updateMainMedia(thumbnail) {
 
 
 
-<h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px; cursor: pointer;" onclick="toggleTable()">المواصفات</h2>
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -1657,8 +1655,15 @@ function updateMainMedia(thumbnail) {
             margin-top: -4px;
             padding: 0 15px;
         }
-        .hidden-rows {
-            display: none;
+        .show-more {
+            cursor: pointer;
+            color: #0a78d1;
+            text-decoration: underline;
+            font-size: 17px;
+            font-family: Cairo, sans-serif;
+            margin-right: 11px;
+            margin-bottom: -10px;
+            display: inline-block;
         }
         @media only screen and (max-width: 768px) {
             .description {
@@ -1668,10 +1673,11 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
+    <h2 id="specHeader" class="show-more" style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
-    <p id="productDesc" class="description"></p>
+    <p id="productDescription" class="description"></p>
 
     <script>
         // جلب معرف المنتج من URL
@@ -1681,19 +1687,22 @@ function updateMainMedia(thumbnail) {
             return productId;
         }
 
-        // دالة لعرض/إخفاء الصفوف الإضافية
-        function toggleTable() {
-            const hiddenRows = document.querySelectorAll('.hidden-rows');
-            const specTitle = document.querySelector('h2');
-            
-            hiddenRows.forEach(row => {
-                if (row.style.display === 'none' || row.style.display === '') {
-                    row.style.display = 'table-row';
-                    specTitle.textContent = 'إخفاء المواصفات';
-                } else {
-                    row.style.display = 'none';
-                    specTitle.textContent = 'المواصفات';
-                }
+        let fullTableData = [];
+        let showingAll = false;
+
+        function renderTable(data, limitRows = 6) {
+            const table = document.getElementById('productTable');
+            table.innerHTML = '';
+            const rowsToShow = (limitRows && data.length > limitRows && !showingAll) ? data.slice(0, limitRows) : data;
+            rowsToShow.forEach(item => {
+                const row = document.createElement('tr');
+                const questionCell = document.createElement('td');
+                const answerCell = document.createElement('td');
+                questionCell.textContent = item.question;
+                answerCell.textContent = item.answer;
+                row.appendChild(questionCell);
+                row.appendChild(answerCell);
+                table.appendChild(row);
             });
         }
 
@@ -1710,37 +1719,37 @@ function updateMainMedia(thumbnail) {
                 .then(products => {
                     const product = products.find(p => p.id === productId);
                     if (!product) {
-                        document.getElementById('productDesc').textContent = 'المنتج غير موجود';
+                        document.getElementById('productDescription').textContent = 'المنتج غير موجود';
                         return;
                     }
 
+                    // حفظ البيانات الكاملة للجدول
+                    fullTableData = product.tableData || [];
+
                     // تحديث الجدول
-                    const table = document.getElementById('productTable');
-                    product.tableData.forEach((item, index) => {
-                        const row = document.createElement('tr');
-                        if (index >= 6) {
-                            row.classList.add('hidden-rows');
-                        }
-                        const questionCell = document.createElement('td');
-                        const answerCell = document.createElement('td');
-                        questionCell.textContent = item.question;
-                        answerCell.textContent = item.answer;
-                        row.appendChild(questionCell);
-                        row.appendChild(answerCell);
-                        table.appendChild(row);
-                    });
+                    renderTable(fullTableData, 6);
 
                     // تحديث النص الوصفي
-                    if (product.description) {
-                        document.getElementById('productDesc').textContent = product.description;
+                    document.getElementById('productDescription').textContent = product.description;
+
+                    // إذا كان هنالك أكثر من 6 صفوف، أضف حدث النقر
+                    if (fullTableData.length > 6) {
+                        const specHeader = document.getElementById('specHeader');
+                        specHeader.style.cursor = 'pointer';
+                        specHeader.title = 'اضغط لعرض جميع المواصفات';
+                        specHeader.onclick = function () {
+                            showingAll = !showingAll;
+                            renderTable(fullTableData, 6);
+                            specHeader.textContent = showingAll ? 'إخفاء المواصفات الإضافية' : 'المواصفات';
+                        };
                     }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل البيانات';
+                    document.getElementById('productDescription').textContent = 'حدث خطأ أثناء تحميل البيانات';
                 });
         } else {
-            document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
+            document.getElementById('productDescription').textContent = 'يرجى تحديد معرف المنتج في URL';
         }
     </script>
 </body>
