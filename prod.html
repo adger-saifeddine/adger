@@ -1693,7 +1693,7 @@ function updateMainMedia(thumbnail) {
             background-color: #f1f1f1;
         }
         .product-table td:first-child {
-            background-color: #f0f0f093; /* الطرف الأيمن للجدول بلون رصاصي */
+            background-color: #f0f0f0; /* الطرف الأيمن للجدول بلون رصاصي */
             color: #222;
             font-weight: bold;
         }
@@ -1708,18 +1708,6 @@ function updateMainMedia(thumbnail) {
             margin-top: -4px;
             padding: 0 15px;
         }
-        .show-more-btn {
-            display: block;
-            margin: 10px auto;
-            padding: 8px 16px;
-            background-color: #f2f2f2;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .hidden-rows {
-            display: none;
-        }
         @media only screen and (max-width: 768px) {
             .description {
                 margin-top: -8px;
@@ -1728,10 +1716,11 @@ function updateMainMedia(thumbnail) {
     </style>
 </head>
 <body>
+    <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-right: 11px; margin-bottom: -10px;">المواصفات</h2>
     <table class="product-table" id="productTable">
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
-    <button id="showMoreBtn" class="show-more-btn" style="display: none;">عرض المزيد</button>
+    <button id="showMoreBtn" style="display: none; margin: 10px auto; display: block;">عرض المزيد</button>
     <p id="productDesc" class="description"></p>
 
     <script>
@@ -1741,6 +1730,7 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
             return productId;
         }
+
 
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
@@ -1761,10 +1751,7 @@ function updateMainMedia(thumbnail) {
 
                     // تحديث الجدول
                     const table = document.getElementById('productTable');
-                    const showMoreBtn = document.getElementById('showMoreBtn');
-                    let rows = [];
-                    
-                    product.tableData.forEach((item, index) => {
+                    product.tableData.forEach(item => {
                         const row = document.createElement('tr');
                         const questionCell = document.createElement('td');
                         const answerCell = document.createElement('td');
@@ -1772,25 +1759,16 @@ function updateMainMedia(thumbnail) {
                         answerCell.textContent = item.answer;
                         row.appendChild(questionCell);
                         row.appendChild(answerCell);
-                        
-                        if (index >= 6) {
-                            row.classList.add('hidden-rows');
-                        }
-                        
                         table.appendChild(row);
-                        rows.push(row);
                     });
 
-                    // إذا كان هناك أكثر من 6 صفوف، نعرض زر "عرض المزيد"
-                    if (product.tableData.length > 6) {
-                        showMoreBtn.style.display = 'block';
-                        
-                        showMoreBtn.addEventListener('click', function() {
-                            rows.forEach(row => {
-                                row.classList.remove('hidden-rows');
-                            });
-                            showMoreBtn.style.display = 'none';
-                        });
+                    // إدارة إظهار الصفوف
+                    const rows = table.rows;
+                    if (rows.length > 6) {
+                        for (let i = 6; i < rows.length; i++) {
+                            rows[i].style.display = 'none';
+                        }
+                        document.getElementById('showMoreBtn').style.display = 'block';
                     }
 
                     // تحديث النص الوصفي
@@ -1803,6 +1781,16 @@ function updateMainMedia(thumbnail) {
         } else {
             document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
         }
+
+        // إضافة حدث النقر على الزر
+        document.getElementById('showMoreBtn').addEventListener('click', function() {
+            const table = document.getElementById('productTable');
+            const rows = table.rows;
+            for (let i = 6; i < rows.length; i++) {
+                rows[i].style.display = '';
+            }
+            this.style.display = 'none';
+        });
     </script>
 </body>
 </html>
