@@ -3825,7 +3825,7 @@
   "media": [
     {"src": "https://files.catbox.moe/w5jx3o.mp4", "type": "video"},
     {"src": "https://files.catbox.moe/g3u7u2.jpg", "type": "image"},
-    {"src": "https://files.catbox.moe/zmhmb1.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/uv00m4.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/zii5dv.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/2yekf6.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/80rd95.jpg", "type": "image"},
@@ -3869,8 +3869,9 @@
     {
       "type": "images",
       "items": [
+            "https://files.catbox.moe/f3qtx6.webp",
         "https://files.catbox.moe/g3u7u2.jpg",
-        "https://files.catbox.moe/zmhmb1.jpg",
+        "https://files.catbox.moe/uv00m4.jpg",
         "https://files.catbox.moe/zii5dv.jpg",
         "https://files.catbox.moe/2yekf6.jpg",
         "https://files.catbox.moe/80rd95.jpg",
