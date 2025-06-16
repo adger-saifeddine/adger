@@ -484,7 +484,7 @@
 },
 {
   "name": "حامل عرض مجوهرات PET - إطار عائم",
-  "dataName": "#54 صندوق عرض مجوهرات بتصميم مبتكر",
+  "dataName": "#54 صندوق ",
   "price": "300.00",
   "image": "https://files.catbox.moe/bmuevt.jpg",
   "sold": "مستلزمات المجوهرات",
@@ -546,6 +546,24 @@
   "sold": "إكسسوارات إلكترونية",
   "discountTexts": ["كان بـ600 جنيه", "خصم 67%"],
   "link": "prod.html?id=60"
+},
+{
+  "name": "نظارات شمسية مربعة - طراز الهيب هوب",
+  "dataName": "#61 نظارات شمسية عصرية للرجال والنساء",
+  "price": "250.00",
+  "image": "https://files.catbox.moe/uo19qq.webp",
+  "sold": "النظارات والإكسسوارات",
+  "discountTexts": ["تصميم مربع كلاسيكي", "عدسات معكوسة"],
+  "link": "prod.html?id=61"
+},
+{
+  "name": "كاميرا منظار 7.0 مم مقاومة للماء",
+  "dataName": "#62 كاميرا تفتيش مرنة لأندرويد",
+  "price": "320.00",
+  "image": "https://files.catbox.moe/g3u7u2.jpg",
+  "sold": "الكترونيات",
+  "discountTexts": ["6 مصابيح LED", "مقاومة للماء IP67"],
+  "link": "prod.html?id=62"
 }
 
 

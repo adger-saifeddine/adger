@@ -3726,6 +3726,180 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "61",
+  "media": [
+    {"src": "https://files.catbox.moe/jdkbas.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/uo19qq.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/4v2jf9.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/pubhdj.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/j3bjco.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/qyky5l.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/t3uztr.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/jfvdqo.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/c8rnpj.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/c05ijx.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/b5rwb2.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ocl6hl.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ek0hqm.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/20tga6.jpg", "type": "image"}
+  ],
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "تصميم مربع كلاسيكي",
+    "إطارات معدنية متينة",
+    "عدسات ملونة عصرية"
+  ],
+  "longText": "نظارات شمسية مربعة على طراز الهيب هوب - خيار عصري للرجال والنساء",
+  "desc": "نظارات شمسية عصرية بتصميم مربع مستوحى من موضة الهيب هوب، مصنوعة من سبائك معدنية خفيفة الوزن مع عدسات بلاستيكية ملونة. تتميز بإطارات قوية وعدسات معكوسة تمنحك مظهرًا جذابًا وحماية من أشعة الشمس. مناسبة للاستخدام اليومي غير الرسمي وتأتي بعدة ألوان متنوعة للعدسات والإطارات.",
+  "sales": "النظارات والإكسسوارات",
+  "buttonId": "commentButton61",
+  "commentId": "61",
+  "elementId": "commentCount61",
+  "tableData": [
+    {"question": "النوع", "answer": "نظارات شمسية"},
+    {"question": "النمط", "answer": "مربع - طراز الهيب هوب"},
+    {"question": "مادة الإطار", "answer": "سبيكة معدنية"},
+    {"question": "مادة العدسات", "answer": "بلاستيك"},
+    {"question": "نوع العدسات", "answer": "معكوسة"},
+    {"question": "الألوان المتاحة", "answer": "عدسة سماوي/فضي - عدسة سوداء/أسود - عدسة حمراء/أسود - عدسة سوداء/ذهبي - عدسة سوداء/فضي - عدسة بنية/ذهبي - عدسة شبه سوداء/فضي"},
+    {"question": "الجنس", "answer": "مناسبة للرجال والنساء"},
+    {"question": "المنشأ", "answer": "الصين"},
+    {"question": "العلامة التجارية", "answer": "RMM"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/jdkbas.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/uo19qq.webp",
+        "https://files.catbox.moe/4v2jf9.webp",
+        "https://files.catbox.moe/pubhdj.webp",
+        "https://files.catbox.moe/j3bjco.webp",
+        "https://files.catbox.moe/qyky5l.webp",
+        "https://files.catbox.moe/t3uztr.webp",
+        "https://files.catbox.moe/jfvdqo.jpg",
+        "https://files.catbox.moe/c8rnpj.jpg",
+        "https://files.catbox.moe/c05ijx.jpg",
+        "https://files.catbox.moe/b5rwb2.jpg",
+        "https://files.catbox.moe/ocl6hl.jpg",
+        "https://files.catbox.moe/ek0hqm.jpg",
+        "https://files.catbox.moe/20tga6.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/uo19qq.webp",
+    "name": "نظارات شمسية مربعة - طراز الهيب هوب",
+    "sold": "النظارات والإكسسوارات",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "61",
+    "productId": "61",
+    "shippingPrice": "40",
+    "colors": [
+      "عدسة سماوي/معدن فضي",
+      "عدسة سوداء/معدن أسود",
+      "عدسة حمراء/معدن أسود",
+      "عدسة سوداء/معدن ذهبي",
+      "عدسة سوداء/معدن فضي",
+      "عدسة بنية/معدن ذهبي",
+      "عدسة شبه سوداء/معدن فضي"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "شكل عصري"
+  }
+},
+{
+  "id": "62",
+  "media": [
+    {"src": "https://files.catbox.moe/w5jx3o.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/g3u7u2.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/zmhmb1.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/zii5dv.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/2yekf6.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/80rd95.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/17mwp0.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/f3qtx6.webp", "type": "image"}
+  ],
+  "pri": "320",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "كاميرا منظار 7.0 مم مقاومة للماء IP67",
+    "6 مصابيح LED قابلة للتعديل",
+    "متوافق مع أندرويد عبر USB"
+  ],
+  "longText": "كاميرا منظار 7.0 مم للهواتف الذكية - أداة تفتيش مرنة",
+  "desc": "كاميرا منظار احترافية بقطر 7.0 مم مزودة بـ6 مصابيح LED قابلة للتعديل، مقاومة للماء بمستوى IP67. تتميز بسلك مرن بطول 1.5 متر وواجهة USB للاتصال بأجهزة أندرويد (4.0+). تتيح التقاط الصور وتسجيل الفيديو بدقة 640×480، مع مسافة بؤرية تتراوح بين 3-8 سم. مثالية لأعمال التفتيش في الأماكن الضيقة، الصيانة المنزلية، فحص السيارات والأنابيب.",
+  "sales": "الكترونيات",
+  "buttonId": "commentButton62",
+  "commentId": "62",
+  "elementId": "commentCount62",
+  "tableData": [
+    {"question": "نوع الكاميرا", "answer": "منظار داخلي (Endoscope)"},
+    {"question": "قطر الرأس", "answer": "7.0 مم"},
+    {"question": "المقاومة للماء", "answer": "IP67"},
+    {"question": "المصابيح", "answer": "6 LED قابلة للتعديل"},
+    {"question": "الدقة", "answer": "640 × 480 بكسل"},
+    {"question": "طول السلك", "answer": "1.5 متر"},
+    {"question": "نظام التشغيل", "answer": "أندرويد 4.0+ (يدعم OTG)"},
+    {"question": "نوع الاتصال", "answer": "USB"},
+    {"question": "درجة الحرارة", "answer": "-20°C إلى 100°C"},
+    {"question": "المنشأ", "answer": "الصين"},
+    {"question": "العلامة التجارية", "answer": "OLPAY"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/w5jx3o.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/g3u7u2.jpg",
+        "https://files.catbox.moe/zmhmb1.jpg",
+        "https://files.catbox.moe/zii5dv.jpg",
+        "https://files.catbox.moe/2yekf6.jpg",
+        "https://files.catbox.moe/80rd95.jpg",
+        "https://files.catbox.moe/17mwp0.webp",
+        "https://files.catbox.moe/f3qtx6.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/g3u7u2.jpg",
+    "name": "كاميرا منظار 7.0 مم مقاومة للماء",
+    "sold": "الكترونيات",
+    "price": "320.00",
+    "discount": "",
+    "pageId": "62",
+    "productId": "62",
+    "shippingPrice": "40",
+    "features": [
+      "مقاومة للماء IP67",
+      "6 مصابيح LED",
+      "سلك مرن 1.5 متر"
+    ],
+    "compatibility": "أندرويد 4.0+ مع دعم OTG",
+    "resolution": "640×480"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
 
 
