@@ -579,10 +579,19 @@
   "dataName": "#64 ماوس ألعاب بدقة 8000 DPI وإضاءة RGB",
   "price": "950.00",
   "oldPrice": "1200.00",
-  "image": "https://files.catbox.moe/ikeg2e.png",
+  "image": "https://files.catbox.moe/evoa6q.jpg",
   "sold": "إكسسوارات ألعاب",
   "discountTexts": ["كان بـ1200 جنيه", "خصم 21%"],
   "link": "prod.html?id=64"
+},
+{
+  "name": "روبوت كلب ميكانيكي للتحكم عن بعد",
+  "dataName": "#65 مجموعة تعليمية STEM للتركيب الذاتي",
+  "price": "1350.00",
+  "image": "https://files.catbox.moe/3xdjvn.png",
+  "sold": "ألعاب تعليمية",
+  "discountTexts": ["تركيب ذاتي", "تحكم عن بعد"],
+  "link": "prod.html?id=65"
 }
 
 

@@ -4039,6 +4039,72 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "65",
+  "media": [
+    {"src": "https://files.catbox.moe/gyoh8z.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/3xdjvn.png", "type": "image"},
+    {"src": "https://files.catbox.moe/uhfjur.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/oryfsh.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/s02lqb.jpg", "type": "image"}
+  ],
+  "pri": "1350",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "روبوت كلب ميكانيكي للتحكم عن بعد",
+    "مجموعة تعليمية STEM للتركيب الذاتي",
+    "مناسب للأطفال من 6-14 سنة"
+  ],
+  "longText": "لعبة روبوت كلب ميكانيكي للتحكم عن بعد - مجموعة تعليمية STEM للتركيب الذاتي",
+  "desc": "مجموعة روبوت كلب ميكانيكي تعليمية للتحكم عن بعد، مصممة لتعزيز الإبداع والمهارات الحركية لدى الأطفال من سن 6 إلى 14 سنة. تتميز بتصميم واقعي مع حركات ميكانيكية للأطراف، وتعمل بالتحكم عن بعد لمحاكاة حركات الكلب الحقيقي. تحتوي على جميع القطع اللازمة للتركيب الذاتي مما يجعلها هدية تعليمية مثالية تنمي التفكير الإبداعي والتفاعل بين الوالدين والطفل.",
+  "sales": "ألعاب تعليمية",
+  "buttonId": "commentButton65",
+  "commentId": "65",
+  "elementId": "commentCount65",
+  "tableData": [
+    {"question": "النوع", "answer": "روبوت كلب ميكانيكي للتحكم عن بعد"},
+    {"question": "الفئة العمرية", "answer": "6-14 سنة"},
+    {"question": "المادة", "answer": "بلاستيك"},
+    {"question": "الأبعاد", "answer": "13.5×7×8 سم"},
+    {"question": "البطاريات المطلوبة", "answer": "2 × AAA (غير متضمنة) + 2 × LR44 (مضمنة)"},
+    {"question": "المميزات", "answer": "تركيب ذاتي - حركات ميكانيكية واقعية - تحكم عن بعد"},
+    {"question": "المحتويات", "answer": "1 كلب ميكانيكي - 1 رأس قطة بديل - 1 جهاز تحكم عن بعد"},
+    {"question": "العلامة التجارية", "answer": "Kmoist"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/y8lfoi.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/3xdjvn.png",
+        "https://files.catbox.moe/uhfjur.jpg",
+        "https://files.catbox.moe/oryfsh.jpg",
+        "https://files.catbox.moe/s02lqb.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/3xdjvn.png",
+    "name": "روبوت كلب ميكانيكي للتحكم عن بعد",
+    "sold": "ألعاب تعليمية",
+    "price": "1350.00",
+    "discount": "",
+    "pageId": "65",
+    "productId": "65",
+    "shippingPrice": "80"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "تحكم عن بعد"
+  }
 }
 
 
