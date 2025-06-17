@@ -4105,8 +4105,246 @@
     "currency": "جنيه",
     "discountLabel": "تحكم عن بعد"
   }
-}
+},
 
+{
+  "id": "66",
+  "media": [
+    {"src": "https://files.catbox.moe/yyjwiz.mp4", "type": "video"},
+    {"src": "https://files.catbox.moe/y0j778.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/62clw8.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ve20uo.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/lbfm41.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/th1uje.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/8i9j5x.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/8xkd0h.avif", "type": "image"}
+  ],
+  "pri": "680",
+  "oldPrice": "1200",
+  "dis": "خصم 43%",
+  "changingText": [
+    "دمية لابوبو الفينيل الفاخرة",
+    "تصميم مخصص DIY",
+    "متوفرة بعدة ألوان جذابة"
+  ],
+  "longText": "دمية لابوبو الفينيل الفاخرة - لعبة جمع وتزيين مخصصة",
+  "desc": "دمية لابوبو الفينيل الفاخرة من MINISO، مصنوعة من مواد عالية الجودة بملمس ناعم. تأتي بعدة ألوان مميزة (بني غامق، بني فاتح، وردي، أخضر فاتح، بنفسجي فاتح، أصفر فاتح) وتتميز بإمكانية التخصيص والتركيب الذاتي. مثالية لهواة الجمع وكهدايا عيد ميلاد مميزة للأطفال والكبار. الشكل الفريد والتصميم الجذاب يجعلها قطعة ديكور رائعة بالإضافة إلى كونها لعبة محببة.",
+  "sales": "ألعاب وهوايات",
+  "buttonId": "commentButton66",
+  "commentId": "66",
+  "elementId": "commentCount66",
+  "tableData": [
+    {"question": "النوع", "answer": "دمية فينيل فاخرة"},
+    {"question": "المادة", "answer": "فينيل فاخر (قطيفة)"},
+    {"question": "الألوان", "answer": "بني غامق، بني فاتح، وردي، أخضر فاتح، بنفسجي فاتح، أصفر فاتح"},
+    {"question": "العلامة التجارية", "answer": "MINISO"},
+    {"question": "الفئة العمرية", "answer": "14+ (مناسبة للكبار والأطفال)"},
+    {"question": "الخصائص", "answer": "قابلة للتخصيص - DIY"},
+    {"question": "الاستخدام", "answer": "جمع - هدايا - ديكور"},
+    {"question": "الشهادة", "answer": "CE"},
+    {"question": "المنشأ", "answer": "الصين (Guangdong)"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/yyjwiz.mp4"
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/y0j778.jpg",
+        "https://files.catbox.moe/62clw8.jpg",
+        "https://files.catbox.moe/ve20uo.avif",
+        "https://files.catbox.moe/lbfm41.avif",
+        "https://files.catbox.moe/th1uje.avif",
+        "https://files.catbox.moe/8i9j5x.avif",
+        "https://files.catbox.moe/8xkd0h.avif"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/y0j778.jpg",
+    "name": "دمية لابوبو الفينيل الفاخرة",
+    "sold": "ألعاب وهوايات",
+    "price": "680.00",
+    "discount": "1200.00",
+    "pageId": "66",
+    "productId": "66",
+    "shippingPrice": "60",
+    "colors": ["بني غامق", "بني فاتح", "وردي", "أخضر فاتح", "بنفسجي فاتح", "أصفر فاتح"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "67",
+  "media": [
+    {"src": "https://files.catbox.moe/mlwl5s.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/1nojcr.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/kg3aia.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/9n0u7i.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/3z9094.jpg", "type": "image"}
+  ],
+  "pri": "200",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "حافظة جلدية فاخرة لسامسونج جالاكسي",
+    "حماية متكاملة من الصدمات والخدوش",
+    "تصميم أنيق مع فتحات دقيقة"
+  ],
+  "longText": "حافظة جلدية عالية الجودة لهواتف سامسونج جالاكسي بجميع موديلاتها",
+  "desc": "حافظة هاتف جلدية فاخرة مصنوعة من خليط TPU والسيليكون، توفر حماية كاملة لهاتفك من الصدمات والخدوش مع الحفاظ على المظهر الأنيق. تتميز بفتحات دقيقة تتيح الوصول لجميع أزرار الهاتف ومداخل الشحن، مع سطح مقاوم للبصمات والغبار. متوفرة بعدة ألوان تناسب جميع الأذواق وتتوافق مع معظم موديلات سامسونج جالاكسي الحديثة.",
+  "sales": "إكسسوارات جوال",
+  "buttonId": "commentButton67",
+  "commentId": "67",
+  "elementId": "commentCount67",
+  "tableData": [
+    {"question": "النوع", "answer": "حافظة جلدية نصفية"},
+    {"question": "المادة", "answer": "جلد + TPU سيليكون"},
+    {"question": "الألوان", "answer": "رصاصي، أسود، أزرق، عاجي، أبيض، بني"},
+    {"question": "المميزات", "answer": "مقاوم للصدمات - مضاد للخدش - مقاوم للبصمات"},
+    {"question": "الموديلات المتوافقة", "answer": "S25/S25+/S25 Ultra, S24/S24+/S24 Ultra, A15/A16, A25/A26, A35/A36, A53/A54/A55/A56"},
+    {"question": "العلامة التجارية", "answer": "YISHANGOU"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/mlwl5s.jpg",
+        "https://files.catbox.moe/1nojcr.jpg",
+        "https://files.catbox.moe/kg3aia.jpg",
+        "https://files.catbox.moe/9n0u7i.jpg",
+        "https://files.catbox.moe/3z9094.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/mlwl5s.jpg",
+    "name": "حافظة جلدية لسامسونج جالاكسي",
+    "sold": "إكسسوارات جوال",
+    "price": "200.00",
+    "discount": "",
+    "pageId": "67",
+    "productId": "67",
+    "shippingPrice": "30",
+    "colors": ["رصاصي", "أسود", "أزرق", "عاجي", "أبيض", "بني"],
+ "materials": [
+  "Galaxy S22 5G",
+  "Galaxy S22+ 5G",
+  "Galaxy S22 Ultra 5G",
+  "Galaxy A16 5G",
+  "Galaxy A36",
+  "Galaxy A26 5G",
+  "Galaxy S25 Slim",
+  "Galaxy A54",
+  "Galaxy S24 FE",
+  "Galaxy S23 Ultra",
+  "Galaxy S25 Ultra",
+  "Galaxy S24 Ultra",
+  "Galaxy A34",
+  "Galaxy A35",
+  "Galaxy A55",
+  "Galaxy A53 5G",
+  "Galaxy S25+",
+  "Galaxy S23",
+  "Galaxy A15 5G",
+  "Galaxy A56",
+  "Galaxy A25",
+  "Galaxy S25",
+  "Galaxy S24",
+  "Galaxy A14 5G",
+  "Galaxy S24+",
+  "Galaxy S23 FE",
+  "Galaxy S21 FE 5G",
+  "Galaxy S23+"
+]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "من السيليكون TPU"
+  }
+},
+{
+  "id": "68",
+  "media": [
+    {"src": "https://files.catbox.moe/26r4oz.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/mohptz.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/gzowkt.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/daw539.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/hl5zb5.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/enwzk9.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/jzcrn4.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/v38mr9.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/e9fdgd.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/fj2wws.webp", "type": "image"}
+  ],
+  "pri": "375",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مروحة صغيرة محمولة بقابس USB",
+    "3 سرعات للرياح",
+    "تصميم صامت لا يزعج"
+  ],
+  "longText": "مروحة مكتبية صغيرة قابلة للشحن عبر USB - تبريد شخصي",
+  "desc": "مروحة صغيرة محمولة تعمل بالبطارية القابلة لإعادة الشحن عبر USB، تتميز بحجم صغير ووزن خفيف مع 3 سرعات مختلفة للرياح. تصميم صامت لا يسبب الإزعاج، مثالية للاستخدام على المكتب، في السيارة، أو أثناء السفر. تأتي مع كابل USB للشحن وسعة بطارية 300 مللي أمبير تتيح عمل مستمر لمدة تصل إلى 30 دقيقة بعد شحن كامل (1-2 ساعات).",
+  "sales": "أجهزة تبريد",
+  "buttonId": "commentButton68",
+  "commentId": "68",
+  "elementId": "commentCount68",
+  "tableData": [
+    {"question": "النوع", "answer": "مروحة تبريد صغيرة"},
+    {"question": "مصدر الطاقة", "answer": "بطارية قابلة للشحن عبر USB"},
+    {"question": "سعة البطارية", "answer": "300 مللي أمبير"},
+    {"question": "وقت الشحن", "answer": "1-2 ساعات"},
+    {"question": "مدة التشغيل", "answer": "حتى 30 دقيقة"},
+    {"question": "السرعات", "answer": "3 سرعات للرياح"},
+    {"question": "الألوان", "answer": "أبيض، أزرق، أخضر، وردي"},
+    {"question": "الأبعاد", "answer": "16×8×5 سم"},
+    {"question": "الضوضاء", "answer": "منخفضة (تصميم صامت)"},
+    {"question": "المادة", "answer": "ABS + مكونات إلكترونية"},
+    {"question": "العلامة التجارية", "answer": "米囹"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/26r4oz.webp",
+        "https://files.catbox.moe/mohptz.jpg",
+        "https://files.catbox.moe/gzowkt.webp",
+        "https://files.catbox.moe/daw539.webp",
+        "https://files.catbox.moe/hl5zb5.webp",
+        "https://files.catbox.moe/enwzk9.webp",
+        "https://files.catbox.moe/jzcrn4.webp",
+        "https://files.catbox.moe/v38mr9.webp",
+        "https://files.catbox.moe/e9fdgd.webp",
+        "https://files.catbox.moe/fj2wws.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/26r4oz.webp",
+    "name": "مروحة USB صغيرة قابلة للشحن",
+    "sold": "أجهزة تبريد",
+    "price": "375.00",
+    "discount": "",
+    "pageId": "68",
+    "productId": "68",
+    "shippingPrice": "25",
+    "colors": ["أبيض", "أزرق", "أخضر", "وردي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "دوران شفرات سريع"
+  }
+}
 
 
 

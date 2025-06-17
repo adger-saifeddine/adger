@@ -592,6 +592,34 @@
   "sold": "ألعاب تعليمية",
   "discountTexts": ["تركيب ذاتي", "تحكم عن بعد"],
   "link": "prod.html?id=65"
+},
+{
+  "name": "دمية لابوبو الفينيل الفاخرة",
+  "dataName": "#66 دمية فينيل قابلة للتخصيص من MINISO",
+  "price": "680.00",
+  "oldPrice": "1200.00",
+  "image": "https://files.catbox.moe/y0j778.jpg",
+  "sold": "ألعاب وهوايات",
+  "discountTexts": ["كان بـ1200 جنيه", "خصم 43%"],
+  "link": "prod.html?id=66"
+},
+{
+  "name": "حافظة جلدية لسامسونج جالاكسي",
+  "dataName": "#67 حافظة جلدية متعددة جراب جرابات الموديلات",
+  "price": "200.00",
+  "image": "https://files.catbox.moe/mlwl5s.jpg",
+  "sold": "إكسسوارات جوال",
+  "discountTexts": ["حماية متكاملة", "تصميم أنيق"],
+  "link": "prod.html?id=67"
+},
+{
+  "name": "مروحة USB صغيرة قابلة للشحن",
+  "dataName": "#68 مروحة تبريد شخصي محمولة",
+  "price": "375.00",
+  "image": "https://files.catbox.moe/26r4oz.webp",
+  "sold": "أجهزة تبريد",
+  "discountTexts": ["3 سرعات للرياح", "شحن عبر USB"],
+  "link": "prod.html?id=68"
 }
 
 
