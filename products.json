@@ -564,6 +564,25 @@
   "sold": "الكترونيات",
   "discountTexts": ["6 مصابيح LED", "مقاومة للماء IP67"],
   "link": "prod.html?id=62"
+},
+{
+  "name": "ضوء ترحيب باب السيارة LED - SKODA",
+  "dataName": "#63 ضوء ليزر ترحيبي لسيارات SKODA",
+  "price": "520.00",
+  "image": "https://files.catbox.moe/octcjo.webp",
+  "sold": "إكسسوارات السيارات",
+  "discountTexts": ["تشغيل تلقائي", "تصميم لاسلكي"],
+  "link": "prod.html?id=63"
+},
+{
+  "name": "ماوس ألعاب لوجيتك G102",
+  "dataName": "#64 ماوس ألعاب بدقة 8000 DPI وإضاءة RGB",
+  "price": "950.00",
+  "oldPrice": "1200.00",
+  "image": "https://files.catbox.moe/ikeg2e.png",
+  "sold": "إكسسوارات ألعاب",
+  "discountTexts": ["كان بـ1200 جنيه", "خصم 21%"],
+  "link": "prod.html?id=64"
 }
 
 

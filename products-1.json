@@ -3901,6 +3901,144 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "63",
+  "media": [
+    {"src": "https://files.catbox.moe/octcjo.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/9ip4e9.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/l0l7hz.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/s2n5rb.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/xxm3kp.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/n3ph0g.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/ortaiy.avif", "type": "image"},
+    {"src": "https://files.catbox.moe/csjssz.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/6e0i63.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/kshvs2.webp", "type": "image"}
+  ],
+  "pri": "520",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "ضوء ترحيب لاسلكي للسيارة",
+    "تشغيل تلقائي عند فتح الباب",
+    "تصميم مغناطيسي حساس"
+  ],
+  "longText": "ضوء جهاز عرض باب السيارة LED لاسلكي - شعار SKODA",
+  "desc": "ضوء ترحيب لاسلكي عالي الجودة للسيارة يعمل بتقنية LED، مصمم خصيصًا لسيارات SKODA (كودياق، فابيا، كاميق، كاروك، اوكتافيا، A5، A7، السريع، سكالا). يتميز بتصميم لاسلكي سهل التركيب مع شريط لاصق 3M، يعمل تلقائيًا عند فتح الباب ويغلق عند إغلاقه. يعمل ببطارية 1.5 فولت (غير متضمنة) ويوفر إضاءة أنيقة تعزز مظهر سيارتك ليلاً مع الحفاظ على التصميم الأصلي للسيارة.",
+  "sales": "إكسسوارات السيارات",
+  "buttonId": "commentButton63",
+  "commentId": "63",
+  "elementId": "commentCount63",
+  "tableData": [
+    {"question": "النوع", "answer": "ضوء ترحيب باب السيارة"},
+    {"question": "المادة", "answer": "بلاستيك ABS"},
+    {"question": "الأبعاد", "answer": "6.4x6.6x2.1 سم"},
+    {"question": "الجهد", "answer": "1.5 فولت (بطاريات AA غير متضمنة)"},
+    {"question": "طريقة التركيب", "answer": "لاسلكي - شريط لاصق 3M"},
+    {"question": "الميزات", "answer": "تشغيل/إيقاف تلقائي - تصميم حساس مغناطيسي"},
+    {"question": "الموديلات المتوافقة", "answer": "SKODA كودياق، فابيا، كاميق، كاروك، اوكتافيا، A5، A7، السريع، سكالا"},
+    {"question": "العلامة التجارية", "answer": "SKODA"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/octcjo.webp",
+        "https://files.catbox.moe/9ip4e9.webp",
+        "https://files.catbox.moe/l0l7hz.webp",
+        "https://files.catbox.moe/s2n5rb.webp",
+        "https://files.catbox.moe/xxm3kp.webp",
+        "https://files.catbox.moe/n3ph0g.avif",
+        "https://files.catbox.moe/ortaiy.avif",
+        "https://files.catbox.moe/csjssz.webp",
+        "https://files.catbox.moe/6e0i63.webp",
+        "https://files.catbox.moe/kshvs2.webp"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/octcjo.webp",
+    "name": "ضوء ترحيب باب السيارة LED - SKODA",
+    "sold": "إكسسوارات السيارات",
+    "price": "520.00",
+    "discount": "",
+    "pageId": "63",
+    "productId": "63",
+    "shippingPrice": "50",
+    "material": ["بلاستيك ABS"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "كلاسيكي"
+  }
+},
+{
+  "id": "64",
+  "media": [
+    {"src": "https://files.catbox.moe/ikeg2e.png", "type": "image"},
+    {"src": "https://files.catbox.moe/9dmr0g.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/j6e1r7.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/l6mes8.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ofz852.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/dsre48.jpg", "type": "image"}
+  ],
+  "pri": "950",
+  "oldPrice": "1200",
+  "dis": "خصم 21%",
+  "changingText": [
+    "دقة 8000 DPI قابلة للتعديل",
+    "إضاءة RGB قوس قزح",
+    "6 أزرار قابلة للبرمجة"
+  ],
+  "longText": "ماوس ألعاب لوجيتك G102 - أداء عالي مع إضاءة RGB",
+  "desc": "ماوس ألعاب سلكي من لوجيتك بمواصفات عالية، يتميز بدقة 8000 DPI قابلة للتعديل، إضاءة RGB متطورة بتأثير قوس قزح، و6 أزرار قابلة للبرمجة. تصميم مريح يناسب اليد اليمنى مع سطح متوحد الخواص للتحكم الدقيق. متوافق مع أنظمة Windows وmacOS، مثالي للاعبين والمحترفين الذين يحتاجون إلى دقة عالية واستجابة سريعة.",
+  "sales": "إكسسوارات ألعاب",
+  "buttonId": "commentButton64",
+  "commentId": "64",
+  "elementId": "commentCount64",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Logitech"},
+    {"question": "الموديل", "answer": "G102"},
+    {"question": "نوع الاتصال", "answer": "سلكي (USB)"},
+    {"question": "أقصى دقة", "answer": "8000 DPI"},
+    {"question": "عدد الأزرار", "answer": "6 أزرار (قابلة للبرمجة)"},
+    {"question": "الإضاءة", "answer": "RGB - تأثير قوس قزح"},
+    {"question": "التوافق", "answer": "Windows, macOS"},
+    {"question": "الألوان", "answer": "أسود، أزرق، أبيض، بنفسجي"},
+    {"question": "الشهادة", "answer": "CE"},
+    {"question": "المنشأ", "answer": "الصين"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/71270s.png",
+        "https://files.catbox.moe/ikeg2e.png",
+        "https://files.catbox.moe/9dmr0g.jpg",
+        "https://files.catbox.moe/j6e1r7.jpg",
+        "https://files.catbox.moe/l6mes8.jpg",
+        "https://files.catbox.moe/ofz852.jpg",
+        "https://files.catbox.moe/dsre48.jpg"
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/ikeg2e.png",
+    "name": "ماوس ألعاب لوجيتك G102",
+    "sold": "إكسسوارات ألعاب",
+    "price": "950.00",
+    "discount": "1200.00",
+    "pageId": "64",
+    "productId": "64",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أزرق", "أبيض", "بنفسجي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
 }
 
 
