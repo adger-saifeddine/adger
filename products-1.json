@@ -4118,7 +4118,6 @@
     {"src": "https://files.catbox.moe/g7fxli.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/evwhpz.webp", "type": "image"},
     {"src": "https://files.catbox.moe/0f9hh2.jpg", "type": "image"},
-      {"src": "https://files.catbox.moe/co22nb.webp", "type": "image"},
     {"src": "https://files.catbox.moe/7nxzo4.webp", "type": "image"},
     {"src": "https://files.catbox.moe/xnj41l.webp", "type": "image"}
   ],
@@ -4159,6 +4158,7 @@
       "items": [
         "https://files.catbox.moe/y0j778.jpg",
         "https://files.catbox.moe/62clw8.jpg",
+        "https://files.catbox.moe/co22nb.webp",
         "https://files.catbox.moe/ve20uo.avif",
         "https://files.catbox.moe/lbfm41.avif",
         "https://files.catbox.moe/th1uje.avif",
