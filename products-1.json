@@ -4113,11 +4113,14 @@
     {"src": "https://files.catbox.moe/yyjwiz.mp4", "type": "video"},
     {"src": "https://files.catbox.moe/y0j778.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/62clw8.jpg", "type": "image"},
-    {"src": "https://files.catbox.moe/ve20uo.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/lbfm41.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/th1uje.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/8i9j5x.avif", "type": "image"},
-    {"src": "https://files.catbox.moe/8xkd0h.avif", "type": "image"}
+    {"src": "https://files.catbox.moe/00f8yn.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/58m2j3.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/jjlj3s.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/rx9h1q.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/k9oapa.webp", "type": "image"},
+      {"src": "https://files.catbox.moe/wz2f2s.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/7nxzo4.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/tberz6.webp", "type": "image"}
   ],
   "pri": "680",
   "oldPrice": "1200",
@@ -4233,7 +4236,7 @@
     "pageId": "67",
     "productId": "67",
     "shippingPrice": "30",
-    "colors": ["رصاصي", "أسود", "أزرق", "عاجي", "أبيض", "بني"],
+    "colors": ["رصاصي", "أسود", "أزرق", "أبيض عاجي", "بني"],
  "materials": [
   "Galaxy S22 5G",
   "Galaxy S22+ 5G",
@@ -4273,16 +4276,13 @@
 {
   "id": "68",
   "media": [
-    {"src": "https://files.catbox.moe/26r4oz.webp", "type": "image"},
     {"src": "https://files.catbox.moe/mohptz.jpg", "type": "image"},
-    {"src": "https://files.catbox.moe/gzowkt.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/daw539.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/hl5zb5.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/enwzk9.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/jzcrn4.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/v38mr9.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/e9fdgd.webp", "type": "image"},
-    {"src": "https://files.catbox.moe/fj2wws.webp", "type": "image"}
+    {"src": "https://files.catbox.moe/26r4oz.webp", "type": "image"},
+    {"src": "https://files.catbox.moe/w5rcej.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/bsbfta.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/ueyiwl.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/84sasg.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/oe7fzz.jpg", "type": "image"}
   ],
   "pri": "375",
   "oldPrice": "",
@@ -4316,21 +4316,17 @@
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/26r4oz.webp",
         "https://files.catbox.moe/mohptz.jpg",
-        "https://files.catbox.moe/gzowkt.webp",
-        "https://files.catbox.moe/daw539.webp",
-        "https://files.catbox.moe/hl5zb5.webp",
-        "https://files.catbox.moe/enwzk9.webp",
-        "https://files.catbox.moe/jzcrn4.webp",
-        "https://files.catbox.moe/v38mr9.webp",
-        "https://files.catbox.moe/e9fdgd.webp",
-        "https://files.catbox.moe/fj2wws.webp"
+        "https://files.catbox.moe/26r4oz.webp",
+        "https://files.catbox.moe/w5rcej.jpg",
+        "https://files.catbox.moe/bsbfta.jpg",
+        "https://files.catbox.moe/ueyiwl.jpg",
+        "https://files.catbox.moe/84sasg.jpg"
       ]
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/26r4oz.webp",
+    "image": "https://files.catbox.moe/mohptz.jpg",
     "name": "مروحة USB صغيرة قابلة للشحن",
     "sold": "أجهزة تبريد",
     "price": "375.00",
