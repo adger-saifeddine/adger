@@ -4340,7 +4340,159 @@
     "currency": "جنيه",
     "discountLabel": "دوران شفرات سريع"
   }
+},
+{
+  "id": "69",
+  "media": [
+    {"src": "https://files.catbox.moe/l9v4e9.mp4",  "type": "video"},
+    {"src": "https://files.catbox.moe/663nkl.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/l4olcz.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ons3ro.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/w3v57t.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/b9ta3b.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/od32wj.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/jw5edg.jpg",  "type": "image"}
+  ],
+  "pri": "4600",
+  "oldPrice": "8760",
+  "dis": "خصم 48%",
+  "changingText": [
+    "روبوت كلب ذكي AI RC",
+    "تحكم صوتي وتطبيقي",
+    "برمجة - رقص - غناء"
+  ],
+  "longText": "روبوت كلب ذكي AI RC - تحكم صوتي وتطبيقي، برمجة الرقص والغناء للأطفال",
+  "desc": "روبوت كلب ذكي مزود بتقنية الذكاء الاصطناعي (AI) والتحكم عن بعد (RC)، يدعم التحكم الصوتي والتطبيقي عبر الهاتف. يتميز بقدرات متعددة مثل البرمجة، الرقص، والغناء، مما يجعله مرشدًا تعليميًا ومصدرًا للترفيه للأطفال من سن 14 سنة فما فوق. يمكن برمجة الحركات وتخصيصها لتعزيز التفكير المنطقي والقدرة على حل المشكلات.\n\nالكلب الذكي مصنوع من مواد عالية الجودة آمنة تمامًا للأطفال، مع تصميم جذاب مستوحى من الطبيعة والتكنولوجيا. يحتوي على بطارية ليثيوم قابلة لإعادة الشحن، ويتم تشغيله كهربائيًا بجودة عالية وأداء موثوق.\n\nمناسب كهدية تعليمية تجمع بين المتعة والتعلم، حيث يساعد الأطفال على التعرف على أساسيات البرمجة، التحكم عن بعد، وفهم التفاعلات الإلكترونية بطريقة ممتعة وتفاعلية.",
+  "sales": "ألعاب تعليمية, خيال علمي, إلكترونيات",
+  "buttonId": "commentButton69",
+  "commentId": "69",
+  "elementId": "commentCount69",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Fremego"},
+    {"question": "النوع", "answer": "روبوت كلب ذكي"},
+    {"question": "التحكم", "answer": "نعم - تطبيق + صوتي"},
+    {"question": "الوظائف", "answer": "رقص، غناء، برمجة، حركة تفاعلية"},
+    {"question": "البطارية", "answer": "ليثيوم قابلة للشحن"},
+    {"question": "المصدر الكهربائي", "answer": "كهربائي"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "الفئة العمرية", "answer": "14+"},
+    {"question": "الموضوع التعبوي", "answer": "الحيوانات والطبيعة, خيال علمي, رياضات, موسيقى"},
+    {"question": "التنمية الفكرية", "answer": "تحسين التفكير المنطقي وحل المشكلات"},
+    {"question": "التفاعل الحسي", "answer": "تحفيز البصر والسمع واللمس"},
+    {"question": "السلامة", "answer": "مواد عالية الجودة وخضعت لاختبارات الأمان"},
+    {"question": "التفاعل الأسري", "answer": "مثالي للعب مع الوالدين وتعزيز العلاقة"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/l9v4e9.mp4" 
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/663nkl.png", 
+        "https://files.catbox.moe/l4olcz.jpg", 
+        "https://files.catbox.moe/ons3ro.avif", 
+        "https://files.catbox.moe/w3v57t.jpg", 
+        "https://files.catbox.moe/b9ta3b.jpg", 
+        "https://files.catbox.moe/od32wj.avif", 
+        "https://files.catbox.moe/jw5edg.jpg" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/663nkl.png", 
+    "name": "روبوت كلب ذكي AI RC - تحكم صوتي وتطبيقي",
+    "sold": " خيال علمي",
+    "price": "4600.00",
+    "discount": "8760.00",
+    "pageId": "69",
+    "productId": "69",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "70",
+  "media": [
+    {"src": "https://files.catbox.moe/ekh2wq.mp4",  "type": "video"},
+    {"src": "https://files.catbox.moe/5pkfho.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/qa6qih.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ueyih9.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/t7dwpb.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/p7stum.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/y82iu8.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/g99th0.jpg",  "type": "image"}
+  ],
+  "pri": "150",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "آلة ختم الأكياس الحرارية المحمولة",
+    "إغلاق محكم للكيس البلاستيكي",
+    "مثالية لحفظ الطعام"
+  ],
+  "longText": "آلة ختم الأكياس الحرارية الصغيرة - حافظ على طعامك طازجًا وجافًا",
+  "desc": "آلة ختم أكياس حرارية صغيرة وعملية، مثالية لختم أكياس الطعام البلاستيكية والحفاظ على نضارتها. تتميز بتصميم محمول وسهل الاستخدام، وتستخدم بطاريات AA لتوفير حرارة فورية عند الضغط. لا تحتاج إلى تسخين مسبق، فقط اضغط لمدة 3-5 ثوانٍ لتبدأ بالتسخين.\n\nمصنوعة من مادة ABS عالية الجقة، مقاومة لدرجات الحرارة العالية والمنخفضة، وهيكل غير سام ودائم. تعمل بشكل فعال مع أكياس البلاستيك الرقيقة والمتوسطة السماكة، لكنها غير مناسبة للأكياس الورقية النقية أو أكياس الألومنيوم.\n\nتُستخدم بسهولة: بعد تركيب بطاريتين AA جديدة (غير متضمنة)، افتح الغطاء، اضغط على الجهاز حتى يسخن، ثم مرر الحافة المراد إغلاقها بين المعدن ببطء وثبات للحصول على إغلاق محكم.\n\n**تحذير**: يجب التأكد من تركيب البطاريات بشكل صحيح وعدم استخدامها بقوة لتجنب تشويه عناصر التسخين.",
+  "sales": "أدوات المطبخ",
+  "buttonId": "commentButton70",
+  "commentId": "70",
+  "elementId": "commentCount70",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "MOONBIFFY"},
+    {"question": "النوع", "answer": "آلة ختم حرارية صغيرة"},
+    {"question": "المادة", "answer": "ABS عالية الجودة"},
+    {"question": "الأبعاد", "answer": "9.6 × 3.5 × 3.5 سم"},
+    {"question": "الألوان المتاحة", "answer": "أبيض / وردي"},
+    {"question": "البطارية", "answer": "2 × بطاريات AA 1.5 فولت (غير متضمنة)"},
+    {"question": "المميزات", "answer": "محمولة - سهلة الاستخدام - صديقة للبيئة"},
+    {"question": "المواصفات الإضافية", "answer": "مقاوم لدرجة الحرارة - بدون تسخين مسبق"},
+    {"question": "الاستخدام", "answer": "إغلاق أكياس البلاستيك - حفظ الطعام"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "ملحوظة مهمة", "answer": "غير مناسبة للأكياس الورقية النقية أو أكياس الألومنيوم"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/ekh2wq.mp4" 
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/5pkfho.jpg", 
+        "https://files.catbox.moe/qa6qih.jpg", 
+        "https://files.catbox.moe/ueyih9.jpg", 
+        "https://files.catbox.moe/t7dwpb.jpg", 
+        "https://files.catbox.moe/p7stum.jpg", 
+        "https://files.catbox.moe/y82iu8.jpg", 
+        "https://files.catbox.moe/g99th0.jpg" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/5pkfho.jpg", 
+    "name": "آلة ختم الأكياس الحرارية الصغيرة",
+    "sold": "أدوات المطبخ",
+    "price": "150.00",
+    "discount": "",
+    "pageId": "70",
+    "productId": "70",
+    "shippingPrice": "50",
+    "colors": ["أبيض", "وردي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مطبخ منزلي"
+  }
 }
+
 
 
 
