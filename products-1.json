@@ -4491,6 +4491,339 @@
     "currency": "جنيه",
     "discountLabel": "مطبخ منزلي"
   }
+},
+{
+  "id": "71",
+  "media": [
+    {"src": "https://files.catbox.moe/5jvz5m.mp4",  "type": "video"},
+    {"src": "https://files.catbox.moe/4g7ai9.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/63cnxe.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/2uthhy.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/g3rqk0.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/9xinrd.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/rl0i4r.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/jn7v1h.webp",  "type": "image"}
+  ],
+  "pri": "1400",
+  "oldPrice": "1800",
+  "dis": "خصم 22%",
+  "changingText": [
+    "كاميرا BodyCam صغيرة بدقة 4K",
+    "رؤية ليلية بالأشعة تحت الحمراء",
+    "عدسة 180° قابلة للدوران"
+  ],
+  "longText": "كاميرا صغيرة فائقة الدقة 4K - واي فاي - BodyCam مع رؤية ليلية وعُدسة قابلة للتدوير",
+  "desc": "كاميرا رقمية محمولة صغيرة بجودة 4K، مزودة بوظيفة الواي فاي والرؤية الليلية بالأشعة تحت الحمراء. تتميز بعدسة قابلة للدوران بزاوية 180°، وكاميرا بزاوية عريضة تصل إلى 140°، وتتوافق مع العديد من الاستخدامات مثل الشرطة، تسجيل المركبات، الرياضة، وجمع الأدلة القانونية.\n\nتتيح لك الاتصال عبر الواي فاي لمراقبة الفيديو في الوقت الفعلي عبر التطبيق، كما أنها تدعم بطاقات SD حتى 512 جيجابايت مع خاصية التسجيل الحلقي. بطارية 1000 مللي أمبير توفر ما يصل إلى 6 ساعات من التشغيل المستمر بعد شحن لمدة ساعتين.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton71",
+  "commentId": "71",
+  "elementId": "commentCount71",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "occkic"},
+    {"question": "النموذج", "answer": "Ultra HD 4K WiFi Mini Camera"},
+    {"question": "الدقة", "answer": "4K / 2K / 1080P"},
+    {"question": "نوع المستشعر", "answer": "CMOS"},
+    {"question": "زاوية العدسة", "answer": "140° زاوية واسعة"},
+    {"question": "دوران العدسة", "answer": "180° قابلة للدوران"},
+    {"question": "شاشة العرض", "answer": "1.54 بوصة"},
+    {"question": "الرؤية الليلية", "answer": "نعم - أشعة تحت الحمراء"},
+    {"question": "الواي فاي", "answer": "نعم - اتصال مباشر مع الهاتف"},
+    {"question": "البطارية", "answer": "1000 مللي أمبير"},
+    {"question": "وقت الشحن", "answer": "حوالي ساعتين"},
+    {"question": "مدة العمل", "answer": "حتى 6 ساعات"},
+    {"question": "منفذ الشحن", "answer": "USB Type-C"},
+    {"question": "الذاكرة الخارجية", "answer": "حتى 512 جيجابايت Micro SD"},
+    {"question": "الوزن", "answer": "حوالي 50 جرام"},
+    {"question": "الألوان", "answer": "أسود"},
+    {"question": "المادة", "answer": "ABS"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "الضمان", "answer": "6 أشهر"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/5jvz5m.mp4" 
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/4g7ai9.jpg", 
+        "https://files.catbox.moe/63cnxe.jpg", 
+        "https://files.catbox.moe/2uthhy.jpg", 
+        "https://files.catbox.moe/g3rqk0.jpg", 
+        "https://files.catbox.moe/9xinrd.jpg", 
+        "https://files.catbox.moe/rl0i4r.webp", 
+        "https://files.catbox.moe/jn7v1h.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/4g7ai9.jpg", 
+    "name": "كاميرا صغيرة فائقة الدقة 4K واي فاي",
+    "sold": "إلكترونيات",
+    "price": "1400.00",
+    "discount": "1800.00",
+    "pageId": "71",
+    "productId": "71",
+    "shippingPrice": "50",
+    "colors": ["أسود"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "72",
+  "media": [
+    {"src": "https://files.catbox.moe/v8srik.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/xs8enr.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/cgtin1.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/qmw353.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/no1e1x.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/t8m3fp.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/dnxdwi.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/l794b5.jpg",  "type": "image"}
+  ],
+  "pri": "180",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "جراب حاسبة مضحك لهاتف آيفون",
+    "تصميم كلاسيكي مع لمسات عصرية",
+    "حماية متكاملة من الصدمات"
+  ],
+  "longText": "جراب هاتف على شكل آلة حاسبة - مضحك وأنيق لهواتف iPhone 16 إلى SE 2022",
+  "desc": "جراب حماية نصف مغطى لهواتف iPhone بجميع إصداراتها من iPhone 7 إلى iPhone 16، يأخذ شكل آلة حاسبة كلاسيكية مع تصميم مضحك وأنيق. مصنوع من خامات عالية الجودة (PC + TPU) لضمان حماية ممتازة من الصدمات والخدوش. يتميز بسطح ماتي غير لامع، مقاوم للبصمات والانزلاق، ويوفر تهوية جيدة للموبايل.\n\n- متوافق مع: iPhone 16 Pro Max, iPhone 16 Pro, iPhone 16 Plus, iPhone 16, iPhone 15 Pro Max, iPhone 15 Pro, iPhone 15 Plus, iPhone 15, iPhone 14 Pro Max, iPhone 14 Pro, iPhone 14 Plus, iPhone 14, iPhone 13 Pro Max, iPhone 13 Pro, iPhone 13, iPhone 12 Pro Max, iPhone 12 Pro, iPhone 12, iPhone 11 Pro Max, iPhone 11 Pro, iPhone 11, iPhone XS Max, iPhone XS, iPhone X, iPhone XR, iPhone 8 Plus, iPhone 7 Plus, iPhone SE 2022/2023.",
+  "sales": "إكسسوارات آيفون",
+  "buttonId": "commentButton72",
+  "commentId": "72",
+  "elementId": "commentCount72",
+  "tableData": [
+    {"question": "النوع", "answer": "جراب نصف مغطى"},
+    {"question": "المادة", "answer": "PC + TPU"},
+    {"question": "التصميم", "answer": "نمط آلة حاسبة كلاسيكية"},
+    {"question": "الألوان", "answer": "حواف بيضاء، سوداء، بنفسجية، خضراء"},
+    {"question": "المميزات", "answer": "مقاوم للصدمات - مضاد للبصمات - مضاد للانزلاق - مقاوم للغبار - خفيف الوزن - ماتي غير لامع"},
+    {"question": "التوافق", "answer": "iPhone 16 Pro Max, iPhone 16 Pro, iPhone 16 Plus, iPhone 16, iPhone 15 Pro Max, iPhone 15 Pro, iPhone 15 Plus, iPhone 15, iPhone 14 Pro Max, iPhone 14 Pro, iPhone 14 Plus, iPhone 14, iPhone 13 Pro Max, iPhone 13 Pro, iPhone 13, iPhone 12 Pro Max, iPhone 12 Pro, iPhone 12, iPhone 11 Pro Max, iPhone 11 Pro, iPhone 11, iPhone XS Max, iPhone XS, iPhone X, iPhone XR, iPhone 8 Plus, iPhone 7 Plus, iPhone SE 2022/2023"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "العلامة التجارية", "answer": "Matrails"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/v8srik.jpg", 
+        "https://files.catbox.moe/xs8enr.jpg", 
+        "https://files.catbox.moe/cgtin1.jpg", 
+        "https://files.catbox.moe/qmw353.webp", 
+        "https://files.catbox.moe/no1e1x.webp", 
+        "https://files.catbox.moe/t8m3fp.jpg", 
+        "https://files.catbox.moe/dnxdwi.jpg", 
+        "https://files.catbox.moe/l794b5.jpg" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/v8srik.jpg", 
+    "name": "جراب آلة حاسبة مضحك لهاتف آيفون",
+    "sold": "إكسسوارات آيفون",
+    "price": "180.00",
+    "discount": "",
+    "pageId": "72",
+    "productId": "72",
+    "shippingPrice": "60",
+    "colors": ["حواف بيضاء", "حواف سوداء", "حواف بنفسجية", "حواف خضراء"],
+    "materials": [
+      "iPhone 16 Pro Max",
+      "iPhone 16 Pro",
+      "iPhone 16 Plus",
+      "iPhone 16",
+      "iPhone 15 Pro Max",
+      "iPhone 15 Pro",
+      "iPhone 15 Plus",
+      "iPhone 15",
+      "iPhone 14 Pro Max",
+      "iPhone 14 Pro",
+      "iPhone 14 Plus",
+      "iPhone 14",
+      "iPhone 13 Pro Max",
+      "iPhone 13 Pro",
+      "iPhone 13",
+      "iPhone 12 Pro Max",
+      "iPhone 12 Pro",
+      "iPhone 12",
+      "iPhone 11 Pro Max",
+      "iPhone 11 Pro",
+      "iPhone 11",
+      "iPhone XS Max",
+      "iPhone XS",
+      "iPhone X",
+      "iPhone XR",
+      "iPhone 8 Plus",
+      "iPhone 7 Plus",
+      "iPhone SE 2022",
+      "iPhone SE 2023"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "شكل كلاسيكي"
+  }
+},
+{
+  "id": "73",
+  "media": [
+    {"src": "https://files.catbox.moe/05kh7u.mp4",  "type": "video"},
+    {"src": "https://files.catbox.moe/9x1hgg.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/jy97k3.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/1qw9o2.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ku489z.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/isin8z.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/hfyvcf.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/me0u5w.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/50xzqb.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ljsn0f.jpg",  "type": "image"}
+  ],
+  "pri": "230",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "آلة خياطة محمولة لاسلكية صغيرة",
+    "سهلة الاستخدام في المنزل",
+    "مناسبة للحرف اليدوية مع الأطفال"
+  ],
+  "longText": "آلة غرزة لاسلكية صغيرة محمولة - ماكينة خياطة يدوية مفيدة للملابس المنزلية",
+  "desc": "ماكينة خياطة يدوية صغيرة ومحمولة، مثالية للاستخدام المنزلي وللقيام بمشاريع الحرف اليدوية مع الأطفال. لا تحتاج إلى كهرباء أو بطاريات، فقط قم بتشغيلها يدويًا بسهولة وبدون عناء. تتميز بوزن خفيف وتصميم مدمج يجعلها مثالية للسفر أو الإصلاح السريع للملابس.\n\n- مصنوعة من مواد عالية الجودة (PP + فولاذ مقاوم للصدأ)\n- مناسبة للأعمال المنزلية مثل إصلاح الملابس، والخياطة البسيطة، والحرف اليدوية\n- تصميم بسيط وعملي سهل الحمل والاستخدام\n- لا تتطلب خبرة في الخياطة - يمكن استخدامها من قبل المبتدئين والأطفال تحت إشراف الأهل",
+  "sales": "أدوات الخياطة والحياكة",
+  "buttonId": "commentButton73",
+  "commentId": "73",
+  "elementId": "commentCount73",
+  "tableData": [
+    {"question": "النوع", "answer": "آلة خياطة يدوية صغيرة"},
+    {"question": "المادة", "answer": "PP + فولاذ مقاوم للصدأ"},
+    {"question": "حجم المنتج", "answer": "11 × 7 × 2 سم"},
+    {"question": "الألوان", "answer": "أبيض، أحمر، أزرق"},
+    {"question": "الوزن", "answer": "خفيف الوزن - سهل الحمل"},
+    {"question": "الاستخدام", "answer": "إصلاح الملابس، الحرف اليدوية، الخياطة المنزلية"},
+    {"question": "المميزات", "answer": "لاسلكية - بدون طاقة - سهلة الاستخدام"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "الحزمة", "answer": "1 × ماكينة خياطة يدوية صغيرة"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/05kh7u.mp4" 
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/9x1hgg.jpg", 
+        "https://files.catbox.moe/jy97k3.jpg", 
+        "https://files.catbox.moe/1qw9o2.jpg", 
+        "https://files.catbox.moe/ku489z.jpg", 
+        "https://files.catbox.moe/isin8z.jpg", 
+        "https://files.catbox.moe/hfyvcf.jpg", 
+        "https://files.catbox.moe/me0u5w.jpg", 
+        "https://files.catbox.moe/50xzqb.jpg", 
+        "https://files.catbox.moe/ljsn0f.jpg" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/9x1hgg.jpg", 
+    "name": "آلة غرزة لاسلكية صغيرة محمولة",
+    "sold": "أدوات الخياطة والحياكة",
+    "price": "230.00",
+    "discount": "",
+    "pageId": "73",
+    "productId": "73",
+    "shippingPrice": "30",
+    "colors": ["أبيض", "أحمر", "أزرق"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خياطة منزلية"
+  }
+},
+{
+  "id": "74",
+  "media": [
+    {"src": "https://files.catbox.moe/2w9a5f.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/h0ffnx.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/nlwrzr.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/dy2389.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/xl7i30.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/u3cc37.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/0dz186.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/o0vz5l.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/nshcsq.webp",  "type": "image"}
+  ],
+  "pri": "1450",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "كاميرا فيديو محمولة بدقة 4K وتكبير 16x",
+    "شاشة IPS 2.4 بوصة",
+    "مثالية للفيديوهات اليومية"
+  ],
+  "longText": "كاميرا تسجيل فيديو محمولة 4K HD - دقة 1080P مع تكبير 16x وشاشة IPS 2.4 بوصة",
+  "desc": "كاميرا فيديو رقمية مدمجة ومحمولة تقدم أداءً عالي الجودة مناسبة لكل من المبتدئين والهواة. تدعم دقة 1080P Full HD، وتتميز بمستشعر CMOS عالي الدقة يوفر صورًا واضحة وحادة حتى في الإضاءة المنخفضة. تحتوي على شاشة IPS مقاس 2.4 بوصة لعرض مباشر وواضح أثناء التصوير، إلى جانب خاصية التكبير الرقمي حتى 16x لتتيح لك التقاط اللقطات البعيدة بجودة ممتازة.\n\n- **دقة عالية**: 96 مليون بكسل لصور حادة وواضحة.\n- **تسجيل فيديو HD**: دعم تنسيقات 1080P / 720P / VGA.\n- **شاشة IPS 2.4 بوصة**: رؤية واضحة وألوان نابضة بالحياة.\n- **تكبير قوي**: تكبير رقمي 16x لالتقاط الصور عن بعد.\n- **خفة الوزن والمرونة**: تصميم صغير يسهل حمله في الجيب أو الحقيبة.\n- **توسيع الذاكرة**: تدعم بطاقة microSD حتى 64 جيجا بايت (غير متضمنة).\n- **بطارية داخلية**: تعمل عبر USB مع بطارية 3.7 فولت.\n- **مناسب للمستخدمين من جميع الأعمار**، سواء للأطفال أو البالغين.\n\nمثالية لتسجيل الفيديوهات اليومية، التدوين المرئي، السفر، والمناسبات العائلية.",
+  "sales": "إلكترونيات",
+  "buttonId": "commentButton74",
+  "commentId": "74",
+  "elementId": "commentCount74",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "ALLOYSEED"},
+    {"question": "الدقة", "answer": "96MP - 1080P/720P/VGA"},
+    {"question": "الشاشة", "answer": "IPS LCD 2.4 بوصة"},
+    {"question": "التكبير", "answer": "رقمي 16x"},
+    {"question": "المستشعر", "answer": "CMOS"},
+    {"question": "تنسيق الفيديو", "answer": "AVI"},
+    {"question": "البطاقة الخارجية", "answer": "microSD حتى 64GB"},
+    {"question": "البطارية", "answer": "Li-ion 3.7V (USB)"},
+    {"question": "الألوان", "answer": "أسود، أبيض، رصاصي، فضي"},
+    {"question": "الوزن", "answer": "خفيف الوزن - سهل الحمل"},
+    {"question": "الاستخدامات", "answer": "تصوير فيديو، يوميات، سفر، المناسبات"},
+    {"question": "المنشأ", "answer": "الصين"},
+    {"question": "الشهادات", "answer": "بدون شهادات"},
+    {"question": "الوظائف الخاصة", "answer": "لا شيء"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/2w9a5f.jpg", 
+        "https://files.catbox.moe/h0ffnx.jpg", 
+        "https://files.catbox.moe/nlwrzr.jpg", 
+        "https://files.catbox.moe/dy2389.webp", 
+        "https://files.catbox.moe/xl7i30.jpg", 
+        "https://files.catbox.moe/u3cc37.jpg", 
+        "https://files.catbox.moe/0dz186.jpg", 
+        "https://files.catbox.moe/o0vz5l.webp", 
+        "https://files.catbox.moe/nshcsq.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/2w9a5f.jpg", 
+    "name": "كاميرا تسجيل فيديو محمولة 4K HD",
+    "sold": "إلكترونيات",
+    "price": "1450.00",
+    "discount": "",
+    "pageId": "74",
+    "productId": "74",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أبيض", "رمادي", "فضي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "تصوير شخصي"
+  }
 }
 
 
