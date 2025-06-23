@@ -4824,6 +4824,479 @@
     "currency": "جنيه",
     "discountLabel": "تصوير شخصي"
   }
+},
+{
+  "id": "75",
+  "media": [
+    {"src": "https://files.catbox.moe/lrizlx.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/s16vq5.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/896i8b.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/uxnhml.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/2w6eqh.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/49q9wo.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/z334us.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/8zpiss.webp",  "type": "image"}
+  ],
+  "pri": "190",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "حافظة تنين مضادة للصدمات لهاتف آيفون",
+    "تصميم فاخر بزخارف التنين الطوطمي",
+    "حماية متكاملة من الصدمات"
+  ],
+  "longText": "حافظة فاخرة مضادة للسقوط على شكل تنين - تصميم طراز الطوطم لهواتف iPhone المختلفة",
+  "desc": "حافظة هاتف مخصصة لهواتف iPhone، تتميز بتصميم فني أنيق مستوحى من رمزية التنين الطوطمي مع لمسات فاخرة. صُنعت من مواد عالية الجودة توفر حماية شاملة من الصدمات والانزلاق، مع تصميم مقاوم للبصمات والغبار والماء. مناسبة لمجموعة واسعة من إصدارات iPhone بما في ذلك iPhone 16 Plus، iPhone 15 Pro Max، iPhone 14، iPhone 13، iPhone 12، iPhone 11، X، XR، XS Max، 8، 7، SE 2020/2022 وغيرها.\n\n- **مواد متينة**: مزيج عالي الجودة بين TPU المرنة والبلاستيك الصلب لامتصاص الصدمات.\n- **مقاوم للانزلاق**: تصميم سطحي غير لامع يوفر قبضة محكمة.\n- **تصميم دقيق**: فتحات دقيقة لكل الأزرار ومنافذ الشحن.\n- **سهلة التركيب**: تركيب سريع وثابت دون الحاجة لأدوات.\n- **مقاومة للعوامل الخارجية**: مقاومة للماء، الغبار، البصمات، والخدوش.\n- **ألوان وأساليب متعددة**: حواف سوداء بتنين أسود، حواف شبه صفراء بتنين أسود، حواف كوفي بتنين أسود، حواف سوداء بتنين أزرق، حواف شبه صفراء بتنين أزرق، حواف كوفي بتنين أزرق.",
+  "sales": "إكسسوارات آيفون",
+  "buttonId": "commentButton75",
+  "commentId": "75",
+  "elementId": "commentCount75",
+  "tableData": [
+    {"question": "النوع", "answer": "حافظة كاملة مقاومة للصدمات"},
+    {"question": "المادة", "answer": "TPU + بلاستيك ABS"},
+    {"question": "التصميم", "answer": "تنين طوطمي - زخارف فنية"},
+    {"question": "الألوان", "answer": "حواف سوداء بتنين أسود، حواف شبه صفراء بتنين أسود، حواف كوفي بتنين أسود، حواف سوداء بتنين أزرق، حواف شبه صفراء بتنين أزرق، حواف كوفي بتنين أزرق"},
+    {"question": "المميزات", "answer": "مقاوم للصدمات - مضاد للبصمات - مضاد للانزلاق - مقاوم للغبار والماء"},
+    {"question": "التوافق", "answer": "iPhone 16 Plus, iPhone 15 Pro Max, iPhone 15, iPhone 14, iPhone 14 Pro, iPhone 14 Plus, iPhone 13, iPhone 13 Pro, iPhone 13 Pro Max, iPhone 12, iPhone 12 Pro, iPhone 12 Pro Max, iPhone 11, iPhone 11 Pro, iPhone 11 Pro Max, iPhone X, iPhone XS, iPhone XR, iPhone XS Max, iPhone 8, iPhone 7, iPhone 8 Plus, iPhone 7 Plus, iPhone SE 2020/2022"},
+    {"question": "العلامة التجارية", "answer": "SKCCM"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "الوظائف", "answer": "حماية متكاملة - مظهر فاخر - تصميم مريح"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/lrizlx.jpg", 
+        "https://files.catbox.moe/s16vq5.jpg", 
+        "https://files.catbox.moe/896i8b.jpg", 
+        "https://files.catbox.moe/uxnhml.jpg", 
+        "https://files.catbox.moe/2w6eqh.jpg", 
+        "https://files.catbox.moe/49q9wo.jpg", 
+        "https://files.catbox.moe/z334us.jpg", 
+        "https://files.catbox.moe/8zpiss.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/lrizlx.jpg", 
+    "name": "حافظة فاخرة مضادة للسقوط على شكل تنين",
+    "sold": "إكسسوارات آيفون",
+    "price": "190.00",
+    "discount": "",
+    "pageId": "75",
+    "productId": "75",
+    "shippingPrice": "60",
+    "colors": [
+      "حواف سوداء بتنين أسود",
+      "حواف شبه صفراء بتنين أسود",
+      "حواف كوفي بتنين أسود",
+      "حواف سوداء بتنين أزرق",
+      "حواف شبه صفراء بتنين أزرق",
+      "حواف كوفي بتنين أزرق"
+    ],
+    "materials": [
+      "iPhone 16 Plus",
+      "iPhone 15 Pro Max",
+      "iPhone 15",
+      "iPhone 14",
+      "iPhone 14 Pro",
+      "iPhone 14 Plus",
+      "iPhone 13",
+      "iPhone 13 Pro",
+      "iPhone 13 Pro Max",
+      "iPhone 12",
+      "iPhone 12 Pro",
+      "iPhone 12 Pro Max",
+      "iPhone 11",
+      "iPhone 11 Pro",
+      "iPhone 11 Pro Max",
+      "iPhone X",
+      "iPhone XS",
+      "iPhone XR",
+      "iPhone XS Max",
+      "iPhone 8",
+      "iPhone 7",
+      "iPhone 8 Plus",
+      "iPhone 7 Plus",
+      "iPhone SE 2020",
+      "iPhone SE 2022"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "تصميم فني"
+  }
+},
+{
+  "id": "76",
+  "media": [
+    {"src": "https://files.catbox.moe/9vu4dn.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/hsnwlc.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/o2xopa.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/g6k5ob.png",  "type": "image"}
+  ],
+  "pri": "690",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "ساعة ذكية D20 للياقة والصحة",
+    "شاشة TFT ملونة 1.3 بوصة",
+    "تتبع الخطوات - معدل ضربات القلب - النوم"
+  ],
+  "longText": "ساعة ذكية D20 للرجال والنساء - تتبع اللياقة ومراقبة الصحة مع شاشة كبيرة وعمر بطارية طويل",
+  "desc": "ساعة ذكية عملية وعصرية من Tebaurry، تدعم تتبع اللياقة البدنية مثل عدد الخطوات، السعرات الحرارية، المسافة، ومعدل ضربات القلب في الوقت الفعلي. تحتوي على شاشة LCD كبيرة بحجم 1.3 بوصة بدقة 240×240 بكسل، وتتوافق مع أجهزة Android وiOS.\n\n- **بطارية قوية** تدوم حتى 5 أيام بعد شحن كامل (3 ساعات).\n- **مواد عالية الجودة**: هيكل معدني متين + سوار TPU ناعم وصديق للبشرة.\n- **وظائف ذكية**: إشعارات الهاتف، التذكير بالرسائل، التحكم في الكاميرا، واسترجاع الهاتف.\n- **أحزمة قابلة للاستبدال** بألوان: أسود، أبيض، وردي.\n- **تتبع صحي شامل**: نوم، معدل ضربات القلب، وأوضاع رياضية متعددة.\n\n*ملاحظة*: الجهاز غير طبي، فقط لمتابعة اللياقة والرياضة. يُنصح بشحنه لمدة 3 ساعات قبل الاستخدام الأول.",
+  "sales": "الساعات الذكية",
+  "buttonId": "commentButton76",
+  "commentId": "76",
+  "elementId": "commentCount76",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Tebaurry"},
+    {"question": "الموديل", "answer": "D20"},
+    {"question": "الشاشة", "answer": "TFT - 1.3 بوصة - 240×240 بكسل"},
+    {"question": "المواد", "answer": "تيتانيوم + TPU"},
+    {"question": "الألوان", "answer": "أسود، أبيض، وردي"},
+    {"question": "الوزن", "answer": "45 جرام"},
+    {"question": "التوافق", "answer": "أندرويد / iOS"},
+    {"question": "البطارية", "answer": "150 مللي أمبير - شحن مباشر عبر USB"},
+    {"question": "عمر البطارية", "answer": "حتى 5 أيام"},
+    {"question": "الشحن", "answer": "شحن USB مباشر (3 ساعات)"},
+    {"question": "المميزات", "answer": "مراقبة معدل ضربات القلب - تتبع الرياضة - تنبيهات الرسائل - عرض الوقت - عداد الخطوات"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "مقاومة الماء", "answer": "غير مقاومة للماء"},
+    {"question": "التطبيق", "answer": "FitPro أو HryFine (متاح على App Store وGoogle Play)"},
+    {"question": "الوظائف الإضافية", "answer": "تحكم في الكاميرا - استعادة الهاتف - تنبيهات المكالمات والرسائل"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/9vu4dn.png", 
+        "https://files.catbox.moe/hsnwlc.png", 
+        "https://files.catbox.moe/o2xopa.png", 
+        "https://files.catbox.moe/g6k5ob.png" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/9vu4dn.png", 
+    "name": "ساعة ذكية D20 للرجال والنساء",
+    "sold": "الساعات الذكية",
+    "price": "690.00",
+    "discount": "",
+    "pageId": "76",
+    "productId": "76",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أبيض", "وردي"]   
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ساعة ذكية"
+  }
+},
+{
+  "id": "77",
+  "media": [
+    {"src": "https://files.catbox.moe/9u3606.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/vjzsly.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ijvt01.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/t50kv7.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/0l3ann.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/5unqcb.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/ezj75d.webp",  "type": "image"}
+  ],
+  "pri": "280",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "سماعات نوم لاسلكية TWS",
+    "صوت ستيريو عالي الوضوح",
+    "مثالية للنوم والاستماع الليلي"
+  ],
+  "longText": "Xiaomi X55 سماعات أذن للنوم - سماعات TWS صغيرة مخفية مع بلوتوث وتقنية HD للمكالمات",
+  "desc": "سماعات أذن Xiaomi X55 مصممة خصيصًا للاستخدام أثناء النوم، تقدم تجربة استماع فريدة مع تصميم صغير ومريح لا يسبب إزعاجًا عند ارتدائها لفترات طويلة. تدعم تقنية البلوتوث اللاسلكية لتوصيل سلس مع الهاتف أو الجهاز المحمول، وتتميز بميكروفون مدمج لإجراء مكالمات بصوت واضح وجودة عالية.\n\n- **صوت ستيريو مميز**: جودة صوت محيطي ممتازة مناسبة للموسيقى والقراءة والنوم.\n- **تصميم مثالي للنوم**: صغير الحجم ومناسب تمامًا داخل الأذن دون ضغط أو إزعاج.\n- **مقاوم للعرق**: مثالي للاستخدام أثناء النوم أو التمارين الخفيفة.\n- **عمر بطارية طويل**: حتى 4 ساعات متواصلة بعد شحن كامل.\n- **سهولة الاتصال**: دعم تقنية Bluetooth 5.0 لاتصال سريع ومستقر.\n- **أزرار تحكم مدمجة**: للتحكم في الصوت والمكالمات بدون الحاجة للهاتف.\n\nمثالية لعشاق الموسيقى الهادئة قبل النوم، أو الاستماع إلى الكتب الصوتية أو البودكاست براحة تامة.",
+  "sales": "سماعات وسماعات",
+  "buttonId": "commentButton77",
+  "commentId": "77",
+  "elementId": "commentCount77",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "MIJIA (شياومي)"},
+    {"question": "الموديل", "answer": "X55"},
+    {"question": "النوع", "answer": "سماعات TWS داخل الأذن"},
+    {"question": "الاتصال", "answer": "لاسلكي - Bluetooth"},
+    {"question": "البطارية", "answer": "حتى 4 ساعات تشغيل مستمر"},
+    {"question": "الخصائص", "answer": "مثالية للنوم - ميكروفون مدمج - تحكم باللمس"},
+    {"question": "المادة", "answer": "ABS"},
+    {"question": "الألوان", "answer": "أزرق، أبيض، أسود، بنفسجي، وردي"},
+    {"question": "الشهادات", "answer": "CE, FCC"},
+    {"question": "المنشأ", "answer": "الصين (CN)"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 4.8 جرام لكل سماعة"},
+    {"question": "الوظائف", "answer": "استقبال المكالمات - تشغيل/إيقاف - التحكم في الصوت"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/9u3606.jpg", 
+        "https://files.catbox.moe/vjzsly.jpg", 
+        "https://files.catbox.moe/ijvt01.jpg", 
+        "https://files.catbox.moe/t50kv7.jpg", 
+        "https://files.catbox.moe/0l3ann.jpg", 
+        "https://files.catbox.moe/5unqcb.jpg", 
+        "https://files.catbox.moe/ezj75d.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/9u3606.jpg", 
+    "name": "سماعات أذن Xiaomi X55 للنوم",
+    "sold": "سماعات",
+    "price": "280.00",
+    "discount": "",
+    "pageId": "77",
+    "productId": "77",
+    "shippingPrice": "50",
+    "colors": ["أزرق", "أبيض", "أسود", "بـني", "وردي"],
+    "materials": ["ABS"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "سماعات لاسلكية"
+  }
+},
+{
+  "id": "78",
+  "media": [
+    {"src": "https://files.catbox.moe/fqppcd.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/apcgrl.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/3pj1yp.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/ee4onx.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/rvrkc5.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/2bf6zo.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/2tyyjk.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/w9bpcn.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/nnii7a.webp",  "type": "image"}
+  ],
+  "pri": "280",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مصباح LED RGB للاستخدام المنزلي",
+    "16 لونًا + تحكم عن بعد",
+    "مثالي للديكور والإضاءة السحرية"
+  ],
+  "longText": "مصباح إضاءة RGB ذكي بقاعدة E27، 7 واط، 16 لونًا مختلفًا، مع جهاز تحكم عن بعد، مناسب للديكور الداخلي وإضافة أجواء احتفالية أو رومانسية",
+  "desc": "استمتع بتغيير الإضاءة في منزلك بلمسة زر مع مصباح LED RGB الذكي! هذا المصباح يقدم 16 لونًا مختلفًا يمكنك الاختيار بينهم لتغيير الأجواء المنزلية بسهولة. يأتي مع جهاز تحكم عن بعد لضبط الألوان، السطوع، وأنماط التوهج المختلفة. مناسب تمامًا للاستخدام في غرف النوم، الصالونات، أو حتى الديكورات الخارجية مثل الشرفات.\n\n- **16 لون RGB**: مجموعة ألوان واسعة تلبي جميع الأذواق.\n- **تحكم عن بعد IR**: جهاز تحكم بالأشعة تحت الحمراء (24 زر) لتشغيل وإيقاف وتغيير الألوان.\n- **إمكانية التعتيم**: ضبط مستوى السطوع حسب الرغبة.\n- **عالية الجودة**: مصنوعة من مواد ABS ومعدن ألومنيوم متينة.\n- **موفرة للطاقة**: استهلاك 7 واط فقط مع عمر طويل.\n- **سهلة التركيب**: بقاعدة E27 تناسب أي لمبة تقليدية.\n- **إضاءة مريحة**: بدون فلاش، آمنة على العينين.\n\nمثالي لحفلات الزفاف، الليالي الرومانسية، أو ديكورات الغرف الحديثة.",
+  "sales": "مصابيح وديكورات إنارة",
+  "buttonId": "commentButton78",
+  "commentId": "78",
+  "elementId": "commentCount78",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "MIJIA (شياومي)"},
+    {"question": "الموديل", "answer": "RGB Smart Lamp"},
+    {"question": "اللون", "answer": "16 لونًا (بما في ذلك الأبيض)"},
+    {"question": "الجهد الكهربائي", "answer": "220 فولت / 50 هرتز"},
+    {"question": "الطاقة", "answer": "7 واط"},
+    {"question": "القاعدة", "answer": "E27"},
+    {"question": "التحكم", "answer": "جهاز تحكم عن بعد IR (24 زر)"},
+    {"question": "المواد", "answer": "ABS + ألومنيوم"},
+    {"question": "الأبعاد", "answer": "12.5 × 6 سم"},
+    {"question": "الوظائف", "answer": "تغيير اللون، التعتيم، فلاش، ثابت، تبديل سريع"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "المنشأ", "answer": "Mainland China"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 120 جرام تقريبًا"},
+    {"question": "الضمان", "answer": "لم يتم تحديد الضمان"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/fqppcd.jpg", 
+        "https://files.catbox.moe/apcgrl.webp", 
+        "https://files.catbox.moe/3pj1yp.avif", 
+        "https://files.catbox.moe/ee4onx.jpg", 
+        "https://files.catbox.moe/rvrkc5.webp", 
+        "https://files.catbox.moe/2bf6zo.jpg", 
+        "https://files.catbox.moe/2tyyjk.jpg", 
+        "https://files.catbox.moe/w9bpcn.webp", 
+        "https://files.catbox.moe/nnii7a.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/fqppcd.jpg", 
+    "name": "مصباح LED RGB ذكي 16 لون E27",
+    "sold": "مصابيح وإنارة",
+    "price": "280.00",
+    "discount": "",
+    "pageId": "78",
+    "productId": "78",
+    "shippingPrice": "50",
+    "colors": ["متعدد الألوان"],
+    "materials": ["ABS", "ألومنيوم"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مصابيح RGB"
+  }
+},
+{
+  "id": "79",
+  "media": [
+    {"src": "https://files.catbox.moe/5v44ku.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/5gtfcl.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/irlz66.webp",  "type": "image"},
+    {"src": "https://files.catbox.moe/kiwn8o.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/rhgi2w.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/asz0ey.png",  "type": "image"},
+    {"src": "https://files.catbox.moe/h1or13.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/0nseen.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/6ibbuo.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/gir0g8.avif",  "type": "image"},
+    {"src": "https://files.catbox.moe/cdwoec.webp",  "type": "image"}
+  ],
+  "pri": "400",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "شريط إضاءة RGB 32 LED",
+    "مُفعّل بإيقاع الموسيقى",
+    "تحكم عبر التطبيق + USB"
+  ],
+  "longText": "FTOYIN 32 Led RGB شريط إضاءة ليلية مزودة بالتحكم بالإيقاع الصوتي، قابلة للشحن، مع دعم التحكم عبر التطبيق، مناسبة للألعاب، اللعب، الإضاءة المحيطة، والديكور الداخلي",
+  "desc": "استمتع بإضاءة مثيرة ومفعمة بالألوان مع شريط الإضاءة FTOYIN RGB! هذا الشريط الذكي مزود بـ 32 LED عالية الجودة ويعمل على أساس إيقاع الصوت أو الموسيقى. يمكنك التحكم به عبر جهاز التحكم أو باستخدام تطبيق الهاتف (حسب النسخة). تصميم عصري وأنيق من ABS، ومناسب تمامًا لتزيين الغرفة، السيارات المصغرة، الألعاب، أو حتى كضوء ليلي مريح.\n\n- **32 LED عالية الوضوح**: إضاءة واضحة وقوية مع ألوان زاهية.\n- **إحساس صوتي ذكي**: الاستجابة لإيقاع الموسيقى أو الصوت المحيط.\n- **تحكم عبر التطبيق**: نسخة متوفرة مع دعم Wi-Fi أو Bluetooth للتحكم من خلال الهاتف.\n- **قابلة للشحن**: تعمل ببطارية مدمجة قابلة لإعادة الشحن.\n- **USB مصدر الطاقة**: سهلة التوصيل بأي منفذ USB.\n- **تصميم متين**: من مادة ABS مقاومة للصدمات.\n- **أضواء متعددة الأوضاع**: يمكنك الاختيار بين العديد من الأنماط والألوان.\n\nمثالية للأطفال والكبار، وللحصول على أجواء ممتعة أثناء اللعب أو الاستماع للموسيقى.",
+  "sales": "مصابيح وإنارة",
+  "buttonId": "commentButton79",
+  "commentId": "79",
+  "elementId": "commentCount79",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "FTOYIN"},
+    {"question": "عدد LED", "answer": "32 LED"},
+    {"question": "اللون الخارجي", "answer": "أسود / أبيض"},
+    {"question": "الجهد الكهربائي", "answer": "5 فولت"},
+    {"question": "الطاقة المستهلكة", "answer": "0-5 واط"},
+    {"question": "نوع المنتج", "answer": "إضاءة ليلية موسيقية"},
+    {"question": "المواد", "answer": "ABS"},
+    {"question": "التحكم", "answer": "يدوي / عبر التطبيق (حسب النسخة)"},
+    {"question": "الخصائص", "answer": "إيقاع صوتي، ألوان RGB، قابلة للشحن"},
+    {"question": "المصدر", "answer": "USB"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الشكل", "answer": "مستطيل"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 150 جرام تقريبًا"},
+    {"question": "الوظائف", "answer": "إضاءة ليلية، تفاعل مع الصوت، تغيير الألوان"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/5v44ku.png", 
+        "https://files.catbox.moe/5gtfcl.png", 
+        "https://files.catbox.moe/irlz66.webp", 
+        "https://files.catbox.moe/kiwn8o.avif", 
+        "https://files.catbox.moe/rhgi2w.jpg", 
+        "https://files.catbox.moe/asz0ey.png", 
+        "https://files.catbox.moe/h1or13.jpg", 
+        "https://files.catbox.moe/0nseen.jpg", 
+        "https://files.catbox.moe/6ibbuo.jpg", 
+        "https://files.catbox.moe/gir0g8.avif", 
+        "https://files.catbox.moe/cdwoec.webp" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/5v44ku.png", 
+    "name": "شريط إضاءة RGB 32 LED - FTOYIN",
+    "sold": "مصابيح وإنارة",
+    "price": "400.00",
+    "discount": "",
+    "pageId": "79",
+    "productId": "79",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أبيض"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إضاءة RGP"
+  }
+},
+{
+  "id": "80",
+  "media": [
+    {"src": "https://files.catbox.moe/89l30c.mp4",  "type": "video"},
+    {"src": "https://files.catbox.moe/rgtj83.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/zdge9s.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/46ki65.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/3mfofc.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/xw4g10.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/g09ph5.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/q9itfl.jpg",  "type": "image"},
+    {"src": "https://files.catbox.moe/8ext5i.jpg",  "type": "image"}
+  ],
+  "pri": "330",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مرطب هواء للسيارة والمنزل",
+    "ضوء ليلي متعدد الألوان",
+    "يعمل عبر USB"
+  ],
+  "longText": "مرطب هواء للسيارة والمنزل مع ضوء LED متعدد الألوان، سعة 220 مل، يعمل بصمت (<30 ديسيبل)، مناسب للمكتب، السيارة، والغرف",
+  "desc": "استمتع بجو نقي ومريح داخل السيارة أو المنزل مع هذا المرطب العملي والمميز. يتميز بتصميم أنيق مع إضاءة LED متعددة الألوان تخلق أجواءً مريحة، ويأتي بسعة خزان ماء 220 مل مع رش ثابت (35 مل/ساعة) وضوضاء منخفضة أقل من 30 ديسيبل.\n\n- **رش مستمر وهادئ**: يعمل بصوت منخفض يجعله مناسبًا حتى أثناء النوم أو القيادة.\n- **إضاءة ليلية RGB**: اضبط لون الإضاءة حسب الرغبة بين 7 ألوان باستخدام زر التحكم.\n- **USB питание**: يدعم التشغيل عبر أي منفذ USB مثل الكمبيوتر، بنك الطاقة، أو الشاحن.\n- **وقت تشغيل طويل**: حتى 5 ساعات في وضع الاستمرار و10 ساعات في الوضع المتقطع.\n- **حماية تلقائية**: يتوقف عند انخفاض المياه لتجنب التلف.\n- **سهل الاستخدام**: تصميم محمول ومناسب للسيارة، المكتب، والمنزل.\n\nمثالي لمحبي العطور والعناية بالجو الداخلي، سواء كنت تقود سيارتك أو تعمل من المنزل.",
+  "sales": "مستلزمات السيارات والإكسسوارات",
+  "buttonId": "commentButton80",
+  "commentId": "80",
+  "elementId": "commentCount80",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Generic / OEM"},
+    {"question": "السعة", "answer": "220 مل"},
+    {"question": "كمية الرش", "answer": "35 مل/ساعة"},
+    {"question": "الجهد الكهربائي", "answer": "DC 5V / 350mA"},
+    {"question": "وقت التشغيل", "answer": "5 ساعات (مستمر)، 10 ساعات (متقطع)"},
+    {"question": "المواد", "answer": "بولي بروبيلين، ABS، سيليكون"},
+    {"question": "الأبعاد", "answer": "8 × 8 × 10.3 سم"},
+    {"question": "الألوان", "answer": "أبيض، وردي، أخضر (Water Drop & Easter Egg)"},
+    {"question": "المصدر", "answer": "USB"},
+    {"question": "الوظائف", "answer": "رذاذ الهواء، إضاءة LED، حماية تلقائية من الجفاف"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "المحتويات", "answer": "1 × مرطب، 1 × كابل USB"}
+  ],
+  "groups": [
+        {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/89l30c.mp4" 
+      ]
+    }
+    ,{
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/rgtj83.jpg", 
+        "https://files.catbox.moe/zdge9s.jpg", 
+        "https://files.catbox.moe/46ki65.jpg", 
+        "https://files.catbox.moe/3mfofc.jpg", 
+        "https://files.catbox.moe/xw4g10.jpg", 
+        "https://files.catbox.moe/g09ph5.jpg", 
+        "https://files.catbox.moe/q9itfl.jpg", 
+        "https://files.catbox.moe/8ext5i.jpg" 
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/rgtj83.jpg", 
+    "name": "مرطب هواء مع عطر LED للسيارة والمنزل",
+    "sold": "مستلزمات السيارات",
+    "price": "330.00",
+    "discount": "",
+    "pageId": "80",
+    "productId": "80",
+    "shippingPrice": "50",
+    "colors": ["أبيض Water Drop", "وردي Water Drop", "أخضر Water Drop", "أبيض Easter Egg", "وردي Easter Egg", "أخضر Easter Egg"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إكسسوارات سيارة"
+  }
 }
 
 
