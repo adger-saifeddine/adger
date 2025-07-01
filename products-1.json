@@ -6439,7 +6439,7 @@
   "id": "95",
   "media": [
     {"src": "https://files.catbox.moe/aehbc7.mp4 ", "type": "video"},
-    {"src": "https://files.catbox.moe/jjry7q.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/hj1590.webp ", "type": "image"},
     {"src": "https://files.catbox.moe/k872bf.jpg ", "type": "image"},
     {"src": "https://files.catbox.moe/q3c4lc.jpg ", "type": "image"},
     {"src": "https://files.catbox.moe/fz2x1u.jpg ", "type": "image"},
@@ -6454,7 +6454,7 @@
   ],
   "pri": "1200",
   "oldPrice": "1800",
-  "dis": "33%",
+  "dis": "خصم 33%",
   "changingText": [
     "ساعة ذكية للياقة والصحة",
     "شاشة 1.28 بوصة TFT",
@@ -6496,7 +6496,7 @@
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/jjry7q.jpg ",
+        "https://files.catbox.moe/hj1590.webp ",
         "https://files.catbox.moe/k872bf.jpg ",
         "https://files.catbox.moe/q3c4lc.jpg ",
         "https://files.catbox.moe/fz2x1u.jpg ",
@@ -6512,7 +6512,7 @@
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/jjry7q.jpg ",
+    "image": "https://files.catbox.moe/hj1590.webp ",
     "name": "ساعة ذكية ZL02 - مقاومة للماء IP68، شاشة 1.28\", تتبع صحي، بلوتوث، سماعة داخلية",
     "sold": "ساعات ذكية",
     "price": "1200.00",
