@@ -4564,7 +4564,7 @@
     "name": "كاميرا صغيرة فائقة الدقة 4K واي فاي",
     "sold": "إلكترونيات",
     "price": "1400.00",
-    "discount": "1800.00",
+    "discount": "22%",
     "pageId": "71",
     "productId": "71",
     "shippingPrice": "50",
@@ -5443,14 +5443,14 @@
     "name": "USB C Hub 8 منافذ - محول متعدد الوظائف USB 3.0 + SD/TF Reader + خرج صوت",
     "sold": "إكسسوارات الحواسيب",
     "price": "380.00",
-    "discount": "23%",
+    "discount": "23",
     "pageId": "82",
     "productId": "82",
     "shippingPrice": "60"
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "USB HUB"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -5628,7 +5628,7 @@
     "name": "مصباح غروب الشمس مع إسقاط قوس قزح - ضوء ليلي RGB",
     "sold": "مصابيح وإنارة",
     "price": "200.00",
-    "discount": "50%",
+    "discount": "50",
     "pageId": "84",
     "productId": "84",
     "shippingPrice": "50",
@@ -5636,7 +5636,7 @@
     },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "إضاءة دافئة"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -5874,7 +5874,7 @@
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "جرابات مغناطيسية"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -5950,7 +5950,7 @@
     "name": "قفل بصمة الإصبع الذكي RAYKUBE P2 - مقاوم للماء + بطارية مدمجة",
     "sold": "الأجهزة الذكية والأمان",
     "price": "1100.00",
-    "discount": "45%",
+    "discount": "45",
     "pageId": "88",
     "productId": "88",
     "shippingPrice": "50",
@@ -5958,7 +5958,7 @@
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "أقفال ذكية"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -6344,14 +6344,14 @@
     "name": "كابل شحن Type-C سريع 120W - 7A، زاوية 180°، مقاوم للحرارة",
     "sold": "إكسسوارات الهواتف",
     "price": "180.00",
-    "discount": "55%",
+    "discount": "55",
     "pageId": "93",
     "productId": "93",
     "shippingPrice": "50"
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "كابلات شحن"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -6418,7 +6418,7 @@
     "name": "سماعات Redmi Air7 اللاسلكية TWS - سماعات بلوتوث ستيريو مع عزل ضوضاء، مقاومة للماء، مناسبة للألعاب والرياضة",
     "sold": "سماعات وسماعات",
     "price": "750.00",
-    "discount": "38%",
+    "discount": "38",
     "pageId": "94",
     "productId": "94",
     "shippingPrice": "50",
@@ -6426,7 +6426,7 @@
   },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "سماعات Xiaomi"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -6510,7 +6510,7 @@
     "name": "ساعة ذكية ZL02 - مقاومة للماء IP68، شاشة 1.28\", تتبع صحي، بلوتوث، سماعة داخلية",
     "sold": "ساعات ذكية",
     "price": "1200.00",
-    "discount": "33%",
+    "discount": "33",
     "pageId": "95",
     "productId": "95",
     "shippingPrice": "90",
@@ -6518,7 +6518,7 @@
     },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "ساعات ذكية"
+    "discountLabel": "خصم"
   }
 },
 {
@@ -6765,7 +6765,7 @@
 {
   "id": "99",
   "media": [
-    {"src": "https://files.catbox.moe/0t0hgl.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/oj9snx.jpg ", "type": "image"},
     {"src": "https://i.postimg.cc/FsDLbgsh/40f61ba1a417c120e85f7db838398aaa.jpg ", "type": "image"},
     {"src": "https://i.postimg.cc/7ZhTKGf0/81pf-CQi-XTv-L-UF1000-1000-QL80.jpg ", "type": "image"},
     {"src": "https://i.postimg.cc/pdn5twQd/O1-CN01-Ei-FArq1n-Rt-YCrz2up-2210134145087-0-cib.jpg ", "type": "image"},
@@ -6812,7 +6812,7 @@
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/0t0hgl.png ",
+        "https://files.catbox.moe/oj9snx.jpg ",
         "https://i.postimg.cc/FsDLbgsh/40f61ba1a417c120e85f7db838398aaa.jpg ",
         "https://i.postimg.cc/7ZhTKGf0/81pf-CQi-XTv-L-UF1000-1000-QL80.jpg ",
         "https://i.postimg.cc/pdn5twQd/O1-CN01-Ei-FArq1n-Rt-YCrz2up-2210134145087-0-cib.jpg ",
@@ -6824,11 +6824,11 @@
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/0t0hgl.png ",
+    "image": "https://files.catbox.moe/oj9snx.jpg ",
     "name": "لوحة مفاتيح لاسلكية صغيرة مع إضاءة RGB - لوحة مفاتيح بلوتوث 5.0 صامتة، 87 مفتاح، تعمل مع iPad والهواتف والحواسيب",
     "sold": "إكسسوارات الحواسيب",
     "price": "800.00",
-    "discount": "64%",
+    "discount": "64",
     "pageId": "99",
     "productId": "99",
     "shippingPrice": "90",
@@ -6836,14 +6836,14 @@
     },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "لوحات مفاتيح لاسلكية"
+    "discountLabel": "خصم"
   }
 },
 {
   "id": "100",
   "media": [
     {"src": "https://files.catbox.moe/sztmqm.mp4 ", "type": "video"},
-    {"src": "https://files.catbox.moe/hbs5zl.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/98euh0.jpg", "type": "image"},
     {"src": "https://files.catbox.moe/i60hwq.png ", "type": "image"},
     {"src": "https://files.catbox.moe/rqo168.png ", "type": "image"},
     {"src": "https://files.catbox.moe/lprbld.png ", "type": "image"},
@@ -6897,7 +6897,7 @@
     {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/pic6dm.png ",
+        "https://files.catbox.moe/98euh0.jpg ",
         "https://files.catbox.moe/i60hwq.png ",
         "https://files.catbox.moe/rqo168.png ",
         "https://files.catbox.moe/lprbld.png ",
@@ -6907,11 +6907,11 @@
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/pic6dm.png ",
+    "image": "https://files.catbox.moe/98euh0.jpg",
     "name": "نظارات JOYINU D13 الذكية - 4K HD، كاميرا 100MP، مساعد صوتي AI، بلوتوث، بطارية 260mAh",
     "sold": "الأجهزة الذكية والأمان",
     "price": "3500.00",
-    "discount": "39%",
+    "discount": "39",
     "pageId": "100",
     "productId": "100",
     "shippingPrice": "150",
@@ -6919,7 +6919,7 @@
     },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "نظارات ذكية"
+    "discountLabel": "خصم"
   }
 }
 
