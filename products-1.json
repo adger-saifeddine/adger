@@ -5296,6 +5296,1633 @@
     "currency": "جنيه",
     "discountLabel": "إكسسوارات سيارة"
   }
+},
+{
+  "id": "81",
+  "media": [
+    {"src": "https://files.catbox.moe/lzblx5.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/k5g6b9.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/0f476p.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/8qf0uc.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/3wg7gp.webp ", "type": "image"}
+  ],
+  "pri": "200",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "جراب شفاف لهواتف الآيفون",
+    "مصنوع من سيليكون عالي الجودة",
+    "مقاوم للصدمات والخدوش"
+  ],
+  "longText": "TOPTOY جراب سيليكون شفاف متوافق مع iPhone 7 إلى iPhone 16 Pro Max، ضد الغبار، مقاوم للصدمات، تصميم نصف مغطى، خفيف الوزن وسهل التركيب",
+  "desc": "حافظة عالية الجودة لهواتف iPhone بمختلف إصداراتها، مصنوعة من سيليكون عالي الجودة لتوفير حماية شاملة لهاتفك من الصدمات والخدوش. تصميم شفاف يُبرز جمال اللون الأصلي لجهازك، مع حواف مضادة للانزلاق وحوامل داخلية مضادة للغبار.\n\n- **تصميم شفاف فاخر**: يظهر اللون الأصلي للجهاز مع حماية طويلة الأمد.\n- **مقاومة للصدمات والخدش**: طبقة سميكة مخصصة لامتصاص الصدمات.\n- **حماية من الغبار**: تصميم داخلي مضاد للغبار.\n- **Anti-Slip حواف**: لضمان ثبات الجهاز في يدك.\n- **متوافق مع العديد من الإصدارات**: من iPhone 7 حتى iPhone 16 Pro Max.\n- **سهل التركيب والاستخدام**: تركيب سريع دون الحاجة لأدوات.\n\nمثالية لمحبي البساطة والعناية بجهازهم، سواء كنت تستخدمه يوميًا أو كهدية.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton81",
+  "commentId": "81",
+  "elementId": "commentCount81",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "TOPTOY"},
+    {"question": "المتوافق مع", "answer": "iPhone 7، 8، SE 2020، XR، 11، 11 Pro Max، 12، 12 Pro، 12 Pro Max، 13، 13 Pro، 13 Pro Max، 14، 14 Plus، 14 Pro، 14 Pro Max، 15، 15 Plus، 15 Pro، 15 Pro Max، iPhone 16، 16 Plus، 16 Pro، 16 Pro Max"},
+    {"question": "المواد", "answer": "سيليكون عالي الجودة"},
+    {"question": "التصميم", "answer": "شفاف، كارتون، أنمي (حسب النسخة)"},
+    {"question": "الوظيفة", "answer": "مقاوم للصدمات، مضاد للانزلاق، مضاد للغبار"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 35 جرام تقريبًا"},
+    {"question": "الشكل", "answer": "نصف مغطى"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الألوان", "answer": "شفاف، رسمة 1، رسمة 2"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/lzblx5.avif ",
+        "https://files.catbox.moe/k5g6b9.png ",
+        "https://files.catbox.moe/0f476p.jpg ",
+        "https://files.catbox.moe/8qf0uc.webp ",
+        "https://files.catbox.moe/3wg7gp.webp "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/lzblx5.avif ",
+    "name": "جراب TOPTOY شفاف لهواتف iPhone 7 إلى iPhone 16 Pro Max",
+    "sold": "إكسسوارات الهواتف",
+    "price": "200.00",
+    "discount": "",
+    "pageId": "81",
+    "productId": "81",
+    "shippingPrice": "30",
+    "colors": ["رسمة 1", "رسمة 2"],
+    "materials": [
+      "iPhone 7",
+      "iPhone 8",
+      "iPhone SE 2020",
+      "iPhone XR",
+      "iPhone 11",
+      "iPhone 11 Pro",
+      "iPhone 11 Pro Max",
+      "iPhone 12",
+      "iPhone 12 Pro",
+      "iPhone 12 Pro Max",
+      "iPhone 13",
+      "iPhone 13 Pro",
+      "iPhone 13 Pro Max",
+      "iPhone 14",
+      "iPhone 14 Plus",
+      "iPhone 14 Pro",
+      "iPhone 14 Pro Max",
+      "iPhone 15",
+      "iPhone 15 Plus",
+      "iPhone 15 Pro",
+      "iPhone 15 Pro Max",
+      "iPhone 16",
+      "iPhone 16 Plus",
+      "iPhone 16 Pro",
+      "iPhone 16 Pro Max"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جرابات آيفون"
+  }
+},
+{
+  "id": "82",
+  "media": [
+    {"src": "https://files.catbox.moe/ujwolf.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/1vwbeq.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/8aa55f.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/osf4io.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/5pbght.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/rx24ux.jpg ", "type": "image"}
+  ],
+  "pri": "380",
+  "oldPrice": "490",
+  "dis": "23%",
+  "changingText": [
+    "محول USB-C متعدد الوظائف",
+    "8 منافذ - دعم SD/TF/USB 3.0/Audio",
+    "مثالي لماك بوك والحواسيب الحديثة"
+  ],
+  "longText": "محول USB-C Hub 8 في 2 - قارئ بطاقات SD/TF + USB 3.0 + USB 2.0 + خرج صوت - متوافق مع ماك بوك وجميع الأجهزة الداعمة لمنفذ Type-C",
+  "desc": "استمتع بتوصيل العديد من الأجهزة بسهولة باستخدام هذا المحول العملي والمتعدد الوظائف! يدعم حتى 8 منافذ مختلفة بما في ذلك USB 3.0، USB 2.0، قارئ بطاقات SD/TF، وخرج صوت 3.5 ملم. مصنوع من مواد عالية الجودة ويأتي بتصميم أنيق ومناسب للسفر.\n\n- **8 منافذ متعددة الاستخدام**: USB 3.0 × 2 / USB 2.0 × 2 / SD / TF / Audio Out / USB-C PD للشحن.\n- **سرعة نقل عالية**: حتى 5Gbps عبر منفذ USB 3.0.\n- **متوافق تمامًا**: مع ماك بوك، أجهزة لاب توب، هواتف USB-C، وأجهزة الكمبيوتر المكتبية.\n- **يدعم الشحن أثناء الاستخدام**: منفذ USB-C PD للحفاظ على شحن جهازك أثناء العمل.\n- **تصميم عصري وأنيق**: خفيف الوزن وسهل الحمل.\n- **توصيل مباشر Plug & Play**: لا يحتاج لأي تعريفات أو برامج تشغيل إضافية.\n\nمناسب تمامًا للاستخدام الشخصي، العمل الحر، التصوير الفوتوغرافي، والمستخدمين الذين يحتاجون إلى توسيع منافذ أجهزتهم بسهولة.",
+  "sales": "إكسسوارات الحواسيب",
+  "buttonId": "commentButton82",
+  "commentId": "82",
+  "elementId": "commentCount82",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "kebidumei"},
+    {"question": "رقم الموديل", "answer": "S472C"},
+    {"question": "النوع", "answer": "USB C Hub متعدد الوظائف"},
+    {"question": "عدد المنافذ", "answer": "8 منافذ"},
+    {"question": "الواجهة", "answer": "USB Type-C"},
+    {"question": "المعيار", "answer": "USB 3.0 / USB 2.0 / SD / TF / 3.5mm Audio"},
+    {"question": "الوظائف", "answer": "قارئ بطاقات SD/TF، USB Hub، خرج صوت، دعم PD للشحن السريع"},
+    {"question": "السرعة القصوى", "answer": "حتى 5Gbps (USB 3.0)"},
+    {"question": "المواد", "answer": "بلاستيك ABS + معدن"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الوزن", "answer": "85 جرام تقريبًا"},
+    {"question": "الألوان", "answer": "فضي، رمادي فلكي"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/ujwolf.png ",
+        "https://files.catbox.moe/1vwbeq.jpg ",
+        "https://files.catbox.moe/8aa55f.jpg ",
+        "https://files.catbox.moe/osf4io.png ",
+        "https://files.catbox.moe/5pbght.jpg ",
+        "https://files.catbox.moe/rx24ux.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/ujwolf.png ",
+    "name": "USB C Hub 8 منافذ - محول متعدد الوظائف USB 3.0 + SD/TF Reader + خرج صوت",
+    "sold": "إكسسوارات الحواسيب",
+    "price": "380.00",
+    "discount": "23%",
+    "pageId": "82",
+    "productId": "82",
+    "shippingPrice": "60"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "USB HUB"
+  }
+},
+{
+  "id": "83",
+  "media": [
+    {"src": "https://files.catbox.moe/c7wp4f.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/q4uh2o.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/14lqd9.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/p9gkbe.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2rbdv4.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/pq0jra.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/ea7szj.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/ocl5xo.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/lpucbe.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/znq6co.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2u85f9.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/vihc6w.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/hsf4jc.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/vf7bso.jpg ", "type": "image"}
+  ],
+  "pri": "240",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "جراب محفظة لهاتف آيفون",
+    "فتحة بطاقة داخلية + مقاوم للصدمات",
+    "مثالي للاستخدام اليومي"
+  ],
+  "longText": "حافظة محفظة لهواتف iPhone مع فتحة بطاقة وطبقة مزدوجة الحماية، مصنوعة من مادة TPU والبولي يوريثان، خفيفة الوزن ومريحة في الاستخدام اليومي",
+  "desc": "استمتع بحماية شاملة لهاتفك مع تصميم عملي وعصري من خلال هذه الحافظة المدمجة التي تحتوي على **فتحة مخصصة لبطاقات الائتمان أو الهوية**. تتميز بطبقة مزدوجة من المواد (TPU + PU) لامتصاص الصدمات والحماية من الخدوش، كما أنها **متوافقة مع الشحن اللاسلكي** مما يجعلها خيارًا مثاليًا للمستخدمين النشطين.\n\n- **تصميم محفظة ذكي**: فتحة مخصصة لبطاقات الائتمان أو البطاقات الشخصية.\n- **طبقة مزدوجة الحماية**: TPU مرنة + سطح خارجي من البولي يوريثان القوي.\n- **مقاوم للانزلاق والغبار**: تصميم دقيق يحمي الهاتف من العوامل الخارجية.\n- **متوافق مع الشحن اللاسلكي**: لا تحتاج إلى إزالته عند الشحن.\n- **خفيف الوزن وسهل الحمل**: تصميم نحيف ومناسب تمامًا للأحجام المختلفة من iPhone.\n- **متوفر بعدة ألوان عصرية**: أسود، أحمر، أخضر، أزرق، ذهبي، فضي، رصاصي.\n\nمثالي لهواتف iPhone 16 Pro Max، iPhone 15 Pro Max، iPhone 14، iPhone 13، iPhone 12، iPhone 11، XS Max، XR وغيرها.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton83",
+  "commentId": "83",
+  "elementId": "commentCount83",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Huikai"},
+    {"question": "المتوافق مع", "answer": "iPhone 16 Pro Max, iPhone 16 Pro, iPhone 16 Plus, iPhone 16, iPhone 15 Pro Max, iPhone 15 Pro, iPhone 15 Plus, iPhone 15, iPhone 14 Pro Max, iPhone 14 Pro, iPhone 14 Plus, iPhone 14, iPhone 13 Pro Max, iPhone 13 Pro, iPhone 13, iPhone 12 Pro Max, iPhone 12 Pro, iPhone 12, iPhone 11 Pro Max, iPhone 11 Pro, iPhone 11, iPhone XS Max, iPhone XS, iPhone XR"},
+    {"question": "المواد", "answer": "TPU + Polyurethane"},
+    {"question": "الوظائف", "answer": "فتحة بطاقة، مضاد للصدمات، مضاد للانزلاق، شحن لاسلكي"},
+    {"question": "التصميم", "answer": "محفظة، فتحة بطاقة جانبية، تصميم نحيف"},
+    {"question": "الألوان", "answer": "أسود، أحمر، أخضر، أزرق، ذهبي، فضي، رصاصي"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 70 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الخصائص", "answer": "مضاد للبصمات، مضاد للخدش، مغناطيسي (للحامل)، خفيف الوزن، تصميم هندسي"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/c7wp4f.png ",
+        "https://files.catbox.moe/q4uh2o.jpg ",
+        "https://files.catbox.moe/14lqd9.jpg ",
+        "https://files.catbox.moe/p9gkbe.jpg ",
+        "https://files.catbox.moe/2rbdv4.jpg ",
+        "https://files.catbox.moe/pq0jra.jpg ",
+        "https://files.catbox.moe/ea7szj.jpg ",
+        "https://files.catbox.moe/ocl5xo.jpg ",
+        "https://files.catbox.moe/lpucbe.jpg ",
+        "https://files.catbox.moe/znq6co.jpg ",
+        "https://files.catbox.moe/2u85f9.jpg ",
+        "https://files.catbox.moe/vihc6w.jpg ",
+        "https://files.catbox.moe/hsf4jc.jpg ",
+        "https://files.catbox.moe/vf7bso.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/c7wp4f.png ",
+    "name": "جراب محفظة لهواتف iPhone - حامل بطاقة + مضاد للصدمات",
+    "sold": "إكسسوارات الهواتف",
+    "price": "240.00",
+    "discount": "",
+    "pageId": "83",
+    "productId": "83",
+    "shippingPrice": "50",
+    "colors": ["أسود", "أحمر", "أخضر", "أزرق", "ذهبي", "فضي", "رصاصي"],
+    "materials": [
+      "iPhone 16 Pro Max",
+      "iPhone 16 Pro",
+      "iPhone 16 Plus",
+      "iPhone 16",
+      "iPhone 15 Pro Max",
+      "iPhone 15 Pro",
+      "iPhone 15 Plus",
+      "iPhone 15",
+      "iPhone 14 Pro Max",
+      "iPhone 14 Pro",
+      "iPhone 14 Plus",
+      "iPhone 14",
+      "iPhone 13 Pro Max",
+      "iPhone 13 Pro",
+      "iPhone 13",
+      "iPhone 12 Pro Max",
+      "iPhone 12 Pro",
+      "iPhone 12",
+      "iPhone 11 Pro Max",
+      "iPhone 11 Pro",
+      "iPhone 11",
+      "iPhone XS Max",
+      "iPhone XS",
+      "iPhone XR"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جرابات محفظة"
+  }
+},
+{
+  "id": "84",
+  "media": [
+    {"src": "https://files.catbox.moe/28s2qz.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/uhyu59.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/s048nu.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/63ifo8.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/och0jm.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/pcg24a.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/51u1tc.jpg ", "type": "image"}
+  ],
+  "pri": "200",
+  "oldPrice": "400",
+  "dis": "50%",
+  "changingText": [
+    "مصباح غروب الشمس LED",
+    "إضاءة دافئة بـ 7 ألوان ثابتة + 6 ديناميكية",
+    "مثالي للديكور والتصوير الفوتوغرافي"
+  ],
+  "longText": "مصباح غروب الشمس USB مع إسقاط قوس قزح، ضوء ليلي RGB، مناسب للديكور المنزلي، تصوير السيلفي، أو أجواء البارات والمطاعم",
+  "desc": "استمتع بإضاءة ساحرة تُعيد لك ذكريات غروب الشمس الطبيعي! هذا المصباح الذكي يُصدر ألوانًا دافئة وقوس قزح بشكل متناغم، وهو خيار مثالي لإضافة لمسة رومانسية أو فنية إلى الغرفة. يمكنك استخدامه في التصوير الفوتوغرافي، الإضاءة المحيطة، أو كضوء ليلي مريح.\n\n- **تأثير غروب الشمس + قوس قزح**: إضاءة دافئة ومريحة تعكس ألوان السماء الطبيعية.\n- **13 وضع إضاءة**: 7 ألوان ثابتة + 6 أنماط ديناميكية.\n- **USB питание**: يعمل عبر منفذ USB (أي كمبيوتر، شواحن الجدار، أو بنوك الطاقة).\n- **زاوية دوران 360°**: لتعديل زاوية الإضاءة حسب الرغبة.\n- **تصميم أنيق وزجاجي**: هيكل من الزجاج والبلاستيك ABS متين وفاخر.\n- **سهل الاستخدام**: Plug & Play بدون برامج أو تحكم معقد.\n- **مناسب للعديد من الاستخدامات**: تصوير السيلفي، ديكور المنزل، المقهى، الحفلات، أو كهدية فنية.\n\nمثالي لخلق أجواء رومانسية، دافئة، أو لصور شخصية احترافية!",
+  "sales": "مصابيح وإنارة",
+  "buttonId": "commentButton84",
+  "commentId": "84",
+  "elementId": "commentCount84",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "DUTRIEUX"},
+    {"question": "الجهد الكهربائي", "answer": "DC 5V"},
+    {"question": "الطاقة", "answer": "1 واط"},
+    {"question": "نوع مصدر الضوء", "answer": "LED SMD 63030"},
+    {"question": "الألوان", "answer": "7 ألوان ثابتة + 6 ألوان ديناميكية"},
+    {"question": "الوضعيات", "answer": "13 وضعية (ثابتة وديناميكية)"},
+    {"question": "المادة", "answer": "ABS + زجاج"},
+    {"question": "التحكم", "answer": "زر تشغيل / إيقاف مع تغيير الأوضاع"},
+    {"question": "الوظائف", "answer": "إضاءة ليلية، إسقاط قوس قزح، ضوء دافئ، تأثير غروب الشمس"},
+    {"question": "الطول الكلي", "answer": "18 × 12 سم (تقريبًا)"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "لا يوجد"},
+    {"question": "الاستخدام", "answer": "ديكور، تصوير، غرف نوم، مكاتب، مطاعم، مقاهي"},
+    {"question": "الشحن", "answer": "متصل عبر USB"},
+    {"question": "العمر الافتراضي", "answer": "50,000 ساعة"},
+    {"question": "زاوية الإضاءة", "answer": "40°"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 150 جرام تقريبًا"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/28s2qz.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/uhyu59.jpg ",
+        "https://files.catbox.moe/s048nu.jpg ",
+        "https://files.catbox.moe/63ifo8.jpg ",
+        "https://files.catbox.moe/och0jm.jpg ",
+        "https://files.catbox.moe/pcg24a.jpg ",
+        "https://files.catbox.moe/51u1tc.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/uhyu59.jpg ",
+    "name": "مصباح غروب الشمس مع إسقاط قوس قزح - ضوء ليلي RGB",
+    "sold": "مصابيح وإنارة",
+    "price": "200.00",
+    "discount": "50%",
+    "pageId": "84",
+    "productId": "84",
+    "shippingPrice": "50",
+    "colors": ["غروب أحمر", "غروب أصفر", "غروب أزرق", "RGB"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إضاءة دافئة"
+  }
+},
+{
+  "id": "85",
+  "media": [
+    {"src": "https://files.catbox.moe/wta4q8.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/40fz2g.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/ef8g7r.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/oyrf1c.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/uo7zu0.jpg ", "type": "image"}
+  ],
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مبخرة بخور على شكل مصباح علاء الدين",
+    "تصميم عتيق أنيق",
+    "تنقية الهواء ونشر العبير"
+  ],
+  "longText": "مبخرة بخور على الطراز العتيق - تصميم مصباح علاء الدين، من معدن متين، مثالية لتنقية الجو وإضافة لمسة ديكورية فريدة للمنزل",
+  "desc": "استمتع بلمسة سحرية في منزلك مع هذه المبخرة الفريدة التي تحمل تصميم مصباح علاء الدين الكلاسيكي! مصنوعة من معدن قوي وعالي الجودة، وتُستخدم لنشر البخور العطرية وتنقية الهواء بطريقة رائعة. مناسبة تمامًا لمحبي الديكور العتيق أو الأشخاص الذين يبحثون عن أجواء هادئة ومريحة.\n\n- **تصميم عتيق أنيق**: مستوحى من مصباح علاء الدين، يضيف لمسة من التراث والسحر الشرقي.\n- **جودة عالية**: مصنوعة من معدن متين للاستخدام طويل الأمد.\n- **تنقية الهواء**: نشر رائحة البخور العطرية لإنشاء بيئة مريحة وهادئة.\n- **سهلة الاستخدام**: ضع الفحم أو البخور في الجزء العلوي واشعله.\n- **مناسبة للديكور المنزلي**: تزين غرف المعيشة، غرف النوم، أماكن التأمل، واليوغا.\n- **هدية رائعة**: خيار مثالي كهدية لمحبي الديكور أو عشاق الأجواء الرومانسية والعطرية.\n\nمثالية للاستخدام اليومي أو كقطعة زينة فنية فريدة.",
+  "sales": "ديكور المنزل",
+  "buttonId": "commentButton85",
+  "commentId": "85",
+  "elementId": "commentCount85",
+  "tableData": [
+    {"question": "الاسم", "answer": "مبخرة بخور على الطراز العتيق"},
+    {"question": "المادة", "answer": "معدن"},
+    {"question": "اللون", "answer": "كما في الصورة (ذهبي، نحاسي، فضي)"},
+    {"question": "الأبعاد", "answer": "11.8 × 7.2 سم (4.64 × 2.83 بوصة)"},
+    {"question": "الوظيفة", "answer": "تقطير البخور، تنقية الهواء، إضافة ديكورية"},
+    {"question": "الاستخدام", "answer": "ديكور منزلي، تنقية الهواء، عبادة، تأمل"},
+    {"question": "الوزن", "answer": "متوسط - 200 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "العلامة التجارية", "answer": "Generic / OEM"},
+    {"question": "محتويات العبوة", "answer": "1 × مبخرة بخور"},
+    {"question": "الشكل", "answer": "مصباح علاء الدين (النمط العربي)"},
+    {"question": "النوع", "answer": "مبخرة معدنية"},
+    {"question": "الخواص", "answer": "عمر طويل، مقاومة للحرارة، آمنة للاستخدام"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/wta4q8.webp ",
+        "https://files.catbox.moe/40fz2g.jpg ",
+        "https://files.catbox.moe/ef8g7r.webp ",
+        "https://files.catbox.moe/oyrf1c.webp ",
+        "https://files.catbox.moe/uo7zu0.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/wta4q8.webp ",
+    "name": "مبخرة بخور على الطراز العتيق - مصباح علاء الدين",
+    "sold": "ديكور المنزل",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "85",
+    "productId": "85",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ديكورات منزلية"
+  }
+},
+{
+  "id": "86",
+  "media": [
+    {"src": "https://files.catbox.moe/gb6xfe.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/973bb7.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2vkrjg.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/1e2pno.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/67qg47.webp ", "type": "image"}
+  ],
+  "pri": "300",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "جراب مغناطيسي لهواتف سامسونج Galaxy",
+    "تصميم من جلد PU أنيق",
+    "يدعم الشحن اللاسلكي Magsafe"
+  ],
+  "longText": "حافظة مغناطيسية لهواتف Samsung Galaxy S25 / S24 Ultra Plus / S23 Ultra / S22 Ultra - تصميم من جلد البولي يوريثين المقاوم للبصمات والخدوش، دعم شحن لاسلكي مغناطيسي",
+  "desc": "استمتع بحماية مميزة لهاتفك مع تصميم أنيق وفاخر من خلال هذه الحافظة المغناطيسية لهواتف Samsung Galaxy. مصنوعة من **جلد PU عالي الجودة** مع طبقة داخلية من TPU مرنة توفر حماية شاملة من الصدمات والانزلاق. تحتوي على **أقطاب مغناطيسية مدمجة** متوافقة مع نظام Magsafe أو أي شواحن لاسلكية مغناطيسية.\n\n- **تصميم فاخر من جلد PU**: مقاوم للبصمات والخدوش.\n- **طبقة مضادة للصدمات**: TPU مرنة لامتصاص الارتطامات.\n- **دعم الشحن اللاسلكي**: لا تحتاج إلى إزالة الجراب عند الشحن.\n- **تركيب دقيق**: مناسب تمامًا لهواتف Samsung Galaxy S25 / S24 Ultra / S23 Ultra / S22 Ultra وغيرها.\n- **إطار معدني مغناطيسي**: لتثبيت آمن مع شواحن Magsafe أو حوامل السيارة المغناطيسية.\n- **متوفرة بألوان عصرية**: أسود، ذهبي، أزرق، رصاصي، بني.\n\nاختيار مثالي للمستخدمين الذين يبحثون عن حماية متكاملة وأناقة في استخدام يومي مريح.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton86",
+  "commentId": "86",
+  "elementId": "commentCount86",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Generic / OEM"},
+    {"question": "المتوافق مع", "answer": "Samsung Galaxy S25 / S25 Plus / S25 Ultra / S24 / S24 Plus / S24 Ultra / S23 / S23 Plus / S23 Ultra / S22 / S22 Plus / S22 Ultra"},
+    {"question": "المواد", "answer": "جلد PU + TPU + إطار مغناطيسي"},
+    {"question": "الوظائف", "answer": "شحن لاسلكي، مغناطيسي، مضاد للصدمات، مضاد للبصمات"},
+    {"question": "التصميم", "answer": "جراب نصف مغطى - مغناطيسي"},
+    {"question": "الألوان", "answer": "أسود، ذهبي، أزرق، رصاصي، بني"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 50 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "لا يوجد"},
+    {"question": "الخصائص", "answer": "مقاوم للصدمات، مضاد للبصمات، دعم Magsafe، خفيف الوزن"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/gb6xfe.png ",
+        "https://files.catbox.moe/973bb7.jpg ",
+        "https://files.catbox.moe/2vkrjg.jpg ",
+        "https://files.catbox.moe/1e2pno.webp ",
+        "https://files.catbox.moe/67qg47.webp "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/gb6xfe.png ",
+    "name": "حافظة مغناطيسية لهواتف Samsung Galaxy - دعم Magsafe وشحن لاسلكي",
+    "sold": "إكسسوارات الهواتف",
+    "price": "300.00",
+    "discount": "",
+    "pageId": "86",
+    "productId": "86",
+    "shippingPrice": "50",
+    "colors": ["أسود", "ذهبي", "أزرق", "رصاصي", "بني"],
+    "materials": [
+      "Samsung Galaxy S25 Ultra",
+      "Samsung Galaxy S25 Plus",
+      "Samsung Galaxy S25",
+      "Samsung Galaxy S24 Ultra",
+      "Samsung Galaxy S23 Ultra",
+      "Samsung Galaxy S22 Ultra"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جرابات مغناطيسية"
+  }
+},
+{
+  "id": "87",
+  "media": [
+    {"src": "https://files.catbox.moe/hkayxv.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/uooplz.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/x0vn1j.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/ot5kaq.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/5awnk0.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/68mny6.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/h3qkcg.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/ypzyop.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/4biovh.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/ma05sv.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/2bn88b.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/2x5vcd.webp ", "type": "image"}
+  ],
+  "pri": "215",
+  "oldPrice": "454",
+  "dis": "52%",
+  "changingText": [
+    "جراب مغناطيسي فاخر للآيفون",
+    "جلد صناعي + عطر داخلي",
+    "شحن لاسلكي بدون إزالة الجراب"
+  ],
+  "longText": "جراب آيفون فاخر مغناطيسي من الجلد الصناعي بخاصية العلاج بالروائح - متوافق مع iPhone 16 / 15 / 14 / 13 / 12 / 11 - يدعم Magsafe والشحن اللاسلكي",
+  "desc": "استمتع بتجربة استخدام راقية مع هذا الجراب الفاخر المصمم لهواتف iPhone بمختلف إصداراتها. يتميز بتصميم أنيق من الجلد الصناعي الفاخر، مع طبقة داخلية مضادة للصدمات ولمسة نهائية مقاومة للبصمات. كما يحتوي على حجر عطري خفيف يمنح الجراب رائحة منعشة تدوم طويلًا. يأتي بإطار مغناطيسي مدمج متوافق تمامًا مع شواحن Magsafe أو الحوامل المغناطيسية.\n\n- **تصميم فاخر من الجلد الصناعي**: يمنحك مظهرًا أنيقًا وأنيقًا.\n- **طبقة مضادة للصدمات**: TPU مرنة لحماية الهاتف من السقوط والصدمات.\n- **خاصية العلاج بالروائح**: رائحة عطرية خفيفة تساعد في تحسين الحالة المزاجية.\n- **يدعم الشحن اللاسلكي**: لا تحتاج إلى إزالة الجراب عند الشحن.\n- **إطار مغناطيسي دقيق**: مثالي لتثبيت الجراب على حوامل السيارة أو الشواحن المغناطيسية.\n- **متوفر بعدة ألوان أنيقة**: أسود، ذهبي، أزرق، رصاصي، بني.\n- **متوافق مع العديد من الإصدارات**: من iPhone 11 حتى iPhone 16 Pro Max.\n\nخيار مثالي للمستخدمين الذين يبحثون عن الأناقة، الراحة، والوظائف الذكية في جراب واحد.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton87",
+  "commentId": "87",
+  "elementId": "commentCount87",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Generic / OEM"},
+    {"question": "المتوافق مع", "answer": "iPhone 16 ProMax, iPhone 16 Pro, iPhone 16 Plus, iPhone 16, iPhone 15 ProMax, iPhone 15 Pro, iPhone 15 Plus, iPhone 15, iPhone 14 ProMax, iPhone 14 Pro, iPhone 14 Plus, iPhone 14, iPhone 13 ProMax, iPhone 13 Pro, iPhone 13, iPhone 13 Mini, iPhone 12 ProMax, iPhone 12 Pro, iPhone 12, iPhone 12 Mini, iPhone 11 ProMax, iPhone 11"},
+    {"question": "المواد", "answer": "جلد صناعي + إطار بلاستيكي + TPU داخلي"},
+    {"question": "الوظائف", "answer": "مغناطيسي، شحن لاسلكي، مضاد للصدمات، مضاد للبصمات، مضاد للانزلاق"},
+    {"question": "التصميم", "answer": "تغطية كاملة مع إطار مغناطيسي"},
+    {"question": "الألوان", "answer": "أسود، ذهبي، أزرق، رصاصي، بني"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 60 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الخصائص", "answer": "مقاوم للصدمات، مضاد للبصمات، مضاد للانزلاق، شحن لاسلكي، مغناطيسي"},
+    {"question": "العمر الافتراضي", "answer": "طويل الأمد مع مقاومة عالية"},
+    {"question": "الشهادات", "answer": "لا يوجد"},
+    {"question": "الضمان", "answer": "لا يوجد"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/hkayxv.png ",
+        "https://files.catbox.moe/uooplz.webp ",
+        "https://files.catbox.moe/x0vn1j.webp ",
+        "https://files.catbox.moe/ot5kaq.jpg ",
+        "https://files.catbox.moe/5awnk0.webp ",
+        "https://files.catbox.moe/68mny6.png ",
+        "https://files.catbox.moe/h3qkcg.webp ",
+        "https://files.catbox.moe/ypzyop.webp ",
+        "https://files.catbox.moe/4biovh.webp ",
+        "https://files.catbox.moe/ma05sv.webp ",
+        "https://files.catbox.moe/2bn88b.webp ",
+        "https://files.catbox.moe/2x5vcd.webp "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/hkayxv.png ",
+    "name": "جراب مغناطيسي فاخر لهواتف iPhone - دعم Magsafe + رائحة عطرية",
+    "sold": "إكسسوارات الهواتف",
+    "price": "215.00",
+    "discount": "52%",
+    "pageId": "87",
+    "productId": "87",
+    "shippingPrice": "50",
+    "colors": ["أسود", "ذهبي", "أزرق", "رصاصي", "بني"],
+    "materials": [
+      "iPhone 16 ProMax",
+      "iPhone 16 Pro",
+      "iPhone 16 Plus",
+      "iPhone 16",
+      "iPhone 15 ProMax",
+      "iPhone 15 Pro",
+      "iPhone 15 Plus",
+      "iPhone 15",
+      "iPhone 14 ProMax",
+      "iPhone 14 Pro",
+      "iPhone 14 Plus",
+      "iPhone 14",
+      "iPhone 13 ProMax",
+      "iPhone 13 Pro",
+      "iPhone 13",
+      "iPhone 13 Mini",
+      "iPhone 12 ProMax",
+      "iPhone 12 Pro",
+      "iPhone 12",
+      "iPhone 12 Mini",
+      "iPhone 11 ProMax",
+      "iPhone 11"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جرابات مغناطيسية"
+  }
+},
+{
+  "id": "88",
+  "media": [
+    {"src": "https://files.catbox.moe/ubv7tq.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/e6kd7m.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/y3msvj.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/gxxt5w.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/m20xtb.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2ubkaj.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/fmyg07.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/elnvrq.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/y8j0n2.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/3rq8zb.jpg ", "type": "image"}
+  ],
+  "pri": "1100",
+  "oldPrice": "2000",
+  "dis": "45%",
+  "changingText": [
+    "قفل بصمة الإصبع الذكي",
+    "مقاوم للماء + بطارية مدمجة",
+    "مناسب للباب الخشبي أو المعدني"
+  ],
+  "longText": "RAYKUBE P2 قفل ذكي بالبصمة - من سبائك الزنك، مقاوم للماء، يدعم فتح متعدد الطبقات: البصمة / كلمة المرور / البلوتوث، بطارية مدمجة قابلة لإعادة الشحن",
+  "desc": "استمتع بأمان عالي الجودة مع قفل بصمة الإصبع الذكي RAYKUBE P2! مصنوع من **سبائك الزنك عالية المتانة** ويتميز بتصميم مقاوم للماء مناسب للاستخدام الداخلي والخارجي. يدعم عدة طرق لفتح الباب مثل **البصمة، رمز PIN، والبلوتوث**، وهو مثالي للأبواب الخشبية، الفولاذية، والنحاسية. يأتي مع **بطارية ليثيوم مدمجة قابلة لإعادة الشحن** لتوفير طاقة طويلة الأمد.\n\n- **تقنية بيومترية دقيقة**: دعم فتح بالبصمة (حتى 10 أصابع).\n- **مقاومة للماء والغبار**: IP65 مناسب للاستخدام الخارجي.\n- **دعم البلوتوث**: افتح الباب عبر تطبيق الهاتف الذكي.\n- **بطارية مدمجة قابلة لإعادة الشحن**: عمر طويل بدون استبدال.\n- **مواد متينة**: هيكل من سبائك الزنك ضد الصدأ والتآكل.\n- **سهل التثبيت**: تصميم موحد مناسب لأي نوع باب تقريبًا.\n- **شاشة LCD صغيرة**: لمراقبة الحالة وتشغيل الإعدادات.\n\nخيار مثالي للمنازل، الشقق، المكاتب، أو أي مكان يحتاج إلى نظام إقفال ذكي وآمن.",
+  "sales": "الأجهزة الذكية والأمان",
+  "buttonId": "commentButton88",
+  "commentId": "88",
+  "elementId": "commentCount88",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "RAYKUBE"},
+    {"question": "الموديل", "answer": "SY-11"},
+    {"question": "النوع", "answer": "قفل بصمة الإصبع الذكي"},
+    {"question": "المواد", "answer": "سبائك الزنك"},
+    {"question": "طرق الفتح", "answer": "بصمة الإصبع، كلمة مرور رقمية، بلوتوث، مفتاح يدوي احتياطي"},
+    {"question": "سعة البصمات", "answer": "حتى 10 مستخدمين"},
+    {"question": "الاتصال", "answer": "Bluetooth 4.0"},
+    {"question": "الطاقة", "answer": "بطارية ليثيوم مدمجة قابلة لإعادة الشحن"},
+    {"question": "مقاومة الماء", "answer": "IP65"},
+    {"question": "الوزن", "answer": "2.5 كجم"},
+    {"question": "الأبعاد", "answer": "120 × 120 مم"},
+    {"question": "التوافق", "answer": "باب خشبي، باب فولاذي، باب نحاسي"},
+    {"question": "الوظائف", "answer": "فتح بالبصمة، كلمات مرور، تطبيق الهاتف، مفتاح احتياطي"},
+    {"question": "الضمان", "answer": "لم يتم تحديد الضمان"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, FCC"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/ubv7tq.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/e6kd7m.jpg ",
+        "https://files.catbox.moe/y3msvj.avif ",
+        "https://files.catbox.moe/gxxt5w.jpg ",
+        "https://files.catbox.moe/m20xtb.jpg ",
+        "https://files.catbox.moe/2ubkaj.jpg ",
+        "https://files.catbox.moe/fmyg07.png ",
+        "https://files.catbox.moe/elnvrq.jpg ",
+        "https://files.catbox.moe/y8j0n2.jpg ",
+        "https://files.catbox.moe/3rq8zb.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/e6kd7m.jpg ",
+    "name": "قفل بصمة الإصبع الذكي RAYKUBE P2 - مقاوم للماء + بطارية مدمجة",
+    "sold": "الأجهزة الذكية والأمان",
+    "price": "1100.00",
+    "discount": "45%",
+    "pageId": "88",
+    "productId": "88",
+    "shippingPrice": "50",
+    "colors": ["أسود", "فضي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "أقفال ذكية"
+  }
+},
+{
+  "id": "89",
+  "media": [
+    {"src": "https://files.catbox.moe/vsf0pc.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/3zqe3g.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/8wcu1h.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/b8tvmx.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/6cuqfp.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/yoi2od.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/xuaux7.jpg ", "type": "image"}
+  ],
+  "pri": "180",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مصباح قراءة USB هادئ ومريح",
+    "حماية العين بدون فلاش",
+    "مثالي للدراسة أو غرفة النوم"
+  ],
+  "longText": "مصباح USB للقراءة الليلية، إضاءة مريحة بزاوية قابلة للتعديل، مناسب للطلاب والمكاتب والمنازل",
+  "desc": "استمتع بإضاءة مثالية أثناء القراءة أو الدراسة مع هذا المصباح المحمول العملي. يأتي المصباح بتصميم أنيق وقابل للتعديل، ويُشغل مباشرةً عبر منفذ USB مما يجعله خيارًا مثاليًا للطلاب أو الأشخاص الذين يبحثون عن ضوء ليلي مريح. لا يحتوي على فلاش، وهو آمن تمامًا على العينين.\n\n- **إضاءة مريحة**: LED بدون فلاش لحماية العينين.\n- **زاوية تعديل 360°**: يمكنك توجيه الضوء إلى أي زاوية تحتاجها.\n- **تشغيل عبر USB**: لا يحتاج إلى بطاريات، يعمل مباشرةً من منفذ USB.\n- **مناسب تمامًا للقراءة والدراسة**: سطوع متوازن ومناسب للأجواء الهادئة.\n- **سهل الحمل والاستخدام**: تصميم نحيف وخفيف الوزن.\n- **مثالي للطلاب والمكتب والمنزل**: ضوء ثابت ومستقر دون تشتيت.\n\nخيار رائع لمحبي القراءة المسائية، الطلاب، أو حتى كضوء ليلي في غرف الأطفال.",
+  "sales": "مصابيح وإنارة",
+  "buttonId": "commentButton89",
+  "commentId": "89",
+  "elementId": "commentCount89",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "DUTRIEUX"},
+    {"question": "رقم الموديل", "answer": "Study Reading Available Night Light"},
+    {"question": "الجهد الكهربائي", "answer": "DC 5V"},
+    {"question": "المصدر", "answer": "USB питание"},
+    {"question": "الوظائف", "answer": "قراءة، دراسة، ضوء ليلي"},
+    {"question": "المواد", "answer": "ABS + بلاستيك صلب"},
+    {"question": "الألوان", "answer": "أبيض، أسود (حسب التوفر)"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 200 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE"},
+    {"question": "الطول", "answer": "25 سم (تقريبًا)"},
+    {"question": "نوع الإضاءة", "answer": "LED بدون فلاش"},
+    {"question": "الاستخدام", "answer": "غرفة نوم، مكتب، طلاب، ضوء ليلي"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/vsf0pc.jpg ",
+        "https://files.catbox.moe/3zqe3g.webp ",
+        "https://files.catbox.moe/8wcu1h.jpg ",
+        "https://files.catbox.moe/b8tvmx.jpg ",
+        "https://files.catbox.moe/6cuqfp.jpg ",
+        "https://files.catbox.moe/yoi2od.webp ",
+        "https://files.catbox.moe/xuaux7.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/vsf0pc.jpg ",
+    "name": "مصباح USB للقراءة والدراسة - ضوء ليلي مريح بدون فلاش",
+    "sold": "مصابيح وإنارة",
+    "price": "180.00",
+    "discount": "",
+    "pageId": "89",
+    "productId": "89",
+    "shippingPrice": "60",
+    "colors": ["أسود", "أبيض"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إضاءة للقراءة"
+  }
+},
+{
+  "id": "90",
+  "media": [
+    {"src": "https://files.catbox.moe/y4ja4i.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/3s77wk.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/7ppr1g.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/idtxuj.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/1avmdf.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/sj26b1.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/jbsyt3.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/o58svl.jpg ", "type": "image"}
+  ],
+  "pri": "230",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "حلقة تحكم لاسلكية لهاتفك",
+    "للسيلفي والتحكم في الصور",
+    "مثالية لـ TikTok والفيديو"
+  ],
+  "longText": "حلقة تحكم لاسلكية مريحة تعمل عبر البلوتوث - مناسبة للهواتف الذكية، تستخدم في التصوير، السيلفي، وتطبيقات الفيديو مثل TikTok",
+  "desc": "استمتع بالتحكم الكامل في هاتفك أثناء التصوير أو البث المباشر باستخدام هذه الحلقة اللاسلكية الذكية! تعمل عبر تقنية البلوتوث لتمنحك الحرية الكاملة في التقاط الصور، تسجيل الفيديو، أو حتى تصفح الصفحات دون الحاجة إلى لمس الهاتف. تصميم عملي ومريح يناسب كل المستخدمين، سواء كنت تصور فيديوهات TikTok أو تُجري بثًا مباشرًا.\n\n#### كيف تعمل:\n- بعد توصيل الحلقة بهاتفك عبر **بلوتوث**، يمكنك استخدام الزر الموجود على الحلقة للتحكم في:\n  - **التقاط الصور** (بضغطة واحدة)\n  - **تشغيل / إيقاف الفيديو** (بضغطتين)\n  - **ت Turning الصفحة** في التطبيقات (يسار/يمين حسب الإعداد)\n  - **تشغيل الموسيقى أو الإيقاف المؤقت** (حسب التطبيق).\n\n- **سهلة التركيب**: تثبت الحلقة حول إصبعك وتتصل مباشرةً بالهاتف.\n- **تصميم خفيف وعملي**: مناسب تمامًا للاستخدام اليومي أو أثناء التنقل.\n- **مثالية للمؤثرين والمبدعين**: خاصةً في تطبيقات مثل TikTok وInstagram.\n- **متوافقة مع جميع الهواتف**: التي تدعم البلوتوث، سواء كانت أندرويد أو iOS.\n\nابدأ باستخدام يدك الحرة الآن مع هذه الحلقة اللاسلكية المبتكرة!",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton90",
+  "commentId": "90",
+  "elementId": "commentCount90",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "WYMECT"},
+    {"question": "الموديل", "answer": "S260"},
+    {"question": "الاتصال", "answer": "بلوتوث + RF"},
+    {"question": "الوظائف", "answer": "التقاط صور، تشغيل فيديو، تحكم في الصفحة، البث المباشر"},
+    {"question": "التوافق", "answer": "جميع الهواتف الذكية (أندرويد / iOS)"},
+    {"question": "المواد", "answer": "ABS + سيليكون مرنا"},
+    {"question": "البطارية", "answer": "CR2016 (مضمونة داخل الجهاز)"},
+    {"question": "الاستخدام", "answer": "سيلفي، فيديوهات، TikTok، Instagram، تصفح صفحات"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 15 جرام فقط"},
+    {"question": "الألوان", "answer": "أسود، أبيض، وردي"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "العمر الافتراضي للبطارية", "answer": "حتى 6 أشهر (قابلة للتبديل)"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/y4ja4i.png ",
+        "https://files.catbox.moe/3s77wk.jpg ",
+        "https://files.catbox.moe/7ppr1g.avif ",
+        "https://files.catbox.moe/idtxuj.jpg ",
+        "https://files.catbox.moe/1avmdf.jpg ",
+        "https://files.catbox.moe/sj26b1.jpg ",
+        "https://files.catbox.moe/jbsyt3.jpg ",
+        "https://files.catbox.moe/o58svl.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/y4ja4i.png ",
+    "name": "حلقة تحكم لاسلكية للهاتف - التحكم بالصور والفيديوهات عبر البلوتوث",
+    "sold": "إكسسوارات الهواتف",
+    "price": "230.00",
+    "discount": "",
+    "pageId": "90",
+    "productId": "90",
+    "shippingPrice": "60",
+    "colors": ["أسود", "أبيض", "وردي"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إكسسوارات الهواتف"
+  }
+},
+{
+  "id": "91",
+  "media": [
+    {"src": "https://files.catbox.moe/p6ten3.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/0e3red.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/x87ef0.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/1y6mci.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/aa70lh.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/n64z7w.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/p6kkbw.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/tfe07x.png ", "type": "image"}
+  ],
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "فرشاة أسنان كهربائية بالموجات فوق الصوتية",
+    "شعيرات DuPont ناعمة وقوية",
+    "مقاومة مياه IPX7 + بطاريات مدمجة"
+  ],
+  "longText": "فرشاة أسنان كهربائية بالموجات فوق الصوتية، مقاومة للماء IPX7، بشعيرات دوبونت، 10000 حركة في الدقيقة، مناسبة للكبار",
+  "desc": "استمتع بتجربة تنظيف أسنان احترافية في المنزل مع هذه الفرشاة الكهربائية عالية الجودة! توفر فرشاة الأسنان هذه أداءً قويًا بفضل **تقنية الموجات فوق الصوتية التي تصل إلى 10,000 حركة في الدقيقة**، مما يساعد على إزالة البلاك وتنظيف الأسنان بشكل عميق وفعّال.\n\n#### ميزات المنتج:\n- **تقنية الموجات فوق الصوتية**: تنظيف عميق وفعال دون عناء.\n- **مقاوم للماء IPX7**: يمكنك استخدامه تحت الماء أو أثناء الاستحمام.\n- **شعيرات دوبونت عالية الجودة**: ناعمة على اللثة، وتتحمل الاستخدام الطويل.\n- **سهلة الاستخدام**: زر كبير للتشغيل / الإيقاف، مناسب لكبار السن أو الأطفال.\n- **بطارية مدمجة**: تعمل بـ 5 بطاريات AA (متوفرة في العبوة).\n- **تصميم عصري وأنيق**: مقبض مريح ومناسب لليد.\n- **وضع واحد للتنظيف الذكي**: ينظّف كل منطقة لمدة 30 ثانية ويُصدر إشارة لتذكيرك بالانتقال.\n- **مناسب لكل الفئات العمرية**: تصميم متعدد الاستخدامات.\n- **5 رؤوس فرش مختلفة** (ناعمة، متوسطة، وغيرها) لتناسب جميع أنواع الأسنان.\n\nخيار مثالي للعناية اليومية بالأسنان واللثة، سواء كنت في المنزل أو المسافر دائمًا."
+
+  ,
+  "sales": "أدوات العناية الشخصية",
+  "buttonId": "commentButton91",
+  "commentId": "91",
+  "elementId": "commentCount91",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Generic / OEM"},
+    {"question": "الموديل", "answer": "Sonic Toothbrush - IPX7"},
+    {"question": "الوظيفة", "answer": "تنظيف عميق"},
+    {"question": "عدد الحركات", "answer": "حتى 10,000 حركة في الدقيقة"},
+    {"question": "عدد الوضعيات", "answer": "وضع واحد ذكي"},
+    {"question": "عدد الرؤوس", "answer": "5 رؤوس (مختلفة النعومة)"},
+    {"question": "المواد", "answer": "ABS + شعيرات DuPont"},
+    {"question": "الطاقة", "answer": "5 بطاريات AA (مضمونة)"},
+    {"question": "مقاومة الماء", "answer": "IPX7"},
+    {"question": "الاستخدام", "answer": "للبالغين والأطفال"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 120 جرام تقريبًا"},
+    {"question": "الألوان", "answer": "أبيض، وردي، أزرق، أخضر"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, CCC"},
+    {"question": "الفئة المستهدفة", "answer": "الجميع (كبار السن، البالغين، المراهقين)"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/p6ten3.png ",
+        "https://files.catbox.moe/0e3red.png ",
+        "https://files.catbox.moe/x87ef0.png ",
+        "https://files.catbox.moe/1y6mci.png ",
+        "https://files.catbox.moe/aa70lh.webp ",
+        "https://files.catbox.moe/n64z7w.jpg ",
+        "https://files.catbox.moe/p6kkbw.avif ",
+        "https://files.catbox.moe/tfe07x.png "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/p6ten3.png ",
+    "name": "فرشاة أسنان كهربائية بالموجات فوق الصوتية - IPX7 مقاومة للماء، 10000 حركة/دقيقة، مع 5 رؤوس",
+    "sold": "أدوات العناية الشخصية",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "91",
+    "productId": "91",
+    "shippingPrice": "60",
+    "colors": ["أبيض", "وردي", "أزرق", "أخضر"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "فرشاة أسنان كهربائية"
+  }
+},
+{
+  "id": "92",
+  "media": [
+    {"src": "https://files.catbox.moe/s76yvg.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/e7y5kj.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2mgwf9.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/tee703.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/u4lb3x.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/h2n8x0.jpg ", "type": "image"}
+  ],
+  "pri": "140",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "جراب سيليكون شفاف لمختلف موديلات iPhone",
+    "تصميمات فنية: دولارات، زهور، حيوانات بحرية",
+    "مقاوم للصدمات ومضاد للانزلاق"
+  ],
+  "longText": "حافظة شفافة لهواتف iPhone 16 إلى iPhone SE 2022 - تصميمات فنية متنوعة، مقاومة للصدمات، من السيليكون الناعم والمتين",
+  "desc": "استمتع بحماية هاتفك مع لمسة من الفن والشخصية باستخدام هذا الجراب الشفاف المتميز! مصنوع من **سيليكون عالي الجودة** يوفر حماية شاملة من الصدمات والخدوش، ويأتي بأكثر من نمط فني مثل: \n\n- **نمط الدولار**: تصميم أنيق مستوحى من النقود.\n- **نمط الزهور**: لمسة طبيعية أنثوية أو رومانسية.\n- **نمط الحيوانات البحرية**: تصميم صيفي ممتع.\n- **نمط تجريدي**: أشكال فنية عصرية.\n- **غطاء شفاف كلاسيكي**: للحفاظ على اللون الأصلي للجهاز.\n\n#### الميزات الرئيسية:\n- **مقاومة للصدمات**: طبقة مضادة للصدمات تحمي الهاتف من السقوط.\n- **تصميم غير لاصق**: مقاومة الانزلاق لثبات الجهاز في اليد.\n- **شفافية عالية**: يظهر اللون الأصلي للجهاز بوضوح.\n- **توافق كامل**: متوفر لأنواع متعددة من iPhone بما في ذلك iPhone 16 Pro Max، iPhone 15، iPhone 14 Plus، iPhone SE 2022، وغيرهم.\n- **سهولة التركيب**: تركيب سريع ومريح دون الحاجة لأدوات.\n- **فتحات دقيقة**: الوصول الكامل إلى الأزرار ومنفذ الشحن.\n\nاختيار رائع لكل من يبحث عن **حماية + أناقة + تعبير عن الشخصية**.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton92",
+  "commentId": "92",
+  "elementId": "commentCount92",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "JIOM XL"},
+    {"question": "المتوافق مع", "answer": "iPhone 16 / 16 Pro / 16 Pro Max / 15 / 15 Pro / 15 Pro Max / 14 / 14 Pro / 14 Pro Max / 13 / 13 Pro / 13 Pro Max / 12 / 12 Pro / 12 Pro Max / 11 / 11 Pro / 11 Pro Max / iPhone XR / XS / XS Max / 8 / 8 Plus / 7 / 7 Plus / SE 2020 / SE 2022"},
+    {"question": "المواد", "answer": "سيليكون ناعم، ABS خلفية صلبة (حسب النموذج)"},
+    {"question": "التصميم", "answer": "شفاف، نقشات فنية (دولار، زهور، حيوانات بحرية، نباتات...)"},
+    {"question": "الوظائف", "answer": "حماية من الصدمات، مضاد للانزلاق، شفاف، تصميم مريح"},
+    {"question": "الألوان", "answer": "أبيض، أسود، شفاف مع رسومات"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الخصائص", "answer": "مقاوم للصدمات، مضاد للانزلاق، شفاف، تصميم فني"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 40 جرام تقريبًا"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "عدد النماذج", "answer": "12 نمط مختلف (دولار، زهور، تصاميم بحرية...)"},
+    {"question": "الضمان", "answer": "لا يوجد"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/s76yvg.png ",
+        "https://files.catbox.moe/e7y5kj.jpg ",
+        "https://files.catbox.moe/2mgwf9.jpg ",
+        "https://files.catbox.moe/tee703.jpg ",
+        "https://files.catbox.moe/u4lb3x.jpg ",
+        "https://files.catbox.moe/h2n8x0.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/s76yvg.png ",
+    "name": "جراب شفاف لهواتف iPhone - تصميمات فنية مختلفة (دولار، زهور، حيوانات بحرية...)",
+    "sold": "إكسسوارات الهواتف",
+    "price": "140.00",
+    "discount": "",
+    "pageId": "92",
+    "productId": "92",
+    "shippingPrice": "50",
+    "materials": [
+      "iPhone 16",
+      "iPhone 16 Pro",
+      "iPhone 16 ProMAX",
+      "iPhone 15",
+      "iPhone 15 Pro",
+      "iPhone 15 ProMAX",
+      "iPhone 14",
+      "iPhone 14 Pro",
+      "iPhone 14 ProMAX",
+      "iPhone 13",
+      "iPhone 13 Pro",
+      "iPhone 13 ProMAX",
+      "iPhone 12",
+      "iPhone 12 Pro",
+      "iPhone 12 ProMAX",
+      "iPhone 11",
+      "iPhone 11 Pro",
+      "iPhone 11 ProMAX",
+      "iPhone XR",
+      "iPhone XS MAX",
+      "iPhone 7",
+      "iPhone 8",
+      "iPhone 7 Plus",
+      "iPhone 8 Plus",
+      "iPhone SE 2020",
+      "iPhone SE 2022",
+      "iPhone 16 Plus",
+      "iPhone 15 Plus",
+      "iPhone 14 Plus",
+      "iPhone 13 Mini",
+      "iPhone 12 Mini"
+    ]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "جرابات شفافة"
+  }
+},
+{
+  "id": "93",
+  "media": [
+    {"src": "https://files.catbox.moe/mkjsjm.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/u3s0fx.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/zhzx98.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/aukuud.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/3sp2iq.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/86rxth.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/csf9mn.jpg ", "type": "image"}
+  ],
+  "pri": "180",
+  "oldPrice": "400",
+  "dis": "55%",
+  "changingText": [
+    "كابل شحن USB C بسرعة 120 واط",
+    "تيار 7 أمبير + زاوية دوران 180°",
+    "مقاوم للحرارة حتى 105 درجة"
+  ],
+  "longText": "كابل شحن USB Type-C سريع بقدرة 120 واط، يدعم تيار 7 أمبير، تصميم دوار بزاوية 180 درجة، من السيليكون المقاوم للحرارة، متوافق مع iPhone/Xiaomi/Redmi/Honor",
+  "desc": "استمتع بشحن أسرع وأكثر أمانًا مع هذا الكابل المتميز! تم تصميمه ليعمل بتيار يصل إلى **7 أمبير** و**قدرة 120 واط**، مما يجعله خيارًا مثاليًا لشحن الهواتف الذكية والتابلت الحديثة بسرعة فائقة. يتميز بـ **رأس Type-C مزدوج الدوران 180°** لتسهيل التوصيل في أي اتجاه، كما أنه مصنوع من **مادة TPE/TPE مقاومة للحرارة حتى 105°م** لضمان الأمان أثناء الشحن.\n\n#### المميزات:\n- **شحن سريع 120W**: تقليل وقت الشحن بنسبة تصل إلى 50%.\n- **تيار عالي 7A**: مناسب لأجهزة الشحن السريع.\n- **رأس Type-C مزدوج الدوران**: يمكنك تدوير الرأس بزاوية 180 درجة.\n- **مواد متينة**: غلاف سيليكون سائل يوفر حماية من الانثناء والتشابك.\n- **مقاومة الحرارة العالية**: تتحمل حتى 105 درجة مئوية.\n- **متوافق مع العديد من الأجهزة**: مثل iPhone، Xiaomi، Redmi، Honor، Samsung وغيرها.\n- **طول عملي 2 متر**: استخدام حر في أي مكان داخل المنزل أو المكتب.\n- **خالي من الحزمة الورقية**: يمكنك إعادة استخدامه بسهولة دون تعقيد.\n\nخيار مثالي لكل من يحتاج إلى **شواحن عالية الأداء** للاستخدام اليومي أو أثناء التنقل.",
+  "sales": "إكسسوارات الهواتف",
+  "buttonId": "commentButton93",
+  "commentId": "93",
+  "elementId": "commentCount93",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "DI XS JI"},
+    {"question": "الموديل", "answer": "Type-C to Type-C"},
+    {"question": "النوع", "answer": "كابل شحن سريع"},
+    {"question": "الطول", "answer": "2 متر"},
+    {"question": "الموصل A", "answer": "USB Type-C"},
+    {"question": "الموصل B", "answer": "USB Type-C"},
+    {"question": "التيار الأقصى", "answer": "حتى 7 أمبير"},
+    {"question": "الطاقة القصوى", "answer": "حتى 120 واط"},
+    {"question": "المواد", "answer": "TPE + نحاس داخلي + طبقة سيليكون سائل"},
+    {"question": "الخصائص", "answer": "مقاوم للحرارة، دوار 180°، شحن سريع، بدون عبوة"},
+    {"question": "التوافق", "answer": "iPhone، Xiaomi، Redmi، Honor، Samsung، OPPO، OnePlus، Realme... إلخ"},
+    {"question": "درجة حرارة التشغيل", "answer": "حتى 105° مئوية"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الوزن", "answer": "خفيف الوزن - 45 جرام تقريبًا"},
+    {"question": "اللون", "answer": "أسود، أبيض، أحمر، أزرق"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/mkjsjm.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/u3s0fx.webp ",
+        "https://files.catbox.moe/zhzx98.jpg ",
+        "https://files.catbox.moe/aukuud.avif ",
+        "https://files.catbox.moe/3sp2iq.avif ",
+        "https://files.catbox.moe/86rxth.jpg ",
+        "https://files.catbox.moe/csf9mn.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/u3s0fx.webp ",
+    "name": "كابل شحن Type-C سريع 120W - 7A، زاوية 180°، مقاوم للحرارة",
+    "sold": "إكسسوارات الهواتف",
+    "price": "180.00",
+    "discount": "55%",
+    "pageId": "93",
+    "productId": "93",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "كابلات شحن"
+  }
+},
+{
+  "id": "94",
+  "media": [
+    {"src": "https://files.catbox.moe/prj35v.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/xn9rlk.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/iuyn8k.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/hrh2gu.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/e0sw76.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/4qcuec.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/5tf2ra.png ", "type": "image"}
+  ],
+  "pri": "750",
+  "oldPrice": "1200",
+  "dis": "38%",
+  "changingText": [
+    "سماعات Redmi Air7 اللاسلكية",
+    "صوت ستيريو + مقاومة للماء",
+    "مثالية للألعاب والرياضة"
+  ],
+  "longText": "Redmi Air7 سماعات أذن لاسلكية TWS - بلوتوث 5.3، صوت ستيريو، مقاومة للماء، مناسبة للألعاب والتمارين الرياضية",
+  "desc": "استمتع بصوت محيط عالي الجودة مع سماعات Redmi Air7 اللاسلكية الجديدة! هذه السماعات الذكية مصممة لتلبية احتياجات المستخدمين النشطين سواء في الألعاب أو أثناء التمارين الرياضية. تحتوي على **ميكروفون مدمج** وتدعم **تقنية البلوتوث 5.3** لضمان اتصال مستقر وسريع. تتميز أيضًا بـ **عزل ضوضاء فعال** وتصميم **مقاوم للماء والعرق (IPX4)**، مما يجعلها مناسبة تمامًا للتدريبات الشاقة.\n\n#### المميزات الرئيسية:\n- **صوت ستيريو محيطي**: جودة صوت عالية HD ومريحة للأذنين.\n- **بلوتوث 5.3**: اتصال سريع ومستقر حتى 10 أمتار.\n- **مقاومة للماء IPX4**: مناسبة للتدريبات الرياضية والعرق.\n- **عمر بطارية طويل**: حتى 28 ساعة مع العلبة.\n- **دعم إلغاء الضوضاء**: عزل الصوت لتجربة استماع نقية.\n- **شاشة LED للشحن (حسب الإصدار)**: لمعرفة مستوى البطارية.\n- **تصميم مريح داخل الأذن**: خفيف الوزن ومثالي للاستخدام الطويل.\n- **مناسب للألعاب والرياضة**: تأخير منخفض (Low Latency) عند استخدامه مع الهواتف الذكية.\n\nمثالية لعشاق الموسيقى، اللاعبين، والرياضيين الذين يبحثون عن أداء قوي وجودة صوت واضحة.",
+  "sales": "سماعات وسماعات",
+  "buttonId": "commentButton94",
+  "commentId": "94",
+  "elementId": "commentCount94",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "Xiaomi / Redmi"},
+    {"question": "الموديل", "answer": "Redmi AirDots 7"},
+    {"question": "النوع", "answer": "سماعات TWS داخل الأذن"},
+    {"question": "الاتصال", "answer": "بلوتوث 5.3 لاسلكي"},
+    {"question": "المسافة اللاسلكية", "answer": "حتى 10 أمتار"},
+    {"question": "الخصائص", "answer": "ميكروفون مدمج، عزل ضوضاء، مقاومة للماء IPX4، دعم HiFi، تأخير منخفض"},
+    {"question": "المواد", "answer": "PC"},
+    {"question": "الوظائف", "answer": "للألعاب، الرياضة، الاستماع للموسيقى، الاتصال بدون سلك"},
+    {"question": "البطارية", "answer": "سماعة: 40mAh / العلبة: 300mAh"},
+    {"question": "وقت التشغيل", "answer": "حتى 6 ساعات (بدون ANC)، 28 ساعة مع العلبة"},
+    {"question": "الوزن", "answer": "5.4 غرام لكل سماعة"},
+    {"question": "المقاومة للماء", "answer": "IPX4"},
+    {"question": "التحكم", "answer": "لمس ذكي (Touch Control)"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "اللون", "answer": "أبيض، أسود (حسب التوفر)"},
+    {"question": "الحقيبة", "answer": "علبة شحن مغناطيسية مع مؤشر LED"},
+    {"question": "التوافق", "answer": "جميع الأجهزة الداعمة لبلوتوث"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/prj35v.png ",
+        "https://files.catbox.moe/xn9rlk.webp ",
+        "https://files.catbox.moe/iuyn8k.webp ",
+        "https://files.catbox.moe/hrh2gu.png ",
+        "https://files.catbox.moe/e0sw76.png ",
+        "https://files.catbox.moe/4qcuec.png ",
+        "https://files.catbox.moe/5tf2ra.png "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/prj35v.png ",
+    "name": "سماعات Redmi Air7 اللاسلكية TWS - سماعات بلوتوث ستيريو مع عزل ضوضاء، مقاومة للماء، مناسبة للألعاب والرياضة",
+    "sold": "سماعات وسماعات",
+    "price": "750.00",
+    "discount": "38%",
+    "pageId": "94",
+    "productId": "94",
+    "shippingPrice": "50",
+    "colors": ["أسود"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "سماعات Xiaomi"
+  }
+},
+{
+  "id": "95",
+  "media": [
+    {"src": "https://files.catbox.moe/aehbc7.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/jjry7q.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/k872bf.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/q3c4lc.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/fz2x1u.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/2u5app.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/w86q9x.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/5kfbzc.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/y5v2yp.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/dqk3m8.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/h7vkze.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/ncgp71.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/3jye85.jpg ", "type": "image"}
+  ],
+  "pri": "1200",
+  "oldPrice": "1800",
+  "dis": "33%",
+  "changingText": [
+    "ساعة ذكية للياقة والصحة",
+    "شاشة 1.28 بوصة TFT",
+    "مقاومة الماء IP68 + بلوتوث"
+  ],
+  "longText": "ساعة ذكية ZL02 متعددة الوظائف - مقاومة للماء IP68، شاشة 1.28 بوصة، تتبع صحي، دعم البلوتوث، متوافقة مع Android وiOS",
+  "desc": "استمتع بالتحكم الكامل في نشاطاتك اليومية مع هذه الساعة الذكية الشاملة! تقدم لك **شاشة واضحة عالية الدقة 240 × 240 بكسل بحجم 1.28 بوصة**، **مقاومة للماء حتى مستوى IP68**، وتتيح لك الاتصال الهاتفي عبر **بلوتوث 5.1BLE**، كما أنها تدعم تتبع اللياقة البدنية مثل **عدد الخطوات، السعرات الحرارية، النوم، معدل ضربات القلب، ومستوى الأكسجين في الدم**.\n\n#### المميزات الرئيسية:\n- **شاشة كبيرة واضحة**: شاشة TFT 1.28 بوصة مع واجهة قابلة للتخصيص.\n- **Bluetooth Calling**: يمكنك الرد على المكالمات مباشرة من ساعتك.\n- **تتبع اللياقة**: خطوات، سعرات حرارية، تمرين، نوم، ضغط الدم، تنفس، درجة حرارة الجسم، رطوبة...\n- **مقاومة المياه IP68**: لا تقلق عند الاستخدام أثناء التمارين أو تحت المطر.\n- **بطارية طويلة الأمد**: حتى 5 أيام عمل بشحنة واحدة.\n- **متوافقة تمامًا**: تعمل مع أنظمة Android وiOS.\n- **إشعارات ذكية**: تتلقى إشعارات التطبيقات (واتساب، فيسبوك، سناب...).\n- **وضعيات رياضية متعددة**: جري، مشي، ركوب الدراجة، السباحة، والمشي لمسافات طويلة.\n- **تصميم عصري وأنيق**: متوفر بألوان: أسود، أزرق، ذهبي، وردي.\n\nمثالية لكل من يبحث عن **جهاز تعقب صحي + اتصال مريح + تصميم أنيق** بسعر اقتصادي.",
+  "sales": "ساعات ذكية",
+  "buttonId": "commentButton95",
+  "commentId": "95",
+  "elementId": "commentCount95",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "KETURUS"},
+    {"question": "الموديل", "answer": "ZL02"},
+    {"question": "الشاشة", "answer": "TFT 1.28\"، 240×240 بكسل"},
+    {"question": "الوظائف الأساسية", "answer": "مراقبة الصحة، تتبع الرياضة، مكالمات بلوتوث، إشعارات التطبيقات"},
+    {"question": "نظام التشغيل", "answer": "Wear OS، متوافق مع Android/iOS"},
+    {"question": "الاتصال", "answer": "بلوتوث 5.1 BLE، بدون GPS"},
+    {"question": "مقاومة الماء", "answer": "IP68"},
+    {"question": "البطارية", "answer": "220 - 300 مللي أمبير / 3-5 أيام استعمال يومي"},
+    {"question": "المواد", "answer": "بلاستيك + سوار سيليكون"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 38 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الخصائص الصحية", "answer": "رصد ضربات القلب، مستويات الأكسجين، النوم، الضغط، التنفس، درجة الحرارة، الرطوبة..."},
+    {"question": "الخصائص الرياضية", "answer": "عداد الخطوات، مراقب اللياقة، مؤقت، تقويم، منبه، عداد السعرات"},
+    {"question": "اللغات المدعومة", "answer": "إنجليزي، روسي، إسباني، فرنسي، عربي، ياباني، كوري، تركي، وغيرها"},
+    {"question": "التطبيقات المتوافقة", "answer": "Da Fit، والعديد من التطبيقات الأخرى"},
+    {"question": "الألوان", "answer": "أسود، أزرق، ذهبي، وردي"},
+    {"question": "الشهادات", "answer": "CE, FCC, RoHS"},
+    {"question": "محتويات العبوة", "answer": "1 × ساعة ZL02، 1 × كابل شحن، 1 × سوار إضافي، 1 × دليل المستخدم"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/aehbc7.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/jjry7q.jpg ",
+        "https://files.catbox.moe/k872bf.jpg ",
+        "https://files.catbox.moe/q3c4lc.jpg ",
+        "https://files.catbox.moe/fz2x1u.jpg ",
+        "https://files.catbox.moe/2u5app.jpg ",
+        "https://files.catbox.moe/w86q9x.jpg ",
+        "https://files.catbox.moe/5kfbzc.jpg ",
+        "https://files.catbox.moe/y5v2yp.png ",
+        "https://files.catbox.moe/dqk3m8.jpg ",
+        "https://files.catbox.moe/h7vkze.jpg ",
+        "https://files.catbox.moe/ncgp71.jpg ",
+        "https://files.catbox.moe/3jye85.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/jjry7q.jpg ",
+    "name": "ساعة ذكية ZL02 - مقاومة للماء IP68، شاشة 1.28\", تتبع صحي، بلوتوث، سماعة داخلية",
+    "sold": "ساعات ذكية",
+    "price": "1200.00",
+    "discount": "33%",
+    "pageId": "95",
+    "productId": "95",
+    "shippingPrice": "90",
+    "colors": ["أسود", "أزرق", "ذهبي", "وردي"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ساعات ذكية"
+  }
+},
+{
+  "id": "96",
+  "media": [
+    {"src": "https://files.catbox.moe/4s67k2.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/1dom2m.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/xucorq.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/cekha4.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/bv5c86.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/kvt152.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/fp5n37.webp ", "type": "image"}
+  ],
+  "pri": "220",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "ماوس لاسلكي ثنائي الوضع",
+    "بلوتوث 5.2 + 2.4G",
+    "إضاءة LED + صامت"
+  ],
+  "longText": "ماوس لاسلكي Kebidumei ثنائي الوضع - يدعم بلوتوث 5.2 و2.4G، بطارية 400mAh قابلة للشحن، دقة 1600 DPI، إضاءة LED، مناسب للأجهزة اللوحية والكمبيوتر المحمول",
+  "desc": "استمتع بتجربة استخدام سلسة وقوية مع هذا الماوس اللاسلكي المتعدد الاستخدامات! يعمل بنظام **الاتصال المزدوج: بلوتوث 5.2 و2.4G** لتوفير اتصال مستقر وسريع. مثالي لكل شيء من العمل اليومي إلى الألعاب الخفيفة، ويتميز بإضاءة LED زخرفية تُضفي لمسة جذابة.\n\n- **اتصال مزدوج**: يمكنك الاختيار بين بلوتوث 5.2 أو رسيفر 2.4G دون أي مشكلة.\n- **بطارية قوية 400 مللي أمبير**: شحن واحد يوفر وقت عمل طويل.\n- **إضاءة LED زاهية**: ضوابط الإضاءة القابلة للتخصيص (RGB أو ثابت).\n- **أزرار صامتة**: تصميم خاص يقلل من الضوضاء أثناء الاستخدام.\n- **دقة 1600 DPI قابلة للتعديل**: تناسب مختلف أنواع السطح.\n- **تصميم مريح**: مناسب لكلتا اليدين، مناسب تمامًا للمستخدمين العاديين واللاعبين.\n- **منفذ USB-C للشحن**: سريع وكفاءة عالية في الشحن.\n- **متوافق مع جميع الأنظمة**: Windows، Mac OS، Android.\n\nسواء كنت تعمل أو تلعب، فإن هذا الماوس اللاسلكي هو الخيار الأمثل لك!",
+  "sales": "إكسسوارات الحواسيب",
+  "buttonId": "commentButton96",
+  "commentId": "96",
+  "elementId": "commentCount96",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "kebidumei"},
+    {"question": "الموديل", "answer": "KBD-Mouse-96"},
+    {"question": "النوع", "answer": "ماوس لاسلكي ثنائي وضع"},
+    {"question": "طرق الاتصال", "answer": "بلوتوث 5.2 / 2.4G (برسيفر داخلي)"},
+    {"question": "الدقة", "answer": "حتى 1600 DPI قابلة للتعديل"},
+    {"question": "عدد الأزرار", "answer": "5 أزرار (بما في ذلك عجلة التمرير)"},
+    {"question": "البطارية", "answer": "400 مللي أمبير - ليثيوم قابلة لإعادة الشحن"},
+    {"question": "منفذ الشحن", "answer": "USB-C"},
+    {"question": "وقت التشغيل", "answer": "حتى 10 أيام بشحن واحد (حسب الاستخدام)"},
+    {"question": "الإضاءة", "answer": "LED RGB قابلة للتحكم أو ثابتة"},
+    {"question": "الخصائص", "answer": "صامت، مريح لكلتا اليدين، دعم متعدد الأنظمة"},
+    {"question": "الألوان", "answer": "أسود، رصاصي"},
+    {"question": "الوزن", "answer": "خفيف - 75 جرام تقريبًا"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الاستخدام", "answer": "للجامعات، العمل، الألعاب، المنزل، المكتب"},
+    {"question": "التوصيل", "answer": "لا يحتاج لبرنامج تعريف - Plug & Play"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/4s67k2.jpg ",
+        "https://files.catbox.moe/1dom2m.webp ",
+        "https://files.catbox.moe/xucorq.webp ",
+        "https://files.catbox.moe/cekha4.webp ",
+        "https://files.catbox.moe/bv5c86.webp ",
+        "https://files.catbox.moe/kvt152.webp ",
+        "https://files.catbox.moe/fp5n37.webp "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/4s67k2.jpg ",
+    "name": "ماوس لاسلكي ثنائي الوضع - بلوتوث 5.2 + 2.4G، 1600 DPI، بطارية 400mAh، إضاءة LED، ماوس صامت للألعاب والعمل",
+    "sold": "إكسسوارات الحواسيب",
+    "price": "220.00",
+    "discount": "",
+    "pageId": "96",
+    "productId": "96",
+    "shippingPrice": "60",
+    "colors": ["أسود", "رصاصي"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ماوس لاسلكي"
+  }
+},
+{
+  "id": "97",
+  "media": [
+    {"src": "https://files.catbox.moe/7h0odj.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/08k2sg.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/nfefxm.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/m6a71b.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/9xrkif.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/lsobpu.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/dhf2i5.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/yl0wp1.jpg ", "type": "image"}
+  ],
+  "pri": "400",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "شريط LED RGB ذكي",
+    "تحكم عبر التطبيق + واي فاي",
+    "مزامنة مع الموسيقى"
+  ],
+  "longText": "شريط إضاءة LED RGB SMD5050، 2 متر، DC5V، تحكم ذكي عبر التطبيق، مزامنة مع الموسيقى، مناسب للديكور المنزلي والمناسبات",
+  "desc": "استمتع بإضاءة ذكية ساحرة في غرفتك أو مكتبك مع هذا الشريط الرائع! يحتوي على **LED SMD5050** عالي الجودة، ويُدار عبر **تطبيق الهاتف الذكي (Wi-Fi / Bluetooth)**، مما يسمح لك بتغيير الألوان، التعتيم، أو حتى مزامنتها مع الإيقاع الموسيقي. يمكنك أيضًا استخدام جهاز تحكم عن بعد IR لتغيير الأنماط يدويًا.\n\n#### المميزات الرئيسية:\n- **RGB متعدد الألوان**: أكثر من 16 مليون لون قابل للتعديل حسب الرغبة.\n- **تحكم ذكي**: عبر تطبيق الهاتف باستخدام واي فاي أو البلوتوث.\n- **مزامنة الصوت والإضاءة**: يعمل مع الموسيقى لإنشاء تأثير بصري مذهل.\n- **إضاءة خلفية ناعمة**: تصميم منتشر لتجنب الوهج أو اللمعان الحاد.\n- **سهل التركيب**: شريط ذاتي اللصق بطبقة ثنائية الجانب.\n- **منخفض الطاقة**: استهلاك 2.88 واط/متر، آمن وموفر.\n- **عمر طويل**: حتى 50,000 ساعة.\n- **مثالي للديكور**: غرف النوم، المكاتب، السقف، النوافذ، والمناسبات مثل عيد الميلاد أو الهالوين.\n- **قابل للقطع والتعديل**: يمكنك تعديل الطول حسب الحاجة.\n\nمع عمر طويل وتوصيل USB، يوفر هذا الشريط طابعًا رومانسيًا أو احتفاليًا لأي مكان.",
+  "sales": "مصابيح وإنارة",
+  "buttonId": "commentButton97",
+  "commentId": "97",
+  "elementId": "commentCount97",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "To the name"},
+    {"question": "الطول", "answer": "2 متر"},
+    {"question": "الجهد", "answer": "DC 5V"},
+    {"question": "النوع", "answer": "شريط LED SMD5050"},
+    {"question": "عدد المصابيح", "answer": "30 مصباح LED (15 لكل متر)"},
+    {"question": "التحكم", "answer": "جهاز تحكم عن بعد IR + تطبيق الهاتف"},
+    {"question": "الخصائص", "answer": "RGB متعدد الألوان، مزامنة موسيقى، ضوء خافت، تغيير تلقائي"},
+    {"question": "الاتصال", "answer": "Wi-Fi / Bluetooth (حسب الإصدار)"},
+    {"question": "المواد", "answer": "بولي كلوريد الفينيل PVC + شريط لاصق"},
+    {"question": "الاستخدام", "answer": "ديكور المنزل، المناسبات، الليالي الرومانسية، الحفلات"},
+    {"question": "الطاقة", "answer": "2.88 واط/متر"},
+    {"question": "الزاوية الضوئية", "answer": "120 درجة"},
+    {"question": "درجة حرارة العمل", "answer": "-25° إلى 60° مئوية"},
+    {"question": "الضمان", "answer": "لا يوجد"},
+    {"question": "المصدر", "answer": "USB питание"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS, UL"},
+    {"question": "الألوان", "answer": "RGB (متعدد الألوان)"},
+    {"question": "التحكم في التطبيق", "answer": "نعم (عبر تطبيق Tuya أو Smart Life)"},
+    {"question": "مقاومة للماء", "answer": "لا (للداخل فقط)"},
+    {"question": "الوضعيات", "answer": "7 ألوان ثابتة، 6 أنماط فلاش، 3 أنماط تدرج"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/7h0odj.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/08k2sg.jpg ",
+        "https://files.catbox.moe/nfefxm.jpg ",
+        "https://files.catbox.moe/m6a71b.jpg ",
+        "https://files.catbox.moe/9xrkif.jpg ",
+        "https://files.catbox.moe/lsobpu.jpg ",
+        "https://files.catbox.moe/dhf2i5.jpg ",
+        "https://files.catbox.moe/yl0wp1.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/08k2sg.jpg ",
+    "name": "شريط LED RGB ذكي 2 متر - مزامنة مع الموسيقى، تحكم عبر التطبيق، دعم Wi-Fi / Bluetooth",
+    "sold": "مصابيح وإنارة",
+    "price": "400.00",
+    "discount": "",
+    "pageId": "97",
+    "productId": "97",
+    "shippingPrice": "60",
+    "colors": ["RGB (متعدد الألوان)"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "إضاءة ذكية"
+  }
+},
+{
+  "id": "98",
+  "media": [
+    {"src": "https://files.catbox.moe/ttfvmx.avif ", "type": "image"},
+    {"src": "https://files.catbox.moe/yzqyi7.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/lpoxl5.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/tyv0gd.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/61s3qs.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/lvnmk4.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/m1j2y9.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/6o14fi.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/k2t7c4.jpg ", "type": "image"}
+  ],
+  "pri": "350",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "ماوس ألعاب لاسلكي مزدوج الوضع",
+    "Bluetooth / 2.4G USB - تبديل حر",
+    "أزرار صامتة + DPI قابلة للتعديل"
+  ],
+  "longText": "ماوس لاسلكي مزدوج الوضع - بلوتوث + 2.4G، أزرار صامتة، دقة 1600 DPI، يدعم الأجهزة: ماك بوك، PC، iPad، والهواتف الذكية",
+  "desc": "استمتع بتجربة استخدام هادئة وفعالة مع هذا الماوس اللاسلكي المتقدم! يعمل بنظام **الاتصال المزدوج عبر البلوتوث أو رسيفر 2.4G**، مما يجعله مثاليًا لأجهزة الكمبيوتر المحمول، التابلت، وحتى الهواتف الذكية. يتميز بأزرار صامتة لتقليل الضوضاء بنسبة تصل إلى 90%، وهو خيار ممتاز للمكتبات والمكاتب الهادئة.\n\n- **وضعان للاتصال**: يمكنك الاختيار بين **بلوتوث** أو **رسيفر USB 2.4G**.\n- **أزرار صامتة**: تقنية Silent Click لتقليل الضوضاء أثناء الاستخدام.\n- **3 مستويات DPI قابلة للتعديل**: 800 / 1200 / 1600 لتناسب مختلف الأسطح.\n- **بطارية مدمجة قابلة للشحن**: شحن USB-C أو Micro USB حسب الإصدار.\n- **تصميم مريح ergonomics**: مناسب تمامًا لليد اليمنى.\n- **مسافة اتصال تصل إلى 10 أمتار**: استخدمه بحرية في أي مكان.\n- **متوافق مع جميع الأنظمة**: Windows، Mac OS، Android، Linux، Chrome OS.\n- **خفيف الوزن وسهل الحمل**: مناسب تمامًا للاستخدام اليومي والعمل الحر.\n- **ضوء LED اختياري**: بعض الإصدارات تحتوي على إضاءة RGB خلفية.\n\n#### طريقة الاتصال:\n- **الوضع A (2.4G)**: قم بإدخال الرسيفر في منفذ USB واستخدمه مباشرةً.\n- **الوضع B (بلوتوث)**: اضغط على زر الاقتران لمدة 2-3 ثوانٍ حتى يرتبط بالجهاز.\n\nخيار مثالي لكل من يستخدم الحاسوب الشخصي، ماك بوك، أو الجهاز اللوحي.",
+  "sales": "إكسسوارات الحواسيب",
+  "buttonId": "commentButton98",
+  "commentId": "98",
+  "elementId": "commentCount98",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "com.congdi"},
+    {"question": "الموديل", "answer": "RGB Silent Mouse"},
+    {"question": "الطول", "answer": "2 متر (الكابل)"},
+    {"question": "الوزن", "answer": "85 جرام تقريبًا"},
+    {"question": "الخصائص", "answer": "صامت، DPI قابلة للتعديل، دعم مزدوج، بلوتوث، 2.4G، إضاءة LED (اختياري)"},
+    {"question": "عدد الأزرار", "answer": "4 أزرار (بما فيها عجلة التمرير)"},
+    {"question": "التحكم في الدقة", "answer": "800 / 1200 / 1600 DPI"},
+    {"question": "الاتصال", "answer": "بلوتوث / 2.4G (USB Dongle)"},
+    {"question": "البطارية", "answer": "Li-ion مدمجة، 300mAh (قابلة لإعادة الشحن)"},
+    {"question": "منفذ الشحن", "answer": "Micro USB أو USB-C (حسب الإصدار)"},
+    {"question": "وقت التشغيل", "answer": "حتى 15 يوم بشحن واحد (حسب الاستخدام)"},
+    {"question": "المواد", "answer": "ABS + سيليكون ناعم (للمقبض)"},
+    {"question": "الألوان", "answer": "أسود، رصاصي، أبيض، أخضر، وردي"},
+    {"question": "الوظائف", "answer": "ماوس صامت، ماوس لألعاب الفيديو، ماوس مكتبي، ماوس محمول"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الاستخدام", "answer": "للجامعات، العمل، المنزل، الألعاب الخفيفة، المكتب"},
+    {"question": "الضمان", "answer": "لا يوجد"},
+    {"question": "الطول الكلي", "answer": "12 سم تقريبًا"},
+    {"question": "العرض", "answer": "6 سم"},
+    {"question": "الارتفاع", "answer": "4 سم"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/ttfvmx.avif ",
+        "https://files.catbox.moe/yzqyi7.jpg ",
+        "https://files.catbox.moe/lpoxl5.webp ",
+        "https://files.catbox.moe/tyv0gd.jpg ",
+        "https://files.catbox.moe/61s3qs.jpg ",
+        "https://files.catbox.moe/lvnmk4.jpg ",
+        "https://files.catbox.moe/m1j2y9.jpg ",
+        "https://files.catbox.moe/6o14fi.jpg ",
+        "https://files.catbox.moe/k2t7c4.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/ttfvmx.avif ",
+    "name": "ماوس لاسلكي مزدوج الوضع - بلوتوث 2.4G، أزرار صامتة، DPI قابل للتعديل، ماوس ألعاب مريح",
+    "sold": "إكسسوارات الحواسيب",
+    "price": "350.00",
+    "discount": "",
+    "pageId": "98",
+    "productId": "98",
+    "shippingPrice": "50",
+    "colors": ["أسود", "رصاصي", "أبيض", "أخضر", "وردي"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "ماوس لاسلكي"
+  }
+},
+{
+  "id": "99",
+  "media": [
+    {"src": "https://files.catbox.moe/luf01y.png ", "type": "image"},
+    {"src": "https://i.postimg.cc/FsDLbgsh/40f61ba1a417c120e85f7db838398aaa.jpg ", "type": "image"},
+    {"src": "https://i.postimg.cc/7ZhTKGf0/81pf-CQi-XTv-L-UF1000-1000-QL80.jpg ", "type": "image"},
+    {"src": "https://i.postimg.cc/pdn5twQd/O1-CN01-Ei-FArq1n-Rt-YCrz2up-2210134145087-0-cib.jpg ", "type": "image"},
+    {"src": "https://i.postimg.cc/W4rzyMjF/O1-CN01z-Rx-To-I1-Cti1w-DJPY1-2218259680139-0-cib.jpg ", "type": "image"},
+    {"src": "https://i.postimg.cc/brYvdWnk/O1-CN01gxq4-O91-Cti21ecx-L9-2218259680139-0-cib.jpg ", "type": "image"},
+    {"src": "https://i.postimg.cc/vTPZnh7j/2025-06-29-185430.png ", "type": "image"},
+    {"src": "https://i.postimg.cc/pVkT3VNZ/85916827-5e54-420a-a3ab-74a723acc74b-CR0-0-600-450-PT0-SX600-V1.jpg ", "type": "image"}
+  ],
+  "pri": "800",
+  "oldPrice": "2200",
+  "dis": "64%",
+  "changingText": [
+    "لوحة مفاتيح لاسلكية صغيرة",
+    "إضاءة RGB خلفية + صامتة",
+    "متوافقة مع Windows, Android, iOS"
+  ],
+  "longText": "لوحة مفاتيح Kebidumei اللاسلكية - تصميم صامت، إضاءة RGB، تدعم البلوتوث 5.0، USB، 87 مفتاحًا، مناسبة للأجهزة اللوحية والكمبيوتر المحمول",
+  "desc": "استمتع بتجربة كتابة سلسة وهادئة مع هذه **اللوحة المفاتيح اللاسلكية الصغيرة** التي تحتوي على **87 مفتاحًا قياسيًا** وإضاءة خلفية RGB ملونة أو ثابتة حسب الإصدار. تعمل عبر **بلوتوث 5.0** أو **USB**، مما يجعلها متوافقة تمامًا مع أجهزة مثل **iPad، أندرويد، ويندوز، وماك**.\n\n#### المميزات الرئيسية:\n- **تصميم صامت**: لا ضوضاء عند الضغط على المفاتيح، مناسب للمكتبات والمكاتب الهادئة.\n- **إضاءة خلفية RGB متعددة الألوان**: يمكنك الاختيار بين أنماط ثابتة أو تنفسية أو متغيرة.\n- **اتصال مزدوج**: دعم **بلوتوث 5.0** و**منفذ USB**.\n- **بطارية مدمجة قابلة لإعادة الشحن**: عمر طويل يصل إلى 15 يومًا بشحن واحدة.\n- **صغيرة وخفيفة الوزن**: تصميم مدمج سهل الحمل في الحقيبة.\n- **مفاتيح ABS مقاومة للتآكل**: طباعة ليزر عالية الجودة تتحمل الاستخدام الطويل.\n- **متوافقة مع عدة أنظمة**: iOS، Android، Windows، Linux.\n- **سهلة الاقتران**: Plug & Play بدون الحاجة لتثبيت تعريفات.\n- **أزرار قابلة للتخصيص**: دعم اللغة الإنجليزية، العربية، الفرنسية، الألمانية، وغيرها.\n\n#### أنواع متوفرة:\n- **RGB Backlighting Black**\n- **7 Color Backlighting Black**\n- **No Backlight - Black 10\"**\n- **No Backlight - Black 7\"**\n\nخيار مثالي للطلاب، الكتاب، المسافرين، أو المستخدمين الذين يبحثون عن لوحة مفاتيح عملية ومريحة.",
+  "sales": "إكسسوارات الحواسيب",
+  "buttonId": "commentButton99",
+  "commentId": "99",
+  "elementId": "commentCount99",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "kebidumei"},
+    {"question": "الموديل", "answer": "Mini Wireless Keyboard - 10\" / 7\""},
+    {"question": "الحجم", "answer": "10 بوصة / 7 بوصة"},
+    {"question": "عدد المفاتيح", "answer": "87 مفتاح (مع مفاتيح وظيفية كاملة)"},
+    {"question": "الاتصال", "answer": "بلوتوث 5.0 / USB"},
+    {"question": "الخصائص", "answer": "صامتة، إضاءة RGB، قابلة للشحن، مدمجة"},
+    {"question": "المواد", "answer": "ABS بلاستيك عالي الجودة"},
+    {"question": "اللغات المدعومة", "answer": "إنجليزي، عربي، عبري، روسي، إسباني، فرنسي، ياباني، كوري، برتقالي... إلخ"},
+    {"question": "البطارية", "answer": "Li-ion مدمجة، 300mAh، شحن USB-C أو Micro USB"},
+    {"question": "وقت التشغيل", "answer": "حتى 15 يومًا (بدون إضاءة)، 7 أيام (مع إضاءة)"},
+    {"question": "مسافة الاتصال", "answer": "حتى 10 أمتار"},
+    {"question": "الوزن", "answer": "200 جرام تقريبًا (حسب الإصدار)"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE"},
+    {"question": "الوظائف", "answer": "كتابة نصوص، مكالمات، ألعاب خفيفة، التحكم في التطبيقات"},
+    {"question": "الألوان المتوفرة", "answer": "أسود، رصاصي، أبيض (حسب الإصدار)"},
+    {"question": "التحكم بالإضاءة", "answer": "نعم، 7 ألوان أو RGB (حسب الإصدار)"},
+    {"question": "الاستخدام", "answer": "iPad، كمبيوتر محمول، هاتف، نظام ويندوز، ماك"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/luf01y.png ",
+        "https://i.postimg.cc/FsDLbgsh/40f61ba1a417c120e85f7db838398aaa.jpg ",
+        "https://i.postimg.cc/7ZhTKGf0/81pf-CQi-XTv-L-UF1000-1000-QL80.jpg ",
+        "https://i.postimg.cc/pdn5twQd/O1-CN01-Ei-FArq1n-Rt-YCrz2up-2210134145087-0-cib.jpg ",
+        "https://i.postimg.cc/W4rzyMjF/O1-CN01z-Rx-To-I1-Cti1w-DJPY1-2218259680139-0-cib.jpg ",
+        "https://i.postimg.cc/brYvdWnk/O1-CN01gxq4-O91-Cti21ecx-L9-2218259680139-0-cib.jpg ",
+        "https://i.postimg.cc/vTPZnh7j/2025-06-29-185430.png ",
+        "https://i.postimg.cc/pVkT3VNZ/85916827-5e54-420a-a3ab-74a723acc74b-CR0-0-600-450-PT0-SX600-V1.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/luf01y.png ",
+    "name": "لوحة مفاتيح لاسلكية صغيرة مع إضاءة RGB - لوحة مفاتيح بلوتوث 5.0 صامتة، 87 مفتاح، تعمل مع iPad والهواتف والحواسيب",
+    "sold": "إكسسوارات الحواسيب",
+    "price": "800.00",
+    "discount": "64%",
+    "pageId": "99",
+    "productId": "99",
+    "shippingPrice": "90",
+    "colors": ["أسود", "رصاصي", "أبيض"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "لوحات مفاتيح لاسلكية"
+  }
+},
+{
+  "id": "100",
+  "media": [
+    {"src": "https://files.catbox.moe/sztmqm.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/pic6dm.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/i60hwq.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/rqo168.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/lprbld.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/76tki7.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/op888m.png ", "type": "image"}
+  ],
+  "pri": "3500",
+  "oldPrice": "5699",
+  "dis": "39%",
+  "changingText": [
+    "نظارات ذكية AI + كاميرا 100MP",
+    "شاشة تعمل باللمس، مساعد صوت، بلوتوث",
+    "تصميم أنيق يناسب الرجال والنساء"
+  ],
+  "longText": "JOYINU D13 نظارات ذكية - كاميرا 100MP، شاشة HD، بلوتوث، مساعد صوتي AI، بطارية 260mAh، مناسبة للاستخدام اليومي والخارجي",
+  "desc": "استمتع بتكنولوجيا مستقبلية حقيقية مع هذه النظارات الذكية المتقدمة التي تحتوي على كاميرا عالية الدقة حتى 100MP ودعم لتسجيل الفيديو بدقة 4K HD مما يجعلها أكثر من مجرد نظارة شمسية أو زينة يمكنك التقاط الصور أو تسجيل مقاطع الفيديو أثناء التنقل دون الحاجة إلى هاتفها تتميز بشاشة داخلية تعمل باللمس لتظهر لك الإشعارات والمكالمات مباشرة كما تدعم البلوتوث والواي فاي لإجراء مكالمات صوتية والاستماع للموسيقى أو التحكم في الأجهزة الذكية وتضم بطارية قوية 260 مللي أمبير توفر عمر تشغيل طويل والإضاءة LED مؤشر لمعرفة حالة التشغيل والبطارية كما تدعم عدة لغات مثل العربية والإنجليزية والألمانية والفرنسية والإسبانية والروسية والتركية وغيرها وتتوفر أيضًا وظائف متعددة مثل المساعد الصوتي الذكي والتقاط الصور وتسجيل الفيديو وتشغيل الموسيقى وإشعارات التطبيقات وهي مثالية لكل من يبحث عن تجربة تقنية متطورة سواء للاستخدام الشخصي أو المهني مثل البث الحي أو التوثيق أو الأمن.",
+  "sales": "الأجهزة الذكية والأمان",
+  "buttonId": "commentButton100",
+  "commentId": "100",
+  "elementId": "commentCount100",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "JOYINU"},
+    {"question": "الموديل", "answer": "D13"},
+    {"question": "الدقة", "answer": "100MP / 4K HD"},
+    {"question": "الخصائص", "answer": "مساعد صوتي AI، كاميرا، فيديو، بلوتوث، واي فاي، تحكم بالموسيقى، ترجمة، تعرف على الكائنات، شاشة تعمل باللمس"},
+    {"question": "البطارية", "answer": "260 مللي أمبير في الساعة"},
+    {"question": "وقت التشغيل", "answer": "حتى 6 ساعات عمل متواصلة"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 45 جرام فقط"},
+    {"question": "المواد", "answer": "بلاستيك ABS عالي الجودة"},
+    {"question": "الوظائف الأساسية", "answer": "التقاط الصور، تسجيل الفيديو، مساعد صوتي، مكالمات، تشغيل موسيقى، إشعارات التطبيقات"},
+    {"question": "الاتصال", "answer": "بلوتوث 5.0، Wi-Fi"},
+    {"question": "التحكم بالمساعد", "answer": "نعم، عبر المساعد الصوتي القائم على الذكاء الاصطناعي (AI)"},
+    {"question": "اللغات المدعومة", "answer": "إنجليزي، روسي، إسباني، برتغالي، تركي، إيطالي، فرنسي، ألماني، نرويجي، كوري، ياباني، أوكراني، عبري، هولندي، عربي، إندونيسي، يوناني"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, FCC"},
+    {"question": "الضمان", "answer": "لا يوجد"},
+    {"question": "الطول", "answer": "حجم قياسي للأذنين (135 مم)"},
+    {"question": "العرض", "answer": "50 مم"},
+    {"question": "الارتفاع", "answer": "35 مم"},
+    {"question": "التحكم بالإشعارات", "answer": "نعم، عبر الشاشة أو الأوامر الصوتية"},
+    {"question": "التطبيق المتوافق", "answer": "تطبيق JOYINU الخاص"},
+    {"question": "الاستخدام", "answer": "السفر، الرياضة، السياحة، العمل الحر، التوثيق، البث المباشر"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/sztmqm.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/pic6dm.png ",
+        "https://files.catbox.moe/i60hwq.png ",
+        "https://files.catbox.moe/rqo168.png ",
+        "https://files.catbox.moe/lprbld.png ",
+        "https://files.catbox.moe/76tki7.png ",
+        "https://files.catbox.moe/op888m.png "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/pic6dm.png ",
+    "name": "نظارات JOYINU D13 الذكية - 4K HD، كاميرا 100MP، مساعد صوتي AI، بلوتوث، بطارية 260mAh",
+    "sold": "الأجهزة الذكية والأمان",
+    "price": "3500.00",
+    "discount": "39%",
+    "pageId": "100",
+    "productId": "100",
+    "shippingPrice": "150",
+    "colors": ["أسود", "أبيض"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "نظارات ذكية"
+  }
 }
 
 
