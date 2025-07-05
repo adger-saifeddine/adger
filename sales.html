@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger</title>
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+<html>
+<head>
+    <title>سجل المشتريات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+        
+        body {
+            background: white;
+            padding: 15px;
+            max-width: 100%;
+            overflow-x: hidden;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #d8d8d8;
+            width: 100%;
+        }
+        
+        .header-content {
+            text-align: right;
+            margin-left: auto;
+        }
+        
+        .header-title {
+            font-size: 22px;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: -2px;
+        }
+        
+        .header-subtitle {
+            font-size: 20px;
+            color: #161616;
+            font-weight: bold;
+        }
+        
+        .activity-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: auto;
+        }
+        
+        .main-content {
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 20px auto;
+            padding: 20px;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow: auto;
+            border-radius: 5px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #777;
+            font-size: 16px;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+        
+        /* Password Modal Styles */
+        .password-modal {
+            display: flex;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .password-container {
+            background-color: #fefefe;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .password-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .password-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        .password-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: flex;
+            position: fixed;
+            z-index: 9998;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            color: #333;
+            margin-top: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 22px;
+            }
+            
+            .header-subtitle {
+                font-size: 18px;
+            }
+            
+            .activity-btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <div class="loading-text">جاري التحميل...</div>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="password-modal" style="display: none;">
+        <div class="password-container">
+            <h2 class="password-title">🔒 أدخل كلمة المرور</h2>
+            <input type="password" id="passwordInput" class="password-input" placeholder="كلمة المرور السرية">
+            <button onclick="checkPassword()" class="password-btn">موافق</button>
+            <div id="errorMessage" class="error-message">كلمة المرور غير صحيحة!</div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden by default) -->
+    <div id="mainContent" style="display: none;">
+        <div class="header">
+            <button class="activity-btn" onclick="openModal()">📊 نشاطتي</button>
+            <div class="header-content">
+                <h1 class="header-title">سجل المشتريات</h1>
+                <h2 class="header-subtitle">إجمالي المبيعات: <span id="totalSales">0.00</span> جنيه</h2>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <table id="purchasesTable">
+                <thead>
+                    <tr>
+                        <th>اسم المنتج</th>
+                        <th>رقم المنتج</th>
+                        <th>الكمية</th>
+                        <th>السعر الإجمالي</th>
+                        <th>اسم المستخدم</th>
+                        <th>معلومات التوصيل</th>
+                        <th>الخيارات</th>
+                        <th>التوقيت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- سيتم إضافة صفوف المشتريات هنا -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal للإحصائيات -->
+        <div id="activityModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">📈 تحليل نشاط المبيعات</h2>
+                    <button class="close-btn" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalOrders">0</div>
+                            <div class="stat-label">إجمالي الطلبات</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalRevenue">0</div>
+                            <div class="stat-label">إجمالي الإيرادات (جنيه)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="avgOrderValue">0</div>
+                            <div class="stat-label">متوسط قيمة الطلب</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="topProduct">—</div>
+                            <div class="stat-label">المنتج الأكثر مبيعاً</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تهيئة Firebase
+        firebase.initializeApp({
+            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+            authDomain: "buy-from-adger.firebaseapp.com",
+            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+            projectId: "buy-from-adger",
+            storageBucket: "buy-from-adger.appspot.com",
+            messagingSenderId: "396020785601",
+            appId: "1:396020785601:web:yourWebAppID"
+        });
+
+        // كلمة المرور الصحيحة
+        const CORRECT_PASSWORD = "11523";
+        
+        // متغيرات عامة
+        let allPurchases = [];
+        let salesChart = null;
+        
+        // التحقق من وجود كلمة مرور محفوظة
+        function checkSavedPassword() {
+            const savedPassword = localStorage.getItem('savedPassword');
+            if (savedPassword === CORRECT_PASSWORD) {
+                // إخفاء دائرة التحميل مباشرة إذا كانت كلمة المرور محفوظة
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadContent();
+            } else {
+                // إخفاء دائرة التحميل وإظهار نموذج كلمة المرور
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('passwordModal').style.display = 'flex';
+            }
+        }
+        
+        // التحقق من كلمة المرور المدخلة
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (passwordInput === CORRECT_PASSWORD) {
+                // حفظ كلمة المرور للجلسات القادمة
+                localStorage.setItem('savedPassword', passwordInput);
+                
+                // إخفاء نموذج كلمة المرور وإظهار المحتوى الرئيسي
+                document.getElementById('passwordModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                // تحميل المحتوى
+                loadContent();
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // تحميل المحتوى بعد المصادقة
+        function loadContent() {
+            const database = firebase.database();
+            const purchasesRef = database.ref('purchases');
+
+            // جلب المشتريات مرة واحدة
+            purchasesRef.once('value', (snapshot) => {
+                const purchases = snapshot.val();
+                const tbody = document.querySelector('#purchasesTable tbody');
+                let totalSales = 0;
+
+                if (!purchases) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="8" style="text-align: center;">لا توجد مشتريات بعد</td>';
+                    tbody.appendChild(row);
+                    return;
+                }
+
+                const purchasesArray = [];
+                for (const key in purchases) {
+                    purchasesArray.push({ id: key, ...purchases[key] });
+                }
+
+                allPurchases = purchasesArray;
+                purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
+
+                purchasesArray.forEach((purchase) => {
+                    let options = '';
+                    if (purchase.color) options += `اللون: ${purchase.color}<br>`;
+                    if (purchase.size) options += `المقاس: ${purchase.size}<br>`;
+                    if (purchase.material) options += `المادة: ${purchase.material}<br>`;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${purchase.productName}</td>
+                        <td>${purchase.productId}</td>
+                        <td>${purchase.quantity}</td>
+                        <td>${purchase.totalPrice.toFixed(2)}</td>
+                        <td>${purchase.username}</td>
+                        <td>
+                            الاسم: ${purchase.deliveryInfo.name}<br>
+                            الهاتف: ${purchase.deliveryInfo.phone}<br>
+                            الإيميل: ${purchase.deliveryInfo.email}<br>
+                            المحافظة: ${purchase.deliveryInfo.governorate}<br>
+                            المدينة: ${purchase.deliveryInfo.city}<br>
+                            الشارع: ${purchase.deliveryInfo.street}<br>
+                            المعلم: ${purchase.deliveryInfo.landmark}
+                        </td>
+                        <td>${options}</td>
+                        <td>${new Date(purchase.timestamp).toLocaleString('ar-EG')}</td>
+                    `;
+                    tbody.appendChild(row);
+                    totalSales += purchase.totalPrice;
+                });
+
+                // تعديل عرض إجمالي المبيعات لإضافة فواصل الآلاف
+                document.getElementById('totalSales').textContent = totalSales.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            });
+        }
+
+        // فتح نافذة الإحصائيات
+        function openModal() {
+            document.getElementById('activityModal').style.display = 'block';
+            generateStatistics();
+            createChart();
+        }
+
+        // إغلاق نافذة الإحصائيات
+        function closeModal() {
+            document.getElementById('activityModal').style.display = 'none';
+            if (salesChart) {
+                salesChart.destroy();
+                salesChart = null;
+            }
+        }
+
+        // توليد الإحصائيات
+        function generateStatistics() {
+            if (allPurchases.length === 0) return;
+
+            const totalOrders = allPurchases.length;
+            const totalRevenue = allPurchases.reduce((sum, p) => sum + p.totalPrice, 0);
+            const avgOrderValue = totalRevenue / totalOrders;
+
+            const productSales = {};
+            allPurchases.forEach(p => {
+                productSales[p.productName] = (productSales[p.productName] || 0) + p.quantity;
+            });
+            const topProduct = Object.keys(productSales).reduce((a, b) => 
+                productSales[a] > productSales[b] ? a : b, '—'
+            );
+
+            document.getElementById('totalOrders').textContent = totalOrders;
+            document.getElementById('totalRevenue').textContent = totalRevenue.toFixed(2);
+            document.getElementById('avgOrderValue').textContent = avgOrderValue.toFixed(2);
+            document.getElementById('topProduct').textContent = topProduct;
+        }
+
+        // إنشاء الرسم البياني
+        function createChart() {
+            if (allPurchases.length === 0) return;
+
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            
+            const salesByDate = {};
+            allPurchases.forEach(purchase => {
+                const date = new Date(purchase.timestamp).toLocaleDateString('ar-EG');
+                salesByDate[date] = (salesByDate[date] || 0) + purchase.totalPrice;
+            });
+
+            const sortedDates = Object.keys(salesByDate).sort((a, b) => 
+                new Date(a.split('/').reverse().join('-')) - new Date(b.split('/').reverse().join('-'))
+            );
+
+            const salesData = sortedDates.map(date => salesByDate[date]);
+
+            if (salesChart) {
+                salesChart.destroy();
+            }
+
+            salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: sortedDates,
+                    datasets: [{
+                        label: 'المبيعات اليومية (جنيه)',
+                        data: salesData,
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'تطور المبيعات عبر الوقت',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // إغلاق النافذة عند النقر خارجها
+        window.onclick = function(event) {
+            const modal = document.getElementById('activityModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // عند تحميل الصفحة، التحقق من كلمة المرور المحفوظة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إظهار دائرة التحميل أولاً
+            document.getElementById('loadingSpinner').style.display = 'flex';
+            
+            // بعد تأخير بسيط (لإظهار تأثير التحميل)، التحقق من كلمة المرور
+            setTimeout(checkSavedPassword, 500);
+        });
+        
+        // السماح بإدخال كلمة المرور بالضغط على زر Enter
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
