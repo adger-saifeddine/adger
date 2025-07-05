@@ -84,6 +84,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: right;
+            overflow-wrap: break-word;
         }
         
         th {
@@ -150,7 +151,7 @@
         }
         
         .stat-number {
-            font-size: 2.2em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #007bff;
             margin-bottom: 5px;
@@ -458,6 +459,15 @@
                     if (purchase.color) options += `اللون: ${purchase.color}<br>`;
                     if (purchase.size) options += `المقاس: ${purchase.size}<br>`;
                     if (purchase.material) options += `المادة: ${purchase.material}<br>`;
+                    
+                    // --- بداية التعديل ---
+                    const purchaseDate = new Date(purchase.timestamp);
+                    const datePart = purchaseDate.toLocaleDateString('ar-EG', { year: 'numeric', month: 'numeric', day: 'numeric' });
+                    const timePart = purchaseDate.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', hour12: true });
+                    
+                    // نغلف كل جزء بـ span مع خاصية تمنع انكسار السطر لضمان عدم انقسام السنة أو الوقت
+                    const formattedTimestamp = `<span style="white-space: nowrap;">${datePart}</span><br><span style="white-space: nowrap;">${timePart}</span>`;
+                    // --- نهاية التعديل ---
 
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -476,7 +486,7 @@
                             المعلم: ${purchase.deliveryInfo.landmark}
                         </td>
                         <td>${options}</td>
-                        <td>${new Date(purchase.timestamp).toLocaleString('ar-EG')}</td>
+                        <td>${formattedTimestamp}</td>
                     `;
                     tbody.appendChild(row);
                     totalSales += purchase.totalPrice;
