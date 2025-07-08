@@ -2820,22 +2820,113 @@
         </p>
     </div>
 
-       <script>
-        // قاموس الكلمات المفتاحية
-        let keywordMap = {
+   <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية</title>
+    <style>
+        /* أنماط CSS يمكن إضافتها هنا حسب الحاجة */
+    </style>
+</head>
+<body>
+    <!-- الخلفية العلوية -->
+    <div class="top-background"></div>
+
+    <!-- الخلفية البيضاء الجديدة -->
+    <div class="sub-header-background"></div>
+
+    <!-- Sub Header -->
+    <div class="sub-header">
+        <nav>
+            <a href="#" onclick="selectItem('الكل', this)" style="font-family: Cairo, sans-serif;">الكل</a>
+            <a onclick="selectItem('خصومات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">خصومات</a>
+            <a onclick="selectItem('إلكترونيات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إلكترونيات</a>
+            <a onclick="selectItem('إكسسوارات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إكسسوارات</a>
+            <a onclick="selectItem('موضة', this)" class="menu-item" style="font-family: Cairo, sans-serif;">موضة</a>
+            <a onclick="selectItem('كتب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كتب</a>
+            <a onclick="selectItem('فن', this)" class="menu-item" style="font-family: Cairo, sans-serif;">فن</a>
+            <a onclick="selectItem('أدوات رياضية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أدوات رياضية</a>
+            <a onclick="selectItem('حقائب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">حقائب</a>
+            <a onclick="selectItem('ساعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ساعات</a>
+            <a onclick="selectItem('البيت', this)" class="menu-item" style="font-family: Cairo, sans-serif;">البيت</a>
+            <a onclick="selectItem('اختراعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">اختراعات</a>
+            <a onclick="selectItem('أحذية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أحذية</a>
+            <a onclick="selectItem('ديكور', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ديكور</a>
+            <a onclick="selectItem('ألعاب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ألعاب</a>
+            <a onclick="selectItem('أجهزة منزلية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أجهزة منزلية</a>
+            <a onclick="selectItem('مستلزمات السفر', this)" class="menu-item" style="font-family: Cairo, sans-serif;">مستلزمات السفر</a>
+            <a onclick="selectItem('منتجات العناية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">منتجات العناية</a>
+            <a onclick="selectItem('معدات الطبخ', this)" class="menu-item" style="font-family: Cairo, sans-serif;">معدات الطبخ</a>
+            <a onclick="selectItem('كمبيوترات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كمبيوترات</a>
+            <a onclick="selectItem('كاميرات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كاميرات</a>
+            <div class="underline"></div>
+        </nav>
+    </div>
+
+    <!-- نافذة القائمة الجانبية -->
+    <div class="menu-popup" id="menuPopup">
+        <div class="back-arrow" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+        </div>
+        <p onclick="window.location.href='account.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">حسابي</span>
+        </p>
+        <p onclick="window.location.href='about.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">سياسات وأحكام</span>
+        </p>
+        <p onclick="window.location.href='return.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">طلب استرجاع</span>
+        </p>
+        <p onclick="window.location.href='deals.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">صفقة رابحة</span>
+        </p>
+        <p onclick="window.location.href='wholesale.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شراء بالجملة</span>
+        </p>
+        <p onclick="window.location.href='companies.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شركات عالمية</span>
+        </p>
+        <p onclick="window.location.href='categories.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">الفئات</span>
+        </p>
+    </div>
+
+    <div id="gallery" class="gallery"></div>
+
+    <!-- رسالة "لا توجد نتائج" -->
+    <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px; display: none;">
+        <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="8" x2="14" y2="14"></line>
+                <line x1="14" y1="8" x2="8" y2="14"></line>
+            </svg>
+        </div>
+        <p style="font-size: 24px; margin-top: 10px;">
+            لا توجد نتائج لـ "<span id="search-term-display"></span>"
+        </p>
+    </div>
+
+    <script>
+        // --- قاموس الكلمات المفتاحية للبحث المتقدم ---
+        const keywordMap = {
             'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
-            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الإلكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'الإكسسوارات', 'اكسسوار'],
+            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
+            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
             'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-            'كتب': ['كتب', 'كتاب', 'الكتب', 'رواية', 'روايات'],
-            'الكتابة': ['الكتابة', 'كتابة', 'أدوات الكتابة', 'دورة الكتابة'],
+            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
             'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
             'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
             'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-            'ساعات': ['ساعات', 'ساعة', 'الساعات'],
+            'ساعات': ['ساعات', 'ساعة'],
             'البيت': ['البيت', 'منزل', 'منزلي'],
             'اختراعات': ['اختراعات', 'اختراع'],
-            'أحذية': ['أحذية', 'حذاء', 'جزمة', 'شوز'],
+            'أحذية': ['أحذية', 'حذاء', 'شوز'],
             'ديكور': ['ديكور', 'ديكورات'],
             'ألعاب': ['ألعاب', 'لعبة', 'لعبه'],
             'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة'],
@@ -2843,51 +2934,10 @@
             'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم'],
             'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني'],
             'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي'],
-            'كاميرات': ['كاميرات', 'كاميرا', 'تصوير']
+            'كاميرات': ['كاميرات', 'كاميرا', 'تصوير'],
+            'مكتب': ['مكتب', 'مكاتب', 'طاولة مكتب'],
+            'الكتابة': ['الكتابة', 'كتابة', 'قلم', 'أقلام']
         };
-
-        // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
-        function addKeyword(category, synonyms) {
-            if (!keywordMap[category]) {
-                keywordMap[category] = synonyms;
-                // تحديث واجهة المستخدم لإضافة الفئة الجديدة
-                const nav = document.querySelector('.sub-header nav');
-                const newItem = document.createElement('a');
-                newItem.className = 'menu-item';
-                newItem.style.fontFamily = 'Cairo, sans-serif';
-                newItem.textContent = category;
-                newItem.onclick = () => selectItem(category, newItem);
-                nav.insertBefore(newItem, nav.lastElementChild);
-            } else {
-                keywordMap[category] = [...new Set([...keywordMap[category], ...synonyms])];
-            }
-        }
-
-        // دالة لإزالة تشكيل الحروف العربية وأل التعريف
-        function removeArabicDiacritics(text) {
-            return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '').replace(/^(ال|أ)/, '');
-        }
-
-        // دالة البحث المتقدم
-        function advancedSearch(searchTerm) {
-            const normalizedSearchTerm = removeArabicDiacritics(searchTerm.toLowerCase().trim());
-            let matchedKeywords = [];
-            let matchedCategory = null;
-
-            // البحث عن الفئة المطابقة
-            for (const [category, synonyms] of Object.entries(keywordMap)) {
-                if (synonyms.some(synonym => 
-                    removeArabicDiacritics(synonym.toLowerCase()) === normalizedSearchTerm
-                )) {
-                    matchedKeywords = synonyms;
-                     matchedCategory = category;
-                    break;
-                }
-            }
-
-            // إذا لم يتم العثور على فئة، استخدام مصطلح البحث الأصلي
-            return { keywords: matchedKeywords.length > 0 ? matchedKeywords : [searchTerm], category: matchedCategory };
-        }
 
         // إظهار وإزالة أداة التحميل
         function showLoadingAnimation() {
@@ -2946,6 +2996,11 @@
             if (loadingDiv) loadingDiv.remove();
         }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const gallery = document.getElementById('gallery');
+            if (gallery) showLoadingAnimation();
+        });
+
         // دالة للتحقق من النصوص العربية
         function isArabic(text) {
             return /[\u0600-\u06FF]/.test(text);
@@ -2965,13 +3020,13 @@
         function updateWelcomeMessage() {
             const username = localStorage.getItem('username');
             const welcomeMessage = document.getElementById('welcomeMessage');
-            
+
             if (!welcomeMessage) return;
-            
+
             if (username) {
                 const displayName = truncateUsername(username);
                 welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
-                
+
                 window.addEventListener('resize', () => {
                     const usernameDisplay = document.getElementById('usernameDisplay');
                     if (usernameDisplay) {
@@ -2983,13 +3038,11 @@
             }
         }
 
-        // تحديث رسالة الترحيب عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             updateWelcomeMessage();
             updateCartCount();
         });
 
-        // الاستماع إلى تغييرات localStorage
         window.addEventListener('storage', function(event) {
             if (event.key === 'username') {
                 updateWelcomeMessage();
@@ -3005,13 +3058,12 @@
         setInterval(() => {
             const currentUser = localStorage.getItem('username');
             const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
-            
+
             if (truncateUsername(currentUser) !== displayedUser) {
                 updateWelcomeMessage();
             }
         }, 1000);
 
-        // تحريك الخط عند النقر على عناصر القائمة
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
             item.addEventListener('click', () => window.scrollTo(0, 0));
@@ -3051,7 +3103,7 @@
             }
         }
         function endDrag() {
-           isDragging = false;
+            isDragging = false;
         }
         function handleClickOutside(event) {
             if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
@@ -3097,7 +3149,6 @@
             if (cartCountElement) cartCountElement.textContent = cart.length;
         }
 
-        // التنقل إلى صفحة العربة
         function navigateToCart() {
             window.location.href = 'cart.html';
         }
@@ -3111,6 +3162,21 @@
         const itemsPerLoad = 20;
         let loadedItems = 0;
 
+        // دالة لتوسيع استعلام البحث باستخدام القاموس
+        function expandSearchTerm(searchTerm) {
+            const words = searchTerm.split(/\s+/);
+            const expandedTerms = new Set();
+            words.forEach(word => {
+                expandedTerms.add(word.toLowerCase());
+                for (const [category, keywords] of Object.entries(keywordMap)) {
+                    if (keywords.some(keyword => keyword.toLowerCase().includes(word.toLowerCase()))) {
+                        keywords.forEach(keyword => expandedTerms.add(keyword.toLowerCase()));
+                    }
+                }
+            });
+            return Array.from(expandedTerms);
+        }
+
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
@@ -3122,40 +3188,14 @@
             gallery.innerHTML = '';
             showLoadingAnimation();
 
-            // الحصول على الكلمات المفتاحية والفئة باستخدام البحث المتقدم
-            const { keywords, category } = advancedSearch(searchTerm);
-
             fetch('products.json')
                 .then(response => response.json())
                 .then(products => {
                     removeLoadingAnimation();
-                    // تصفية المنتجات بناءً على الكلمات المفتاحية والفئة
+                    const expandedTerms = expandSearchTerm(searchTerm);
                     filteredProducts = products.filter(product => {
-                        const searchFields = [
-                            product.name || '',
-                            product.dataName || '',
-                            product.sold || '',
-                            product.description || '',
-                            product.category || ''
-                        ].map(field => removeArabicDiacritics(field.toLowerCase()));
-
-                        // إذا تم العثور على فئة، إعطاء الأولوية للمنتجات المصنفة ضمن هذه الفئة
-                        if (category) {
-                            // التحقق من أن الفئة تتطابق أو أن الكلمات المفتاحية موجودة في الحقول
-                            return product.category === category || 
-                                   keywords.some(keyword => 
-                                       searchFields.some(field => 
-                                           field.includes(removeArabicDiacritics(keyword.toLowerCase()))
-                                       )
-                                   );
-                        }
-
-                        // إذا لم يتم العثور على فئة، البحث في الحقول باستخدام الكلمات المفتاحية
-                        return keywords.some(keyword => 
-                            searchFields.some(field => 
-                                field.includes(removeArabicDiacritics(keyword.toLowerCase()))
-                            )
-                        );
+                        const productText = `${product.name} ${product.dataName || ''} ${product.sold || ''}`.toLowerCase().split(/\s+/);
+                        return expandedTerms.some(term => productText.includes(term));
                     });
 
                     shuffleArray(filteredProducts);
