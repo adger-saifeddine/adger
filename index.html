@@ -2820,638 +2820,302 @@
         </p>
     </div>
 
+   
     <script>
-        // --- قاموس البحث المتقدم ---
-    // هذا هو المصدر الرئيسي للبحث. يمكنك إضافة فئات جديدة أو كلمات مفتاحية داخل الفئات الحالية.
-    const keywordMap = {
-        'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
-        'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-        'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
-        'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-        'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
-        'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
-        'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
-        'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-        'ساعات': ['ساعات', 'ساعة'],
-        'البيت': ['البيت', 'منزل', 'منزلي'],
-        'اختراعات': ['اختراعات', 'اختراع'],
-        'أحذية': ['أحذية', 'حذاء', 'شوز'],
-        'ديكور': ['ديكور', 'ديكورات'],
-        'ألعاب': ['ألعاب', 'لعبة', 'لعبه'],
-        'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة'],
-        'مستلزمات السفر': ['مستلزمات السفر', 'سفر'],
-        'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم'],
-        'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني'],
-        'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي'],
-        'كاميرات': ['كاميرات', 'كاميرا', 'تصوير']
-    };
+        // قاموس البحث المتقدم
+        const keywordMap = {
+            'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
+            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
+            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
+            'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
+            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات', 'قراءة', 'أدب', 'قصة'],
+            'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم', 'تصوير', 'إبداع'],
+            'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية', 'تمرين', 'لياقة'],
+            'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط', 'محمول'],
+            'ساعات': ['ساعات', 'ساعة', 'وقت', 'زمن'],
+            'البيت': ['البيت', 'منزل', 'منزلي', 'بيتي', 'بيت'],
+            'اختراعات': ['اختراعات', 'اختراع', 'ابتكار', 'جديد'],
+            'أحذية': ['أحذية', 'حذاء', 'شوز', 'نعل', 'قدم'],
+            'ديكور': ['ديكور', 'ديكورات', 'زينة', 'تجميل', 'تزيين'],
+            'ألعاب': ['ألعاب', 'لعبة', 'لعبه', 'ترفيه', 'تسلية'],
+            'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة', 'بيت'],
+            'مستلزمات السفر': ['مستلزمات السفر', 'سفر', 'ترحال', 'رحلات'],
+            'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم', 'جمال'],
+            'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني', 'طبيخ', 'أكل'],
+            'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي', 'تكنولوجيا'],
+            'كاميرات': ['كاميرات', 'كاميرا', 'تصوير', 'صورة', 'لقطة']
+        };
 
-    // --- بداية دوال البحث المتقدم ---
+        // بيانات المنتجات
+        const products = [
+            { id: 1, name: "رواية رحلة إلى الشرق", category: "كتب", keywords: ["أدب", "قصص", "روايات"] },
+            { id: 2, name: "مكتب خشبي فاخر", category: "البيت", keywords: ["أثاث", "خشب", "مكتب"] },
+            { id: 3, name: "قلم حبر جاف فاخر", category: "معدات الطبخ", keywords: ["كتابة", "مدرسة", "أدوات"] },
+            { id: 4, name: "كتاب تعلم البرمجة", category: "كتب", keywords: ["تكنولوجيا", "تعليم", "برمجة"] },
+            { id: 5, name: "ساعة يد ذكية", category: "ساعات", keywords: ["إلكترونيات", "ذكية", "وقت"] },
+            { id: 6, name: "حقيبة سفر متينة", category: "حقائب", keywords: ["سفر", "ترحال", "مستلزمات"] },
+            { id: 7, name: "كاميرا احترافية 24MP", category: "كاميرات", keywords: ["تصوير", "صورة", "لقطة"] },
+            { id: 8, name: "جهاز لابتوب رايزر", category: "كمبيوترات", keywords: ["إلكترونيات", "عمل", "تكنولوجيا"] },
+            { id: 9, name: "مجموعة أدوات كتابة", category: "معدات الطبخ", keywords: ["قرطاسية", "مدرسة", "كتابة"] },
+            { id: 10, name: "طاولة مكتب قابلة للطي", category: "البيت", keywords: ["أثاث", "مكتب", "خشب"] },
+            { id: 11, name: "كتاب الطبخ الشهي", category: "كتب", keywords: ["طبخ", "وصفات", "أكل"] },
+            { id: 12, name: "ماوس لاسلكي", category: "إلكترونيات", keywords: ["كمبيوتر", "أدوات", "لاسلكي"] },
+            { id: 13, name: "حذاء رياضي مريح", category: "أحذية", keywords: ["رياضة", "مشي", "راحة"] },
+            { id: 14, name: "ساعة حائط كلاسيكية", category: "ساعات", keywords: ["ديكور", "منزل", "وقت"] },
+            { id: 15, name: "مجموعة قصص للأطفال", category: "كتب", keywords: ["أطفال", "تعليم", "ترفيه"] },
+            { id: 16, name: "مصباح مكتب LED", category: "البيت", keywords: ["إضاءة", "مكتب", "LED"] },
+            { id: 17, name: "دفتر ملاحظات فاخر", category: "معدات الطبخ", keywords: ["كتابة", "ملاحظات", "ورق"] },
+            { id: 18, name: "سماعات لاسلكية", category: "إلكترونيات", keywords: ["صوت", "موسيقى", "لاسلكي"] },
+            { id: 19, name: "مقلمة جلدية", category: "إكسسوارات", keywords: ["مدرسة", "قرطاسية", "أقلام"] },
+            { id: 20, name: "لوحة فنية زيتية", category: "فن", keywords: ["ديكور", "رسم", "جمال"] }
+        ];
 
-    /**
-     * دالة مساعدة لتجنب أخطاء التعبيرات النمطية إذا احتوت الكلمة على رموز خاصة.
-     * @param {string} string - السلسلة النصية المراد تنظيفها.
-     * @returns {string} سلسلة نصية آمنة للاستخدام في التعبيرات النمطية.
-     */
-    function escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    /**
-     * تبحث عن مصطلح البحث في قاموس الكلمات المفتاحية وتعيد كل الكلمات المرادفة له.
-     * @param {string} searchTerm - الكلمة التي أدخلها المستخدم.
-     * @returns {string[]} مصفوفة من الكلمات المفتاحية الموسعة للبحث.
-     */
-    function getExpandedSearchTerms(searchTerm) {
-        const normalizedTerm = searchTerm.trim().toLowerCase();
-        if (!normalizedTerm) return [];
-
-        for (const category in keywordMap) {
-            const keywords = keywordMap[category].map(k => k.toLowerCase());
-            // تحقق إذا كان المصطلح هو اسم الفئة أو أحد الكلمات المفتاحية فيها
-            if (category.toLowerCase() === normalizedTerm || keywords.includes(normalizedTerm)) {
-                return keywordMap[category]; // إرجاع كل الكلمات في تلك الفئة
-            }
-        }
-        
-        // إذا لم يتم العثور على تطابق في القاموس، ابحث عن الكلمة نفسها
-        return [searchTerm];
-    }
-    
-    // --- نهاية دوال البحث المتقدم ---
-
-    // إظهار وإزالة أداة التحميل
-    function showLoadingAnimation() {
-        // ... (كود التحميل كما هو) ...
-    }
-
-    function removeLoadingAnimation() {
-        // ... (كود إزالة التحميل كما هو) ...
-    }
-    
-  
-
-    /**
-     * الوظيفة الرئيسية لجلب المنتجات وتصفيتها باستخدام منطق البحث المتقدم.
-     * @param {string} searchTerm - مصطلح البحث.
-     */
-    function fetchAndFilterProducts(searchTerm) {
-        const gallery = document.getElementById('gallery');
-        const noResultsMessage = document.getElementById('no-results-message');
-        const searchTermDisplay = document.getElementById('search-term-display');
-        const searchBox = document.getElementById('search-box');
-
-        if (searchBox) searchBox.value = searchTerm;
-
-        gallery.innerHTML = '';
-        showLoadingAnimation();
-
-        fetch('products.json')
-            .then(response => response.json())
-            .then(allProducts => {
-                removeLoadingAnimation();
-                
-                const searchKeywords = getExpandedSearchTerms(searchTerm);
-
-                if (!searchTerm || searchTerm.toLowerCase() === 'الكل' || searchKeywords.length === 0) {
-                    filteredProducts = allProducts; // عرض كل المنتجات إذا كان البحث فارغًا
-                } else {
-                    // إنشاء تعبير نمطي للبحث عن أي من الكلمات المفتاحية ككلمات كاملة
-                    // مثال: /\b(كتب|كتاب|رواية)\b/i
-                    // `\b` يضمن أنها كلمة مستقلة وليست جزءًا من كلمة أخرى (مثل "مكتب")
-                    const searchRegex = new RegExp(`\\b(${searchKeywords.map(escapeRegExp).join('|')})\\b`, 'i');
-
-                    filteredProducts = allProducts.filter(product => {
-                        // دمج كل النصوص القابلة للبحث من المنتج في نص واحد
-                        const productText = [
-                            product.name || '',
-                            product.dataName || '',
-                            product.sold || ''
-                        ].join(' ');
-
-                        // اختبار النص باستخدام التعبير النمطي
-                        return searchRegex.test(productText);
-                    });
-                }
-                
-                shuffleArray(filteredProducts);
-                gallery.innerHTML = '';
-                loadedItems = 0;
-
-                if (filteredProducts.length > 0) {
-                    loadProducts(0, itemsPerLoad);
-                    noResultsMessage.style.display = 'none';
-                } else {
-                    noResultsMessage.style.display = 'block';
-                    searchTermDisplay.textContent = searchTerm;
-                }
-            })
-            .catch(error => {
-                removeLoadingAnimation();
-                console.error('فشل جلب المنتجات من JSON:', error);
-                gallery.innerHTML = '';
-                noResultsMessage.style.display = 'block';
-                searchTermDisplay.textContent = searchTerm;
-            });
-    }
-
-    // --- باقي دوال الصفحة (لم يتم تعديلها) ---
-
-    function loadProducts(startIndex, count) {
-        // ... (الكود كما هو)
-    }
-
-        // ... (الكود كما هو)
-
-    function isWhiteBackground(img) {
-        // ... (الكود كما هو)
-    }
-
-    function startRotatingText(selector) {
-        // ... (الكود كما هو)
-    }
-
-    function getSearchTermFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('search') || '';
-    }
-
-    document.addEventListener('scroll', function () {
-        // ... (الكود كما هو)
-    });
-
-    function selectItem(item, element) {
-        // ... (الكود كما هو)
-        if (item === 'الكل') {
-            fetchAndFilterProducts('');
-        } else if (item) {
-            fetchAndFilterProducts(item);
-        }
-        // ... (باقي الكود)
-    }
-
-    function shuffleArray(array) {
-        // ... (الكود كما هو)
-    }
-
-    window.onload = function () {
-        removeLoadingAnimation();
-        const defaultItem = document.querySelector('.sub-header nav a');
-        if (defaultItem) {
-            // ... (الكود الخاص بتفعيل العنصر الأول)
-        }
-        const searchTerm = getSearchTermFromURL();
-        const searchBox = document.getElementById('search-box');
-        if (searchBox && searchTerm) searchBox.value = searchTerm;
-        fetchAndFilterProducts(searchTerm || '');
-    };
-
-    // يمكنك إضافة باقي الدوال المتبقية هنا
-    // (toggleMenu, addToCart, updateCartCount, updateWelcomeMessage, etc.)
-    // لقد حذفتها من هنا للاختصار ولكن يجب أن تكون موجودة في الكود النهائي الخاص بك
-    // كما هي في الكود الأصلي الذي أرسلته.
-
-        // إظهار وإزالة أداة التحميل
-        function showLoadingAnimation() {
-            const gallery = document.getElementById('gallery');
-            const loadingDiv = document.createElement('div');
-            loadingDiv.id = 'loading-animation';
-            loadingDiv.style.cssText = `
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100px;
-            `;
-            loadingDiv.innerHTML = `
-                <div class="spinner">
-                    <div></div>
-                    <div></div>
-                </div>
-            `;
-            gallery.appendChild(loadingDiv);
-    
-            const styleSheet = document.createElement('style');
-            styleSheet.textContent = `
-                .spinner {
-                    display: inline-block;
-                    position: relative;
-                    width: 60px;
-                    height: 20px;
-                }
-                .spinner div {
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    animation: dot-flashing 1s infinite linear alternate;
-                }
-                .spinner div:first-child {
-                    background-color: #ff0000;
-                    left: 0;
-                }
-                .spinner div:last-child {
-                    background-color: #0000ff;
-                    right: 0;
-                    animation-delay: 0.5s;
-                }
-                @keyframes dot-flashing {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.5); }
-                    100% { transform: scale(1); }
-                }
-            `;
-            document.head.appendChild(styleSheet);
-        }
-    
-        function removeLoadingAnimation() {
-            const loadingDiv = document.getElementById('loading-animation');
-            if (loadingDiv) loadingDiv.remove();
-        }
-    
-        document.addEventListener('DOMContentLoaded', () => {
-            const gallery = document.getElementById('gallery');
-            if (gallery) showLoadingAnimation();
-        });
-    
-        // دالة للتحقق من النصوص العربية
-        function isArabic(text) {
-            return /[\u0600-\u06FF]/.test(text);
-        }
-    
-        // دالة لتقصير اسم المستخدم
-        function truncateUsername(name) {
-            if (!name) return '';
-            const maxLength = isArabic(name) ? 12 : 7;
-            if (window.innerWidth < 966 && name.length > maxLength) {
-                return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
-            }
-            return name;
-        }
-    
-        // دالة لتحديث رسالة الترحيب (محدثة)
-        function updateWelcomeMessage() {
-            const username = localStorage.getItem('username');
-            const welcomeMessage = document.getElementById('welcomeMessage');
-            
-            if (!welcomeMessage) return;
-            
-            if (username) {
-                const displayName = truncateUsername(username);
-                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
-                
-                // تحديث عند تغيير الحجم
-                window.addEventListener('resize', () => {
-                    const usernameDisplay = document.getElementById('usernameDisplay');
-                    if (usernameDisplay) {
-                        usernameDisplay.textContent = truncateUsername(username);
-                    }
-                });
-            } else {
-                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-            }
-        }
-    
-        // تحديث رسالة الترحيب عند تحميل الصفحة
+        // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            updateWelcomeMessage();
-            updateCartCount();
+            renderCategories();
+            renderProducts(products);
+            setupSearch();
+            setupAddKeyword();
         });
-    
-        // الاستماع إلى تغييرات localStorage (محدث)
-        window.addEventListener('storage', function(event) {
-            if (event.key === 'username') {
-                updateWelcomeMessage();
-            }
-            if (event.key === 'cart') {
-                updateCartCount();
-            }
-        });
-    
-        // إضافة أحداث جديدة لتحديث الاسم عند العودة
-        window.addEventListener('pageshow', updateWelcomeMessage);
-        window.addEventListener('focus', updateWelcomeMessage);
-        
-        // حل احتياطي: التحقق كل ثانية من التغييرات
-        setInterval(() => {
-            const currentUser = localStorage.getItem('username');
-            const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+
+        // عرض الفئات
+        function renderCategories() {
+            const categoryList = document.getElementById('category-list');
+            const categorySelect = document.getElementById('keyword-category');
             
-            if (truncateUsername(currentUser) !== displayedUser) {
-                updateWelcomeMessage();
-            }
-        }, 1000);
-    
-        // تحريك الخط عند النقر على عناصر القائمة
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => window.scrollTo(0, 0));
-        });
-    
-        // إظهار أو إخفاء القائمة الجانبية
-        function toggleMenu() {
-            const menuPopup = document.getElementById('menuPopup');
-            if (menuPopup.classList.contains('active')) {
-                menuPopup.classList.remove('active');
-                menuPopup.classList.add('closing');
-                setTimeout(() => {
-                    menuPopup.classList.remove('closing');
-                    menuPopup.style.display = 'none';
-                }, 300);
-            } else {
-                menuPopup.style.display = 'block';
-                setTimeout(() => menuPopup.classList.add('active'), 10);
-            }
-        }
-    
-        let startX = 0, currentX = 0, isDragging = false;
-        const menuPopup = document.getElementById('menuPopup');
-    
-        function startDrag(event) {
-            if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
-                startX = event.touches[0].clientX;
-                isDragging = true;
-            }
-        }
-        function drag(event) {
-            if (!isDragging) return;
-            currentX = event.touches[0].clientX;
-            if (currentX - startX < -50) {
-                toggleMenu();
-                isDragging = false;
-            }
-        }
-        function endDrag() {
-            isDragging = false;
-        }
-        function handleClickOutside(event) {
-            if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
-        }
-        document.addEventListener('touchstart', startDrag);
-        document.addEventListener('touchmove', drag);
-        document.addEventListener('touchend', endDrag);
-        document.addEventListener('click', handleClickOutside);
-        menuPopup.addEventListener('touchmove', (event) => {
-            if (menuPopup.classList.contains('active')) event.preventDefault();
-        }, { passive: false });
-    
-        // دالة لإضافة المنتج إلى السلة
-        function addToCart(element) {
-            event.stopPropagation();
-            event.preventDefault();
-    
-            const productContainer = element.closest('.image-container');
-            const product = {
-                id: productContainer.querySelector('img').src,
-                image: productContainer.querySelector('img').src,
-                name: productContainer.querySelector('h1').textContent,
-                sold: productContainer.querySelector('h2').textContent,
-                price: productContainer.querySelector('.number').textContent,
-                discount: productContainer.querySelector('h3').textContent,
-                link: productContainer.querySelector('a').href
-            };
-    
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingProduct = cart.find(item => item.id === product.id);
-            if (!existingProduct) {
-                cart.push(product);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-            }
-            return false;
-        }
-    
-        // دالة لتحديث عدد المنتجات في العربة
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCountElement = document.querySelector('.cart-count');
-            if (cartCountElement) cartCountElement.textContent = cart.length;
-        }
-    
-        // التنقل إلى صفحة العربة
-        function navigateToCart() {
-            window.location.href = 'cart.html';
-        }
-    
-        if (document.querySelector('.cart-icon')) {
-            document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
-        }
-    
-        // باقي الكود الخاص بجلب المنتجات والتحميل الكسول
-        let filteredProducts = [];
-        const itemsPerLoad = 20;
-        let loadedItems = 0;
-    
-        function fetchAndFilterProducts(searchTerm) {
-            const gallery = document.getElementById('gallery');
-            const noResultsMessage = document.getElementById('no-results-message');
-            const searchTermDisplay = document.getElementById('search-term-display');
-            const searchBox = document.getElementById('search-box');
-    
-            if (searchBox) searchBox.value = searchTerm;
-    
-            gallery.innerHTML = '';
-            showLoadingAnimation();
-    
-            fetch('products.json')
-                .then(response => response.json())
-                .then(products => {
-                    removeLoadingAnimation();
-                    // تحسين عملية التصفية لتشمل البحث في name و data-name و sold
-                    filteredProducts = products.filter(product => {
-                        const searchLower = searchTerm.toLowerCase();
-                        return (
-                            (product.name && product.name.toLowerCase().includes(searchLower)) ||
-                            (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
-                            (product.sold && product.sold.toLowerCase().includes(searchLower))
-                        );
+            categoryList.innerHTML = '';
+            categorySelect.innerHTML = '<option value="">اختر فئة</option>';
+            
+            Object.keys(keywordMap).forEach(category => {
+                // إضافة الفئة إلى القائمة
+                const li = document.createElement('li');
+                li.className = 'category-item';
+                li.innerHTML = `
+                    <span>${category}</span>
+                    <span class="category-count">${keywordMap[category].length}</span>
+                `;
+                li.addEventListener('click', () => {
+                    document.querySelectorAll('.category-item').forEach(item => {
+                        item.classList.remove('active');
                     });
-                    
-                    shuffleArray(filteredProducts);
-                    gallery.innerHTML = '';
-                    loadedItems = 0;
-    
-                    if (filteredProducts.length > 0) {
-                        loadProducts(0, itemsPerLoad);
-                        noResultsMessage.style.display = 'none';
-                    } else {
-                        noResultsMessage.style.display = 'block';
-                        searchTermDisplay.textContent = searchTerm;
-                    }
-                })
-                .catch(error => {
-                    removeLoadingAnimation();
-                    console.error('فشل جلب المنتجات من JSON:', error);
-                    gallery.innerHTML = '';
-                    noResultsMessage.style.display = 'block';
-                    searchTermDisplay.textContent = searchTerm;
+                    li.classList.add('active');
+                    searchByCategory(category);
                 });
+                categoryList.appendChild(li);
+                
+                // إضافة الفئة إلى القائمة المنسدلة
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
         }
-    
-        function loadProducts(startIndex, count) {
-            const gallery = document.getElementById('gallery');
-            const endIndex = Math.min(startIndex + count, filteredProducts.length);
-    
-            for (let i = startIndex; i < endIndex; i++) {
-                const product = filteredProducts[i];
-                const priceStr = product.price.toString();
-                const firstDigit = priceStr.charAt(0);
-                const specialDigits = ['2', '3', '5', '6', '8', '9'];
-                const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
-    
-                const productDiv = document.createElement('div');
-                productDiv.className = 'image-container product';
-                productDiv.setAttribute('data-name', product.dataName || product.name);
-                productDiv.innerHTML = `
-                    <div class="image-frame">
-                        <a href="${product.link}" onclick="return true;">
-                            <div class="image-wrapper">
-                                <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
-                                <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="text-under">
-                            <h1>${product.name}</h1>
-                            <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
-                            <div class="container">
-                                <div class="zero" style="font-size: 24px;"></div>
-                                <div class="number" style="font-size: 20px;">${product.price}</div>
-                                <div class="letter" style="margin-right: ${letterMargin}; font-size: 17px;">EGP</div>
-                            </div>
-                            <div class="product1212">
-                                <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
-                            </div>
+
+        // البحث حسب الفئة
+        function searchByCategory(category) {
+            const filteredProducts = products.filter(product => product.category === category);
+            renderProducts(filteredProducts);
+        }
+
+        // عرض المنتجات
+        function renderProducts(productsArray) {
+            const productsGrid = document.getElementById('products-grid');
+            const resultsCount = document.getElementById('results-count');
+            
+            resultsCount.textContent = productsArray.length;
+            
+            if (productsArray.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">📭</div>
+                        <p class="no-results-text">لم يتم العثور على نتائج</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            productsGrid.innerHTML = '';
+            
+            productsArray.forEach(product => {
+                const keywords = product.keywords || [];
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                // اختيار أيقونة حسب الفئة
+                let icon = '📚';
+                if (product.category === 'إلكترونيات') icon = '📱';
+                if (product.category === 'البيت') icon = '🏠';
+                if (product.category === 'أحذية') icon = '👟';
+                if (product.category === 'ساعات') icon = '⌚';
+                if (product.category === 'كاميرات') icon = '📷';
+                
+                productCard.innerHTML = `
+                    <div class="product-image">${icon}</div>
+                    <div class="product-details">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">${Math.floor(Math.random() * 900 + 100)} جنيه</div>
+                        <div class="product-keywords">
+                            ${keywords.map(kw => `<span class="keyword">${kw}</span>`).join('')}
                         </div>
                     </div>
                 `;
-                gallery.appendChild(productDiv);
-            }
-    
-            loadedItems = endIndex;
-            const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
-            lazyImages.forEach(img => observer.observe(img));
-            startRotatingText(".rotating-text1212:not(.rotating)");
+                productsGrid.appendChild(productCard);
+            });
         }
-    
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.onload = () => {
-                        img.classList.add("loaded");
-                        if (isWhiteBackground(img)) img.classList.add("white-bg");
-                    };
-                    observer.unobserve(img);
+
+        // إعداد البحث
+        function setupSearch() {
+            const searchBox = document.getElementById('search-box');
+            
+            searchBox.addEventListener('input', function() {
+                const searchTerm = this.value.trim();
+                
+                if (searchTerm === '') {
+                    renderProducts(products);
+                    return;
+                }
+                
+                // البحث المتقدم باستخدام الخوارزمية
+                const results = advancedSearch(searchTerm);
+                renderProducts(results);
+            });
+        }
+
+        // البحث المتقدم
+        function advancedSearch(term) {
+            // الخطوة 1: البحث عن تطابق مباشر مع الفئات
+            const directCategoryMatch = Object.keys(keywordMap).find(category => 
+                category.toLowerCase() === term.toLowerCase()
+            );
+            
+            if (directCategoryMatch) {
+                return products.filter(product => product.category === directCategoryMatch);
+            }
+            
+            // الخطوة 2: البحث في الكلمات المفتاحية
+            const keywordCategory = findCategoryByKeyword(term);
+            if (keywordCategory) {
+                return products.filter(product => product.category === keywordCategory);
+            }
+            
+            // الخطوة 3: التمييز بين الكلمات المتشابهة
+            if (term.includes('كتب') || term.includes('كتاب')) {
+                return handleBookRelatedSearch(term);
+            }
+            
+            if (term.includes('مكتب')) {
+                return handleDeskRelatedSearch(term);
+            }
+            
+            if (term.includes('كتابة') || term.includes('قلم')) {
+                return handleWritingRelatedSearch(term);
+            }
+            
+            // الخطوة 4: البحث العام
+            return products.filter(product => {
+                const productText = `${product.name} ${product.category} ${product.keywords.join(' ')}`.toLowerCase();
+                return productText.includes(term.toLowerCase());
+            });
+        }
+
+        // العثور على الفئة عن طريق الكلمة المفتاحية
+        function findCategoryByKeyword(keyword) {
+            for (const [category, keywords] of Object.entries(keywordMap)) {
+                if (keywords.some(kw => kw.toLowerCase() === keyword.toLowerCase())) {
+                    return category;
+                }
+            }
+            return null;
+        }
+
+        // معالجة البحث المتعلق بالكتب
+        function handleBookRelatedSearch(term) {
+            // إذا كان البحث عن كتب أو قراءة
+            if (term.includes('قراءة') || term.includes('أدب') || term.includes('رواية')) {
+                return products.filter(product => product.category === 'كتب');
+            }
+            
+            // إذا كان البحث عن كتب ولكن في سياق أثاث
+            if (term.includes('رف') || term.includes('خزانة')) {
+                return products.filter(product => product.category === 'البيت' && 
+                    (product.name.includes('كتب') || product.name.includes('رف')));
+            }
+            
+            return products.filter(product => product.category === 'كتب');
+        }
+
+        // معالجة البحث المتعلق بالمكاتب
+        function handleDeskRelatedSearch(term) {
+            // إذا كان البحث عن مكتب في سياق أثاث
+            if (term.includes('خشب') || term.includes('طاولة') || term.includes('كرسي')) {
+                return products.filter(product => product.category === 'البيت' && 
+                    (product.name.includes('مكتب') || product.name.includes('طاولة')));
+            }
+            
+            // إذا كان البحث عن مكتب في سياق عمل
+            if (term.includes('عمل') || term.includes('وظيفة') || term.includes('شركة')) {
+                return products.filter(product => product.category === 'إكسسوارات' || 
+                    product.category === 'كمبيوترات');
+            }
+            
+            return products.filter(product => 
+                product.name.includes('مكتب') || 
+                product.keywords.includes('مكتب')
+            );
+        }
+
+        // معالجة البحث المتعلق بالكتابة
+        function handleWritingRelatedSearch(term) {
+            // إذا كان البحث عن أدوات كتابة
+            if (term.includes('قلم') || term.includes('دفتر') || term.includes('ورق')) {
+                return products.filter(product => product.category === 'معدات الطبخ');
+            }
+            
+            // إذا كان البحث عن مهارة الكتابة
+            if (term.includes('مهارة') || term.includes('تعلم') || term.includes('لغة')) {
+                return products.filter(product => product.category === 'كتب' && 
+                    product.name.includes('كتابة'));
+            }
+            
+            return products.filter(product => 
+                product.name.includes('كتابة') || 
+                product.keywords.includes('كتابة')
+            );
+        }
+
+        // إعداد إضافة الكلمات المفتاحية
+        function setupAddKeyword() {
+            const addBtn = document.getElementById('add-keyword-btn');
+            const newKeywordInput = document.getElementById('new-keyword');
+            const categorySelect = document.getElementById('keyword-category');
+            
+            addBtn.addEventListener('click', function() {
+                const newKeyword = newKeywordInput.value.trim();
+                const category = categorySelect.value;
+                
+                if (!newKeyword || !category) {
+                    alert('الرجاء إدخال كلمة مفتاحية واختيار فئة');
+                    return;
+                }
+                
+                // إضافة الكلمة المفتاحية إلى القاموس
+                if (!keywordMap[category].includes(newKeyword)) {
+                    keywordMap[category].push(newKeyword);
+                    alert(`تم إضافة الكلمة المفتاحية "${newKeyword}" إلى فئة "${category}"`);
+                    
+                    // تحديث الواجهة
+                    renderCategories();
+                    newKeywordInput.value = '';
+                    categorySelect.value = '';
+                } else {
+                    alert('هذه الكلمة المفتاحية موجودة بالفعل في هذه الفئة');
                 }
             });
-        }, { rootMargin: "0px 0px 200px 0px" });
-    
-        function isWhiteBackground(img) {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-            const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
-            const data = imageData.data;
-            let whitePixelCount = 0;
-            let totalPixelCount = data.length / 4;
-    
-            for (let i = 0; i < data.length; i += 4) {
-                if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) whitePixelCount++;
-            }
-            return (whitePixelCount / totalPixelCount) > 0.9;
         }
-    
-        function startRotatingText(selector) {
-            document.querySelectorAll(selector).forEach(element => {
-                element.classList.add('rotating');
-                const texts = JSON.parse(element.getAttribute("data-texts"));
-                let currentIndex = 0;
-                setInterval(() => {
-                    element.style.transition = "opacity 0.5s, transform 0.5s";
-                    element.style.opacity = "0";
-                    element.style.transform = "translateY(20px)";
-                    setTimeout(() => {
-                        currentIndex = (currentIndex + 1) % texts.length;
-                        element.textContent = texts[currentIndex];
-                        element.style.opacity = "1";
-                        element.style.transform = "translateY(0)";
-                    }, 500);
-                }, 5000);
-            });
-        }
-    
-        function getSearchTermFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('search') || '';
-        }
-    
-        document.addEventListener('scroll', function () {
-            const gallery = document.getElementById('gallery');
-            const triggerHeight = window.innerHeight * 1.5;
-            const galleryHeight = gallery.scrollHeight;
-    
-            if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
-                loadProducts(loadedItems, itemsPerLoad);
-            }
-        });
-    
-        function selectItem(item, element) {
-            const searchBox = document.getElementById('search-box');
-            if (searchBox) {
-                if (item === 'الكل') searchBox.value = '';
-                else searchBox.value = item;
-            }
-            if (item === 'الكل') fetchAndFilterProducts('');
-            else if (item) fetchAndFilterProducts(item);
-    
-            const allItems = document.querySelectorAll('.sub-header nav a');
-            allItems.forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-    
-            const underline = document.querySelector('.underline');
-            const itemRect = element.getBoundingClientRect();
-            const navRect = element.parentElement.getBoundingClientRect();
-    
-            underline.style.width = `${itemRect.width}px`;
-            underline.style.left = `${itemRect.left - navRect.left}px`;
-    
-            element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-        }
-    
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-    
-        window.onload = function () {
-            removeLoadingAnimation();
-            const defaultItem = document.querySelector('.sub-header nav a');
-            const underline = document.querySelector('.underline');
-            if (defaultItem && underline) {
-                const itemRect = defaultItem.getBoundingClientRect();
-                const navRect = defaultItem.parentElement.getBoundingClientRect();
-                defaultItem.classList.add('active');
-                underline.style.width = `${itemRect.width}px`;
-                underline.style.left = `${itemRect.left - navRect.left}px`;
-            }
-            const searchTerm = getSearchTermFromURL();
-            const searchBox = document.getElementById('search-box');
-            if (searchBox && searchTerm) searchBox.value = searchTerm;
-            fetchAndFilterProducts(searchTerm || '');
-        };
     </script>
 </body>
 </html>
-
-
 
 
 
