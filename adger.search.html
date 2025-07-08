@@ -1366,7 +1366,7 @@
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
-    // --- دوال المستخدم والعربة ---
+    // --- دوال الواجهة والمستخدم (من الكود الأصلي) ---
     function isArabic(text) { return /[\u0600-\u06FF]/.test(text); }
     function truncateUsername(name) {
         if (!name) return '';
@@ -1414,21 +1414,11 @@
         return false;
     }
     function navigateToCart() { window.location.href = 'cart.html'; }
-    function toggleMenu() { /* ... الكود الأصلي للقائمة ... */ }
+    function toggleMenu() { /* الكود الأصلي للقائمة */ }
 
-    // --- دوال البحث والتصفية المتقدمة (الجزء المصحح) ---
+    // --- دوال البحث والتصفية (الجزء المحدث النهائي) ---
 
-    function getExpandedSearchKeywords(searchTerm) {
-        const lowerTerm = searchTerm.toLowerCase().trim();
-        if (!lowerTerm) return [];
-        for (const category in keywordMap) {
-            const synonyms = keywordMap[category].map(s => s.toLowerCase());
-            if (synonyms.includes(lowerTerm)) return keywordMap[category].map(k => k.toLowerCase());
-        }
-        return [lowerTerm];
-    }
-    
-    // الدالة الرئيسية للتصفية (بنية صحيحة ومُعاد هيكلتها)
+    // الدالة الرئيسية للتصفية والبحث
     function filterAndDisplayProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
@@ -1439,34 +1429,25 @@
         noResultsMessage.style.display = 'none';
         gallery.innerHTML = '';
 
-        const term = (searchTerm || "").trim(); // تأكد من أن المصطلح ليس null
-        const priceMatch = term.match(/أقل من (\d+)/);
+        const term = (searchTerm || "").trim().toLowerCase();
+        
+        // إذا كان البحث فارغًا أو هو "الكل"، اعرض كل المنتجات
+        if (!term || term === 'الكل') {
+            filteredProducts = [...allProducts];
+        } else {
+            // تقسيم عبارة البحث إلى كلمات فردية
+            const searchWords = term.split(/\s+/).filter(Boolean); // .filter(Boolean) لإزالة أي فراغات إضافية
 
-        // 1. حالة البحث الفارغ أو "الكل"
-        if (!term || term.toLowerCase() === 'الكل') {
-            filteredProducts = [...allProducts]; // عرض نسخة من جميع المنتجات
-        }
-        // 2. حالة البحث بالسعر
-        else if (priceMatch) {
-            const maxPrice = parseInt(priceMatch[1]);
-            let minPrice = 0;
-            const priceRanges = [
-                {max: 99, min: 0},{max: 200, min: 100},{max: 350, min: 201},{max: 500, min: 351},{max: 750, min: 501},{max: 1000, min: 751},{max: 1500, min: 1001},{max: 2000, min: 1501},{max: 3000, min: 2001},{max: 5000, min: 3001},{max: 7500, min: 5001},{max: 10000, min: 7501},{max: 15000, min: 10001},{max: 20000, min: 15001},{max: 30000, min: 20001},{max: 50000, min: 30001},{max: 75000, min: 50001},{max: 100000, min: 75001}
-            ];
-            const foundRange = priceRanges.find(range => maxPrice <= range.max);
-            minPrice = foundRange ? foundRange.min : 0;
+            // تصفية المنتجات: يجب أن يحتوي المنتج على *كل* كلمات البحث
             filteredProducts = allProducts.filter(product => {
-                const productPrice = parseInt(product.price);
-                return productPrice >= minPrice && productPrice <= maxPrice;
-            });
-        }
-        // 3. حالة البحث المتقدم بالكلمات المفتاحية
-        else {
-            const searchKeywords = getExpandedSearchKeywords(term);
-            filteredProducts = allProducts.filter(product => {
-                const productText = [product.name || '', product.dataName || '', product.sold || ''].join(' ').toLowerCase();
-                const productWords = productText.split(/[\s,،.\-_]+/);
-                return productWords.some(pWord => searchKeywords.includes(pWord.trim()));
+                const productText = [
+                    product.name || '',
+                    product.dataName || '',
+                    product.sold || ''
+                ].join(' ').toLowerCase();
+
+                // استخدم .every() للتأكد من أن كل كلمة بحث موجودة في نص المنتج
+                return searchWords.every(word => productText.includes(word));
             });
         }
 
@@ -1483,8 +1464,7 @@
         }
     }
 
-
-    // --- دوال عرض المنتجات والتحميل ---
+    // --- دوال عرض المنتجات والتحميل (بدون تغيير) ---
     function loadProducts(startIndex, count) {
         const gallery = document.getElementById('gallery');
         const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -1542,8 +1522,8 @@
     function lazyLoadImages() {
         document.querySelectorAll("img[data-src]:not(.loaded)").forEach(img => observer.observe(img));
     }
-    function isWhiteBackground(img) { return false; }
-    function startRotatingText(selector) { /* ... الكود الأصلي للنصوص المتحركة ... */ }
+    function isWhiteBackground(img) { /* ... */ return false; }
+    function startRotatingText(selector) { /* ... */ }
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -1573,8 +1553,11 @@
 
     // --- نقطة بداية تشغيل التطبيق ---
     function initializeApp() {
+        // تهيئة الواجهة
         updateWelcomeMessage();
         updateCartCount();
+
+        // ربط الأحداث
         if (document.querySelector('.cart-icon')) {
             document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
@@ -1582,25 +1565,29 @@
             item.addEventListener('click', () => window.scrollTo(0, 0));
         });
 
+        // جلب البيانات مرة واحدة فقط ثم بدء العمليات
         fetch('products.json')
             .then(response => response.json())
             .then(data => {
-                allProducts = data;
+                allProducts = data; // تخزين كل المنتجات في الذاكرة
+
+                // تهيئة القائمة العلوية
                 const defaultItem = document.querySelector('.sub-header nav a');
                 if (defaultItem) selectItem('الكل', defaultItem);
                 
+                // التحقق من وجود بحث في رابط الصفحة
                 const searchTerm = getSearchTermFromURL();
                 if (searchTerm) {
                     const searchBox = document.getElementById('search-box');
                     if (searchBox) searchBox.value = searchTerm;
                     filterAndDisplayProducts(searchTerm);
                 } else {
-                     filterAndDisplayProducts('الكل');
+                    filterAndDisplayProducts('الكل'); // عرض الكل افتراضيًا
                 }
             })
             .catch(error => {
                 console.error('فشل جلب المنتجات:', error);
-                document.getElementById('gallery').innerHTML = '<p>فشل تحميل المنتجات.</p>';
+                document.getElementById('gallery').innerHTML = '<p>فشل تحميل المنتجات. يرجى المحاولة لاحقاً.</p>';
             });
     }
 
