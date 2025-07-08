@@ -2820,19 +2820,18 @@
         </p>
     </div>
 
-   
-    <script>
+       <script>
         // قاموس الكلمات المفتاحية
         let keywordMap = {
             'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
-            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
+            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الإلكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
+            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'الإكسسوارات', 'اكسسوار'],
             'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
+            'كتب': ['كتب', 'كتاب', 'الكتب', 'رواية', 'روايات'],
             'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
             'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
             'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-            'ساعات': ['ساعات', 'ساعة'],
+            'ساعات': ['ساعات', 'ساعة', 'الساعات'],
             'البيت': ['البيت', 'منزل', 'منزلي'],
             'اختراعات': ['اختراعات', 'اختراع'],
             'أحذية': ['أحذية', 'حذاء', 'جزمة', 'شوز'],
@@ -2865,26 +2864,28 @@
 
         // دالة لإزالة تشكيل الحروف العربية
         function removeArabicDiacritics(text) {
-            return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '');
+            return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '').replace(/^(ال|أ)/, '');
         }
 
         // دالة البحث المتقدم
         function advancedSearch(searchTerm) {
             const normalizedSearchTerm = removeArabicDiacritics(searchTerm.toLowerCase().trim());
             let matchedKeywords = [];
+            let matchedCategory = null;
 
-            // البحث عن الكلمات المفتاحية المطابقة
+            // البحث عن الفئة المطابقة
             for (const [category, synonyms] of Object.entries(keywordMap)) {
                 if (synonyms.some(synonym => 
-                    removeArabicDiacritics(synonym.toLowerCase()) === normalizedSearchTerm ||
-                    removeArabicDiacritics(synonym.toLowerCase()).includes(normalizedSearchTerm)
+                    removeArabicDiacritics(synonym.toLowerCase()) === normalizedSearchTerm
                 )) {
-                    matchedKeywords.push(...synonyms);
+                    matchedKeywords = synonyms;
+                    matchedCategory = category;
+                    break;
                 }
             }
 
-            // إذا لم يتم العثور على كلمات مفتاحية، استخدام مصطلح البحث الأصلي
-            return matchedKeywords.length > 0 ? matchedKeywords : [searchTerm];
+            // إذا لم يتم العثور على فئة، استخدام مصطلح البحث الأصلي
+            return { keywords: matchedKeywords.length > 0 ? matchedKeywords : [searchTerm], category: matchedCategory };
         }
 
         // إظهار وإزالة أداة التحميل
@@ -2932,7 +2933,7 @@
                 }
                 @keyframes dot-flashing {
                     0% { transform: scale(1); }
-                    50% { transform: scale(208); }
+                    50% { transform: scale(1.5); }
                     100% { transform: scale(1); }
                 }
             `;
@@ -3120,22 +3121,34 @@
             gallery.innerHTML = '';
             showLoadingAnimation();
 
-            // الحصول على الكلمات المفتاحية باستخدام البحث المتقدم
-            const keywords = advancedSearch(searchTerm);
+            // الحصول على الكلمات المفتاحية والفئة باستخدام البحث المتقدم
+            const { keywords, category } = advancedSearch(searchTerm);
 
             fetch('products.json')
                 .then(response => response.json())
                 .then(products => {
                     removeLoadingAnimation();
-                    // تصفية المنتجات بناءً على الكلمات المفتاحية
+                    // تصفية المنتجات بناءً على الكلمات المفتاحية والفئة
                     filteredProducts = products.filter(product => {
                         const searchFields = [
                             product.name || '',
                             product.dataName || '',
                             product.sold || '',
-                            product.description || '' // إضافة وصف المنتج إذا كان موجودًا
+                            product.description || '',
+                            product.category || '' // إضافة حقل الفئة إذا كان موجودًا
                         ].map(field => removeArabicDiacritics(field.toLowerCase()));
 
+                        // إذا تم العثور على فئة، إعطاء الأولوية للمنتجات المصنفة ضمن هذه الفئة
+                        if (category) {
+                            return product.category === category || 
+                                   keywords.some(keyword => 
+                                       searchFields.some(field => 
+                                           field.includes(removeArabicDiacritics(keyword.toLowerCase()))
+                                       )
+                                   );
+                        }
+
+                        // إذا لم يتم العثور على فئة، البحث في الحقول باستخدام الكلمات المفتاحية
                         return keywords.some(keyword => 
                             searchFields.some(field => 
                                 field.includes(removeArabicDiacritics(keyword.toLowerCase()))
@@ -3173,161 +3186,159 @@
                 const priceStr = product.price.toString();
                 const firstDigit = priceStr.charAt(0);
                 const specialDigits = ['2', '3', '5', '6', '8', '9'];
-                    const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
+                const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
 
-                    const productDiv = document.createElement('div');
-                    productDiv.className = 'image-container product';
-                    productDiv.setAttribute('data-name', product.dataName || product.name);
-                    productDiv.innerHTML = `
-                        <div class="image-frame">
-                            <a href="${product.link}" onclick="return true;">
-                                <div class="image-wrapper">
-                                    <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
-                                    <div class="add-to-cart" onclick="event
-
-.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="text-under">
-                                <h1>${product.name}</h1>
-                                <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
-                                <div class="container">
-                                    <div class="zero" style="font-size: 24px;"></div>
-                                    <div class="number" style="font-size: 20px;">${product.price}</div>
-                                    <div class="letter" style="margin-right: ${letterMargin}; font-size: 17px;">EGP</div>
-                                </div>
-                                <div class="product1212">
-                                    <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
+                const productDiv = document.createElement('div');
+                productDiv.className = 'image-container product';
+                productDiv.setAttribute('data-name', product.dataName || product.name);
+                productDiv.innerHTML = `
+                    <div class="image-frame">
+                        <a href="${product.link}" onclick="return true;">
+                            <div class="image-wrapper">
+                                <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
+                                <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                                    </svg>
                                 </div>
                             </div>
+                        </a>
+                        <div class="text-under">
+                            <h1>${product.name}</h1>
+                            <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
+                            <div class="container">
+                                <div class="zero" style="font-size: 24px;"></div>
+                                <div class="number" style="font-size: 20px;">${product.price}</div>
+                                <div class="letter" style="margin-right: ${letterMargin}; font-size: 17px;">EGP</div>
+                            </div>
+                            <div class="product1212">
+                                <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
+                            </div>
                         </div>
-                    `;
-                    gallery.appendChild(productDiv);
-                }
-
-                loadedItems = endIndex;
-                const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
-                lazyImages.forEach(img => observer.observe(img));
-                startRotatingText(".rotating-text1212:not(.rotating)");
+                    </div>
+                `;
+                gallery.appendChild(productDiv);
             }
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.onload = () => {
-                            img.classList.add("loaded");
-                            if (isWhiteBackground(img)) img.classList.add("white-bg");
-                        };
-                        observer.unobserve(img);
-                    }
-                });
-            }, { rootMargin: "0px 0px 200px 0px" });
+            loadedItems = endIndex;
+            const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
+            lazyImages.forEach(img => observer.observe(img));
+            startRotatingText(".rotating-text1212:not(.rotating)");
+        }
 
-            function isWhiteBackground(img) {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-                context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-                const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
-                const data = imageData.data;
-                let whitePixelCount = 0;
-                let totalPixelCount = data.length / 4;
-
-                for (let i = 0; i < data.length; i += 4) {
-                    if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) whitePixelCount++;
-                }
-                return (whitePixelCount / totalPixelCount) > 0.9;
-            }
-
-            function startRotatingText(selector) {
-                document.querySelectorAll(selector).forEach(element => {
-                    element.classList.add('rotating');
-                    const texts = JSON.parse(element.getAttribute("data-texts"));
-                    let currentIndex = 0;
-                    setInterval(() => {
-                        element.style.transition = "opacity 0.5s, transform 0.5s";
-                        element.style.opacity = "0";
-                        element.style.transform = "translateY(20px)";
-                        setTimeout(() => {
-                            currentIndex = (currentIndex + 1) % texts.length;
-                            element.textContent = texts[currentIndex];
-                            element.style.opacity = "1";
-                            element.style.transform = "translateY(0)";
-                        }, 500);
-                    }, 5000);
-                });
-            }
-
-            function getSearchTermFromURL() {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get('search') || '';
-            }
-
-            document.addEventListener('scroll', function () {
-                const gallery = document.getElementById('gallery');
-                const triggerHeight = window.innerHeight * 1.5;
-                const galleryHeight = gallery.scrollHeight;
-
-                if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
-                    loadProducts(loadedItems, itemsPerLoad);
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.onload = () => {
+                        img.classList.add("loaded");
+                        if (isWhiteBackground(img)) img.classList.add("white-bg");
+                    };
+                    observer.unobserve(img);
                 }
             });
+        }, { rootMargin: "0px 0px 200px 0px" });
 
-            function selectItem(item, element) {
-                const searchBox = document.getElementById('search-box');
-                if (searchBox) {
-                    if (item === 'الكل') searchBox.value = '';
-                    else searchBox.value = item;
-                }
-                if (item === 'الكل') fetchAndFilterProducts('');
-                else if (item) fetchAndFilterProducts(item);
+        function isWhiteBackground(img) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+            const data = imageData.data;
+            let whitePixelCount = 0;
+            let totalPixelCount = data.length / 4;
 
-                const allItems = document.querySelectorAll('.sub-header nav a');
-                allItems.forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) whitePixelCount++;
+            }
+            return (whitePixelCount / totalPixelCount) > 0.9;
+        }
 
-                const underline = document.querySelector('.underline');
-                const itemRect = element.getBoundingClientRect();
-                const navRect = element.parentElement.getBoundingClientRect();
+        function startRotatingText(selector) {
+            document.querySelectorAll(selector).forEach(element => {
+                element.classList.add('rotating');
+                const texts = JSON.parse(element.getAttribute("data-texts"));
+                let currentIndex = 0;
+                setInterval(() => {
+                    element.style.transition = "opacity 0.5s, transform 0.5s";
+                    element.style.opacity = "0";
+                    element.style.transform = "translateY(20px)";
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % texts.length;
+                        element.textContent = texts[currentIndex];
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }, 500);
+                }, 5000);
+            });
+        }
 
+        function getSearchTermFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('search') || '';
+        }
+
+        document.addEventListener('scroll', function () {
+            const gallery = document.getElementById('gallery');
+            const triggerHeight = window.innerHeight * 1.5;
+            const galleryHeight = gallery.scrollHeight;
+
+            if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
+                loadProducts(loadedItems, itemsPerLoad);
+            }
+        });
+
+        function selectItem(item, element) {
+            const searchBox = document.getElementById('search-box');
+            if (searchBox) {
+                if (item === 'الكل') searchBox.value = '';
+                else searchBox.value = item;
+            }
+            if (item === 'الكل') fetchAndFilterProducts('');
+            else if (item) fetchAndFilterProducts(item);
+
+            const allItems = document.querySelectorAll('.sub-header nav a');
+            allItems.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+
+            const underline = document.querySelector('.underline');
+            const itemRect = element.getBoundingClientRect();
+            const navRect = element.parentElement.getBoundingClientRect();
+
+            underline.style.width = `${itemRect.width}px`;
+            underline.style.left = `${itemRect.left - navRect.left}px`;
+
+            element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        window.onload = function () {
+            removeLoadingAnimation();
+            const defaultItem = document.querySelector('.sub-header nav a');
+            const underline = document.querySelector('.underline');
+            if (defaultItem && underline) {
+                const itemRect = defaultItem.getBoundingClientRect();
+                const navRect = defaultItem.parentElement.getBoundingClientRect();
+                defaultItem.classList.add('active');
                 underline.style.width = `${itemRect.width}px`;
                 underline.style.left = `${itemRect.left - navRect.left}px`;
-
-                element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
             }
-
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
-
-            window.onload = function () {
-                removeLoadingAnimation();
-                const defaultItem = document.querySelector('.sub-header nav a');
-                const underline = document.querySelector('.underline');
-                if (defaultItem && underline) {
-                    const itemRect = defaultItem.getBoundingClientRect();
-                    const navRect = defaultItem.parentElement.getBoundingClientRect();
-                    defaultItem.classList.add('active');
-                    underline.style.width = `${itemRect.width}px`;
-                    underline.style.left = `${itemRect.left - navRect.left}px`;
-                }
-                const searchTerm = getSearchTermFromURL();
-                const searchBox = document.getElementById('search-box');
-                if (searchBox && searchTerm) searchBox.value = searchTerm;
-                fetchAndFilterProducts(searchTerm || '');
-            };
-        </script>
-    </body>
+            const searchTerm = getSearchTermFromURL();
+            const searchBox = document.getElementById('search-box');
+            if (searchBox && searchTerm) searchBox.value = searchTerm;
+            fetchAndFilterProducts(searchTerm || '');
+        };
+    </script>
+</body>
 </html>
 
 
