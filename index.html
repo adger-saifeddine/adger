@@ -2820,10 +2820,7 @@
         </p>
     </div>
 
-   <!DOCTYPE html>
-<html>
-<body>
-<script>
+    <script>
         // إظهار وإزالة أداة التحميل
         function showLoadingAnimation() {
             const gallery = document.getElementById('gallery');
@@ -3049,16 +3046,6 @@
             document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
     
-        // قاموس الكلمات المفتاحية
-        const keywordMap = {
-            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات', 'أدب', 'شعر', 'قصص'],
-            'مكتب': ['مكتب', 'مكاتب', 'أثاث مكتبي', 'كرسي مكتب', 'طاولة مكتب'],
-            'الكتابة': ['الكتابة', 'كتابة', 'أدوات كتابة', 'قلم', 'ورق'],
-            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
-            'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-        };
-    
         // باقي الكود الخاص بجلب المنتجات والتحميل الكسول
         let filteredProducts = [];
         const itemsPerLoad = 20;
@@ -3079,24 +3066,16 @@
                 .then(response => response.json())
                 .then(products => {
                     removeLoadingAnimation();
-                    let keywords = [searchTerm.toLowerCase()];
-    
-                    // إذا كانت searchTerm موجودة في keywordMap، استخدم الكلمات المفتاحية المرتبطة
-                    if (keywordMap[searchTerm]) {
-                        keywords = keywordMap[searchTerm].map(keyword => keyword.toLowerCase());
-                    }
-    
+                    // تحسين عملية التصفية لتشمل البحث في name و data-name و sold
                     filteredProducts = products.filter(product => {
-                        const productText = [
-                            product.name,
-                            product.dataName,
-                            product.sold
-                        ].filter(Boolean).join(' ').toLowerCase();
-    
-                        // التحقق مما إذا كانت أي من الكلمات المفتاحية موجودة في نص المنتج
-                        return keywords.some(keyword => productText.includes(keyword));
+                        const searchLower = searchTerm.toLowerCase();
+                        return (
+                            (product.name && product.name.toLowerCase().includes(searchLower)) ||
+                            (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
+                            (product.sold && product.sold.toLowerCase().includes(searchLower))
+                        );
                     });
-    
+                    
                     shuffleArray(filteredProducts);
                     gallery.innerHTML = '';
                     loadedItems = 0;
@@ -3281,6 +3260,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
