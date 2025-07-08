@@ -3114,32 +3114,37 @@
             .then(products => {
                 removeLoadingAnimation();
                 const searchLower = searchTerm.toLowerCase().trim();
-                
-                // إنشاء قائمة الكلمات المفتاحية للبحث
-                let searchKeywords = [searchLower];
-                for (const category in keywordMap) {
-                    if (keywordMap[category].includes(searchLower)) {
-                        searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category]])];
+
+                // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
+                if (!searchLower) {
+                    filteredProducts = products;
+                } else {
+                    // إنشاء قائمة الكلمات المفتاحية للبحث
+                    let searchKeywords = [searchLower];
+                    for (const category in keywordMap) {
+                        if (keywordMap[category].includes(searchLower)) {
+                            searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category]])];
+                        }
                     }
-                }
 
-                // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
-                filteredProducts = products.filter(product => {
-                    const fieldsToSearch = [
-                        product.name?.toLowerCase() || '',
-                        product.dataName?.toLowerCase() || '',
-                        product.sold?.toLowerCase() || ''
-                    ];
+                    // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
+                    filteredProducts = products.filter(product => {
+                        const fieldsToSearch = [
+                            product.name?.toLowerCase() || '',
+                            product.dataName?.toLowerCase() || '',
+                            product.sold?.toLowerCase() || ''
+                        ];
 
-                    return searchKeywords.some(keyword => {
-                        return fieldsToSearch.some(field => {
-                            // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                            const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                            return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                   field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                        return searchKeywords.some(keyword => {
+                            return fieldsToSearch.some(field => {
+                                // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
+                                const words = field.split(/\s+/); // تقسيم بناءً على المسافات
+                                return words.includes(keyword) || // مطابقة الكلمة الكاملة
+                                       field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                            });
                         });
                     });
-                });
+                }
 
                 shuffleArray(filteredProducts);
                 gallery.innerHTML = '';
