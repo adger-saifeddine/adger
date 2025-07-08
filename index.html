@@ -2862,7 +2862,7 @@
         }
     }
 
-    // إظهار وإزالة أداة التحميل
+    // إظهار أداة التحميل
     function showLoadingAnimation() {
         const gallery = document.getElementById('gallery');
         const loadingDiv = document.createElement('div');
@@ -2914,6 +2914,7 @@
         document.head.appendChild(styleSheet);
     }
 
+    // إزالة أداة التحميل
     function removeLoadingAnimation() {
         const loadingDiv = document.getElementById('loading-animation');
         if (loadingDiv) loadingDiv.remove();
@@ -2951,7 +2952,6 @@
             const displayName = truncateUsername(username);
             welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
             
-            // تحديث عند تغيير الحجم
             window.addEventListener('resize', () => {
                 const usernameDisplay = document.getElementById('usernameDisplay');
                 if (usernameDisplay) {
@@ -3060,7 +3060,7 @@
             id: productContainer.querySelector('img').src,
             image: productContainer.querySelector('img').src,
             name: productContainer.querySelector('h1').textContent,
-            sold: productContainer.querySelector('عند البيع').textContent,
+            sold: productContainer.querySelector('h2').textContent,
             price: productContainer.querySelector('.number').textContent,
             discount: productContainer.querySelector('h3').textContent,
             link: productContainer.querySelector('a').href
@@ -3076,7 +3076,7 @@
         return false;
     }
 
-    // دالة لتحديث عدد المنtجات في العربة
+    // دالة لتحديث عدد المنتجات في العربة
     function updateCartCount() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartCountElement = document.querySelector('.cart-count');
@@ -3097,7 +3097,7 @@
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
-    // دالة البحث المتقدم
+    // دالة البحث المتقدم مع التمييز بين الكلمات
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
@@ -3123,7 +3123,7 @@
                     }
                 }
 
-                // تصفية المنتجات بناءً على الكلمات المفتاحية
+                // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
                 filteredProducts = products.filter(product => {
                     const fieldsToSearch = [
                         product.name?.toLowerCase() || '',
@@ -3131,26 +3131,15 @@
                         product.sold?.toLowerCase() || ''
                     ];
 
-                    // مطابقة دقيقة للكلمات المفتاحية
-                    return searchKeywords.some(keyword => 
-                        fieldsToSearch.some(field => 
-                            field.includes(keyword) || 
-                            keyword.split(' ').every(word => field.includes(word))
-                        )
-                    );
-                });
-
-                // إضافة ميزة التمييز بين الكلمات المتشابهة
-                filteredProducts = filteredProducts.filter(product => {
-                    const fields = [product.name, product.dataName, product.sold].filter(Boolean);
-                    return fields.some(field => {
-                        // تجنب المطابقات الخاطئة مثل "مكتب" عند البحث عن "كتب"
-                        const words = field.toLowerCase().split(' ');
-                        return searchKeywords.some(keyword => 
-                            words.includes(keyword) || field.includes(keyword)
-                        );
+                    return searchKeywords.some(keyword => {
+                        return fieldsToSearch.some(field => {
+                            // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
+                            const words = field.split(/\s+/); // تقسيم بناءً على المسافات
+                            return words.includes(keyword) || // مطابقة الكلمة الكاملة
+                                   field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                        });
                     });
-            });
+                });
 
                 shuffleArray(filteredProducts);
                 gallery.innerHTML = '';
