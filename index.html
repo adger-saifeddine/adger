@@ -2696,34 +2696,22 @@
         </style>
     </head>
    <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر إلكتروني</title>
-    <!-- يمكنك إضافة ملفات CSS هنا -->
+    <title>متجر إلكتروني متقدم</title>
     <style>
-        /* أضف هنا جميع أنماط CSS الخاصة بك */
-        /* مثال بسيط للتشغيل */
-        body { font-family: 'Cairo', sans-serif; }
-        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
-        .image-container { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; width: 220px; }
-        .image-frame img { width: 100%; height: auto; display: block; }
-        .text-under { padding: 10px; }
-        .sub-header { overflow-x: auto; white-space: nowrap; }
-        .sub-header nav { display: flex; position: relative; }
-        .sub-header a { padding: 10px 15px; text-decoration: none; color: #333; }
-        .underline { position: absolute; bottom: 0; height: 3px; background-color: blue; transition: all 0.3s ease; }
-        .menu-popup { /* أنماط القائمة الجانبية */ }
+        /* أضف أنماط CSS هنا إذا لزم الأمر */
     </style>
 </head>
 <body>
     <!-- الخلفية العلوية -->
     <div class="top-background"></div>
-
+    
     <!-- الخلفية البيضاء الجديدة -->
     <div class="sub-header-background"></div>
-
+    
     <!-- Sub Header -->
     <div class="sub-header">
         <nav>
@@ -2751,12 +2739,13 @@
             <div class="underline"></div>
         </nav>
     </div>
-
+    
     <!-- نافذة القائمة الجانبية -->
     <div class="menu-popup" id="menuPopup">
-        <!-- محتوى القائمة الجانبية كما هو في الكود الأصلي -->
         <div class="back-arrow" onclick="toggleMenu()">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path dict="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
         </div>
         <p onclick="window.location.href='account.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)"><span style="pointer-events: none;">حسابي</span></p>
         <p onclick="window.location.href='about.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)"><span style="pointer-events: none;">سياسات وأحكام</span></p>
@@ -2766,7 +2755,7 @@
         <p onclick="window.location.href='companies.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)"><span style="pointer-events: none;">شركات عالمية</span></p>
         <p onclick="window.location.href='categories.html'" style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='black'" ontouchstart="this.style.color='#888'" ontouchend="setTimeout(() => this.style.color='black', 300)"><span style="pointer-events: none;">الفئات</span></p>
     </div>
-
+    
     <div id="gallery" class="gallery"></div>
     
     <!-- رسالة "لا توجد نتائج" -->
@@ -2776,131 +2765,295 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="8" y1="8" x2="14" y2="14"></line>
-                <line x1="14" y1="8" x2="8" y2="14"></line>
+                <div x1="14" y1="8" x2="8" y2="14"></div>
             </svg>
         </div>
         <p style="font-size: 24px; margin-top: 10px;">
             لا توجد نتائج لـ "<span id="search-term-display"></span>"
         </p>
     </div>
-
+    
     <script>
-        // --- قاموس البحث المتقدم ---
-        // يمكنك تعديل هذا القاموس أو إضافة كلمات مفتاحية وفئات جديدة بسهولة
+        // قاموس الكلمات المفتاحية الموسع
         const keywordMap = {
             'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
-            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
-            'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
-            'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
-            'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
-            'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-            'ساعات': ['ساعات', 'ساعة'],
-            'البيت': ['البيت', 'منزل', 'منزلي'],
-            'اختراعات': ['اختراعات', 'اختراع'],
-            'أحذية': ['أحذية', 'حذاء', 'شوز'],
-            'ديكور': ['ديكور', 'ديكورات'],
-            'ألعاب': ['ألعاب', 'لعبة', 'لعبه'],
-            'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة'],
-            'مستلزمات السفر': ['مستلزمات السفر', 'سفر'],
-            'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم'],
-            'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني'],
+            'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت', 'لابتوب', 'حاسوب'],
+            'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار', 'مجوهرات', 'سوار', 'قلادة'],
+            'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان', 'تنورة', 'جاكيت'],
+            'كتب': ['كتب', 'كتاب', 'رواية', 'روايات', 'أدب', 'شعر', 'قصص'],
+            'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم', 'نحت', 'تصوير'],
+            'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية', 'كرة', 'دراجة', 'معدات رياضية'],
+            'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط', 'ظهر', 'يد'],
+            'ساعات': ['ساعات', 'ساعة', 'معصم', 'جيب'],
+            'البيت': ['البيت', 'منزل', 'منزلي', 'أثاث', 'ديكور', 'مفروشات'],
+            'اختراعات': ['اختراعات', 'اختراع', 'ابتكار', 'ابتكارات'],
+            'أحذية': ['أحذية', 'حذاء', 'شوز', 'صندل', 'كعب'],
+            'ديكور': ['ديكور', 'ديكورات', 'زينة', 'تحف'],
+            'ألعاب': ['ألعاب', 'لعبة', 'لعبه', 'أطفال', 'ترفيه'],
+            'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة', 'مكنسة'],
+            'مستلزمات السفر': ['مستلزمات السفر', 'سفر', 'رحلة', 'حقيبة سفر'],
+            'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم', 'لوشن'],
+            'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني', 'أدوات طهي'],
             'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي'],
-            'كاميرات': ['كاميرات', 'كاميرا', 'تصوير']
+            'كاميرات': ['كاميرات', 'كاميرا', 'تصوير', 'عدسة'],
+            'مكتب': ['مكتب', 'مكاتب', 'أثاث مكتبي', 'كرسي مكتب', 'طاولة مكتب'],
+            'الكتابة': ['الكتابة', 'كتابة', 'أدوات كتابة', 'قلم', 'ورق']
         };
-
-        // باقي كود جافاسكريبت
-        let filteredProducts = [];
-        const itemsPerLoad = 20;
-        let loadedItems = 0;
-
+    
         // إظهار وإزالة أداة التحميل
         function showLoadingAnimation() {
             const gallery = document.getElementById('gallery');
             const loadingDiv = document.createElement('div');
             loadingDiv.id = 'loading-animation';
-            loadingDiv.style.cssText = `display: flex; justify-content: center; align-items: center; height: 100px; width: 100%;`;
-            loadingDiv.innerHTML = `<div class="spinner"><div></div><div></div></div>`;
+            loadingDiv.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+            `;
+            loadingDiv.innerHTML = `
+                <div class="spinner">
+                    <div></div>
+                    <div></div>
+                </div>
+            `;
             gallery.appendChild(loadingDiv);
-
-            if (!document.getElementById('spinner-style')) {
-                const styleSheet = document.createElement('style');
-                styleSheet.id = 'spinner-style';
-                styleSheet.textContent = `
-                    .spinner { display: inline-block; position: relative; width: 60px; height: 20px; }
-                    .spinner div { position: absolute; width: 20px; height: 20px; border-radius: 50%; animation: dot-flashing 1s infinite linear alternate; }
-                    .spinner div:first-child { background-color: #ff0000; left: 0; }
-                    .spinner div:last-child { background-color: #0000ff; right: 0; animation-delay: 0.5s; }
-                    @keyframes dot-flashing { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
-                `;
-                document.head.appendChild(styleSheet);
-            }
+    
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = `
+                .spinner {
+                    display: inline-block;
+                    position: relative;
+                    width: 60px;
+                    height: 20px;
+                }
+                .spinner div {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    animation: dot-flashing 1s infinite linear alternate;
+                }
+                .spinner div:first-child {
+                    background-color: #ff0000;
+                    left: 0;
+                }
+                .spinner div:last-child {
+                    background-color: #0000ff;
+                    right: 0;
+                    animation-delay: 0.5s;
+                }
+                @keyframes dot-flashing {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.5); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(styleSheet);
         }
-
+    
         function removeLoadingAnimation() {
             const loadingDiv = document.getElementById('loading-animation');
             if (loadingDiv) loadingDiv.remove();
         }
-
-        // --- دالة البحث المتقدمة والمحسّنة ---
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const gallery = document.getElementById('gallery');
+            if (gallery) showLoadingAnimation();
+        });
+    
+        // دالة للتحقق من النصوص العربية
+        function isArabic(text) {
+            return /[\u0600-\u06FF]/.test(text);
+        }
+    
+        // دالة لتقصير اسم المستخدم
+        function truncateUsername(name) {
+            if (!name) return '';
+            const maxLength = isArabic(name) ? 12 : 7;
+            if (window.innerWidth < 966 && name.length > maxLength) {
+                return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
+            }
+            return name;
+        }
+    
+        // دالة لتحديث رسالة الترحيب
+        function updateWelcomeMessage() {
+            const username = localStorage.getItem('username');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (!welcomeMessage) return;
+            
+            if (username) {
+                const displayName = truncateUsername(username);
+                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
+                
+                window.addEventListener('resize', () => {
+                    const usernameDisplay = document.getElementById('usernameDisplay');
+                    if (usernameDisplay) {
+                        usernameDisplay.textContent = truncateUsername(username);
+                    }
+                });
+            } else {
+                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer; white-space: nowrap;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWelcomeMessage();
+            updateCartCount();
+        });
+    
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'username') {
+                updateWelcomeMessage();
+            }
+            if (event.key === 'cart') {
+                updateCartCount();
+            }
+        });
+    
+        window.addEventListener('pageshow', updateWelcomeMessage);
+        window.addEventListener('focus', updateWelcomeMessage);
+        
+        setInterval(() => {
+            const currentUser = localStorage.getItem('username');
+            const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+            
+            if (truncateUsername(currentUser) !== displayedUser) {
+                updateWelcomeMessage();
+            }
+        }, 1000);
+    
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => window.scrollTo(0, 0));
+        });
+    
+        // إظهار أو إخفاء القائمة الجانبية
+        function toggleMenu() {
+            const menuPopup = document.getElementById('menuPopup');
+            if (menuPopup.classList.contains('active')) {
+                menuPopup.classList.remove('active');
+                menuPopup.classList.add('closing');
+                setTimeout(() => {
+                    menuPopup.classList.remove('closing');
+                    menuPopup.style.display = 'none';
+                }, 300);
+            } else {
+                menuPopup.style.display = 'block';
+                setTimeout(() => menuPopup.classList.add('active'), 10);
+            }
+        }
+    
+        let startX = 0, currentX = 0, isDragging = false;
+        const menuPopup = document.getElementById('menuPopup');
+    
+        function startDrag(event) {
+            if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
+                startX = event.touches[0].clientX;
+                isDragging = true;
+            }
+        }
+        function drag(event) {
+            if (!isDragging) return;
+            currentX = event.touches[0].clientX;
+            if (currentX - startX < -50) {
+                toggleMenu();
+                isDragging = false;
+            }
+        }
+        function endDrag() {
+            isDragging = false;
+        }
+        function handleClickOutside(event) {
+            if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
+        }
+        document.addEventListener('touchstart', startDrag);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('touchend', endDrag);
+        document.addEventListener('click', handleClickOutside);
+        menuPopup.addEventListener('touchmove', (event) => {
+            if (menuPopup.classList.contains('active')) event.preventDefault();
+        }, { passive: false });
+    
+        // دالة لإضافة المنتج إلى السلة
+        function addToCart(element) {
+            event.stopPropagation();
+            event.preventDefault();
+    
+            const productContainer = element.closest('.image-container');
+            const product = {
+                id: productContainer.querySelector('img').src,
+                image: productContainer.querySelector('img').src,
+                name: productContainer.querySelector('h1').textContent,
+                sold: productContainer.querySelector('h2').textContent,
+                price: productContainer.querySelector('.number').textContent,
+                discount: productContainer.querySelector('h3').textContent,
+                link: productContainer.querySelector('a').href
+            };
+    
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.id === product.id);
+            if (!existingProduct) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+            }
+            return false;
+        }
+    
+        // دالة لتحديث عدد المنتجات في العربة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCountElement = document.querySelector('.cart-count');
+            if (cartCountElement) cartCountElement.textContent = cart.length;
+        }
+    
+        // التنقل إلى صفحة العربة
+        function navigateToCart() {
+            window.location.href = 'cart.html';
+        }
+    
+        if (document.querySelector('.cart-icon')) {
+            document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
+        }
+    
+        // باقي الكود الخاص بجلب المنتجات والتحميل الكسول
+        let filteredProducts = [];
+        const itemsPerLoad = 20;
+        let loadedItems = 0;
+    
         function fetchAndFilterProducts(searchTerm) {
             const gallery = document.getElementById('gallery');
             const noResultsMessage = document.getElementById('no-results-message');
             const searchTermDisplay = document.getElementById('search-term-display');
             const searchBox = document.getElementById('search-box');
-
-            if (searchBox) {
-                 searchBox.value = searchTerm;
-            }
-
+    
+            if (searchBox) searchBox.value = searchTerm;
+    
             gallery.innerHTML = '';
             showLoadingAnimation();
-
+    
             fetch('products.json')
                 .then(response => response.json())
                 .then(products => {
                     removeLoadingAnimation();
-                    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+                    // تحسين عملية التصفية باستخدام الكلمات المفتاحية
+                    filteredProducts = products.filter(product => {
+                        const searchLower = searchTerm.toLowerCase();
+                        // التحقق مما إذا كانت الكلمة المفتاحية تطابق أي كلمة في name أو data-name أو sold
+                        return keywordMap[searchTerm] && keywordMap[searchTerm].some(keyword => 
+                            (product.name && product.name.toLowerCase().includes(keyword)) ||
+                            (product.dataName && product.dataName.toLowerCase().includes(keyword)) ||
+                            (product.sold && product.sold.toLowerCase().includes(keyword))
+                        );
+                    });
                     
-                    // إذا كان البحث فارغاً، أظهر كل المنتجات
-                    if (!normalizedSearchTerm || normalizedSearchTerm === "الكل") {
-                        filteredProducts = products;
-                    } else {
-                        let targetKeywords = null;
-
-                        // الخطوة 1: ابحث عن المصطلح في قاموس الكلمات المفتاحية
-                        for (const key in keywordMap) {
-                            // تحويل الكلمات في القاموس إلى حروف صغيرة للمقارنة
-                            const keywordsInMap = keywordMap[key].map(k => k.toLowerCase());
-                            if (keywordsInMap.includes(normalizedSearchTerm)) {
-                                targetKeywords = keywordsInMap;
-                                break;
-                            }
-                        }
-
-                        // الخطوة 2: قم بالتصفية بناءً على النتيجة
-                        filteredProducts = products.filter(product => {
-                            const combinedText = [
-                                product.name,
-                                product.dataName,
-                                product.sold
-                            ].join(' ').toLowerCase();
-
-                            if (targetKeywords) {
-                                // بحث متقدم: إذا وجدنا فئة، ابحث عن أي كلمة من قائمة المرادفات
-                                return targetKeywords.some(keyword => combinedText.includes(keyword));
-                            } else {
-                                // بحث احتياطي: إذا لم نجد فئة، ابحث عن المصطلح نفسه
-                                return combinedText.includes(normalizedSearchTerm);
-                            }
-                        });
-                    }
-
                     shuffleArray(filteredProducts);
                     gallery.innerHTML = '';
                     loadedItems = 0;
-
+    
                     if (filteredProducts.length > 0) {
                         loadProducts(0, itemsPerLoad);
                         noResultsMessage.style.display = 'none';
@@ -2917,17 +3070,18 @@
                     searchTermDisplay.textContent = searchTerm;
                 });
         }
-        
-        // باقي الدوال كما هي في الكود الأصلي
+    
         function loadProducts(startIndex, count) {
             const gallery = document.getElementById('gallery');
             const endIndex = Math.min(startIndex + count, filteredProducts.length);
+    
             for (let i = startIndex; i < endIndex; i++) {
                 const product = filteredProducts[i];
                 const priceStr = product.price.toString();
                 const firstDigit = priceStr.charAt(0);
                 const specialDigits = ['2', '3', '5', '6', '8', '9'];
                 const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
+    
                 const productDiv = document.createElement('div');
                 productDiv.className = 'image-container product';
                 productDiv.setAttribute('data-name', product.dataName || product.name);
@@ -2937,7 +3091,9 @@
                             <div class="image-wrapper">
                                 <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
                                 <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/></svg>
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                                    </svg>
                                 </div>
                             </div>
                         </a>
@@ -2953,31 +3109,52 @@
                                 <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
                             </div>
                         </div>
-                    </div>`;
+                    </div>
+                `;
                 gallery.appendChild(productDiv);
             }
+    
             loadedItems = endIndex;
             const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
             lazyImages.forEach(img => observer.observe(img));
             startRotatingText(".rotating-text1212:not(.rotating)");
         }
-
+    
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
                     img.src = img.dataset.src;
-                    img.onload = () => img.classList.add("loaded");
+                    img.onload = () => {
+                        img.classList.add("loaded");
+                        if (isWhiteBackground(img)) img.classList.add("white-bg");
+                    };
                     observer.unobserve(img);
                 }
             });
         }, { rootMargin: "0px 0px 200px 0px" });
-
+    
+        function isWhiteBackground(img) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+            const data = imageData.data;
+            let whitePixelCount = 0;
+            let totalPixelCount = data.length / 4;
+    
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) whitePixelCount++;
+            }
+            return (whitePixelCount / totalPixelCount) > 0.9;
+        }
+    
         function startRotatingText(selector) {
             document.querySelectorAll(selector).forEach(element => {
                 element.classList.add('rotating');
                 const texts = JSON.parse(element.getAttribute("data-texts"));
-                if (!texts || texts.length === 0) return;
                 let currentIndex = 0;
                 setInterval(() => {
                     element.style.transition = "opacity 0.5s, transform 0.5s";
@@ -2992,60 +3169,67 @@
                 }, 5000);
             });
         }
-        
+    
         function getSearchTermFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('search') || '';
         }
-
+    
         document.addEventListener('scroll', function () {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && loadedItems < filteredProducts.length) {
+            const gallery = document.getElementById('gallery');
+            const triggerHeight = window.innerHeight * 1.5;
+            const galleryHeight = gallery.scrollHeight;
+    
+            if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
                 loadProducts(loadedItems, itemsPerLoad);
             }
         });
-
+    
         function selectItem(item, element) {
-            const searchTerm = (item === 'الكل') ? '' : item;
-            fetchAndFilterProducts(searchTerm);
-            
+            const searchBox = document.getElementById('search-box');
+            if (searchBox) {
+                if (item === 'الكل') searchBox.value = '';
+                else searchBox.value = item;
+            }
+            if (item === 'الكل') fetchAndFilterProducts('');
+            else if (item) fetchAndFilterProducts(item);
+    
             const allItems = document.querySelectorAll('.sub-header nav a');
-            allItems.forEach(i => i.classList.remove('active'));
+            allItems.forEach(item => item.classList.remove('active'));
             element.classList.add('active');
-
+    
             const underline = document.querySelector('.underline');
             const itemRect = element.getBoundingClientRect();
             const navRect = element.parentElement.getBoundingClientRect();
+    
             underline.style.width = `${itemRect.width}px`;
             underline.style.left = `${itemRect.left - navRect.left}px`;
-
-            element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    
+            element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         }
-
+    
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
-        
-        // دوال القائمة الجانبية والسلة والترحيب (تبقى كما هي)
-        function toggleMenu() { /* ... الكود الأصلي ... */ }
-        function addToCart(element) { /* ... الكود الأصلي ... */ }
-        function updateCartCount() { /* ... الكود الأصلي ... */ }
-        function updateWelcomeMessage() { /* ... الكود الأصلي ... */ }
-
-        // تحميل الصفحة
+    
         window.onload = function () {
-            const searchTermFromUrl = getSearchTermFromURL();
-            let initialSearchTerm = searchTermFromUrl || '';
-            let activeElement = document.querySelector('.sub-header nav a[onclick*="' + (initialSearchTerm || 'الكل') + '"]');
-
-            if (!activeElement) {
-                activeElement = document.querySelector('.sub-header nav a'); // الافتراضي هو "الكل"
-                initialSearchTerm = '';
+            removeLoadingAnimation();
+            const defaultItem = document.querySelector('.sub-header nav a');
+            const underline = document.querySelector('.underline');
+            if (defaultItem && underline) {
+                const itemRect = defaultItem.getBoundingClientRect();
+                const navRect = defaultItem.parentElement.getBoundingClientRect();
+                defaultItem.classList.add('active');
+                underline.style.width = `${itemRect.width}px`;
+                underline.style.left = `${itemRect.left - navRect.left}px`;
             }
-
-            selectItem(initialSearchTerm || 'الكل', activeElement);
+            const searchTerm = getSearchTermFromURL();
+            const searchBox = document.getElementById('search-box');
+            if (searchBox && searchTerm) searchBox.value = searchTerm;
+            fetchAndFilterProducts(searchTerm || '');
         };
     </script>
 </body>
