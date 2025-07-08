@@ -2828,6 +2828,7 @@
             'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'الإكسسوارات', 'اكسسوار'],
             'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
             'كتب': ['كتب', 'كتاب', 'الكتب', 'رواية', 'روايات'],
+            'الكتابة': ['الكتابة', 'كتابة', 'أدوات الكتابة', 'دورة الكتابة'],
             'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
             'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
             'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
@@ -2862,7 +2863,7 @@
             }
         }
 
-        // دالة لإزالة تشكيل الحروف العربية
+        // دالة لإزالة تشكيل الحروف العربية وأل التعريف
         function removeArabicDiacritics(text) {
             return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670]/g, '').replace(/^(ال|أ)/, '');
         }
@@ -2879,7 +2880,7 @@
                     removeArabicDiacritics(synonym.toLowerCase()) === normalizedSearchTerm
                 )) {
                     matchedKeywords = synonyms;
-                    matchedCategory = category;
+                     matchedCategory = category;
                     break;
                 }
             }
@@ -3050,7 +3051,7 @@
             }
         }
         function endDrag() {
-            isDragging = false;
+           isDragging = false;
         }
         function handleClickOutside(event) {
             if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
@@ -3135,11 +3136,12 @@
                             product.dataName || '',
                             product.sold || '',
                             product.description || '',
-                            product.category || '' // إضافة حقل الفئة إذا كان موجودًا
+                            product.category || ''
                         ].map(field => removeArabicDiacritics(field.toLowerCase()));
 
                         // إذا تم العثور على فئة، إعطاء الأولوية للمنتجات المصنفة ضمن هذه الفئة
                         if (category) {
+                            // التحقق من أن الفئة تتطابق أو أن الكلمات المفتاحية موجودة في الحقول
                             return product.category === category || 
                                    keywords.some(keyword => 
                                        searchFields.some(field => 
