@@ -1357,7 +1357,8 @@
         'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم'],
         'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني'],
         'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي'],
-        'كاميرات': ['كاميرات', 'كاميرا', 'تصوير']
+        'كاميرات': ['كاميرات', 'كاميرا', 'تصوير'],
+        'مدرسة': ['مدرسة', 'مدرسه'] // إضافة فئة جديدة كمثال
     };
 
     // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
@@ -1375,6 +1376,16 @@
         if (savedMap) {
             keywordMap = JSON.parse(savedMap);
         }
+    }
+
+    // دالة لتطبيع النصوص العربية
+    function normalizeArabic(text) {
+        if (!text) return '';
+        return text
+            .toLowerCase()
+            .replace(/أ|إ|آ/g, 'ا') // تحويل الألف الممدودة والمفتوحة إلى ألف عادية
+            .replace(/ى/g, 'ي') // تحويل الألف المقصورة إلى ياء
+            .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
     }
 
     // استرجاع بيانات المستخدم من localStorage
@@ -1699,7 +1710,7 @@
                         return productPrice >= minPrice && productPrice <= maxPrice;
                     });
                 } else {
-                    const searchLower = searchTerm.toLowerCase().trim();
+                    const searchLower = normalizeArabic(searchTerm).trim();
 
                     // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
                     if (!searchLower) {
@@ -1708,17 +1719,17 @@
                         // إنشاء قائمة الكلمات المفتاحية للبحث
                         let searchKeywords = [searchLower];
                         for (const category in keywordMap) {
-                            if (keywordMap[category].includes(searchLower)) {
-                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category]])];
+                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
+                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
                             }
                         }
 
                         // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
                         filteredProducts = products.filter(product => {
                             const fieldsToSearch = [
-                                product.name?.toLowerCase() || '',
-                                product.dataName?.toLowerCase() || '',
-                                product.sold?.toLowerCase() || ''
+                                normalizeArabic(product.name) || '',
+                                normalizeArabic(product.dataName) || '',
+                                normalizeArabic(product.sold) || ''
                             ];
 
                             return searchKeywords.some(keyword => {
@@ -1941,10 +1952,6 @@
 </script>
 </body>
 </html>
-
-
-
-
 
 
 
