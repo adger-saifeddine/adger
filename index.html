@@ -191,6 +191,1240 @@
 
 
 
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>خلفية بعرض الشاشة وارتفاع 350 بكسل</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+            .main-container {
+                margin-top: 119px;
+                width: 100%; /* عرض الشاشة بالكامل */
+                height: 350px; /* ارتفاع 350 بكسل */
+                background-color: rgb(0, 195, 255); /* لون الخلفية */
+                background-image: url('your-image-url.jpg'); /* رابط الصورة الخلفية */
+                background-size: cover; /* تغطية الخلفية بالكامل */
+                background-position: center; /* تمركز الخلفية */
+                background-repeat: no-repeat; /* عدم تكرار الخلفية */
+                position: relative; /* لجعل العناصر الداخلية قابلة للتحديد بشكل نسبي */
+                display: flex;
+                align-items: center;
+                margin-bottom: -90px;
+            }
+    
+            /* لتصغير الارتفاع على الهواتف المحمولة */
+            @media (max-width: 1568px) {
+                .main-container {
+                    display: none;
+                }
+            }
+    
+            .main-container .left-image {
+                position: absolute;
+                left: 11vw; /* زيادة النسبة لجعل left يتناقص بشكل أسرع */
+                top: 50%;
+                transform: translateY(-50%);
+                height: 80%;
+                width: auto;
+                z-index: 1;
+                border-radius: 50px;
+            }
+    
+            .right-content {
+                position: absolute;
+                right: 20px; /* المسافة من الجانب الأيمن */
+                top: 50%;
+                transform: translateY(-50%);
+                width: 60%; /* عرض المستطيل الكبير */
+                height: 80%; /* ارتفاع المستطيل الكبير */
+                background-color: rgba(255, 255, 255, 0.8); /* لون خلفية المستطيل */
+                padding: 20px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between; /* توزيع المساحة بين العناصر */
+                align-items: center; /* توسيط العناصر عموديًا */
+            }
+    
+            .content-section {
+                display: flex;
+                flex-direction: column; /* تغيير الاتجاه إلى عمودي */
+                align-items: flex-start; /* توسيط العناصر إلى اليمين */
+                width: 30%; /* عرض القسم النصي */
+            }
+    
+            .text-wrapper {
+                margin-bottom: 20px; /* المسافة بين النصوص */
+            }
+    
+            .text-wrapper h3 {
+                margin: 0 0 10px 0;
+                font-size: 18px;
+                color: #333;
+            }
+    
+            .text-wrapper p {
+                margin: 0;
+                font-size: 14px;
+                color: #666;
+            }
+    
+            .middle-text {
+                font-size: 16px;
+                color: #444;
+                text-align: center; /* توسيط النص */
+                flex: 1; /* يأخذ المساحة المتبقية */
+                margin: 0 50px; /* زيادة المسافة الجانبية إلى 50px */
+            }
+    
+            .changing-text {
+                font-size: 14px;
+                color: #555;
+                text-align: center; /* توسيط النص */
+                margin-top: 10px; /* مسافة بين النص الثابت والمتغير */
+            }
+    
+            .image-section {
+                display: flex;
+                flex-direction: row; /* عرض الصور في صف واحد */
+                gap: 10px; /* المسافة بين الصور */
+                width: 30%; /* عرض قسم الصور */
+            }
+    
+            .image-wrapper2 {
+                display: flex;
+                flex-direction: column; /* تغيير الاتجاه إلى عمودي */
+                align-items: center; /* توسيط العناصر عموديًا */
+                width: 100px; /* عرض المستطيل الصغير */
+                height: auto; /* جعل الارتفاع يتكيف مع المحتوى */
+                background-color: #000000; /* لون خلفية المستطيل الصغير */
+                padding: 10px;
+                box-sizing: border-box;
+            }
+    
+            .image-wrapper2 img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+    
+            .image-wrapper2 p {
+                margin: 10px 0 0 0; /* مسافة بين الصورة والنص */
+                font-size: 12px;
+                color: #333;
+                text-align: center;
+            }
+    
+            /* قسم الصور المصغرة */
+            .thumbnail-section {
+                display: flex;
+                justify-content: center;
+                gap: 5px; /* مسافة صغيرة بين الصور */
+                margin-top: 10px; /* مسافة بين النص المتحرك والصورة */
+            }
+    
+            .thumbnail-section img {
+                margin-bottom: -22px;
+                width: 50px; /* حجم الصورة المصغرة */
+                height: 50px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <img class="left-image" src="https://i.postimg.cc/qRtjHDLK/2025-04-12-11-44-16-adbf45fe-removebg-preview.png" alt="صورة داخلية">
+            <div class="right-content">
+                <div class="content-section">
+                    <div class="text-wrapper">
+                        <h3>الخصوصية و الأمان</h3>
+                        <h2 style="font-family: 'Cairo', sans-serif;  color: #555555;  font-size: 14px;">لا تصل معلومات حسابك الى المستخدمين الأخرين ابداً</h2>
+                    </div>
+                    <div class="text-wrapper">
+                        <h3>الشروط و الأحكام</h3>
+                        <h2 style="font-family: 'Cairo', sans-serif;  color: #555555;  font-size: 14px;">يرجى قراءة الشروط والأحكام بعناية قبل استخدام الموقع.</h2>
+                    </div>
+                </div>
+                <!-- النص الأكبر (الثابت) -->
+                <div class="middle-text">
+                    <h2 style="font-family: 'Cairo', sans-serif;  color: #000000;  font-size: 14px;">ها قد اشرقت الشمس و صنع سيف الدين أدجر</h2>
+                    <!-- النص المتغير -->
+                    <h2 id="changing-text" class="changing-text" style="font-family: 'Cairo', sans-serif; margin-bottom: 22px; color: #a200ff; font-size: 14px; text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #bbb, 2px 2px 0 #aaa, 3px 3px 0 #999, 2px 2px 0 #888, 3px 3px 0 #777;">
+                        أكثر من 50 منتج
+                        </h2>
+                    <!-- قسم الصور المصغرة -->
+                    <div class="thumbnail-section">
+                        <img src="e1.jpg" alt="صورة مصغرة 1" onclick="window.location.href='deals.html';">
+                        <img src="e3.jpg" alt="صورة مصغرة 3" onclick="window.location.href='wholesale.html';">
+                        <img src="e2.jpg" alt="صورة مصغرة 2" onclick="window.location.href='companies.html';">
+                        <img src="e4.jpg" alt="صورة مصغرة 4" onclick="window.location.href='categories.html';">
+                    </div>
+                </div>
+                <div class="image-section">
+                    <div class="image-wrapper2">
+                        <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="صورة 1" style="cursor: pointer;" onclick="window.location.href='prod.html?id=1';">
+                        <h2 style="font-family: 'Cairo', sans-serif; color: #ffffff; font-size: 11px;">كتاب ابقَ قويًا 365 يومًا  </h2>
+                    </div>
+                    <div class="image-wrapper2">
+                        <img src="https://files.catbox.moe/g2tzgl.webp" alt="صورة 3" style="cursor: pointer;" onclick="window.location.href='prod.html?id=21';">
+                        <h2 style="font-family: 'Cairo', sans-serif; color: #ffffff; font-size: 11px;">سماعة بلوتوث TWS</h2>
+                    </div>
+                    <div class="image-wrapper2">
+                        <img src="https://i.postimg.cc/nVmJf8kW/1703917864-DSC04765.jpg" alt="صورة 2" style="cursor: pointer;" onclick="window.location.href='prod.html?id=2';">
+                        <h2 style="font-family: 'Cairo', sans-serif; color: #ffffff; font-size: 11px;">حذاء جلد عالي الجودة</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    
+ 
+            <style>
+                #text-container {
+                    overflow: hidden; /* لإخفاء النص الذي يتحرك خارج الإطار */
+                    height: 40px; /* ارتفاع الحاوية لتحديد المساحة */
+                }
+        
+                #changing-text {
+                    display: inline-block; /* لجعل النص يتحرك عموديًا */
+                    font-size: 24px;
+                    font-weight: bold;
+                    transition: transform 1.5s ease-in-out; /* زيادة مدة الانتقال لجعل الحركة أبطأ */
+                }
+            </style>
+        </head>
+        <body>
+         
+            <script>
+                // النصوص التي سيتم تغييرها
+                const texts = [
+                    "خصومات تصل الى 50%",
+                    "أنشأ حسابك",
+                    "تصفح المنتجات ",
+                    "و قم بالشراء"
+                ];
+        
+                let currentIndex = 0; // الفهرس الحالي للنص
+                const textElement = document.getElementById("changing-text"); // العنصر الذي يعرض النص
+        
+                // دالة لتحديث النص كل 7 ثوانٍ
+                function changeText() {
+                    // تحريك النص الحالي إلى الأسفل أولاً
+        
+                    setTimeout(() => {
+                        // تحريك النص الحالي إلى الأعلى
+                        textElement.style.transform = "translateY(-20%)";
+        
+                        setTimeout(() => {
+                            // إعادة النص إلى مكانه الطبيعي وتغيير النص
+                            textElement.style.transform = "translateY(0)";
+                            textElement.textContent = texts[currentIndex];
+                            currentIndex = (currentIndex + 1) % texts.length; // الانتقال إلى النص التالي
+                        }, 1500); // الانتظار لمدة 1.5 ثانية قبل العودة إلى المكان الطبيعي
+                    }, 1500); // الانتظار لمدة 1.5 ثانية قبل التحرك إلى الأعلى
+                }
+        
+                // تغيير النص كل 7 ثوانٍ
+                setInterval(changeText, 7000); // 7000 مللي ثانية = 7 ثوانٍ
+            </script>
+        </body>
+        </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!DOCTYPE html>
+        <html lang="ar">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Slideshow</title>
+            <style>
+                .white-bar {
+                    height: 94px;
+                    background-color: white;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                @media (max-width: 769px) {
+                    .white-bar {
+                        height: 73px;
+                    }
+                }
+        
+                .content {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    position: relative;   
+                    top: -6px;   
+                    margin-bottom: -22px;
+                }
+                @media (min-width: 1569px) {
+                    .content {
+                        display: none;
+                    }
+                }
+        
+                .slideshow-container {
+                    position: relative;
+                    overflow: hidden;
+                }
+        
+                .slides {
+                    width: 100%;
+                    height: 199px;
+                    display: none;
+                    border-radius: 9px;
+                    clip-path: inset(0 0 100% 0); /* في البداية، تظهر الصورة من الأعلى فقط */
+                }
+        
+                @media (max-width: 768px) {
+                    .slides {
+                        height: 150px;
+                    }
+                }
+        
+                .slides.active {
+                    display: block;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="white-bar"></div>
+            <div class="content" id="content">
+                <!-- عرض الصور -->
+                <div class="slideshow-container" id="slideshow-container">
+                    <img class="slides active" id="slide1" src="i1.jpg" alt="صورة 1">
+                    <img class="slides" id="slide2" src="i2.jpg" alt="صورة 2">
+                    <img class="slides" id="slide3" src="i3.jpg" alt="صورة 3">
+                    <a href="https://median.co/share/wwarzl">
+                        <img class="slides" id="slide4" src="i4.jpg" alt="تطبيق أدجر">
+                    </a>
+                </div>
+            </div>
+        
+            <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+            <script>
+                let slideIndex = 0;
+                let slides = document.getElementsByClassName("slides");
+                let slideshowContainer = document.getElementById("slideshow-container");
+        
+                // دالة لتطبيق التأثير التدريجي السريع أثناء تحميل الصورة الأولى
+                function applyLoadingEffect(slide) {
+                    let progress = 100; // النسبة المئوية للتحميل
+                    slide.style.clipPath = `inset(0 0 ${progress}% 0)`; // البداية من الأعلى
+        
+                    // بدء التأثير التدريجي السريع عند تحميل الصورة
+                    slide.onload = () => {
+                        const interval = setInterval(() => {
+                            progress -= 10; // تقليل النسبة بمقدار 10% (سريع)
+                            if (progress <= 0) {
+                                progress = 0;
+                                clearInterval(interval); // إيقاف المؤقت
+                                slide.style.clipPath = `inset(0 0 0 0)`; // الصورة كاملة
+                            } else {
+                                slide.style.clipPath = `inset(0 0 ${progress}% 0)`; // تحديث التأثير
+                            }
+                        }, 10); // التحديث كل 10 مللي ثانية (سريع جدًا)
+                    };
+        
+                    // إذا كانت الصورة محملة بالفعل من الذاكرة المؤقتة، نشغل التأثير فورًا
+                    if (slide.complete) {
+                        slide.onload();
+                    }
+                }
+        
+                // دالة لإظهار الصورة بشكل كامل (للشرائح الأخرى)
+                function showFullImage(slide) {
+                    slide.style.clipPath = `inset(0 0 0 0)`; // إظهار الصورة بالكامل فورًا
+                }
+        
+                // تطبيق التأثير على الصورة الأولى أثناء تحميل الصفحة
+                slides[slideIndex].style.display = "block";
+                slides[slideIndex].classList.add("active");
+                applyLoadingEffect(slides[slideIndex]);
+        
+                // دالة لتغيير الشريحة دون التأثير التدريجي
+                function changeSlide(n) {
+                    slides[slideIndex].style.display = "none";
+                    slides[slideIndex].classList.remove("active");
+                    slideIndex = (slideIndex + n + slides.length) % slides.length;
+                    slides[slideIndex].style.display = "block";
+                    slides[slideIndex].classList.add("active");
+                    showFullImage(slides[slideIndex]); // إظهار الصورة الجديدة بالكامل فورًا
+                }
+        
+                // تشغيل عرض الصور تلقائيًا كل 7 ثوانٍ
+                setInterval(() => changeSlide(1), 7000);
+        
+                // استخدام Hammer.js للسحب
+                const hammertime = new Hammer(slideshowContainer);
+                hammertime.on("swipeleft", () => changeSlide(1));
+                hammertime.on("swiperight", () => changeSlide(-1));
+            </script>
+        </body>
+        </html>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>مربعات</title>
+        <style>
+            .container114 {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: nowrap; /* منع الانتقال إلى سطر جديد */
+                width: 100%; /* التأكد من أن العرض لا يتجاوز الشاشة */
+            }
+            .box {
+                flex: 1; /* يجعل العناصر تأخذ مساحة متساوية */
+                min-width: 0; /* يسمح بتقلص العناصر */
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .image-box {
+                width: 20vw; /* حجم الصندوق يعتمد على عرض الشاشة */
+                height: 20vw;
+                max-width: 100px; /* تحديد حجم أقصى للصندوق */
+                max-height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer; /* تغيير شكل المؤشر إلى يد عند التمرير */
+            }
+            .box img {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 33px;
+            }
+            .write {
+                font-size: 3vw; /* حجم الخط يعتمد على عرض الشاشة */
+                font-family: Cairo, sans-serif;
+            }
+    
+            /* استعلام الوسائط للشاشات الكبيرة */
+            @media (min-width: 600px) {
+                .image-box {
+                    width: 100px; /* حجم ثابت للشاشات الكبيرة */
+                    height: 100px;
+                }
+                .write {
+                    font-size: 14px; /* حجم خط ثابت للشاشات الكبيرة */
+                }
+            }
+    
+            /* إخفاء المحتوى في الشاشات الأكبر من 1569px */
+            @media (min-width: 1569px) {
+                .container114, .line3 {
+                    display: none;
+                }
+            }
+    
+            .line3 {
+                width: 100%;
+                height: 8px;
+                background-color: #eeeeee;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container114">
+            <div class="box">
+                <a href="deals.html" class="image-box">
+                    <img src="e1.jpg" alt="عملات">
+                </a>
+                <h3 class="write">صفقة رابحة</h3>
+            </div>
+      
+            <div class="box">
+                <a href="wholesale.html" class="image-box">
+                    <img src="e3.jpg" alt="جوائز">
+                </a>
+                <h3 class="write">شراء بالجملة</h3>
+            </div>
+    
+            <div class="box">
+                <a href="companies.html" class="image-box">
+                    <img src="e2.jpg" alt="عروض">
+                </a>
+                <h3 class="write">شركات عالمية</h3>
+            </div>
+            
+            <div class="box">
+                <a href="categories.html" class="image-box">
+                    <img src="e4.jpg" alt="الفئات">
+                </a>
+                <h3 class="write">الفئات</h3>
+            </div>
+        </div>
+    
+        <div class="line3" style="color: #f5f5f5; height: 10px;"></div>
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h1 class="prices" style="font-family: 'Cairo', sans-serif; color: #ff4800; font-size: 25px; text-align: right; margin-right: 15px; user-select: none; -webkit-tap-highlight-color: transparent; outline: none;">
+        قسم الأسعار
+    </h1>
+       <style>
+    @media (max-width: 768px) {
+   .prices{
+        font-size: 19px !important;
+        margin-top: 12px;
+    }
+}
+@media (min-width: 768px) {
+   .prices{
+      margin-top: 21px;
+    }
+}
+   </style>
+   
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Slider</title>
+    <style>
+        .photo-slider-container {
+            position: relative;
+            overflow: hidden; /* منع التمرير الأفقي في الحاوية */
+        }
+
+        .photo-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* إخفاء شريط التمرير في المتصفحات الحديثة */
+            width: 100%;
+            
+            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+            outline: none; /* إزالة الإطار عند النقر */
+            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+        }
+
+        .photo-slider::-webkit-scrollbar {
+            display: none; /* إخفاء شريط التمرير في WebKit */
+        }
+
+        .photo-slider img {
+            width: 187px;
+            height: 187px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            flex-shrink: 0; /* منع الصور من الانكماش */
+        }
+        @media only screen and (max-width: 1367px) {
+            .photo-slider img {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .photo-slider img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        .arrow-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 66px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1;
+        }
+
+        .left-arrow {
+            left: 10px;
+        }
+
+        .right-arrow {
+            right: 10px;
+        }
+
+        .line {
+            width: 100%;
+            height: 8px;
+            background-color: #eeeeee;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-slider-container">
+        <div class="photo-slider">
+            <img src="a1.jpg" alt="صورة 1" onclick="redirectToSea('أقل من 50 جنيه')">
+            <img src="a2.jpg" alt="صورة 2" onclick="redirectToSea('أقل من 90 جنيه')">
+            <img src="a3.jpg" alt="صورة 3" onclick="redirectToSea('أقل من 150 جنيه')">
+            <img src="a4.jpg" alt="صورة 4" onclick="redirectToSea('أقل من 200 جنيه')">
+            <img src="a5.jpg" alt="صورة 1" onclick="redirectToSea('أقل من 350 جنيه')">
+            <img src="a6.jpg" alt="صورة 2" onclick="redirectToSea('أقل من 499 جنيه')">
+            <img src="a7.jpg" alt="صورة 3" onclick="redirectToSea('أقل من 700 جنيه')">
+            <img src="a8.jpg" alt="صورة 4" onclick="redirectToSea('أقل من 1000 جنيه')">
+            <img src="a9.jpg" alt="صورة 4" onclick="redirectToSea('أقل من 1500 جنيه')">
+            <img src="a10.jpg" alt="صورة 4" onclick="redirectToSea('أقل من 2000 جنيه')">            
+        </div>
+    </div>
+
+    <script>
+        // دالة لتوجيه المستخدم إلى صفحة sea.html وإضافة الاسم إلى صندوق البحث
+        function redirectToSea(categoryName) {
+            // توجيه المستخدم إلى صفحة sea.html مع إضافة النص كمعلمة بحث
+            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
+        }
+
+        // دالة لتنفيذ البحث (يمكن استخدامها في صفحة sea.html)
+        function performSearch(searchTerm) {
+            const products = document.querySelectorAll('.product'); // جميع المنتجات
+
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase(); // اسم المنتج
+                if (productName.includes(searchTerm.toLowerCase())) {
+                    product.classList.remove('hidden'); // إظهار المنتج إذا تطابق
+                } else {
+                    product.classList.add('hidden'); // إخفاء المنتج إذا لم يتطابق
+                }
+            });
+        }
+
+        // عند تحميل الصفحة، تحقق من وجود معلمة بحث في الرابط
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('search');
+
+            if (searchTerm) {
+                const searchBox = document.getElementById('search-box');
+                if (searchBox) {
+                    searchBox.value = searchTerm; // تعبئة صندوق البحث بالقيمة
+                }
+                performSearch(searchTerm); // تنفيذ البحث
+            }
+        };
+
+        // دالة للكشف عن نوع الجهاز
+        function isDesktop() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+            const isTablet = /(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(userAgent);
+            const screenWidth = window.innerWidth;
+
+            // إذا كان الجهاز ليس هاتفًا أو جهازًا لوحيًا وكان عرض الشاشة أكبر من 768 بكسل
+            return !isMobile && !isTablet && screenWidth > 768;
+        }
+
+        // إنشاء الأسهم وإضافتها إلى الصفحة إذا كان الجهاز كمبيوتر
+        function createArrows() {
+            if (!isDesktop()) return; // إذا لم يكن الجهاز كمبيوتر، لا ننفذ الكود
+
+            const container = document.querySelector('.photo-slider-container');
+            const slider = document.querySelector('.photo-slider');
+
+            // إنشاء سهم اليسار
+            const leftArrow = document.createElement('button');
+            leftArrow.innerHTML = '&#10094;'; // رمز السهم الأيسر
+            leftArrow.classList.add('arrow-button', 'left-arrow');
+            leftArrow.onclick = () => {
+                scrollSlider(-200);
+                updateArrowsVisibility();
+            };
+
+            // إنشاء سهم اليمين
+            const rightArrow = document.createElement('button');
+            rightArrow.innerHTML = '&#10095;'; // رمز السهم الأيمن
+            rightArrow.classList.add('arrow-button', 'right-arrow');
+            rightArrow.style.display = 'none'; // إخفاء السهم الأيمن في البداية
+            rightArrow.onclick = () => {
+                scrollSlider(200);
+                updateArrowsVisibility();
+            };
+
+            // إضافة الأسهم إلى الحاوية
+            container.appendChild(leftArrow);
+            container.appendChild(rightArrow);
+
+            // دالة لتحديث رؤية الأسهم بناءً على موقع التمرير
+            function updateArrowsVisibility() {
+                if (slider.scrollLeft === 0) {
+                    rightArrow.style.display = 'none'; // إخفاء السهم الأيمن عند البداية
+                } else {
+                    rightArrow.style.display = 'block'; // إظهار السهم الأيمن
+                }
+
+                if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
+                    leftArrow.style.display = 'none'; // إخفاء السهم الأيسر عند النهاية
+                } else {
+                    leftArrow.style.display = 'block'; // إظهار السهم الأيسر
+                }
+            }
+
+            // تحديث رؤية الأسهم عند التمرير
+            slider.addEventListener('scroll', updateArrowsVisibility);
+
+            // تحديث رؤية الأسهم عند تحميل الصفحة
+            updateArrowsVisibility();
+        }
+
+        // دالة للتمرير
+        function scrollSlider(scrollAmount) {
+            const slider = document.querySelector('.photo-slider');
+            slider.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // إنشاء الأسهم عند تحميل الصفحة إذا كان الجهاز كمبيوتر
+        createArrows();
+    </script>
+</body>
+</html>
+
+ <!-- الخط -->
+ <div class="line" style="margin-top: 25px;"></div>
+
+
+
+ <h1 class="disco" style="font-family: 'Cairo', sans-serif; color: #ff4800; font-size: 25px; text-align: right; margin-right: 15px; user-select: none; -webkit-tap-highlight-color: transparent; outline: none;">
+    قسم الخصومات
+</h1>
+ <style>
+    @media (max-width: 768px) {
+   .disco{
+        font-size: 19px !important;
+    }
+}
+@media (min-width: 768px) {
+   .disco{
+      margin-top: 21px;
+    }
+}
+ </style>
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الصور</title>
+    <style>
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            direction: rtl; /* Ensure RTL direction */
+        }
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+        .carousel-item {
+            width: 220px;
+            margin: 0 7px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 35px;
+            padding: 0;
+            flex: 0 0 auto;
+            overflow: hidden; /* لضمان عدم خروج الصورة عن الإطار */
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 200px;
+            cursor: pointer;
+            border-radius: 33px 33px 0 0; /* جعل الحدود العلوية مدورة فقط */
+            transition: transform 0.3s;
+            background: #c4c4c43a;
+            object-fit: cover;
+            display: block;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 10px;
+
+            -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+            outline: none; /* إزالة الإطار عند النقر */
+            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+        }
+
+        @media (max-width: 1367px) {
+    .carousel-item {
+        width: 190px; /* تعديل العرض */
+    }
+
+    .carousel-item img {
+        height: 170px; /* تعديل الارتفاع */
+    }
+
+    .carousel-item h1:nth-child(5) { /* الخصم */
+                font-size: 12px !important;
+                line-height: 21px !important;
+                height: 23px !important;
+            }
+
+    .carousel-item p,
+    .carousel-item h1 {
+        font-size: 13px !important; /* تم التعديل */}
+}
+
+
+        @media (max-width: 768px) {
+            .carousel-item img {
+                background: #e0e0e031;
+            }
+        }
+        .carousel-item p {
+            margin: 5px 0;
+        }
+        .carousel-item h1 {
+            font-family: 'Cairo', sans-serif;
+            margin: 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* تعديل نص اسم المنتج فقط */
+        .carousel-item h1:nth-child(2) {
+            text-align: right; /* محاذاة اسم المنتج إلى اليمين */
+            padding-right: 10px; /* مسافة ثابتة على يمين اسم المنتج */
+        }
+        @media (max-width: 768px) {
+            .carousel-item {
+                width: 150px;
+                margin: 0 2px;
+                padding: 0; /* إزالة الحشوة لضمان ملء الصورة للإطار */
+            }
+            .carousel-item img {
+                width: 100%;
+                height: 140px;
+                border-radius: 18px 18px 0 0; /* جعل الحدود العلوية مدورة فقط */
+                margin-bottom: 8px;
+            }
+            .carousel-item h1 {
+                font-size: 13.5px !important;
+                margin: 3px 0 !important;
+                line-height: 19px !important;
+            }
+            .carousel-item h1:nth-child(2) { /* اسم المنتج */
+                font-size: 12px !important;
+                padding-right: 8px; /* تعديل المسافة للشاشات الصغيرة */
+            }
+            .carousel-item h1:nth-child(3) { /* السعر الحالي */
+                font-size: 12px !important;
+            }
+            .carousel-item h1:nth-child(4) { /* السعر القديم */
+                font-size: 11px !important;
+                margin-top: -4px !important;
+            }
+            .carousel-item h1:nth-child(5) { /* الخصم */
+                font-size: 10px !important;
+                line-height: 21px !important;
+                height: 21px !important;
+                padding-right: 5px !important;
+                padding-left: 5px !important;
+                margin-right: 13px !important;
+                margin-bottom: 15px !important; /* زيادة المسافة أسفل نص الخصم في الهواتف */
+            }
+        }
+        .arrow-button {
+            position: absolute;
+            top: 50%;
+            border-radius: 66px;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 7px;
+            cursor: pointer;
+            font-size: 17px;
+            z-index: 1;
+        }
+        .left-arrow {
+            left: 10px;
+        }
+        .right-arrow {
+            right: 10px;
+        }
+        .carousel-container {
+            will-change: transform;
+            transform: translateZ(0);
+            position: relative;
+        }
+        /* Add spacing after the last item */
+        .carousel::after {
+            content: '';
+            width: 9px; /* Adjust spacing size */
+            flex: 0 0 auto;
+        }
+        
+        /* Style for the "Show More" item */
+        .show-more-item {
+            width: 220px;
+            margin: 0 7px;
+            text-align: center;
+            border-radius: 35px;
+            padding: 0;
+            flex: 0 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            order: 999; /* Move to the end (left side in RTL) */
+            margin-left: -30px;
+            margin-right: -30px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; /* لمنع التحديد */
+        }
+        .show-more-item:hover {
+            background-color: #f3f3f300; /* لون مختلف عند تمرير الماوس */
+        }
+
+        
+        .show-more-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 10px;
+            border: 2px solid #2e2e2ed3; /* إضافة border للسهم */
+            border-radius: 50%; /* جعل السهم دائري */
+            padding: 6px; /* إضافة مساحة داخلية للسهم */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .show-more-text {
+            font-family: 'Cairo', sans-serif;
+            color: #363636;
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .show-more-item {
+                width: 150px;
+                margin: 0 2px;
+                margin-left: 5px;
+                margin-right: -12px;
+            }
+            
+            .show-more-text {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <!-- Show More Item - Now positioned to be on the left side -->
+            <div class="show-more-item" onclick="redirectToDiscounts()">
+                <svg class="show-more-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7"/>
+                </svg>
+                <div class="show-more-text">عرض المزيد</div>
+            </div>
+            
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/k5BR8sS6/1.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=1')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">ابقَ قوياً 365 يومًا في السنة ل ديمى لوفاتو</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">70.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">114.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                الخصم 38.6% 
+                </h1>
+            </div>
+
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/nVmJf8kW/1703917864-DSC04765.jpg" alt="صورة 1" onclick="selectImage('prod.html?id=2')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">حذاء جلد طبيعي عالي الجودة بمظهر أنيق</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">299.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">450.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 33.56%
+                </h1>
+            </div>
+
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://files.catbox.moe/g2tzgl.webp" alt="صورة 1" onclick="selectImage('prod.html?id=21')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">سماعة بلوتوث TWS بتصميم مميز</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">420.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">650.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 54%
+                </h1>
+            </div>
+
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/J7DrRk82/1730638332091458963.jpg" alt="ايربودز A-16 بلوتوث" onclick="selectImage('prod.html?id=4')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">ايربودز A-16 بلوتوث</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">400.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">500.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 20%
+                </h1>
+            </div>
+          
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/j506JbY9/1745746083temp1014429155113836232-removebg-preview.png" alt="شنطة كروس jeep" onclick="selectImage('prod.html?id=5')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">شنطة كروس jeep للكتف وأخري لليد و محفظة </h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">225.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">300.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 25%
+                </h1>
+            </div>
+            
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg" alt="رامة DDR4 4G" onclick="selectImage('prod.html?id=6')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">رامة DDR4 4G</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">300.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">400.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 25%
+                </h1>
+            </div>
+            
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/15z3Yh3F/1723529658temp250218069738258446.jpg" alt="علبة ألوان عملاقة 168 قطعة" onclick="selectImage('prod.html?id=7')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">علبة ألوان عملاقة 168 قطعة</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">270.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;">360.00 جنيه</h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 25%
+                </h1>
+            </div>
+
+            <div class="carousel-item" style="margin-right: 12px;" loading="lazy">
+                <img src="https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg" alt="شنطة كروس ميكي" onclick="selectImage('prod.html?id=8')" loading="lazy">
+                <h1 style="color: #363636; font-size: 16px;">شنطة كروس ميكي</h1>
+                <h1 style="color: #4e4e4e; font-size: 16px;">200.00 جنيه</h1>
+                <h1 style="color: #868686; font-size: 14px; text-decoration: line-through; margin-top: -8px; margin-right: -41px;"> 250.00 جنيه  </h1>
+                <h1 style="color: #ffffff; font-size: 13px; background-color: #ff0000; border-radius: 2px; text-align: center; line-height: 28px; height: 28px; float: right; margin-right: 17px; padding-right: 8px; padding-left: 8px; margin-bottom: 15px;">
+                    الخصم 20%
+                </h1>
+            </div>
+            
+        
+    
+            <!-- يمكنك إضافة المزيد من العناصر هنا بنفس الطريقة -->
+        </div>
+    </div>
+    <script>
+        // دالة لترتيب المنتجات عشوائياً
+        function shuffleCarouselItems() {
+            const carousel = document.getElementById('carousel');
+            const items = Array.from(carousel.querySelectorAll('.carousel-item'));
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
+            }
+            items.forEach(item => carousel.appendChild(item));
+            
+            // Make sure the "Show More" item stays at the end (left in RTL)
+            const showMoreItem = carousel.querySelector('.show-more-item');
+            if (showMoreItem) {
+                carousel.appendChild(showMoreItem);
+            }
+        }
+
+        function selectImage(path) {
+            window.location.href = path;
+        }
+        
+        function redirectToDiscounts() {
+            window.location.href = 'adger.search.html?search=خصومات';
+        }
+        
+        function isDesktop() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+            const isTablet = /(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(userAgent);
+            const screenWidth = window.innerWidth;
+            return !isMobile && !isTablet && screenWidth > 768;
+        }
+        function createArrows() {
+            if (!isDesktop()) return;
+            const container = document.querySelector('.carousel-container');
+            const carousel = document.querySelector('.carousel');
+            const leftArrow = document.createElement('button');
+            leftArrow.innerHTML = '❮';
+            leftArrow.classList.add('arrow-button', 'left-arrow');
+            leftArrow.style.display = 'block';
+            leftArrow.onclick = () => {
+                scrollCarousel(-200);
+                updateArrowsVisibility();
+            };
+            const rightArrow = document.createElement('button');
+            rightArrow.innerHTML = '❯';
+            rightArrow.classList.add('arrow-button', 'right-arrow');
+            rightArrow.style.display = 'none';
+            rightArrow.onclick = () => {
+                scrollCarousel(200);
+                updateArrowsVisibility();
+            };
+            container.appendChild(leftArrow);
+            container.appendChild(rightArrow);
+            function updateArrowsVisibility() {
+                if (carousel.scrollLeft === 0) {
+                    leftArrow.style.display = 'block';
+                    rightArrow.style.display = 'none';
+                } else if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
+                    leftArrow.style.display = 'none';
+                    rightArrow.style.display = 'block';
+                } else {
+                    leftArrow.style.display = 'block';
+                    rightArrow.style.display = 'block';
+                }
+            }
+            carousel.addEventListener('scroll', debounce(updateArrowsVisibility, 100));
+            updateArrowsVisibility();
+        }
+        function scrollCarousel(scrollAmount) {
+            const carousel = document.querySelector('.carousel');
+            carousel.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            shuffleCarouselItems(); // ترتيب المنتجات عشوائياً عند تحميل الصفحة
+            createArrows();
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('src');
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: '0px 0px 100px 0px' });
+            images.forEach(img => observer.observe(img));
+        });
+    </script>
+</body>
+</html>
+
+
+    <div class="line" style="margin-top: 25px;"></div>
+
+
+
+
 
 
 
