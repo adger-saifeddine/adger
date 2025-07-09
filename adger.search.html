@@ -1362,7 +1362,6 @@
     };
 
     // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
- Cardinals
     function addKeywords(category, keywords) {
         if (!keywordMap[category]) {
             keywordMap[category] = [];
@@ -1453,7 +1452,7 @@
         }
     });
 
-    // حل اح matteredي: التحقق كل ثانية
+    // حل احتياطي: التحقق كل ثانية
     setInterval(() => {
         const currentUser = localStorage.getItem('username');
         const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
@@ -1598,8 +1597,15 @@
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
+    // --- التعديل هنا ---
     // دالة لإظهار أداة التحميل
     function showLoadingAnimation() {
+        // التحقق أولاً: هل أيقونة التحميل موجودة بالفعل؟
+        if (document.getElementById('loading-spinner')) {
+            return; // إذا كانت موجودة، لا تفعل شيئًا واخرج من الدالة
+        }
+
+        // إذا لم تكن موجودة، قم بإنشائها
         const gallery = document.getElementById('gallery');
         const loadingDiv = document.createElement('div');
         loadingDiv.id = 'loading-spinner';
@@ -1617,43 +1623,49 @@
         `;
         gallery.appendChild(loadingDiv);
 
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = `
-            .spinner {
-                display: inline-block;
-                position: relative;
-                width: 60px;
-                height: 20px;
-            }
-            .spinner div {
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                animation: dot-flashing 1s infinite linear alternate;
-            }
-            .spinner div:first-child {
-                background-color: #ff0000;
-                left: 0;
-            }
-            .spinner div:last-child {
-                background-color: #0000ff;
-                right: 0;
-                animation-delay: 0.5s;
-            }
-            @keyframes dot-flashing {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.5); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(styleSheet);
+        // قم بإضافة الستايل فقط إذا لم يكن موجودًا من قبل لتجنب التكرار
+        if (!document.getElementById('spinner-style-sheet')) {
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'spinner-style-sheet';
+            styleSheet.textContent = `
+                .spinner {
+                    display: inline-block;
+                    position: relative;
+                    width: 60px;
+                    height: 20px;
+                }
+                .spinner div {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    animation: dot-flashing 1s infinite linear alternate;
+                }
+                .spinner div:first-child {
+                    background-color: #ff0000;
+                    left: 0;
+                }
+                .spinner div:last-child {
+                    background-color: #0000ff;
+                    right: 0;
+                    animation-delay: 0.5s;
+                }
+                @keyframes dot-flashing {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.5); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        }
     }
 
     // دالة لإزالة أداة التحميل
     function removeLoadingAnimation() {
         const loadingDiv = document.getElementById('loading-spinner');
-        if (loadingDiv) loadingDiv.remove();
+        if (loadingDiv) {
+            loadingDiv.remove();
+        }
     }
 
     // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
@@ -1663,82 +1675,56 @@
         const searchTermDisplay = document.getElementById('search-term-display');
         const searchBox = document.getElementById('search-box');
 
-        if (searchBox) searchBox.value = searchTerm;
+        if (searchBox) {
+            searchBox.value = searchTerm;
+        }
 
-        // إظهار الـ spinner فورًا
-        showLoadingAnimation();
-        noResultsMessage.style.display = 'none';
         gallery.innerHTML = '';
+        noResultsMessage.style.display = 'none';
+        showLoadingAnimation(); // ستظهر أيقونة واحدة فقط الآن
 
         fetch('products.json')
             .then(response => response.json())
             .then(products => {
-                // إزالة الـ spinner بعد جلب البيانات
-                removeLoadingAnimation();
-
                 const priceMatch = searchTerm.match(/أقل من (\d+)/);
                 if (priceMatch) {
                     const maxPrice = parseInt(priceMatch[1]);
                     let minPrice = 0;
-
-                    // نظام النطاقات السعرية
                     const priceRanges = [
-                        {max: 99, min: 0},
-                        {max: 200, min: 100},
-                        {max: 350, min: 201},
-                        {max: 500, min: 351},
-                        {max: 750, min: 501},
-                        {max: 1000, min: 751},
-                        {max: 1500, min: 1001},
-                        {max: 2000, min: 1501},
-                        {max: 3000, min: 2001},
-                        {max: 5000, min: 3001},
-                        {max: 7500, min: 5001},
-                        {max: 10000, min: 7501},
-                        {max: 15000, min: 10001},
-                        {max: 20000, min: 15001},
-                        {max: 30000, min: 20001},
-                        {max: 50000, min: 30001},
-                        {max: 75000, min: 50001},
-                        {max: 100000, min: 75001}
+                        {max: 99, min: 0}, {max: 200, min: 100}, {max: 350, min: 201},
+                        {max: 500, min: 351}, {max: 750, min: 501}, {max: 1000, min: 751},
+                        {max: 1500, min: 1001}, {max: 2000, min: 1501}, {max: 3000, min: 2001},
+                        {max: 5000, min: 3001}, {max: 7500, min: 5001}, {max: 10000, min: 7501},
+                        {max: 15000, min: 10001}, {max: 20000, min: 15001}, {max: 30000, min: 20001},
+                        {max: 50000, min: 30001}, {max: 75000, min: 50001}, {max: 100000, min: 75001}
                     ];
-
                     const foundRange = priceRanges.find(range => maxPrice <= range.max);
                     minPrice = foundRange ? foundRange.min : 0;
-
                     filteredProducts = products.filter(product => {
                         const productPrice = parseInt(product.price);
                         return productPrice >= minPrice && productPrice <= maxPrice;
                     });
                 } else {
                     const searchLower = normalizeArabic(searchTerm).trim();
-
-                    // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
                     if (!searchLower) {
                         filteredProducts = products;
                     } else {
-                        // إنشاء قائمة الكلمات المفتاحية للبحث
                         let searchKeywords = [searchLower];
                         for (const category in keywordMap) {
                             if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
                                 searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
                             }
                         }
-
-                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
                         filteredProducts = products.filter(product => {
                             const fieldsToSearch = [
                                 normalizeArabic(product.name) || '',
                                 normalizeArabic(product.dataName) || '',
                                 normalizeArabic(product.sold) || ''
                             ];
-
                             return searchKeywords.some(keyword => {
                                 return fieldsToSearch.some(field => {
-                                    // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                                    const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                                    const words = field.split(/\s+/);
+                                    return words.includes(keyword) || field === keyword;
                                 });
                             });
                         });
@@ -1746,8 +1732,9 @@
                 }
 
                 shuffleArray(filteredProducts);
-                gallery.innerHTML = '';
                 loadedItems = 0;
+                
+                removeLoadingAnimation(); // إزالة التحميل بعد اكتمال كل العمليات
 
                 if (filteredProducts.length > 0) {
                     loadProducts(0, itemsPerLoad);
@@ -1883,6 +1870,7 @@
     // تحميل المنتجات عند التمرير
     document.addEventListener('scroll', function () {
         const gallery = document.getElementById('gallery');
+        if(!gallery) return;
         const triggerHeight = window.innerHeight * 1.5;
         const galleryHeight = gallery.scrollHeight;
 
@@ -1897,11 +1885,6 @@
 
         if (searchBox) {
             searchBox.value = item === 'الكل' ? '' : item;
-        }
-
-        // إظهار الـ spinner عند النقر على "الكل"
-        if (item === 'الكل') {
-            showLoadingAnimation();
         }
 
         fetchAndFilterProducts(item === 'الكل' ? '' : item);
