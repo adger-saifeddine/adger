@@ -192,6 +192,856 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>الصفحة الرئيسية</title>
+        <style>
+            /* التنسيق العام */
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background-color: #ffffff;
+                padding-top: 114px; /* تعديل الحشو الأعلى ليشمل الرأس والشريط الفرعي */
+            }
+    
+            /* الشريط العلوي الثابت */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 66px;
+                background-color: white;
+                padding: 0 20px;
+                z-index: 1;
+                box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
+            }
+    
+            /* الشريط الأبيض الثابت أسفل الشريط العلوي */
+            .sub-header {
+                position: fixed;
+                top: 66px;
+                left: 0;
+                right: 0;
+                height: 48px;
+                background-color: white;
+                box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
+                text-shadow: none;
+                z-index: 999;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                overflow-x: auto; /* التمرير الأفقي */
+                scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+                -ms-overflow-style: none; /* إخفاء شريط التمرير في IE و Edge */
+            }
+    
+            /* إخفاء شريط التمرير في WebKit (Chrome, Safari) */
+            .sub-header::-webkit-scrollbar {
+                display: none;
+            }
+    
+            /* قائمة العناصر في الشريط الأبيض */
+            .sub-header nav {
+                display: flex;
+                gap: 30px;
+                position: relative;
+                white-space: nowrap; /* منع النص من الانتقال لسطر جديد */
+                user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none;
+            }
+    
+            .sub-header nav a {
+                text-decoration: none;
+                color: #333;
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 0; /* إضافة حشو لتحسين المظهر */
+            }
+    
+            /* الخط الرصاصي الرفيع تحت العنصر المحدد */
+            .underline {
+                position: absolute;
+                bottom: 0; /* التأكد من أن الخط أسفل النص تمامًا */
+                height: 3px;
+                background-color: #000000; /* لون الخط */
+                transition: all 0.3s ease;
+            }
+    
+            /* بقية التنسيقات كما هي */
+            .search-wrapper {
+                flex-grow: 1;
+                margin: 0 10px;
+                position: relative;
+            }
+            @media (min-width: 768px) { /* تعديل المارغن فقط للشاشات الأكبر من الهواتف */
+    .search-wrapper {
+        margin-right: 6px;
+        margin-left: 11px;
+    }
+}
+    
+            #search-box {
+                width: 100%;
+                padding: 10px 12px 10px 53px;
+                font-size: 16px;
+                border: 1px solid #000000;
+                border-radius: 51px;
+                outline: none;
+                box-sizing: border-box;
+                text-align: right;
+                direction: rtl;
+            }
+    
+            #search-button {
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: black;
+    color: white;
+    width: 70px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 33px;
+    border: none;
+    cursor: pointer;
+    outline: none; /* إزالة التأثير الأزرق عند التركيز */
+    -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق على الأجهزة التي تستخدم WebKit */
+}
+            @media (max-width: 1066px) {
+                #search-button {
+                  width: 49px !important;
+                }
+            }
+    
+            #search-button svg {
+                width: 20px;
+                height: 20px;
+                color: white;
+            }
+    
+            .right-elements {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+    
+            .right-elements span {
+                font-size: 16px;
+                color: #333;
+            }
+    
+            .user-icon {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-left: 20px;
+                justify-content: center;
+            }
+    
+            .user-icon svg {
+                width: 24px;
+                height: 24px;
+                color: #333;
+                flex-shrink: 0;
+            }
+    
+            .welcome-message {
+                font-size: 16px;
+                color: #007bff;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+    
+            .welcome-message span {
+                font-weight: bold;
+                color: #333;
+            }
+    
+            .left-elements {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+    
+            .menu-icon, .cart-icon, .message-button {
+                cursor: pointer;
+            }
+    
+            .menu-icon svg, .cart-icon svg, .message-button svg {
+                width: 24px;
+                height: 24px;
+                color: #333;
+            }
+    
+            .cart-icon {
+                position: relative;
+                user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none;
+            }
+    
+            .cart-count {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: red;
+                color: white;
+                font-size: 12px;
+                padding: 2px 6px;
+                border-radius: 50%;
+            }
+    
+            /* إخفاء العنصر على الهواتف */
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -10px;
+                    margin-right: -14px !important;
+                }
+            }
+            @media only screen and (max-width: 499px) {
+                .cart-icon {
+                margin-right: -12px;
+                }
+            }
+            @media only screen and (max-width: 767px) {
+                .cart-icon {
+                    margin-left: -13px;
+                    margin-right: -8px;
+                }
+            }
+            @media only screen and (max-width: 499px) {
+                .cart-icon {
+                    margin-left: -18.4px;
+                    margin-right: -13.4px;
+                }
+            }
+    
+            /* تعديلات النافذة الجانبية */
+            .menu-popup {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 250px;
+                height: 100vh;
+                background-color: white;
+                box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                z-index: 1000;
+                transition: left 0.3s ease-in-out;
+                overflow-y: auto;
+            }
+    
+            @keyframes slideIn {
+                from {
+                    left: -250px;
+                }
+                to {
+                    left: 0;
+                }
+            }
+    
+            @keyframes slideOut {
+                from {
+                    left: 0;
+                }
+                to {
+                    left: -250px;
+                }
+            }
+    
+            .menu-popup.active {
+                display: block;
+                animation: slideIn 0.3s ease-in-out forwards;
+            }
+    
+            .menu-popup.closing {
+                animation: slideOut 0.3s ease-in-out forwards;
+            }
+    
+            .menu-popup .back-arrow {
+    cursor: pointer;
+    margin-bottom: 20px;
+    -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
+}
+
+.menu-popup .back-arrow:focus {
+    outline: none; /* منع ظهور التحديد عند التركيز */
+}
+
+.menu-popup .back-arrow svg {
+    width: 24px;
+    height: 24px;
+    color: #333;
+    pointer-events: none; /* يمنع التأثير على الـ SVG */
+}
+
+    
+            .menu-popup p {
+                font-size: 18px;
+                color: #333;
+                cursor: pointer;
+            }
+    
+            .menu-icon {
+                margin-left: 10px;
+                user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none;
+            }
+    
+            /* إخفاء العنصر على الهواتف */
+            @media only screen and (max-width: 767px) {
+                .menu-icon {
+                    margin-left: -6px;
+                }
+            }
+            @media only screen and (min-width: 767px) {
+                .menu-icon {
+                 margin-right: -6px;
+                }
+            }
+    
+            .adger {
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+    margin-left: 10px;
+    font-weight: bold;
+    background: linear-gradient(to right, #f37420, #ffc4c4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    user-select: none; /* منع تحديد النص */
+    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
+    outline: none; /* إزالة أي إطار تحديد عند التركيز */
+}
+    
+            @media (max-width: 767px) {
+                .adger {
+                    font-size: 24px;
+                    margin-right: -5px !important;
+                }
+            }
+    
+            @media (min-width: 767px) {
+                .adger {
+                    margin-left: 10px;
+                }
+            }
+    
+            .container22 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+    
+            .country-code {
+                display: inline-flex;
+                align-items: center;
+                font-size: 18px;
+            }
+    
+            .flag {
+                width: 24px;
+                height: 16px;
+                margin-left: 8px;
+            }
+    
+            /* تعديلات للهواتف */
+            @media only screen and (max-width: 767px) {
+                .search-wrapper {
+                    width: 100%; /* Let the search bar take full width on mobile */
+                    max-width: none;
+                    margin: 0; /* Reset margin for mobile */
+                }
+    
+                #search-box {
+                    padding: 10px 12px 10px 45px; /* Adjust padding for mobile, if needed */
+                    font-size: 14px; /* Smaller font size for mobile */
+                }
+    
+                #search-button {
+                    left: 3px;
+                    width: 45px; /* Smaller button for mobile */
+                    height: 32px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- الهيكل الرئيسي -->
+        <div class="header">
+            <!-- العناصر على اليمين -->
+            <div class="right-elements">
+                <style>
+                    .adger-container {
+                      display: flex;
+                      align-items: center;
+                    }
+            
+                    
+                    /* Set cursor for both SVG and text within the container */
+                    .adger-container svg, .adger-container h2 {
+                      cursor: pointer;
+                    }
+                    
+                    /* Differentiate click areas */
+                    .adger-container h2 {
+                      margin-left: 5px; /* To ensure space from the arrow */
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        .adger-container h2 {
+                            margin-left: 9px;
+                            margin-right: -7px;
+                        }
+                    }
+                </style>
+                
+                <div class="adger-container">
+                    <h2 class="adger" onclick="window.location.href='index.html';">Adger</h2>
+                </div>
+                
+                <style>
+                    /* إخفاء العنصر على الهواتف */
+                    @media only screen and (max-width: 767px) {
+                        .element-to-hide {
+                            display: none;
+                        }
+                    }
+                </style>
+                <div class="element-to-hide" style="font-family: Cairo, sans-serif;">
+                    اللغه / <span style="color: red;">ar</span>
+                </div>
+                <style>
+                    /* إخفاء العنصر على الهواتف */
+                    @media only screen and (max-width: 767px) {
+                        .user-icon {
+                            display: none;
+                        }
+                    }
+                </style>
+                <div class="user-icon" onclick="window.location.href='account.html'">
+                    <div class="welcome-message" id="welcomeMessage">
+                        أهلاً <span id="usernameDisplay"></span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- صندوق البحث -->
+            <div class="search-wrapper">
+                <input 
+                    type="text" 
+                    id="search-box" 
+                    placeholder="ابحث فى أدجر" 
+                    autocomplete="off" 
+                    readonly 
+                    onclick="redirectToSearch(event)">
+                    <a href="search.html" id="search-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a>
+            </div>
+            
+            <script>
+                function redirectToSearch(event) {
+                    // منع التركيز على صندوق الإدخال
+                    event.preventDefault();
+                    
+                    // تنفيذ إعادة التوجيه إلى صفحة البحث
+                    window.location.href = "search.html";
+                }
+            </script>
+            
+            <!-- العناصر على اليسار -->
+            <div class="left-elements">
+                <style>
+                    /* إخفاء العنصر على الهواتف */
+                    @media only screen and (max-width: 767px) {
+                        .hide-on-mobile {
+                            display: none;
+                        }
+                    }
+    
+                    /* منع النص من الانقسام */
+                    .country-code {
+                        white-space: nowrap;
+                    }
+    
+                    .flag {
+                        width: 20px;
+                        height: auto;
+                        margin-left: 5px;
+                    }
+    
+                    /* إضافة مسافة بين العنصر والزر */
+                    .country-code {
+                        margin-right: 20px;
+                    }
+                </style>
+                <div class="container22">
+                    <div class="country-code hide-on-mobile">
+                        <span>البلد / </span>
+                        <span style="color: #000000; width: 44px;">EGP</span>
+                        <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg" alt="علم مصر">
+                    </div>
+                </div>
+                
+                <style>
+                    /* إخفاء زر المراسلة على الهواتف */
+                    @media only screen and (max-width: 767px) {
+                        .message-button {
+                            display: none;
+                        }
+                    }
+                </style>
+                <div class="message-button" onclick="window.open('https://wa.me/201152366798', '_blank')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span style="font-family: Cairo, sans-serif;">مراسلة</span>
+                </div>
+                
+                <div class="cart-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </div>
+                
+                <div class="menu-icon" onclick="toggleMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <script>
+            // تحديث عدد المنتجات عند تحميل الصفحة
+            document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
+        
+            // الاستماع إلى تغييرات localStorage
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'cartCount') {
+                    document.getElementById('cartCount').textContent = event.newValue;
+                }
+            });
+        </script>
+    
+        <!-- الشريط الأبيض الثابت أسفل الشريط العلوي -->
+          <!-- الشريط الأبيض الثابت أسفل الشريط العلوي -->
+          <!DOCTYPE html>
+          <html lang="ar" dir="rtl">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>الصفحة الرئيسية</title>
+              <style>
+                  /* تنسيق العنصر النشط */
+                  .sub-header nav a.active {
+                      color: #000000 !important; /* لون النص الأسود */
+                      font-weight: bold; /* يمكنك إضافة تنسيقات إضافية إذا أردت */
+                  }
+          
+                  /* الخط الرصاصي الرفيع تحت العنصر المحدد */
+                  .underline {
+                      position: absolute;
+                      bottom: 0;
+                      height: 2px;
+                      background-color: #000000; /* لون الخط */
+                      transition: all 0.3s ease;
+                  }
+
+                  #usernameDisplay {
+            white-space: nowrap; /* منع النص من الانتقال إلى سطر جديد */
+            overflow: hidden; /* إخفاء النص الزائد */
+            text-overflow: ellipsis; /* إضافة نقاط (...) للنص الزائد */
+            max-width: 150px; /* تحديد عرض أقصى للعنصر (يمكن تعديله حسب الحاجة) */
+            display: inline-block; /* لجعل العنصر يتصرف كعنصر inline مع إمكانية تحديد عرض */
+        }
+              </style>
+          </head>
+          <body>
+      
+
+
+
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+    <br>
+
+
+
+    <!DOCTYPE html>
+    <html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>تمرير الصور والنصوص</title>
+        <style>
+            /* CSS */
+            /* الخلفية الخضراء */
+            .green-background {
+                width: 100%;
+                padding: 20px;
+                background-color: rgba(0, 255, 13, 0.534);
+                box-sizing: border-box;
+            }
+    
+            /* توزيع المربعين جنبًا إلى جنب */
+            .groups-container {
+                display: flex;
+                gap: 20px; /* المسافة بين المربعين */
+            }
+    
+            /* مربع حول كل مجموعة */
+            .group {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.596); /* خلفية شبه شفافة */
+    flex: 1; /* لجعل المربعين متساويين في العرض */
+}
+    /* التصميم المتجاوب */
+    @media (max-width: 968px) {
+                 .group  {
+                    margin-top: -8px;
+                    margin-bottom: -8px;
+                    margin-left: -8px; /* مسافة 2px من اليسار */
+                    margin-right: -8px; /* مسافة 2px من اليمين */
+                }}
+    
+            /* عنوان المجموعة */
+            .group h2 {
+                color: rgb(0, 0, 0);
+                font-family: Cairo, sans-serif;
+                text-align: right;
+                margin-top: 0;
+                font-size: 24px;
+            }
+    
+            /* ترتيب المنتجات جنبًا إلى جنب */
+            .products {
+                display: flex;
+                gap: 15px; /* المسافة بين المنتجات */
+            }
+    
+            /* تصميم كل منتج */
+            .promda {
+                background-color: white;
+                border-radius: 10px;
+                padding: 15px;
+                text-align: center;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                flex: 1; /* لجعل المنتجات متساوية في العرض */
+                transition: transform 0.3s ease, box-shadow 0.3s ease; /* إضافة انتقال سلس */
+                -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+                outline: none; /* إزالة الإطار عند النقر */
+                -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            }
+    
+            /* تأثير التكبير عند التمرير */
+            .promda:hover {
+                transform: scale(1.05); /* تكبير العنصر بنسبة 5% */
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* زيادة الظل */
+            }
+    
+            .promda img {
+                width: 100%;
+                aspect-ratio: 1 / 1; /* نسبة العرض إلى الارتفاع 1:1 */
+                border-radius: 10px;
+                object-fit: cover; /* لجعل الصورة تملأ المساحة دون تشويه */
+                cursor: pointer; /* تغيير المؤشر إلى يد عند التمرير فوق الصورة */
+                transition: transform 0.3s ease; /* إضافة انتقال سلس للصورة */
+
+                -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+                outline: none; /* إزالة الإطار عند النقر */
+                -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+            }
+    
+            .promda p {
+                margin-top: 10px;
+                font-size: 15px;
+                color: rgb(36, 36, 36);
+                font-family: Cairo, sans-serif;
+                text-align: right; /* محاذاة النص إلى اليمين */
+                direction: rtl; /* جعل النص يبدأ من اليمين */
+            }
+    
+            /* التصميم المتجاوب */
+            @media (max-width: 968px) {
+                .groups-container {
+                    flex-direction: column; /* تغيير اتجاه المربعين إلى عمودي على الشاشات الصغيرة */
+                }
+    
+                /* إخفاء المربع الثاني على الشاشات الصغيرة */
+                #second-group {
+                    display: none;
+                }
+    
+                /* جعل المربع الأول يتقلص ليتناسب مع عرض الشاشة */
+                .group {
+                    flex: 1 1 auto;
+                }
+    
+                /* جعل المنتجات تظهر جنبًا إلى جنب حتى على الهواتف */
+                .products {
+                    flex-direction: row;
+                }
+    
+                /* تصغير حجم المنتجات على الشاشات الصغيرة */
+                .promda {
+                    flex: 1 1 30%; /* جعل كل منتج يشغل حوالي ثلث العرض */
+                }
+            }
+    
+            /* إخفاء المنتج الثالث في الشاشات الأقل من 500px */
+            @media (max-width: 500px) {
+                .products .promda:nth-child(3) {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- الخلفية الخضراء -->
+        <div class="green-background">
+            <!-- حاوية المربعين -->
+            <div class="groups-container">
+          <!-- المربع الأول -->
+<div class="group">
+    <h2>موضة</h2>
+    <div class="products">
+        <!-- المنتج 1: حذاء جلد -->
+        <div class="promda">
+            <a href="prod.html?id=2">
+                <img src="https://i.postimg.cc/GmhV26Fd/1703917866-DSC04769.jpg" alt="حذاء جلد سكاي مريح">
+            </a>
+            <p>360.00 جنيه</p>
+        </div>
+        <!-- المنتج 2: شنطة كروس ميكي (تم تغييرها لتصبح المنتج الثاني) -->
+        <div class="promda">
+            <a href="prod.html?id=8">
+                <img src="https://i.postimg.cc/c4tztV8s/1742285437temp7370626005691229244.jpg" alt="شنطة كروس ميكي">
+            </a>
+            <p>200.00 جنيه</p>
+        </div>
+        <!-- المنتج 3: شنطة كروس Jeep -->
+        <div class="promda">
+            <a href="prod.html?id=5">
+                <img src="https://i.postimg.cc/Jn7GxnYB/1726421816652454993-removebg-preview.png" alt="شنطة كروس Jeep">
+            </a>
+            <p>225.00 جنيه</p>
+        </div>
+    </div>
+</div>
+    
+                <!-- المربع الثاني -->
+                <div class="group" id="second-group">
+                    <h2>إلكترونيات</h2>
+                    <div class="products">
+                        <!-- المنتج 1: الطابعة -->
+                        <div class="promda">
+                            <a href="prod.html?id=10">
+                                <img src="https://i.postimg.cc/gJTzW3fP/1740299607img-20250223-102854-892-removebg-preview-2.png" alt="طابعة USB">
+                            </a>
+                            <p>999.00 جنيه</p>
+                        </div>
+                        <!-- المنتج 2: هولدر تصوير -->
+                        <div class="promda">
+                            <a href="prod.html?id=9">
+                                <img src="https://i.postimg.cc/rmt1cw7K/2025-04-03-13-30-49-5707d50e-removebg-preview.png" alt="هولدر تصوير AY49">
+                            </a>
+                            <p>520.00 جنيه</p>
+                        </div>
+                        <!-- المنتج 3: رامة DDR4 -->
+                        <div class="promda">
+                            <a href="prod.html?id=6">
+                                <img src="https://i.postimg.cc/CM7QL9Hm/CRUCIAL-4-GB-2133-MHz.jpg" alt="رامة DDR4 4G">
+                            </a>
+                            <p>300.00 جنيه</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+<br>
+
+
+
     
 <style>
     @media (max-width: 768px) { /* للهواتف */
