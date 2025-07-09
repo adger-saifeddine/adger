@@ -1597,7 +1597,7 @@
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
-    // دالة لإظهار أداة التحميل
+    // دالة لإظهار أداة التحميل فورًا
     function showLoadingAnimation() {
         const gallery = document.getElementById('gallery');
         const loadingDiv = document.createElement('div');
@@ -1607,6 +1607,7 @@
             justify-content: center;
             align-items: center;
             height: 100px;
+            opacity: 1; /* ضمان الظهور الفوري */
         `;
         loadingDiv.innerHTML = `
             <div class="spinner">
@@ -1630,6 +1631,7 @@
                 height: 20px;
                 border-radius: 50%;
                 animation: dot-flashing 1s infinite linear alternate;
+                opacity: 1; /* ضمان الظهور الفوري */
             }
             .spinner div:first-child {
                 background-color: #ff0000;
@@ -1664,10 +1666,9 @@
 
         if (searchBox) searchBox.value = searchTerm;
 
-        // إخلاء المحتوى القديم وإظهار التحميل فوراً
-        gallery.innerHTML = '';
+        showLoadingAnimation(); // إظهار التحميل فورًا
         noResultsMessage.style.display = 'none';
-        showLoadingAnimation();
+        gallery.innerHTML = '';
 
         fetch('products.json')
             .then(response => response.json())
@@ -1949,6 +1950,8 @@
     // addKeywords('كتب', ['مكتبة', 'قراءة']);
     // addKeywords('جديدة', ['منتج جديد', 'إصدار جديد']);
 </script>
+</body>
+</html>
 
 
 
