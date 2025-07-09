@@ -1336,58 +1336,6 @@
         </p>
     </div>
 <script>
-    // --- قاموس البحث المتقدم ---
-    let keywordMap = {
-        'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
-        'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-        'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
-        'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
-        'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
-        'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
-        'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
-        'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-        'ساعات': ['ساعات', 'ساعة'],
-        'البيت': ['البيت', 'منزل', 'منزلي'],
-        'اختراعات': ['اختراعات', 'اختراع'],
-        'أحذية': ['أحذية', 'حذاء', 'شوز'],
-        'ديكور': ['ديكور', 'ديكورات'],
-        'ألعاب': ['ألعاب', 'لعبة', 'لعبه'],
-        'أجهزة منزلية': ['أجهزة منزلية', 'جهاز منزلي', 'مطبخ', 'ثلاجة', 'غسالة'],
-        'مستلزمات السفر': ['مستلزمات السفر', 'سفر'],
-        'منتجات العناية': ['منتجات العناية', 'عناية', 'بشرة', 'شعر', 'كريم'],
-        'معدات الطبخ': ['معدات الطبخ', 'طبخ', 'مطبخ', 'أواني'],
-        'كمبيوترات': ['كمبيوترات', 'كمبيوتر', 'لابتوب', 'حاسوب', 'حاسب آلي'],
-        'كاميرات': ['كاميرات', 'كاميرا', 'تصوير'],
-        'مدرسة': ['مدرسة', 'مدرسه']
-    };
-
-    // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
-    function addKeywords(category, keywords) {
-        if (!keywordMap[category]) {
-            keywordMap[category] = [];
-        }
-        keywordMap[category] = [...new Set([...keywordMap[category], ...keywords])];
-        localStorage.setItem('keywordMap', JSON.stringify(keywordMap));
-    }
-
-    // تحميل القاموس من localStorage إن وجد
-    function loadKeywordMap() {
-        const savedMap = localStorage.getItem('keywordMap');
-        if (savedMap) {
-            keywordMap = JSON.parse(savedMap);
-        }
-    }
-
-    // دالة لتطبيع النصوص العربية
-    function normalizeArabic(text) {
-        if (!text) return '';
-        return text
-            .toLowerCase()
-            .replace(/أ|إ|آ/g, 'ا') // تحويل الألف الممدودة، الألف مع همزة أسفل، والألف مع همزة أعلى إلى ألف عادية
-            .replace(/ى/g, 'ي') // تحويل الألف المقصورة إلى ياء
-            .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
-    }
-
     // استرجاع بيانات المستخدم من localStorage
     const username = localStorage.getItem('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
@@ -1408,7 +1356,7 @@
         return name;
     }
 
-    // دالة لتحديث رسالة الترحيب
+    // دالة لتحديث رسالة الترحيب (محدثة)
     function updateWelcomeMessage() {
         const username = localStorage.getItem('username');
         
@@ -1418,6 +1366,7 @@
             const displayName = truncateUsername(username);
             welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
             
+            // تحديث عند تغيير الحجم
             window.addEventListener('resize', () => {
                 const usernameDisplay = document.getElementById('usernameDisplay');
                 if (usernameDisplay) {
@@ -1443,16 +1392,21 @@
         welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
     }
 
-    // حل تحديث الاسم عند العودة
+    // ========== حل تحديث الاسم عند العودة ==========
+    // 1. حدث التركيز عند العودة للصفحة
     window.addEventListener('focus', updateWelcomeMessage);
+    
+    // 2. حدث عرض الصفحة (لصفحات الـ SPA)
     window.addEventListener('pageshow', updateWelcomeMessage);
+    
+    // 3. حدث تخزين محلي (للتغييرات من صفحات أخرى)
     window.addEventListener('storage', function(event) {
         if (event.key === 'username') {
             updateWelcomeMessage();
         }
     });
-
-    // حل احتياطي: التحقق كل ثانية
+    
+    // 4. حل احتياطي: التحقق كل ثانية
     setInterval(() => {
         const currentUser = localStorage.getItem('username');
         const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
@@ -1462,6 +1416,7 @@
         }
     }, 1000);
 
+    // ========== باقي الكود الأصلي ==========
     // تهيئة العربة
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let cartCount = cart.length;
@@ -1526,7 +1481,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateCartCount();
         updateWelcomeMessage();
-        loadKeywordMap(); // تحميل القاموس عند بدء التشغيل
     });
 
     // ربط حدث النقر على أيقونة العربة
@@ -1552,7 +1506,7 @@
             }, 300);
         } else {
             menuPopup.style.display = 'block';
-            setTimeout(() => menuPopup.classList.add('active'), 10);
+            setTimeout(() => menuPopup.classList.add('active'), 聴);
         }
     }
 
@@ -1566,7 +1520,6 @@
             isDragging = true;
         }
     }
-
     function drag(event) {
         if (!isDragging) return;
         currentX = event.touches[0].clientX;
@@ -1575,15 +1528,12 @@
             isDragging = false;
         }
     }
-
     function endDrag() {
         isDragging = false;
     }
-
     function handleClickOutside(event) {
         if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
     }
-
     document.addEventListener('touchstart', startDrag);
     document.addEventListener('touchmove', drag);
     document.addEventListener('touchend', endDrag);
@@ -1657,14 +1607,14 @@
         if (loadingDiv) loadingDiv.remove();
     }
 
-    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
+    // دالة لجلب وتصفية المنتجات مع التعديل ليشمل البحث في sold
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
         const searchTermDisplay = document.getElementById('search-term-display');
         const searchBox = document.getElementById('search-box');
 
-        if (searchBox) searchBox.value = searchTerm;
+        if (searchBox) searchBox.value = searchSeeingTerm;
 
         showLoadingAnimation(); // إظهار التحميل فورًا
         noResultsMessage.style.display = 'none';
@@ -1676,10 +1626,11 @@
                 removeLoadingAnimation();
 
                 const priceMatch = searchTerm.match(/أقل من (\d+)/);
+                
                 if (priceMatch) {
                     const maxPrice = parseInt(priceMatch[1]);
                     let minPrice = 0;
-
+                    
                     // نظام النطاقات السعرية
                     const priceRanges = [
                         {max: 99, min: 0},
@@ -1710,40 +1661,15 @@
                         return productPrice >= minPrice && productPrice <= maxPrice;
                     });
                 } else {
-                    const searchLower = normalizeArabic(searchTerm).trim();
-
-                    // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
-                    if (!searchLower) {
-                        filteredProducts = products;
-                    } else {
-                        // إنشاء قائمة الكلمات المفتاحية للبحث
-                        let searchKeywords = [searchLower];
-                        for (const category in keywordMap) {
-                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
-                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
-                            }
-                        }
-
-                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
-                        filteredProducts = products.filter(product => {
-                            const fieldsToSearch = [
-                                normalizeArabic(product.name) || '',
-                                normalizeArabic(product.dataName) || '',
-                                normalizeArabic(product.sold) || ''
-                            ];
-
-                            return searchKeywords.some(keyword => {
-                                return fieldsToSearch.some(field => {
-                                    // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                                    const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
-                                });
-                            });
-                        });
-                    }
+                    // التعديل الرئيسي: البحث في name و data-name و sold
+                    const searchLower = searchTerm.toLowerCase();
+                    filteredProducts = products.filter(product => 
+                        (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
+                        (product.name && product.name.toLowerCase().includes(searchLower)) ||
+                        (product.sold && product.sold.toLowerCase().includes(searchLower))
+                    );
                 }
-
+                
                 shuffleArray(filteredProducts);
                 gallery.innerHTML = '';
                 loadedItems = 0;
@@ -1791,164 +1717,159 @@
                                 </svg>
                             </div>
                         </div>
-                    </a>
-                    <div class="text-under">
-                        <h1>${product.name}</h1>
-                        <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
-                        <div class="container">
-                            <div class="zero" style="font-size: 24px;"></div>
-                            <div class="number" style="font-size: 20px;">${product.price}</div>
-                            <div class="letter" style="margin-right: ${letterMargin}; font-size: 17px;">EGP</div>
-                        </div>
-                        <div class="product1212">
-                            <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
+                        <div class="text-under">
+                            <h1>${product.name}</h1>
+                            <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
+                            <div class="container">
+                                <div class="zero" style="font-size: 24px;"></div>
+                                <div class="number" style="font-size: 20px;">${product.price}</div>
+                                <div class="letter" style="margin-right: ${letterMargin}; font-size: 17px;">EGP</div>
+                            </div>
+                            <div class="product1212">
+                                <h3 class="rotating-text1212" data-texts='${JSON.stringify(product.discountTexts)}'>${product.discountTexts[0]}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            gallery.appendChild(productDiv);
+                `;
+                gallery.appendChild(productDiv);
+            }
+
+            loadedItems = endIndex;
+            const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
+            lazyImages.forEach(img => observer.observe(img));
+            startRotatingText(".rotating-text1212:not(.rotating)");
         }
 
-        loadedItems = endIndex;
-        const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
-        lazyImages.forEach(img => observer.observe(img));
-        startRotatingText(".rotating-text1212:not(.rotating)");
-    }
+        // مراقب التحميل الكسول
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.onload = () => {
+                        img.classList.add("loaded");
+                        if (isWhiteBackground(img)) {
+                            img.classList.add("white-bg");
+                        }
+                    };
+                    observer.unobserve(img);
+                }
+            });
+        }, { rootMargin: "0px 0px 200px 0px" });
 
-    // مراقب التحميل الكسول
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.onload = () => {
-                    img.classList.add("loaded");
-                    if (isWhiteBackground(img)) {
-                        img.classList.add("white-bg");
-                    }
-                };
-                observer.unobserve(img);
+        // دالة للتحقق من خلفية الصورة البيضاء
+        function isWhiteBackground(img) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+            const data = imageData.data;
+            let whitePixelCount = 0;
+            let totalPixelCount = data.length / 4;
+
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
+                    whitePixelCount++;
+                }
+            }
+
+            return (whitePixelCount / totalPixelCount) > 0.9;
+        }
+
+        // دالة لتدوير النصوص
+        function startRotatingText(selector) {
+            document.querySelectorAll(selector).forEach(element => {
+                element.classList.add('rotating');
+                const texts = JSON.parse(element.getAttribute("data-texts"));
+                let currentIndex = 0;
+                setInterval(() => {
+                    element.style.transition = "opacity 0.5s, transform 0.5s";
+                    element.style.opacity = "0";
+                    element.style.transform = "translateY(20px)";
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % texts.length;
+                        element.textContent = texts[currentIndex];
+                        element.style.opacity = "1";
+                        element.style.transform = "translateY(0)";
+                    }, 500);
+                }, 5000);
+            });
+        }
+
+        // دالة لقراءة معلمة البحث من URL
+        function getSearchTermFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('search') || '';
+        }
+
+        // تحميل المنتجات عند التمرير
+        document.addEventListener('scroll', function () {
+            const gallery = document.getElementById('gallery');
+            const triggerHeight = window.innerHeight * 1.5;
+            const galleryHeight = gallery.scrollHeight;
+
+            if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
+                loadProducts(loadedItems, itemsPerLoad);
             }
         });
-    }, { rootMargin: "0px 0px 200px 0px" });
 
-    // دالة للتحقق من خلفية الصورة البيضاء
-    function isWhiteBackground(img) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-        const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
-        const data = imageData.data;
-        let whitePixelCount = 0;
-        let totalPixelCount = data.length / 4;
+        // دالة لتحريك الخط وتنفيذ البحث
+        function selectItem(item, element) {
+            const searchBox = document.getElementById('search-box');
 
-        for (let i = 0; i < data.length; i += 4) {
-            if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
-                whitePixelCount++;
+            if (searchBox) {
+                searchBox.value = item === 'الكل' ? '' : item;
             }
-        }
 
-        return (whitePixelCount / totalPixelCount) > 0.9;
-    }
+            fetchAndFilterProducts(item === 'الكل' ? '' : item);
 
-    // دالة لتدوير النصوص
-    function startRotatingText(selector) {
-        document.querySelectorAll(selector).forEach(element => {
-            element.classList.add('rotating');
-            const texts = JSON.parse(element.getAttribute("data-texts"));
-            let currentIndex = 0;
-            setInterval(() => {
-                element.style.transition = "opacity 0.5s, transform 0.5s";
-                element.style.opacity = "0";
-                element.style.transform = "translateY(20px)";
-                setTimeout(() => {
-                    currentIndex = (currentIndex + 1) % texts.length;
-                    element.textContent = texts[currentIndex];
-                    element.style.opacity = "1";
-                    element.style.transform = "translateY(0)";
-                }, 500);
-            }, 5000);
-        });
-    }
+            const allItems = document.querySelectorAll('.sub-header nav a');
+            allItems.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
 
-    // دالة لقراءة معلمة البحث من URL
-    function getSearchTermFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('search') || '';
-    }
+            const underline = document.querySelector('.underline');
+            const itemRect = element.getBoundingClientRect();
+            const navRect = element.parentElement.getBoundingClientRect();
 
-    // تحميل المنتجات عند التمرير
-    document.addEventListener('scroll', function () {
-        const gallery = document.getElementById('gallery');
-        const triggerHeight = window.innerHeight * 1.5;
-        const galleryHeight = gallery.scrollHeight;
-
-        if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
-            loadProducts(loadedItems, itemsPerLoad);
-        }
-    });
-
-    // دالة لتحريك الخط وتنفيذ البحث
-    function selectItem(item, element) {
-        const searchBox = document.getElementById('search-box');
-
-        if (searchBox) {
-            searchBox.value = item === 'الكل' ? '' : item;
-        }
-
-        fetchAndFilterProducts(item === 'الكل' ? '' : item);
-
-        const allItems = document.querySelectorAll('.sub-header nav a');
-        allItems.forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-
-        const underline = document.querySelector('.underline');
-        const itemRect = element.getBoundingClientRect();
-        const navRect = element.parentElement.getBoundingClientRect();
-
-        underline.style.width = `${itemRect.width}px`;
-        underline.style.left = `${itemRect.left - navRect.left}px`;
-
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center'
-        });
-    }
-
-    // دالة لخلط مصفوفة عشوائيًا
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    // عند تحميل الصفحة
-    window.onload = function () {
-        const defaultItem = document.querySelector('.sub-header nav a');
-        const underline = document.querySelector('.underline');
-        if (defaultItem && underline) {
-            const itemRect = defaultItem.getBoundingClientRect();
-            const navRect = defaultItem.parentElement.getBoundingClientRect();
-            defaultItem.classList.add('active');
             underline.style.width = `${itemRect.width}px`;
             underline.style.left = `${itemRect.left - navRect.left}px`;
+
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center'
+            });
         }
 
-        const searchTerm = getSearchTermFromURL();
-        const searchBox = document.getElementById('search-box');
-        if (searchBox && searchTerm) {
-            searchBox.value = searchTerm;
+        // دالة لخلط مصفوفة عشوائيًا
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
         }
-        fetchAndFilterProducts(searchTerm || '');
-    };
 
-    // مثال لإضافة كلمات مفتاحية جديدة
-    // addKeywords('كتب', ['مكتبة', 'قراءة']);
-    // addKeywords('جديدة', ['منتج جديد', 'إصدار جديد']);
+        // عند تحميل الصفحة
+        window.onload = function () {
+            const defaultItem = document.querySelector('.sub-header nav a');
+            const underline = document.querySelector('.underline');
+            if (defaultItem && underline) {
+                const itemRect = defaultItem.getBoundingClientRect();
+                const navRect = defaultItem.parentElement.getBoundingClientRect();
+                defaultItem.classList.add('active');
+                underline.style.width = `${itemRect.width}px`;
+                underline.style.left = `${itemRect.left - navRect.left}px`;
+            }
+
+            const searchTerm = getSearchTermFromURL();
+            const searchBox = document.getElementById('search-box');
+            if (searchBox && searchTerm) {
+                searchBox.value = searchTerm;
+            }
+            fetchAndFilterProducts(searchTerm || '');
+        };
 </script>
 </body>
 </html>
