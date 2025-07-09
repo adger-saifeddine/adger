@@ -1664,11 +1664,9 @@
 
         if (searchBox) searchBox.value = searchTerm;
 
-        // إظهار الـ spinner فورًا باستخدام setTimeout
         setTimeout(() => {
             showLoadingAnimation();
         }, 0);
-
         noResultsMessage.style.display = 'none';
         gallery.innerHTML = '';
 
@@ -1949,7 +1947,6 @@
     };
 
     // مثال لإضافة كلمات مفتاحية جديدة
- Revealing
     // addKeywords('كتب', ['مكتبة', 'قراءة']);
     // addKeywords('جديدة', ['منتج جديد', 'إصدار جديد']);
 </script>
