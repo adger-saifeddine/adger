@@ -1600,10 +1600,6 @@
     // دالة لإظهار أداة التحميل
     function showLoadingAnimation() {
         const gallery = document.getElementById('gallery');
-        // إزالة أي رسائل سابقة
-        const existingLoading = document.getElementById('loading-spinner');
-        if (existingLoading) existingLoading.remove();
-        
         const loadingDiv = document.createElement('div');
         loadingDiv.id = 'loading-spinner';
         loadingDiv.style.cssText = `
@@ -1611,7 +1607,6 @@
             justify-content: center;
             align-items: center;
             height: 100px;
-            width: 100%;
         `;
         loadingDiv.innerHTML = `
             <div class="spinner">
@@ -1659,7 +1654,11 @@
         const loadingDiv = document.getElementById('loading-spinner');
         if (loadingDiv) loadingDiv.remove();
     }
-
+    
+    // ==========================================================
+    // ==== بداية منطقة التعديل لحل مشكلة نقاط التحميل  ====
+    // ==========================================================
+    
     // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
@@ -1669,126 +1668,96 @@
 
         if (searchBox) searchBox.value = searchTerm;
 
-        // إظهار أداة التحميل مباشرة عند بدء البحث
-        showLoadingAnimation();
-        
-        // إخفاء رسالة عدم وجود نتائج
-        if (noResultsMessage) noResultsMessage.style.display = 'none';
-        
-        // مسح المحتوى الحالي
+        // ---  الحل: تغيير الترتيب ---
+        // الخطوة 1: مسح المعرض الحالي وإخفاء رسالة النتائج الفارغة.
         gallery.innerHTML = '';
+        noResultsMessage.style.display = 'none';
+        
+        // الخطوة 2: إظهار نقاط التحميل في المعرض الفارغ.
+        showLoadingAnimation();
+        // --- نهاية الحل ---
 
-        // تأخير طفيف لمحاكاة جلب البيانات (يمكن إزالته في الإنتاج)
-        setTimeout(() => {
-            fetch('products.json')
-                .then(response => response.json())
-                .then(products => {
-                    removeLoadingAnimation();
+        fetch('products.json')
+            .then(response => response.json())
+            .then(products => {
+                // الخطوة 3: عند وصول البيانات، قم بإزالة نقاط التحميل أولاً.
+                removeLoadingAnimation();
 
-                    const priceMatch = searchTerm.match(/أقل من (\d+)/);
-                    if (priceMatch) {
-                        const maxPrice = parseInt(priceMatch[1]);
-                        let minPrice = 0;
-
-                        // نظام النطاقات السعرية
-                        const priceRanges = [
-                            {max: 99, min: 0},
-                            {max: 200, min: 100},
-                            {max: 350, min: 201},
-                            {max: 500, min: 351},
-                            {max: 750, min: 501},
-                            {max: 1000, min: 751},
-                            {max: 1500, min: 1001},
-                            {max: 2000, min: 1501},
-                            {max: 3000, min: 2001},
-                            {max: 5000, min: 3001},
-                            {max: 7500, min: 5001},
-                            {max: 10000, min: 7501},
-                            {max: 15000, min: 10001},
-                            {max: 20000, min: 15001},
-                            {max: 30000, min: 20001},
-                            {max: 50000, min: 30001},
-                            {max: 75000, min: 50001},
-                            {max: 100000, min: 75001}
-                        ];
-
-                        const foundRange = priceRanges.find(range => maxPrice <= range.max);
-                        minPrice = foundRange ? foundRange.min : 0;
-
-                        filteredProducts = products.filter(product => {
-                            const productPrice = parseInt(product.price);
-                            return productPrice >= minPrice && productPrice <= maxPrice;
-                        });
+                const priceMatch = searchTerm.match(/أقل من (\d+)/);
+                if (priceMatch) {
+                    const maxPrice = parseInt(priceMatch[1]);
+                    let minPrice = 0;
+                    const priceRanges = [
+                        {max: 99, min: 0}, {max: 200, min: 100}, {max: 350, min: 201},
+                        {max: 500, min: 351}, {max: 750, min: 501}, {max: 1000, min: 751},
+                        {max: 1500, min: 1001}, {max: 2000, min: 1501}, {max: 3000, min: 2001},
+                        {max: 5000, min: 3001}, {max: 7500, min: 5001}, {max: 10000, min: 7501},
+                        {max: 15000, min: 10001}, {max: 20000, min: 15001}, {max: 30000, min: 20001},
+                        {max: 50000, min: 30001}, {max: 75000, min: 50001}, {max: 100000, min: 75001}
+                    ];
+                    const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                    minPrice = foundRange ? foundRange.min : 0;
+                    filteredProducts = products.filter(product => {
+                        const productPrice = parseInt(product.price);
+                        return productPrice >= minPrice && productPrice <= maxPrice;
+                    });
+                } else {
+                    const searchLower = normalizeArabic(searchTerm).trim();
+                    if (!searchLower) {
+                        filteredProducts = products;
                     } else {
-                        const searchLower = normalizeArabic(searchTerm).trim();
-
-                        // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
-                        if (!searchLower) {
-                            filteredProducts = products;
-                        } else {
-                            // إنشاء قائمة الكلمات المفتاحية للبحث
-                            let searchKeywords = [searchLower];
-                            for (const category in keywordMap) {
-                                if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
-                                    searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
-                                }
+                        let searchKeywords = [searchLower];
+                        for (const category in keywordMap) {
+                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
+                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
                             }
-
-                            // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
-                            filteredProducts = products.filter(product => {
-                                const fieldsToSearch = [
-                                    normalizeArabic(product.name) || '',
-                                    normalizeArabic(product.dataName) || '',
-                                    normalizeArabic(product.sold) || ''
-                                ];
-
-                                return searchKeywords.some(keyword => {
-                                    return fieldsToSearch.some(field => {
-                                        // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                                        const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                        return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                               field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
-                                    });
+                        }
+                        filteredProducts = products.filter(product => {
+                            const fieldsToSearch = [
+                                normalizeArabic(product.name) || '',
+                                normalizeArabic(product.dataName) || '',
+                                normalizeArabic(product.sold) || ''
+                            ];
+                            return searchKeywords.some(keyword => {
+                                return fieldsToSearch.some(field => {
+                                    const words = field.split(/\s+/);
+                                    return words.includes(keyword) || field === keyword;
                                 });
                             });
-                        }
+                        });
                     }
+                }
 
-                    shuffleArray(filteredProducts);
-                    gallery.innerHTML = '';
-                    loadedItems = 0;
+                shuffleArray(filteredProducts);
+                // gallery.innerHTML = ''; // هذه لم تعد ضرورية هنا لأننا مسحناها في البداية
+                loadedItems = 0;
 
-                    if (filteredProducts.length > 0) {
-                        loadProducts(0, itemsPerLoad);
-                        if (noResultsMessage) noResultsMessage.style.display = 'none';
-                    } else {
-                        if (noResultsMessage) {
-                            noResultsMessage.style.display = 'block';
-                            if (searchTermDisplay) searchTermDisplay.textContent = searchTerm;
-                        }
-                    }
-                })
-                .catch(error => {
-                    removeLoadingAnimation();
-                    console.error('فشل جلب المنتجات:', error);
-                    gallery.innerHTML = '';
-                    if (noResultsMessage) {
-                        noResultsMessage.style.display = 'block';
-                        if (searchTermDisplay) searchTermDisplay.textContent = searchTerm;
-                    }
-                });
-        }, 100); // تأخير طفيف لضمان عرض أداة التحميل
+                // الخطوة 4: عرض المنتجات أو رسالة عدم وجود نتائج
+                if (filteredProducts.length > 0) {
+                    loadProducts(0, itemsPerLoad);
+                    noResultsMessage.style.display = 'none';
+                } else {
+                    noResultsMessage.style.display = 'block';
+                    searchTermDisplay.textContent = searchTerm;
+                }
+            })
+            .catch(error => {
+                removeLoadingAnimation();
+                console.error('فشل جلب المنتجات:', error);
+                gallery.innerHTML = '<p style="text-align:center; color:red;">حدث خطأ أثناء تحميل المنتجات.</p>';
+                noResultsMessage.style.display = 'block';
+                searchTermDisplay.textContent = searchTerm;
+            });
     }
+
+    // ==========================================================
+    // ==== نهاية منطقة التعديل ====
+    // ==========================================================
 
     // دالة لتحميل المنتجات
     function loadProducts(startIndex, count) {
         const gallery = document.getElementById('gallery');
         const endIndex = Math.min(startIndex + count, filteredProducts.length);
-
-        // إظهار أداة التحميل إذا كانت هناك منتجات إضافية لتحميلها
-        if (endIndex < filteredProducts.length) {
-            showLoadingAnimation();
-        }
 
         for (let i = startIndex; i < endIndex; i++) {
             const product = filteredProducts[i];
@@ -1833,9 +1802,6 @@
         const lazyImages = document.querySelectorAll("img[data-src]:not(.loaded)");
         lazyImages.forEach(img => observer.observe(img));
         startRotatingText(".rotating-text1212:not(.rotating)");
-
-        // إزالة أداة التحميل بعد تحميل المنتجات
-        removeLoadingAnimation();
     }
 
     // مراقب التحميل الكسول
@@ -1857,23 +1823,27 @@
 
     // دالة للتحقق من خلفية الصورة البيضاء
     function isWhiteBackground(img) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-        const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
-        const data = imageData.data;
-        let whitePixelCount = 0;
-        let totalPixelCount = data.length / 4;
+        try {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            const imageData = context.getImageData(0, 0, img.naturalWidth, img.naturalHeight);
+            const data = imageData.data;
+            let whitePixelCount = 0;
+            let totalPixelCount = data.length / 4;
 
-        for (let i = 0; i < data.length; i += 4) {
-            if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
-                whitePixelCount++;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) {
+                    whitePixelCount++;
+                }
             }
+            return (whitePixelCount / totalPixelCount) > 0.9;
+        } catch (e) {
+            console.error("Error checking image background:", e);
+            return false;
         }
-
-        return (whitePixelCount / totalPixelCount) > 0.9;
     }
 
     // دالة لتدوير النصوص
@@ -1908,10 +1878,12 @@
         const triggerHeight = window.innerHeight * 1.5;
         const galleryHeight = gallery.scrollHeight;
 
-        if (window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
+        // التأكد من أن gallery ليس فارغًا قبل حساب ارتفاعه
+        if (gallery.children.length > 0 && window.scrollY >= (galleryHeight - triggerHeight) && loadedItems < filteredProducts.length) {
             loadProducts(loadedItems, itemsPerLoad);
         }
     });
+
 
     // دالة لتحريك الخط وتنفيذ البحث
     function selectItem(item, element) {
@@ -1936,7 +1908,7 @@
 
         element.scrollIntoView({
             behavior: 'smooth',
-            block: 'center',
+            block: 'nearest',
             inline: 'center'
         });
     }
@@ -1966,14 +1938,7 @@
         if (searchBox && searchTerm) {
             searchBox.value = searchTerm;
         }
-        
-        // إظهار أداة التحميل مباشرة عند بدء التحميل
-        showLoadingAnimation();
-        
-        // تأخير طفيف لضمان عرض أداة التحميل قبل بدء جلب البيانات
-        setTimeout(() => {
-            fetchAndFilterProducts(searchTerm || '');
-        }, 100);
+        fetchAndFilterProducts(searchTerm || '');
     };
 
     // مثال لإضافة كلمات مفتاحية جديدة
