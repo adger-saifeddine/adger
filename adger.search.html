@@ -1336,387 +1336,318 @@
         </p>
     </div>
 <script>
-    // استرجاع بيانات المستخدم من localStorage
-    const username = localStorage.getItem('username');
-    const welcomeMessage = document.getElementById('welcomeMessage');
-    const usernameDisplay = document.getElementById('usernameDisplay');
-
-    // دالة للتحقق من النصوص العربية
-    function isArabic(text) {
-        return /[\u0600-\u06FF]/.test(text);
-    }
-
-    // دالة لتقصير اسم المستخدم
-    function truncateUsername(name) {
-        if (!name) return '';
-        const maxLength = isArabic(name) ? 12 : 7;
-        if (window.innerWidth < 966 && name.length > maxLength) {
-            return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
-        }
-        return name;
-    }
-
-    // دالة لتحديث رسالة الترحيب (محدثة)
-    function updateWelcomeMessage() {
+        // استرجاع بيانات المستخدم من localStorage
         const username = localStorage.getItem('username');
-        
-        if (!welcomeMessage) return;
-        
-        if (username) {
-            const displayName = truncateUsername(username);
-            welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+
+        // دالة للتحقق من النصوص العربية
+        function isArabic(text) {
+            return /[\u0600-\u06FF]/.test(text);
+        }
+
+        // دالة لتقصير اسم المستخدم
+        function truncateUsername(name) {
+            if (!name) return '';
+            const maxLength = isArabic(name) ? 12 : 7;
+            if (window.innerWidth < 966 && name.length > maxLength) {
+                return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
+            }
+            return name;
+        }
+
+        // دالة لتحديث رسالة الترحيب
+        function updateWelcomeMessage() {
+            const username = localStorage.getItem('username');
             
-            // تحديث عند تغيير الحجم
+            if (!welcomeMessage) return;
+            
+            if (username) {
+                const displayName = truncateUsername(username);
+                welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
+                
+                // تحديث عند تغيير الحجم
+                window.addEventListener('resize', () => {
+                    const usernameDisplay = document.getElementById('usernameDisplay');
+                    if (usernameDisplay) {
+                        usernameDisplay.textContent = truncateUsername(username);
+                    }
+                });
+            } else {
+                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+            }
+        }
+
+        // تهيئة أولية لرسالة الترحيب
+        if (username) {
+            if (usernameDisplay) {
+                usernameDisplay.textContent = truncateUsername(username);
+            }
             window.addEventListener('resize', () => {
-                const usernameDisplay = document.getElementById('usernameDisplay');
                 if (usernameDisplay) {
                     usernameDisplay.textContent = truncateUsername(username);
                 }
             });
-        } else {
+        } else if (welcomeMessage) {
             welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
         }
-    }
 
-    // تهيئة أولية لرسالة الترحيب
-    if (username) {
-        if (usernameDisplay) {
-            usernameDisplay.textContent = truncateUsername(username);
-        }
-        window.addEventListener('resize', () => {
-            if (usernameDisplay) {
-                usernameDisplay.textContent = truncateUsername(username);
+        // حل تحديث الاسم عند العودة
+        window.addEventListener('focus', updateWelcomeMessage);
+        window.addEventListener('pageshow', updateWelcomeMessage);
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'username') {
+                updateWelcomeMessage();
             }
         });
-    } else if (welcomeMessage) {
-        welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-    }
+        setInterval(() => {
+            const currentUser = localStorage.getItem('username');
+            const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+            if (truncateUsername(currentUser) !== displayedUser) {
+                updateWelcomeMessage();
+            }
+        }, 1000);
 
-    // ========== حل تحديث الاسم عند العودة ==========
-    // 1. حدث التركيز عند العودة للصفحة
-    window.addEventListener('focus', updateWelcomeMessage);
-    
-    // 2. حدث عرض الصفحة (لصفحات الـ SPA)
-    window.addEventListener('pageshow', updateWelcomeMessage);
-    
-    // 3. حدث تخزين محلي (للتغييرات من صفحات أخرى)
-    window.addEventListener('storage', function(event) {
-        if (event.key === 'username') {
-            updateWelcomeMessage();
-        }
-    });
-    
-    // 4. حل احتياطي: التحقق كل ثانية
-    setInterval(() => {
-        const currentUser = localStorage.getItem('username');
-        const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
-        
-        if (truncateUsername(currentUser) !== displayedUser) {
-            updateWelcomeMessage();
-        }
-    }, 1000);
-
-    // ========== باقي الكود الأصلي ==========
-    // تهيئة العربة
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let cartCount = cart.length;
-
-    // دالة لتحديث عدد العناصر في العربة
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartCountElement = document.querySelector('.cart-count');
-        if (cartCountElement) {
-            cartCountElement.textContent = cart.length;
-        }
-    }
-
-    // دالة لإضافة المنتج إلى العربة
-    function addToCart(element) {
-        event.stopPropagation();
-        event.preventDefault();
-        const productContainer = element.closest('.image-container');
-        const product = {
-            id: productContainer.querySelector('img').src,
-            image: productContainer.querySelector('img').src,
-            name: productContainer.querySelector('h1').textContent,
-            sold: productContainer.querySelector('h2').textContent,
-            price: productContainer.querySelector('.number').textContent,
-            discount: productContainer.querySelector('h3').textContent,
-            link: productContainer.querySelector('a').href
-        };
-
+        // تهيئة العربة
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (!existingProduct) {
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
+        let cartCount = cart.length;
+
+        // دالة لتحديث عدد العناصر في العربة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCountElement = document.querySelector('.cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = cart.length;
+            }
+        }
+
+        // دالة لإضافة المنتج إلى العربة
+        function addToCart(element) {
+            event.stopPropagation();
+            event.preventDefault();
+            const productContainer = element.closest('.image-container');
+            const product = {
+                id: productContainer.querySelector('img').src,
+                image: productContainer.querySelector('img').src,
+                name: productContainer.querySelector('h1').textContent,
+                sold: productContainer.querySelector('h2').textContent,
+                price: productContainer.querySelector('.number').textContent,
+                discount: productContainer.querySelector('h3').textContent,
+                link: productContainer.querySelector('a').href
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.id === product.id);
+            if (!existingProduct) {
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+            }
+            return false;
+        }
+
+        // التنقل إلى صفحة العربة
+        function navigateToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        // الاستماع إلى تغييرات localStorage
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'cart') {
+                updateCartCount();
+            } else if (event.key === 'username') {
+                updateWelcomeMessage();
+            }
+        });
+
+        // الاستماع إلى الرسائل من صفحة الحساب
+        window.addEventListener('message', function(event) {
+            if (event.data.key === 'username') {
+                localStorage.setItem('username', event.data.value);
+                updateWelcomeMessage();
+            }
+        });
+
+        // تحديث العرض عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
             updateCartCount();
-        }
-        return false;
-    }
-
-    // التنقل إلى صفحة العربة
-    function navigateToCart() {
-        window.location.href = 'cart.html';
-    }
-
-    // الاستماع إلى تغييرات localStorage
-    window.addEventListener('storage', function(event) {
-        if (event.key === 'cart') {
-            updateCartCount();
-        } else if (event.key === 'username') {
             updateWelcomeMessage();
+        });
+
+        // ربط حدث النقر على أيقونة العربة
+        if (document.querySelector('.cart-icon')) {
+            document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
         }
-    });
 
-    // الاستماع إلى الرسائل من صفحة الحساب
-    window.addEventListener('message', function(event) {
-        if (event.data.key === 'username') {
-            localStorage.setItem('username', event.data.value);
-            updateWelcomeMessage();
+        // دالة لتحريك الخط عند النقر على عناصر القائمة
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => window.scrollTo(0, 0));
+        });
+
+        // دالة لإظهار أو إخفاء القائمة الجانبية
+        function toggleMenu() {
+            const menuPopup = document.getElementById('menuPopup');
+            if (menuPopup.classList.contains('active')) {
+                menuPopup.classList.remove('active');
+                menuPopup.classList.add('closing');
+                setTimeout(() => {
+                    menuPopup.classList.remove('closing');
+                    menuPopup.style.display = 'none';
+                }, 300);
+            } else {
+                menuPopup.style.display = 'block';
+                setTimeout(() => menuPopup.classList.add('active'), 10);
+            }
         }
-    });
 
-    // تحديث العرض عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCartCount();
-        updateWelcomeMessage();
-    });
-
-    // ربط حدث النقر على أيقونة العربة
-    if (document.querySelector('.cart-icon')) {
-        document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
-    }
-
-    // دالة لتحريك الخط عند النقر على عناصر القائمة
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => window.scrollTo(0, 0));
-    });
-
-    // دالة لإظهار أو إخفاء القائمة الجانبية
-    function toggleMenu() {
+        // متغيرات ودوال لتتبع السحب
+        let startX = 0, currentX = 0, isDragging = false;
         const menuPopup = document.getElementById('menuPopup');
-        if (menuPopup.classList.contains('active')) {
-            menuPopup.classList.remove('active');
-            menuPopup.classList.add('closing');
-            setTimeout(() => {
-                menuPopup.classList.remove('closing');
-                menuPopup.style.display = 'none';
-            }, 300);
-        } else {
-            menuPopup.style.display = 'block';
-            setTimeout(() => menuPopup.classList.add('active'), 聴);
-        }
-    }
 
-    // متغيرات ودوال لتتبع السحب
-    let startX = 0, currentX = 0, isDragging = false;
-    const menuPopup = document.getElementById('menuPopup');
-
-    function startDrag(event) {
-        if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
-            startX = event.touches[0].clientX;
-            isDragging = true;
+        function startDrag(event) {
+            if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
+                startX = event.touches[0].clientX;
+                isDragging = true;
+            }
         }
-    }
-    function drag(event) {
-        if (!isDragging) return;
-        currentX = event.touches[0].clientX;
-        if (currentX - startX < -50) {
-            toggleMenu();
+        function drag(event) {
+            if (!isDragging) return;
+            currentX = event.touches[0].clientX;
+            if (currentX - startX < -50) {
+                toggleMenu();
+                isDragging = false;
+            }
+        }
+        function endDrag() {
             isDragging = false;
         }
-    }
-    function endDrag() {
-        isDragging = false;
-    }
-    function handleClickOutside(event) {
-        if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
-    }
-    document.addEventListener('touchstart', startDrag);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('touchend', endDrag);
-    document.addEventListener('click', handleClickOutside);
-    menuPopup.addEventListener('touchmove', (event) => {
-        if (menuPopup.classList.contains('active')) event.preventDefault();
-    }, { passive: false });
+        function handleClickOutside(event) {
+            if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
+        }
+        document.addEventListener('touchstart', startDrag);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('touchend', endDrag);
+        document.addEventListener('click', handleClickOutside);
+        menuPopup.addEventListener('touchmove', (event) => {
+            if (menuPopup.classList.contains('active')) event.preventDefault();
+        }, { passive: false });
 
-    // متغيرات عالمية لتتبع المنتجات
-    let filteredProducts = [];
-    const itemsPerLoad = 20;
-    let loadedItems = 0;
+        // متغيرات عالمية لتتبع المنتجات
+        let filteredProducts = [];
+        const itemsPerLoad = 20;
+        let loadedItems = 0;
 
-    // دالة لإظهار أداة التحميل فورًا
-    function showLoadingAnimation() {
-        const gallery = document.getElementById('gallery');
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = 'loading-spinner';
-        loadingDiv.style.cssText = `
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-            opacity: 1; /* ضمان الظهور الفوري */
-        `;
-        loadingDiv.innerHTML = `
-            <div class="spinner">
-                <div></div>
-                <div></div>
-            </div>
-        `;
-        gallery.appendChild(loadingDiv);
+        // دالة لجلب وتصفية المنتجات مع التعديل ليشمل البحث في sold
+        function fetchAndFilterProducts(searchTerm) {
+            const gallery = document.getElementById('gallery');
+            const noResultsMessage = document.getElementById('no-results-message');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const searchTermDisplay = document.getElementById('search-term-display');
+            const searchBox = document.getElementById('search-box');
 
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = `
-            .spinner {
-                display: inline-block;
-                position: relative;
-                width: 60px;
-                height: 20px;
-            }
-            .spinner div {
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                animation: dot-flashing 1s infinite linear alternate;
-                opacity: 1; /* ضمان الظهور الفوري */
-            }
-            .spinner div:first-child {
-                background-color: #ff0000;
-                left: 0;
-            }
-            .spinner div:last-child {
-                background-color: #0000ff;
-                right: 0;
-                animation-delay: 0.5s;
-            }
-            @keyframes dot-flashing {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.5); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(styleSheet);
-    }
+            if (searchBox) searchBox.value = searchTerm;
 
-    // دالة لإزالة أداة التحميل
-    function removeLoadingAnimation() {
-        const loadingDiv = document.getElementById('loading-spinner');
-        if (loadingDiv) loadingDiv.remove();
-    }
+            loadingSpinner.style.display = 'block';
+            noResultsMessage.style.display = 'none';
+            gallery.innerHTML = '';
 
-    // دالة لجلب وتصفية المنتجات مع التعديل ليشمل البحث في sold
-    function fetchAndFilterProducts(searchTerm) {
-        const gallery = document.getElementById('gallery');
-        const noResultsMessage = document.getElementById('no-results-message');
-        const searchTermDisplay = document.getElementById('search-term-display');
-        const searchBox = document.getElementById('search-box');
-
-        if (searchBox) searchBox.value = searchSeeingTerm;
-
-        showLoadingAnimation(); // إظهار التحميل فورًا
-        noResultsMessage.style.display = 'none';
-        gallery.innerHTML = '';
-
-        fetch('products.json')
-            .then(response => response.json())
-            .then(products => {
-                removeLoadingAnimation();
-
-                const priceMatch = searchTerm.match(/أقل من (\d+)/);
-                
-                if (priceMatch) {
-                    const maxPrice = parseInt(priceMatch[1]);
-                    let minPrice = 0;
+            fetch('products.json')
+                .then(response => response.json())
+                .then(products => {
+                    const priceMatch = searchTerm.match(/أقل من (\d+)/);
                     
-                    // نظام النطاقات السعرية
-                    const priceRanges = [
-                        {max: 99, min: 0},
-                        {max: 200, min: 100},
-                        {max: 350, min: 201},
-                        {max: 500, min: 351},
-                        {max: 750, min: 501},
-                        {max: 1000, min: 751},
-                        {max: 1500, min: 1001},
-                        {max: 2000, min: 1501},
-                        {max: 3000, min: 2001},
-                        {max: 5000, min: 3001},
-                        {max: 7500, min: 5001},
-                        {max: 10000, min: 7501},
-                        {max: 15000, min: 10001},
-                        {max: 20000, min: 15001},
-                        {max: 30000, min: 20001},
-                        {max: 50000, min: 30001},
-                        {max: 75000, min: 50001},
-                        {max: 100000, min: 75001}
-                    ];
+                    if (priceMatch) {
+                        const maxPrice = parseInt(priceMatch[1]);
+                        let minPrice = 0;
+                        
+                        const priceRanges = [
+                            {max: 99, min: 0},
+                            {max: 200, min: 100},
+                            {max: 350, min: 201},
+                            {max: 500, min: 351},
+                            {max: 750, min: 501},
+                            {max: 1000, min: 751},
+                            {max: 1500, min: 1001},
+                            {max: 2000, min: 1501},
+                            {max: 3000, min: 2001},
+                            {max: 5000, min: 3001},
+                            {max: 7500, min: 5001},
+                            {max: 10000, min: 7501},
+                            {max: 15000, min: 10001},
+                            {max: 20000, min: 15001},
+                            {max: 30000, min: 20001},
+                            {max: 50000, min: 30001},
+                            {max: 75000, min: 50001},
+                            {max: 100000, min: 75001}
+                        ];
 
-                    const foundRange = priceRanges.find(range => maxPrice <= range.max);
-                    minPrice = foundRange ? foundRange.min : 0;
+                        const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                        minPrice = foundRange ? foundRange.min : 0;
 
-                    filteredProducts = products.filter(product => {
-                        const productPrice = parseInt(product.price);
-                        return productPrice >= minPrice && productPrice <= maxPrice;
-                    });
-                } else {
-                    // التعديل الرئيسي: البحث في name و data-name و sold
-                    const searchLower = searchTerm.toLowerCase();
-                    filteredProducts = products.filter(product => 
-                        (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
-                        (product.name && product.name.toLowerCase().includes(searchLower)) ||
-                        (product.sold && product.sold.toLowerCase().includes(searchLower))
-                    );
-                }
-                
-                shuffleArray(filteredProducts);
-                gallery.innerHTML = '';
-                loadedItems = 0;
+                        filteredProducts = products.filter(product => {
+                            const productPrice = parseInt(product.price);
+                            return productPrice >= minPrice && productPrice <= maxPrice;
+                        });
+                    } else {
+                        const searchLower = searchTerm.toLowerCase();
+                        filteredProducts = products.filter(product => 
+                            (product.dataName && product.dataName.toLowerCase().includes(searchLower)) ||
+                            (product.name && product.name.toLowerCase().includes(searchLower)) ||
+                            (product.sold && product.sold.toLowerCase().includes(searchLower))
+                        );
+                    }
+                    
+                    shuffleArray(filteredProducts);
+                    gallery.innerHTML = '';
+                    loadedItems = 0;
 
-                if (filteredProducts.length > 0) {
-                    loadProducts(0, itemsPerLoad);
-                    noResultsMessage.style.display = 'none';
-                } else {
+                    loadingSpinner.style.display = 'none';
+
+                    if (filteredProducts.length > 0) {
+                        loadProducts(0, itemsPerLoad);
+                        noResultsMessage.style.display = 'none';
+                    } else {
+                        noResultsMessage.style.display = 'block';
+                        searchTermDisplay.textContent = searchTerm;
+                    }
+                })
+                .catch(error => {
+                    console.error('فشل جلب المنتجات:', error);
+                    gallery.innerHTML = '';
+                    loadingSpinner.style.display = 'none';
                     noResultsMessage.style.display = 'block';
                     searchTermDisplay.textContent = searchTerm;
-                }
-            })
-            .catch(error => {
-                removeLoadingAnimation();
-                console.error('فشل جلب المنتجات:', error);
-                gallery.innerHTML = '';
-                noResultsMessage.style.display = 'block';
-                searchTermDisplay.textContent = searchTerm;
-            });
-    }
+                });
+        }
 
-    // دالة لتحميل المنتجات
-    function loadProducts(startIndex, count) {
-        const gallery = document.getElementById('gallery');
-        const endIndex = Math.min(startIndex + count, filteredProducts.length);
+        // دالة لتحميل المنتجات
+        function loadProducts(startIndex, count) {
+            const gallery = document.getElementById('gallery');
+            const endIndex = Math.min(startIndex + count, filteredProducts.length);
 
-        for (let i = startIndex; i < endIndex; i++) {
-            const product = filteredProducts[i];
-            const priceStr = product.price.toString();
-            const firstDigit = priceStr.charAt(0);
-            const specialDigits = ['2', '3', '5', '6', '8', '9'];
-            const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
+            for (let i = startIndex; i < endIndex; i++) {
+                const product = filteredProducts[i];
+                const priceStr = product.price.toString();
+                const firstDigit = priceStr.charAt(0);
+                const specialDigits = ['2', '3', '5', '6', '8', '9'];
+                const letterMargin = specialDigits.includes(firstDigit) ? '-4px' : '-4px';
 
-            const productDiv = document.createElement('div');
-            productDiv.className = 'image-container product';
-            productDiv.setAttribute('data-name', product.dataName || product.name);
-            productDiv.innerHTML = `
-                <div class="image-frame">
-                    <a href="${product.link}" onclick="return true;">
-                        <div class="image-wrapper">
-                            <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
-                            <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
-                                </svg>
+                const productDiv = document.createElement('div');
+                productDiv.className = 'image-container product';
+                productDiv.setAttribute('data-name', product.dataName || product.name);
+                productDiv.innerHTML = `
+                    <div class="image-frame">
+                        <a href="${product.link}" onclick="return true;">
+                            <div class="image-wrapper">
+                                <img data-src="${product.image}" alt="${product.name}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAE9gH8dP5TLgAAAABJRU5ErkJggg==">
+                                <div class="add-to-cart" onclick="event.preventDefault(); event.stopPropagation(); addToCart(this); return false;">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"/>
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <div class="text-under">
                             <h1>${product.name}</h1>
                             <h2 style="font-family: Cairo, sans-serif; color: #ffa600; font-size: 13px; margin-top: -5px;">${product.sold}</h2>
@@ -1870,7 +1801,7 @@
             }
             fetchAndFilterProducts(searchTerm || '');
         };
-</script>
+    </script>
 </body>
 </html>
 
