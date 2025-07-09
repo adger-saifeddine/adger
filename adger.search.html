@@ -1388,6 +1388,26 @@
             .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
     }
 
+    // دالة لحساب مسافة Levenshtein (عدد التعديلات اللازمة لتحويل كلمة إلى أخرى)
+    function levenshteinDistance(a, b) {
+        const matrix = Array(b.length + 1).fill().map(() => Array(a.length + 1).fill(0));
+
+        for (let i = 0; i <= a.length; i++) matrix[0][i] = i;
+        for (let j = 0; j <= b.length; j++) matrix[j][0] = j;
+
+        for (let j = 1; j <= b.length; j++) {
+            for (let i = 1; i <= a.length; i++) {
+                const indicator = a[i - 1] === b[j - 1] ? 0 : 1;
+                matrix[j][i] = Math.min(
+                    matrix[j][i - 1] + 1, // حذف
+                    matrix[j - 1][i] + 1, // إضافة
+                    matrix[j - 1][i - 1] + indicator // استبدال
+                );
+            }
+        }
+        return matrix[b.length][a.length];
+    }
+
     // استرجاع بيانات المستخدم من localStorage
     const username = localStorage.getItem('username');
     const welcomeMessage = document.getElementById('welcomeMessage');
@@ -1655,7 +1675,7 @@
         if (loadingDiv) loadingDiv.remove();
     }
 
-    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
+    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات ومعالجة الأخطاء الإملائية
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
@@ -1719,12 +1739,15 @@
                         // إنشاء قائمة الكلمات المفتاحية للبحث
                         let searchKeywords = [searchLower];
                         for (const category in keywordMap) {
-                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
+                            if (keywordMap[category].some(keyword => 
+                                normalizeArabic(keyword) === searchLower || 
+                                levenshteinDistance(normalizeArabic(keyword), searchLower) <= 2
+                            )) {
                                 searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
                             }
                         }
 
-                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
+                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة أو قريبة
                         filteredProducts = products.filter(product => {
                             const fieldsToSearch = [
                                 normalizeArabic(product.name) || '',
@@ -1736,8 +1759,10 @@
                                 return fieldsToSearch.some(field => {
                                     // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
                                     const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                                    return words.some(word => 
+                                        word === keyword || 
+                                        levenshteinDistance(word, keyword) <= 2
+                                    ) || field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
                                 });
                             });
                         });
@@ -1952,9 +1977,6 @@
 </script>
 </body>
 </html>
-
-
-
 
 
 
