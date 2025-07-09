@@ -1597,12 +1597,9 @@
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
-    // دالة لإظهار أداة التحميل (فورية)
+    // دالة لإظهار أداة التحميل
     function showLoadingAnimation() {
         const gallery = document.getElementById('gallery');
-        // تنظيف المعرض أولاً قبل إظهار التحميل
-        gallery.innerHTML = '';
-        
         const loadingDiv = document.createElement('div');
         loadingDiv.id = 'loading-spinner';
         loadingDiv.style.cssText = `
@@ -1610,7 +1607,6 @@
             justify-content: center;
             align-items: center;
             height: 100px;
-            width: 100%;
         `;
         loadingDiv.innerHTML = `
             <div class="spinner">
@@ -1620,41 +1616,37 @@
         `;
         gallery.appendChild(loadingDiv);
 
-        // إضافة أنيميشن CSS فقط إذا لم يكن موجوداً بالفعل
-        if (!document.getElementById('spinner-style')) {
-            const styleSheet = document.createElement('style');
-            styleSheet.id = 'spinner-style';
-            styleSheet.textContent = `
-                .spinner {
-                    display: inline-block;
-                    position: relative;
-                    width: 60px;
-                    height: 20px;
-                }
-                .spinner div {
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    animation: dot-flashing 1s infinite linear alternate;
-                }
-                .spinner div:first-child {
-                    background-color: #ff0000;
-                    left: 0;
-                }
-                .spinner div:last-child {
-                    background-color: #0000ff;
-                    right: 0;
-                    animation-delay: 0.5s;
-                }
-                @keyframes dot-flashing {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.5); }
-                    100% { transform: scale(1); }
-                }
-            `;
-            document.head.appendChild(styleSheet);
-        }
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            .spinner {
+                display: inline-block;
+                position: relative;
+                width: 60px;
+                height: 20px;
+            }
+            .spinner div {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                animation: dot-flashing 1s infinite linear alternate;
+            }
+            .spinner div:first-child {
+                background-color: #ff0000;
+                left: 0;
+            }
+            .spinner div:last-child {
+                background-color: #0000ff;
+                right: 0;
+                animation-delay: 0.5s;
+            }
+            @keyframes dot-flashing {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.5); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
     }
 
     // دالة لإزالة أداة التحميل
@@ -1667,14 +1659,16 @@
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
+        const loadingSpinner = document.getElementById('loading-spinner');
         const searchTermDisplay = document.getElementById('search-term-display');
         const searchBox = document.getElementById('search-box');
 
         if (searchBox) searchBox.value = searchTerm;
 
-        // عرض أداة التحميل فوراً
-        showLoadingAnimation();
+        if (loadingSpinner) loadingSpinner.style.display = 'block';
+        else showLoadingAnimation();
         noResultsMessage.style.display = 'none';
+        gallery.innerHTML = '';
 
         fetch('products.json')
             .then(response => response.json())
@@ -1740,8 +1734,10 @@
 
                             return searchKeywords.some(keyword => {
                                 return fieldsToSearch.some(field => {
+                                    // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
                                     const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                    return words.includes(keyword) || field === keyword;
+                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
+                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
                                 });
                             });
                         });
@@ -1749,13 +1745,13 @@
                 }
 
                 shuffleArray(filteredProducts);
+                gallery.innerHTML = '';
                 loadedItems = 0;
 
                 if (filteredProducts.length > 0) {
                     loadProducts(0, itemsPerLoad);
                     noResultsMessage.style.display = 'none';
                 } else {
-                    gallery.innerHTML = '';
                     noResultsMessage.style.display = 'block';
                     searchTermDisplay.textContent = searchTerm;
                 }
