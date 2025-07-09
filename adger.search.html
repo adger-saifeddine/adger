@@ -1340,7 +1340,7 @@
     let keywordMap = {
         'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
         'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
-        'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار', 'اكسسورات', 'إكسسورات'], // إضافة الإملاء الخاطئ
+        'إكسسوارات': ['إكسسوارات', 'اكسسوارات', 'اكسسوار'],
         'موضة': ['موضة', 'ملابس', 'ازياء', 'أزياء', 'تيشيرت', 'بنطلون', 'فستان'],
         'كتب': ['كتب', 'كتاب', 'رواية', 'روايات'],
         'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
@@ -1386,18 +1386,6 @@
             .replace(/أ|إ|آ/g, 'ا') // تحويل الألف الممدودة، الألف مع همزة أسفل، والألف مع همزة أعلى إلى ألف عادية
             .replace(/ى/g, 'ي') // تحويل الألف المقصورة إلى ياء
             .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
-    }
-
-    // دالة لتصحيح الأخطاء الإملائية الشائعة
-    function correctSpelling(searchTerm) {
-        const normalizedTerm = normalizeArabic(searchTerm);
-        for (const category in keywordMap) {
-            const keywords = keywordMap[category].map(normalizeArabic);
-            if (keywords.includes(normalizedTerm)) {
-                return category; // إرجاع الكلمة الصحيحة من القاموس
-            }
-        }
-        return searchTerm; // إرجاع النص الأصلي إذا لم يتم العثور على تصحيح
     }
 
     // استرجاع بيانات المستخدم من localStorage
@@ -1722,8 +1710,7 @@
                         return productPrice >= minPrice && productPrice <= maxPrice;
                     });
                 } else {
-                    const correctedSearchTerm = correctSpelling(searchTerm); // تصحيح الإملاء
-                    const searchLower = normalizeArabic(correctedSearchTerm).trim();
+                    const searchLower = normalizeArabic(searchTerm).trim();
 
                     // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
                     if (!searchLower) {
