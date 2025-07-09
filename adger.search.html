@@ -1659,14 +1659,16 @@
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
-        const loadingSpinner = document.getElementById('loading-spinner');
         const searchTermDisplay = document.getElementById('search-term-display');
         const searchBox = document.getElementById('search-box');
 
         if (searchBox) searchBox.value = searchTerm;
 
-        if (loadingSpinner) loadingSpinner.style.display = 'block';
-        else showLoadingAnimation();
+        // إظهار الـ spinner فورًا باستخدام setTimeout
+        setTimeout(() => {
+            showLoadingAnimation();
+        }, 0);
+
         noResultsMessage.style.display = 'none';
         gallery.innerHTML = '';
 
