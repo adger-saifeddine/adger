@@ -1362,6 +1362,7 @@
     };
 
     // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
+ Cardinals
     function addKeywords(category, keywords) {
         if (!keywordMap[category]) {
             keywordMap[category] = [];
@@ -1452,7 +1453,7 @@
         }
     });
 
-    // حل احتياطي: التحقق كل ثانية
+    // حل اح matteredي: التحقق كل ثانية
     setInterval(() => {
         const currentUser = localStorage.getItem('username');
         const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
@@ -1659,13 +1660,12 @@
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
-        const loadingSpinner = document.getElementById('loading-spinner');
         const searchTermDisplay = document.getElementById('search-term-display');
         const searchBox = document.getElementById('search-box');
 
         if (searchBox) searchBox.value = searchTerm;
 
-        // إظهار نقاط التحميل فورًا
+        // إظهار الـ spinner فورًا
         showLoadingAnimation();
         noResultsMessage.style.display = 'none';
         gallery.innerHTML = '';
@@ -1673,6 +1673,7 @@
         fetch('products.json')
             .then(response => response.json())
             .then(products => {
+                // إزالة الـ spinner بعد جلب البيانات
                 removeLoadingAnimation();
 
                 const priceMatch = searchTerm.match(/أقل من (\d+)/);
@@ -1898,21 +1899,12 @@
             searchBox.value = item === 'الكل' ? '' : item;
         }
 
-        // إظهار نقاط التحميل فورًا عند النقر على أي عنصر
-        showLoadingAnimation();
-        
-        // مسح المحتوى الحالي
-        const gallery = document.getElementById('gallery');
-        gallery.innerHTML = '';
+        // إظهار الـ spinner عند النقر على "الكل"
+        if (item === 'الكل') {
+            showLoadingAnimation();
+        }
 
-        // إخفاء رسالة عدم وجود نتائج
-        const noResultsMessage = document.getElementById('no-results-message');
-        noResultsMessage.style.display = 'none';
-
-        // تنفيذ البحث بعد تأخير بسيط لمحاكاة التحميل
-        setTimeout(() => {
-            fetchAndFilterProducts(item === 'الكل' ? '' : item);
-        }, 100);
+        fetchAndFilterProducts(item === 'الكل' ? '' : item);
 
         const allItems = document.querySelectorAll('.sub-header nav a');
         allItems.forEach(item => item.classList.remove('active'));
@@ -1957,12 +1949,7 @@
         if (searchBox && searchTerm) {
             searchBox.value = searchTerm;
         }
-        
-        // إظهار نقاط التحميل أثناء التحميل الأولي
-        showLoadingAnimation();
-        setTimeout(() => {
-            fetchAndFilterProducts(searchTerm || '');
-        }, 100);
+        fetchAndFilterProducts(searchTerm || '');
     };
 
     // مثال لإضافة كلمات مفتاحية جديدة
