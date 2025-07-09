@@ -1383,9 +1383,9 @@
         if (!text) return '';
         return text
             .toLowerCase()
-            .replace(/أ|إ|آ/g, 'ا') // تحويل الألف الممدودة، الألف مع همزة أسفل، والألف مع همزة أعلى إلى ألف عادية
-            .replace(/ى/g, 'ي') // تحويل الألف المقصورة إلى ياء
-            .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
+            .replace(/أ|إ|آ/g, 'ا')
+            .replace(/ى/g, 'ي')
+            .replace(/^ال/, '');
     }
 
     // استرجاع بيانات المستخدم من localStorage
@@ -1526,7 +1526,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateCartCount();
         updateWelcomeMessage();
-        loadKeywordMap(); // تحميل القاموس عند بدء التشغيل
+        loadKeywordMap();
     });
 
     // ربط حدث النقر على أيقونة العربة
@@ -1607,7 +1607,7 @@
             justify-content: center;
             align-items: center;
             height: 100px;
-            opacity: 1; /* ضمان الظهور الفوري */
+            opacity: 1;
         `;
         loadingDiv.innerHTML = `
             <div class="spinner">
@@ -1631,7 +1631,7 @@
                 height: 20px;
                 border-radius: 50%;
                 animation: dot-flashing 1s infinite linear alternate;
-                opacity: 1; /* ضمان الظهور الفوري */
+                opacity: 1;
             }
             .spinner div:first-child {
                 background-color: #ff0000;
@@ -1680,7 +1680,6 @@
                     const maxPrice = parseInt(priceMatch[1]);
                     let minPrice = 0;
 
-                    // نظام النطاقات السعرية
                     const priceRanges = [
                         {max: 99, min: 0},
                         {max: 200, min: 100},
@@ -1712,11 +1711,9 @@
                 } else {
                     const searchLower = normalizeArabic(searchTerm).trim();
 
-                    // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
                     if (!searchLower) {
                         filteredProducts = products;
                     } else {
-                        // إنشاء قائمة الكلمات المفتاحية للبحث
                         let searchKeywords = [searchLower];
                         for (const category in keywordMap) {
                             if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
@@ -1724,7 +1721,6 @@
                             }
                         }
 
-                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
                         filteredProducts = products.filter(product => {
                             const fieldsToSearch = [
                                 normalizeArabic(product.name) || '',
@@ -1734,10 +1730,8 @@
 
                             return searchKeywords.some(keyword => {
                                 return fieldsToSearch.some(field => {
-                                    // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                                    const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
+                                    const words = field.split(/\s+/);
+                                    return words.includes(keyword) || field === keyword;
                                 });
                             });
                         });
