@@ -6927,6 +6927,153 @@
     "currency": "جنيه",
     "discountLabel": "خصم"
   }
+},
+{
+  "id": "101",
+  "media": [
+    {"src": "https://files.catbox.moe/26hrxj.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/q61lec.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/qzy3wk.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/zpn4ch.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/g1o6xx.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/uaqosf.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/e0p57h.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/7pu6pt.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/8ykn82.jpg ", "type": "image"}
+  ],
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "",
+  "changingText": [
+    "مروحة USB محمولة بـ 5 سرعات",
+    "شاشة LED + تصميم قابل للطي",
+    "هادئة ومثالية لفصل الصيف"
+  ],
+  "longText": "مروحة USB صغيرة PDQ F5 - مروحة شخصية محمولة مع شاشة LED، 5 مستويات سرعة، مناسبة للسفر والطلاب",
+  "desc": "استمتع بتبريد فعّال وعملي مع هذه المروحة الصغيرة التي تتميز بتصميم قابل للطي، شاشة عرض LED، و5 مستويات سرعة لتلبية احتياجات التبريد المختلفة، وتصلح للاستخدام في المنزل أو أثناء التنقل.",
+  "sales": "إكسسوارات الصيف",
+  "buttonId": "commentButton101",
+  "commentId": "101",
+  "elementId": "commentCount101",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "PDQ"},
+    {"question": "الموديل", "answer": "F5"},
+    {"question": "النوع", "answer": "مروحة USB محمولة"},
+    {"question": "الخصائص", "answer": "قابلة للطي، شاشة LED، 5 سرعات، هادئة"},
+    {"question": "المواد", "answer": "بلاستيك ABS عالي الجودة"},
+    {"question": "التحكم", "answer": "زر تحكم بالسرعة"},
+    {"question": "الطاقة", "answer": "USB питание (DC 5V)"},
+    {"question": "مستوى الضوضاء", "answer": "أقل من 40 ديسيبل"},
+    {"question": "عدد السرعات", "answer": "5 مستويات سرعة"},
+    {"question": "الألوان المتاحة", "answer": "أبيض، أزرق داكن، موف، وردي"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 180 جرام تقريبًا"},
+    {"question": "الطول", "answer": "13 × 9 × 3.5 سم (مع الطي)"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الاستخدام", "answer": "للطلاب، المسافرين، والمكاتب"},
+    {"question": "الضمان", "answer": "لا يوجد"},
+    {"question": "الوظائف", "answer": "تبريد الهواء، عرض الوقت والحرارة عبر شاشة LED"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/26hrxj.jpg ",
+        "https://files.catbox.moe/q61lec.jpg ",
+        "https://files.catbox.moe/qzy3wk.jpg ",
+        "https://files.catbox.moe/zpn4ch.jpg ",
+        "https://files.catbox.moe/g1o6xx.jpg ",
+        "https://files.catbox.moe/uaqosf.jpg ",
+        "https://files.catbox.moe/e0p57h.jpg ",
+        "https://files.catbox.moe/7pu6pt.jpg ",
+        "https://files.catbox.moe/8ykn82.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/26hrxj.jpg ",
+    "name": "مروحة PDQ F5 USB محمولة - 5 سرعات، شاشة LED، قابلة للطي، مناسبة للطلاب والسفر",
+    "sold": "إكسسوارات الصيف",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "101",
+    "productId": "101",
+    "shippingPrice": "55",
+    "colors": ["أبيض", "كحلي", "موف", "وردي"]
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "مروحة USB"
+  }
+},
+{
+  "id": "102",
+  "media": [
+    {"src": "https://files.catbox.moe/bjoc03.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/n5y3ll.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/c9ebru.webp ", "type": "image"},
+    {"src": "https://files.catbox.moe/jvt5hr.jpg ", "type": "image"},
+    {"src": "https://files.catbox.moe/bm4j5x.jpg ", "type": "image"}
+  ],
+  "pri": "80",
+  "oldPrice": "140",
+  "dis": "43%",
+  "changingText": [
+    "كتاب العادات الذرية",
+    "تطوير ذاتي عملي",
+    "أفضل بائع تطوير بشري"
+  ],
+  "longText": "كتاب العادات الذرية - جيمس كلير | تنمية بشرية | 291 صفحة | منشور باللغة العربية",
+  "desc": "كتاب العادات الذرية يوضح كيف يمكن للأفعال الصغيرة أن تصنع فارقًا كبيرًا في تطوير الشخصية والحياة اليومية حيث يقدم المؤلف جيمس كلير إطار عمل شامل لتغيير العادات وتحقيق نتائج مذهلة عبر خطوات صغيرة متكررة ومدروسة.",
+  "sales": "كتب إلكترونية وورقية",
+  "buttonId": "commentButton102",
+  "commentId": "102",
+  "elementId": "commentCount102",
+  "tableData": [
+    {"question": "العنوان", "answer": "العادات الذرية Atomic Habits"},
+    {"question": "تأليف", "answer": "جيمس كلير"},
+    {"question": "التصنيف", "answer": "تنمية بشرية / تطوير الذات"},
+    {"question": "عدد الصفحات", "answer": "291 صفحة"},
+    {"question": "اللغة", "answer": "العربية"},
+    {"question": "الطبعة", "answer": "مترجم ومُعد محليًا"},
+    {"question": "الوزن", "answer": "160 غرام تقريبًا"},
+    {"question": "الحجم", "answer": "14 × 21 سم"},
+    {"question": "الغلاف", "answer": "صلب أو عادي حسب الإصدار"},
+    {"question": "المنشأ", "answer": "CN (الصين) أو محلي حسب الطبعة"},
+    {"question": "الناشر", "answer": "دار نشر محلية / Generic"},
+    {"question": "الاستخدام", "answer": "قراءة، تطوير الذات، التعلم الشخصي"},
+    {"question": "الشكل", "answer": "كتاب ورقي + PDF اختياري"},
+    {"question": "التوافر", "answer": "متوفر بأكثر من نسخة (مجلد، عادي، إلكتروني)"},
+    {"question": "السعر القديم", "answer": "140 جنيه"},
+    {"question": "السعر الجديد", "answer": "80 جنيه"},
+    {"question": "الخصم", "answer": "43% خصم"}
+  ],
+  "groups": [
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/bjoc03.jpg ",
+        "https://files.catbox.moe/n5y3ll.jpg ",
+        "https://files.catbox.moe/c9ebru.webp ",
+        "https://files.catbox.moe/jvt5hr.jpg ",
+        "https://files.catbox.moe/bm4j5x.jpg "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/bjoc03.jpg ",
+    "name": "كتاب العادات الذرية - جيمس كلير (مترجَم للعربية)",
+    "sold": "كتب إلكترونية وورقية",
+    "price": "80.00",
+    "discount": "43",
+    "pageId": "102",
+    "productId": "102",
+    "shippingPrice": "50"
+  },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "كتب التنمية البشرية"
+  }
 }
 
 
