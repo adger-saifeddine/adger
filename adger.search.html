@@ -1509,10 +1509,10 @@
     window.addEventListener('storage', function(event) {
         if (event.key === 'cart') {
             updateCartCount();
-        } else ifAtlas:// event.key === 'username') {
+        } else if (event.key === 'username') {
             updateWelcomeMessage();
         }
-    );
+    });
 
     // الاستماع إلى الرسائل من صفحة الحساب
     window.addEventListener('message', function(event) {
@@ -1655,10 +1655,8 @@
         if (loadingDiv) loadingDiv.remove();
     }
 
-    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات (مع تعديل لظهور التحميل فورًا)
+    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
     function fetchAndFilterProducts(searchTerm) {
-        showLoadingAnimation(); // إظهار أداة التحميل فورًا
-
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
         const searchTermDisplay = document.getElementById('search-term-display');
@@ -1666,104 +1664,104 @@
 
         if (searchBox) searchBox.value = searchTerm;
 
-        noResultsMessage.style.display = 'none';
+        // إخلاء المحتوى القديم وإظهار التحميل فوراً
         gallery.innerHTML = '';
+        noResultsMessage.style.display = 'none';
+        showLoadingAnimation();
 
-        setTimeout(() => {
-            fetch('products.json')
-                .then(response => response.json())
-                .then(products => {
-                    removeLoadingAnimation();
+        fetch('products.json')
+            .then(response => response.json())
+            .then(products => {
+                removeLoadingAnimation();
 
-                    const priceMatch = searchTerm.match(/أقل من (\d+)/);
-                    if (priceMatch) {
-                        const maxPrice = parseInt(priceMatch[1]);
-                        let minPrice = 0;
+                const priceMatch = searchTerm.match(/أقل من (\d+)/);
+                if (priceMatch) {
+                    const maxPrice = parseInt(priceMatch[1]);
+                    let minPrice = 0;
 
-                        // نظام النطاقات السعرية
-                        const priceRanges = [
-                            {max: 99, min: 0},
-                            {max: 200, min: 100},
-                            {max: 350, min: 201},
-                            {max: 500, min: 351},
-                            {max: 750, min: 501},
-                            {max: 1000, min: 751},
-                            {max: 1500, min: 1001},
-                            {max: 2000, min: 1501},
-                            {max: 3000, min: 2001},
-                            {max: 5000, min: 3001},
-                            {max: 7500, min: 5001},
-                            {max: 10000, min: 7501},
-                            {max: 15000, min: 10001},
-                            {max: 20000, min: 15001},
-                            {max: 30000, min: 20001},
-                            {max: 50000, min: 30001},
-                            {max: 75000, min: 50001},
-                            {max: 100000, min: 75001}
-                        ];
+                    // نظام النطاقات السعرية
+                    const priceRanges = [
+                        {max: 99, min: 0},
+                        {max: 200, min: 100},
+                        {max: 350, min: 201},
+                        {max: 500, min: 351},
+                        {max: 750, min: 501},
+                        {max: 1000, min: 751},
+                        {max: 1500, min: 1001},
+                        {max: 2000, min: 1501},
+                        {max: 3000, min: 2001},
+                        {max: 5000, min: 3001},
+                        {max: 7500, min: 5001},
+                        {max: 10000, min: 7501},
+                        {max: 15000, min: 10001},
+                        {max: 20000, min: 15001},
+                        {max: 30000, min: 20001},
+                        {max: 50000, min: 30001},
+                        {max: 75000, min: 50001},
+                        {max: 100000, min: 75001}
+                    ];
 
-                        const foundRange = priceRanges.find(range => maxPrice <= range.max);
-                        minPrice = foundRange ? foundRange.min : 0;
+                    const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                    minPrice = foundRange ? foundRange.min : 0;
 
-                        filteredProducts = products.filter(product => {
-                            const productPrice = parseInt(product.price);
-                            return productPrice >= minPrice && productPrice <= maxPrice;
-                        });
+                    filteredProducts = products.filter(product => {
+                        const productPrice = parseInt(product.price);
+                        return productPrice >= minPrice && productPrice <= maxPrice;
+                    });
+                } else {
+                    const searchLower = normalizeArabic(searchTerm).trim();
+
+                    // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
+                    if (!searchLower) {
+                        filteredProducts = products;
                     } else {
-                        const searchLower = normalizeArabic(searchTerm).trim();
-
-                        // إذا كان البحث فارغًا (مثل اختيار "الكل")، أرجع جميع المنتجات
-                        if (!searchLower) {
-                            filteredProducts = products;
-                        } else {
-                            // إنشاء قائمة الكلمات المفتاحية للبحث
-                            let searchKeywords = [searchLower];
-                            for (const category in keywordMap) {
-                                if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
-                                    searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
-                                }
+                        // إنشاء قائمة الكلمات المفتاحية للبحث
+                        let searchKeywords = [searchLower];
+                        for (const category in keywordMap) {
+                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
+                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
                             }
+                        }
 
-                            // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
-                            filteredProducts = products.filter(product => {
-                                const fieldsToSearch = [
-                                    normalizeArabic(product.name) || '',
-                                    normalizeArabic(product.dataName) || '',
-                                    normalizeArabic(product.sold) || ''
-                                ];
+                        // تصفية المنتجات بناءً على الكلمات المفتاحية مع مطابقة دقيقة
+                        filteredProducts = products.filter(product => {
+                            const fieldsToSearch = [
+                                normalizeArabic(product.name) || '',
+                                normalizeArabic(product.dataName) || '',
+                                normalizeArabic(product.sold) || ''
+                            ];
 
-                                return searchKeywords.some(keyword => {
-                                    return fieldsToSearch.some(field => {
-                                        // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
-                                        const words = field.split(/\s+/); // تقسيم بناءً على المسافات
-                                        return words.includes(keyword) || // مطابقة الكلمة الكاملة
-                                               field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
-                                    });
+                            return searchKeywords.some(keyword => {
+                                return fieldsToSearch.some(field => {
+                                    // تقسيم النص إلى كلمات للتأكد من مطابقة الكلمة الكاملة
+                                    const words = field.split(/\s+/); // تقسيم بناءً على المسافات
+                                    return words.includes(keyword) || // مطابقة الكلمة الكاملة
+                                           field === keyword; // مطابقة النص الكامل إذا كان متطابقًا
                                 });
                             });
-                        }
+                        });
                     }
+                }
 
-                    shuffleArray(filteredProducts);
-                    gallery.innerHTML = '';
-                    loadedItems = 0;
+                shuffleArray(filteredProducts);
+                gallery.innerHTML = '';
+                loadedItems = 0;
 
-                    if (filteredProducts.length > 0) {
-                        loadProducts(0, itemsPerLoad);
-                        noResultsMessage.style.display = 'none';
-                    } else {
-                        noResultsMessage.style.display = 'block';
-                        searchTermDisplay.textContent = searchTerm;
-                    }
-                })
-                .catch(error => {
-                    removeLoadingAnimation();
-                    console.error('فشل جلب المنتجات:', error);
-                    gallery.innerHTML = '';
+                if (filteredProducts.length > 0) {
+                    loadProducts(0, itemsPerLoad);
+                    noResultsMessage.style.display = 'none';
+                } else {
                     noResultsMessage.style.display = 'block';
                     searchTermDisplay.textContent = searchTerm;
-                });
-        }, 0); // جدولة fetch بعد تحديث الشاشة
+                }
+            })
+            .catch(error => {
+                removeLoadingAnimation();
+                console.error('فشل جلب المنتجات:', error);
+                gallery.innerHTML = '';
+                noResultsMessage.style.display = 'block';
+                searchTermDisplay.textContent = searchTerm;
+            });
     }
 
     // دالة لتحميل المنتجات
@@ -1951,8 +1949,6 @@
     // addKeywords('كتب', ['مكتبة', 'قراءة']);
     // addKeywords('جديدة', ['منتج جديد', 'إصدار جديد']);
 </script>
-</body>
-</html>
 
 
 
