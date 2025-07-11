@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحقيق الأمنيات | صناعة الفيديوهات والصور</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Global Styles --- */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            direction: rtl;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Container --- */
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* --- Header --- */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* --- Form --- */
+        #wish-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+        /* --- Custom File Input --- */
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px dashed #ced4da;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .file-label:hover {
+            background-color: #dfe6ed;
+            border-color: #b8c6d6;
+        }
+
+        .file-label span {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        /* --- Files Preview --- */
+        #files-preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 10px;
+            border-radius: 8px;
+            justify-content: space-between;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #333;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .delete-btn:hover {
+            color: #a71d2a;
+        }
+
+        /* --- Submit Button --- */
+        .submit-btn {
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>✨ تحقيق الأمنيات ✨</h1>
+            <p>حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.</p>
+        </div>
+
+        <form id="wish-form">
+            <div class="form-group">
+                <label for="name">الاسم الكامل</label>
+                <input type="text" id="name" name="name" placeholder="اكتب اسمك هنا" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">رقم الهاتف (مع كود الدولة)</label>
+                <input type="tel" id="phone" name="phone" placeholder="مثال: +201012345678" required>
+            </div>
+
+            <div class="form-group">
+                <label for="service-type">اختر نوع الخدمة</label>
+                <select id="service-type" name="service-type" required>
+                    <option value="" disabled selected>-- حدد نوع العمل المطلوب --</option>
+                    <option value="مونتاج فيديو">🎬 مونتاج فيديو</option>
+                    <option value="تعديل صورة">🖼️ تعديل صورة</option>
+                    <option value="تصميم إعلان">📢 تصميم إعلان (فيديو أو صورة)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="file-input" class="file-label">
+                    <span>📤</span>
+                    ارفع الوسائط (صور أو فيديوهات)
+                </label>
+                <input type="file" id="file-input" multiple accept="image/*,video/*">
+            </div>
+
+            <div id="files-preview-container">
+                <!-- معاينة الملفات ستظهر هنا -->
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                موافق وإرسال عبر واتساب
+                <span>✅</span>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- تعريف العناصر ---
+            const wishForm = document.getElementById('wish-form');
+            const fileInput = document.getElementById('file-input');
+            const filesPreviewContainer = document.getElementById('files-preview-container');
+
+            // --- رقم الواتساب المستهدف ---
+            const whatsappNumber = '+201028768495';
+
+            // --- مصفوفة لتخزين الملفات المرفوعة ---
+            let uploadedFiles = [];
+
+            // --- الاستماع لحدث تغيير في حقل رفع الملفات ---
+            fileInput.addEventListener('change', () => {
+                // إضافة الملفات الجديدة إلى المصفوفة
+                const newFiles = Array.from(fileInput.files);
+                uploadedFiles.push(...newFiles);
+                
+                // إعادة عرض الملفات
+                renderFilesPreview();
+                
+                // إعادة تعيين قيمة حقل الإدخال للسماح بإضافة نفس الملف مرة أخرى إذا تم حذفه
+                fileInput.value = '';
+            });
+
+            // --- دالة لعرض معاينة الملفات ---
+            function renderFilesPreview() {
+                // تفريغ الحاوية قبل إعادة العرض
+                filesPreviewContainer.innerHTML = '';
+
+                if (uploadedFiles.length === 0) {
+                    filesPreviewContainer.style.display = 'none';
+                    return;
+                }
+
+                filesPreviewContainer.style.display = 'flex';
+                
+                uploadedFiles.forEach((file, index) => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+
+                    const fileTypeIcon = file.type.startsWith('image/') ? '🖼️' : '🎬';
+                    
+                    fileItem.innerHTML = `
+                        <div class="file-info">
+                            <span class="file-icon">${fileTypeIcon}</span>
+                            <span class="file-name" title="${file.name}">${file.name}</span>
+                        </div>
+                        <button type="button" class="delete-btn" data-index="${index}" title="حذف الملف">×</button>
+                    `;
+
+                    filesPreviewContainer.appendChild(fileItem);
+                });
+            }
+
+            // --- الاستماع للنقرات داخل حاوية المعاينة (لحذف الملفات) ---
+            filesPreviewContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const indexToRemove = parseInt(e.target.getAttribute('data-index'), 10);
+                    
+                    // حذف الملف من المصفوفة
+                    uploadedFiles.splice(indexToRemove, 1);
+
+                    // إعادة عرض قائمة الملفات المحدثة
+                    renderFilesPreview();
+                }
+            });
+
+            // --- الاستماع لحدث إرسال النموذج ---
+            wishForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // منع الإرسال التقليدي للنموذج
+
+                // --- التحقق من صحة المدخلات ---
+                if (uploadedFiles.length === 0) {
+                    alert('يرجى رفع ملف واحد على الأقل (صورة أو فيديو).');
+                    return;
+                }
+
+                // --- الحصول على بيانات النموذج ---
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const serviceType = document.getElementById('service-type').value;
+
+                // --- إنشاء قائمة بأسماء الملفات ---
+                const fileNames = uploadedFiles.map(file => `- ${file.name}`).join('\n');
+
+                // --- تجهيز الرسالة للواتساب ---
+                const message = `
+*✨ طلب خدمة جديد من صفحة تحقيق الأمنيات ✨*
+
+*الاسم:* ${name}
+*رقم الهاتف:* ${phone}
+*نوع الخدمة المطلوبة:* ${serviceType}
+
+*الملفات المرفوعة (${uploadedFiles.length}):*
+${fileNames}
+
+-----------------------------------
+*⚠️ ملاحظة هامة:* يرجى إرفاق الملفات المذكورة أعلاه يدوياً في المحادثة لإكمال الطلب.
+                `;
+
+                // --- ترميز الرسالة لتكون صالحة في الرابط ---
+                const encodedMessage = encodeURIComponent(message.trim());
+
+                // --- إنشاء رابط الواتساب ---
+                const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+                // --- فتح الرابط في نافذة جديدة ---
+                window.open(whatsappURL, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
