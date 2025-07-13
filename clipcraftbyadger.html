@@ -14,12 +14,12 @@
     <style>
         /* --- Global Styles & New Color Palette --- */
         :root {
-            --primary-accent: #00e5ff; /* A vibrant cyan for highlights */
-            --secondary-accent: #ff00c1; /* A vivid magenta */
+            --primary-accent: #00e5ff;
+            --secondary-accent: #ff00c1;
             --bg-color-deep: #0f002a;
             --text-color-light: #f0f0f0;
             --text-color-dark: #cccccc;
-            --glass-bg: rgba(20, 10, 40, 0.5); /* Semi-transparent dark purple */
+            --glass-bg: rgba(20, 10, 40, 0.5);
             --glass-border: rgba(255, 255, 255, 0.15);
             --shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             --border-radius: 16px;
@@ -40,12 +40,11 @@
             align-items: flex-start;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 20px; 
             box-sizing: border-box;
             position: relative;
         }
         
-        /* --- Stunning 3D Animated Aurora Background --- */
         body::before, body::after {
             content: '';
             position: absolute;
@@ -54,9 +53,11 @@
             width: 100%;
             height: 100%;
             background-size: 300% 300%;
-            animation: aurora 25s ease infinite;
+            /* MODIFICATION: Slower animation duration */
+            animation: aurora 30s ease infinite; 
             z-index: -1;
-            filter: blur(100px);
+            /* MODIFICATION: Reduced blur for better performance */
+            filter: blur(80px); 
         }
 
         body::before {
@@ -67,11 +68,11 @@
         body::after {
             background-image: radial-gradient(circle at 90% 80%, #4f0080, transparent 40%),
                               radial-gradient(circle at 20% 90%, var(--primary-accent), transparent 40%);
-            animation-duration: 20s;
+            /* MODIFICATION: Slower animation duration */
+            animation-duration: 25s; 
             animation-delay: -5s;
         }
 
-        /* --- Frosted Glass Container --- */
         .container {
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
@@ -86,7 +87,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* --- Header --- */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -104,7 +104,6 @@
             line-height: 1.6;
         }
 
-        /* --- Form --- */
         #wish-form {
             display: flex;
             flex-direction: column;
@@ -143,7 +142,6 @@
             opacity: 1;
         }
         
-        /* --- Custom styling for select dropdown arrows --- */
         select {
             -webkit-appearance: none; -moz-appearance: none; appearance: none;
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');
@@ -155,17 +153,9 @@
 
         select option { background-color: #2a1a47; color: var(--text-color-light); }
 
-        /* --- International Phone Input Styles --- */
         .iti { width: 100%; }
-        
-        .iti .iti__arrow {
-            border-top-color: white; 
-        }
-
-        .iti.iti--allow-dropdown.iti--separate-dial-code .iti__arrow--up {
-            border-bottom-color: white;
-        }
-
+        .iti .iti__arrow { border-top-color: white; }
+        .iti.iti--allow-dropdown.iti--separate-dial-code .iti__arrow--up { border-bottom-color: white; }
         .iti .iti__country-list { background-color: #1a0f30; border-color: var(--glass-border); }
         .iti .iti__country:hover, .iti .iti__active { background-color: rgba(0, 229, 255, 0.1); }
         .iti .iti__dial-code { color: var(--text-color-dark); }
@@ -182,7 +172,6 @@
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
         }
 
-        /* --- Dimension Selection --- */
         #dimension-group { display: none; }
         .dimension-options-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 10px; }
         .dimension-option input[type="radio"] { display: none; }
@@ -223,8 +212,30 @@
         }
         .dimension-option input[type="radio"]:checked + label .dimension-preview { border-color: var(--primary-accent); }
         .dimension-option input[type="radio"]:checked + label .dimension-shape { background-color: var(--primary-accent); }
+        
+        #price-banner {
+            width: 100%;
+            background: rgba(0, 229, 255, 0.08); 
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            color: var(--text-color-light);
+            font-size: 1.1rem;
+            font-weight: 500;
+            align-items: center;
+            gap: 8px;
+            display: none; 
+            justify-content: center;
+        }
 
-        /* --- WhatsApp Note --- */
+        #final-price {
+            font-weight: 700;
+            color: var(--primary-accent);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+        }
+
         #whatsapp-note {
             display: none;
             background-color: rgba(255, 235, 59, 0.1);
@@ -233,13 +244,12 @@
             text-align: center; font-size: 0.95rem; line-height: 1.7;
         }
 
-        /* --- Submit Button --- */
         .submit-btn {
             background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
             color: white; padding: 15px; border: none; border-radius: 10px;
             font-size: 1.2rem; font-weight: 700; font-family: 'Tajawal', sans-serif;
             cursor: pointer; transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
@@ -247,16 +257,15 @@
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 10px 25px rgba(0, 229, 255, 0.4);
         }
-
-        /* --- Responsive Adjustments --- */
+        
         @media (max-width: 600px) {
             body { padding: 10px; align-items: center; }
             .container { padding: 20px; margin: 20px 0; }
             .header h1 { font-size: 1.8rem; }
             .dimension-options-container { grid-template-columns: repeat(2, 1fr); }
+            #price-banner { font-size: 1rem; padding: 12px; }
         }
         
-        /* --- Phone Country List Centering --- */
         @media (max-width: 900px) {
             .iti__country-list {
                 position: fixed !important; 
@@ -264,7 +273,6 @@
                 left: 50% !important;
                 transform: translate(-50%, -50%) !important;
                 z-index: 9999;
-                /* تم حذف max-height للسماح بالارتفاع الافتراضي للمكتبة */
             }
         }
     </style>
@@ -273,7 +281,7 @@
 
     <div class="container">
         <div class="header">
-            <h1>✨ clipcraft by adger ✨</h1>
+            <h1> clipcraft by adger </h1>
             <p data-translate-key="headerSubtitle">حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.</p>
         </div>
 
@@ -310,13 +318,15 @@
             <div class="form-group" id="dimension-group">
                 <label data-translate-key="dimensionLabel">اختر أبعاد العمل (مقاس الفيديو أو الصورة)</label>
                 <div class="dimension-options-container">
+                    
                     <div class="dimension-option" id="dim-story">
-                        <input type="radio" id="dimension-story" name="dimension" value="قصة (طولي 9:16)" checked>
+                        <input type="radio" id="dimension-story" name="dimension" value="طولي (9:16)" checked>
                         <label for="dimension-story">
                             <div class="dimension-preview"><div class="dimension-shape"></div></div>
                             <span data-translate-key="dimStory">طولي (9:16)</span>
                         </label>
                     </div>
+                    
                     <div class="dimension-option" id="dim-square">
                         <input type="radio" id="dimension-square" name="dimension" value="مربع (1:1)">
                         <label for="dimension-square">
@@ -325,7 +335,7 @@
                         </label>
                     </div>
                     <div class="dimension-option" id="dim-post">
-                        <input type="radio" id="dimension-post" name="dimension" value="بوست (طولي 4:5)">
+                        <input type="radio" id="dimension-post" name="dimension" value="بوست (4:5)">
                         <label for="dimension-post">
                             <div class="dimension-preview"><div class="dimension-shape"></div></div>
                             <span data-translate-key="dimPost">بوست (4:5)</span>
@@ -345,6 +355,11 @@
                 <label for="details" data-translate-key="detailsLabel">الموضوع (اشرح طلبك بالتفصيل)</label>
                 <textarea id="details" name="details" rows="5" data-translate-key-placeholder="detailsPlaceholder" placeholder="اكتب هنا تفاصيل طلبك..." required></textarea>
             </div>
+            
+            <div id="price-banner">
+                <span data-translate-key="priceLabel">السعر النهائي:</span>
+                <span id="final-price"></span>
+            </div>
 
             <div id="whatsapp-note">
                 <strong data-translate-key="noteTitle">⚠️ ملاحظة هامة جداً</strong>
@@ -360,7 +375,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- START: TRANSLATION & LANGUAGE SETUP ---
+        // --- START: SCRIPT SETUP ---
         const translations = {
             'ar': {
                 headerSubtitle: 'حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.',
@@ -373,12 +388,13 @@
                 fileOptionDefault: '-- اختر من فضلك --',
                 fileOptionYes: 'نعم، سأقوم برفع ملفات (صور أو فيديوهات)', fileOptionNo: 'لا، الطلب لا يحتاج رفع ملفات (مثلاً: تصميم من الصفر)',
                 dimensionLabel: 'اختر أبعاد العمل (مقاس الفيديو أو الصورة)',
-                dimStory: 'قصة (9:16)', dimSquare: 'مربع (1:1)', dimPost: 'بوست (4:5)', dimLandscape: 'عرضي (16:9)',
+                dimStory: 'طولي (9:16)', dimSquare: 'مربع (1:1)', dimPost: 'بوست (4:5)', dimLandscape: 'عرضي (16:9)',
                 detailsLabel: 'الموضوع (اشرح طلبك بالتفصيل)',
                 detailsPlaceholder: 'اكتب هنا تفاصيل طلبك، مثل الألوان المفضلة، النصوص المطلوبة، الأسلوب المرغوب، إلخ...',
                 noteTitle: '⚠️ ملاحظة هامة جداً',
                 noteBody: 'لإكمال طلبك، يرجى إرسال جميع الملفات المطلوبة (الصور أو الفيديوهات) مباشرة في محادثة الواتساب بعد الضغط على زر الإرسال.',
                 submitButton: 'موافق وإرسال عبر واتساب',
+                priceLabel: 'السعر النهائي:',
                 whatsappTitle: '*✨ طلب خدمة جديد ✨*', whatsappName: '*الاسم:*', whatsappPhone: '*رقم الهاتف:*', whatsappService: '*نوع الخدمة المطلوبة:*',
                 whatsappDimensions: '*أبعاد العمل:*', whatsappFilesStatus: '*حالة الملفات:*', whatsappFilesAttached: 'سيتم إرفاق الملفات في المحادثة.',
                 whatsappFilesNone: 'الطلب لا يتضمن رفع ملفات.', whatsappDetails: '*تفاصيل الطلب:*', whatsappNote: '*⚠️ ملاحظة:* سأقوم الآن بإرسال الملفات اللازمة للبدء في العمل.'
@@ -394,12 +410,13 @@
                 fileOptionDefault: '-- Please choose an option --',
                 fileOptionYes: 'Yes, I will upload files (images or videos)', fileOptionNo: 'No, the request does not require files (e.g., design from scratch)',
                 dimensionLabel: 'Choose Project Dimensions (Video/Image Size)',
-                dimStory: 'Story (9:16)', dimSquare: 'Square (1:1)', dimPost: 'Post (4:5)', dimLandscape: 'Widescreen (16:9)',
+                dimStory: 'Vertical (9:16)', dimSquare: 'Square (1:1)', dimPost: 'Post (4:5)', dimLandscape: 'Widescreen (16:9)',
                 detailsLabel: 'Subject (Describe your request in detail)',
                 detailsPlaceholder: 'Describe your request here, such as preferred colors, required text, desired style, etc...',
                 noteTitle: '⚠️ Very Important Note',
                 noteBody: 'To complete your request, please send all required files (images or videos) directly in the WhatsApp chat after clicking the submit button.',
                 submitButton: ' Agree & Send via WhatsApp',
+                priceLabel: 'Final Price:',
                 whatsappTitle: '*✨ New Service Request ✨*', whatsappName: '*Name:*', whatsappPhone: '*Phone Number:*', whatsappService: '*Service Type:*',
                 whatsappDimensions: '*Project Dimensions:*', whatsappFilesStatus: '*Files Status:*', whatsappFilesAttached: 'Files will be attached in the chat.',
                 whatsappFilesNone: 'Request does not include file uploads.', whatsappDetails: '*Request Details:*', whatsappNote: '*⚠️ Note:* I will now send the necessary files to begin the work.'
@@ -410,6 +427,70 @@
             'sa': 'ar', 'eg': 'ar', 'ae': 'ar', 'kw': 'ar', 'qa': 'ar', 'bh': 'ar', 'om': 'ar', 'jo': 'ar', 'lb': 'ar', 'sy': 'ar', 'ye': 'ar', 'ps': 'ar',
             'us': 'en', 'gb': 'en', 'ca': 'en', 'au': 'en', 'nz': 'en', 'ie': 'en'
         };
+        
+        // --- START: DYNAMIC PRICE LOGIC ---
+        let currentBasePrice = 0;
+        let currentCountryCode = 'eg';
+        const finalPriceElement = document.getElementById('final-price');
+        const priceBanner = document.getElementById('price-banner');
+        const serviceTypeSelect = document.getElementById('service-type');
+        
+        const basePrices = {
+            'مونتاج فيديو': 40,
+            'تعديل صورة': 20,
+            'تصميم إعلان': 30
+        };
+
+        const currencyData = {
+            'eg': { rate: 1, symbol: 'جنيه مصري', position: 'after' },
+            'sa': { rate: 0.14, symbol: 'ريال سعودي', position: 'after' },
+            'ae': { rate: 0.13, symbol: 'درهم إماراتي', position: 'after' },
+            'qa': { rate: 0.13, symbol: 'ريال قطري', position: 'after' },
+            'kw': { rate: 0.012, symbol: 'دينار كويتي', position: 'after' },
+            'om': { rate: 0.014, symbol: 'ريال عماني', position: 'after' },
+            'bh': { rate: 0.014, symbol: 'دينار بحريني', position: 'after' },
+            'jo': { rate: 0.037, symbol: 'دينار أردني', position: 'after' },
+            'us': { rate: 0.021, symbol: '$', position: 'before' },
+            'gb': { rate: 0.017, symbol: '£', position: 'before' },
+            'eu': { rate: 0.020, symbol: '€', position: 'before' },
+            'ca': { rate: 0.029, symbol: 'CA$', position: 'before' }
+        };
+
+        function updatePrice() {
+            if (currentBasePrice <= 0) {
+                priceBanner.style.display = 'none';
+                return;
+            }
+
+            let data = currencyData[currentCountryCode];
+            const europeanCountries = ['de', 'fr', 'it', 'es', 'nl', 'be', 'pt', 'gr', 'at', 'fi', 'ie'];
+            if (!data && europeanCountries.includes(currentCountryCode)) {
+                data = currencyData['eu'];
+            }
+            if (!data) {
+                data = currencyData['eg'];
+            }
+
+            const newPrice = (currentBasePrice * data.rate).toFixed(2);
+            if (data.position === 'before') {
+                finalPriceElement.innerText = `${data.symbol}${newPrice}`;
+            } else {
+                finalPriceElement.innerText = `${newPrice} ${data.symbol}`;
+            }
+            priceBanner.style.display = 'flex';
+        }
+
+        serviceTypeSelect.addEventListener('change', (e) => {
+            const selectedService = e.target.value;
+            if (basePrices[selectedService]) {
+                currentBasePrice = basePrices[selectedService];
+                updatePrice();
+            } else {
+                currentBasePrice = 0;
+                priceBanner.style.display = 'none';
+            }
+        });
+        // --- END: DYNAMIC PRICE LOGIC ---
 
         function applyTranslation(lang) {
             if (!translations[lang]) lang = 'ar'; 
@@ -455,12 +536,14 @@
                     .then(res => res.json())
                     .then(data => {
                         const countryCode = data.country_code.toLowerCase();
+                        currentCountryCode = countryCode;
                         const lang = countryToLang[countryCode] || 'ar';
                         applyTranslation(lang);
                         callback(countryCode);
                     })
                     .catch(() => {
                         applyTranslation('ar');
+                        currentCountryCode = 'eg';
                         callback("sa");
                     });
             },
