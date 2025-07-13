@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clipcraft</title>
+    <title>clipcraft ∞ adger</title>
     <link rel="icon" href="https://i.postimg.cc/HLhDwZXj/2025-07-11-18-26-52-c789ad91-removebg-preview.png" type="image/x-icon">
     
     <!-- مكتبة حقل الهاتف الدولي -->
@@ -57,7 +57,8 @@
             background-size: 300% 300%;
             animation: aurora 25s ease infinite;
             z-index: -1;
-            filter: blur(100px);
+            /* MODIFIED: تم تقليل قوة البلور قليلاً لتحسين الأداء على الأجهزة الأضعف */
+            filter: blur(80px);
         }
 
         body::before {
@@ -74,8 +75,9 @@
 
         .container {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            /* MODIFIED: تم تقليل قوة البلور قليلاً لتحسين الأداء */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             padding: 30px 40px;
             border-radius: var(--border-radius);
@@ -95,6 +97,21 @@
             color: #ffffff;
             font-weight: 700;
             text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            display: flex; /* Using flex for easy alignment */
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .infinity-symbol {
+            background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 1.2em;
+            margin: 0 10px;
         }
 
         .header p {
@@ -276,22 +293,12 @@
             }
         }
 
-        /* --- NEW: PERFORMANCE OPTIMIZATION FOR MOBILE --- */
-        /* نستهدف الشاشات الأصغر (الهواتف والأجهزة اللوحية الصغيرة) */
-        @media (max-width: 768px) {
-            /* 1. إيقاف الخلفية المتحركة والمكلفة تمامًا */
-            body::before, body::after {
-                display: none; /* إخفاء العناصر يوفر أداء أفضل من تعطيل الحركة فقط */
-            }
-
-            /* 2. إيقاف تأثير الزجاج المكلف على الحاوية الرئيسية */
-            .container {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                /* استخدام لون خلفية صريح كبديل */
-                background-color: rgba(20, 10, 40, 0.75);
-            }
-        }
+        /* 
+           REMOVED: تم حذف قسم تحسين الأداء للهواتف بناءً على طلبك
+           للسماح للخلفية المتحركة وتأثير الزجاج بالعمل على جميع الشاشات.
+           كان الكود الأصلي يعطل هذه التأثيرات على الشاشات الأصغر من 768 بكسل
+           لضمان تجربة مستخدم سريعة وسلسة على الهواتف.
+        */
 
     </style>
 </head>
@@ -299,7 +306,7 @@
 
     <div class="container">
         <div class="header">
-            <h1> clipcraft by adger </h1>
+            <h1>adger<span class="infinity-symbol">∞</span>clipcraft</h1>
             <p data-translate-key="headerSubtitle">حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.</p>
         </div>
 
