@@ -530,11 +530,16 @@
         }
         
         const wishForm = document.getElementById('wish-form');
+        const nameInput = document.getElementById('name');
         const fileOptionSelect = document.getElementById('file-option');
         const dimensionGroup = document.getElementById('dimension-group');
         const whatsappNote = document.getElementById('whatsapp-note');
         const phoneInput = document.getElementById('phone');
         const whatsappNumber = '+201028768495';
+
+        // --- تعديل: تحميل الرقم الدولي الكامل ---
+        nameInput.value = localStorage.getItem('clipcraft_userName') || '';
+        phoneInput.value = localStorage.getItem('clipcraft_userFullPhone') || '';
 
         const iti = window.intlTelInput(phoneInput, {
             initialCountry: "auto",
@@ -560,6 +565,21 @@
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js",
         });
 
+        // --- تعديل: دالة لحفظ بيانات المستخدم الصحيحة ---
+        function saveUserData() {
+            localStorage.setItem('clipcraft_userName', nameInput.value);
+            // حفظ الرقم الدولي الكامل فقط إذا كان صحيحًا
+            if (iti.isValidNumber()) {
+                localStorage.setItem('clipcraft_userFullPhone', iti.getNumber());
+            }
+        }
+        
+        // --- تعديل: أحداث حفظ البيانات ---
+        nameInput.addEventListener('input', saveUserData);
+        phoneInput.addEventListener('blur', saveUserData); // حفظ عند الخروج من الحقل
+        phoneInput.addEventListener('countrychange', saveUserData); // حفظ عند تغيير الدولة
+
+
         function toggleFileFields() {
             const selectedValue = fileOptionSelect.value;
             dimensionGroup.style.display = (selectedValue === 'with-files') ? 'block' : 'none';
@@ -574,6 +594,10 @@
                 alert(document.documentElement.lang === 'ar' ? 'الرجاء إدخال رقم هاتف صحيح.' : 'Please enter a valid phone number.');
                 return;
             }
+
+            // --- تعديل: التأكد من حفظ البيانات قبل الإرسال ---
+            saveUserData();
+
             const currentLang = document.documentElement.lang;
             const langPack = translations[currentLang] || translations['ar'];
             const name = document.getElementById('name').value;
