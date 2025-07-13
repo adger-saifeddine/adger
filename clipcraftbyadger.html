@@ -404,7 +404,8 @@
                 priceLabel: 'السعر النهائي:',
                 whatsappTitle: '*✨ طلب خدمة جديد ✨*', whatsappName: '*الاسم:*', whatsappPhone: '*رقم الهاتف:*', whatsappService: '*نوع الخدمة المطلوبة:*',
                 whatsappDimensions: '*أبعاد العمل:*', whatsappFilesStatus: '*حالة الملفات:*', whatsappFilesAttached: 'سيتم إرفاق الملفات في المحادثة.',
-                whatsappFilesNone: 'الطلب لا يتضمن رفع ملفات.', whatsappDetails: '*تفاصيل الطلب:*', whatsappNote: '*⚠️ ملاحظة:* سأقوم الآن بإرسال الملفات اللازمة للبدء في العمل.'
+                whatsappFilesNone: 'الطلب لا يتضمن رفع ملفات.', whatsappDetails: '*تفاصيل الطلب:*', whatsappNote: '*⚠️ ملاحظة:* سأقوم الآن بإرسال الملفات اللازمة للبدء في العمل.',
+                whatsappPrice: '*السعر النهائي:*'
             },
             'en': {
                 headerSubtitle: 'Turn your ideas into reality. Order professional video editing, photo retouching, or creative ad designs.',
@@ -426,7 +427,8 @@
                 priceLabel: 'Final Price:',
                 whatsappTitle: '*✨ New Service Request ✨*', whatsappName: '*Name:*', whatsappPhone: '*Phone Number:*', whatsappService: '*Service Type:*',
                 whatsappDimensions: '*Project Dimensions:*', whatsappFilesStatus: '*Files Status:*', whatsappFilesAttached: 'Files will be attached in the chat.',
-                whatsappFilesNone: 'Request does not include file uploads.', whatsappDetails: '*Request Details:*', whatsappNote: '*⚠️ Note:* I will now send the necessary files to begin the work.'
+                whatsappFilesNone: 'Request does not include file uploads.', whatsappDetails: '*Request Details:*', whatsappNote: '*⚠️ Note:* I will now send the necessary files to begin the work.',
+                whatsappPrice: '*Final Price:*'
             }
         };
 
@@ -437,6 +439,7 @@
         
         let currentBasePrice = 0;
         let currentCountryCode = 'eg';
+        let currentFinalPriceText = '';
         const finalPriceElement = document.getElementById('final-price');
         const priceBanner = document.getElementById('price-banner');
         const serviceTypeSelect = document.getElementById('service-type');
@@ -465,6 +468,7 @@
         function updatePrice() {
             if (currentBasePrice <= 0) {
                 priceBanner.style.display = 'none';
+                currentFinalPriceText = '';
                 return;
             }
             let data = currencyData[currentCountryCode];
@@ -478,8 +482,10 @@
             const newPrice = (currentBasePrice * data.rate).toFixed(2);
             if (data.position === 'before') {
                 finalPriceElement.innerText = `${data.symbol}${newPrice}`;
+                currentFinalPriceText = `${data.symbol}${newPrice}`;
             } else {
                 finalPriceElement.innerText = `${newPrice} ${data.symbol}`;
+                currentFinalPriceText = `${newPrice} ${data.symbol}`;
             }
             priceBanner.style.display = 'flex';
         }
@@ -492,6 +498,7 @@
             } else {
                 currentBasePrice = 0;
                 priceBanner.style.display = 'none';
+                currentFinalPriceText = '';
             }
         });
 
@@ -586,6 +593,9 @@
                 messageBody += `${langPack.whatsappFilesStatus} ${langPack.whatsappFilesNone}\n\n`;
             }
             messageBody += `${langPack.whatsappDetails}\n${details}\n\n`;
+            if (currentFinalPriceText) {
+                messageBody += `${langPack.whatsappPrice} ${currentFinalPriceText}\n\n`;
+            }
             if (fileOption === 'with-files') {
                 messageBody += `-----------------------------------\n${langPack.whatsappNote}`;
             }
