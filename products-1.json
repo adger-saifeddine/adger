@@ -6373,7 +6373,7 @@
   ],
   "pri": "750",
   "oldPrice": "1200",
-  "dis": "38%",
+  "dis": "خصم 38%",
   "changingText": [
     "سماعات Redmi Air7 اللاسلكية",
     "صوت ستيريو + مقاومة للماء",
@@ -6847,6 +6847,89 @@
 },
 {
   "id": "100",
+  "media": [
+    {"src": "https://files.catbox.moe/sztmqm.mp4 ", "type": "video"},
+    {"src": "https://files.catbox.moe/98euh0.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/i60hwq.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/rqo168.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/lprbld.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/76tki7.png ", "type": "image"},
+    {"src": "https://files.catbox.moe/op888m.png ", "type": "image"}
+  ],
+  "pri": "3500",
+  "oldPrice": "5699",
+  "dis": "خصم 39%",
+  "changingText": [
+    "نظارات ذكية AI + كاميرا 100MP",
+    "شاشة تعمل باللمس، مساعد صوت، بلوتوث",
+    "تصميم أنيق يناسب الرجال والنساء"
+  ],
+  "longText": "JOYINU D13 نظارات ذكية - كاميرا 100MP، شاشة HD، بلوتوث، مساعد صوتي AI، بطارية 260mAh، مناسبة للاستخدام اليومي والخارجي",
+  "desc": "استمتع بتكنولوجيا مستقبلية حقيقية مع هذه النظارات الذكية المتقدمة التي تحتوي على كاميرا عالية الدقة حتى 100MP ودعم لتسجيل الفيديو بدقة 4K HD مما يجعلها أكثر من مجرد نظارة شمسية أو زينة يمكنك التقاط الصور أو تسجيل مقاطع الفيديو أثناء التنقل دون الحاجة إلى هاتفها تتميز بشاشة داخلية تعمل باللمس لتظهر لك الإشعارات والمكالمات مباشرة كما تدعم البلوتوث والواي فاي لإجراء مكالمات صوتية والاستماع للموسيقى أو التحكم في الأجهزة الذكية وتضم بطارية قوية 260 مللي أمبير توفر عمر تشغيل طويل والإضاءة LED مؤشر لمعرفة حالة التشغيل والبطارية كما تدعم عدة لغات مثل العربية والإنجليزية والألمانية والفرنسية والإسبانية والروسية والتركية وغيرها وتتوفر أيضًا وظائف متعددة مثل المساعد الصوتي الذكي والتقاط الصور وتسجيل الفيديو وتشغيل الموسيقى وإشعارات التطبيقات وهي مثالية لكل من يبحث عن تجربة تقنية متطورة سواء للاستخدام الشخصي أو المهني مثل البث الحي أو التوثيق أو الأمن.",
+  "sales": "الأجهزة الذكية والأمان",
+  "buttonId": "commentButton100",
+  "commentId": "100",
+  "elementId": "commentCount100",
+  "tableData": [
+    {"question": "العلامة التجارية", "answer": "JOYINU"},
+    {"question": "الموديل", "answer": "D13"},
+    {"question": "الدقة", "answer": "100MP / 4K HD"},
+    {"question": "الخصائص", "answer": "مساعد صوتي AI، كاميرا، فيديو، بلوتوث، واي فاي، تحكم بالموسيقى، ترجمة، تعرف على الكائنات، شاشة تعمل باللمس"},
+    {"question": "البطارية", "answer": "260 مللي أمبير في الساعة"},
+    {"question": "وقت التشغيل", "answer": "حتى 6 ساعات عمل متواصلة"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 45 جرام فقط"},
+    {"question": "المواد", "answer": "بلاستيك ABS عالي الجودة"},
+    {"question": "الوظائف الأساسية", "answer": "التقاط الصور، تسجيل الفيديو، مساعد صوتي، مكالمات، تشغيل موسيقى، إشعارات التطبيقات"},
+    {"question": "الاتصال", "answer": "بلوتوث 5.0، Wi-Fi"},
+    {"question": "التحكم بالمساعد", "answer": "نعم، عبر المساعد الصوتي القائم على الذكاء الاصطناعي (AI)"},
+    {"question": "اللغات المدعومة", "answer": "إنجليزي، روسي، إسباني، برتغالي، تركي، إيطالي، فرنسي، ألماني، نرويجي، كوري، ياباني، أوكراني، عبري، هولندي، عربي، إندونيسي، يوناني"},
+    {"question": "المنشأ", "answer": "CN (الصين)"},
+    {"question": "الشهادات", "answer": "CE, FCC"},
+    {"question": "الضمان", "answer": "لا يوجد"},
+    {"question": "الطول", "answer": "حجم قياسي للأذنين (135 مم)"},
+    {"question": "العرض", "answer": "50 مم"},
+    {"question": "الارتفاع", "answer": "35 مم"},
+    {"question": "التحكم بالإشعارات", "answer": "نعم، عبر الشاشة أو الأوامر الصوتية"},
+    {"question": "التطبيق المتوافق", "answer": "تطبيق JOYINU الخاص"},
+    {"question": "الاستخدام", "answer": "السفر، الرياضة، السياحة، العمل الحر، التوثيق، البث المباشر"}
+  ],
+  "groups": [
+    {
+      "type": "videos",
+      "items": [
+        "https://files.catbox.moe/sztmqm.mp4 "
+      ]
+    },
+    {
+      "type": "images",
+      "items": [
+        "https://files.catbox.moe/98euh0.jpg ",
+        "https://files.catbox.moe/i60hwq.png ",
+        "https://files.catbox.moe/rqo168.png ",
+        "https://files.catbox.moe/lprbld.png ",
+        "https://files.catbox.moe/76tki7.png ",
+        "https://files.catbox.moe/op888m.png "
+      ]
+    }
+  ],
+  "product": {
+    "image": "https://files.catbox.moe/98euh0.jpg",
+    "name": "نظارات JOYINU D13 الذكية - 4K HD، كاميرا 100MP، مساعد صوتي AI، بلوتوث، بطارية 260mAh",
+    "sold": "الأجهزة الذكية والأمان",
+    "price": "3500.00",
+    "discount": "39",
+    "pageId": "100",
+    "productId": "100",
+    "shippingPrice": "150",
+    "colors": ["أسود", "أبيض"]
+    },
+  "texts": {
+    "currency": "جنيه",
+    "discountLabel": "خصم"
+  }
+},
+{
+  "id": "101",
   "media": [
     {"src": "https://files.catbox.moe/sztmqm.mp4 ", "type": "video"},
     {"src": "https://files.catbox.moe/98euh0.jpg", "type": "image"},
