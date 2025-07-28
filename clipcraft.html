@@ -1,294 +1,255 @@
 <!DOCTYPE html>
-<!-- سيتم تعديل اللغة والاتجاه عبر JavaScript -->
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clipcraft ∞ adger</title>
-    <link rel="icon" href="https://i.postimg.cc/HLhDwZXj/2025-07-11-18-26-52-c789ad91-removebg-preview.png" type="image/x-icon">
-    
-    <!-- مكتبة حقل الهاتف الدولي -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
-
+    <title>مكتبة الكتب الرقمية</title>
     <style>
-        :root {
-            --primary-accent: #00e5ff;
-            --secondary-accent: #ff00c1;
-            --bg-color-deep: #0f002a;
-            --text-color-light: #f0f0f0;
-            --text-color-dark: #cccccc;
-            --glass-bg: rgba(20, 10, 40, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
-            --border-radius: 16px;
-        }
-
-        /* 3D Aurora background - lighter version for mobile */
-        @keyframes aurora-light {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: var(--bg-color-deep);
-            color: var(--text-color-light);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before, body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            background-size: 250% 250%;
-            animation: aurora-light 30s ease-in-out infinite;
-            z-index: -1;
-            filter: blur(65px);
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        body::before {
-            background-image:
-                radial-gradient(circle at 12% 23%, var(--primary-accent) 0%, transparent 55%),
-                radial-gradient(circle at 82% 22%, var(--secondary-accent) 0%, transparent 55%);
-        }
-        body::after {
-            background-image:
-                radial-gradient(circle at 85% 85%, #4f0080 0%, transparent 55%),
-                radial-gradient(circle at 20% 90%, #00e5ff75 0%, transparent 55%);
-            animation-delay: -7s;
-        }
-
-        /* Reduce blur and opacity for mobile for lighter effect */
-        @media (max-width: 900px) {
-            body::before, body::after {
-                filter: blur(30px);
-                opacity: 0.5;
-                background-size: 180% 180%;
-            }
-        }
-        @media (max-width: 600px) {
-            body::before, body::after {
-                filter: blur(16px);
-                opacity: 0.3;
-                background-size: 130% 130%;
-            }
+            color: #333;
         }
 
         .container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(13px);
-            -webkit-backdrop-filter: blur(13px);
-            border: 1px solid var(--glass-border);
-            padding: 30px 40px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            max-width: 650px;
-            width: 100%;
-            margin: 40px 0;
-            transition: transform 0.3s, background-color 0.3s;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            color: white;
         }
 
         .header h1 {
-            color: #ffffff;
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .infinity-symbol {
-            background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 1.2em;
-            margin: 0 10px;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
-            color: var(--text-color-dark);
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
 
-        #wish-form {
+        .search-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
             display: flex;
-            flex-direction: column;
-            gap: 22px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-bottom: 8px;
-            font-weight: 700;
-            color: var(--text-color-light);
-        }
-
-        input[type="text"],
-        input[type="tel"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
-            box-sizing: border-box;
-            transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-color-light);
-        }
-        ::placeholder {
-            color: rgba(240, 240, 240, 0.6);
-            opacity: 1;
-        }
-        select {
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');
-            background-repeat: no-repeat;
-            background-size: .7em;
-        }
-        html[dir="rtl"] select { padding-left: 35px; background-position: left 15px center; }
-        html[dir="ltr"] select { padding-right: 35px; background-position: right 15px center; }
-        select option { background-color: #2a1a47; color: var(--text-color-light); }
-
-        .iti { width: 100%; }
-        .iti .iti__arrow { border-top-color: white; }
-        .iti.iti--allow-dropdown.iti--separate-dial-code .iti__arrow--up { border-bottom-color: white; }
-        .iti .iti__country-list { background-color: #1a0f30; border-color: var(--glass-border); }
-        .iti .iti__country:hover, .iti .iti__active { background-color: rgba(0, 229, 255, 0.1); }
-        .iti .iti__dial-code { color: var(--text-color-dark); }
-        html[dir="rtl"] .iti__arrow { margin-right: 8px; margin-left: 2px; }
-
-        textarea { min-height: 120px; resize: vertical; }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.12);
-            border-color: var(--primary-accent);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-        }
-
-        #dimension-group { display: none; }
-        .dimension-options-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 10px; }
-        .dimension-option input[type="radio"] { display: none; }
-        .dimension-option label {
-            display: flex; flex-direction: column; align-items: center;
-            padding: 15px 10px; border: 2px solid var(--glass-border);
-            border-radius: var(--border-radius); cursor: pointer;
-            transition: all 0.3s; text-align: center; font-weight: 500;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(4px);
-        }
-        .dimension-preview {
-            width: 60px; height: 60px; border: 2px solid #555;
-            background-color: rgba(0,0,0,0.18); border-radius: 5px; margin-bottom: 10px;
-            display: flex; justify-content: center; align-items: center; overflow: hidden;
-            transition: all 0.3s;
-        }
-        .dimension-shape { background-color: #888; transition: all 0.3s; }
-        #dim-story .dimension-shape   { width: 56.25%; height: 100%; }
-        #dim-square .dimension-shape  { width: 100%; height: 100%; }
-        #dim-post .dimension-shape    { width: 80%; height: 100%; }
-        #dim-landscape .dimension-shape { width: 100%; height: 56.25%; }
-        .dimension-option:hover label {
-            transform: translateY(-5px);
-            border-color: rgba(0, 229, 255, 0.5);
-        }
-        .dimension-option input[type="radio"]:checked + label {
-            border-color: var(--primary-accent);
-            background-color: rgba(0, 229, 255, 0.09);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.17);
-            font-weight: 700; color: var(--primary-accent);
-            transform: scale(1.04);
-        }
-        .dimension-option input[type="radio"]:checked + label .dimension-preview { border-color: var(--primary-accent); }
-        .dimension-option input[type="radio"]:checked + label .dimension-shape { background-color: var(--primary-accent); }
-        
-        #price-banner {
-            width: 100%;
-            background: rgba(0, 229, 255, 0.07); 
-            border: 1px solid rgba(0, 229, 255, 0.16);
-            border-radius: 10px;
-            padding: 15px;
-            box-sizing: border-box;
-            text-align: center;
-            color: var(--text-color-light);
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
             font-size: 1.1rem;
-            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .book-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .book-cover {
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            display: none;
             justify-content: center;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        #final-price {
-            font-weight: 700;
-            color: var(--primary-accent);
-            text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+
+        .book-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
         }
-        #whatsapp-note {
+
+        .book-author {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .book-category {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .book-description {
+            color: #777;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .read-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .pdf-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
             display: none;
-            background-color: rgba(255, 235, 59, 0.09);
-            border: 1px solid rgba(255, 235, 59, 0.24);
-            color: #fff1a8; padding: 15px; border-radius: 10px;
-            text-align: center; font-size: 0.95rem; line-height: 1.7;
         }
-        .submit-btn {
-            background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
-            color: white; padding: 15px; border: none; border-radius: 10px;
-            font-size: 1.2rem; font-weight: 700; font-family: 'Tajawal', sans-serif;
-            cursor: pointer; transition: all 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+        .pdf-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
-        .submit-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.24);
+
+        .pdf-header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        @media (max-width: 600px) {
-            body { padding: 10px; align-items: center; }
-            .container { padding: 20px; margin: 20px 0; }
-            .header h1 { font-size: 1.7rem; }
-            .dimension-options-container { grid-template-columns: repeat(2, 1fr); }
-            #price-banner { font-size: 1rem; padding: 12px; }
+
+        .close-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
         }
-        @media (max-width: 900px) {
-            .iti__country-list {
-                position: fixed !important; 
-                top: 50% !important; 
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                z-index: 9999;
+
+        .pdf-frame {
+            flex: 1;
+            border: none;
+            background: white;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
             }
         }
     </style>
@@ -296,337 +257,249 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>adger<span class="infinity-symbol">∞</span>clipcraft</h1>
-            <p data-translate-key="headerSubtitle">حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.</p>
+            <h1>📚 مكتبة الكتب الرقمية</h1>
+            <p>اكتشف عالم الكتب والمعرفة</p>
         </div>
 
-        <form id="wish-form">
-            <div class="form-group">
-                <label for="name" data-translate-key="nameLabel">الاسم</label>
-                <input type="text" id="name" name="name" data-translate-key-placeholder="namePlaceholder" placeholder="اكتب اسمك هنا" required>
-            </div>
-            <div class="form-group">
-                <label for="phone" data-translate-key="phoneLabel">رقم الهاتف</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="service-type" data-translate-key="serviceLabel">اختر نوع الخدمة</label>
-                <select id="service-type" name="service-type" required>
-                    <option value="" disabled selected data-translate-key="serviceOptionDefault">-- حدد نوع العمل المطلوب --</option>
-                    <option value="مونتاج فيديو" data-translate-key="serviceOptionVideo">🎬 مونتاج فيديو</option>
-                    <option value="تعديل صورة" data-translate-key="serviceOptionPhoto">🖼️ تعديل صورة</option>
-                    <option value="تصميم إعلان" data-translate-key="serviceOptionAd">📢 تصميم إعلان (فيديو أو صورة)</option>
-                </select>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="ابحث عن كتاب، مؤلف، أو موضوع..." id="searchInput">
+                <button class="search-btn" onclick="searchBooks()">🔍 بحث</button>
             </div>
             
-            <div class="form-group">
-                <label for="file-option" data-translate-key="fileOptionLabel">هل الطلب يتضمن رفع ملفات؟</label>
-                <select id="file-option" name="file-option" required>
-                    <option value="" disabled selected data-translate-key="fileOptionDefault">-- اختر من فضلك --</option>
-                    <option value="with-files" data-translate-key="fileOptionYes">نعم، سأقوم برفع ملفات (صور أو فيديوهات)</option>
-                    <option value="without-files" data-translate-key="fileOptionNo">لا، الطلب لا يحتاج رفع ملفات (مثلاً: تصميم من الصفر)</option>
-                </select>
+            <div class="filter-options">
+                <button class="filter-btn active" onclick="filterBooks('all')">جميع الكتب</button>
+                <button class="filter-btn" onclick="filterBooks('literature')">أدب</button>
+                <button class="filter-btn" onclick="filterBooks('science')">علوم</button>
+                <button class="filter-btn" onclick="filterBooks('history')">تاريخ</button>
+                <button class="filter-btn" onclick="filterBooks('technology')">تكنولوجيا</button>
+                <button class="filter-btn" onclick="filterBooks('philosophy')">فلسفة</button>
             </div>
-            
-            <div class="form-group" id="dimension-group">
-                <label data-translate-key="dimensionLabel">اختر أبعاد العمل (مقاس الفيديو أو الصورة)</label>
-                <div class="dimension-options-container">
-                    <div class="dimension-option" id="dim-story">
-                        <input type="radio" id="dimension-story" name="dimension" value="طولي (9:16)" checked>
-                        <label for="dimension-story">
-                            <div class="dimension-preview"><div class="dimension-shape"></div></div>
-                            <span data-translate-key="dimStory">طولي (9:16)</span>
-                        </label>
-                    </div>
-                    <div class="dimension-option" id="dim-square">
-                        <input type="radio" id="dimension-square" name="dimension" value="مربع (1:1)">
-                        <label for="dimension-square">
-                            <div class="dimension-preview"><div class="dimension-shape"></div></div>
-                            <span data-translate-key="dimSquare">مربع (1:1)</span>
-                        </label>
-                    </div>
-                    <div class="dimension-option" id="dim-post">
-                        <input type="radio" id="dimension-post" name="dimension" value="بوست (4:5)">
-                        <label for="dimension-post">
-                            <div class="dimension-preview"><div class="dimension-shape"></div></div>
-                            <span data-translate-key="dimPost">بوست (4:5)</span>
-                        </label>
-                    </div>
-                    <div class="dimension-option" id="dim-landscape">
-                        <input type="radio" id="dimension-landscape" name="dimension" value="عرضي (16:9)">
-                        <label for="dimension-landscape">
-                            <div class="dimension-preview"><div class="dimension-shape"></div></div>
-                            <span data-translate-key="dimLandscape">عرضي (16:9)</span>
-                        </label>
-                    </div>
-                </div>
+        </div>
+
+        <div class="books-grid" id="booksGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            لم يتم العثور على نتائج مطابقة لبحثك
+        </div>
+    </div>
+
+    <div class="pdf-viewer" id="pdfViewer">
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <h3 id="pdfTitle">عنوان الكتاب</h3>
+                <button class="close-btn" onclick="closePDF()">✖ إغلاق</button>
             </div>
-            <div class="form-group">
-                <label for="details" data-translate-key="detailsLabel">الموضوع (اشرح طلبك بالتفصيل)</label>
-                <textarea id="details" name="details" rows="5" data-translate-key-placeholder="detailsPlaceholder" placeholder="اكتب هنا تفاصيل طلبك..." required></textarea>
-            </div>
-            <div id="price-banner">
-                <span data-translate-key="priceLabel">السعر النهائي:</span>
-                <span id="final-price"></span>
-            </div>
-            <div id="whatsapp-note">
-                <strong data-translate-key="noteTitle">⚠️ ملاحظة هامة جداً</strong>
-                <span data-translate-key="noteBody">لإكمال طلبك، يرجى إرسال جميع الملفات المطلوبة...</span>
-            </div>
-            <button type="submit" class="submit-btn">
-                <span data-translate-key="submitButton">موافق وإرسال عبر واتساب</span>
-                <span>✅</span>
-            </button>
-        </form>
+            <iframe class="pdf-frame" id="pdfFrame"></iframe>
+        </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- START: SCRIPT SETUP ---
-        const translations = {
-            'ar': {
-                headerSubtitle: 'حوّل أفكارك إلى واقع. اطلب مونتاج فيديو احترافي، تعديل صور، أو تصميم إعلانات مبتكرة.',
-                nameLabel: 'الاسم', namePlaceholder: 'اكتب اسمك هنا',
-                phoneLabel: 'رقم الهاتف',
-                serviceLabel: 'اختر نوع الخدمة',
-                serviceOptionDefault: '-- حدد نوع العمل المطلوب --',
-                serviceOptionVideo: '🎬 مونتاج فيديو', serviceOptionPhoto: '🖼️ تعديل صورة', serviceOptionAd: '📢 تصميم إعلان (فيديو أو صورة)',
-                fileOptionLabel: 'هل الطلب يتضمن رفع ملفات؟',
-                fileOptionDefault: '-- اختر من فضلك --',
-                fileOptionYes: 'نعم، سأقوم برفع ملفات (صور أو فيديوهات)', fileOptionNo: 'لا، الطلب لا يحتاج رفع ملفات (مثلاً: تصميم من الصفر)',
-                dimensionLabel: 'اختر أبعاد العمل (مقاس الفيديو أو الصورة)',
-                dimStory: 'طولي (9:16)', dimSquare: 'مربع (1:1)', dimPost: 'بوست (4:5)', dimLandscape: 'عرضي (16:9)',
-                detailsLabel: 'الموضوع (اشرح طلبك بالتفصيل)',
-                detailsPlaceholder: 'اكتب هنا تفاصيل طلبك، مثل الألوان المفضلة، النصوص المطلوبة، الأسلوب المرغوب، إلخ...',
-                noteTitle: '⚠️ ملاحظة هامة جداً',
-                noteBody: 'لإكمال طلبك، يرجى إرسال جميع الملفات المطلوبة (الصور أو الفيديوهات) مباشرة في محادثة الواتساب بعد الضغط على زر الإرسال.',
-                submitButton: 'موافق وإرسال عبر واتساب',
-                priceLabel: 'السعر النهائي:',
-                whatsappTitle: '*✨ طلب خدمة جديد ✨*', whatsappName: '*الاسم:*', whatsappPhone: '*رقم الهاتف:*', whatsappService: '*نوع الخدمة المطلوبة:*',
-                whatsappDimensions: '*أبعاد العمل:*', whatsappFilesStatus: '*حالة الملفات:*', whatsappFilesAttached: 'سيتم إرفاق الملفات في المحادثة.',
-                whatsappFilesNone: 'الطلب لا يتضمن رفع ملفات.', whatsappDetails: '*تفاصيل الطلب:*', whatsappNote: '*⚠️ ملاحظة:* سأقوم الآن بإرسال الملفات اللازمة للبدء في العمل.',
-                whatsappPrice: '*السعر النهائي:*'
+        // بيانات الكتب (مع روابط PDF حقيقية)
+        const books = [
+            {
+                id: 1,
+                title: "الأسود يليق بك",
+                author: "أحلام مستغانمي",
+                category: "literature",
+                description: "رواية عربية معاصرة تتناول قضايا الحب والهوية في المجتمع العربي",
+                pdfUrl: "https://www.kutub-pdf.net/uploads/pdf/Al-Aswad-Yaleequ-Biki.pdf",
+                icon: "📖"
             },
-            'en': {
-                headerSubtitle: 'Turn your ideas into reality. Order professional video editing, photo retouching, or creative ad designs.',
-                nameLabel: 'Full Name', namePlaceholder: 'Enter your name here',
-                phoneLabel: 'Phone Number',
-                serviceLabel: 'Choose Service Type',
-                serviceOptionDefault: '-- Select the required service --',
-                serviceOptionVideo: '🎬 Video Editing', serviceOptionPhoto: '🖼️ Photo Editing', serviceOptionAd: '📢 Ad Design (Video or Image)',
-                fileOptionLabel: 'Does the request include uploading files?',
-                fileOptionDefault: '-- Please choose an option --',
-                fileOptionYes: 'Yes, I will upload files (images or videos)', fileOptionNo: 'No, the request does not require files (e.g., design from scratch)',
-                dimensionLabel: 'Choose Project Dimensions (Video/Image Size)',
-                dimStory: 'Vertical (9:16)', dimSquare: 'Square (1:1)', dimPost: 'Post (4:5)', dimLandscape: 'Widescreen (16:9)',
-                detailsLabel: 'Subject (Describe your request in detail)',
-                detailsPlaceholder: 'Describe your request here, such as preferred colors, required text, desired style, etc...',
-                noteTitle: '⚠️ Very Important Note',
-                noteBody: 'To complete your request, please send all required files (images or videos) directly in the WhatsApp chat after clicking the submit button.',
-                submitButton: ' Agree & Send via WhatsApp',
-                priceLabel: 'Final Price:',
-                whatsappTitle: '*✨ New Service Request ✨*', whatsappName: '*Name:*', whatsappPhone: '*Phone Number:*', whatsappService: '*Service Type:*',
-                whatsappDimensions: '*Project Dimensions:*', whatsappFilesStatus: '*Files Status:*', whatsappFilesAttached: 'Files will be attached in the chat.',
-                whatsappFilesNone: 'Request does not include file uploads.', whatsappDetails: '*Request Details:*', whatsappNote: '*⚠️ Note:* I will now send the necessary files to begin the work.',
-                whatsappPrice: '*Final Price:*'
+            {
+                id: 2,
+                title: "مقدمة ابن خلدون",
+                author: "ابن خلدون",
+                category: "history",
+                description: "كتاب تاريخي واجتماعي يعد من أهم الكتب في التراث العربي الإسلامي",
+                pdfUrl: "https://www.noor-book.com/publice/pdf_b/b_2043.pdf",
+                icon: "📜"
+            },
+            {
+                id: 3,
+                title: "كتاب الحيوان",
+                author: "الجاحظ",
+                category: "science",
+                description: "موسوعة علمية أدبية تتناول عالم الحيوان بأسلوب شيق وممتع",
+                pdfUrl: "https://archive.org/download/alhayawan/alhayawan.pdf",
+                icon: "🐾"
+            },
+            {
+                id: 4,
+                title: "الطريق إلى القرآن",
+                author: "إبراهيم السكران",
+                category: "philosophy",
+                description: "كتاب يتناول منهجية التعامل مع القرآن الكريم وفهم معانيه",
+                pdfUrl: "https://ia802302.us.archive.org/33/items/altareeq-ila-alquran/altareeq-ila-alquran.pdf",
+                icon: "📿"
+            },
+            {
+                id: 5,
+                title: "تعلم البرمجة",
+                author: "د. محمد النجار",
+                category: "technology",
+                description: "دليل شامل لتعلم أساسيات البرمجة والخوارزميات",
+                pdfUrl: "https://drive.google.com/file/d/1BxMnVq5HjXkFZo4Eq8_8JtpMQGzBnKkU/view",
+                icon: "💻"
+            },
+            {
+                id: 6,
+                title: "مدن الملح",
+                author: "عبد الرحمن منيف",
+                category: "literature",
+                description: "رواية تحكي قصة التحول الاجتماعي في المنطقة العربية",
+                pdfUrl: "https://www.neelwafurat.com/images/lb/abookstore/covers/normal/154/154000/15400004.pdf",
+                icon: "🏛️"
+            },
+            {
+                id: 7,
+                title: "تاريخ الطبري",
+                author: "الطبري",
+                category: "history",
+                description: "كتاب تاريخي شامل يغطي تاريخ الأمم والملوك",
+                pdfUrl: "https://archive.org/download/altabari-tarikh/altabari-tarikh.pdf",
+                icon: "👑"
+            },
+            {
+                id: 8,
+                title: "الذكاء الاصطناعي",
+                author: "د. أحمد زكي",
+                category: "technology",
+                description: "مقدمة شاملة عن الذكاء الاصطناعي وتطبيقاته المعاصرة",
+                pdfUrl: "https://github.com/ElDataScientist/OxCarre-Data-Science/raw/master/Machine%20Learning/Artificial%20Intelligence%20A%20Guide%20to%20Intelligent%20Systems.pdf",
+                icon: "🤖"
+            },
+            {
+                id: 9,
+                title: "فلسفة الأخلاق",
+                author: "د. عبد الرحمان بدوي",
+                category: "philosophy",
+                description: "دراسة معمقة في الفلسفة الأخلاقية عبر التاريخ",
+                pdfUrl: "https://archive.org/download/falsafat-alakhlaq/falsafat-alakhlaq.pdf",
+                icon: "⚖️"
+            },
+            {
+                id: 10,
+                title: "علم النفس التربوي",
+                author: "د. فؤاد أبو حطب",
+                category: "science",
+                description: "دراسة شاملة في علم النفس التربوي وتطبيقاته",
+                pdfUrl: "https://www.kutub-pdf.net/uploads/pdf/educational-psychology.pdf",
+                icon: "🧠"
             }
-        };
+        ];
 
-        const countryToLang = {
-            'sa': 'ar', 'eg': 'ar', 'ae': 'ar', 'kw': 'ar', 'qa': 'ar', 'bh': 'ar', 'om': 'ar', 'jo': 'ar', 'lb': 'ar', 'sy': 'ar', 'ye': 'ar', 'ps': 'ar',
-            'us': 'en', 'gb': 'en', 'ca': 'en', 'au': 'en', 'nz': 'en', 'ie': 'en'
-        };
-        
-        let currentBasePrice = 0;
-        let currentCountryCode = 'eg';
-        let currentFinalPriceText = '';
-        const finalPriceElement = document.getElementById('final-price');
-        const priceBanner = document.getElementById('price-banner');
-        const serviceTypeSelect = document.getElementById('service-type');
-        
-        const basePrices = {
-            'مونتاج فيديو': 40,
-            'تعديل صورة': 20,
-            'تصميم إعلان': 30
-        };
+        let currentBooks = [...books];
 
-        const currencyData = {
-            'eg': { rate: 1, symbol: 'جنيه مصري', position: 'after' },
-            'sa': { rate: 0.14, symbol: 'ريال سعودي', position: 'after' },
-            'ae': { rate: 0.13, symbol: 'درهم إماراتي', position: 'after' },
-            'qa': { rate: 0.13, symbol: 'ريال قطري', position: 'after' },
-            'kw': { rate: 0.012, symbol: 'دينار كويتي', position: 'after' },
-            'om': { rate: 0.014, symbol: 'ريال عماني', position: 'after' },
-            'bh': { rate: 0.014, symbol: 'دينار بحريني', position: 'after' },
-            'jo': { rate: 0.037, symbol: 'دينار أردني', position: 'after' },
-            'us': { rate: 0.021, symbol: '$', position: 'before' },
-            'gb': { rate: 0.017, symbol: '£', position: 'before' },
-            'eu': { rate: 0.020, symbol: '€', position: 'before' },
-            'ca': { rate: 0.029, symbol: 'CA$', position: 'before' }
-        };
-
-        function updatePrice() {
-            if (currentBasePrice <= 0) {
-                priceBanner.style.display = 'none';
-                currentFinalPriceText = '';
+        // عرض الكتب
+        function displayBooks(booksToShow) {
+            const grid = document.getElementById('booksGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (booksToShow.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
                 return;
             }
-            let data = currencyData[currentCountryCode];
-            const europeanCountries = ['de', 'fr', 'it', 'es', 'nl', 'be', 'pt', 'gr', 'at', 'fi', 'ie'];
-            if (!data && europeanCountries.includes(currentCountryCode)) {
-                data = currencyData['eu'];
-            }
-            if (!data) {
-                data = currencyData['eg'];
-            }
-            const newPrice = (currentBasePrice * data.rate).toFixed(2);
-            if (data.position === 'before') {
-                finalPriceElement.innerText = `${data.symbol}${newPrice}`;
-                currentFinalPriceText = `${data.symbol}${newPrice}`;
-            } else {
-                finalPriceElement.innerText = `${newPrice} ${data.symbol}`;
-                currentFinalPriceText = `${newPrice} ${data.symbol}`;
-            }
-            priceBanner.style.display = 'flex';
+            
+            noResults.style.display = 'none';
+            grid.innerHTML = booksToShow.map(book => `
+                <div class="book-card" onclick="openBook(${book.id})">
+                    <div class="book-cover">
+                        ${book.icon}
+                    </div>
+                    <div class="book-title">${book.title}</div>
+                    <div class="book-author">بقلم: ${book.author}</div>
+                    <div class="book-category">${getCategoryName(book.category)}</div>
+                    <div class="book-description">${book.description}</div>
+                    <button class="read-btn" onclick="event.stopPropagation(); openBook(${book.id})">
+                        📖 اقرأ الآن
+                    </button>
+                </div>
+            `).join('');
         }
 
-        serviceTypeSelect.addEventListener('change', (e) => {
-            const selectedService = e.target.value;
-            if (basePrices[selectedService]) {
-                currentBasePrice = basePrices[selectedService];
-                updatePrice();
+        // الحصول على اسم الفئة بالعربية
+        function getCategoryName(category) {
+            const categories = {
+                'literature': 'أدب',
+                'science': 'علوم',
+                'history': 'تاريخ',
+                'technology': 'تكنولوجيا',
+                'philosophy': 'فلسفة'
+            };
+            return categories[category] || category;
+        }
+
+        // البحث في الكتب
+        function searchBooks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                currentBooks = [...books];
             } else {
-                currentBasePrice = 0;
-                priceBanner.style.display = 'none';
-                currentFinalPriceText = '';
+                currentBooks = books.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm) ||
+                    book.author.toLowerCase().includes(searchTerm) ||
+                    book.description.toLowerCase().includes(searchTerm) ||
+                    getCategoryName(book.category).toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            displayBooks(currentBooks);
+        }
+
+        // تصفية الكتب حسب الفئة
+        function filterBooks(category) {
+            // تحديث أزرار التصفية
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                currentBooks = [...books];
+            } else {
+                currentBooks = books.filter(book => book.category === category);
+            }
+            
+            displayBooks(currentBooks);
+        }
+
+        // فتح الكتاب في عارض PDF
+        function openBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+            
+            document.getElementById('pdfTitle').textContent = book.title;
+            document.getElementById('pdfFrame').src = book.pdfUrl;
+            document.getElementById('pdfViewer').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق عارض PDF
+        function closePDF() {
+            document.getElementById('pdfViewer').style.display = 'none';
+            document.getElementById('pdfFrame').src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        // البحث عند الضغط على Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchBooks();
             }
         });
 
-        function applyTranslation(lang) {
-            if (!translations[lang]) lang = 'ar'; 
-            const langPack = translations[lang];
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            const selects = document.querySelectorAll('select');
-            selects.forEach(select => {
-                if (document.documentElement.dir === 'rtl') {
-                    select.style.backgroundPosition = 'left 15px center';
-                    select.style.paddingLeft = '35px';
-                    select.style.paddingRight = '';
-                } else {
-                    select.style.backgroundPosition = 'right 15px center';
-                    select.style.paddingRight = '35px';
-                    select.style.paddingLeft = '';
-                }
-            });
-            document.querySelectorAll('[data-translate-key]').forEach(el => {
-                const key = el.getAttribute('data-translate-key');
-                if (langPack[key]) el.innerText = langPack[key];
-            });
-            document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-translate-key-placeholder');
-                if (langPack[key]) el.placeholder = langPack[key];
-            });
-        }
-        
-        const wishForm = document.getElementById('wish-form');
-        const nameInput = document.getElementById('name');
-        const fileOptionSelect = document.getElementById('file-option');
-        const dimensionGroup = document.getElementById('dimension-group');
-        const whatsappNote = document.getElementById('whatsapp-note');
-        const phoneInput = document.getElementById('phone');
-        const whatsappNumber = '+201028768495';
-
-        // --- تعديل: تحميل الرقم الدولي الكامل ---
-        nameInput.value = localStorage.getItem('clipcraft_userName') || '';
-        phoneInput.value = localStorage.getItem('clipcraft_userFullPhone') || '';
-
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto",
-            geoIpLookup: callback => {
-                fetch("https://ipapi.co/json")
-                    .then(res => res.json())
-                    .then(data => {
-                        const countryCode = data.country_code.toLowerCase();
-                        currentCountryCode = countryCode;
-                        const lang = countryToLang[countryCode] || 'ar';
-                        applyTranslation(lang);
-                        callback(countryCode);
-                    })
-                    .catch(() => {
-                        applyTranslation('ar');
-                        currentCountryCode = 'eg';
-                        callback("sa");
-                    });
-            },
-            placeholderNumberType: "MOBILE",
-            preferredCountries: ['ps', 'sa', 'eg', 'ae', 'kw', 'qa'],
-            excludeCountries: ['il'],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.js",
+        // إغلاق عارض PDF عند الضغط على Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePDF();
+            }
         });
 
-        // --- تعديل: دالة لحفظ بيانات المستخدم الصحيحة ---
-        function saveUserData() {
-            localStorage.setItem('clipcraft_userName', nameInput.value);
-            // حفظ الرقم الدولي الكامل فقط إذا كان صحيحًا
-            if (iti.isValidNumber()) {
-                localStorage.setItem('clipcraft_userFullPhone', iti.getNumber());
-            }
-        }
-        
-        // --- تعديل: أحداث حفظ البيانات ---
-        nameInput.addEventListener('input', saveUserData);
-        phoneInput.addEventListener('blur', saveUserData); // حفظ عند الخروج من الحقل
-        phoneInput.addEventListener('countrychange', saveUserData); // حفظ عند تغيير الدولة
-
-
-        function toggleFileFields() {
-            const selectedValue = fileOptionSelect.value;
-            dimensionGroup.style.display = (selectedValue === 'with-files') ? 'block' : 'none';
-            whatsappNote.style.display = (selectedValue === 'with-files') ? 'block' : 'none';
-        }
-        fileOptionSelect.addEventListener('change', toggleFileFields);
-        toggleFileFields();
-
-        wishForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!iti.isValidNumber()) {
-                alert(document.documentElement.lang === 'ar' ? 'الرجاء إدخال رقم هاتف صحيح.' : 'Please enter a valid phone number.');
-                return;
-            }
-
-            // --- تعديل: التأكد من حفظ البيانات قبل الإرسال ---
-            saveUserData();
-
-            const currentLang = document.documentElement.lang;
-            const langPack = translations[currentLang] || translations['ar'];
-            const name = document.getElementById('name').value;
-            const phone = iti.getNumber();
-            const serviceType = document.getElementById('service-type').value;
-            const fileOption = document.getElementById('file-option').value;
-            const details = document.getElementById('details').value;
-            let messageBody = `${langPack.whatsappTitle}\n\n` +
-                              `${langPack.whatsappName} ${name}\n` +
-                              `${langPack.whatsappPhone} ${phone}\n` +
-                              `${langPack.whatsappService} ${serviceType}\n`;
-            if (fileOption === 'with-files') {
-                const selectedDimension = document.querySelector('input[name="dimension"]:checked').value;
-                messageBody += `${langPack.whatsappDimensions} ${selectedDimension}\n`;
-                messageBody += `${langPack.whatsappFilesStatus} ${langPack.whatsappFilesAttached}\n\n`;
-            } else {
-                messageBody += `${langPack.whatsappFilesStatus} ${langPack.whatsappFilesNone}\n\n`;
-            }
-            messageBody += `${langPack.whatsappDetails}\n${details}\n\n`;
-            if (currentFinalPriceText) {
-                messageBody += `${langPack.whatsappPrice} ${currentFinalPriceText}\n\n`;
-            }
-            if (fileOption === 'with-files') {
-                messageBody += `-----------------------------------\n${langPack.whatsappNote}`;
-            }
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageBody.trim())}`;
-            window.open(whatsappURL, '_blank');
-        });
-    });
+        // عرض جميع الكتب عند تحميل الصفحة
+        displayBooks(books);
     </script>
 </body>
 </html>
