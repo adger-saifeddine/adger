@@ -9,9 +9,9 @@
 
     <!-- بيانات Open Graph -->
     <meta property="og:title" content="Adger - التسوق الإلكتروني">
-    <meta property="og:description" content="مرحبًا بك في أدجر، وجهتك الأولى للتسوق الإلكتروني ,لقد وجدت هذا المنتج للتو">
+    <meta property="og:description" content="مرحبًا بك في أدجر، وجهتك الأولى للتسوق الإلكتروني حيث تجد كل ما تبحث عنه بأسعار تنافسية وجودة عالية.">
     <meta property="og:image" content="https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg">
-    <meta property="og:url" content="https://adger-saifeddine.github.io/adger/prod.html">
+    <meta property="og:url" content="https://adger-saifeddine.github.io/adger/">
     <meta property="og:type" content="website">
 
     <!-- بيانات منظمة Schema.org -->
@@ -20,12 +20,30 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Adger",
-      "url": "https://adger-saifeddine.github.io/adger/prod.html
+      "url": "https://adger-saifeddine.github.io/adger/",
       "logo": "https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg"
     }
     </script>
+
+    <!-- نص برمجي لتغيير الفيكون بناءً على نوع الجهاز -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function isDesktop() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.includes('windows') || userAgent.includes('macintosh') || userAgent.includes('linux') && !userAgent.includes('android');
+        }
+        if (isDesktop()) {
+            document.querySelector('link[rel="icon"]').href = 'logo2.png';
+        }
+    });
+    </script>
 </head>
 <body>
+
+</body>
+</html>
+
+
 
 </body>
 </html>
@@ -1611,60 +1629,7 @@ function updateMainMedia(thumbnail) {
 </html>
 
 
-
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول معلومات المنتج</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
-        }
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .product-table th, .product-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        .product-table th {
-            background-color: #f2f2f2;
-        }
-        .product-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        .product-table td:first-child {
-            background-color: #f0f0f093; /* الطرف الأيمن للجدول بلون رصاصي */
-            color: #222;
-            font-weight: bold;
-        }
-        .product-table td:last-child {
-            background-color: #fff; /* الطرف الأيسر (الإجابة) بلون أبيض */
-            color: #222;
-        }
-        .description {
-            color: #575757;
-            font-size: 15px;
-            font-family: Cairo, sans-serif;
-            margin-top: -4px;
-            padding: 0 15px;
-        }
-        @media only screen and (max-width: 768px) {
-            .description {
-                margin-top: -8px;
-            }
-        }
-    </style>
-</head>
-<body>
-    
-   <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -1717,13 +1682,13 @@ function updateMainMedia(thumbnail) {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-              cursor: pointer;
+            cursor: pointer;
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
         .specifications-header svg {
-            margin-right: 12px;
-            margin-top: 24px !important;
+            transition: transform 0.3s ease;
+            margin-left: 8px; /* تم تعديل الهامش ليكون على اليسار في RTL */
         }
         .hidden-rows {
             display: none;
@@ -1732,8 +1697,8 @@ function updateMainMedia(thumbnail) {
 </head>
 <body>
     <div class="specifications-header" onclick="toggleTable()">
-        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-bottom: -10px; margin-right: 11px;">المواصفات</h2>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-bottom: 0; margin-top: 10px;">المواصفات</h2>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </div>
@@ -1741,6 +1706,7 @@ function updateMainMedia(thumbnail) {
         <!-- الصفوف سيتم إضافتها ديناميكيًا -->
     </table>
     <p id="productDesc" class="description"></p>
+    
     <script>
         let isExpanded = false;
 
@@ -1749,7 +1715,10 @@ function updateMainMedia(thumbnail) {
             const rows = table.querySelectorAll('tr');
             const svg = document.querySelector('.specifications-header svg');
 
-            if (!isExpanded) {
+            isExpanded = !isExpanded; // Toggle state first
+
+            if (isExpanded) {
+                // Expand: show all rows and rotate arrow down
                 rows.forEach((row, index) => {
                     if (index >= 6) {
                         row.classList.remove('hidden-rows');
@@ -1757,6 +1726,7 @@ function updateMainMedia(thumbnail) {
                 });
                 svg.style.transform = 'rotate(180deg)';
             } else {
+                // Collapse: hide extra rows and rotate arrow up
                 rows.forEach((row, index) => {
                     if (index >= 6) {
                         row.classList.add('hidden-rows');
@@ -1764,36 +1734,45 @@ function updateMainMedia(thumbnail) {
                 });
                 svg.style.transform = 'rotate(0deg)';
             }
-            isExpanded = !isExpanded;
         }
 
-        // جلب معرف المنتج من URL
-        function getProductId() {
+        // دالة لجلب معرف المنتج من الرابط
+        function getProductIdFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            return productId;
+            return urlParams.get('id');
         }
+
+
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
+            // للسماح بوضع أكثر من 100 منتج في كل ملف، يتم تقسيم المنتجات.
+            // يمكنك تغيير الرقم 1000 إلى أي رقم تريده (مثلاً 200، 500، إلخ).
+            const productsPerFile = 1000; 
+            const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
                 .then(response => {
-                    if (!response.ok) throw new Error('الملف غير موجود');
+                    if (!response.ok) {
+                        throw new Error('ملف المنتجات غير موجود');
+                    }
                     return response.json();
                 })
                 .then(products => {
-                    const product = products.find(p => p.id === productId);
+                    // ابحث عن المنتج المحدد داخل الملف
+                    const product = products.find(p => p.id == productId);
+                    
                     if (!product) {
-                        document.getElementById('productDesc').textContent = 'المنتج غير موجود';
+                        document.getElementById('productDesc').textContent = 'المنتج غير موجود.';
                         return;
                     }
 
-                    // تحديث الجدول
+                    // تحديث جدول المواصفات
                     const table = document.getElementById('productTable');
+                    table.innerHTML = ''; // مسح الجدول قبل إضافة البيانات الجديدة
                     product.tableData.forEach((item, index) => {
                         const row = document.createElement('tr');
+                        // إخفاء الصفوف التي ترتيبها أكبر من 6 بشكل افتراضي
                         if (index >= 6) {
                             row.classList.add('hidden-rows');
                         }
@@ -1806,27 +1785,29 @@ function updateMainMedia(thumbnail) {
                         table.appendChild(row);
                     });
 
-                    // إخفاء السهم إذا كان عدد الصفوف 6 أو أقل
+                    // إخفاء رأس المواصفات والسهم إذا كان عدد الصفوف 6 أو أقل
                     if (product.tableData.length <= 6) {
-                        document.querySelector('.specifications-header svg').style.display = 'none';
+                        document.querySelector('.specifications-header').style.display = 'none';
                     }
 
-                    // تحديث النص الوصفي
+                    // تحديث النص الوصفي للمنتج
                     document.getElementById('productDesc').textContent = product.description;
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل البيانات';
+                    document.getElementById('productTable').style.display = 'none';
+                    document.querySelector('.specifications-header').style.display = 'none';
+                    document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل بيانات المنتج.';
                 });
         } else {
-            document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في URL';
+            // إخفاء العناصر في حال عدم وجود معرف للمنتج
+            document.getElementById('productTable').style.display = 'none';
+            document.querySelector('.specifications-header').style.display = 'none';
+            document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في الرابط (مثال: page.html?id=1)';
         }
     </script>
 </body>
 </html>
-    <br>
-
-</div>
 
 
 
