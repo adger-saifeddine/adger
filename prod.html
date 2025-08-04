@@ -1629,185 +1629,106 @@ function updateMainMedia(thumbnail) {
 </html>
 
 
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول معلومات المنتج</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
-        }
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .product-table th, .product-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        .product-table th {
-            background-color: #f2f2f2;
-        }
-        .product-table tr:hover {
-            background-color: #f1f1f1;
-        }
-        .product-table td:first-child {
-            background-color: #f0f0f093; /* الطرف الأيمن للجدول بلون رصاصي */
-            color: #222;
-            font-weight: bold;
-        }
-        .product-table td:last-child {
-            background-color: #fff; /* الطرف الأيسر (الإجابة) بلون أبيض */
-            color: #222;
-        }
-        .description {
-            color: #575757;
-            font-size: 15px;
-            font-family: Cairo, sans-serif;
-            margin-top: -4px;
-            padding: 0 15px;
-        }
-        @media only screen and (max-width: 768px) {
-            .description {
-                margin-top: -8px;
-            }
-        }
-        .specifications-header {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            cursor: pointer;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .specifications-header svg {
-            transition: transform 0.3s ease;
-            margin-left: 8px; /* تم تعديل الهامش ليكون على اليسار في RTL */
-        }
-        .hidden-rows {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="specifications-header" onclick="toggleTable()">
-        <h2 style="color: #202020; font-size: 17px; font-family: Cairo, sans-serif; margin-bottom: 0; margin-top: 10px;">المواصفات</h2>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <table class="product-table" id="productTable">
-        <!-- الصفوف سيتم إضافتها ديناميكيًا -->
-    </table>
-    <p id="productDesc" class="description"></p>
-    
-    <script>
-        let isExpanded = false;
+<script>
+    let isExpanded = false;
 
-        function toggleTable() {
-            const table = document.getElementById('productTable');
-            const rows = table.querySelectorAll('tr');
-            const svg = document.querySelector('.specifications-header svg');
+    function toggleTable() {
+        const table = document.getElementById('productTable');
+        const rows = table.querySelectorAll('tr');
+        const svg = document.querySelector('.specifications-header svg');
 
-            isExpanded = !isExpanded; // Toggle state first
+        isExpanded = !isExpanded; // Toggle state first
 
-            if (isExpanded) {
-                // Expand: show all rows and rotate arrow down
-                rows.forEach((row, index) => {
-                    if (index >= 6) {
-                        row.classList.remove('hidden-rows');
-                    }
-                });
-                svg.style.transform = 'rotate(180deg)';
-            } else {
-                // Collapse: hide extra rows and rotate arrow up
-                rows.forEach((row, index) => {
+        if (isExpanded) {
+            // Expand: show all rows and rotate arrow down
+            rows.forEach((row, index) => {
+                if (index >= 6) {
+                    row.classList.remove('hidden-rows');
+                }
+            });
+            svg.style.transform = 'rotate(180deg)';
+        } else {
+            // Collapse: hide extra rows and rotate arrow up
+            rows.forEach((row, index) => {
+                if (index >= 6) {
+                    row.classList.add('hidden-rows');
+                }
+            });
+            svg.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    // دالة لجلب معرف المنتج من الرابط (يمكنك الاحتفاظ بها كما هي)
+    function getProductIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    }
+
+    // --- بداية التغيير ---
+    // استخدمنا اسم متغير جديد "specProductId" لتجنب التعارض
+    const specProductId = getProductIdFromUrl();
+
+    if (specProductId) {
+        // تحديد اسم ملف JSON بناءً على معرف المنتج
+        const productsPerFile = 1000; 
+        const fileIndex = Math.ceil(parseInt(specProductId) / productsPerFile);
+        const jsonFile = `products-${fileIndex}.json`;
+
+        fetch(jsonFile)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('ملف المنتجات غير موجود');
+                }
+                return response.json();
+            })
+            .then(products => {
+                // البحث باستخدام اسم المتغير الجديد
+                const product = products.find(p => p.id == specProductId);
+                
+                if (!product) {
+                    document.getElementById('productDesc').textContent = 'المنتج غير موجود.';
+                    return;
+                }
+
+                // تحديث جدول المواصفات
+                const table = document.getElementById('productTable');
+                table.innerHTML = ''; // مسح الجدول قبل إضافة البيانات الجديدة
+                product.tableData.forEach((item, index) => {
+                    const row = document.createElement('tr');
                     if (index >= 6) {
                         row.classList.add('hidden-rows');
                     }
+                    const questionCell = document.createElement('td');
+                    const answerCell = document.createElement('td');
+                    questionCell.textContent = item.question;
+                    answerCell.textContent = item.answer;
+                    row.appendChild(questionCell);
+                    row.appendChild(answerCell);
+                    table.appendChild(row);
                 });
-                svg.style.transform = 'rotate(0deg)';
-            }
-        }
 
-        // دالة لجلب معرف المنتج من الرابط
-        function getProductIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
-
-
-        if (productId) {
-            // تحديد اسم ملف JSON بناءً على معرف المنتج
-            // للسماح بوضع أكثر من 100 منتج في كل ملف، يتم تقسيم المنتجات.
-            // يمكنك تغيير الرقم 1000 إلى أي رقم تريده (مثلاً 200، 500، إلخ).
-            const productsPerFile = 1000; 
-            const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
-            const jsonFile = `products-${fileIndex}.json`;
-
-            fetch(jsonFile)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('ملف المنتجات غير موجود');
-                    }
-                    return response.json();
-                })
-                .then(products => {
-                    // ابحث عن المنتج المحدد داخل الملف
-                    const product = products.find(p => p.id == productId);
-                    
-                    if (!product) {
-                        document.getElementById('productDesc').textContent = 'المنتج غير موجود.';
-                        return;
-                    }
-
-                    // تحديث جدول المواصفات
-                    const table = document.getElementById('productTable');
-                    table.innerHTML = ''; // مسح الجدول قبل إضافة البيانات الجديدة
-                    product.tableData.forEach((item, index) => {
-                        const row = document.createElement('tr');
-                        // إخفاء الصفوف التي ترتيبها أكبر من 6 بشكل افتراضي
-                        if (index >= 6) {
-                            row.classList.add('hidden-rows');
-                        }
-                        const questionCell = document.createElement('td');
-                        const answerCell = document.createElement('td');
-                        questionCell.textContent = item.question;
-                        answerCell.textContent = item.answer;
-                        row.appendChild(questionCell);
-                        row.appendChild(answerCell);
-                        table.appendChild(row);
-                    });
-
-                    // إخفاء رأس المواصفات والسهم إذا كان عدد الصفوف 6 أو أقل
-                    if (product.tableData.length <= 6) {
-                        document.querySelector('.specifications-header').style.display = 'none';
-                    }
-
-                    // تحديث النص الوصفي للمنتج
-                    document.getElementById('productDesc').textContent = product.description;
-                })
-                .catch(error => {
-                    console.error('خطأ في جلب البيانات:', error);
-                    document.getElementById('productTable').style.display = 'none';
+                // إخفاء رأس المواصفات والسهم إذا كان عدد الصفوف 6 أو أقل
+                if (product.tableData.length <= 6) {
                     document.querySelector('.specifications-header').style.display = 'none';
-                    document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل بيانات المنتج.';
-                });
-        } else {
-            // إخفاء العناصر في حال عدم وجود معرف للمنتج
-            document.getElementById('productTable').style.display = 'none';
-            document.querySelector('.specifications-header').style.display = 'none';
-            document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في الرابط (مثال: page.html?id=1)';
-        }
-    </script>
-</body>
-</html>
+                }
+
+                // تحديث النص الوصفي للمنتج
+                document.getElementById('productDesc').textContent = product.description;
+            })
+            .catch(error => {
+                console.error('خطأ في جلب البيانات:', error);
+                document.getElementById('productTable').style.display = 'none';
+                document.querySelector('.specifications-header').style.display = 'none';
+                document.getElementById('productDesc').textContent = 'حدث خطأ أثناء تحميل بيانات المنتج.';
+            });
+    } else {
+        // إخفاء العناصر في حال عدم وجود معرف للمنتج
+        document.getElementById('productTable').style.display = 'none';
+        document.querySelector('.specifications-header').style.display = 'none';
+        document.getElementById('productDesc').textContent = 'يرجى تحديد معرف المنتج في الرابط (مثال: page.html?id=1)';
+    }
+    // --- نهاية التغيير ---
+</script>
 
 
 
