@@ -642,7 +642,7 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
 
             if (productId) {
-                const productsPerFile = 1000;
+                const productsPerFile = 100;
                 const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
 
@@ -952,7 +952,7 @@ function updateMainMedia(thumbnail) {
         const productId = urlParams.get('id');
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            const fileIndex = Math.ceil(id / 1000); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
             fetch(jsonFile)
                 .then(response => {
@@ -1793,7 +1793,7 @@ function updateMainMedia(thumbnail) {
         }
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 1000); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -2120,7 +2120,7 @@ function updateMainMedia(thumbnail) {
                 const productId = urlParams.get('id');
     
                 if (productId) {
-                    const productsPerFile = 1000;
+                    const productsPerFile = 100;
                     const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                     const jsonFile = `products-${fileIndex}.json`;
     
