@@ -1,6 +1,5 @@
 [
-
-{
+    {
   "id": "101",
   "media": [
     {"src": "https://files.catbox.moe/26hrxj.jpg", "type": "image"},
@@ -79,5 +78,4 @@
     "discountLabel": "مروحة USB"
   }
 }
-
 ]
