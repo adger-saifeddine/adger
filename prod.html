@@ -925,6 +925,16 @@ function updateMainMedia(thumbnail) {
                 display: inline;
             }
         }
+        /* --- بداية التعديل: إضافة تنسيق لعنصر الوصف --- */
+        #productDesc {
+            display: none; /* يتم إظهاره عبر الجافاسكريبت */
+            margin-right: 16px;
+            margin-left: 16px;
+            direction: rtl;
+            text-align: right;
+            font-family: 'Cairo', sans-serif;
+        }
+        /* --- نهاية التعديل --- */
     </style>
 </head>
 <body>
@@ -945,6 +955,10 @@ function updateMainMedia(thumbnail) {
         <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
             5 مباع
         </div>
+        <!-- --- بداية التعديل: إضافة عنصر الوصف المفقود --- -->
+        <p id="productDesc"></p>
+        <!-- --- نهاية التعديل --- -->
+    </div>
     <script>
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -952,32 +966,35 @@ function updateMainMedia(thumbnail) {
 
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // --- بداية التعديل ---
-            // حساب رقم الملف بناءً على معرف المنتج (كل 100 منتج في ملف)
-            // مثال: id=99 -> fileIndex=1, id=101 -> fileIndex=2
-            const fileIndex = Math.ceil(id / 100); 
-            // إنشاء اسم الملف ديناميكيًا
+            // --- بداية التعديل: التأكد من أن ID رقم صحيح ---
+            if (!id || isNaN(id)) {
+                document.body.innerHTML = '<p>معرّف المنتج غير صالح.</p>';
+                return;
+            }
+            const numericId = parseInt(id, 10);
+            // --- نهاية التعديل ---
+
+            const fileIndex = Math.ceil(numericId / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
-            // --- نهاية التعديل ---
                 .then(response => {
-                    if (!response.ok) throw new Error('الملف غير موجود');
+                    if (!response.ok) throw new Error(`الملف ${jsonFile} غير موجود`);
                     return response.json();
                 })
                 .then(products => {
-                    // ملاحظة: من الأفضل تحويل id المستلم من الرابط إلى رقم لضمان المقارنة الصحيحة
-                    const numericProductId = parseInt(id, 10);
-                    const product = products.find(p => p.id === numericProductId);
+                    // --- بداية التعديل: استخدام numericId للمقارنة ---
+                    const product = products.find(p => p.id === numericId);
+                    // --- نهاية التعديل ---
 
                     if (!product) {
-                        document.body.innerHTML = '<p>المنتج غير موجود</p>';
+                        document.body.innerHTML = `<p>المنتج بالمعرف ${numericId} غير موجود في الملف ${jsonFile}</p>`;
                         return;
                     }
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
                     priElement.textContent = product.pri || '0';
-                    // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
+                    // تحديث السعر القديم
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
                         oldPriceElement.textContent = product.oldPrice;
@@ -985,7 +1002,7 @@ function updateMainMedia(thumbnail) {
                     } else {
                         oldPriceElement.style.display = 'none';
                     }
-                    // تحديث نص الخصم (إخفاء إذا لم يكن موجودًا)
+                    // تحديث نص الخصم
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
@@ -1004,6 +1021,7 @@ function updateMainMedia(thumbnail) {
                     if (changingTexts.length > 0) {
                         changeText();
                         setInterval(changeText, 5000);
+                        textContainer.style.display = 'inline-block';
                     } else {
                         textContainer.style.display = 'none';
                     }
@@ -1025,14 +1043,22 @@ function updateMainMedia(thumbnail) {
                     } else {
                         salesElement.style.display = 'none';
                     }
+                    // تحديث نص الوصف
+                    const descElement = document.getElementById('productDesc');
+                    if (product.desc) {
+                        descElement.textContent = product.desc;
+                        descElement.style.display = 'block';
+                    } else {
+                        descElement.style.display = 'none';
+                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
+                    document.body.innerHTML = `<p>حدث خطأ أثناء تحميل البيانات: ${error.message}</p>`;
                 });
         }
-        
-        // دالة تهيئة النص الطويل (تبقى كما هي بدون تغيير)
+
+        // دالة تهيئة النص الطويل (تبقى كما هي)
         function initializeLongText() {
             const container = document.getElementById('hop');
             const originalText = container.textContent.trim();
@@ -1101,7 +1127,7 @@ function updateMainMedia(thumbnail) {
             if (productId) {
                 loadProductData(productId);
             } else {
-                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL</p>';
+                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL (مثال: ?id=101)</p>';
             }
         });
     </script>
