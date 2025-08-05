@@ -1793,7 +1793,7 @@ function updateMainMedia(thumbnail) {
         }
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 1000); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)

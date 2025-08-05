@@ -1,83 +1,79 @@
 {
   "id": "101",
   "media": [
-    {"src": "https://files.catbox.moe/sztmqm.mp4 ", "type": "video"},
-    {"src": "https://files.catbox.moe/98euh0.jpg", "type": "image"},
-    {"src": "https://files.catbox.moe/i60hwq.png ", "type": "image"},
-    {"src": "https://files.catbox.moe/rqo168.png ", "type": "image"},
-    {"src": "https://files.catbox.moe/lprbld.png ", "type": "image"},
-    {"src": "https://files.catbox.moe/76tki7.png ", "type": "image"},
-    {"src": "https://files.catbox.moe/op888m.png ", "type": "image"}
+    {"src": "https://files.catbox.moe/26hrxj.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/q61lec.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/qzy3wk.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/zpn4ch.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/g1o6xx.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/uaqosf.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/e0p57h.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/7pu6pt.jpg", "type": "image"},
+    {"src": "https://files.catbox.moe/8ykn82.jpg", "type": "image"}
   ],
-  "pri": "3500",
-  "oldPrice": "5699",
-  "dis": "خصم 39%",
+  "pri": "250",
+  "oldPrice": "",
+  "dis": "",
   "changingText": [
-    "نظارات ذكية AI + كاميرا 100MP",
-    "شاشة تعمل باللمس، مساعد صوت، بلوتوث",
-    "تصميم أنيق يناسب الرجال والنساء"
+    "مروحة USB محمولة بـ 5 سرعات",
+    "شاشة LED + تصميم قابل للطي",
+    "هادئة ومثالية لفصل الصيف"
   ],
-  "longText": "JOYINU D13 نظارات ذكية - كاميرا 100MP، شاشة HD، بلوتوث، مساعد صوتي AI، بطارية 260mAh، مناسبة للاستخدام اليومي والخارجي",
-  "desc": "استمتع بتكنولوجيا مستقبلية حقيقية مع هذه النظارات الذكية المتقدمة التي تحتوي على كاميرا عالية الدقة حتى 100MP ودعم لتسجيل الفيديو بدقة 4K HD مما يجعلها أكثر من مجرد نظارة شمسية أو زينة يمكنك التقاط الصور أو تسجيل مقاطع الفيديو أثناء التنقل دون الحاجة إلى هاتفها تتميز بشاشة داخلية تعمل باللمس لتظهر لك الإشعارات والمكالمات مباشرة كما تدعم البلوتوث والواي فاي لإجراء مكالمات صوتية والاستماع للموسيقى أو التحكم في الأجهزة الذكية وتضم بطارية قوية 260 مللي أمبير توفر عمر تشغيل طويل والإضاءة LED مؤشر لمعرفة حالة التشغيل والبطارية كما تدعم عدة لغات مثل العربية والإنجليزية والألمانية والفرنسية والإسبانية والروسية والتركية وغيرها وتتوفر أيضًا وظائف متعددة مثل المساعد الصوتي الذكي والتقاط الصور وتسجيل الفيديو وتشغيل الموسيقى وإشعارات التطبيقات وهي مثالية لكل من يبحث عن تجربة تقنية متطورة سواء للاستخدام الشخصي أو المهني مثل البث الحي أو التوثيق أو الأمن.",
-  "sales": "الأجهزة الذكية والأمان",
-  "buttonId": "commentButton100",
-  "commentId": "100",
-  "elementId": "commentCount100",
+  "longText": "مروحة USB صغيرة PDQ F5 - مروحة شخصية محمولة مع شاشة LED، 5 مستويات سرعة، مناسبة للسفر والطلاب",
+  "desc": "استمتع بتبريد فعّال وعملي مع هذه المروحة الصغيرة التي تتميز بتصميم قابل للطي، شاشة عرض LED، و5 مستويات سرعة لتلبية احتياجات التبريد المختلفة، وتصلح للاستخدام في المنزل أو أثناء التنقل.",
+  "sales": "إكسسوارات الصيف",
+  "buttonId": "commentButton101",
+  "commentId": "101",
+  "elementId": "commentCount101",
   "tableData": [
-    {"question": "العلامة التجارية", "answer": "JOYINU"},
-    {"question": "الموديل", "answer": "D13"},
-    {"question": "الدقة", "answer": "100MP / 4K HD"},
-    {"question": "الخصائص", "answer": "مساعد صوتي AI، كاميرا، فيديو، بلوتوث، واي فاي، تحكم بالموسيقى، ترجمة، تعرف على الكائنات، شاشة تعمل باللمس"},
-    {"question": "البطارية", "answer": "260 مللي أمبير في الساعة"},
-    {"question": "وقت التشغيل", "answer": "حتى 6 ساعات عمل متواصلة"},
-    {"question": "الوزن", "answer": "خفيفة الوزن - 45 جرام فقط"},
+    {"question": "العلامة التجارية", "answer": "PDQ"},
+    {"question": "الموديل", "answer": "F5"},
+    {"question": "النوع", "answer": "مروحة USB محمولة"},
+    {"question": "الخصائص", "answer": "قابلة للطي، شاشة LED، 5 سرعات، هادئة"},
     {"question": "المواد", "answer": "بلاستيك ABS عالي الجودة"},
-    {"question": "الوظائف الأساسية", "answer": "التقاط الصور، تسجيل الفيديو، مساعد صوتي، مكالمات، تشغيل موسيقى، إشعارات التطبيقات"},
-    {"question": "الاتصال", "answer": "بلوتوث 5.0، Wi-Fi"},
-    {"question": "التحكم بالمساعد", "answer": "نعم، عبر المساعد الصوتي القائم على الذكاء الاصطناعي (AI)"},
-    {"question": "اللغات المدعومة", "answer": "إنجليزي، روسي، إسباني، برتغالي، تركي، إيطالي، فرنسي، ألماني، نرويجي، كوري، ياباني، أوكراني، عبري، هولندي، عربي، إندونيسي، يوناني"},
+    {"question": "التحكم", "answer": "زر تحكم بالسرعة"},
+    {"question": "الطاقة", "answer": "USB питание (DC 5V)"},
+    {"question": "مستوى الضوضاء", "answer": "أقل من 40 ديسيبل"},
+    {"question": "عدد السرعات", "answer": "5 مستويات سرعة"},
+    {"question": "الألوان المتاحة", "answer": "أبيض، أزرق داكن، موف، وردي"},
+    {"question": "الوزن", "answer": "خفيفة الوزن - 180 جرام تقريبًا"},
+    {"question": "الطول", "answer": "13 × 9 × 3.5 سم (مع الطي)"},
     {"question": "المنشأ", "answer": "CN (الصين)"},
-    {"question": "الشهادات", "answer": "CE, FCC"},
+    {"question": "الشهادات", "answer": "CE, RoHS"},
+    {"question": "الاستخدام", "answer": "للطلاب، المسافرين، والمكاتب"},
     {"question": "الضمان", "answer": "لا يوجد"},
-    {"question": "الطول", "answer": "حجم قياسي للأذنين (135 مم)"},
-    {"question": "العرض", "answer": "50 مم"},
-    {"question": "الارتفاع", "answer": "35 مم"},
-    {"question": "التحكم بالإشعارات", "answer": "نعم، عبر الشاشة أو الأوامر الصوتية"},
-    {"question": "التطبيق المتوافق", "answer": "تطبيق JOYINU الخاص"},
-    {"question": "الاستخدام", "answer": "السفر، الرياضة، السياحة، العمل الحر، التوثيق، البث المباشر"}
+    {"question": "الوظائف", "answer": "تبريد الهواء، عرض الوقت والحرارة عبر شاشة LED"}
   ],
   "groups": [
     {
-      "type": "videos",
-      "items": [
-        "https://files.catbox.moe/sztmqm.mp4 "
-      ]
-    },
-    {
       "type": "images",
       "items": [
-        "https://files.catbox.moe/98euh0.jpg ",
-        "https://files.catbox.moe/i60hwq.png ",
-        "https://files.catbox.moe/rqo168.png ",
-        "https://files.catbox.moe/lprbld.png ",
-        "https://files.catbox.moe/76tki7.png ",
-        "https://files.catbox.moe/op888m.png "
+        "https://files.catbox.moe/26hrxj.jpg",
+        "https://files.catbox.moe/q61lec.jpg",
+        "https://files.catbox.moe/qzy3wk.jpg",
+        "https://files.catbox.moe/zpn4ch.jpg",
+        "https://files.catbox.moe/g1o6xx.jpg",
+        "https://files.catbox.moe/uaqosf.jpg",
+        "https://files.catbox.moe/e0p57h.jpg",
+        "https://files.catbox.moe/7pu6pt.jpg",
+        "https://files.catbox.moe/8ykn82.jpg"
       ]
     }
   ],
   "product": {
-    "image": "https://files.catbox.moe/98euh0.jpg",
-    "name": "نظارات JOYINU D13 الذكية - 4K HD، كاميرا 100MP، مساعد صوتي AI، بلوتوث، بطارية 260mAh",
-    "sold": "الأجهزة الذكية والأمان",
-    "price": "3500.00",
-    "discount": "39",
-    "pageId": "100",
-    "productId": "100",
-    "shippingPrice": "150",
-    "colors": ["أسود", "أبيض"]
-    },
+    "image": "https://files.catbox.moe/26hrxj.jpg",
+    "name": "مروحة PDQ F5 USB محمولة - 5 سرعات، شاشة LED، قابلة للطي، مناسبة للطلاب والسفر",
+    "sold": "إكسسوارات الصيف",
+    "price": "250.00",
+    "discount": "",
+    "pageId": "101",
+    "productId": "101",
+    "shippingPrice": "55",
+    "colors": ["أبيض", "كحلي", "موف", "وردي"],
+    "materials": ["ABS"]
+  },
   "texts": {
     "currency": "جنيه",
-    "discountLabel": "خصم"
+    "discountLabel": "مروحة USB"
   }
 }
