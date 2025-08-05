@@ -170,18 +170,29 @@
 
         /* --- Modals --- */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background-color: white; border-radius: 12px; width: 90%; max-width: 900px; max-height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; animation: modalFadeIn 0.3s ease-out; }
+        .modal-content { 
+            background-color: white; 
+            border-radius: 12px; 
+            width: 90%; 
+            max-width: 900px; 
+            max-height: 95vh; 
+            overflow-y: auto; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            animation: modalFadeIn 0.3s ease-out; 
+        }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .close { 
             position: absolute; 
-            top: 20px; 
-            left: 20px; 
+            top: 10px; 
+            left: 10px; 
             color: #333; 
             font-size: 30px; 
             font-weight: bold; 
             cursor: pointer; 
             z-index: 10; 
-            background: rgba(255, 255, 255, 0.9); 
+            background: #6c757d; /* Gray background for close button */
             border-radius: 50%; 
             width: 40px; 
             height: 40px; 
@@ -198,16 +209,16 @@
             grid-template-columns: 1fr 1fr; 
             gap: 2.5rem; 
             padding: 2.5rem; 
-            overflow-y: auto; 
             align-items: start; 
         }
         .modal-images { 
             position: relative; 
             width: 100%; 
-            height: 400px; /* Fixed height for consistency */
-            max-height: 400px; 
+            height: 450px; /* Larger height for better detail visibility */
+            max-height: 450px; 
             overflow: hidden; 
             border-radius: 8px; 
+            margin-top: 50px; /* Space for close button */
         }
         .main-image { 
             width: 100%; 
@@ -246,8 +257,8 @@
         .next-image { left: 15px; }
         .image-counter { 
             position: absolute; 
-            bottom: 10px; 
-            right: 10px; 
+            bottom: 15px; /* Added small margin */
+            right: 15px; /* Added small margin */
             color: var(--color-text); 
             background: rgba(255,255,255,0.8); 
             padding: 5px 10px; 
@@ -308,8 +319,9 @@
                 padding: 1.5rem; 
             }
             .modal-images { 
-                height: 300px; /* Adjusted for smaller screens */
-                max-height: 300px; 
+                height: 400px; /* Larger height for phones */
+                max-height: 400px; 
+                margin-top: 45px; /* Space for close button */
             }
             .main-image img { 
                 width: 100%; 
@@ -318,11 +330,12 @@
             }
             .modal-details { padding: 0; }
             .close { 
-                top: 15px; 
-                left: 15px; 
+                top: 10px; 
+                left: 10px; 
                 width: 35px; 
                 height: 35px; 
                 font-size: 24px; 
+                background: #6c757d; /* Gray background for close button */
             }
             .image-nav { 
                 width: 35px; 
@@ -332,8 +345,8 @@
             .prev-image { right: 10px; } 
             .next-image { left: 10px; }
             .image-counter { 
-                bottom: 5px; 
-                right: 5px; 
+                bottom: 10px; /* Adjusted for smaller screens */
+                right: 10px; /* Adjusted for smaller screens */
                 font-size: 0.8rem; 
             }
             
@@ -354,18 +367,19 @@
         }
         @media (max-width: 480px) {
             .modal-images { 
-                height: 250px; /* Further reduced for very small screens */
-                max-height: 250px; 
+                height: 350px; /* Slightly smaller but still large for small screens */
+                max-height: 350px; 
             }
             .modal-details h2 { font-size: 1.8rem; }
             .modal-details .price { font-size: 1.5rem; }
             .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
             .close { 
-                top: 10px; 
-                left: 10px; 
+                top: 8px; 
+                left: 8px; 
                 width: 30px; 
                 height: 30px; 
                 font-size: 20px; 
+                background: #6c757d; /* Gray background for close button */
             }
         }
     </style>
