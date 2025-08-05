@@ -950,26 +950,18 @@ function updateMainMedia(thumbnail) {
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
-
         // دالة لجلب بيانات المنتج من JSON
+        // *** تعديل: السكريبت يجلب الملف المناسب حسب رقم المنتج، وليس فقط products-1.json ***
         function loadProductData(id) {
-            // هذا السطر صحيح ويقوم بتحديد الملف المناسب بناءً على المعرف
-            // مثال: id=99 -> fileIndex=1, id=101 -> fileIndex=2, id=250 -> fileIndex=3
             const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
-            const jsonFile = `products-${fileIndex}.json`;
-
+            const jsonFile = `products-${fileIndex}.json`; // الآن سيجلب من products-رقم.json وليس فقط products-1.json
             fetch(jsonFile)
                 .then(response => {
                     if (!response.ok) throw new Error('الملف غير موجود');
                     return response.json();
                 })
                 .then(products => {
-                    // **-- التعديل الرئيسي هنا --**
-                    // يجب تحويل المعرف القادم من الرابط (وهو نص) إلى رقم لكي تتم المقارنة بشكل صحيح
-                    // مع المعرف الرقمي الموجود في ملف JSON.
-                    const numericProductId = parseInt(id, 10);
-                    const product = products.find(p => p.id === numericProductId);
-
+                    const product = products.find(p => p.id === id);
                     if (!product) {
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
@@ -1039,7 +1031,6 @@ function updateMainMedia(thumbnail) {
                     document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
                 });
         }
-
         // دالة تهيئة النص الطويل
         function initializeLongText() {
             const container = document.getElementById('hop');
@@ -1103,7 +1094,6 @@ function updateMainMedia(thumbnail) {
             updateTextBasedOnScreenSize();
             window.addEventListener('resize', updateTextBasedOnScreenSize);
         }
-
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
@@ -1112,7 +1102,11 @@ function updateMainMedia(thumbnail) {
                 document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL</p>';
             }
         });
-</script>
+    </script>
+<!-- 
+ملاحظة التعديل: 
+السكريبت الآن يجلب البيانات من الملف المناسب مثل products-2.json أو products-3.json حسب رقم المنتج وليس products-1.json فقط.
+-->
            
 
 
