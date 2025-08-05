@@ -952,190 +952,181 @@ function updateMainMedia(thumbnail) {
         const productId = urlParams.get('id');
 
         // دالة لجلب بيانات المنتج من JSON
-        function loadProductData(id, retryCount = 0, maxRetries = 3) {
-            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
+        function loadProductData(id) {
+            // كل 100 منتج في ملف، مثال: id=99 -> file-1, id=101 -> file-2
+            const fileIndex = Math.ceil(id / 100); 
             const jsonFile = `products-${fileIndex}.json`;
-            console.log('جارٍ جلب الملف:', jsonFile); // تسجيل اسم الملف
-            // إظهار رسالة التحميل
-            document.body.innerHTML = '<p class="loading-message">جارٍ التحميل...</p>';
+
             fetch(jsonFile)
                 .then(response => {
-                    if (!response.ok) throw new Error(`الملف ${jsonFile} غير موجود`);
+                    if (!response.ok) {
+                        throw new Error(`الملف ${jsonFile} غير موجود`);
+                    }
                     return response.json();
                 })
                 .then(products => {
-                    console.log('البيانات المستلمة:', products); // تسجيل البيانات
-                    const product = products.find(p => p.id === id);
-                    console.log('المنتج:', product); // تسجيل المنتج
+                    // تحويل id من الرابط إلى رقم لضمان المقارنة الصحيحة
+                    const numericId = parseInt(id, 10); 
+                    const product = products.find(p => p.id === numericId);
+
                     if (!product) {
-                        document.body.innerHTML = '<p class="error-message">المنتج غير موجود</p>';
+                        document.querySelector('.product-container').innerHTML = '<h2>المنتج غير موجود</h2><p>قد يكون الرابط غير صحيح أو تم حذف المنتج.</p>';
                         return;
                     }
-                    // إعادة إنشاء المحتوى الأصلي
-                    document.body.innerHTML = `
-                        <div class="container" style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; margin-top: 26px;">
-                            <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
-                                <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
-                                <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
-                                <div class="letter" style="margin-right: -3px; font-size: 20px;">EGP</div>
-                                <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
-                                <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
-                            </div>
-                            <div id="text-container" class="text-style">
-                                النص الأول
-                            </div>
-                            <h2 id="hop" class="placeholder">
-                                أفضل اختيار لجميع احتياجاتك اليومية بجودة لا مثيل لها...
-                            </h2>
-                            <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
-                                5 مباع
-                            </div>
-                        </div>
-                    `;
+
+                    // تحديث عنوان الصفحة باسم المنتج
+                    document.title = product.desc || 'تفاصيل المنتج';
+
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
                     priElement.textContent = product.pri || '0';
+
                     // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
-                        oldPriceElement.textContent = product.oldPrice;
+                        oldPriceElement.textContent = product.oldPrice + ' ريال';
                         oldPriceElement.style.display = 'inline';
                     } else {
                         oldPriceElement.style.display = 'none';
                     }
+
                     // تحديث نص الخصم (إخفاء إذا لم يكن موجودًا)
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
-                        disElement.style.display = 'inline';
+                        disElement.style.display = 'inline-block';
                     } else {
                         disElement.style.display = 'none';
                     }
+
                     // تحديث النص المتغير
                     const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
-                    let index = 0;
-                    function changeText() {
-                        textContainer.textContent = changingTexts[index];
-                        index = (index + 1) % changingTexts.length;
-                    }
                     if (changingTexts.length > 0) {
-                        changeText();
+                        let index = 0;
+                        function changeText() {
+                            textContainer.textContent = changingTexts[index];
+                            index = (index + 1) % changingTexts.length;
+                        }
+                        changeText(); // استدعاء فوري
                         setInterval(changeText, 5000);
+                        textContainer.style.display = 'block';
                     } else {
                         textContainer.style.display = 'none';
                     }
+
                     // تحديث النص الطويل
                     const hopContainer = document.getElementById('hop');
                     if (product.longText) {
-                        hopContainer.classList.remove('placeholder');
                         hopContainer.textContent = product.longText;
                         hopContainer.style.display = 'block';
-                        initializeLongText();
+                        initializeLongText(); // استدعاء التهيئة بعد وضع النص
                     } else {
                         hopContainer.style.display = 'none';
                     }
+
                     // تحديث عدد المبيعات
                     const salesElement = document.getElementById('sales');
                     if (product.sales) {
-                        salesElement.textContent = product.sales;
+                        salesElement.textContent = `تم بيع ${product.sales} مرة`;
                         salesElement.style.display = 'block';
                     } else {
                         salesElement.style.display = 'none';
                     }
-                    // تحديث نص الوصف (إذا كان موجودًا)
+
+                    // تحديث نص الوصف (العنوان الرئيسي)
                     const descElement = document.getElementById('productDesc');
-                    if (descElement && product.desc) {
+                    if (product.desc) {
                         descElement.textContent = product.desc;
-                        descElement.style.display = 'block';
-                    } else if (descElement) {
+                    } else {
                         descElement.style.display = 'none';
                     }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    if (retryCount < maxRetries) {
-                        console.log(`إعادة المحاولة ${retryCount + 1} من ${maxRetries}`);
-                        setTimeout(() => loadProductData(id, retryCount + 1, maxRetries), 2000);
-                    } else {
-                        document.body.innerHTML = `
-                            <p class="error-message">حدث خطأ أثناء تحميل البيانات، يرجى المحاولة مرة أخرى</p>
-                            <button onclick="loadProductData(${id})">إعادة المحاولة</button>
-                        `;
-                    }
+                    document.querySelector('.product-container').innerHTML = '<h2>حدث خطأ</h2><p>حدث خطأ أثناء تحميل بيانات المنتج. يرجى التأكد من أن معرف المنتج صحيح وأن ملف البيانات موجود.</p>';
                 });
         }
 
-        // دالة تهيئة النص الطويل
+        // دالة تهيئة النص الطويل (عرض المزيد/أقل)
         function initializeLongText() {
             const container = document.getElementById('hop');
             const originalText = container.textContent.trim();
-            const charLimitMobile = 50;
-            const charLimitTablet = 122;
-            const charLimitLarge = 132;
+            if (!originalText) return;
+
+            // تحديدات مختلفة لأحجام الشاشات
+            const charLimitMobile = 80;
+            const charLimitTablet = 150;
+            const charLimitLarge = 200;
+
             const truncateText = (text, charLimit) => {
-                if (text.length > charLimit) {
-                    const truncatedText = text.substring(0, charLimit);
-                    const lastSpaceIndex = truncatedText.lastIndexOf(' ');
-                    let shortTextContent = truncatedText;
-                    let lastWord = '';
-                    if (lastSpaceIndex !== -1) {
-                        shortTextContent = truncatedText.substring(0, lastSpaceIndex);
-                        lastWord = truncatedText.substring(lastSpaceIndex + 1);
-                    }
-                    const shortText = document.createElement('span');
-                    shortText.className = 'short-text';
-                    const initialText = document.createElement('span');
-                    initialText.textContent = shortTextContent;
-                    const lastWordWrapper = document.createElement('span');
-                    lastWordWrapper.className = 'last-word-wrapper';
-                    lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '...';
-                    const fullText = document.createElement('span');
-                    fullText.className = 'full-text';
-                    fullText.textContent = text;
-                    const moreBtn = document.createElement('span');
-                    moreBtn.className = 'more-btn';
-                    moreBtn.innerHTML = `
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    `;
-                    container.textContent = '';
-                    shortText.appendChild(initialText);
-                    lastWordWrapper.appendChild(moreBtn);
-                    shortText.appendChild(lastWordWrapper);
-                    container.appendChild(shortText);
-                    container.appendChild(fullText);
-                    moreBtn.addEventListener('click', () => {
-                        container.classList.toggle('expanded');
-                    });
-                } else {
-                    container.style.display = 'block';
+                // لا تقم بالاقتطاع إذا كان النص أصلاً قصيرًا
+                if (text.length <= charLimit) {
+                    container.textContent = text;
+                    return;
                 }
+
+                // اقتطاع النص عند أقرب مسافة قبل الحد
+                const truncatedText = text.substring(0, charLimit);
+                const lastSpaceIndex = truncatedText.lastIndexOf(' ');
+                const shortTextContent = (lastSpaceIndex > 0) ? truncatedText.substring(0, lastSpaceIndex) : truncatedText;
+
+                // بناء العناصر الجديدة
+                const shortTextSpan = document.createElement('span');
+                shortTextSpan.className = 'short-text';
+                shortTextSpan.textContent = shortTextContent + '... ';
+
+                const moreBtn = document.createElement('span');
+                moreBtn.className = 'more-btn';
+                moreBtn.innerHTML = `عرض المزيد 
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>`;
+
+                const fullTextSpan = document.createElement('span');
+                fullTextSpan.className = 'full-text';
+                fullTextSpan.textContent = text;
+
+                // إفراغ الحاوية وإضافة العناصر الجديدة
+                container.innerHTML = '';
+                shortTextSpan.appendChild(moreBtn);
+                container.appendChild(shortTextSpan);
+                container.appendChild(fullTextSpan);
+                
+                // إضافة المستمع لزر "عرض المزيد"
+                moreBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // منع أي أحداث أخرى
+                    container.classList.toggle('expanded');
+                    if (container.classList.contains('expanded')) {
+                        moreBtn.innerHTML = `عرض أقل 
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; transform: rotate(180deg);">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>`;
+                    }
+                });
             };
+
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
                 if (screenWidth <= 768) {
                     truncateText(originalText, charLimitMobile);
-                } else if (screenWidth >= 769 && screenWidth <= 1199) {
+                } else if (screenWidth <= 1199) {
                     truncateText(originalText, charLimitTablet);
-                } else if (screenWidth >= 1200 && screenWidth <= 1999) {
-                    truncateText(originalText, charLimitLarge);
                 } else {
-                    container.textContent = originalText;
-                    container.style.display = 'block';
+                    truncateText(originalText, charLimitLarge);
                 }
             };
-            updateTextBasedOnScreenSize();
-            window.addEventListener('resize', updateTextBasedOnScreenSize);
+            
+            updateTextBasedOnScreenSize(); // تطبيق عند التحميل
+            window.addEventListener('resize', updateTextBasedOnScreenSize); // تطبيق عند تغيير حجم الشاشة
         }
 
-        // تهيئة الصفحة
+        // تهيئة الصفحة عند تحميلها بالكامل
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
                 loadProductData(productId);
             } else {
-                document.body.innerHTML = '<p class="error-message">يرجى تحديد معرف المنتج في URL</p>';
+                document.querySelector('.product-container').innerHTML = '<h2>لم يتم تحديد المنتج</h2><p>يرجى إضافة معرف المنتج إلى الرابط، مثال: <code>?id=1</code></p>';
             }
         });
     </script>
