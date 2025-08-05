@@ -818,6 +818,8 @@ function updateMainMedia(thumbnail) {
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -896,9 +898,9 @@ function updateMainMedia(thumbnail) {
             #hop {
                 position: relative;
             }
-            .zero {
-                margin-right: 10px !important;
-            }
+            .zero{
+                    margin-right: 10px !important;
+                }
         }
         /* للشاشات المتوسطة */
         @media only screen and (min-width: 769px) and (max-width: 1199px) {
@@ -908,7 +910,7 @@ function updateMainMedia(thumbnail) {
         }
         /* للشاشات الكبيرة */
         @media only screen and (min-width: 1200px) and (max-width: 1999px) {
-            #hop {
+            #hop  {
                 font-size: 16px;
             }
         }
@@ -924,23 +926,6 @@ function updateMainMedia(thumbnail) {
                 display: inline;
             }
         }
-        /* تنسيق رسالة التحميل والخطأ */
-        .loading-message, .error-message {
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .error-message button {
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-        }
     </style>
 </head>
 <body>
@@ -948,7 +933,7 @@ function updateMainMedia(thumbnail) {
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
             <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
             <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
-            <div class="letter" style="margin-right: -3px; font-size: 20px;">EGP</div>
+            <div class="letter" style="  margin-right: -3px; font-size: 20px;">EGP</div>
             <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
             <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
@@ -961,7 +946,6 @@ function updateMainMedia(thumbnail) {
         <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
             5 مباع
         </div>
-    </div>
     <script>
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -1058,6 +1042,14 @@ function updateMainMedia(thumbnail) {
                         salesElement.style.display = 'block';
                     } else {
                         salesElement.style.display = 'none';
+                    }
+                    // تحديث نص الوصف (إذا كان موجودًا)
+                    const descElement = document.getElementById('productDesc');
+                    if (descElement && product.desc) {
+                        descElement.textContent = product.desc;
+                        descElement.style.display = 'block';
+                    } else if (descElement) {
+                        descElement.style.display = 'none';
                     }
                 })
                 .catch(error => {
