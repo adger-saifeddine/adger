@@ -237,6 +237,7 @@
             border-radius: 8px; 
             background-color: #f1f1f1;
             cursor: grab;
+            touch-action: pan-y; /* Allow vertical scroll but handle horizontal swipe with JS */
         }
         .modal-images:active {
             cursor: grabbing;
@@ -688,53 +689,63 @@
                 openModal(dom.productModal);
             }
 
-            // --- New, Improved Touch Logic ---
+            // --- New, Improved Touch Logic with Axis-Dominance ---
             let isDragging = false,
-                startPos = 0,
-                currentTranslate = 0;
+                startPosX = 0,
+                startPosY = 0,
+                initialTranslate = 0;
 
             function touchStart(event) {
                 isDragging = true;
-                startPos = event.touches[0].clientX;
+                startPosX = event.touches[0].clientX;
+                startPosY = event.touches[0].clientY;
+                
                 const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform');
-                if (transformMatrix !== 'none') {
-                    currentTranslate = parseInt(transformMatrix.split(',')[4].trim());
-                } else {
-                    currentTranslate = 0;
-                }
+                initialTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0;
+                
                 dom.imageTrack.style.transition = 'none';
             }
 
             function touchMove(event) {
                 if (!isDragging) return;
-                const currentPosition = event.touches[0].clientX;
-                const diff = currentPosition - startPos;
-                dom.imageTrack.style.transform = `translateX(${currentTranslate + diff}px)`;
+                const currentPosX = event.touches[0].clientX;
+                const diffX = currentPosX - startPosX;
+                dom.imageTrack.style.transform = `translateX(${initialTranslate + diffX}px)`;
             }
 
-            function touchEnd() {
+            function touchEnd(event) {
                 if (!isDragging) return;
                 isDragging = false;
-                
                 dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
 
-                const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform');
-                const finalTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0;
+                const endPosX = event.changedTouches[0].clientX;
+                const endPosY = event.changedTouches[0].clientY;
                 
-                const slideWidth = dom.imageContainer.offsetWidth;
+                const diffX = startPosX - endPosX; // Positive for swipe left, negative for swipe right
+                const diffY = startPosY - endPosY; // Positive for swipe up, negative for swipe down
 
-                // Calculate the index that the slider is closest to based on the final position.
-                // This implements the "snap to middle" logic.
-                const closestIndex = Math.round(-finalTranslate / slideWidth);
+                const swipeThresholdX = 50;  // Minimum pixels to be considered a horizontal swipe
+                const swipeThresholdY = 70;  // Minimum pixels to be considered a vertical swipe
 
-                // Clamp the index to stay within the bounds of the image array
-                const newIndex = Math.max(0, Math.min(closestIndex, currentProduct.images.length - 1));
-
-                // Update the current image index
-                currentImageIndex = newIndex;
-                
-                // Snap to the calculated correct slide
-                updateSliderView();
+                // Check if horizontal movement is more dominant than vertical
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // It's a horizontal swipe
+                    if (diffX > swipeThresholdX && currentImageIndex < currentProduct.images.length - 1) {
+                        currentImageIndex++; // Swipe Left -> Next Image
+                    } else if (diffX < -swipeThresholdX && currentImageIndex > 0) {
+                        currentImageIndex--; // Swipe Right -> Previous Image
+                    }
+                    // Snap to the correct slide (new or old one)
+                    updateSliderView();
+                } else {
+                    // It's a vertical swipe
+                    if (diffY < -swipeThresholdY) { // A significant swipe down
+                        closeModal(dom.productModal);
+                    } else {
+                        // Not a significant vertical swipe, snap back horizontally
+                        updateSliderView();
+                    }
+                }
             }
 
             dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
@@ -815,7 +826,7 @@
                     return;
                 }
                 dom.searchResultsInfo.innerHTML = `نتائج البحث عن: <span>'${searchTerm}'</span>`;
-                const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm)); // Simple filter
+                const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm));
                 renderProducts(filtered);
             });
             
