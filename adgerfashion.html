@@ -103,7 +103,27 @@
         .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         #headerSearchInput { border: none; background: transparent; outline: none; width: 0; padding: 5px 15px 5px 40px; opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px; box-sizing: border-box; border-radius: 50px; }
         .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
-        .search-icon { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; z-index: 2; cursor: pointer; color: var(--color-primary); display: flex; align-items: center; justify-content: center; transition: color 0.3s ease; }
+        
+        /* -- التعديل: توسيط العدسة وإضافة الحركة -- */
+        .search-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 38px;
+            height: 38px;
+            z-index: 2;
+            cursor: pointer;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease, left 0.4s ease, transform 0.4s ease;
+        }
+        .search-container.active .search-icon {
+            left: 0;
+            transform: translateY(-50%);
+        }
         .search-icon:hover { color: var(--color-secondary); }
 
         /* --- Mobile Navigation --- */
@@ -811,12 +831,12 @@
                 e.stopPropagation();
                 const nowActive = dom.searchContainer.classList.toggle('active');
                 dom.header.classList.toggle('search-active-mobile', nowActive);
+                
+                // -- التعديل: التمرير إلى قسم المنتجات عند فتح البحث --
                 if (nowActive) {
                     dom.searchInput.focus();
                     const productsSectionTop = dom.productsSection.offsetTop - dom.header.clientHeight;
-                    if (window.scrollY < productsSectionTop) {
-                        window.scrollTo({ top: productsSectionTop, behavior: 'smooth' });
-                    }
+                    window.scrollTo({ top: productsSectionTop, behavior: 'smooth' });
                 }
             });
 
