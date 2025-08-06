@@ -176,7 +176,7 @@
             width: 90%; 
             max-width: 900px; 
             max-height: 95vh; 
-            overflow: hidden; /* MODIFIED */
+            overflow: hidden; 
             position: relative; 
             display: flex; 
             flex-direction: column; 
@@ -184,7 +184,6 @@
         }
         @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
-        /* --- NEW: Modal Header --- */
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -201,7 +200,6 @@
             margin: 0;
             line-height: 1;
         }
-        /* --- MODIFIED: Modal Close Button --- */
         .close { 
             position: static;
             color: #888;
@@ -227,37 +225,48 @@
             gap: 2.5rem; 
             padding: 2.5rem; 
             align-items: start;
-            overflow-y: auto; /* ADDED for scrollable body */
-            flex-grow: 1; /* ADDED for scrollable body */
+            overflow-y: auto; 
+            flex-grow: 1; 
         }
         .modal-images { 
             position: relative; 
             width: 100%; 
-            height: 450px; /* Larger height for better detail visibility */
-            max-height: 450px; 
+            height: 550px; 
+            max-height: 550px; 
             overflow: hidden; 
             border-radius: 8px; 
-            /* margin-top: 50px; REMOVED */
+            background-color: #f1f1f1;
+            cursor: grab;
         }
-        .main-image { 
+        .modal-images:active {
+            cursor: grabbing;
+        }
+        .image-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide img { 
             width: 100%; 
             height: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background-color: #f1f1f1; 
+            object-fit: contain; 
+            user-select: none; /* Prevent image selection on drag */
+            pointer-events: none; /* Prevent image from capturing events */
         }
-        .main-image img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; /* Ensures image fits without cropping */
-            border-radius: 8px; 
-        }
+
         .image-nav { 
             position: absolute; 
             top: 50%; 
             transform: translateY(-50%); 
-            background: rgba(0,0,0,0.5); 
+            background: rgba(0,0,0,0.4); 
             color: white; 
             border: none; 
             border-radius: 50%; 
@@ -274,19 +283,20 @@
         .image-nav:hover { background: rgba(0,0,0,0.7); }
         .prev-image { right: 15px; } 
         .next-image { left: 15px; }
+
         .image-counter { 
             position: absolute; 
-            bottom: 15px; /* Added small margin */
-            right: 15px; /* Added small margin */
+            bottom: 15px;
+            right: 15px;
             color: var(--color-text); 
             background: rgba(255,255,255,0.8); 
             padding: 5px 10px; 
             border-radius: 5px; 
             font-size: 0.9rem; 
             font-weight: 500; 
+            z-index: 10;
         }
         .modal-details { 
-            padding: 1rem; 
             display: flex; 
             flex-direction: column; 
             gap: 1rem; 
@@ -327,45 +337,38 @@
             .nav ul { display: flex; list-style: none; gap: 2.5rem; }
             .mobile-menu-toggle { display: none; }
         }
+
         @media (max-width: 768px) {
             .header { padding: 0 15px; }
             .logo h1 { font-size: 1.6rem; }
             .hero-content h1 { font-size: 2.5rem; }
-            .modal-header { padding: 0.5rem 1rem; }
-            .modal-logo h3 { font-size: 1.3rem; }
-            .modal-body { 
-                display: flex; 
-                flex-direction: column; 
-                gap: 2rem; 
-                padding: 1.5rem; 
+            
+            #productModal .modal-content {
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+                overflow-y: auto;
             }
-            .modal-images { 
-                height: 400px;
-                max-height: 400px; 
-                /* margin-top: 45px; REMOVED */
+            #productModal .modal-header {
+                position: static;
+                padding: 0.5rem 1rem;
             }
-            .main-image img { 
-                width: 100%; 
-                height: 100%; 
-                object-fit: contain; 
+            #productModal .modal-body {
+                display: block;
+                padding: 0;
+                overflow: visible;
+                flex-grow: 1;
             }
-            .modal-details { padding: 0; }
-            .close { 
-                width: 35px; 
-                height: 35px; 
-                font-size: 30px; 
+            #productModal .modal-images {
+                position: relative;
+                height: 60vh;
+                width: 100%;
+                border-radius: 0;
             }
-            .image-nav { 
-                width: 35px; 
-                height: 35px; 
-                font-size: 1.2rem; 
-            }
-            .prev-image { right: 10px; } 
-            .next-image { left: 10px; }
-            .image-counter { 
-                bottom: 10px; /* Adjusted for smaller screens */
-                right: 10px; /* Adjusted for smaller screens */
-                font-size: 0.8rem; 
+            #productModal .modal-details {
+                position: static;
+                padding: 1.5rem;
             }
             
             .logo { max-width: 500px; }
@@ -384,18 +387,9 @@
             .floating-action-widget { bottom: 15px; left: 15px; }
         }
         @media (max-width: 480px) {
-            .modal-images { 
-                height: 350px; /* Slightly smaller but still large for small screens */
-                max-height: 350px; 
-            }
-            .modal-details h2 { font-size: 1.8rem; }
-            .modal-details .price { font-size: 1.5rem; }
-            .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
-            .close { 
-                width: 30px; 
-                height: 30px; 
-                font-size: 28px;
-            }
+            #productModal .modal-details h2 { font-size: 1.8rem; }
+            #productModal .modal-details .price { font-size: 1.5rem; }
+            #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
         }
     </style>
 </head>
@@ -545,7 +539,6 @@
     <!-- Modals (Product & Purchase) -->
     <div id="productModal" class="modal">
         <div class="modal-content">
-            <!-- MODIFIED/NEW SECTION: Modal Header -->
             <div class="modal-header">
                 <div class="modal-logo">
                     <h3>
@@ -556,10 +549,11 @@
                 </div>
                 <span class="close">&times;</span>
             </div>
-            <!-- END MODIFIED/NEW SECTION -->
             <div class="modal-body">
                 <div class="modal-images">
-                    <div class="main-image"><img id="modalMainImage" src="" alt=""></div>
+                    <div class="image-track" id="imageTrack">
+                        <!-- Slides will be injected by JS -->
+                    </div>
                     <button class="image-nav prev-image">‹</button>
                     <button class="image-nav next-image">›</button>
                     <div class="image-counter" id="imageCounter"></div>
@@ -614,7 +608,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- DATA ---
             const products = [
                 { id: 1, name: "بليزر كتان أنيق", price: 850, category: "men", images: ["https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1552343864-a735c03a35a6?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1593030103057-004351659732?q=80&w=1887&auto=format&fit=crop"], description: "بليزر رجالي مصنوع من أجود أنواع الكتان، مثالي لإطلالة صيفية أنيقة ومريحة.", sizes: ["S", "M", "L", "XL"], colors: ["#F5F5DC", "#BDB7AB", "#607D8B"], },
                 { id: 2, name: "فستان حرير ميدي", price: 1200, category: "women", images: ["https://images.unsplash.com/photo-1595911463955-abc395454157?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1760&auto=format&fit=crop", "https://images.unsplash.com/photo-1614299538257-557340b19283?q=80&w=1887&auto=format&fit=crop"], description: "فستان نسائي بتصميم عصري من الحرير الطبيعي، يجمع بين الفخامة والراحة.", sizes: ["XS", "S", "M", "L"], colors: ["#C0A062", "#D8BFD8", "#4682B4"], },
@@ -622,7 +615,6 @@
                 { id: 4, name: "بلوزة شتوية صوف", price: 650, category: "women", images: ["https://images.unsplash.com/photo-1542841791-1925b05a121f?q=80&w=1887&auto=format&fit=crop"], description: "بلوزة شتوية ناعمة من الصوف الممزوج، مثالية لإطلالة دافئة ومريحة.", sizes: ["S", "M", "L"], colors: ["#FFFFFF", "#D2B48C", "#FFB6C1"], },
             ];
 
-            // --- DOM ELEMENTS ---
             const dom = {
                 header: document.querySelector('.header'),
                 productsGrid: document.getElementById('productsGrid'),
@@ -637,39 +629,14 @@
                 mobileNav: document.getElementById('mobileNav'),
                 desktopNavLinks: document.querySelectorAll('#desktopNav .nav-link'),
                 allNavLinks: document.querySelectorAll('.nav-link, .mobile-nav a, .cta-btn, .floating-btn'),
-                floatingWidget: document.querySelector('.floating-action-widget')
+                floatingWidget: document.querySelector('.floating-action-widget'),
+                imageContainer: document.querySelector('#productModal .modal-images'),
+                imageTrack: document.getElementById('imageTrack'),
+                imageCounter: document.getElementById('imageCounter'),
             };
             
             let currentProduct = null, currentImageIndex = 0, selectedSize = null, selectedColor = null;
 
-            // --- FUZZY SEARCH (Levenshtein Distance) ---
-            const levenshtein = (s1, s2) => {
-                let longer = s1, shorter = s2;
-                if (s1.length < s2.length) { longer = s2; shorter = s1; }
-                let longerLength = longer.length;
-                if (longerLength === 0) return 1.0;
-                return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-            };
-            const editDistance = (s1, s2) => {
-                s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
-                const costs = [];
-                for (let i = 0; i <= s1.length; i++) {
-                    let lastValue = i;
-                    for (let j = 0; j <= s2.length; j++) {
-                        if (i === 0) costs[j] = j;
-                        else if (j > 0) {
-                            let newValue = costs[j - 1];
-                            if (s1.charAt(i - 1) !== s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                            costs[j - 1] = lastValue;
-                            lastValue = newValue;
-                        }
-                    }
-                    if (i > 0) costs[s2.length] = lastValue;
-                }
-                return costs[s2.length];
-            };
-
-            // --- RENDER & UI FUNCTIONS ---
             function renderProducts(productArray = products) {
                 dom.productsGrid.innerHTML = '';
                 if(productArray.length === 0){
@@ -688,25 +655,93 @@
             function openModal(modal) { modal.style.display = 'flex'; document.body.classList.add('menu-open'); }
             function closeModal(modal) { modal.style.display = 'none'; if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open'); }
             
-            function showProductImage(index) {
-                document.getElementById('modalMainImage').src = currentProduct.images[index];
-                document.getElementById('imageCounter').textContent = `${index + 1} / ${currentProduct.images.length}`;
-                currentImageIndex = index;
+            function updateSliderView() {
+                const offset = -currentImageIndex * dom.imageContainer.offsetWidth;
+                dom.imageTrack.style.transform = `translateX(${offset}px)`;
+                dom.imageCounter.textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`;
             }
 
             function openProductModal(product) {
                 currentProduct = product;
-                selectedSize = null; selectedColor = null;
-                showProductImage(0);
+                currentImageIndex = 0;
+                selectedSize = null; 
+                selectedColor = null;
+
+                dom.imageTrack.innerHTML = '';
+                product.images.forEach(imgSrc => {
+                    const slide = document.createElement('div');
+                    slide.className = 'slide';
+                    slide.innerHTML = `<img src="${imgSrc}" alt="${product.name}">`;
+                    dom.imageTrack.appendChild(slide);
+                });
+                
+                dom.imageTrack.style.transition = 'none'; // Prevent animation on open
+                updateSliderView();
+                setTimeout(() => { dom.imageTrack.style.transition = ''; }, 0); // Restore animation
+
                 document.getElementById('modalProductName').textContent = product.name;
                 document.getElementById('modalProductPrice').textContent = `${product.price} جنيه`;
                 document.getElementById('modalProductDescription').textContent = product.description;
                 document.getElementById('modalProductSizes').innerHTML = product.sizes.map(s => `<span class="size-option">${s}</span>`).join('');
                 document.getElementById('modalProductColors').innerHTML = product.colors.map(c => `<span class="color-option" style="background-color:${c}" title="${c}"></span>`).join('');
+
                 openModal(dom.productModal);
             }
 
-            // --- EVENT LISTENERS ---
+            // --- New, Improved Touch Logic ---
+            let isDragging = false,
+                startPos = 0,
+                currentTranslate = 0;
+
+            function touchStart(event) {
+                isDragging = true;
+                startPos = event.touches[0].clientX;
+                const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform');
+                if (transformMatrix !== 'none') {
+                    currentTranslate = parseInt(transformMatrix.split(',')[4].trim());
+                } else {
+                    currentTranslate = 0;
+                }
+                dom.imageTrack.style.transition = 'none';
+            }
+
+            function touchMove(event) {
+                if (!isDragging) return;
+                const currentPosition = event.touches[0].clientX;
+                const diff = currentPosition - startPos;
+                dom.imageTrack.style.transform = `translateX(${currentTranslate + diff}px)`;
+            }
+
+            function touchEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+                const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform');
+                const finalTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0;
+                
+                const slideWidth = dom.imageContainer.offsetWidth;
+
+                // Calculate the index that the slider is closest to based on the final position.
+                // This implements the "snap to middle" logic.
+                const closestIndex = Math.round(-finalTranslate / slideWidth);
+
+                // Clamp the index to stay within the bounds of the image array
+                const newIndex = Math.max(0, Math.min(closestIndex, currentProduct.images.length - 1));
+
+                // Update the current image index
+                currentImageIndex = newIndex;
+                
+                // Snap to the calculated correct slide
+                updateSliderView();
+            }
+
+            dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
+            dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
+            dom.imageContainer.addEventListener('touchend', touchEnd);
+
+            // --- General Event Listeners ---
             window.addEventListener('scroll', () => {
                 let current = '';
                 const sections = document.querySelectorAll('.section');
@@ -716,14 +751,12 @@
                         current = section.getAttribute('id');
                     }
                 });
-
                 dom.desktopNavLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href').substring(1) === current) {
                         link.classList.add('active');
                     }
                 });
-                
                 if (window.scrollY > 300) {
                     dom.floatingWidget.classList.add('show');
                 } else {
@@ -739,10 +772,7 @@
                         const targetElement = document.querySelector(href);
                         if (targetElement) {
                             const offsetTop = targetElement.offsetTop - (href === '#home' ? 0 : dom.header.clientHeight);
-                            window.scrollTo({
-                                top: offsetTop,
-                                behavior: 'smooth'
-                            });
+                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                             if (dom.mobileNav.classList.contains('active')) {
                                 dom.mobileMenuToggle.click();
                             }
@@ -757,20 +787,15 @@
                 document.body.classList.toggle('menu-open');
             });
 
-            // --- Search Logic ---
             dom.searchIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const nowActive = dom.searchContainer.classList.toggle('active');
                 dom.header.classList.toggle('search-active-mobile', nowActive);
-
                 if (nowActive) {
                     dom.searchInput.focus();
                     const productsSectionTop = dom.productsSection.offsetTop - dom.header.clientHeight;
                     if (window.scrollY < productsSectionTop) {
-                        window.scrollTo({
-                            top: productsSectionTop,
-                            behavior: 'smooth'
-                        });
+                        window.scrollTo({ top: productsSectionTop, behavior: 'smooth' });
                     }
                 }
             });
@@ -784,14 +809,13 @@
 
             dom.searchInput.addEventListener('input', (e) => {
                 const searchTerm = e.target.value.toLowerCase().trim();
-
                 if (!searchTerm) {
                     dom.searchResultsInfo.innerHTML = '';
                     renderProducts(products);
                     return;
                 }
                 dom.searchResultsInfo.innerHTML = `نتائج البحث عن: <span>'${searchTerm}'</span>`;
-                const filtered = products.filter(p => levenshtein(p.name, searchTerm) > 0.4 || p.name.toLowerCase().includes(searchTerm));
+                const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm)); // Simple filter
                 renderProducts(filtered);
             });
             
@@ -812,21 +836,29 @@
             });
 
             document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
+            
             dom.productModal.addEventListener('click', (e) => {
-                const targetClass = e.target.classList;
-                if(targetClass.contains('size-option')) {
+                if (e.target.closest('.size-option')) {
+                    const target = e.target.closest('.size-option');
                     dom.productModal.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
-                    e.target.classList.add('selected');
-                    selectedSize = e.target.textContent;
-                } else if(targetClass.contains('color-option')) {
+                    target.classList.add('selected');
+                    selectedSize = target.textContent;
+                } else if (e.target.closest('.color-option')) {
+                    const target = e.target.closest('.color-option');
                     dom.productModal.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
-                    e.target.classList.add('selected');
-                    selectedColor = e.target.title;
-                } else if(targetClass.contains('prev-image')) {
-                    showProductImage((currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length);
-                } else if(targetClass.contains('next-image')) {
-                    showProductImage((currentImageIndex + 1) % currentProduct.images.length);
-                } else if(e.target.id === 'modalBuyBtn') {
+                    target.classList.add('selected');
+                    selectedColor = target.title;
+                } else if (e.target.closest('.prev-image')) {
+                    if (currentImageIndex > 0) {
+                        currentImageIndex--;
+                        updateSliderView();
+                    }
+                } else if (e.target.closest('.next-image')) {
+                    if (currentImageIndex < currentProduct.images.length - 1) {
+                        currentImageIndex++;
+                        updateSliderView();
+                    }
+                } else if (e.target.closest('#modalBuyBtn')) {
                     if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
                     closeModal(dom.productModal);
                     document.getElementById('summaryProductName').textContent = currentProduct.name;
@@ -850,7 +882,6 @@
                 this.reset();
             });
 
-            // --- INITIAL RENDER ---
             renderProducts();
         });
     </script>
