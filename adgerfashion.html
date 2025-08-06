@@ -104,7 +104,6 @@
         #headerSearchInput { border: none; background: transparent; outline: none; width: 0; padding: 5px 15px 5px 40px; opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px; box-sizing: border-box; border-radius: 50px; }
         .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
         
-        /* -- التعديل: توسيط العدسة وإضافة الحركة -- */
         .search-icon {
             position: absolute;
             left: 50%;
@@ -127,7 +126,16 @@
         .search-icon:hover { color: var(--color-secondary); }
 
         /* --- Mobile Navigation --- */
-        .mobile-menu-toggle { display: flex; flex-direction: column; gap: 5px; width: 24px; height: 20px; cursor: pointer; z-index: 1010; }
+        .mobile-menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 24px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1010;
+            flex-shrink: 0; /* -- التعديل الأول: منع الزر من الانكماش -- */
+        }
         .mobile-menu-toggle span { width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease-in-out; }
         .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
@@ -360,12 +368,14 @@
         }
 
         @media (max-width: 768px) {
+            /* -- التعديل الثاني: تقليل الفجوة لتحريك البحث لليسار قليلاً -- */
+            .header-right {
+                gap: 0.75rem; 
+            }
             .header { padding: 0 15px; }
-            /* -- التعديل المطلوب: تصغير الشعار في الهواتف -- */
             .logo h1 { font-size: 1.2rem; }
             .hero-content h1 { font-size: 2.5rem; }
             
-            /* نافذة عرض المنتج المنبثقة لم يتم تغييرها حسب الطلب */
             #productModal .modal-content {
                 width: 100%;
                 height: 100%;
@@ -403,15 +413,10 @@
             .footer-content { grid-template-columns: 1fr; text-align: center; }
             .social-links { justify-content: center; }
             
-            /* -- التعديلات المطلوبة: تحسين بطاقات المنتجات في الهواتف -- */
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            /* تصغير ارتفاع الصورة */
             .product-image { height: 220px; } 
-            /* تصغير الحشوة الداخلية */
             .product-info { padding: 1rem; }
-            /* تصغير حجم خط اسم المنتج */
             .product-name { font-size: 0.9rem; }
-            /* تصغير حجم خط السعر */
             .product-price { font-size: 1rem; }
             
             .floating-action-widget { bottom: 15px; left: 15px; }
@@ -832,7 +837,6 @@
                 const nowActive = dom.searchContainer.classList.toggle('active');
                 dom.header.classList.toggle('search-active-mobile', nowActive);
                 
-                // -- التعديل: التمرير إلى قسم المنتجات عند فتح البحث --
                 if (nowActive) {
                     dom.searchInput.focus();
                     const productsSectionTop = dom.productsSection.offsetTop - dom.header.clientHeight;
