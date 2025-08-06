@@ -341,9 +341,11 @@
 
         @media (max-width: 768px) {
             .header { padding: 0 15px; }
-            .logo h1 { font-size: 1.6rem; }
+            /* -- التعديل المطلوب: تصغير الشعار في الهواتف -- */
+            .logo h1 { font-size: 1.5rem; }
             .hero-content h1 { font-size: 2.5rem; }
             
+            /* نافذة عرض المنتج المنبثقة لم يتم تغييرها حسب الطلب */
             #productModal .modal-content {
                 width: 100%;
                 height: 100%;
@@ -380,11 +382,18 @@
 
             .footer-content { grid-template-columns: 1fr; text-align: center; }
             .social-links { justify-content: center; }
+            
+            /* -- التعديلات المطلوبة: تحسين بطاقات المنتجات في الهواتف -- */
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .product-image { height: 220px; }
+            /* تصغير ارتفاع الصورة */
+            .product-image { height: 220px; } 
+            /* تصغير الحشوة الداخلية */
             .product-info { padding: 1rem; }
+            /* تصغير حجم خط اسم المنتج */
             .product-name { font-size: 0.9rem; }
+            /* تصغير حجم خط السعر */
             .product-price { font-size: 1rem; }
+            
             .floating-action-widget { bottom: 15px; left: 15px; }
         }
         @media (max-width: 480px) {
