@@ -1,3 +1,11 @@
+
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger fashion</title>
+    <link rel="icon" href="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" type="image/x-icon">
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -787,22 +795,39 @@
             dom.imageContainer.addEventListener('touchend', touchEnd);
 
             // --- General Event Listeners ---
+            
+            // --- MODIFIED SCROLL LISTENER ---
             window.addEventListener('scroll', () => {
                 let current = '';
                 const sections = document.querySelectorAll('.section');
+                const scrollY = window.scrollY;
+                const headerHeight = dom.header.clientHeight;
+
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - dom.header.clientHeight - 1;
-                    if (window.scrollY >= sectionTop) {
-                        current = section.getAttribute('id');
+                    const sectionTop = section.offsetTop - headerHeight - 1;
+                    const sectionId = section.getAttribute('id');
+                    
+                    // Standard logic: find the last section we scrolled past
+                    if (scrollY >= sectionTop) {
+                        current = sectionId;
                     }
                 });
+
+                // Special case: If scrolled to the bottom of the page, force the last section to be active.
+                // This fixes the issue where the last section's top is unreachable.
+                if ((window.innerHeight + scrollY) >= document.documentElement.scrollHeight - 2) {
+                    const lastSection = sections[sections.length - 1];
+                    current = lastSection.getAttribute('id');
+                }
+
                 dom.desktopNavLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href').substring(1) === current) {
                         link.classList.add('active');
                     }
                 });
-                if (window.scrollY > 300) {
+
+                if (scrollY > 300) {
                     dom.floatingWidget.classList.add('show');
                 } else {
                     dom.floatingWidget.classList.remove('show');
