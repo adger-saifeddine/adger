@@ -1,440 +1,416 @@
-
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adger fashion</title>
-    <link rel="icon" href="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" type="image/x-icon">
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adger fashion - أناقة عصرية</title>
+    <link rel="icon" href="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" type="image/x-icon">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    /* --- Base & Reset --- */
+    :root {
+        --color-primary: #1a1a1a;
+        --color-secondary: #C0A062; /* Refined Gold */
+        --color-text: #333;
+        --color-light-gray: #f8f9fa;
+        --color-border: #e9ecef;
+        --color-input-icon: #b0b0b0;
+        --color-danger: #dc3545;
+        --font-primary: 'Poppins', sans-serif;
+        --font-display: 'Playfair Display', serif;
+        --font-logo: 'Cinzel Decorative', serif;
+        --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
+        --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
+        --header-height: 70px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: var(--font-primary);
+        line-height: 1.7;
+        color: var(--color-text);
+        background-color: #fff;
+        direction: rtl;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        transition: padding-top 0.3s ease;
+    }
+    body.menu-open { overflow: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); }
     
-    <style>
-        /* --- Base & Reset --- */
-        :root {
-            --color-primary: #1a1a1a;
-            --color-secondary: #C0A062; /* Refined Gold */
-            --color-text: #333;
-            --color-light-gray: #f8f9fa;
-            --color-border: #e9ecef;
-            --font-primary: 'Poppins', sans-serif;
-            --font-display: 'Playfair Display', serif;
-            --font-logo: 'Cinzel Decorative', serif;
-            --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
-            --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
-            --header-height: 70px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: var(--font-primary);
-            line-height: 1.7;
-            color: var(--color-text);
-            background-color: #fff;
-            direction: rtl;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-            transition: padding-top 0.3s ease;
-        }
-        body.menu-open { overflow: hidden; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); }
+    /* --- Header --- */
+    .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0 20px;
+        height: var(--header-height);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        transition: padding 0.3s ease;
+    }
+    .header .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .logo { transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease; overflow: hidden; white-space: nowrap; }
+    .logo a { text-decoration: none; color: inherit; }
+    
+    /* --- Logo Style --- */
+    .logo h1 {
+        font-family: var(--font-logo);
+        font-size: 2rem;
+        font-weight: 700;
+        transition: font-size 0.3s ease;
+    }
+    .logo-adger {
+        background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    .logo-fashion {
+        background: linear-gradient(90deg, #C0A062, #e6c8e1, #a9c5df, #C0A062);
+        background-size: 300% auto;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: animate-gradient-text 6s linear infinite;
+    }
+    .logo-dot {
+        color: var(--color-secondary);
+        background-clip: initial;
+        -webkit-background-clip: initial;
+    }
+    @keyframes animate-gradient-text {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .header-right { display: flex; align-items: center; gap: 1rem; }
+    .nav { display: none; }
+    .nav a { color: var(--color-text); text-decoration: none; font-weight: 500; transition: color 0.3s ease, border-bottom 0.3s ease; position: relative; padding: 5px 0; }
+    .nav a::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--color-secondary); transition: width 0.3s ease; }
+    .nav a:hover, .nav a.active { color: var(--color-secondary); }
+    .nav a.active::after { width: 100%; }
+
+    .account-icon {
+        cursor: pointer;
+        color: var(--color-primary); 
+        transition: transform 0.3s ease, opacity 0.3s ease, display 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .account-icon:hover {
+        transform: scale(1.1);
+        color: var(--color-secondary);
+    }
+
+    /* --- Header Search (Integrated) --- */
+    .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; transition: all 0.4s ease; }
+    .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    #headerSearchInput { border: none; background: transparent; outline: none; width: 0; padding: 5px 15px 5px 40px; opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px; box-sizing: border-box; border-radius: 50px; }
+    .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
+    
+    .search-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 38px;
+        height: 38px;
+        z-index: 2;
+        cursor: pointer;
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease, left 0.4s ease, transform 0.4s ease;
+    }
+    .search-container.active .search-icon {
+        left: 0;
+        transform: translateY(-50%);
+    }
+    .search-icon:hover { color: var(--color-secondary); }
+
+    /* --- Mobile Navigation --- */
+    .mobile-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 24px;
+        height: 20px;
+        cursor: pointer;
+        z-index: 1010;
+        flex-shrink: 0;
+    }
+    .mobile-menu-toggle span { width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease-in-out; }
+    .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav { position: fixed; top: var(--header-height); right: 0; width: 100%; height: calc(100vh - var(--header-height)); background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(5px); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
+    .mobile-nav.active { transform: translateX(0); }
+    .mobile-nav ul { list-style: none; }
+    .mobile-nav li { margin: 2rem 0; text-align: center; }
+    .mobile-nav a { font-size: 1.8rem; font-family: var(--font-display); color: var(--color-primary); text-decoration: none; }
+
+    /* --- Hero Section --- */
+    .hero-section { padding-top: var(--header-height); display: flex; align-items: center; justify-content: center; text-align: center; height: 100vh; min-height: 650px; background: url('https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=1887&auto=format&fit=crop') no-repeat center center/cover; position: relative; color: white; }
+    .hero-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+    .hero-content { position: relative; z-index: 2; padding: 0 20px; }
+    .hero-content h1 { font-size: 4rem; color: white; margin-bottom: 1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+    .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; font-weight: 300; }
+    .cta-btn { background: var(--color-secondary); color: white; padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md); text-decoration: none; }
+    .cta-btn:hover { transform: translateY(-3px); background: #a58850; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    
+    /* --- General Section Styling --- */
+    .section { padding: 6rem 0; }
+    .section-bg { background-color: var(--color-light-gray); }
+    .section-tight { padding-top: 4rem; }
+    .section-title { text-align: center; margin-bottom: 4rem; }
+    .section-title h2 { font-size: 2.5rem; }
+    #searchResultsInfo { text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--color-text); }
+    #searchResultsInfo span { font-weight: 600; color: var(--color-secondary); }
+
+    /* --- Products Grid --- */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .product-card { background: white; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; }
+    .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+    .product-image { height: 300px; background-color: #f1f1f1; }
+    .product-image img { width: 100%; height: 100%; object-fit: contain; }
+    .product-info { padding: 1.5rem; text-align: center; }
+    .product-category { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
+    .product-name { font-family: var(--font-primary); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-primary); }
+    .product-price { font-size: 1.2rem; font-weight: 600; color: var(--color-secondary); }
+
+    /* --- Contact Section --- */
+    .contact-section { padding-bottom: 6rem; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .contact-card { text-align: center; padding: 2rem; }
+    .contact-card .icon { margin-bottom: 1rem; color: var(--color-secondary); }
+    .contact-card h4 { font-family: var(--font-primary); font-weight: 600; margin-bottom: 0.5rem; }
+    .contact-card p { color: #6c757d; font-size: 0.9rem; }
+
+    /* --- Footer --- */
+    .footer { background: var(--color-primary); color: rgba(255,255,255,0.8); padding: 4rem 0 2rem; }
+    .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-section h4 { margin-bottom: 1.5rem; color: white; font-size: 1.2rem; }
+    .footer-section ul { list-style: none; }
+    .footer-section ul li { margin-bottom: 0.75rem; }
+    .footer-section ul li a { color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease; }
+    .footer-section ul li a:hover { color: var(--color-secondary); }
+    .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+    .social-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; }
+    .social-link:hover { background: var(--color-secondary); transform: translateY(-3px); }
+    .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+
+    /* --- Modals --- */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+    .modal-content { 
+        background-color: white; 
+        border-radius: 12px; 
+        width: 90%; 
+        max-width: 900px; 
+        max-height: 95vh; 
+        overflow: hidden; 
+        position: relative; 
+        display: flex; 
+        flex-direction: column; 
+        animation: modalFadeIn 0.3s ease-out; 
+    }
+    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        width: 100%;
+        flex-shrink: 0;
+    }
+    .modal-logo h3 { font-family: var(--font-logo); font-size: 1.6rem; font-weight: 700; margin: 0; line-height: 1; }
+    .close { position: static; color: #888; font-size: 35px; font-weight: 300; cursor: pointer; background: transparent; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, color 0.3s ease; line-height: 1; }
+    .close:hover { background: var(--color-light-gray); color: var(--color-primary); }
+    .modal-body { overflow-y: auto; flex-grow: 1; }
+    
+    /* --- Product Modal Specifics --- */
+    #productModal .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 2.5rem; align-items: start; }
+    .modal-images { position: relative; width: 100%; height: 550px; max-height: 550px; overflow: hidden; border-radius: 8px; background-color: #f1f1f1; cursor: grab; touch-action: pan-y; }
+    .modal-images:active { cursor: grabbing; }
+    .image-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .slide { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .slide img { width: 100%; height: 100%; object-fit: contain; user-select: none; pointer-events: none; }
+    .image-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.5rem; cursor: pointer; transition: background 0.3s ease; display: flex; align-items: center; justify-content: center; z-index: 10; }
+    .image-nav:hover { background: rgba(0,0,0,0.7); }
+    .prev-image { right: 15px; } 
+    .next-image { left: 15px; }
+    .image-counter { position: absolute; bottom: 15px; right: 15px; color: var(--color-text); background: rgba(255,255,255,0.8); padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; font-weight: 500; z-index: 10;}
+    .modal-details { display: flex; flex-direction: column; gap: 1rem; }
+    .modal-details h2 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .modal-details .price { font-size: 1.8rem; font-weight: 600; color: var(--color-secondary); margin-bottom: 1rem; }
+    .spec-group { margin-bottom: 1.5rem; }
+    .spec-group h4 { font-family: var(--font-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .sizes, .colors { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .size-option, .color-option { border: 2px solid var(--color-border); border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
+    .size-option { padding: 0.5rem 1rem; }
+    .color-option { width: 35px; height: 35px; border-radius: 50%; }
+    .size-option.selected, .color-option.selected { border-color: var(--color-primary); background-color: var(--color-primary); color: white; }
+    .color-option.selected { transform: scale(1.1); }
+    .buy-now-btn { width: 100%; padding: 1rem; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem;}
+    .buy-now-btn:hover { background: var(--color-secondary); }
+
+    /* --- Purchase Modal Specifics --- */
+    .purchase-form { padding: 2.5rem; }
+    .purchase-form h2 { text-align: center; margin-bottom: 2rem; }
+    .purchase-form .form-group { margin-bottom: 1rem; }
+    .purchase-form input, .purchase-form textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); background-color: white; }
+    .purchase-summary p { margin-bottom: 0.5rem; }
+    .purchase-summary p span { font-weight: 600; color: var(--color-secondary); margin-inline-start: 5px; }
+    .purchase-form button[type="submit"] { width: 100%; margin-top: 1.5rem; }
+    
+    /* --- Account & Orders Modals --- */
+    #accountModal .modal-content, #ordersModal .modal-content { max-width: 650px; }
+    .account-modal-body, .orders-modal-body { padding: 2rem 2.5rem; }
+    #accountModalTitle { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-primary); }
+    
+    /* Account Form Styles */
+    #accountFormContainer .profile-pic-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1.5rem;
+    }
+    #profilePicPreview {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--color-border);
+        background-color: var(--color-light-gray);
+    }
+    .change-pic-label {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 32px;
+        height: 32px;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid white;
+        transition: transform 0.3s ease;
+    }
+    .change-pic-label:hover { transform: scale(1.1); }
+
+    .account-form { text-align: right; }
+    .account-form .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .account-form .form-group { margin-bottom: 0.5rem; }
+    .account-form .form-group.full-width { grid-column: 1 / -1; }
+    .account-form label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+    .account-form .input-wrapper { position: relative; }
+    .account-form .input-wrapper svg { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: var(--color-input-icon); width: 18px; height: 18px; pointer-events: none; transition: color 0.3s ease; }
+    .account-form .input-wrapper:focus-within svg { color: var(--color-secondary); }
+    .account-form input, .account-form textarea { width: 100%; padding: 0.8rem 45px 0.8rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+    .account-form input:focus, .account-form textarea:focus { outline: none; border-color: var(--color-secondary); box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.2); }
+    .account-form textarea { resize: vertical; min-height: 80px; }
+    .account-form .input-wrapper textarea + svg { top: 1.2rem; transform: translateY(0); }
+    .account-actions { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    /* Account Details View Styles */
+    #accountDetailsContainer { display: none; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+    #detailsProfilePic { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 4px solid var(--color-secondary); padding: 4px; background-color: white; box-shadow: var(--shadow-sm); }
+    #detailsUserName { font-size: 2rem; font-family: var(--font-display); color: var(--color-primary); margin-bottom: 1.5rem; }
+    #detailsInfoList { list-style: none; padding: 0; margin: 0 0 1.5rem 0; text-align: right; width: 100%; max-width: 400px; border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
+    #detailsInfoList li { display: flex; align-items: center; gap: 1rem; font-size: 1rem; margin-bottom: 1rem; color: var(--color-text); }
+    #detailsInfoList li svg { width: 20px; height: 20px; color: var(--color-secondary); flex-shrink: 0; }
+    .details-address-block { text-align: right; width: 100%; max-width: 400px; margin-bottom: 2rem; }
+    .details-address-block h4 { display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-primary); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    #detailsUserAddress { font-size: 0.95rem; color: #6c757d; line-height: 1.6; padding-right: 32px; }
+    #logoutBtn { background: transparent; color: var(--color-danger); border: 2px solid var(--color-danger); }
+    #logoutBtn:hover { background: var(--color-danger); color: white; }
+
+    /* Order History Styles */
+    .orders-modal-body h3 { margin-bottom: 1.5rem; }
+    .order-item { display: flex; gap: 1.5rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 1rem; text-align: right; }
+    .order-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
+    .order-details { flex-grow: 1; }
+    .order-details h4 { font-family: var(--font-primary); font-size: 1.1rem; }
+    .order-details p { font-size: 0.9rem; color: #6c757d; margin: 0.25rem 0; }
+    #orderHistorySection { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+    #noOrdersMessage { padding: 2rem; color: #6c757d; }
+
+    /* --- Floating Action Buttons --- */
+    .floating-action-widget { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; flex-direction: column; align-items: center; gap: 5px; background-color: rgba(26, 26, 26, 0.85); backdrop-filter: blur(8px); padding: 8px; border-radius: 50px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(20px); visibility: hidden; transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s; }
+    .floating-action-widget.show { opacity: 1; transform: translateY(0); visibility: visible; }
+    .floating-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; color: white; text-decoration: none; border-radius: 50%; transition: all 0.3s ease; }
+    .floating-btn:hover { background-color: var(--color-secondary); transform: scale(1.1); }
+    .floating-btn svg { width: 22px; height: 22px; }
+    .widget-separator { width: 60%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin: 2px 0; }
+    
+    /* --- Responsive Design --- */
+    @media (min-width: 769px) {
+        .nav { display: flex; }
+        .nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        .mobile-menu-toggle { display: none; }
+        .header-right { gap: 2rem; } 
+    }
+
+    @media (max-width: 768px) {
+        .header-right { gap: 0.75rem; }
+        .header { padding: 0 15px; }
+        .logo h1 { font-size: 1.2rem; }
+        .hero-content h1 { font-size: 2.5rem; }
         
-        /* --- Header --- */
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 0 20px;
-            height: var(--header-height);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            align-items: center;
-            transition: padding 0.3s ease;
-        }
-        .header .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .logo { transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease; overflow: hidden; white-space: nowrap; }
-        .logo a { text-decoration: none; color: inherit; }
+        .modal .modal-content { width: 100%; height: 100%; max-height: 100vh; border-radius: 0; overflow-y: auto; }
+        .modal .modal-header { position: sticky; top: 0; background: white; z-index: 10; padding: 0.5rem 1rem; }
+        #productModal .modal-body { display: block; padding: 0; overflow: visible; }
+        #productModal .modal-images { position: relative; height: 60vh; width: 100%; border-radius: 0; }
+        #productModal .modal-details { position: static; padding: 1.5rem; }
         
-        /* --- Logo Style --- */
-        .logo h1 {
-            font-family: var(--font-logo);
-            font-size: 2rem;
-            font-weight: 700;
-            transition: font-size 0.3s ease;
-        }
-        .logo-adger {
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .logo-fashion {
-            background: linear-gradient(90deg, #C0A062, #e6c8e1, #a9c5df, #C0A062);
-            background-size: 300% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: animate-gradient-text 6s linear infinite;
-        }
-        .logo-dot {
-            color: var(--color-secondary);
-            background-clip: initial;
-            -webkit-background-clip: initial;
-        }
-        @keyframes animate-gradient-text {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .logo { max-width: 500px; }
+        .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1.5rem; }
+        .header.search-active-mobile .account-icon { display: none; } /* [MODIFIED] Hide account icon */
+        .header.search-active-mobile .header-right { flex-grow: 1; }
+        .header.search-active-mobile .search-container { flex-grow: 1; margin-right: 3px; }
+        .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
+
+        .footer-content { grid-template-columns: 1fr; text-align: center; }
+        .social-links { justify-content: center; }
         
-        .header-right { display: flex; align-items: center; gap: 1.5rem; }
-        .nav { display: none; }
-        .nav a { color: var(--color-text); text-decoration: none; font-weight: 500; transition: color 0.3s ease, border-bottom 0.3s ease; position: relative; padding: 5px 0; }
-        .nav a::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--color-secondary); transition: width 0.3s ease; }
-        .nav a:hover, .nav a.active { color: var(--color-secondary); }
-        .nav a.active::after { width: 100%; }
-
-        /* --- Header Search (Integrated) --- */
-        .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; transition: all 0.4s ease; }
-        .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        #headerSearchInput { border: none; background: transparent; outline: none; width: 0; padding: 5px 15px 5px 40px; opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px; box-sizing: border-box; border-radius: 50px; }
-        .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
+        .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .product-image { height: 220px; } 
+        .product-info { padding: 1rem; }
+        .product-name { font-size: 0.9rem; }
+        .product-price { font-size: 1rem; }
         
-        .search-icon {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 38px;
-            height: 38px;
-            z-index: 2;
-            cursor: pointer;
-            color: var(--color-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color 0.3s ease, left 0.4s ease, transform 0.4s ease;
-        }
-        .search-container.active .search-icon {
-            left: 0;
-            transform: translateY(-50%);
-        }
-        .search-icon:hover { color: var(--color-secondary); }
-
-        /* --- Mobile Navigation --- */
-        .mobile-menu-toggle {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 24px;
-            height: 20px;
-            cursor: pointer;
-            z-index: 1010;
-            flex-shrink: 0; /* -- التعديل الأول: منع الزر من الانكماش -- */
-        }
-        .mobile-menu-toggle span { width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease-in-out; }
-        .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .mobile-menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .mobile-nav { position: fixed; top: var(--header-height); right: 0; width: 100%; height: calc(100vh - var(--header-height)); background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(5px); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
-        .mobile-nav.active { transform: translateX(0); }
-        .mobile-nav ul { list-style: none; }
-        .mobile-nav li { margin: 2rem 0; text-align: center; }
-        .mobile-nav a { font-size: 1.8rem; font-family: var(--font-display); color: var(--color-primary); text-decoration: none; }
-
-        /* --- Hero Section --- */
-        .hero-section { padding-top: var(--header-height); display: flex; align-items: center; justify-content: center; text-align: center; height: 100vh; min-height: 650px; background: url('https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=1887&auto=format&fit=crop') no-repeat center center/cover; position: relative; color: white; }
-        .hero-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
-        .hero-content { position: relative; z-index: 2; padding: 0 20px; }
-        .hero-content h1 { font-size: 4rem; color: white; margin-bottom: 1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; font-weight: 300; }
-        .cta-btn { background: var(--color-secondary); color: white; padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md); text-decoration: none; }
-        .cta-btn:hover { transform: translateY(-3px); background: #a58850; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        .floating-action-widget { bottom: 15px; left: 15px; }
         
-        /* --- General Section Styling --- */
-        .section { padding: 6rem 0; }
-        .section-bg { background-color: var(--color-light-gray); }
-        .section-tight { padding-top: 4rem; }
-        .section-title { text-align: center; margin-bottom: 4rem; }
-        .section-title h2 { font-size: 2.5rem; }
-        #searchResultsInfo { text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--color-text); }
-        #searchResultsInfo span { font-weight: 600; color: var(--color-secondary); }
-
-        /* --- Products Grid --- */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-        .product-card { background: white; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; }
-        .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
-        .product-image { height: 300px; background-color: #f1f1f1; }
-        .product-image img { width: 100%; height: 100%; object-fit: contain; }
-        .product-info { padding: 1.5rem; text-align: center; }
-        .product-category { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
-        .product-name { font-family: var(--font-primary); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-primary); }
-        .product-price { font-size: 1.2rem; font-weight: 600; color: var(--color-secondary); }
-
-        /* --- Contact Section --- */
-        .contact-section { padding-bottom: 6rem; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .contact-card { text-align: center; padding: 2rem; }
-        .contact-card .icon { margin-bottom: 1rem; color: var(--color-secondary); }
-        .contact-card h4 { font-family: var(--font-primary); font-weight: 600; margin-bottom: 0.5rem; }
-        .contact-card p { color: #6c757d; font-size: 0.9rem; }
-
-        /* --- Footer --- */
-        .footer { background: var(--color-primary); color: rgba(255,255,255,0.8); padding: 4rem 0 2rem; }
-        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-        .footer-section h4 { margin-bottom: 1.5rem; color: white; font-size: 1.2rem; }
-        .footer-section ul { list-style: none; }
-        .footer-section ul li { margin-bottom: 0.75rem; }
-        .footer-section ul li a { color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease; }
-        .footer-section ul li a:hover { color: var(--color-secondary); }
-        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
-        .social-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; }
-        .social-link:hover { background: var(--color-secondary); transform: translateY(-3px); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
-
-        /* --- Modals --- */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { 
-            background-color: white; 
-            border-radius: 12px; 
-            width: 90%; 
-            max-width: 900px; 
-            max-height: 95vh; 
-            overflow: hidden; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            animation: modalFadeIn 0.3s ease-out; 
-        }
-        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            border-bottom: 1px solid var(--color-border);
-            width: 100%;
-            flex-shrink: 0;
-        }
-        .modal-logo h3 {
-            font-family: var(--font-logo);
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1;
-        }
-        .close { 
-            position: static;
-            color: #888;
-            font-size: 35px;
-            font-weight: 300;
-            cursor: pointer;
-            background: transparent;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease, color 0.3s ease;
-            line-height: 1;
-        }
-        .close:hover { background: var(--color-light-gray); color: var(--color-primary); }
-        
-        /* --- Product Modal Specifics --- */
-        .modal-body { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 2.5rem; 
-            padding: 2.5rem; 
-            align-items: start;
-            overflow-y: auto; 
-            flex-grow: 1; 
-        }
-        .modal-images { 
-            position: relative; 
-            width: 100%; 
-            height: 550px; 
-            max-height: 550px; 
-            overflow: hidden; 
-            border-radius: 8px; 
-            background-color: #f1f1f1;
-            cursor: grab;
-            touch-action: pan-y; /* Allow vertical scroll but handle horizontal swipe with JS */
-        }
-        .modal-images:active {
-            cursor: grabbing;
-        }
-        .image-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .slide {
-            flex: 0 0 100%;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .slide img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-            user-select: none; /* Prevent image selection on drag */
-            pointer-events: none; /* Prevent image from capturing events */
-        }
-
-        .image-nav { 
-            position: absolute; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            background: rgba(0,0,0,0.4); 
-            color: white; 
-            border: none; 
-            border-radius: 50%; 
-            width: 40px; 
-            height: 40px; 
-            font-size: 1.5rem; 
-            cursor: pointer; 
-            transition: background 0.3s ease; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 10; 
-        }
-        .image-nav:hover { background: rgba(0,0,0,0.7); }
-        .prev-image { right: 15px; } 
-        .next-image { left: 15px; }
-
-        .image-counter { 
-            position: absolute; 
-            bottom: 15px;
-            right: 15px;
-            color: var(--color-text); 
-            background: rgba(255,255,255,0.8); 
-            padding: 5px 10px; 
-            border-radius: 5px; 
-            font-size: 0.9rem; 
-            font-weight: 500; 
-            z-index: 10;
-        }
-        .modal-details { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 1rem; 
-        }
-        .modal-details h2 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-        .modal-details .price { font-size: 1.8rem; font-weight: 600; color: var(--color-secondary); margin-bottom: 1rem; }
-        .spec-group { margin-bottom: 1.5rem; }
-        .spec-group h4 { font-family: var(--font-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .sizes, .colors { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .size-option, .color-option { border: 2px solid var(--color-border); border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
-        .size-option { padding: 0.5rem 1rem; }
-        .color-option { width: 35px; height: 35px; border-radius: 50%; }
-        .size-option.selected, .color-option.selected { border-color: var(--color-primary); background-color: var(--color-primary); color: white; }
-        .color-option.selected { transform: scale(1.1); }
-        .buy-now-btn { width: 100%; padding: 1rem; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; }
-        .buy-now-btn:hover { background: var(--color-secondary); }
-
-        /* --- Purchase Modal Specifics --- */
-        .purchase-form { padding: 2.5rem; }
-        .purchase-form h2 { text-align: center; margin-bottom: 2rem; }
-        .purchase-form .form-group { margin-bottom: 1rem; }
-        .purchase-form input { width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); }
-        .purchase-summary p { margin-bottom: 0.5rem; }
-        .purchase-summary p span { font-weight: 600; color: var(--color-secondary); margin-inline-start: 5px; }
-        .purchase-form button[type="submit"] { width: 100%; margin-top: 1.5rem; }
-
-        /* --- Floating Action Buttons --- */
-        .floating-action-widget { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; flex-direction: column; align-items: center; gap: 5px; background-color: rgba(26, 26, 26, 0.85); backdrop-filter: blur(8px); padding: 8px; border-radius: 50px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(20px); visibility: hidden; transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s; }
-        .floating-action-widget.show { opacity: 1; transform: translateY(0); visibility: visible; }
-        .floating-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; color: white; text-decoration: none; border-radius: 50%; transition: all 0.3s ease; }
-        .floating-btn:hover { background-color: var(--color-secondary); transform: scale(1.1); }
-        .floating-btn svg { width: 22px; height: 22px; }
-        .widget-separator { width: 60%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin: 2px 0; }
-        
-        /* --- Responsive Design --- */
-        @media (min-width: 769px) {
-            .nav { display: flex; }
-            .nav ul { display: flex; list-style: none; gap: 2.5rem; }
-            .mobile-menu-toggle { display: none; }
-        }
-
-        @media (max-width: 768px) {
-            /* -- التعديل الثاني: تقليل الفجوة لتحريك البحث لليسار قليلاً -- */
-            .header-right {
-                gap: 0.75rem; 
-            }
-            .header { padding: 0 15px; }
-            .logo h1 { font-size: 1.2rem; }
-            .hero-content h1 { font-size: 2.5rem; }
-            
-            #productModal .modal-content {
-                width: 100%;
-                height: 100%;
-                max-height: 100vh;
-                border-radius: 0;
-                overflow-y: auto;
-            }
-            #productModal .modal-header {
-                position: static;
-                padding: 0.5rem 1rem;
-            }
-            #productModal .modal-body {
-                display: block;
-                padding: 0;
-                overflow: visible;
-                flex-grow: 1;
-            }
-            #productModal .modal-images {
-                position: relative;
-                height: 60vh;
-                width: 100%;
-                border-radius: 0;
-            }
-            #productModal .modal-details {
-                position: static;
-                padding: 1.5rem;
-            }
-            
-            .logo { max-width: 500px; }
-            .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1.5rem; }
-            .header.search-active-mobile .header-right { flex-grow: 1; }
-            .header.search-active-mobile .search-container { flex-grow: 1; margin-right: 3px; }
-            .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
-
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .social-links { justify-content: center; }
-            
-            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .product-image { height: 220px; } 
-            .product-info { padding: 1rem; }
-            .product-name { font-size: 0.9rem; }
-            .product-price { font-size: 1rem; }
-            
-            .floating-action-widget { bottom: 15px; left: 15px; }
-        }
-        @media (max-width: 480px) {
-            #productModal .modal-details h2 { font-size: 1.8rem; }
-            #productModal .modal-details .price { font-size: 1.5rem; }
-            #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
-        }
-    </style>
+        .account-form .form-grid { grid-template-columns: 1fr; }
+        .account-form .form-group.full-width { grid-column: auto; }
+        .order-item { flex-direction: column; align-items: center; text-align: center;}
+        .order-item img { margin-bottom: 1rem; }
+        .account-modal-body { padding: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+        #productModal .modal-details h2 { font-size: 1.8rem; }
+        #productModal .modal-details .price { font-size: 1.5rem; }
+        #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
+    }
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -457,12 +433,18 @@
                         <li><a href="#contact" class="nav-link">تواصل معنا</a></li>
                     </ul>
                 </nav>
+
+                <div class="account-icon" id="accountBtn">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+
                 <div class="search-container" id="searchContainer">
                     <input type="text" id="headerSearchInput" placeholder="بحث...">
                     <div class="search-icon" id="searchIcon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </div>
                 </div>
+                
                 <div class="mobile-menu-toggle" id="mobileMenuToggle">
                     <span></span>
                     <span></span>
@@ -472,487 +454,536 @@
         </div>
     </header>
 
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav" id="mobileNav">
-        <ul>
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#products">المنتجات</a></li>
-            <li><a href="#contact">تواصل معنا</a></li>
-        </ul>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section id="home" class="hero-section section">
-        <div class="hero-content">
-            <h1>الأناقة في كل قطعة</h1>
-            <p>اكتشف مجموعتنا الحصرية من الأزياء الفاخرة التي تجمع بين الجودة العالية والتصميم الفريد.</p>
-            <a href="#products" class="cta-btn">تسوق الآن</a>
-        </div>
-    </section>
+<nav class="mobile-nav" id="mobileNav">
+    <ul>
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#products">المنتجات</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+</nav>
 
-    <!-- Products Section -->
-    <section id="products" class="section section-bg section-tight">
-        <div class="container">
-            <div class="section-title">
-                <h2 id="productsTitle">منتجاتنا</h2>
-            </div>
-            <div id="searchResultsInfo"></div>
-            <div class="products-grid" id="productsGrid">
-                <!-- Products populated by JS -->
-            </div>
-        </div>
-    </section>
+<!-- Hero Section -->
+<section id="home" class="hero-section section">
+    <div class="hero-content">
+        <h1>الأناقة في كل قطعة</h1>
+        <p>اكتشف مجموعتنا الحصرية من الأزياء الفاخرة التي تجمع بين الجودة العالية والتصميم الفريد.</p>
+        <a href="#products" class="cta-btn">تسوق الآن</a>
+    </div>
+</section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section section-tight">
-        <div class="container">
-            <div class="section-title">
-                <h2>الدعم والتواصل</h2>
-                <p>نحن هنا لمساعدتك. لا تتردد في التواصل معنا عبر القنوات التالية.</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </div>
-                    <h4>البريد الإلكتروني</h4>
-                    <p>adger.shop@gmail.com</p>
-                </div>
-                <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    </div>
-                    <h4>الهاتف</h4>
-                    <p>+20 100 123 4567</p>
-                </div>
-                <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    </div>
-                    <h4>العنوان</h4>
-                    <p>القاهرة، جمهورية مصر العربية</p>
-                </div>
-            </div>
+<!-- Products Section -->
+<section id="products" class="section section-bg section-tight">
+    <div class="container">
+        <div class="section-title">
+            <h2 id="productsTitle">منتجاتنا</h2>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Adger fashion.</h4>
-                    <p>وجهتك الأولى للأزياء العصرية التي تجمع بين الفخامة والجودة.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                        <a href="https://youtube.com/your-channel-link" target="_blank" class="social-link">
-                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                        </a>
-                        <a href="https://tiktok.com/@your-profile-link" target="_blank" class="social-link">
-                           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                               <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.6c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>
-                           </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">المنتجات</a></li>
-                        <li><a href="#contact">تواصل معنا</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>خدمة العملاء</h4>
-                    <ul>
-                        <li><a href="#">الأسئلة الشائعة</a></li>
-                        <li><a href="#">سياسة الإرجاع</a></li>
-                        <li><a href="#">الشحن والتوصيل</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
-            </div>
+        <div id="searchResultsInfo"></div>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products populated by JS -->
         </div>
-    </footer>
+    </div>
+</section>
 
-    <!-- Modals (Product & Purchase) -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-logo">
-                    <h3>
-                        <span class="logo-adger">Adger</span> 
-                        <span class="logo-fashion">fashion</span>
-                        <span class="logo-dot">.</span>
-                    </h3>
+<!-- Contact Section -->
+<section id="contact" class="section contact-section section-tight">
+    <div class="container">
+        <div class="section-title">
+            <h2>الدعم والتواصل</h2>
+            <p>نحن هنا لمساعدتك. لا تتردد في التواصل معنا عبر القنوات التالية.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
-                <span class="close">&times;</span>
+                <h4>البريد الإلكتروني</h4>
+                <p>adger.shop@gmail.com</p>
             </div>
-            <div class="modal-body">
-                <div class="modal-images">
-                    <div class="image-track" id="imageTrack">
-                        <!-- Slides will be injected by JS -->
-                    </div>
-                    <button class="image-nav prev-image">‹</button>
-                    <button class="image-nav next-image">›</button>
-                    <div class="image-counter" id="imageCounter"></div>
+            <div class="contact-card">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 </div>
-                <div class="modal-details">
-                    <h2 id="modalProductName"></h2>
-                    <p class="price" id="modalProductPrice"></p>
-                    <div class="product-description"><p id="modalProductDescription"></p></div>
-                    <div class="product-specs">
-                        <div class="spec-group"><h4>المقاسات</h4><div class="sizes" id="modalProductSizes"></div></div>
-                        <div class="spec-group"><h4>الألوان</h4><div class="colors" id="modalProductColors"></div></div>
-                    </div>
-                    <button class="buy-now-btn" id="modalBuyBtn">شراء الآن</button>
+                <h4>الهاتف</h4>
+                <p>+20 100 123 4567</p>
+            </div>
+            <div class="contact-card">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
+                <h4>العنوان</h4>
+                <p>القاهرة، جمهورية مصر العربية</p>
             </div>
         </div>
     </div>
-    <div id="purchaseModal" class="modal">
-        <div class="modal-content">
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Adger fashion.</h4>
+                <p>وجهتك الأولى للأزياء العصرية التي تجمع بين الفخامة والجودة.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://youtube.com/your-channel-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://tiktok.com/@your-profile-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.6c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>خدمة العملاء</h4>
+                <ul>
+                    <li><a href="#">الأسئلة الشائعة</a></li>
+                    <li><a href="#">سياسة الإرجاع</a></li>
+                    <li><a href="#">الشحن والتوصيل</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Modals -->
+<!-- Product Detail Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-logo"><h3><span class="logo-adger">Adger</span><span class="logo-fashion">fashion</span><span class="logo-dot">.</span></h3></div>
             <span class="close">&times;</span>
-            <form id="purchaseForm" class="purchase-form">
-                <h2>إتمام الطلب</h2>
-                <div class="purchase-summary">
-                    <p>المنتج: <span id="summaryProductName"></span></p>
-                    <p>المقاس المختار: <span id="summarySelectedSize"></span></p>
-                    <p>اللون المختار: <span id="summarySelectedColor"></span></p>
+        </div>
+        <div class="modal-body">
+            <div class="modal-images">
+                <div class="image-track" id="imageTrack"></div>
+                <button class="image-nav prev-image">‹</button>
+                <button class="image-nav next-image">›</button>
+                <div class="image-counter" id="imageCounter"></div>
+            </div>
+            <div class="modal-details">
+                <h2 id="modalProductName"></h2>
+                <p class="price" id="modalProductPrice"></p>
+                <div class="product-description"><p id="modalProductDescription"></p></div>
+                <div class="product-specs">
+                    <div class="spec-group"><h4>المقاسات</h4><div class="sizes" id="modalProductSizes"></div></div>
+                    <div class="spec-group"><h4>الألوان</h4><div class="colors" id="modalProductColors"></div></div>
                 </div>
-                <hr style="margin: 1rem 0; border-color: var(--color-border);">
-                <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
-                <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
-                <div class="form-group"><input type="text" id="customerLocation" placeholder="العنوان بالتفصيل" required></div>
-                <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
-            </form>
+                <button class="buy-now-btn" id="modalBuyBtn">شراء الآن</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- Floating Action Widget -->
-    <div class="floating-action-widget">
-        <a href="https://wa.me/201001234567" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب">
-            <svg fill="currentColor" viewBox="0 0 16 16">
-                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path>
-            </svg>
-        </a>
-        <div class="widget-separator"></div>
-        <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى">
-            <svg fill="currentColor" viewBox="0 0 16 16">
-                 <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path>
-                 <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
-            </svg>
-        </a>
+<!-- Purchase Confirmation Modal -->
+<div id="purchaseModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h2>إتمام الطلب</h2><span class="close">&times;</span></div>
+        <form id="purchaseForm" class="purchase-form">
+            <div class="purchase-summary">
+                <p>المنتج: <span id="summaryProductName"></span></p>
+                <p>المقاس المختار: <span id="summarySelectedSize"></span></p>
+                <p>اللون المختار: <span id="summarySelectedColor"></span></p>
+            </div>
+            <hr style="margin: 1rem 0; border-color: var(--color-border);">
+            <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
+            <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
+            <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
+            <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
+        </form>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const products = [
-                { id: 1, name: "بليزر كتان أنيق", price: 850, category: "men", images: ["https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1552343864-a735c03a35a6?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1593030103057-004351659732?q=80&w=1887&auto=format&fit=crop"], description: "بليزر رجالي مصنوع من أجود أنواع الكتان، مثالي لإطلالة صيفية أنيقة ومريحة.", sizes: ["S", "M", "L", "XL"], colors: ["#F5F5DC", "#BDB7AB", "#607D8B"], },
-                { id: 2, name: "فستان حرير ميدي", price: 1200, category: "women", images: ["https://images.unsplash.com/photo-1595911463955-abc395454157?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1760&auto=format&fit=crop", "https://images.unsplash.com/photo-1614299538257-557340b19283?q=80&w=1887&auto=format&fit=crop"], description: "فستان نسائي بتصميم عصري من الحرير الطبيعي، يجمع بين الفخامة والراحة.", sizes: ["XS", "S", "M", "L"], colors: ["#C0A062", "#D8BFD8", "#4682B4"], },
-                { id: 3, name: "معطف شتوي طويل", price: 1500, category: "men", images: ["https://images.unsplash.com/photo-1515428612177-e430ef8d1621?q=80&w=1887&auto=format&fit=crop"], description: "معطف شتوي طويل وأنيق يوفر الدفء والحماية الكاملة في الأجواء الباردة.", sizes: ["M", "L", "XL"], colors: ["#36454F", "#8B4513"], },
-                { id: 4, name: "بلوزة شتوية صوف", price: 650, category: "women", images: ["https://images.unsplash.com/photo-1542841791-1925b05a121f?q=80&w=1887&auto=format&fit=crop"], description: "بلوزة شتوية ناعمة من الصوف الممزوج، مثالية لإطلالة دافئة ومريحة.", sizes: ["S", "M", "L"], colors: ["#FFFFFF", "#D2B48C", "#FFB6C1"], },
-            ];
+<!-- Account Modal -->
+<div id="accountModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="accountModalTitle">حسابك</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body account-modal-body">
+            <!-- Account Form Container -->
+            <div id="accountFormContainer">
+                <div class="profile-pic-container">
+                    <img id="profilePicPreview" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture Preview">
+                    <label for="profilePicInput" class="change-pic-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg>
+                    </label>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                </div>
 
-            const dom = {
-                header: document.querySelector('.header'),
-                productsGrid: document.getElementById('productsGrid'),
-                productModal: document.getElementById('productModal'),
-                purchaseModal: document.getElementById('purchaseModal'),
-                searchContainer: document.getElementById('searchContainer'),
-                searchIcon: document.getElementById('searchIcon'),
-                searchInput: document.getElementById('headerSearchInput'),
-                searchResultsInfo: document.getElementById('searchResultsInfo'),
-                productsSection: document.getElementById('products'),
-                mobileMenuToggle: document.getElementById('mobileMenuToggle'),
-                mobileNav: document.getElementById('mobileNav'),
-                desktopNavLinks: document.querySelectorAll('#desktopNav .nav-link'),
-                allNavLinks: document.querySelectorAll('.nav-link, .mobile-nav a, .cta-btn, .floating-btn'),
-                floatingWidget: document.querySelector('.floating-action-widget'),
-                imageContainer: document.querySelector('#productModal .modal-images'),
-                imageTrack: document.getElementById('imageTrack'),
-                imageCounter: document.getElementById('imageCounter'),
-            };
-            
-            let currentProduct = null, currentImageIndex = 0, selectedSize = null, selectedColor = null;
+                <form id="accountForm" class="account-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userName">الاسم</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <input type="text" id="userName" placeholder="الاسم الكامل" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">رقم الهاتف</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="userEmail">البريد الإلكتروني (اختياري)</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <input type="email" id="userEmail" placeholder="example@mail.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userGovernorate">المحافظة</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userCity">المدينة / المركز</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <input type="text" id="userCity" placeholder="مثال: مدينة نصر" required>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="userAddress">العنوان الكامل</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                <textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="userLandmark">أقرب علامة مميزة</label>
+                            <div class="input-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <input type="text" id="userLandmark" placeholder="بجوار ..." required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-actions">
+                        <button type="submit" class="buy-now-btn" id="accountSubmitBtn">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                           <span>إنشاء حساب وحفظ</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-            function renderProducts(productArray = products) {
-                dom.productsGrid.innerHTML = '';
-                if(productArray.length === 0){
-                    dom.productsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem 0;">لا توجد منتجات تطابق بحثك.</p>';
-                    return;
-                }
-                productArray.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.dataset.id = product.id;
-                    card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><p class="product-category">${product.category === 'men' ? 'رجالي' : 'نسائي'}</p><h3 class="product-name">${product.name}</h3><p class="product-price">${product.price} جنيه</p></div>`;
-                    dom.productsGrid.appendChild(card);
-                });
-            }
-
-            function openModal(modal) { modal.style.display = 'flex'; document.body.classList.add('menu-open'); }
-            function closeModal(modal) { modal.style.display = 'none'; if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open'); }
-            
-            function updateSliderView() {
-                const offset = -currentImageIndex * dom.imageContainer.offsetWidth;
-                dom.imageTrack.style.transform = `translateX(${offset}px)`;
-                dom.imageCounter.textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`;
-            }
-
-            function openProductModal(product) {
-                currentProduct = product;
-                currentImageIndex = 0;
-                selectedSize = null; 
-                selectedColor = null;
-
-                dom.imageTrack.innerHTML = '';
-                product.images.forEach(imgSrc => {
-                    const slide = document.createElement('div');
-                    slide.className = 'slide';
-                    slide.innerHTML = `<img src="${imgSrc}" alt="${product.name}">`;
-                    dom.imageTrack.appendChild(slide);
-                });
+            <!-- Account Details Container -->
+            <div id="accountDetailsContainer">
+                <img id="detailsProfilePic" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture">
+                <h2 id="detailsUserName"></h2>
                 
-                dom.imageTrack.style.transition = 'none'; // Prevent animation on open
-                updateSliderView();
-                setTimeout(() => { dom.imageTrack.style.transition = ''; }, 0); // Restore animation
+                <ul id="detailsInfoList"></ul>
 
-                document.getElementById('modalProductName').textContent = product.name;
-                document.getElementById('modalProductPrice').textContent = `${product.price} جنيه`;
-                document.getElementById('modalProductDescription').textContent = product.description;
-                document.getElementById('modalProductSizes').innerHTML = product.sizes.map(s => `<span class="size-option">${s}</span>`).join('');
-                document.getElementById('modalProductColors').innerHTML = product.colors.map(c => `<span class="color-option" style="background-color:${c}" title="${c}"></span>`).join('');
+                <div class="details-address-block">
+                     <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>العنوان</h4>
+                     <p id="detailsUserAddress"></p>
+                </div>
 
-                openModal(dom.productModal);
+                <div class="account-actions">
+                     <button type="button" class="buy-now-btn" id="editAccountBtn">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                         <span>تعديل البيانات</span>
+                    </button>
+                     <button type="button" class="buy-now-btn" id="myOrdersBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <span>مشترياتي (<span id="ordersCount">0</span>)</span>
+                     </button>
+                     <button type="button" class="buy-now-btn" id="logoutBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                         <span>تسجيل الخروج</span>
+                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders Modal -->
+<div id="ordersModal" class="modal">
+     <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="ordersModalTitle">مشترياتي</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body orders-modal-body">
+            <div id="lastPurchaseSection">
+                <h3>آخر طلب</h3>
+                <div id="lastPurchaseDetails"></div>
+            </div>
+            <div id="orderHistorySection">
+                <h3>الطلبات السابقة</h3>
+                <div id="orderHistoryList"></div>
+            </div>
+             <div id="noOrdersMessage" style="display: none;">
+                <p>لم تقم بأي عمليات شراء بعد.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Floating Action Widget -->
+<div class="floating-action-widget">
+    <a href="https://wa.me/201001234567" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب"><svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path></svg></a>
+    <div class="widget-separator"></div>
+    <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى"><svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path><path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path></svg></a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const products = [
+            { id: 1, name: "بليزر كتان أنيق", price: 850, category: "men", images: ["https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1552343864-a735c03a35a6?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1593030103057-004351659732?q=80&w=1887&auto=format&fit=crop"], description: "بليزر رجالي مصنوع من أجود أنواع الكتان، مثالي لإطلالة صيفية أنيقة ومريحة.", sizes: ["S", "M", "L", "XL"], colors: ["#F5F5DC", "#BDB7AB", "#607D8B"], },
+            { id: 2, name: "فستان حرير ميدي", price: 1200, category: "women", images: ["https://images.unsplash.com/photo-1595911463955-abc395454157?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1760&auto=format&fit=crop", "https://images.unsplash.com/photo-1614299538257-557340b19283?q=80&w=1887&auto=format&fit=crop"], description: "فستان نسائي بتصميم عصري من الحرير الطبيعي، يجمع بين الفخامة والراحة.", sizes: ["XS", "S", "M", "L"], colors: ["#C0A062", "#D8BFD8", "#4682B4"], },
+            { id: 3, name: "معطف شتوي طويل", price: 1500, category: "men", images: ["https://images.unsplash.com/photo-1515428612177-e430ef8d1621?q=80&w=1887&auto=format&fit=crop"], description: "معطف شتوي طويل وأنيق يوفر الدفء والحماية الكاملة في الأجواء الباردة.", sizes: ["M", "L", "XL"], colors: ["#36454F", "#8B4513"], },
+            { id: 4, name: "بلوزة شتوية صوف", price: 650, category: "women", images: ["https://images.unsplash.com/photo-1542841791-1925b05a121f?q=80&w=1887&auto=format&fit=crop"], description: "بلوزة شتوية ناعمة من الصوف الممزوج، مثالية لإطلالة دافئة ومريحة.", sizes: ["S", "M", "L"], colors: ["#FFFFFF", "#D2B48C", "#FFB6C1"], },
+        ];
+
+        const dom = {
+            header: document.querySelector('.header'),
+            productsGrid: document.getElementById('productsGrid'),
+            productModal: document.getElementById('productModal'),
+            purchaseModal: document.getElementById('purchaseModal'),
+            accountModal: document.getElementById('accountModal'), 
+            ordersModal: document.getElementById('ordersModal'),  
+            searchContainer: document.getElementById('searchContainer'),
+            searchIcon: document.getElementById('searchIcon'),
+            searchInput: document.getElementById('headerSearchInput'),
+            searchResultsInfo: document.getElementById('searchResultsInfo'),
+            mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+            mobileNav: document.getElementById('mobileNav'),
+            desktopNavLinks: document.querySelectorAll('#desktopNav .nav-link'),
+            allNavLinks: document.querySelectorAll('.nav-link, .mobile-nav a, .cta-btn, .floating-btn'), 
+            floatingWidget: document.querySelector('.floating-action-widget'),
+            imageContainer: document.querySelector('#productModal .modal-images'),
+            imageTrack: document.getElementById('imageTrack'),
+            imageCounter: document.getElementById('imageCounter'),
+            // Account Modal Elements
+            accountBtn: document.getElementById('accountBtn'),
+            accountFormContainer: document.getElementById('accountFormContainer'),
+            accountDetailsContainer: document.getElementById('accountDetailsContainer'),
+            accountForm: document.getElementById('accountForm'),
+            accountSubmitBtn: document.getElementById('accountSubmitBtn'),
+            editAccountBtn: document.getElementById('editAccountBtn'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            detailsInfoList: document.getElementById('detailsInfoList'),
+            detailsUserName: document.getElementById('detailsUserName'),
+            detailsUserAddress: document.getElementById('detailsUserAddress'),
+            detailsProfilePic: document.getElementById('detailsProfilePic'),
+            profilePicInput: document.getElementById('profilePicInput'),
+            profilePicPreview: document.getElementById('profilePicPreview'),
+            // Orders Elements
+            myOrdersBtn: document.getElementById('myOrdersBtn'),
+            ordersCount: document.getElementById('ordersCount'),
+            lastPurchaseDetails: document.getElementById('lastPurchaseDetails'),
+            orderHistoryList: document.getElementById('orderHistoryList'),
+            noOrdersMessage: document.getElementById('noOrdersMessage'),
+            ordersModalTitle: document.getElementById('ordersModalTitle'),
+        };
+        
+        const defaultProfilePic = "https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";
+        let currentProduct = null, currentImageIndex = 0, selectedSize = null, selectedColor = null, selectedProfilePic = null;
+
+        // --- Utility Functions ---
+        function renderProducts(productArray = products) {
+            dom.productsGrid.innerHTML = '';
+            if(productArray.length === 0){ dom.productsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem 0;">لا توجد منتجات تطابق بحثك.</p>'; return; }
+            productArray.forEach(product => {
+                const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
+                card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><p class="product-category">${product.category === 'men' ? 'رجالي' : 'نسائي'}</p><h3 class="product-name">${product.name}</h3><p class="product-price">${product.price} جنيه</p></div>`;
+                dom.productsGrid.appendChild(card);
+            });
+        }
+        function openModal(modal) { modal.style.display = 'flex'; document.body.classList.add('menu-open'); }
+        function closeModal(modal) { modal.style.display = 'none'; if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open'); }
+        
+        // --- Product Modal Logic ---
+        function updateSliderView() { const offset = -currentImageIndex * dom.imageContainer.offsetWidth; dom.imageTrack.style.transform = `translateX(${offset}px)`; dom.imageCounter.textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`; }
+        function openProductModal(product) {
+            currentProduct = product; currentImageIndex = 0; selectedSize = null; selectedColor = null;
+            dom.imageTrack.innerHTML = product.images.map(imgSrc => `<div class="slide"><img src="${imgSrc}" alt="${product.name}"></div>`).join('');
+            dom.imageTrack.style.transition = 'none'; updateSliderView(); setTimeout(() => { dom.imageTrack.style.transition = ''; }, 0);
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductPrice').textContent = `${product.price} جنيه`;
+            document.getElementById('modalProductDescription').textContent = product.description;
+            document.getElementById('modalProductSizes').innerHTML = product.sizes.map(s => `<span class="size-option">${s}</span>`).join('');
+            document.getElementById('modalProductColors').innerHTML = product.colors.map(c => `<span class="color-option" style="background-color:${c}" title="${c}"></span>`).join('');
+            openModal(dom.productModal);
+        }
+
+        // --- Touch Logic for Image Slider ---
+        let isDragging = false, startPosX = 0, initialTranslate = 0;
+        function touchStart(event) { isDragging = true; startPosX = event.touches[0].clientX; const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform'); initialTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0; dom.imageTrack.style.transition = 'none'; }
+        function touchMove(event) { if (!isDragging) return; const currentPosX = event.touches[0].clientX; const diffX = currentPosX - startPosX; dom.imageTrack.style.transform = `translateX(${initialTranslate + diffX}px)`; }
+        function touchEnd(event) { if (!isDragging) return; isDragging = false; dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; const endPosX = event.changedTouches[0].clientX; const diffX = startPosX - endPosX; if (diffX > 50 && currentImageIndex < currentProduct.images.length - 1) { currentImageIndex++; } else if (diffX < -50 && currentImageIndex > 0) { currentImageIndex--; } updateSliderView(); }
+
+        // --- Account & Orders Logic ---
+        function getUserData() { return JSON.parse(localStorage.getItem('userData')); }
+        function saveUserData(data) { localStorage.setItem('userData', JSON.stringify(data)); }
+        function getOrders() { const lastOrder = JSON.parse(localStorage.getItem('lastOrder')) || null; const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || []; return { lastOrder, orderHistory }; }
+        function saveOrder(newOrder) { let { lastOrder, orderHistory } = getOrders(); if (lastOrder) { orderHistory.unshift(lastOrder); } lastOrder = newOrder; localStorage.setItem('lastOrder', JSON.stringify(lastOrder)); localStorage.setItem('orderHistory', JSON.stringify(orderHistory)); }
+
+        function openAccountModal() {
+            const userData = getUserData();
+            selectedProfilePic = null; // Reset on open
+            if (userData) {
+                displayAccountDetails(userData);
+            } else {
+                dom.accountFormContainer.style.display = 'block';
+                dom.accountDetailsContainer.style.display = 'none';
+                dom.profilePicPreview.src = defaultProfilePic;
+                dom.accountForm.reset();
+                dom.accountSubmitBtn.querySelector('span').textContent = 'إنشاء حساب وحفظ';
             }
+             if (dom.mobileNav.classList.contains('active')) dom.mobileMenuToggle.click();
+            openModal(dom.accountModal);
+        }
 
-            // --- New, Improved Touch Logic with Axis-Dominance ---
-            let isDragging = false,
-                startPosX = 0,
-                startPosY = 0,
-                initialTranslate = 0;
+        function displayAccountDetails(userData) {
+            const profilePicSrc = userData.profilePic || defaultProfilePic;
+            dom.detailsProfilePic.src = profilePicSrc;
+            dom.detailsUserName.textContent = userData.name;
+            dom.detailsInfoList.innerHTML = `
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> <span>${userData.phone}</span></li>
+                ${userData.email ? `<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> <span>${userData.email}</span></li>` : ''}
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg> <span>${userData.governorate}</span></li>`;
+            dom.detailsUserAddress.textContent = `${userData.address}, ${userData.city}. (أقرب معلم: ${userData.landmark})`;
+            const { lastOrder, orderHistory } = getOrders();
+            dom.ordersCount.textContent = (lastOrder ? 1 : 0) + orderHistory.length;
+            dom.accountFormContainer.style.display = 'none';
+            dom.accountDetailsContainer.style.display = 'flex';
+        }
 
-            function touchStart(event) {
-                isDragging = true;
-                startPosX = event.touches[0].clientX;
-                startPosY = event.touches[0].clientY;
-                
-                const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform');
-                initialTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0;
-                
-                dom.imageTrack.style.transition = 'none';
+        function openOrdersModal() {
+            const { lastOrder, orderHistory } = getOrders();
+            const totalOrders = (lastOrder ? 1 : 0) + orderHistory.length;
+            dom.ordersModalTitle.textContent = `مشترياتي (${totalOrders})`;
+            dom.lastPurchaseDetails.innerHTML = ''; dom.orderHistoryList.innerHTML = '';
+            const lastPurchaseSection = document.getElementById('lastPurchaseSection');
+            const orderHistorySection = document.getElementById('orderHistorySection');
+            if (totalOrders === 0) { dom.noOrdersMessage.style.display = 'block'; lastPurchaseSection.style.display = 'none'; orderHistorySection.style.display = 'none'; } 
+            else {
+                dom.noOrdersMessage.style.display = 'none';
+                if(lastOrder){ lastPurchaseSection.style.display = 'block'; dom.lastPurchaseDetails.innerHTML = createOrderItemHTML(lastOrder); } 
+                else { lastPurchaseSection.style.display = 'none'; }
+                if(orderHistory.length > 0) { orderHistorySection.style.display = 'block'; orderHistory.forEach(order => { dom.orderHistoryList.innerHTML += createOrderItemHTML(order); }); }
+                else { orderHistorySection.style.display = 'none'; }
             }
+            closeModal(dom.accountModal); openModal(dom.ordersModal);
+        }
+        
+        function createOrderItemHTML(order) { return `<div class="order-item"><img src="${order.product.images[0]}" alt="${order.product.name}"><div class="order-details"><h4>${order.product.name}</h4><p>السعر: ${order.product.price} جنيه</p><p>المقاس: ${order.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${order.color}; vertical-align:middle;"></span></p><p>تاريخ الطلب: ${new Date(order.date).toLocaleDateString('ar-EG')}</p></div></div>`; }
 
-            function touchMove(event) {
-                if (!isDragging) return;
-                const currentPosX = event.touches[0].clientX;
-                const diffX = currentPosX - startPosX;
-                dom.imageTrack.style.transform = `translateX(${initialTranslate + diffX}px)`;
-            }
-
-            function touchEnd(event) {
-                if (!isDragging) return;
-                isDragging = false;
-                dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-                const endPosX = event.changedTouches[0].clientX;
-                const endPosY = event.changedTouches[0].clientY;
-                
-                const diffX = startPosX - endPosX; // Positive for swipe left, negative for swipe right
-                const diffY = startPosY - endPosY; // Positive for swipe up, negative for swipe down
-
-                const swipeThresholdX = 50;  // Minimum pixels to be considered a horizontal swipe
-                const swipeThresholdY = 70;  // Minimum pixels to be considered a vertical swipe
-
-                // Check if horizontal movement is more dominant than vertical
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    // It's a horizontal swipe
-                    if (diffX > swipeThresholdX && currentImageIndex < currentProduct.images.length - 1) {
-                        currentImageIndex++; // Swipe Left -> Next Image
-                    } else if (diffX < -swipeThresholdX && currentImageIndex > 0) {
-                        currentImageIndex--; // Swipe Right -> Previous Image
-                    }
-                    // Snap to the correct slide (new or old one)
-                    updateSliderView();
-                } else {
-                    // It's a vertical swipe
-                    if (diffY < -swipeThresholdY) { // A significant swipe down
-                        closeModal(dom.productModal);
-                    } else {
-                        // Not a significant vertical swipe, snap back horizontally
-                        updateSliderView();
-                    }
-                }
-            }
-
-            dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
-            dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
-            dom.imageContainer.addEventListener('touchend', touchEnd);
-
-            // --- General Event Listeners ---
-            
-            // --- MODIFIED SCROLL LISTENER ---
-            window.addEventListener('scroll', () => {
-                let current = '';
-                const sections = document.querySelectorAll('.section');
-                const scrollY = window.scrollY;
-                const headerHeight = dom.header.clientHeight;
-
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - headerHeight - 1;
-                    const sectionId = section.getAttribute('id');
-                    
-                    // Standard logic: find the last section we scrolled past
-                    if (scrollY >= sectionTop) {
-                        current = sectionId;
-                    }
-                });
-
-                // Special case: If scrolled to the bottom of the page, force the last section to be active.
-                // This fixes the issue where the last section's top is unreachable.
-                if ((window.innerHeight + scrollY) >= document.documentElement.scrollHeight - 2) {
-                    const lastSection = sections[sections.length - 1];
-                    current = lastSection.getAttribute('id');
-                }
-
-                dom.desktopNavLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === current) {
-                        link.classList.add('active');
-                    }
-                });
-
-                if (scrollY > 300) {
-                    dom.floatingWidget.classList.add('show');
-                } else {
-                    dom.floatingWidget.classList.remove('show');
-                }
-            });
-
-            dom.allNavLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        e.preventDefault();
-                        const targetElement = document.querySelector(href);
-                        if (targetElement) {
-                            const offsetTop = targetElement.offsetTop - (href === '#home' ? 0 : dom.header.clientHeight);
-                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                            if (dom.mobileNav.classList.contains('active')) {
-                                dom.mobileMenuToggle.click();
-                            }
-                        }
-                    }
-                });
-            });
-
-            dom.mobileMenuToggle.addEventListener('click', () => {
-                dom.mobileMenuToggle.classList.toggle('active');
-                dom.mobileNav.classList.toggle('active');
-                document.body.classList.toggle('menu-open');
-            });
-
-            dom.searchIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const nowActive = dom.searchContainer.classList.toggle('active');
-                dom.header.classList.toggle('search-active-mobile', nowActive);
-                
-                if (nowActive) {
-                    dom.searchInput.focus();
-                    const productsSectionTop = dom.productsSection.offsetTop - dom.header.clientHeight;
-                    window.scrollTo({ top: productsSectionTop, behavior: 'smooth' });
-                }
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!dom.searchContainer.contains(e.target) && dom.searchContainer.classList.contains('active')) {
-                    dom.searchContainer.classList.remove('active');
-                    dom.header.classList.remove('search-active-mobile');
-                }
-            });
-
-            dom.searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                if (!searchTerm) {
-                    dom.searchResultsInfo.innerHTML = '';
-                    renderProducts(products);
-                    return;
-                }
-                dom.searchResultsInfo.innerHTML = `نتائج البحث عن: <span>'${searchTerm}'</span>`;
-                const filtered = products.filter(p => p.name.toLowerCase().includes(searchTerm));
-                renderProducts(filtered);
-            });
-            
-            dom.searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    dom.searchContainer.classList.remove('active');
-                    dom.header.classList.remove('search-active-mobile');
-                    dom.searchInput.blur();
-                }
-            });
-
-            dom.productsGrid.addEventListener('click', (e) => {
-                const card = e.target.closest('.product-card');
-                if (!card) return;
-                const product = products.find(p => p.id == card.dataset.id);
-                if(product) openProductModal(product);
-            });
-
-            document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
-            
-            dom.productModal.addEventListener('click', (e) => {
-                if (e.target.closest('.size-option')) {
-                    const target = e.target.closest('.size-option');
-                    dom.productModal.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
-                    target.classList.add('selected');
-                    selectedSize = target.textContent;
-                } else if (e.target.closest('.color-option')) {
-                    const target = e.target.closest('.color-option');
-                    dom.productModal.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
-                    target.classList.add('selected');
-                    selectedColor = target.title;
-                } else if (e.target.closest('.prev-image')) {
-                    if (currentImageIndex > 0) {
-                        currentImageIndex--;
-                        updateSliderView();
-                    }
-                } else if (e.target.closest('.next-image')) {
-                    if (currentImageIndex < currentProduct.images.length - 1) {
-                        currentImageIndex++;
-                        updateSliderView();
-                    }
-                } else if (e.target.closest('#modalBuyBtn')) {
-                    if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
-                    closeModal(dom.productModal);
-                    document.getElementById('summaryProductName').textContent = currentProduct.name;
-                    document.getElementById('summarySelectedSize').textContent = selectedSize;
-                    document.getElementById('summarySelectedColor').innerHTML = `<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle;"></span>`;
-                    openModal(dom.purchaseModal);
-                }
-            });
-            
-            document.getElementById('purchaseForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const customerName = document.getElementById('customerName').value;
-                const customerPhone = document.getElementById('customerPhone').value;
-                const customerLocation = document.getElementById('customerLocation').value;
-                const subject = `طلب شراء جديد - ${currentProduct.name}`;
-                const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\nبيانات المنتج:\n- المنتج: ${currentProduct.name}\n- السعر: ${currentProduct.price} جنيه\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\nبيانات العميل:\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
-                const mailtoLink = `mailto:adger.shop@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                window.open(mailtoLink);
-                alert('سيتم الآن فتح تطبيق البريد لإرسال طلبك. شكراً لك!');
-                closeModal(dom.purchaseModal);
-                this.reset();
-            });
-
-            renderProducts();
+        // --- Event Listeners ---
+        window.addEventListener('scroll', () => { 
+             let current = ''; const sections = document.querySelectorAll('.section'); const scrollY = window.scrollY; const headerHeight = dom.header.clientHeight;
+            sections.forEach(section => { const sectionTop = section.offsetTop - headerHeight - 1; if (scrollY >= sectionTop) { current = section.getAttribute('id'); } });
+            if ((window.innerHeight + scrollY) >= document.documentElement.scrollHeight - 2) { current = sections[sections.length - 1].getAttribute('id'); }
+            dom.desktopNavLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href').substring(1) === current) { link.classList.add('active'); } });
+            dom.floatingWidget.classList.toggle('show', scrollY > 300);
         });
-    </script>
+        dom.allNavLinks.forEach(link => link.addEventListener('click', function(e) { e.preventDefault(); const targetElement = document.querySelector(this.getAttribute('href')); if (targetElement) { const offsetTop = targetElement.offsetTop - (this.getAttribute('href') === '#home' ? 0 : dom.header.clientHeight); window.scrollTo({ top: offsetTop, behavior: 'smooth' }); if (dom.mobileNav.classList.contains('active')) dom.mobileMenuToggle.click(); } }));
+        dom.mobileMenuToggle.addEventListener('click', () => { dom.mobileMenuToggle.classList.toggle('active'); dom.mobileNav.classList.toggle('active'); document.body.classList.toggle('menu-open'); });
+        dom.searchIcon.addEventListener('click', (e) => { e.stopPropagation(); const nowActive = dom.searchContainer.classList.toggle('active'); dom.header.classList.toggle('search-active-mobile', nowActive); if (nowActive) dom.searchInput.focus(); });
+        document.addEventListener('click', (e) => { if (!dom.searchContainer.contains(e.target) && dom.searchContainer.classList.contains('active')) { dom.searchContainer.classList.remove('active'); dom.header.classList.remove('search-active-mobile'); } });
+        dom.searchInput.addEventListener('input', (e) => { const searchTerm = e.target.value.toLowerCase().trim(); dom.searchResultsInfo.innerHTML = searchTerm ? `نتائج البحث عن: <span>'${searchTerm}'</span>` : ''; renderProducts(products.filter(p => p.name.toLowerCase().includes(searchTerm))); });
+        dom.productsGrid.addEventListener('click', (e) => { const card = e.target.closest('.product-card'); if (!card) return; const product = products.find(p => p.id == card.dataset.id); if(product) openProductModal(product); });
+        document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
+        
+        dom.productModal.addEventListener('click', (e) => {
+            if (e.target.closest('.size-option')) { const target = e.target.closest('.size-option'); dom.productModal.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected')); target.classList.add('selected'); selectedSize = target.textContent; } 
+            else if (e.target.closest('.color-option')) { const target = e.target.closest('.color-option'); dom.productModal.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected')); target.classList.add('selected'); selectedColor = target.title; } 
+            else if (e.target.closest('.prev-image')) { if (currentImageIndex > 0) { currentImageIndex--; updateSliderView(); } } 
+            else if (e.target.closest('.next-image')) { if (currentImageIndex < currentProduct.images.length - 1) { currentImageIndex++; updateSliderView(); } } 
+            else if (e.target.closest('#modalBuyBtn')) {
+                if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
+                closeModal(dom.productModal);
+                const userData = getUserData();
+                if (userData) { document.getElementById('customerName').value = userData.name; document.getElementById('customerPhone').value = userData.phone; const fullAddress = `${userData.address}, ${userData.city}, ${userData.governorate}. (أقرب معلم: ${userData.landmark})`; document.getElementById('customerLocation').value = fullAddress; } 
+                else { document.getElementById('purchaseForm').reset(); }
+                document.getElementById('summaryProductName').textContent = currentProduct.name;
+                document.getElementById('summarySelectedSize').textContent = selectedSize;
+                document.getElementById('summarySelectedColor').innerHTML = `<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle;"></span>`;
+                openModal(dom.purchaseModal);
+            }
+        });
+        
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString() };
+            saveOrder(newOrder); const customerName = document.getElementById('customerName').value; const customerPhone = document.getElementById('customerPhone').value; const customerLocation = document.getElementById('customerLocation').value; const subject = `طلب شراء جديد - ${currentProduct.name}`; const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\nبيانات المنتج:\n- المنتج: ${currentProduct.name}\n- السعر: ${currentProduct.price} جنيه\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\nبيانات العميل:\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
+            const mailtoLink = `mailto:adger.shop@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink); alert('تم تسجيل طلبك بنجاح! سيتم الآن فتح تطبيق البريد لإرسال التفاصيل.'); closeModal(dom.purchaseModal); this.reset();
+        });
+
+        // --- Account Modal Button Listeners ---
+        dom.accountBtn.addEventListener('click', openAccountModal);
+        dom.myOrdersBtn.addEventListener('click', openOrdersModal);
+
+        dom.profilePicInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    selectedProfilePic = event.target.result;
+                    dom.profilePicPreview.src = selectedProfilePic;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        dom.accountForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const existingData = getUserData() || {};
+            const userData = {
+                name: document.getElementById('userName').value, phone: document.getElementById('userPhone').value, email: document.getElementById('userEmail').value,
+                governorate: document.getElementById('userGovernorate').value, city: document.getElementById('userCity').value, address: document.getElementById('userAddress').value,
+                landmark: document.getElementById('userLandmark').value, profilePic: selectedProfilePic || existingData.profilePic || null,
+            };
+            saveUserData(userData);
+            alert('تم حفظ بياناتك بنجاح!');
+            displayAccountDetails(userData);
+        });
+
+        dom.editAccountBtn.addEventListener('click', () => {
+            const userData = getUserData();
+            if (userData) {
+                dom.profilePicPreview.src = userData.profilePic || defaultProfilePic;
+                document.getElementById('userName').value = userData.name || ''; document.getElementById('userPhone').value = userData.phone || ''; document.getElementById('userEmail').value = userData.email || '';
+                document.getElementById('userGovernorate').value = userData.governorate || ''; document.getElementById('userCity').value = userData.city || '';
+                document.getElementById('userAddress').value = userData.address || ''; document.getElementById('userLandmark').value = userData.landmark || '';
+            }
+            dom.accountSubmitBtn.querySelector('span').textContent = 'تحديث البيانات';
+            dom.accountFormContainer.style.display = 'block';
+            dom.accountDetailsContainer.style.display = 'none';
+        });
+
+        dom.logoutBtn.addEventListener('click', () => {
+            if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+                localStorage.removeItem('userData');
+                alert('تم تسجيل الخروج.');
+                openAccountModal(); // Re-open to show the form
+            }
+        });
+
+        // --- Initial setup ---
+        renderProducts();
+        dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
+        dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
+        dom.imageContainer.addEventListener('touchend', touchEnd);
+    });
+</script>
 </body>
 </html>
