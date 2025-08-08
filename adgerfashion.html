@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -375,7 +376,6 @@
 
     @media (max-width: 768px) {
         .header-right { gap: 0.70rem; }
-        /* [MODIFIED] Set header padding to 0 and control inner spacing via container */
         .header { padding: 0; }
         .header .container { padding: 0 0 0 19px; }
 
@@ -392,7 +392,13 @@
         .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1.5rem; }
         .header.search-active-mobile .account-icon { display: none; }
         .header.search-active-mobile .header-right { flex-grow: 1; }
-        .header.search-active-mobile .search-container { flex-grow: 1; margin-right: 10px; }
+        
+        /* [MODIFIED] Increased right margin for a larger gap from the edge */
+        .header.search-active-mobile .search-container {
+            flex-grow: 1;
+            margin-right: 30px; 
+            margin-left: 10px;
+        }
         .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
 
         .footer-content { grid-template-columns: 1fr; text-align: center; }
@@ -418,6 +424,7 @@
         #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
     }
 </style>
+
 </head>
 <body>
     <!-- Header -->
@@ -442,7 +449,7 @@
                 </nav>
 
                 <div class="account-icon" id="accountBtn">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
 
                 <div class="search-container" id="searchContainer">
@@ -451,7 +458,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </div>
                 </div>
-                
+            
                 <div class="mobile-menu-toggle" id="mobileMenuToggle">
                     <span></span>
                     <span></span>
@@ -460,295 +467,293 @@
             </div>
         </div>
     </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#products">المنتجات</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+    </nav>
 
-<nav class="mobile-nav" id="mobileNav">
-    <ul>
-        <li><a href="#home">الرئيسية</a></li>
-        <li><a href="#products">المنتجات</a></li>
-        <li><a href="#contact">تواصل معنا</a></li>
-    </ul>
-</nav>
-
-<!-- Hero Section -->
-<section id="home" class="hero-section section">
-    <div class="hero-content">
-        <h1>الأناقة في كل قطعة</h1>
-        <p>اكتشف مجموعتنا الحصرية من الأزياء الفاخرة التي تجمع بين الجودة العالية والتصميم الفريد.</p>
-        <a href="#products" class="cta-btn">تسوق الآن</a>
-    </div>
-</section>
-
-<!-- Products Section -->
-<section id="products" class="section section-bg section-tight">
-    <div class="container">
-        <div class="section-title">
-            <h2 id="productsTitle">منتجاتنا</h2>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section section">
+        <div class="hero-content">
+            <h1>الأناقة في كل قطعة</h1>
+            <p>اكتشف مجموعتنا الحصرية من الأزياء الفاخرة التي تجمع بين الجودة العالية والتصميم الفريد.</p>
+            <a href="#products" class="cta-btn">تسوق الآن</a>
         </div>
-        <div id="searchResultsInfo"></div>
-        <div class="products-grid" id="productsGrid">
-            <!-- Products populated by JS -->
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Contact Section -->
-<section id="contact" class="section contact-section section-tight">
-    <div class="container">
-        <div class="section-title">
-            <h2>الدعم والتواصل</h2>
-            <p>نحن هنا لمساعدتك. لا تتردد في التواصل معنا عبر القنوات التالية.</p>
-        </div>
-        <div class="contact-grid">
-            <div class="contact-card">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                </div>
-                <h4>البريد الإلكتروني</h4>
-                <p>adger.shop@gmail.com</p>
+    <!-- Products Section -->
+    <section id="products" class="section section-bg section-tight">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="productsTitle">منتجاتنا</h2>
             </div>
-            <div class="contact-card">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </div>
-                <h4>الهاتف</h4>
-                <p>+20 100 123 4567</p>
-            </div>
-            <div class="contact-card">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </div>
-                <h4>العنوان</h4>
-                <p>القاهرة، جمهورية مصر العربية</p>
+            <div id="searchResultsInfo"></div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products populated by JS -->
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Adger fashion.</h4>
-                <p>وجهتك الأولى للأزياء العصرية التي تجمع بين الفخامة والجودة.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                    <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://youtube.com/your-channel-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://tiktok.com/@your-profile-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.6c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg></a>
-                </div>
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section section-tight">
+        <div class="container">
+            <div class="section-title">
+                <h2>الدعم والتواصل</h2>
+                <p>نحن هنا لمساعدتك. لا تتردد في التواصل معنا عبر القنوات التالية.</p>
             </div>
-            <div class="footer-section">
-                <h4>روابط سريعة</h4>
-                <ul>
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#products">المنتجات</a></li>
-                    <li><a href="#contact">تواصل معنا</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>خدمة العملاء</h4>
-                <ul>
-                    <li><a href="#">الأسئلة الشائعة</a></li>
-                    <li><a href="#">سياسة الإرجاع</a></li>
-                    <li><a href="#">الشحن والتوصيل</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
-        </div>
-    </div>
-</footer>
-
-<!-- Modals -->
-<!-- Product Detail Modal -->
-<div id="productModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-logo"><h3><span class="logo-adger">Adger</span><span class="logo-fashion">fashion</span><span class="logo-dot">.</span></h3></div>
-            <span class="close">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="modal-images">
-                <div class="image-track" id="imageTrack"></div>
-                <button class="image-nav prev-image">‹</button>
-                <button class="image-nav next-image">›</button>
-                <div class="image-counter" id="imageCounter"></div>
-            </div>
-            <div class="modal-details">
-                <h2 id="modalProductName"></h2>
-                <p class="price" id="modalProductPrice"></p>
-                <div class="product-description"><p id="modalProductDescription"></p></div>
-                <div class="product-specs">
-                    <div class="spec-group"><h4>المقاسات</h4><div class="sizes" id="modalProductSizes"></div></div>
-                    <div class="spec-group"><h4>الألوان</h4><div class="colors" id="modalProductColors"></div></div>
-                </div>
-                <button class="buy-now-btn" id="modalBuyBtn">شراء الآن</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Purchase Confirmation Modal -->
-<div id="purchaseModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header"><h2>إتمام الطلب</h2><span class="close">&times;</span></div>
-        <form id="purchaseForm" class="purchase-form">
-            <div class="purchase-summary">
-                <p>المنتج: <span id="summaryProductName"></span></p>
-                <p>المقاس المختار: <span id="summarySelectedSize"></span></p>
-                <p>اللون المختار: <span id="summarySelectedColor"></span></p>
-            </div>
-            <hr style="margin: 1rem 0; border-color: var(--color-border);">
-            <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
-            <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
-            <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
-            <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
-        </form>
-    </div>
-</div>
-
-<!-- Account Modal -->
-<div id="accountModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="accountModalTitle">حسابك</h2>
-            <span class="close">&times;</span>
-        </div>
-        <div class="modal-body account-modal-body">
-            <!-- Account Form Container -->
-            <div id="accountFormContainer">
-                <div class="profile-pic-container">
-                    <img id="profilePicPreview" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture Preview">
-                    <label for="profilePicInput" class="change-pic-label">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg>
-                    </label>
-                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
-                </div>
-
-                <form id="accountForm" class="account-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="userName">الاسم</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                <input type="text" id="userName" placeholder="الاسم الكامل" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="userPhone">رقم الهاتف</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                <input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required>
-                            </div>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="userEmail">البريد الإلكتروني (اختياري)</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <input type="email" id="userEmail" placeholder="example@mail.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="userGovernorate">المحافظة</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="userCity">المدينة / المركز</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <input type="text" id="userCity" placeholder="مثال: مدينة نصر" required>
-                            </div>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="userAddress">العنوان الكامل</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                                <textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group full-width">
-                            <label for="userLandmark">أقرب علامة مميزة</label>
-                            <div class="input-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                <input type="text" id="userLandmark" placeholder="بجوار ..." required>
-                            </div>
-                        </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     </div>
+                    <h4>البريد الإلكتروني</h4>
+                    <p>adger.shop@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <h4>الهاتف</h4>
+                    <p>+20 100 123 4567</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <h4>العنوان</h4>
+                    <p>القاهرة، جمهورية مصر العربية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Adger fashion.</h4>
+                    <p>وجهتك الأولى للأزياء العصرية التي تجمع بين الفخامة والجودة.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="https://youtube.com/your-channel-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                        <a href="https://tiktok.com/@your-profile-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.6c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>خدمة العملاء</h4>
+                    <ul>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الإرجاع</a></li>
+                        <li><a href="#">الشحن والتوصيل</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-logo"><h3><span class="logo-adger">Adger</span><span class="logo-fashion">fashion</span><span class="logo-dot">.</span></h3></div>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-images">
+                    <div class="image-track" id="imageTrack"></div>
+                    <button class="image-nav prev-image">‹</button>
+                    <button class="image-nav next-image">›</button>
+                    <div class="image-counter" id="imageCounter"></div>
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalProductName"></h2>
+                    <p class="price" id="modalProductPrice"></p>
+                    <div class="product-description"><p id="modalProductDescription"></p></div>
+                    <div class="product-specs">
+                        <div class="spec-group"><h4>المقاسات</h4><div class="sizes" id="modalProductSizes"></div></div>
+                        <div class="spec-group"><h4>الألوان</h4><div class="colors" id="modalProductColors"></div></div>
+                    </div>
+                    <button class="buy-now-btn" id="modalBuyBtn">شراء الآن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Purchase Confirmation Modal -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h2>إتمام الطلب</h2><span class="close">&times;</span></div>
+            <form id="purchaseForm" class="purchase-form">
+                <div class="purchase-summary">
+                    <p>المنتج: <span id="summaryProductName"></span></p>
+                    <p>المقاس المختار: <span id="summarySelectedSize"></span></p>
+                    <p>اللون المختار: <span id="summarySelectedColor"></span></p>
+                </div>
+                <hr style="margin: 1rem 0; border-color: var(--color-border);">
+                <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
+                <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
+                <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
+                <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="accountModalTitle">حسابك</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body account-modal-body">
+                <!-- Account Form Container -->
+                <div id="accountFormContainer">
+                    <div class="profile-pic-container">
+                        <img id="profilePicPreview" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture Preview">
+                        <label for="profilePicInput" class="change-pic-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg>
+                        </label>
+                        <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                    </div>
+                    <form id="accountForm" class="account-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="userName">الاسم</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <input type="text" id="userName" placeholder="الاسم الكامل" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userPhone">رقم الهاتف</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="userEmail">البريد الإلكتروني (اختياري)</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    <input type="email" id="userEmail" placeholder="example@mail.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userGovernorate">المحافظة</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userCity">المدينة / المركز</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <input type="text" id="userCity" placeholder="مثال: مدينة نصر" required>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="userAddress">العنوان الكامل</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                    <textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="userLandmark">أقرب علامة مميزة</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    <input type="text" id="userLandmark" placeholder="بجوار ..." required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-actions">
+                            <button type="submit" class="buy-now-btn" id="accountSubmitBtn">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                               <span>إنشاء حساب وحفظ</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Account Details Container -->
+                <div id="accountDetailsContainer">
+                    <img id="detailsProfilePic" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture">
+                    <h2 id="detailsUserName"></h2>
+                    
+                    <ul id="detailsInfoList"></ul>
+
+                    <div class="details-address-block">
+                         <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>العنوان</h4>
+                         <p id="detailsUserAddress"></p>
+                    </div>
+
                     <div class="account-actions">
-                        <button type="submit" class="buy-now-btn" id="accountSubmitBtn">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                           <span>إنشاء حساب وحفظ</span>
+                         <button type="button" class="buy-now-btn" id="editAccountBtn">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                             <span>تعديل البيانات</span>
                         </button>
+                         <button type="button" class="buy-now-btn" id="myOrdersBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <span>مشترياتي (<span id="ordersCount">0</span>)</span>
+                         </button>
+                         <button type="button" class="buy-now-btn" id="logoutBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                             <span>تسجيل الخروج</span>
+                         </button>
                     </div>
-                </form>
-            </div>
-
-            <!-- Account Details Container -->
-            <div id="accountDetailsContainer">
-                <img id="detailsProfilePic" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture">
-                <h2 id="detailsUserName"></h2>
-                
-                <ul id="detailsInfoList"></ul>
-
-                <div class="details-address-block">
-                     <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>العنوان</h4>
-                     <p id="detailsUserAddress"></p>
-                </div>
-
-                <div class="account-actions">
-                     <button type="button" class="buy-now-btn" id="editAccountBtn">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                         <span>تعديل البيانات</span>
-                    </button>
-                     <button type="button" class="buy-now-btn" id="myOrdersBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                        <span>مشترياتي (<span id="ordersCount">0</span>)</span>
-                     </button>
-                     <button type="button" class="buy-now-btn" id="logoutBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                         <span>تسجيل الخروج</span>
-                     </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Orders Modal -->
-<div id="ordersModal" class="modal">
-     <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="ordersModalTitle">مشترياتي</h2>
-            <span class="close">&times;</span>
-        </div>
-        <div class="modal-body orders-modal-body">
-            <div id="lastPurchaseSection">
-                <h3>آخر طلب</h3>
-                <div id="lastPurchaseDetails"></div>
+    <!-- Orders Modal -->
+    <div id="ordersModal" class="modal">
+         <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="ordersModalTitle">مشترياتي</h2>
+                <span class="close">&times;</span>
             </div>
-            <div id="orderHistorySection">
-                <h3>الطلبات السابقة</h3>
-                <div id="orderHistoryList"></div>
-            </div>
-             <div id="noOrdersMessage" style="display: none;">
-                <p>لم تقم بأي عمليات شراء بعد.</p>
+            <div class="modal-body orders-modal-body">
+                <div id="lastPurchaseSection">
+                    <h3>آخر طلب</h3>
+                    <div id="lastPurchaseDetails"></div>
+                </div>
+                <div id="orderHistorySection">
+                    <h3>الطلبات السابقة</h3>
+                    <div id="orderHistoryList"></div>
+                </div>
+                 <div id="noOrdersMessage" style="display: none;">
+                    <p>لم تقم بأي عمليات شراء بعد.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<!-- Floating Action Widget -->
-<div class="floating-action-widget">
-    <a href="https://wa.me/201001234567" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب"><svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path></svg></a>
-    <div class="widget-separator"></div>
-    <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى"><svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path><path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path></svg></a>
-</div>
+    <!-- Floating Action Widget -->
+    <div class="floating-action-widget">
+        <a href="https://wa.me/201001234567" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب"><svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path></svg></a>
+        <div class="widget-separator"></div>
+        <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى"><svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path><path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path></svg></a>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -1011,5 +1016,6 @@
         dom.imageContainer.addEventListener('touchend', touchEnd);
     });
 </script>
+
 </body>
 </html>
