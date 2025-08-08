@@ -947,129 +947,30 @@ function updateMainMedia(thumbnail) {
             5 مباع
         </div>
    <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة المنتج</title>
+    <title>تفاصيل المنتج</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .product-container {
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: auto;
-        }
-        h1 {
-            color: #0056b3;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .price-section {
-            font-size: 2em;
-            font-weight: bold;
-            color: #28a745;
-            margin: 10px 0;
-        }
-        #oldPrice {
-            text-decoration: line-through;
-            color: #dc3545;
-            font-size: 0.7em;
-            margin-left: 10px;
-        }
-        #productDis {
-            background-color: #ffc107;
-            color: #333;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.6em;
-            font-weight: bold;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-        .sales-info, .promo-text {
-            background-color: #e9f5ff;
-            border: 1px solid #b3d7ff;
-            color: #004085;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        .description-section {
-            margin-top: 20px;
-        }
-        .placeholder {
-            background-color: #eee;
-            min-height: 20px;
-            border-radius: 4px;
-        }
-        /* --- CSS for "Read More" functionality --- */
-        #hop {
-            transition: max-height 0.5s ease-out;
-        }
-        #hop .full-text {
-            display: none;
-        }
-        #hop .short-text {
-            display: inline;
-        }
-        #hop.expanded .short-text {
-            display: none;
-        }
-        #hop.expanded .full-text {
-            display: inline;
-        }
+        .placeholder { color: gray; }
+        .short-text { display: inline; }
+        .full-text { display: none; }
+        #hop.expanded .short-text { display: none; }
+        #hop.expanded .full-text { display: inline; }
         .more-btn {
             cursor: pointer;
-            font-weight: bold;
-            color: #007bff;
-            display: inline-block;
-        }
-        .more-btn svg {
-            transition: transform 0.3s;
-        }
-        #hop.expanded .more-btn svg {
-            transform: rotate(180deg);
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
-
-    <div class="product-container">
-        <h1>تفاصيل المنتج</h1>
-        
-        <div class="price-section">
-            <span id="productPri" class="placeholder"></span>
-            <del id="oldPrice" style="display: none;"></del>
-            <span id="productDis" style="display: none;"></span>
-        </div>
-
-        <div id="text-container" class="promo-text" style="display: none;"></div>
-
-        <div class="sales-info">
-            <span id="sales" style="display: none;"></span>
-        </div>
-
-        <div class="description-section">
-            <h3>الوصف:</h3>
-            <p id="productDesc" style="display: none;"></p>
-        </div>
-
-        <div class="description-section">
-            <h3>تفاصيل إضافية:</h3>
-            <p id="hop" class="placeholder"></p>
-        </div>
-
-    </div>
+    <p id="productPri"></p>
+    <p id="oldPrice"></p>
+    <p id="productDis"></p>
+    <div id="text-container"></div>
+    <p id="hop" class="placeholder"></p>
+    <p id="sales"></p>
+    <p id="productDesc"></p>
 
     <script>
         // جلب معرف المنتج من URL
@@ -1078,9 +979,7 @@ function updateMainMedia(thumbnail) {
 
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // Note: The original code uses `p.id === id`. Since `urlParams.get()` returns a string,
-            // the `id` in the JSON file MUST also be a string for the comparison to work.
-            const fileIndex = Math.ceil(parseInt(id) / 100); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -1089,7 +988,7 @@ function updateMainMedia(thumbnail) {
                     return response.json();
                 })
                 .then(products => {
-                    const product = products.find(p => p.id === id);
+                    const product = products.find(p => p.id == id); // تأكد أن المقارنة صحيحة
                     if (!product) {
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
@@ -1097,10 +996,9 @@ function updateMainMedia(thumbnail) {
 
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
-                    priElement.classList.remove('placeholder');
-                    priElement.textContent = product.pri || 'السعر غير متوفر';
+                    priElement.textContent = product.pri || '0';
 
-                    // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
+                    // السعر القديم
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
                         oldPriceElement.textContent = product.oldPrice;
@@ -1109,7 +1007,7 @@ function updateMainMedia(thumbnail) {
                         oldPriceElement.style.display = 'none';
                     }
 
-                    // تحديث نص الخصم (إخفاء إذا لم يكن موجودًا)
+                    // الخصم
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
@@ -1118,7 +1016,7 @@ function updateMainMedia(thumbnail) {
                         disElement.style.display = 'none';
                     }
 
-                    // تحديث النص المتغير
+                    // نصوص متغيرة
                     const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
                     let index = 0;
@@ -1127,14 +1025,13 @@ function updateMainMedia(thumbnail) {
                         index = (index + 1) % changingTexts.length;
                     }
                     if (changingTexts.length > 0) {
-                        textContainer.style.display = 'block';
                         changeText();
                         setInterval(changeText, 5000);
                     } else {
                         textContainer.style.display = 'none';
                     }
 
-                    // تحديث النص الطويل
+                    // نص طويل
                     const hopContainer = document.getElementById('hop');
                     if (product.longText) {
                         hopContainer.classList.remove('placeholder');
@@ -1145,7 +1042,7 @@ function updateMainMedia(thumbnail) {
                         hopContainer.style.display = 'none';
                     }
 
-                    // تحديث عدد المبيعات
+                    // عدد المبيعات
                     const salesElement = document.getElementById('sales');
                     if (product.sales) {
                         salesElement.textContent = product.sales;
@@ -1154,7 +1051,7 @@ function updateMainMedia(thumbnail) {
                         salesElement.style.display = 'none';
                     }
 
-                    // تحديث نص الوصف
+                    // الوصف
                     const descElement = document.getElementById('productDesc');
                     if (product.desc) {
                         descElement.textContent = product.desc;
@@ -1183,7 +1080,6 @@ function updateMainMedia(thumbnail) {
                     const lastSpaceIndex = truncatedText.lastIndexOf(' ');
                     let shortTextContent = truncatedText;
                     let lastWord = '';
-
                     if (lastSpaceIndex !== -1) {
                         shortTextContent = truncatedText.substring(0, lastSpaceIndex);
                         lastWord = truncatedText.substring(lastSpaceIndex + 1);
@@ -1197,7 +1093,7 @@ function updateMainMedia(thumbnail) {
 
                     const lastWordWrapper = document.createElement('span');
                     lastWordWrapper.className = 'last-word-wrapper';
-                    lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '... ';
+                    lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '...';
 
                     const fullText = document.createElement('span');
                     fullText.className = 'full-text';
@@ -1210,35 +1106,29 @@ function updateMainMedia(thumbnail) {
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     `;
-                    
-                    container.textContent = ''; // Clear original text
+
+                    container.textContent = '';
                     shortText.appendChild(initialText);
                     lastWordWrapper.appendChild(moreBtn);
                     shortText.appendChild(lastWordWrapper);
                     container.appendChild(shortText);
                     container.appendChild(fullText);
 
-                    moreBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                    moreBtn.addEventListener('click', () => {
                         container.classList.toggle('expanded');
                     });
                 } else {
-                    container.textContent = originalText; // If not long enough, just show it
                     container.style.display = 'block';
                 }
             };
 
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
-                // Re-apply original text to recalculate
-                container.textContent = originalText;
-                container.classList.remove('expanded');
-
                 if (screenWidth <= 768) {
                     truncateText(originalText, charLimitMobile);
-                } else if (screenWidth >= 769 && screenWidth <= 1199) {
+                } else if (screenWidth <= 1199) {
                     truncateText(originalText, charLimitTablet);
-                } else if (screenWidth >= 1200 && screenWidth <= 1999) {
+                } else if (screenWidth <= 1999) {
                     truncateText(originalText, charLimitLarge);
                 } else {
                     container.textContent = originalText;
@@ -1250,18 +1140,18 @@ function updateMainMedia(thumbnail) {
             window.addEventListener('resize', updateTextBasedOnScreenSize);
         }
 
-        // تهيئة الصفحة
+        // تهيئة الصفحة عند التحميل
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
                 loadProductData(productId);
             } else {
-                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL (مثال: product.html?id=2)</p>';
+                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL</p>';
             }
         });
     </script>
-
 </body>
 </html>
+
            
 
 
