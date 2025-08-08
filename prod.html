@@ -897,7 +897,7 @@ function updateMainMedia(thumbnail) {
             #hop {
                 position: relative;
             }
-            .zero{
+            .zero {
                 margin-right: 10px !important;
             }
         }
@@ -909,7 +909,7 @@ function updateMainMedia(thumbnail) {
         }
         /* للشاشات الكبيرة */
         @media only screen and (min-width: 1200px) and (max-width: 1999px) {
-            #hop  {
+            #hop {
                 font-size: 16px;
             }
         }
@@ -932,7 +932,7 @@ function updateMainMedia(thumbnail) {
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
             <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
             <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
-            <div class="letter" style="  margin-right: -3px; font-size: 20px;">EGP</div>
+            <div class="letter" style="margin-right: -3px; font-size: 20px;">EGP</div>
             <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
             <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
@@ -945,16 +945,22 @@ function updateMainMedia(thumbnail) {
         <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
             5 مباع
         </div>
+    </div>
     <script>
-        // جلب معرف المنتج من URL
+        // جلب معرف المنتج من URL وتحويله إلى عدد صحيح
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
+        const productId = parseInt(urlParams.get('id'), 10);
 
-        // دالة لجلب البيانات من أي ملف products-{رقم}.json
+        // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // نحسب رقم الملف بناءً على id
-            // على سبيل المثال: كل 100 منتج في ملف
-            const fileIndex = Math.ceil(id / 100);
+            // التحقق من صحة معرف المنتج
+            if (isNaN(id) || id <= 0) {
+                document.body.innerHTML = '<p>معرف المنتج غير صالح</p>';
+                return;
+            }
+
+            // حساب رقم الملف بناءً على المعرف
+            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -963,6 +969,7 @@ function updateMainMedia(thumbnail) {
                     return response.json();
                 })
                 .then(products => {
+                    // البحث عن المنتج باستخدام المعرف
                     const product = products.find(p => p.id === id);
                     if (!product) {
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
@@ -1026,13 +1033,15 @@ function updateMainMedia(thumbnail) {
                         salesElement.style.display = 'none';
                     }
 
-                    // تحديث نص الوصف
+                    // تحديث نص الوصف (إذا كان العنصر موجودًا)
                     const descElement = document.getElementById('productDesc');
-                    if (product.desc) {
-                        descElement.textContent = product.desc;
-                        descElement.style.display = 'block';
-                    } else {
-                        descElement.style.display = 'none';
+                    if (descElement) {
+                        if (product.desc) {
+                            descElement.textContent = product.desc;
+                            descElement.style.display = 'block';
+                        } else {
+                            descElement.style.display = 'none';
+                        }
                     }
                 })
                 .catch(error => {
@@ -1045,7 +1054,6 @@ function updateMainMedia(thumbnail) {
         function initializeLongText() {
             const container = document.getElementById('hop');
             const originalText = container.textContent.trim();
-
             const charLimitMobile = 50;
             const charLimitTablet = 122;
             const charLimitLarge = 132;
@@ -1060,21 +1068,16 @@ function updateMainMedia(thumbnail) {
                         shortTextContent = truncatedText.substring(0, lastSpaceIndex);
                         lastWord = truncatedText.substring(lastSpaceIndex + 1);
                     }
-
                     const shortText = document.createElement('span');
                     shortText.className = 'short-text';
-
                     const initialText = document.createElement('span');
                     initialText.textContent = shortTextContent;
-
                     const lastWordWrapper = document.createElement('span');
                     lastWordWrapper.className = 'last-word-wrapper';
                     lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '...';
-
                     const fullText = document.createElement('span');
                     fullText.className = 'full-text';
                     fullText.textContent = text;
-
                     const moreBtn = document.createElement('span');
                     moreBtn.className = 'more-btn';
                     moreBtn.innerHTML = `
@@ -1082,14 +1085,12 @@ function updateMainMedia(thumbnail) {
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     `;
-
                     container.textContent = '';
                     shortText.appendChild(initialText);
                     lastWordWrapper.appendChild(moreBtn);
                     shortText.appendChild(lastWordWrapper);
                     container.appendChild(shortText);
                     container.appendChild(fullText);
-
                     moreBtn.addEventListener('click', () => {
                         container.classList.toggle('expanded');
                     });
