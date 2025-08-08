@@ -956,147 +956,131 @@ function updateMainMedia(thumbnail) {
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            background-color: #f4f4f4;
-            color: #333;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            background-color: #f4f4f4;
+            color: #333;
         }
         .product-container {
-            background-color: #fff;
+            background: #fff;
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             max-width: 800px;
-            width: 100%;
+            margin: auto;
+        }
+        h1 {
+            color: #0056b3;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
         .price-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
             font-size: 2em;
             font-weight: bold;
-            color: #2c3e50;
+            color: #28a745;
+            margin: 10px 0;
         }
         #oldPrice {
-            font-size: 0.7em;
             text-decoration: line-through;
-            color: #95a5a6;
+            color: #dc3545;
+            font-size: 0.7em;
+            margin-left: 10px;
         }
         #productDis {
-            background-color: #e74c3c;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.5em;
+            background-color: #ffc107;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.6em;
             font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
         }
-        #text-container {
-            background-color: #eaf6ff;
-            color: #005a9e;
+        .sales-info, .promo-text {
+            background-color: #e9f5ff;
+            border: 1px solid #b3d7ff;
+            color: #004085;
             padding: 10px;
             border-radius: 5px;
             margin: 15px 0;
+        }
+        .description-section {
+            margin-top: 20px;
+        }
+        .placeholder {
+            background-color: #eee;
             min-height: 20px;
-            transition: all 0.5s ease;
+            border-radius: 4px;
         }
-        #sales {
-            color: #27ae60;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        #productDesc {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
+        /* --- CSS for "Read More" functionality --- */
         #hop {
-            color: #555;
-            margin-bottom: 20px;
+            transition: max-height 0.5s ease-out;
         }
-        /* ---- CSS الخاص بخاصية "عرض المزيد" ---- */
-        .full-text {
+        #hop .full-text {
             display: none;
         }
-        .more-btn {
-            color: #007bff;
-            cursor: pointer;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+        #hop .short-text {
+            display: inline;
         }
-        /* عندما يتم توسيع النص */
         #hop.expanded .short-text {
             display: none;
         }
         #hop.expanded .full-text {
             display: inline;
         }
-        /* إخفاء العنصر إذا كان فارغًا */
-        [style*="display: none"] {
-            display: none !important;
+        .more-btn {
+            cursor: pointer;
+            font-weight: bold;
+            color: #007bff;
+            display: inline-block;
         }
-        .placeholder {
-            background-color: #eee;
-            min-height: 50px;
-            border-radius: 5px;
+        .more-btn svg {
+            transition: transform 0.3s;
         }
-        h1 {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        .instructions {
-             background-color: #fff3cd;
-             border: 1px solid #ffeeba;
-             padding: 15px;
-             border-radius: 5px;
-             margin-bottom: 20px;
+        #hop.expanded .more-btn svg {
+            transform: rotate(180deg);
         }
     </style>
 </head>
 <body>
 
     <div class="product-container">
-        <div class="instructions">
-            <p><b>تجربة العرض:</b> لتغيير المنتج، عدّل الرقم في رابط الصفحة بالأعلى.</p>
-            <p>مثال: <code>?id=5</code> أو <code>?id=99</code> أو <code>?id=105</code></p>
-        </div>
-
-        <!-- عناصر المنتج سيتم ملؤها بواسطة JavaScript -->
-        <h1 id="productDesc"></h1>
-
-        <div class="price-section">
-            <span id="productPri"></span>
-            <del id="oldPrice"></del>
-            <span id="productDis"></span>
-        </div>
-
-        <div id="sales"></div>
-
-        <div id="text-container"></div>
-
-        <div id="hop" class="placeholder"></div>
+        <h1>تفاصيل المنتج</h1>
         
+        <div class="price-section">
+            <span id="productPri" class="placeholder"></span>
+            <del id="oldPrice" style="display: none;"></del>
+            <span id="productDis" style="display: none;"></span>
+        </div>
+
+        <div id="text-container" class="promo-text" style="display: none;"></div>
+
+        <div class="sales-info">
+            <span id="sales" style="display: none;"></span>
+        </div>
+
+        <div class="description-section">
+            <h3>الوصف:</h3>
+            <p id="productDesc" style="display: none;"></p>
+        </div>
+
+        <div class="description-section">
+            <h3>تفاصيل إضافية:</h3>
+            <p id="hop" class="placeholder"></p>
+        </div>
+
     </div>
 
     <script>
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
-        // تحويل المعرف إلى رقم لضمان المقارنة الصحيحة مع JSON
-        const productId = parseInt(urlParams.get('id'));
+        const productId = urlParams.get('id');
 
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // التحقق من أن المعرف هو رقم صالح
-            if (isNaN(id)) {
-                document.body.innerHTML = '<p>معرف المنتج غير صالح.</p>';
-                return;
-            }
-            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
+            // Note: The original code uses `p.id === id`. Since `urlParams.get()` returns a string,
+            // the `id` in the JSON file MUST also be a string for the comparison to work.
+            const fileIndex = Math.ceil(parseInt(id) / 100); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -1105,24 +1089,21 @@ function updateMainMedia(thumbnail) {
                     return response.json();
                 })
                 .then(products => {
-                    // المقارنة تتم الآن بين رقم ورقم
                     const product = products.find(p => p.id === id);
                     if (!product) {
-                        document.querySelector('.product-container').innerHTML = '<h1>المنتج غير موجود</h1><p>المنتج بالمعرف <strong>' + id + '</strong> غير موجود في الملف <strong>' + jsonFile + '</strong>. يرجى التأكد من الرابط.</p>';
+                        document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
                     }
 
-                    // تحديث عنوان الصفحة باسم المنتج
-                    document.title = product.desc || 'تفاصيل المنتج';
-
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
-                    priElement.textContent = (product.pri || '0') + ' د.ك';
+                    priElement.classList.remove('placeholder');
+                    priElement.textContent = product.pri || 'السعر غير متوفر';
 
                     // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
-                        oldPriceElement.textContent = product.oldPrice + ' د.ك';
+                        oldPriceElement.textContent = product.oldPrice;
                         oldPriceElement.style.display = 'inline';
                     } else {
                         oldPriceElement.style.display = 'none';
@@ -1132,7 +1113,7 @@ function updateMainMedia(thumbnail) {
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
-                        disElement.style.display = 'inline-block';
+                        disElement.style.display = 'inline';
                     } else {
                         disElement.style.display = 'none';
                     }
@@ -1141,16 +1122,14 @@ function updateMainMedia(thumbnail) {
                     const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
                     let index = 0;
-                    // إيقاف أي مؤقت سابق إذا كان موجودًا لتجنب التكرار
-                    if (window.textInterval) clearInterval(window.textInterval);
                     function changeText() {
                         textContainer.textContent = changingTexts[index];
                         index = (index + 1) % changingTexts.length;
                     }
                     if (changingTexts.length > 0) {
-                        changeText();
-                        window.textInterval = setInterval(changeText, 5000);
                         textContainer.style.display = 'block';
+                        changeText();
+                        setInterval(changeText, 5000);
                     } else {
                         textContainer.style.display = 'none';
                     }
@@ -1159,7 +1138,7 @@ function updateMainMedia(thumbnail) {
                     const hopContainer = document.getElementById('hop');
                     if (product.longText) {
                         hopContainer.classList.remove('placeholder');
-                        hopContainer.textContent = product.longText; // إعادة تعيين المحتوى قبل التهيئة
+                        hopContainer.textContent = product.longText;
                         hopContainer.style.display = 'block';
                         initializeLongText();
                     } else {
@@ -1169,13 +1148,13 @@ function updateMainMedia(thumbnail) {
                     // تحديث عدد المبيعات
                     const salesElement = document.getElementById('sales');
                     if (product.sales) {
-                        salesElement.textContent = "🔥 تم بيع " + product.sales + " مرة في آخر 24 ساعة";
+                        salesElement.textContent = product.sales;
                         salesElement.style.display = 'block';
                     } else {
                         salesElement.style.display = 'none';
                     }
 
-                    // تحديث نص الوصف (العنوان الرئيسي)
+                    // تحديث نص الوصف
                     const descElement = document.getElementById('productDesc');
                     if (product.desc) {
                         descElement.textContent = product.desc;
@@ -1186,64 +1165,89 @@ function updateMainMedia(thumbnail) {
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    document.querySelector('.product-container').innerHTML = '<h1>خطأ</h1><p>حدث خطأ أثناء تحميل البيانات أو أن المنتج المطلوب غير موجود. تأكد من وجود الملف <code>' + jsonFile + '</code> في نفس المجلد.</p>';
+                    document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
                 });
         }
 
-        // دالة تهيئة النص الطويل (عرض المزيد/أقل)
+        // دالة تهيئة النص الطويل
         function initializeLongText() {
             const container = document.getElementById('hop');
-            if (!container || container.dataset.initialized === 'true') {
-                 // إعادة تعيين الحالة إذا تم استدعاء الدالة مرة أخرى لنفس العنصر
-                 container.dataset.initialized = 'false';
-                 const oldMoreBtn = container.querySelector('.more-btn');
-                 if(oldMoreBtn) oldMoreBtn.replaceWith(oldMoreBtn.cloneNode(true)); // استنساخ لإزالة event listener القديم
-            }
-
             const originalText = container.textContent.trim();
-            const charLimitMobile = 80;
-            const charLimitDesktop = 150;
-            
-            // دالة لتقصير النص
+            const charLimitMobile = 50;
+            const charLimitTablet = 122;
+            const charLimitLarge = 132;
+
             const truncateText = (text, charLimit) => {
-                // التأكد من أن النص أطول من الحد المسموح به
                 if (text.length > charLimit) {
                     const truncatedText = text.substring(0, charLimit);
                     const lastSpaceIndex = truncatedText.lastIndexOf(' ');
-                    const shortTextContent = (lastSpaceIndex !== -1) ? truncatedText.substring(0, lastSpaceIndex) : truncatedText;
+                    let shortTextContent = truncatedText;
+                    let lastWord = '';
 
-                    container.innerHTML = `
-                        <span class="short-text">
-                            ${shortTextContent}... 
-                            <span class="more-btn">
-                                عرض المزيد
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </span>
-                        </span>
-                        <span class="full-text">${text}</span>
+                    if (lastSpaceIndex !== -1) {
+                        shortTextContent = truncatedText.substring(0, lastSpaceIndex);
+                        lastWord = truncatedText.substring(lastSpaceIndex + 1);
+                    }
+
+                    const shortText = document.createElement('span');
+                    shortText.className = 'short-text';
+
+                    const initialText = document.createElement('span');
+                    initialText.textContent = shortTextContent;
+
+                    const lastWordWrapper = document.createElement('span');
+                    lastWordWrapper.className = 'last-word-wrapper';
+                    lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '... ';
+
+                    const fullText = document.createElement('span');
+                    fullText.className = 'full-text';
+                    fullText.textContent = text;
+
+                    const moreBtn = document.createElement('span');
+                    moreBtn.className = 'more-btn';
+                    moreBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     `;
+                    
+                    container.textContent = ''; // Clear original text
+                    shortText.appendChild(initialText);
+                    lastWordWrapper.appendChild(moreBtn);
+                    shortText.appendChild(lastWordWrapper);
+                    container.appendChild(shortText);
+                    container.appendChild(fullText);
 
-                    container.querySelector('.more-btn').addEventListener('click', () => {
+                    moreBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         container.classList.toggle('expanded');
                     });
                 } else {
-                    container.innerHTML = text; // إذا كان النص قصيرًا، اعرضه كما هو
+                    container.textContent = originalText; // If not long enough, just show it
+                    container.style.display = 'block';
                 }
             };
 
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
+                // Re-apply original text to recalculate
+                container.textContent = originalText;
+                container.classList.remove('expanded');
+
                 if (screenWidth <= 768) {
                     truncateText(originalText, charLimitMobile);
+                } else if (screenWidth >= 769 && screenWidth <= 1199) {
+                    truncateText(originalText, charLimitTablet);
+                } else if (screenWidth >= 1200 && screenWidth <= 1999) {
+                    truncateText(originalText, charLimitLarge);
                 } else {
-                    truncateText(originalText, charLimitDesktop);
+                    container.textContent = originalText;
+                    container.style.display = 'block';
                 }
             };
-            
-            // التنفيذ عند التحميل وعند تغيير حجم الشاشة
+
             updateTextBasedOnScreenSize();
             window.addEventListener('resize', updateTextBasedOnScreenSize);
-            container.dataset.initialized = 'true';
         }
 
         // تهيئة الصفحة
@@ -1251,10 +1255,11 @@ function updateMainMedia(thumbnail) {
             if (productId) {
                 loadProductData(productId);
             } else {
-                document.querySelector('.product-container').innerHTML = '<h1>مرحباً</h1><p>يرجى تحديد معرف المنتج في الرابط بالأعلى للبدء.</p><p>مثال: أضف <code>?id=5</code> لنهاية الرابط.</p>';
+                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL (مثال: product.html?id=2)</p>';
             }
         });
     </script>
+
 </body>
 </html>
            
