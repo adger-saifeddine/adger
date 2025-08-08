@@ -642,7 +642,7 @@ function updateMainMedia(thumbnail) {
             const productId = urlParams.get('id');
 
             if (productId) {
-                const productsPerFile = 100;
+                const productsPerFile = 5000;
                 const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
 
@@ -819,6 +819,7 @@ function updateMainMedia(thumbnail) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -829,7 +830,7 @@ function updateMainMedia(thumbnail) {
     <style>
         /* تصميم النص مع الخلفية */
         .text-style {
-            display: inline-block;  
+            display: inline-block;
             font-size: 11px;
             font-weight: bold;
             color: #fff;
@@ -897,9 +898,9 @@ function updateMainMedia(thumbnail) {
             #hop {
                 position: relative;
             }
-            .zero {
-                margin-right: 10px !important;
-            }
+            .zero{
+                    margin-right: 10px !important;
+                }
         }
         /* للشاشات المتوسطة */
         @media only screen and (min-width: 769px) and (max-width: 1199px) {
@@ -909,7 +910,7 @@ function updateMainMedia(thumbnail) {
         }
         /* للشاشات الكبيرة */
         @media only screen and (min-width: 1200px) and (max-width: 1999px) {
-            #hop {
+            #hop  {
                 font-size: 16px;
             }
         }
@@ -932,7 +933,7 @@ function updateMainMedia(thumbnail) {
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
             <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
             <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
-            <div class="letter" style="margin-right: -3px; font-size: 20px;">EGP</div>
+            <div class="letter" style="  margin-right: -3px; font-size: 20px;">EGP</div>
             <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
             <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
@@ -945,41 +946,28 @@ function updateMainMedia(thumbnail) {
         <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
             5 مباع
         </div>
-    </div>
     <script>
-        // جلب معرف المنتج من URL وتحويله إلى عدد صحيح
+        // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = parseInt(urlParams.get('id'), 10);
-
+        const productId = urlParams.get('id');
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // التحقق من صحة معرف المنتج
-            if (isNaN(id) || id <= 0) {
-                document.body.innerHTML = '<p>معرف المنتج غير صالح</p>';
-                return;
-            }
-
-            // حساب رقم الملف بناءً على المعرف
-            const fileIndex = Math.ceil(id / 100); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(id / 5000); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
-
             fetch(jsonFile)
                 .then(response => {
                     if (!response.ok) throw new Error('الملف غير موجود');
                     return response.json();
                 })
                 .then(products => {
-                    // البحث عن المنتج باستخدام المعرف
                     const product = products.find(p => p.id === id);
                     if (!product) {
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
                     }
-
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
                     priElement.textContent = product.pri || '0';
-
                     // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
@@ -988,7 +976,6 @@ function updateMainMedia(thumbnail) {
                     } else {
                         oldPriceElement.style.display = 'none';
                     }
-
                     // تحديث نص الخصم (إخفاء إذا لم يكن موجودًا)
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
@@ -997,7 +984,6 @@ function updateMainMedia(thumbnail) {
                     } else {
                         disElement.style.display = 'none';
                     }
-
                     // تحديث النص المتغير
                     const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
@@ -1012,7 +998,6 @@ function updateMainMedia(thumbnail) {
                     } else {
                         textContainer.style.display = 'none';
                     }
-
                     // تحديث النص الطويل
                     const hopContainer = document.getElementById('hop');
                     if (product.longText) {
@@ -1023,7 +1008,6 @@ function updateMainMedia(thumbnail) {
                     } else {
                         hopContainer.style.display = 'none';
                     }
-
                     // تحديث عدد المبيعات
                     const salesElement = document.getElementById('sales');
                     if (product.sales) {
@@ -1032,16 +1016,13 @@ function updateMainMedia(thumbnail) {
                     } else {
                         salesElement.style.display = 'none';
                     }
-
-                    // تحديث نص الوصف (إذا كان العنصر موجودًا)
+                    // تحديث نص الوصف
                     const descElement = document.getElementById('productDesc');
-                    if (descElement) {
-                        if (product.desc) {
-                            descElement.textContent = product.desc;
-                            descElement.style.display = 'block';
-                        } else {
-                            descElement.style.display = 'none';
-                        }
+                    if (product.desc) {
+                        descElement.textContent = product.desc;
+                        descElement.style.display = 'block';
+                    } else {
+                        descElement.style.display = 'none';
                     }
                 })
                 .catch(error => {
@@ -1049,7 +1030,6 @@ function updateMainMedia(thumbnail) {
                     document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
                 });
         }
-
         // دالة تهيئة النص الطويل
         function initializeLongText() {
             const container = document.getElementById('hop');
@@ -1057,7 +1037,6 @@ function updateMainMedia(thumbnail) {
             const charLimitMobile = 50;
             const charLimitTablet = 122;
             const charLimitLarge = 132;
-
             const truncateText = (text, charLimit) => {
                 if (text.length > charLimit) {
                     const truncatedText = text.substring(0, charLimit);
@@ -1098,7 +1077,6 @@ function updateMainMedia(thumbnail) {
                     container.style.display = 'block';
                 }
             };
-
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
                 if (screenWidth <= 768) {
@@ -1112,11 +1090,9 @@ function updateMainMedia(thumbnail) {
                     container.style.display = 'block';
                 }
             };
-
             updateTextBasedOnScreenSize();
             window.addEventListener('resize', updateTextBasedOnScreenSize);
         }
-
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
@@ -1817,7 +1793,7 @@ function updateMainMedia(thumbnail) {
         }
         if (productId) {
             // تحديد اسم ملف JSON بناءً على معرف المنتج
-            const fileIndex = Math.ceil(parseInt(productId) / 100); // كل 100 منتج في ملف
+            const fileIndex = Math.ceil(parseInt(productId) / 5000); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
 
             fetch(jsonFile)
@@ -2144,7 +2120,7 @@ function updateMainMedia(thumbnail) {
                 const productId = urlParams.get('id');
     
                 if (productId) {
-                    const productsPerFile = 100;
+                    const productsPerFile = 5000;
                     const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                     const jsonFile = `products-${fileIndex}.json`;
     

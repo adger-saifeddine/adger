@@ -271,14 +271,53 @@
     .color-option.selected { transform: scale(1.1); }
     .buy-now-btn { width: 100%; padding: 1rem; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem;}
     .buy-now-btn:hover { background: var(--color-secondary); }
+    .buy-now-btn:disabled { background: #cccccc; color: #666666; cursor: not-allowed; }
 
     /* --- Purchase Modal Specifics --- */
+    #purchaseModal .modal-content { max-width: 550px; }
     .purchase-form { padding: 2.5rem; }
-    .purchase-form h2 { text-align: center; margin-bottom: 2rem; }
+    .purchase-form .modal-header h2 { font-family: var(--font-display); font-size: 1.8rem; margin: 0; }
+    .purchase-summary { margin-bottom: 1.5rem; }
+    .purchase-summary h3 {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        color: var(--color-primary);
+        text-align: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 1rem;
+    }
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+    }
+    .summary-item span:first-child { color: #6c757d; }
+    .summary-item strong, .summary-item #summarySelectedColor { color: var(--color-primary); font-weight: 500; }
+
+    .purchase-pricing {
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed var(--color-border);
+    }
+    .summary-total span { font-weight: 600; color: var(--color-primary); }
+    .summary-total strong { color: var(--color-secondary); font-size: 1.4rem; font-weight: 700; }
+    
     .purchase-form .form-group { margin-bottom: 1rem; }
     .purchase-form input, .purchase-form textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); background-color: white; }
-    .purchase-summary p { margin-bottom: 0.5rem; }
-    .purchase-summary p span { font-weight: 600; color: var(--color-secondary); margin-inline-start: 5px; }
     .purchase-form button[type="submit"] { width: 100%; margin-top: 1.5rem; }
     
     /* --- Account & Orders Modals --- */
@@ -393,7 +432,6 @@
         .header.search-active-mobile .account-icon { display: none; }
         .header.search-active-mobile .header-right { flex-grow: 1; }
         
-        /* [MODIFIED] Increased the right margin again for more space */
         .header.search-active-mobile .search-container {
             flex-grow: 1;
             margin-right: 40px; 
@@ -422,6 +460,7 @@
         #productModal .modal-details h2 { font-size: 1.8rem; }
         #productModal .modal-details .price { font-size: 1.5rem; }
         #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
+        .purchase-form { padding: 1.5rem; }
     }
 </style>
 
@@ -600,19 +639,31 @@
     <!-- Purchase Confirmation Modal -->
     <div id="purchaseModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>إتمام الطلب</h2><span class="close">&times;</span></div>
-            <form id="purchaseForm" class="purchase-form">
-                <div class="purchase-summary">
-                    <p>المنتج: <span id="summaryProductName"></span></p>
-                    <p>المقاس المختار: <span id="summarySelectedSize"></span></p>
-                    <p>اللون المختار: <span id="summarySelectedColor"></span></p>
-                </div>
-                <hr style="margin: 1rem 0; border-color: var(--color-border);">
-                <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
-                <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
-                <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
-                <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
-            </form>
+            <div class="modal-header">
+                <h2>إتمام الطلب</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="purchaseForm" class="purchase-form">
+                    <div class="purchase-summary">
+                        <h3>ملخص الطلب</h3>
+                        <div class="summary-item"><span>المنتج:</span><strong id="summaryProductName"></strong></div>
+                        <div class="summary-item"><span>المقاس:</span><strong id="summarySelectedSize"></strong></div>
+                        <div class="summary-item"><span>اللون:</span><span id="summarySelectedColor"></span></div>
+                    </div>
+
+                    <div class="purchase-pricing">
+                        <div class="summary-item"><span>سعر المنتج:</span><strong id="summaryProductPrice"></strong></div>
+                        <div class="summary-item"><span>تكلفة الشحن:</span><strong id="summaryShippingCost"></strong></div>
+                        <div class="summary-total"><span>الإجمالي:</span><strong id="summaryTotalPrice"></strong></div>
+                    </div>
+
+                    <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
+                    <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
+                    <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
+                    <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -783,7 +834,6 @@
             imageContainer: document.querySelector('#productModal .modal-images'),
             imageTrack: document.getElementById('imageTrack'),
             imageCounter: document.getElementById('imageCounter'),
-            // Account Modal Elements
             accountBtn: document.getElementById('accountBtn'),
             accountFormContainer: document.getElementById('accountFormContainer'),
             accountDetailsContainer: document.getElementById('accountDetailsContainer'),
@@ -797,7 +847,6 @@
             detailsProfilePic: document.getElementById('detailsProfilePic'),
             profilePicInput: document.getElementById('profilePicInput'),
             profilePicPreview: document.getElementById('profilePicPreview'),
-            // Orders Elements
             myOrdersBtn: document.getElementById('myOrdersBtn'),
             ordersCount: document.getElementById('ordersCount'),
             lastPurchaseDetails: document.getElementById('lastPurchaseDetails'),
@@ -850,7 +899,7 @@
 
         function openAccountModal() {
             const userData = getUserData();
-            selectedProfilePic = null; // Reset on open
+            selectedProfilePic = null; 
             if (userData) {
                 displayAccountDetails(userData);
             } else {
@@ -916,15 +965,11 @@
             dom.header.classList.toggle('search-active-mobile', nowActive);
             if (nowActive) {
                 dom.searchInput.focus();
-                // Scroll to products section
                 const productsSection = document.getElementById('products');
                 if (productsSection) {
                     const headerHeight = dom.header.clientHeight;
                     const offsetTop = productsSection.offsetTop - headerHeight;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                 }
             }
         });
@@ -932,7 +977,16 @@
         document.addEventListener('click', (e) => { if (!dom.searchContainer.contains(e.target) && dom.searchContainer.classList.contains('active')) { dom.searchContainer.classList.remove('active'); dom.header.classList.remove('search-active-mobile'); } });
         dom.searchInput.addEventListener('input', (e) => { const searchTerm = e.target.value.toLowerCase().trim(); dom.searchResultsInfo.innerHTML = searchTerm ? `نتائج البحث عن: <span>'${searchTerm}'</span>` : ''; renderProducts(products.filter(p => p.name.toLowerCase().includes(searchTerm))); });
         dom.productsGrid.addEventListener('click', (e) => { const card = e.target.closest('.product-card'); if (!card) return; const product = products.find(p => p.id == card.dataset.id); if(product) openProductModal(product); });
-        document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
+        
+        document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', (e) => {
+            const modal = e.target.closest('.modal');
+            closeModal(modal);
+            if(modal.id === 'purchaseModal') {
+                const purchaseBtn = document.querySelector('#purchaseForm button[type="submit"]');
+                purchaseBtn.disabled = false;
+                purchaseBtn.textContent = 'تأكيد الطلب وإرسال';
+            }
+        }));
         
         dom.productModal.addEventListener('click', (e) => {
             if (e.target.closest('.size-option')) { const target = e.target.closest('.size-option'); dom.productModal.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected')); target.classList.add('selected'); selectedSize = target.textContent; } 
@@ -942,21 +996,77 @@
             else if (e.target.closest('#modalBuyBtn')) {
                 if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
                 closeModal(dom.productModal);
+
+                // [MODIFIED] Logic to auto-fill purchase form
                 const userData = getUserData();
-                if (userData) { document.getElementById('customerName').value = userData.name; document.getElementById('customerPhone').value = userData.phone; const fullAddress = `${userData.address}, ${userData.city}, ${userData.governorate}. (أقرب معلم: ${userData.landmark})`; document.getElementById('customerLocation').value = fullAddress; } 
-                else { document.getElementById('purchaseForm').reset(); }
+                const savedCustomerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+
+                document.getElementById('purchaseForm').reset(); // Reset form first
+
+                if (userData) {
+                    // Priority 1: Logged-in user data
+                    document.getElementById('customerName').value = userData.name;
+                    document.getElementById('customerPhone').value = userData.phone;
+                    const fullAddress = `${userData.address}, ${userData.city}, ${userData.governorate}. (أقرب معلم: ${userData.landmark})`;
+                    document.getElementById('customerLocation').value = fullAddress;
+                } else if (savedCustomerInfo) {
+                    // Priority 2: Guest customer info from previous purchase
+                    document.getElementById('customerName').value = savedCustomerInfo.name || '';
+                    document.getElementById('customerPhone').value = savedCustomerInfo.phone || '';
+                    document.getElementById('customerLocation').value = savedCustomerInfo.location || '';
+                }
+
                 document.getElementById('summaryProductName').textContent = currentProduct.name;
                 document.getElementById('summarySelectedSize').textContent = selectedSize;
-                document.getElementById('summarySelectedColor').innerHTML = `<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle;"></span>`;
+                document.getElementById('summarySelectedColor').innerHTML = `<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle; border: 1px solid #ddd;"></span>`;
+
+                const shippingCost = 50;
+                const totalPrice = currentProduct.price + shippingCost;
+                document.getElementById('summaryProductPrice').textContent = `${currentProduct.price} جنيه`;
+                document.getElementById('summaryShippingCost').textContent = `${shippingCost} جنيه`;
+                document.getElementById('summaryTotalPrice').textContent = `${totalPrice} جنيه`;
+                
+                // Reset button state
+                const purchaseBtn = document.querySelector('#purchaseForm button[type="submit"]');
+                purchaseBtn.disabled = false;
+                purchaseBtn.textContent = 'تأكيد الطلب وإرسال';
+
                 openModal(dom.purchaseModal);
             }
         });
         
+        // [MODIFIED] This is the updated event listener for the purchase form
         document.getElementById('purchaseForm').addEventListener('submit', function(e) {
-            e.preventDefault(); const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString() };
-            saveOrder(newOrder); const customerName = document.getElementById('customerName').value; const customerPhone = document.getElementById('customerPhone').value; const customerLocation = document.getElementById('customerLocation').value; const subject = `طلب شراء جديد - ${currentProduct.name}`; const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\nبيانات المنتج:\n- المنتج: ${currentProduct.name}\n- السعر: ${currentProduct.price} جنيه\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\nبيانات العميل:\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
+            e.preventDefault(); 
+            const submitButton = this.querySelector('button[type="submit"]');
+            
+            const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString() };
+            saveOrder(newOrder);
+            
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const customerLocation = document.getElementById('customerLocation').value;
+
+            // [NEW] Save customer info to localStorage for next time
+            const customerInfo = {
+                name: customerName,
+                phone: customerPhone,
+                location: customerLocation
+            };
+            localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
+            
+            const shippingCost = 50;
+            const totalPrice = currentProduct.price + shippingCost;
+            
+            const subject = `طلب شراء جديد - ${currentProduct.name}`;
+            const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\n--- بيانات المنتج ---\n- المنتج: ${currentProduct.name}\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\n--- تفاصيل السعر ---\n- سعر المنتج: ${currentProduct.price} جنيه\n- تكلفة الشحن: ${shippingCost} جنيه\n- الإجمالي: ${totalPrice} جنيه\n\n--- بيانات العميل ---\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
+
             const mailtoLink = `mailto:adger.shop@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.open(mailtoLink); alert('تم تسجيل طلبك بنجاح! سيتم الآن فتح تطبيق البريد لإرسال التفاصيل.'); closeModal(dom.purchaseModal); this.reset();
+            
+            window.open(mailtoLink, '_blank');
+            
+            submitButton.textContent = 'تم الإرسال بنجاح!';
+            submitButton.disabled = true;
         });
 
         // --- Account Modal Button Listeners ---
@@ -1005,7 +1115,7 @@
             if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
                 localStorage.removeItem('userData');
                 alert('تم تسجيل الخروج.');
-                openAccountModal(); // Re-open to show the form
+                openAccountModal();
             }
         });
 
