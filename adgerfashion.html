@@ -385,15 +385,55 @@
     #logoutBtn { background: transparent; color: var(--color-danger); border: 2px solid var(--color-danger); }
     #logoutBtn:hover { background: var(--color-danger); color: white; }
 
-    /* Order History Styles */
+    /* --- [MODIFIED] Order History Styles --- */
     .orders-modal-body h3 { margin-bottom: 1.5rem; }
-    .order-item { display: flex; gap: 1.5rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 1rem; text-align: right; }
-    .order-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
-    .order-details { flex-grow: 1; }
-    .order-details h4 { font-family: var(--font-primary); font-size: 1.1rem; }
+    .order-item { 
+        display: flex; 
+        align-items: center;
+        gap: 1.5rem; 
+        padding: 1rem; 
+        border: 1px solid var(--color-border); 
+        border-radius: 8px; 
+        margin-bottom: 1rem; 
+        text-align: right; 
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .order-item:hover {
+        border-color: var(--color-secondary);
+        box-shadow: var(--shadow-sm);
+        transform: translateY(-3px);
+    }
+    .order-item img { 
+        width: 150px; 
+        height: 150px; 
+        object-fit: contain; /* MODIFIED: Ensures the whole image is visible */
+        background-color: var(--color-light-gray); /* MODIFIED: Adds a background */
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+    .order-details { 
+        flex-grow: 1; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .order-details h4 { font-family: var(--font-primary); font-size: 1.2rem; margin-bottom: 0.5rem; }
     .order-details p { font-size: 0.9rem; color: #6c757d; margin: 0.25rem 0; }
+    .order-details p.order-total {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed var(--color-border);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+    .order-details p.order-total span {
+        color: var(--color-secondary);
+        font-weight: 700;
+    }
     #orderHistorySection { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
-    #noOrdersMessage { padding: 2rem; color: #6c757d; }
+    #noOrdersMessage { padding: 2rem; color: #6c757d; text-align: center; }
 
     /* --- Floating Action Buttons --- */
     .floating-action-widget { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; flex-direction: column; align-items: center; gap: 5px; background-color: rgba(26, 26, 26, 0.85); backdrop-filter: blur(8px); padding: 8px; border-radius: 50px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(20px); visibility: hidden; transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s; }
@@ -452,9 +492,11 @@
         
         .account-form .form-grid { grid-template-columns: 1fr; }
         .account-form .form-group.full-width { grid-column: auto; }
+        
         .order-item { flex-direction: column; align-items: center; text-align: center;}
-        .order-item img { margin-bottom: 1rem; }
-        .account-modal-body { padding: 1.5rem; }
+        .order-item img { margin-bottom: 1rem; width: 100%; height: auto; max-height: 250px; object-fit: contain; }
+        
+        .account-modal-body, .orders-modal-body { padding: 1.5rem; }
     }
     @media (max-width: 480px) {
         #productModal .modal-details h2 { font-size: 1.8rem; }
@@ -816,12 +858,12 @@
         ];
 
         const dom = {
-            header: document.querySelector('.header'),
             productsGrid: document.getElementById('productsGrid'),
             productModal: document.getElementById('productModal'),
             purchaseModal: document.getElementById('purchaseModal'),
             accountModal: document.getElementById('accountModal'), 
-            ordersModal: document.getElementById('ordersModal'),  
+            ordersModal: document.getElementById('ordersModal'),
+            header: document.querySelector('.header'),
             searchContainer: document.getElementById('searchContainer'),
             searchIcon: document.getElementById('searchIcon'),
             searchInput: document.getElementById('headerSearchInput'),
@@ -856,6 +898,7 @@
         };
         
         const defaultProfilePic = "https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";
+        let currentZIndex = 2000;
         let currentProduct = null, currentImageIndex = 0, selectedSize = null, selectedColor = null, selectedProfilePic = null;
 
         // --- Utility Functions ---
@@ -868,8 +911,21 @@
                 dom.productsGrid.appendChild(card);
             });
         }
-        function openModal(modal) { modal.style.display = 'flex'; document.body.classList.add('menu-open'); }
-        function closeModal(modal) { modal.style.display = 'none'; if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open'); }
+        
+        function openModal(modal) {
+            currentZIndex++;
+            modal.style.zIndex = currentZIndex;
+            modal.style.display = 'flex';
+            document.body.classList.add('menu-open');
+        }
+        
+        function closeModal(modal) {
+            modal.style.display = 'none';
+            const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
+            if (openModals.length === 0) {
+                if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open');
+            }
+        }
         
         // --- Product Modal Logic ---
         function updateSliderView() { const offset = -currentImageIndex * dom.imageContainer.offsetWidth; dom.imageTrack.style.transform = `translateX(${offset}px)`; dom.imageCounter.textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`; }
@@ -946,7 +1002,17 @@
             closeModal(dom.accountModal); openModal(dom.ordersModal);
         }
         
-        function createOrderItemHTML(order) { return `<div class="order-item"><img src="${order.product.images[0]}" alt="${order.product.name}"><div class="order-details"><h4>${order.product.name}</h4><p>السعر: ${order.product.price} جنيه</p><p>المقاس: ${order.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${order.color}; vertical-align:middle;"></span></p><p>تاريخ الطلب: ${new Date(order.date).toLocaleDateString('ar-EG')}</p></div></div>`; }
+        function createOrderItemHTML(order) { 
+            return `<div class="order-item" data-product-id="${order.product.id}">
+                        <img src="${order.product.images[0]}" alt="${order.product.name}">
+                        <div class="order-details">
+                            <h4>${order.product.name}</h4>
+                            <p>المقاس: ${order.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${order.color}; vertical-align:middle; border: 1px solid #ddd;"></span></p>
+                            <p>تاريخ الطلب: ${new Date(order.date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            <p class="order-total">الإجمالي (بالشحن): <span>${order.totalPrice} جنيه</span></p>
+                        </div>
+                    </div>`; 
+        }
 
         // --- Event Listeners ---
         window.addEventListener('scroll', () => { 
@@ -997,20 +1063,16 @@
                 if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
                 closeModal(dom.productModal);
 
-                // [MODIFIED] Logic to auto-fill purchase form
                 const userData = getUserData();
                 const savedCustomerInfo = JSON.parse(localStorage.getItem('customerInfo'));
-
-                document.getElementById('purchaseForm').reset(); // Reset form first
+                document.getElementById('purchaseForm').reset();
 
                 if (userData) {
-                    // Priority 1: Logged-in user data
                     document.getElementById('customerName').value = userData.name;
                     document.getElementById('customerPhone').value = userData.phone;
                     const fullAddress = `${userData.address}, ${userData.city}, ${userData.governorate}. (أقرب معلم: ${userData.landmark})`;
                     document.getElementById('customerLocation').value = fullAddress;
                 } else if (savedCustomerInfo) {
-                    // Priority 2: Guest customer info from previous purchase
                     document.getElementById('customerName').value = savedCustomerInfo.name || '';
                     document.getElementById('customerPhone').value = savedCustomerInfo.phone || '';
                     document.getElementById('customerLocation').value = savedCustomerInfo.location || '';
@@ -1026,7 +1088,6 @@
                 document.getElementById('summaryShippingCost').textContent = `${shippingCost} جنيه`;
                 document.getElementById('summaryTotalPrice').textContent = `${totalPrice} جنيه`;
                 
-                // Reset button state
                 const purchaseBtn = document.querySelector('#purchaseForm button[type="submit"]');
                 purchaseBtn.disabled = false;
                 purchaseBtn.textContent = 'تأكيد الطلب وإرسال';
@@ -1035,34 +1096,27 @@
             }
         });
         
-        // [MODIFIED] This is the updated event listener for the purchase form
         document.getElementById('purchaseForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             const submitButton = this.querySelector('button[type="submit"]');
             
-            const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString() };
+            const shippingCost = 50;
+            const totalPrice = currentProduct.price + shippingCost;
+            
+            const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString(), totalPrice: totalPrice };
             saveOrder(newOrder);
             
             const customerName = document.getElementById('customerName').value;
             const customerPhone = document.getElementById('customerPhone').value;
             const customerLocation = document.getElementById('customerLocation').value;
-
-            // [NEW] Save customer info to localStorage for next time
-            const customerInfo = {
-                name: customerName,
-                phone: customerPhone,
-                location: customerLocation
-            };
-            localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
             
-            const shippingCost = 50;
-            const totalPrice = currentProduct.price + shippingCost;
+            const customerInfo = { name: customerName, phone: customerPhone, location: customerLocation };
+            localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
             
             const subject = `طلب شراء جديد - ${currentProduct.name}`;
             const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\n--- بيانات المنتج ---\n- المنتج: ${currentProduct.name}\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\n--- تفاصيل السعر ---\n- سعر المنتج: ${currentProduct.price} جنيه\n- تكلفة الشحن: ${shippingCost} جنيه\n- الإجمالي: ${totalPrice} جنيه\n\n--- بيانات العميل ---\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
 
             const mailtoLink = `mailto:adger.shop@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
             window.open(mailtoLink, '_blank');
             
             submitButton.textContent = 'تم الإرسال بنجاح!';
@@ -1072,6 +1126,18 @@
         // --- Account Modal Button Listeners ---
         dom.accountBtn.addEventListener('click', openAccountModal);
         dom.myOrdersBtn.addEventListener('click', openOrdersModal);
+
+        dom.ordersModal.addEventListener('click', e => {
+            const orderItem = e.target.closest('.order-item[data-product-id]');
+            if (!orderItem) return;
+
+            const productId = parseInt(orderItem.dataset.productId, 10);
+            const product = products.find(p => p.id === productId);
+
+            if (product) {
+                openProductModal(product);
+            }
+        });
 
         dom.profilePicInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
