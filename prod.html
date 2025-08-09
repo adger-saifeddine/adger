@@ -48,7 +48,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>معرض الصور</title>
     <style>
         body {
@@ -84,6 +84,10 @@
             overflow: hidden; /* إخفاء الأجزاء الزائدة من السلايدر */
             border: 2px solid #ccc;
             border-radius: 10px;
+            -webkit-user-select: none; /* لمنع تحديد النص أثناء السحب */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         /* حاوية السلايدر الجديدة */
@@ -94,6 +98,10 @@
             transition: transform 0.4s ease-in-out; 
             /* ليتوافق مع RTL، يتم عكس ترتيب العناصر */
             flex-direction: row-reverse;
+            cursor: grab;
+        }
+        #mediaSlider:active {
+            cursor: grabbing;
         }
         
         /* كل عنصر داخل السلايدر */
@@ -102,6 +110,7 @@
             height: 100%;
             flex-shrink: 0; /* منع العناصر من التقلص */
             display: block;
+            pointer-events: none; /* لمنع تفاعل المتصفح الافتراضي مع سحب الصور */
         }
 
         #mediaSlider img {
@@ -110,6 +119,7 @@
 
         #mediaSlider video {
             object-fit: contain;
+            pointer-events: auto; /* السماح بالتفاعل مع أزرار التحكم في الفيديو */
         }
 
         #mediaSlider video:fullscreen {
@@ -380,14 +390,14 @@
         let mediaElements = [];
         let videoIsPlaying = false;
         
+        const mainMediaContainer = document.querySelector('.main-media');
         const mediaSlider = document.getElementById('mediaSlider');
         const thumbnailsContainer = document.getElementById('thumbnailsContainer');
         const placeholderImage = document.querySelector('.placeholder-image');
         const mediaCounter = document.querySelector('.media-counter');
 
-        // إنشاء مصغرات احتياطية فارغة فورًا
         function createPlaceholderThumbnails(count = 5) {
-            thumbnailsContainer.innerHTML = ''; // مسح أي محتوى سابق
+            thumbnailsContainer.innerHTML = '';
             for (let i = 0; i < count; i++) {
                 const thumbnail = document.createElement('div');
                 thumbnail.classList.add('thumbnail', 'loading');
@@ -397,27 +407,32 @@
             document.getElementById('currentMedia').textContent = '1';
         }
         
+        // ==========================================================
+        //  الدالة التي تم تصحيحها 
+        // ==========================================================
         function goToSlide(index, smooth = true) {
             if (index < 0 || index >= totalMedia) return;
 
             currentIndex = index;
             
-            // إيقاف جميع الفيديوهات
             mediaElements.forEach(el => {
                 if (el.tagName === 'VIDEO') el.pause();
             });
             videoIsPlaying = false;
             updateAllVideoThumbnails();
 
-            // تطبيق التحريك
-            const transformValue = currentIndex * 100;
+            //  **** التصحيح هنا ****
+            // نحسب الإزاحة بالبكسل بدلاً من النسبة المئوية
+            const offset = currentIndex * mainMediaContainer.offsetWidth;
+            
             mediaSlider.style.transition = smooth ? 'transform 0.4s ease-in-out' : 'none';
-            mediaSlider.style.transform = `translateX(${transformValue}%)`;
+            // نستخدم القيمة المحسوبة بالبكسل
+            mediaSlider.style.transform = `translateX(${offset}px)`;
 
-            // تحديث الواجهة
             updateUI();
         }
-
+        // ==========================================================
+        
         function nextMedia() {
             if (currentIndex < totalMedia - 1) {
                 goToSlide(currentIndex + 1);
@@ -431,55 +446,38 @@
         }
 
         function updateUI() {
-            // تحديث العداد
             document.getElementById('currentMedia').textContent = currentIndex + 1;
             document.getElementById('totalMedia').textContent = totalMedia;
-
-            // تحديث حالة الأسهم
             updateArrowState();
             
-            // تحديث حالة المصغرات
             const thumbnails = document.querySelectorAll('.thumbnail');
             thumbnails.forEach((thumb, i) => {
                 thumb.classList.toggle('active', i === currentIndex);
             });
             
-            // تمرير المصغرة النشطة لتكون مرئية
             scrollThumbnailIntoView();
 
-            // إظهار/إخفاء زر المشاركة بناءً على نوع الوسائط
             const currentElement = mediaElements[currentIndex];
             const shareButton = document.getElementById('shareButton');
-            if (currentElement && currentElement.tagName === 'VIDEO') {
-                shareButton.style.display = 'none';
-            } else {
-                shareButton.style.display = 'flex';
-            }
+            shareButton.style.display = (currentElement && currentElement.tagName === 'VIDEO') ? 'none' : 'flex';
         }
 
         function scrollThumbnailIntoView() {
             const activeThumbnail = document.querySelector('.thumbnail.active');
             if (activeThumbnail) {
-                activeThumbnail.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
+                activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
         function updateArrowState() {
             const leftArrow = document.querySelector('.arrow.left');
             const rightArrow = document.querySelector('.arrow.right');
-            
-            // في RTL، السهم الأيمن هو التالي، والأيسر هو السابق
             rightArrow.classList.toggle('disabled', currentIndex === totalMedia - 1);
             leftArrow.classList.toggle('disabled', currentIndex === 0);
         }
         
         function updateAllVideoThumbnails() {
-            const videoThumbnails = document.querySelectorAll('.thumbnail[data-type="video"]');
-            videoThumbnails.forEach(thumb => {
+            document.querySelectorAll('.thumbnail[data-type="video"]').forEach(thumb => {
                 updatePlayIcon(thumb, videoIsPlaying);
             });
         }
@@ -493,18 +491,14 @@
         
         function sharePage() {
             if (navigator.share) {
-                navigator.share({
-                    title: document.title,
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing:', err));
+                navigator.share({ title: document.title, url: window.location.href }).catch(err => console.log('Error sharing:', err));
             } else {
                 alert('ميزة المشاركة غير مدعومة في هذا المتصفح.');
             }
         }
 
-        // --- منطق التحميل والتهيئة ---
         document.addEventListener('DOMContentLoaded', function() {
-            createPlaceholderThumbnails(); // عرض الهياكل العظمية فورًا
+            createPlaceholderThumbnails();
             
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
@@ -530,33 +524,33 @@
                         throw new Error('المنتج أو الوسائط غير موجودة');
                     }
 
-                    // مسح المحتوى المؤقت
                     mediaSlider.innerHTML = '';
                     thumbnailsContainer.innerHTML = '';
                     mediaElements = [];
                     totalMedia = product.media.length;
 
                     product.media.forEach((mediaItem, index) => {
-                        // إنشاء عنصر الوسائط الرئيسي وإضافته للسلايدر
                         let mediaElement;
                         if (mediaItem.type === 'video') {
                             mediaElement = document.createElement('video');
                             mediaElement.src = mediaItem.src;
-                            mediaElement.controls = true;
+                            mediaElement.preload = "metadata";
+                            mediaElement.playsInline = true;
+                            // أضفنا هذا السطر لجعل التحكم في الفيديو متاحًا دائمًا
+                            mediaElement.controls = true; 
                             mediaElement.addEventListener('play', () => { videoIsPlaying = true; updateAllVideoThumbnails(); });
                             mediaElement.addEventListener('pause', () => { videoIsPlaying = false; updateAllVideoThumbnails(); });
                         } else {
                             mediaElement = document.createElement('img');
                             mediaElement.src = mediaItem.src;
                             mediaElement.alt = `صورة المنتج ${index + 1}`;
+                            mediaElement.loading = "lazy";
                         }
                         mediaSlider.appendChild(mediaElement);
                         mediaElements.push(mediaElement);
 
-                        // إنشاء الصورة المصغرة
                         const thumbnail = document.createElement('div');
                         thumbnail.classList.add('thumbnail');
-                        thumbnail.setAttribute('data-src', mediaItem.src);
                         thumbnail.setAttribute('data-type', mediaItem.type);
                         thumbnail.onclick = () => goToSlide(index);
                         
@@ -574,7 +568,6 @@
                         thumbnailsContainer.appendChild(thumbnail);
                     });
 
-                    // إخفاء الصورة الرمادية وإظهار العداد بعد تحميل أول عنصر
                     const firstElement = mediaElements[0];
                     const eventToListen = firstElement.tagName === 'VIDEO' ? 'loadeddata' : 'load';
                     firstElement.addEventListener(eventToListen, () => {
@@ -582,54 +575,43 @@
                         mediaCounter.style.display = 'flex';
                     }, { once: true });
                     
-                    // تحديث الواجهة لأول مرة
                     goToSlide(0, false);
                     setupSwipe();
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
-                    placeholderImage.style.display = 'none'; // إخفاءه عند الخطأ
+                    placeholderImage.style.display = 'none';
                     mediaCounter.innerText = 'خطأ في تحميل المنتج';
                     mediaCounter.style.display = 'flex';
                 });
         });
 
-        // --- منطق التمرير (Swipe) بأسلوب انستغرام ---
         function setupSwipe() {
-            const mainMediaContainer = document.querySelector('.main-media');
             const hammer = new Hammer(mainMediaContainer);
-
-            // تمكين التعرف على التمرير الأفقي
-            hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+            hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 20 });
             
             let startX = 0;
             
             hammer.on('panstart', () => {
-                // إيقاف الانتقال السلس مؤقتاً لتتبع الإصبع
                 mediaSlider.style.transition = 'none';
-                // حساب موضع البداية بالبكسل
-                startX = mediaSlider.getBoundingClientRect().x - mainMediaContainer.getBoundingClientRect().x;
+                const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(mediaSlider).transform);
+                startX = currentTransform.m41;
             });
 
             hammer.on('panmove', (e) => {
-                // تحريك السلايدر مع الإصبع
                 const newX = startX + e.deltaX;
                 mediaSlider.style.transform = `translateX(${newX}px)`;
             });
 
             hammer.on('panend', (e) => {
-                // إعادة تفعيل الانتقال السلس
                 mediaSlider.style.transition = 'transform 0.4s ease-in-out';
-                
                 const threshold = mainMediaContainer.offsetWidth / 4;
                 
-                // تحديد اتجاه السحب بناءً على RTL
-                if (e.deltaX > threshold) { // سحب قوي نحو اليمين (السابق في RTL)
+                if (e.deltaX > threshold) {
                     prevMedia();
-                } else if (e.deltaX < -threshold) { // سحب قوي نحو اليسار (التالي في RTL)
+                } else if (e.deltaX < -threshold) {
                     nextMedia();
                 } else {
-                    // إذا كان السحب ضعيفًا، العودة للموضع الأصلي
                     goToSlide(currentIndex);
                 }
             });
