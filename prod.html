@@ -51,7 +51,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>معرض الوسائط</title>
     <style>
         body {
@@ -62,14 +62,9 @@
             align-items: center;
             margin: 0;
             background-color: #f4f4f4;
+            overscroll-behavior-x: contain; /* يمنع السحب لتحديث الصفحة على الموبايل */
         }
 
-        .line {
-            width: 100%;
-            height: 8px;
-            background-color: #eeeeee;
-        }
-        
         .gallery {
             display: flex;
             align-items: flex-start;
@@ -77,7 +72,7 @@
             margin-top: 20px;
             position: relative;
             width: 100%;
-            max-width: 488px; /* 400px (main) + 20px (margin) + 66px (thumb) + 2px (border) */
+            max-width: 488px;
             justify-content: center;
         }
 
@@ -86,24 +81,27 @@
             position: relative;
             width: 400px;
             height: 400px;
-            overflow: hidden; /* مهم لإخفاء الشرائح الأخرى */
+            overflow: hidden;
             border: 2px solid #ccc;
             border-radius: 10px;
+            touch-action: pan-y; /* يسمح بالتمرير الرأسي للصفحة ولكن Hammer.js يعالج التمرير الأفقي */
         }
 
-        /* حاوية التمرير التي تحتوي على كل الوسائط */
         .media-slider-wrapper {
             display: flex;
             height: 100%;
-            transition: transform 0.4s ease-in-out;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* انتقال أكثر سلاسة */
         }
         
-        /* كل عنصر (صورة أو فيديو) داخل حاوية التمرير */
         .media-slide-item {
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fafafa;
         }
 
         .media-slide-item img, .media-slide-item video {
@@ -112,27 +110,19 @@
             display: block;
         }
 
-        .media-slide-item img {
-            object-fit: cover;
-        }
+        .media-slide-item img { object-fit: cover; }
+        .media-slide-item video { object-fit: contain; }
+        .media-slide-item video:fullscreen { border: none; }
 
-        .media-slide-item video {
-            object-fit: contain;
-        }
-
-        .media-slide-item video:fullscreen {
-            border: none;
-        }
-
-        /* الصورة الرمادية البديلة أثناء التحميل */
         .placeholder-image {
             width: 100%;
             height: 100%;
-            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+            background-color: #fafafa;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 5; /* لتظهر فوق الوسائط الأصلية أثناء التحميل */
+            z-index: 5;
+            transition: opacity 0.3s ease-out;
         }
 
         .thumbnails {
@@ -145,9 +135,7 @@
             -ms-overflow-style: none;
         }
 
-        .thumbnails::-webkit-scrollbar {
-            display: none;
-        }
+        .thumbnails::-webkit-scrollbar { display: none; }
 
         .thumbnail {
             margin: 10px 0;
@@ -160,6 +148,7 @@
             height: 66px;
             box-sizing: border-box;
             background-color: #fafafa;
+            flex-shrink: 0;
         }
         
         .thumbnail.loading::before {
@@ -186,13 +175,11 @@
             padding: 0;
         }
 
-        .thumbnail.active {
-            border-color: #ff0000;
-        }
+        .thumbnail.active { border-color: #ff0000; }
 
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .play-icon {
@@ -211,11 +198,7 @@
             z-index: 1;
         }
 
-        .play-icon svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
-        }
+        .play-icon svg { width: 16px; height: 16px; fill: white; }
 
         .share-button {
             position: absolute;
@@ -234,22 +217,20 @@
             z-index: 10;
         }
 
-        .share-button.hidden {
-            display: none;
-        }
+        .share-button.hidden { display: none; }
 
         .media-counter {
             position: absolute;
             font-family: 'Cairo', sans-serif;
             bottom: 12px;
-            right: 15px; /* تم تعديل الموضع ليلائم التخطيط الجديد */
+            right: 15px;
             background-color: rgba(255, 255, 255, 0.767);
             padding: 2px 12px;
             border-radius: 15px;
             font-size: 13px;
             direction: rtl;
             cursor: pointer;
-            display: flex; /* يتم التحكم به عبر JS */
+            display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -281,57 +262,12 @@
         .arrow.disabled { background-color: rgba(66, 66, 66, 0.253); cursor: not-allowed; }
 
         @media (max-width: 555px) {
-            .gallery {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 0px;
-                margin-right: 0;
-                padding: 0;
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .main-media {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 1 / 1;
-                margin-left: 0;
-                margin-bottom: 20px;
-                border: none;
-                border-radius: 1px;
-            }
-
-            .thumbnails {
-                flex-direction: row;
-                max-height: none;
-                overflow-x: auto;
-                overflow-y: hidden;
-                padding: 0 10px;
-                box-sizing: border-box;
-                width: 100%;
-                white-space: nowrap;
-                gap: 10px;
-                margin-bottom: 10px;
-                justify-content: flex-start;
-            }
-
-            .thumbnail {
-                margin: 0;
-                flex: 0 0 auto;
-                width: 55px;
-                height: 55px;
-            }
-
-            .media-counter {
-                bottom: 15px;
-                right: 15px;
-                font-size: 11px;
-                padding: 3px 13px;
-            }
-            
-            .arrow {
-                display: none;
-            }
+            .gallery { flex-direction: column; align-items: center; margin-top: 0px; margin-right: 0; padding: 0; width: 100%; max-width: 100%; }
+            .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 20px; border: none; border-radius: 0; }
+            .thumbnails { flex-direction: row; max-height: none; overflow-x: auto; overflow-y: hidden; padding: 0 10px; box-sizing: border-box; width: 100%; white-space: nowrap; gap: 10px; margin-bottom: 10px; justify-content: flex-start; }
+            .thumbnail { margin: 0; width: 55px; height: 55px; }
+            .media-counter { bottom: 15px; right: 15px; font-size: 11px; padding: 3px 13px; }
+            .arrow { display: none; }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
@@ -342,93 +278,75 @@
             <div class="media-slider-wrapper" id="mediaSliderWrapper">
                 <!-- شرائح الوسائط ستُضاف هنا عبر JavaScript -->
             </div>
-            <button class="share-button" id="shareButton" onclick="sharePage()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                </svg>
+            <button class="share-button hidden" id="shareButton" onclick="sharePage()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
             </button>
-            <button class="arrow left" onclick="prevMedia()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                </svg>
-            </button>
-            <button class="arrow right" onclick="nextMedia()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
-                </svg>
-            </button>
-            <div class="media-counter">
-                <span id="currentMedia">0</span>/<span id="totalMedia">0</span>
-            </div>
+            <button class="arrow left disabled" onclick="prevMedia()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
+            <button class="arrow right disabled" onclick="nextMedia()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
+            <div class="media-counter" style="display: none;"><span id="currentMedia">0</span>/<span id="totalMedia">0</span></div>
         </div>
-        <div class="thumbnails" id="thumbnailsContainer">
-            <!-- سيتم إضافة المصغرات الاحتياطية هنا -->
-        </div>
+        <div class="thumbnails" id="thumbnailsContainer"><!-- المصغرات الاحتياطية --></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // متغيرات الحالة العامة للمعرض
             let currentIndex = 0;
             let totalMedia = 0;
             let mediaData = [];
-            let isPanning = false; // لتتبع حالة السحب
-            let videoIsPlaying = false;
+            let isPanning = false;
 
-            // الحصول على عناصر DOM الرئيسية
             const sliderWrapper = document.getElementById('mediaSliderWrapper');
             const thumbnailsContainer = document.getElementById('thumbnailsContainer');
             const mainMediaContainer = document.getElementById('mainMediaContainer');
+            const mediaCounter = document.querySelector('.media-counter');
             const mediaCounterCurrent = document.getElementById('currentMedia');
             const mediaCounterTotal = document.getElementById('totalMedia');
             const shareButton = document.getElementById('shareButton');
 
-            // إنشاء مصغرات احتياطية فارغة فورًا
             function createPlaceholderThumbnails(count = 5) {
-                thumbnailsContainer.innerHTML = ''; // مسح أي شيء قديم
+                thumbnailsContainer.innerHTML = '';
                 for (let i = 0; i < count; i++) {
                     const thumbnail = document.createElement('div');
                     thumbnail.classList.add('thumbnail', 'loading');
                     thumbnailsContainer.appendChild(thumbnail);
                 }
-                mediaCounterCurrent.textContent = '1';
-                mediaCounterTotal.textContent = count;
             }
             
-            // الدالة المركزية للانتقال بين الشرائح
             function goToSlide(index, instant = false) {
                 if (index < 0 || index >= totalMedia) return;
 
+                const oldIndex = currentIndex;
                 currentIndex = index;
 
-                // تحديث حاوية التمرير الرئيسية
-                sliderWrapper.style.transition = instant ? 'none' : 'transform 0.4s ease-in-out';
+                sliderWrapper.style.transition = instant ? 'none' : '';
                 sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-                // تحديث حالة المصغرات
                 document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
                     thumb.classList.toggle('active', i === currentIndex);
                 });
 
-                // تحديث حالة زر المشاركة بناءً على نوع الوسائط
                 const currentMediaType = mediaData[currentIndex].type;
                 shareButton.classList.toggle('hidden', currentMediaType === 'video');
 
-                // إيقاف جميع الفيديوهات باستثناء الفيديو النشط
-                document.querySelectorAll('.media-slide-item video').forEach((vid, i) => {
-                    if (i !== currentIndex && !vid.paused) {
-                        vid.pause();
-                    }
-                });
+                // إيقاف الفيديو القديم إذا كان يعمل
+                const oldSlide = sliderWrapper.children[oldIndex];
+                const oldVideo = oldSlide?.querySelector('video');
+                if (oldVideo && !oldVideo.paused) {
+                    oldVideo.pause();
+                }
 
                 updateCountersAndArrows();
                 scrollThumbnailIntoView();
             }
 
-            // تحديث عداد الصور وحالة الأسهم
             function updateCountersAndArrows() {
-                mediaCounterCurrent.textContent = currentIndex + 1;
-                mediaCounterTotal.textContent = totalMedia;
+                if (totalMedia > 0) {
+                    mediaCounter.style.display = 'flex';
+                    mediaCounterCurrent.textContent = currentIndex + 1;
+                    mediaCounterTotal.textContent = totalMedia;
+                } else {
+                    mediaCounter.style.display = 'none';
+                }
 
                 const leftArrow = document.querySelector('.arrow.left');
                 const rightArrow = document.querySelector('.arrow.right');
@@ -439,7 +357,6 @@
                 }
             }
 
-            // تمرير الصورة المصغرة النشطة لتكون مرئية
             function scrollThumbnailIntoView() {
                 const activeThumbnail = document.querySelector('.thumbnail.active');
                 if (activeThumbnail) {
@@ -447,129 +364,111 @@
                 }
             }
             
-            window.nextMedia = function() {
-                goToSlide(currentIndex + 1);
-            }
+            window.nextMedia = () => goToSlide(currentIndex + 1);
+            window.prevMedia = () => goToSlide(currentIndex - 1);
 
-            window.prevMedia = function() {
-                goToSlide(currentIndex - 1);
-            }
-
-            // تحديث أيقونة التشغيل على المصغرات
             function updatePlayIcon(thumbnail, isPlaying) {
                 const playIcon = thumbnail.querySelector('.play-icon svg');
                 if (playIcon) {
                     playIcon.innerHTML = isPlaying 
-                        ? `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>` // Pause icon
-                        : `<path d="M8 5v14l11-7z"/>`; // Play icon
+                        ? `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`
+                        : `<path d="M8 5v14l11-7z"/>`;
                 }
             }
 
-            // جلب البيانات وإعداد المعرض
+            // *** دالة محسنة للتعامل مع تحميل الوسائط ***
+            function createMediaElement(item, slideItem, thumbnail) {
+                const placeholder = slideItem.querySelector('.placeholder-image');
+                const hidePlaceholder = () => {
+                    if (placeholder) placeholder.style.opacity = '0';
+                };
+
+                if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = item.src;
+                    video.preload = 'metadata';
+                    video.playsInline = true;
+                    video.addEventListener('loadeddata', hidePlaceholder);
+                    video.addEventListener('play', () => updatePlayIcon(thumbnail, true));
+                    video.addEventListener('pause', () => updatePlayIcon(thumbnail, false));
+                    slideItem.appendChild(video);
+                    if(video.readyState >= 2) hidePlaceholder(); // لملفات الفيديو المخزنة مؤقتًا
+
+                    const thumbVideo = document.createElement('video');
+                    thumbVideo.src = item.src + '#t=0.5';
+                    thumbVideo.muted = true;
+                    thumbVideo.preload = 'metadata';
+                    thumbVideo.addEventListener('loadedmetadata', () => thumbnail.classList.remove('loading'));
+                    thumbnail.appendChild(thumbVideo);
+
+                    const playIconDiv = document.createElement('div');
+                    playIconDiv.className = 'play-icon';
+                    playIconDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+                    thumbnail.appendChild(playIconDiv);
+
+                } else { // Image
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.alt = 'صورة المنتج';
+                    img.loading = 'lazy'; // تحسين الأداء
+                    img.addEventListener('load', hidePlaceholder);
+                    slideItem.appendChild(img);
+                    if (img.complete) hidePlaceholder(); // للصور المخزنة مؤقتًا
+
+                    const thumbImg = document.createElement('img');
+                    thumbImg.src = item.src;
+                    thumbImg.alt = 'صورة مصغرة';
+                    thumbImg.loading = 'lazy';
+                    thumbImg.addEventListener('load', () => thumbnail.classList.remove('loading'));
+                    thumbnail.appendChild(thumbImg);
+                    if (thumbImg.complete) thumbnail.classList.remove('loading');
+                }
+            }
+
+
             function initializeGallery(productId) {
                 const productsPerFile = 5000;
                 const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
 
                 fetch(jsonFile)
-                    .then(response => {
-                        if (!response.ok) throw new Error('الملف غير موجود');
-                        return response.json();
-                    })
+                    .then(response => response.ok ? response.json() : Promise.reject('الملف غير موجود'))
                     .then(products => {
                         const product = products.find(p => p.id === productId);
                         if (!product || !product.media || product.media.length === 0) {
-                            console.error('المنتج أو الوسائط غير موجودة');
-                            sliderWrapper.innerHTML = '<p>لا توجد وسائط لعرضها.</p>';
-                            return;
+                           return Promise.reject('المنتج أو الوسائط غير موجودة');
                         }
 
                         mediaData = product.media;
                         totalMedia = mediaData.length;
-
-                        // مسح المحتوى الاحتياطي
                         sliderWrapper.innerHTML = '';
                         thumbnailsContainer.innerHTML = '';
                         
                         mediaData.forEach((mediaItem, index) => {
-                            // 1. إنشاء شريحة العرض الرئيسية
                             const slideItem = document.createElement('div');
                             slideItem.className = 'media-slide-item';
-
-                            const placeholder = document.createElement('div');
-                            placeholder.className = 'placeholder-image';
-                            slideItem.appendChild(placeholder);
+                            slideItem.innerHTML = '<div class="placeholder-image"></div>';
                             
-                            // 2. إنشاء المصغرة
                             const thumbnail = document.createElement('div');
                             thumbnail.className = 'thumbnail loading';
-                            thumbnail.setAttribute('data-type', mediaItem.type);
 
-                            if (mediaItem.type === 'video') {
-                                // إعداد الفيديو للشريحة والمصغرة
-                                const video = document.createElement('video');
-                                video.src = mediaItem.src;
-                                video.controls = (index === 0); // تفعيل التحكمات للفيديو الأول فقط مبدئياً
-
-                                const thumbVideo = document.createElement('video');
-                                thumbVideo.src = mediaItem.src + '#t=0.1'; // للحصول على إطار
-                                thumbVideo.muted = true;
-                                thumbVideo.preload = "metadata";
-
-                                slideItem.appendChild(video);
-                                thumbnail.appendChild(thumbVideo);
-
-                                // أيقونة التشغيل على المصغرة
-                                const playIconDiv = document.createElement('div');
-                                playIconDiv.className = 'play-icon';
-                                playIconDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
-                                thumbnail.appendChild(playIconDiv);
-                                
-                                video.onloadeddata = () => {
-                                     placeholder.style.display = 'none';
-                                     video.controls = true;
-                                };
-                                thumbVideo.onloadedmetadata = () => thumbnail.classList.remove('loading');
-                                video.addEventListener('play', () => updatePlayIcon(thumbnail, true));
-                                video.addEventListener('pause', () => updatePlayIcon(thumbnail, false));
-
-                            } else {
-                                // إعداد الصورة للشريحة والمصغرة
-                                const img = document.createElement('img');
-                                img.src = mediaItem.src;
-                                img.alt = 'صورة المنتج';
-
-                                const thumbImg = document.createElement('img');
-                                thumbImg.src = mediaItem.src;
-                                thumbImg.alt = 'صورة مصغرة';
-                                
-                                slideItem.appendChild(img);
-                                thumbnail.appendChild(thumbImg);
-
-                                img.onload = () => placeholder.style.display = 'none';
-                                thumbImg.onload = () => thumbnail.classList.remove('loading');
-                            }
+                            createMediaElement(mediaItem, slideItem, thumbnail);
 
                             sliderWrapper.appendChild(slideItem);
                             thumbnailsContainer.appendChild(thumbnail);
 
-                            thumbnail.addEventListener('click', () => {
-                                if (!isPanning) goToSlide(index);
-                            });
+                            thumbnail.addEventListener('click', () => !isPanning && goToSlide(index));
                         });
 
-                        // إعداد الحالة الأولية
                         goToSlide(0, true);
                         setupHammer();
-
                     })
                     .catch(error => {
                         console.error('خطأ في جلب البيانات:', error);
-                        sliderWrapper.innerHTML = '<p>حدث خطأ أثناء تحميل المنتج.</p>';
+                        mainMediaContainer.innerHTML = `<p style="text-align:center; padding: 20px;">${error.toString()}</p>`;
                     });
             }
 
-            // إعداد Hammer.js للتحكم بالسحب
             function setupHammer() {
                 const hammer = new Hammer(mainMediaContainer);
                 hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 10 });
@@ -577,36 +476,40 @@
 
                 hammer.on('panstart', () => {
                     isPanning = true;
-                    sliderWrapper.style.transition = 'none'; // إيقاف الانتقال الناعم أثناء السحب
-                    // حساب نقطة البداية للتحريك
-                    const transformMatrix = window.getComputedStyle(sliderWrapper).transform;
-                    if (transformMatrix !== 'none') {
-                        startTransformX = parseInt(transformMatrix.split(',')[4]);
-                    } else {
-                        startTransformX = 0;
-                    }
+                    sliderWrapper.style.transition = 'none';
+                    const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(sliderWrapper).transform);
+                    startTransformX = transformMatrix.m41;
                 });
 
                 hammer.on('panmove', (e) => {
-                    // تحريك الحاوية مع حركة الإصبع
-                    sliderWrapper.style.transform = `translateX(${startTransformX + e.deltaX}px)`;
+                    let newDeltaX = e.deltaX;
+                    const isFirst = currentIndex === 0;
+                    const isLast = currentIndex === totalMedia - 1;
+
+                    // *** تطبيق تأثير المقاومة عند الحواف ***
+                    if ((isFirst && e.deltaX > 0) || (isLast && e.deltaX < 0)) {
+                        newDeltaX /= (1 + (Math.abs(e.deltaX) / mainMediaContainer.offsetWidth) * 2);
+                    }
+                    sliderWrapper.style.transform = `translateX(${startTransformX + newDeltaX}px)`;
                 });
 
                 hammer.on('panend', (e) => {
                     isPanning = false;
-                    sliderWrapper.style.transition = 'transform 0.4s ease-in-out'; // إعادة الانتقال الناعم
+                    sliderWrapper.style.transition = ''; // إعادة الانتقال الناعم
 
-                    const containerWidth = mainMediaContainer.offsetWidth;
-                    // قرار الانتقال للشريحة التالية/السابقة أو العودة
-                    // إذا كان السحب قوياً أو تجاوز ثلث الشاشة
-                    if (Math.abs(e.deltaX) > containerWidth / 3 || Math.abs(e.velocityX) > 0.3) {
-                        if (e.deltaX < 0) { // سحب من اليمين إلى اليسار (للعنصر التالي في RTL)
-                            nextMedia();
-                        } else { // سحب من اليسار إلى اليمين (للعنصر السابق في RTL)
-                            prevMedia();
-                        }
+                    const threshold = mainMediaContainer.offsetWidth / 4;
+                    const isFirst = currentIndex === 0;
+                    const isLast = currentIndex === totalMedia - 1;
+                    
+                    // إذا حاول المستخدم السحب خارج الحدود، عد دائمًا
+                    if ((isFirst && e.deltaX > 0) || (isLast && e.deltaX < 0)) {
+                        goToSlide(currentIndex);
+                        return;
+                    }
+
+                    if (Math.abs(e.deltaX) > threshold || Math.abs(e.velocityX) > 0.3) {
+                        e.deltaX < 0 ? nextMedia() : prevMedia();
                     } else {
-                        // العودة إلى الشريحة الحالية
                         goToSlide(currentIndex);
                     }
                 });
@@ -614,10 +517,8 @@
 
             window.sharePage = function() {
                 if (navigator.share) {
-                    navigator.share({
-                        title: document.title,
-                        url: window.location.href
-                    }).catch(err => console.log('Error sharing:', err));
+                    navigator.share({ title: document.title, url: window.location.href })
+                           .catch(err => console.log('Error sharing:', err));
                 } else {
                     console.log('Web Share API not supported');
                 }
@@ -630,9 +531,8 @@
             if (productId) {
                 initializeGallery(productId);
             } else {
-                console.error('يرجى تحديد معرف المنتج في URL');
-                thumbnailsContainer.innerHTML = '';
-                document.querySelector('.media-counter').style.display = 'none';
+                mainMediaContainer.innerHTML = `<p style="text-align:center; padding: 20px;">يرجى تحديد مُعرّف المنتج.</p>`;
+                thumbnailsContainer.style.display = 'none';
             }
         });
     </script>
