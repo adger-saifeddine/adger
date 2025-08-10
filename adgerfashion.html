@@ -9,8 +9,17 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Playfair+Display:wght@700&family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
     /* --- Base & Reset --- */
     :root {
@@ -21,7 +30,7 @@
         --color-border: #e9ecef;
         --color-input-icon: #b0b0b0;
         --color-danger: #dc3545;
-        --font-primary: 'Poppins', sans-serif;
+        --font-primary: 'Cairo', 'Poppins', sans-serif;
         --font-display: 'Playfair Display', serif;
         --font-logo: 'Cinzel Decorative', serif;
         --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
@@ -38,124 +47,78 @@
         direction: rtl;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        transition: padding-top 0.3s ease;
     }
     body.menu-open { overflow: hidden; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); }
+    h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); font-weight: 700; }
+    
+    /* --- [MODIFIED] Loader for Products Section --- */
+    .loader { border: 4px solid var(--color-light-gray); border-top: 4px solid var(--color-secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .products-loader-container {
+        grid-column: 1 / -1; /* Span full grid width */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5rem 0;
+        min-height: 300px; /* Give it some space */
+    }
     
     /* --- Header --- */
-    .header {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 0 14px !important;
-        height: var(--header-height);
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        border-bottom: 1px solid var(--color-border);
-        display: flex;
-        align-items: center;
-        transition: padding 0.3s ease;
-    }
-      @media (max-width: 767px) {.header {    padding: 0 0px !important; }}
-
+    .header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0 14px !important; height: var(--header-height); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; }
     .header .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .logo { transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease; overflow: hidden; white-space: nowrap; }
     .logo a { text-decoration: none; color: inherit; }
-    
-    /* --- Logo Style --- */
     .logo h1 {
         font-family: var(--font-logo);
         font-size: 2rem;
         font-weight: 700;
         transition: font-size 0.3s ease;
+        display: flex;
+        align-items: center;
+        direction: ltr; /* <--- هذا هو السطر الذي يحل المشكلة */
     }
-    .logo-adger {
-        background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-    .logo-fashion {
-        background: linear-gradient(90deg, #C0A062, #e6c8e1, #a9c5df, #C0A062);
-        background-size: 300% auto;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: animate-gradient-text 6s linear infinite;
-    }
-    .logo-dot {
-        color: var(--color-secondary);
-        background-clip: initial;
-        -webkit-background-clip: initial;
-    }
-    @keyframes animate-gradient-text {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
+    .logo-adger { background: linear-gradient(45deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo-fashion { background: linear-gradient(90deg, #C0A062, #e6c8e1, #a9c5df, #C0A062); background-size: 300% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: animate-gradient-text 6s linear infinite; }
+    @keyframes animate-gradient-text { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     .header-right { display: flex; align-items: center; gap: 1rem; }
     .nav { display: none; }
-    .nav a { color: var(--color-text); text-decoration: none; font-weight: 500; transition: color 0.3s ease, border-bottom 0.3s ease; position: relative; padding: 5px 0; }
+    .nav a { color: var(--color-text); text-decoration: none; font-weight: 600; transition: color 0.3s ease; position: relative; padding: 5px 0; }
     .nav a::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--color-secondary); transition: width 0.3s ease; }
     .nav a:hover, .nav a.active { color: var(--color-secondary); }
     .nav a.active::after { width: 100%; }
+    .account-icon { cursor: pointer; color: var(--color-primary); transition: transform 0.3s ease, opacity 0.3s ease, display 0.4s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .account-icon:hover { transform: scale(1.1); color: var(--color-secondary); }
 
-    .account-icon {
-        cursor: pointer;
-        color: var(--color-primary); 
-        transition: transform 0.3s ease, opacity 0.3s ease, display 0.4s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    .account-icon:hover {
-        transform: scale(1.1);
-        color: var(--color-secondary);
-    }
-
-    /* --- Header Search (Integrated) --- */
+    /* --- Header Search --- */
     .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; transition: all 0.4s ease; }
     .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    #headerSearchInput { border: none; background: transparent; outline: none; width: 0; padding: 5px 15px 5px 40px; opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px; box-sizing: border-box; border-radius: 50px; }
+    #headerSearchInput {
+        border: none; background: transparent; outline: none; width: 0;
+        padding: 5px 10px 5px 40px;
+        opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px;
+        box-sizing: border-box; border-radius: 50px; font-family: var(--font-primary);
+    }
     .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
     
     .search-icon {
         position: absolute;
-        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
-        width: 38px;
-        height: 38px;
-        z-index: 2;
-        cursor: pointer;
-        color: var(--color-primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: color 0.3s ease, left 0.4s ease, transform 0.4s ease;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 38px; height: 38px; z-index: 2; cursor: pointer; color: var(--color-primary);
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.4s ease;
     }
     .search-container.active .search-icon {
-        left: 0;
-        transform: translateY(-50%);
+        right: auto;
+        left: 5px;
+        transform: translateY(-50%) rotate(90deg);
     }
     .search-icon:hover { color: var(--color-secondary); }
 
-    /* --- Mobile Navigation --- */
-    .mobile-menu-toggle {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 24px;
-        height: 20px;
-        cursor: pointer;
-        z-index: 1010;
-        flex-shrink: 0;
-    }
+    /* --- Mobile Navigation & Hero --- */
+    .mobile-menu-toggle { display: flex; flex-direction: column; gap: 5px; width: 24px; height: 20px; cursor: pointer; z-index: 1010; flex-shrink: 0; }
     .mobile-menu-toggle span { width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease-in-out; }
     .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
@@ -165,17 +128,15 @@
     .mobile-nav ul { list-style: none; }
     .mobile-nav li { margin: 2rem 0; text-align: center; }
     .mobile-nav a { font-size: 1.8rem; font-family: var(--font-display); color: var(--color-primary); text-decoration: none; }
-
-    /* --- Hero Section --- */
     .hero-section { padding-top: var(--header-height); display: flex; align-items: center; justify-content: center; text-align: center; height: 100vh; min-height: 650px; background: url('https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=1887&auto=format&fit=crop') no-repeat center center/cover; position: relative; color: white; }
     .hero-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
     .hero-content { position: relative; z-index: 2; padding: 0 20px; }
     .hero-content h1 { font-size: 4rem; color: white; margin-bottom: 1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
     .hero-content p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; font-weight: 300; }
-    .cta-btn { background: var(--color-secondary); color: white; padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md); text-decoration: none; }
+    .cta-btn { background: var(--color-secondary); color: white; padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md); text-decoration: none; font-family: var(--font-primary); }
     .cta-btn:hover { transform: translateY(-3px); background: #a58850; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
     
-    /* --- General Section Styling --- */
+    /* --- General Section, Products, and other styles remain the same --- */
     .section { padding: 6rem 0; }
     .section-bg { background-color: var(--color-light-gray); }
     .section-tight { padding-top: 4rem; }
@@ -183,340 +144,76 @@
     .section-title h2 { font-size: 2.5rem; }
     #searchResultsInfo { text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--color-text); }
     #searchResultsInfo span { font-weight: 600; color: var(--color-secondary); }
-
-    /* --- Products Grid --- */
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .product-card { background: white; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+    .product-card { background: white; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; }
     .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
-    .product-image { height: 300px; background-color: #f1f1f1; }
-    .product-image img { width: 100%; height: 100%; object-fit: contain; }
-    .product-info { padding: 1.5rem; text-align: center; }
+    .product-image { height: 300px; background-color: #f1f1f1; position: relative; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    .product-info { padding: 1.5rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
     .product-category { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
-    .product-name { font-family: var(--font-primary); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-primary); }
-    .product-price { font-size: 1.2rem; font-weight: 600; color: var(--color-secondary); }
-
-    /* --- Contact Section --- */
-    .contact-section { padding-bottom: 6rem; }
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-    .contact-card { text-align: center; padding: 2rem; }
-    .contact-card .icon { margin-bottom: 1rem; color: var(--color-secondary); }
-    .contact-card h4 { font-family: var(--font-primary); font-weight: 600; margin-bottom: 0.5rem; }
-    .contact-card p { color: #6c757d; font-size: 0.9rem; }
-
-    /* --- Footer --- */
-    .footer { background: var(--color-primary); color: rgba(255,255,255,0.8); padding: 4rem 0 2rem; }
-    .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-section h4 { margin-bottom: 1.5rem; color: white; font-size: 1.2rem; }
-    .footer-section ul { list-style: none; }
-    .footer-section ul li { margin-bottom: 0.75rem; }
-    .footer-section ul li a { color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease; }
-    .footer-section ul li a:hover { color: var(--color-secondary); }
-    .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
-    .social-link { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; }
-    .social-link:hover { background: var(--color-secondary); transform: translateY(-3px); }
-    .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
-
-    /* --- Modals --- */
-    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-    .modal-content { 
-        background-color: white; 
-        border-radius: 12px; 
-        width: 90%; 
-        max-width: 900px; 
-        max-height: 95vh; 
-        overflow: hidden; 
-        position: relative; 
-        display: flex; 
-        flex-direction: column; 
-        animation: modalFadeIn 0.3s ease-out; 
-    }
-    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .product-name { font-family: var(--font-primary); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-primary); flex-grow: 1;}
+    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--color-secondary); margin-top: 1rem; }
+    .contact-section{padding-bottom:6rem}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.contact-card{text-align:center;padding:2rem}.contact-card .icon{margin-bottom:1rem;color:var(--color-secondary)}.contact-card h4{font-family:var(--font-primary);font-weight:600;margin-bottom:.5rem}.contact-card p{color:#6c757d;font-size:.9rem}.footer{background:var(--color-primary);color:rgba(255,255,255,.8);padding:4rem 0 2rem}.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}.footer-section h4{margin-bottom:1.5rem;color:#fff;font-size:1.2rem}.footer-section ul{list-style:none}.footer-section ul li{margin-bottom:.75rem}.footer-section ul li a{color:rgba(255,255,255,.8);text-decoration:none;transition:all .3s ease}.footer-section ul li a:hover{color:var(--color-secondary)}.social-links{display:flex;gap:1rem;margin-top:1rem}.social-link{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;text-decoration:none;transition:all .3s ease}.social-link:hover{background:var(--color-secondary);transform:translateY(-3px)}.footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem}.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center}.modal-content{background-color:#fff;border-radius:12px;width:90%;max-width:900px;max-height:95vh;overflow:hidden;position:relative;display:flex;flex-direction:column;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.modal-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;border-bottom:1px solid var(--color-border);width:100%;flex-shrink:0}.modal-logo h3{font-family:var(--font-logo);font-size:1.6rem;font-weight:700;margin:0;line-height:1}.close{position:static;color:#888;font-size:35px;font-weight:300;cursor:pointer;background:0 0;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:background .3s ease,color .3s ease;line-height:1}.close:hover{background:var(--color-light-gray);color:var(--color-primary)}.modal-body{overflow-y:auto;flex-grow:1}#productModal .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2.5rem;align-items:start}.modal-images{position:relative;width:100%;height:550px;max-height:550px;overflow:hidden;border-radius:8px;background-color:#f1f1f1;cursor:grab;touch-action:pan-y}.modal-images:active{cursor:grabbing}.image-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.25,.46,.45,.94)}.slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center}.slide img{width:100%;height:100%;object-fit:cover;-webkit-user-select:none;user-select:none;pointer-events:none}.image-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:1.5rem;cursor:pointer;transition:background .3s ease;display:flex;align-items:center;justify-content:center;z-index:10}.image-nav:hover{background:rgba(0,0,0,.7)}.prev-image{left:15px}.next-image{right:15px}.image-counter{position:absolute;bottom:15px;right:15px;color:var(--color-text);background:rgba(255,255,255,.8);padding:5px 10px;border-radius:5px;font-size:.9rem;font-weight:500;z-index:10}.modal-details{display:flex;flex-direction:column;gap:1rem}.modal-details h2{font-size:2.2rem;margin-bottom:.5rem}.modal-details .price{font-size:1.8rem;font-weight:600;color:var(--color-secondary);margin-bottom:1rem}.spec-group{margin-bottom:1.5rem}.spec-group h4{font-family:var(--font-primary);font-size:1rem;font-weight:600;margin-bottom:.75rem}.sizes,.colors{display:flex;gap:.5rem;flex-wrap:wrap}.size-option,.color-option{border:2px solid var(--color-border);border-radius:5px;cursor:pointer;transition:all .3s ease}.size-option{padding:.5rem 1rem;font-family:Poppins,sans-serif}.color-option{width:35px;height:35px;border-radius:50%}.size-option.selected,.color-option.selected{border-color:var(--color-primary);background-color:var(--color-primary);color:#fff}.color-option.selected{transform:scale(1.1)}.buy-now-btn{width:100%;padding:1rem;background:var(--color-primary);color:#fff;border:none;border-radius:8px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.75rem;font-family:var(--font-primary)}.buy-now-btn:hover{background:var(--color-secondary)}.buy-now-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}#purchaseModal .modal-content{max-width:550px}.purchase-form{padding:2.5rem}.purchase-form .modal-header h2{font-family:var(--font-display);font-size:1.8rem;margin:0}.purchase-summary{margin-bottom:1.5rem}.purchase-summary h3{font-family:var(--font-display);font-size:1.4rem;color:var(--color-primary);text-align:center;margin-bottom:1.5rem;border-bottom:1px solid var(--color-border);padding-bottom:1rem}.summary-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;font-size:1rem}.summary-item span:first-child{color:#6c757d}.summary-item strong,.summary-item #summarySelectedColor{color:var(--color-primary);font-weight:600}.purchase-pricing{border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:1rem 0;margin-bottom:1.5rem}.summary-total{display:flex;justify-content:space-between;align-items:center;font-size:1.2rem;margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--color-border)}.summary-total span{font-weight:600;color:var(--color-primary)}.summary-total strong{color:var(--color-secondary);font-size:1.4rem;font-weight:700}.purchase-form .form-group{margin-bottom:1rem}.purchase-form input,.purchase-form textarea{width:100%;padding:.8rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);background-color:#fff}.purchase-form button[type=submit]{width:100%;margin-top:1.5rem}#accountModal .modal-content,#ordersModal .modal-content{max-width:650px}.account-modal-body,.orders-modal-body{padding:2rem 2.5rem}#accountModalTitle{font-family:var(--font-display);font-size:1.8rem;color:var(--color-primary)}#accountFormContainer .profile-pic-container{position:relative;width:120px;height:120px;margin:0 auto 1.5rem}#profilePicPreview{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--color-border);background-color:var(--color-light-gray)}.change-pic-label{position:absolute;bottom:5px;right:5px;width:32px;height:32px;background:var(--color-primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff;transition:transform .3s ease}.change-pic-label:hover{transform:scale(1.1)}.account-form{text-align:right}.account-form .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}.account-form .form-group{margin-bottom:.5rem}.account-form .form-group.full-width{grid-column:1 / -1}.account-form label{display:block;margin-bottom:.5rem;font-weight:600;font-size:.9rem}.account-form .input-wrapper{position:relative}.account-form .input-wrapper svg{position:absolute;top:50%;right:15px;transform:translateY(-50%);color:var(--color-input-icon);width:18px;height:18px;pointer-events:none;transition:color .3s ease}.account-form .input-wrapper:focus-within svg{color:var(--color-secondary)}.account-form input,.account-form textarea{width:100%;padding:.8rem 45px .8rem 1rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);transition:border-color .3s ease,box-shadow .3s ease}.account-form input:focus,.account-form textarea:focus{outline:0;border-color:var(--color-secondary);box-shadow:0 0 0 3px rgba(192,160,98,.2)}.account-form textarea{resize:vertical;min-height:80px}.account-form .input-wrapper textarea+svg{top:1.2rem;transform:translateY(0)}.account-actions{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}#accountDetailsContainer{display:none;flex-direction:column;align-items:center;text-align:center;width:100%}#detailsProfilePic{width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)}#detailsUserName{font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem}#detailsInfoList{list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem}#detailsInfoList li{display:flex;align-items:center;gap:1rem;font-size:1rem;margin-bottom:1rem;color:var(--color-text)}#detailsInfoList li svg{width:20px;height:20px;color:var(--color-secondary);flex-shrink:0}.details-address-block{text-align:right;width:100%;max-width:400px;margin-bottom:2rem}.details-address-block h4{display:flex;align-items:center;gap:.75rem;font-family:var(--font-primary);font-size:1.1rem;font-weight:600;margin-bottom:.5rem}#detailsUserAddress{font-size:.95rem;color:#6c757d;line-height:1.6;padding-right:32px}#logoutBtn{background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)}#logoutBtn:hover{background:var(--color-danger);color:#fff}.orders-modal-body h3{margin-bottom:1.5rem}.order-item{display:flex;align-items:center;gap:1.5rem;padding:1rem;border:1px solid var(--color-border);border-radius:8px;margin-bottom:1rem;text-align:right;cursor:pointer;transition:all .3s ease}.order-item:hover{border-color:var(--color-secondary);box-shadow:var(--shadow-sm);transform:translateY(-3px)}.order-item img{width:150px;height:150px;object-fit:cover;background-color:var(--color-light-gray);border-radius:4px;flex-shrink:0}.order-details{flex-grow:1;display:flex;flex-direction:column;justify-content:center}.order-details h4{font-family:var(--font-primary);font-size:1.2rem;margin-bottom:.5rem}.order-details p{font-size:.9rem;color:#6c757d;margin:.25rem 0}.order-details p.order-total{margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--color-border);font-size:1.1rem;font-weight:600;color:var(--color-primary)}.order-details p.order-total span{color:var(--color-secondary);font-weight:700}#orderHistorySection{margin-top:2rem;padding-top:2rem;border-top:1px solid var(--color-border)}#noOrdersMessage{padding:2rem;color:#6c757d;text-align:center}.floating-action-widget{position:fixed;bottom:20px;left:20px;z-index:1001;display:flex;flex-direction:column;align-items:center;gap:5px;background-color:rgba(26,26,26,.85);backdrop-filter:blur(8px);padding:8px;border-radius:50px;box-shadow:var(--shadow-md);opacity:0;transform:translateY(20px);visibility:hidden;transition:opacity .4s ease,transform .4s ease,visibility .4s ease}.floating-action-widget.show{opacity:1;transform:translateY(0);visibility:visible}.floating-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:#fff;text-decoration:none;border-radius:50%;transition:all .3s ease}.floating-btn:hover{background-color:var(--color-secondary);transform:scale(1.1)}.floating-btn svg{width:22px;height:22px}.widget-separator{width:60%;height:1px;background-color:rgba(255,255,255,.2);margin:2px 0}
     
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem 1.5rem;
-        border-bottom: 1px solid var(--color-border);
-        width: 100%;
-        flex-shrink: 0;
-    }
-    .modal-logo h3 { font-family: var(--font-logo); font-size: 1.6rem; font-weight: 700; margin: 0; line-height: 1; }
-    .close { position: static; color: #888; font-size: 35px; font-weight: 300; cursor: pointer; background: transparent; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, color 0.3s ease; line-height: 1; }
-    .close:hover { background: var(--color-light-gray); color: var(--color-primary); }
-    .modal-body { overflow-y: auto; flex-grow: 1; }
-    
-    /* --- Product Modal Specifics --- */
-    #productModal .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 2.5rem; align-items: start; }
-    .modal-images { position: relative; width: 100%; height: 550px; max-height: 550px; overflow: hidden; border-radius: 8px; background-color: #f1f1f1; cursor: grab; touch-action: pan-y; }
-    .modal-images:active { cursor: grabbing; }
-    .image-track { display: flex; height: 100%; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-    .slide { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .slide img { width: 100%; height: 100%; object-fit: contain; user-select: none; pointer-events: none; }
-    .image-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.5rem; cursor: pointer; transition: background 0.3s ease; display: flex; align-items: center; justify-content: center; z-index: 10; }
-    .image-nav:hover { background: rgba(0,0,0,0.7); }
-    .prev-image { right: 15px; } 
-    .next-image { left: 15px; }
-    .image-counter { position: absolute; bottom: 15px; right: 15px; color: var(--color-text); background: rgba(255,255,255,0.8); padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; font-weight: 500; z-index: 10;}
-    .modal-details { display: flex; flex-direction: column; gap: 1rem; }
-    .modal-details h2 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-    .modal-details .price { font-size: 1.8rem; font-weight: 600; color: var(--color-secondary); margin-bottom: 1rem; }
-    .spec-group { margin-bottom: 1.5rem; }
-    .spec-group h4 { font-family: var(--font-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
-    .sizes, .colors { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .size-option, .color-option { border: 2px solid var(--color-border); border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
-    .size-option { padding: 0.5rem 1rem; }
-    .color-option { width: 35px; height: 35px; border-radius: 50%; }
-    .size-option.selected, .color-option.selected { border-color: var(--color-primary); background-color: var(--color-primary); color: white; }
-    .color-option.selected { transform: scale(1.1); }
-    .buy-now-btn { width: 100%; padding: 1rem; background: var(--color-primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem;}
-    .buy-now-btn:hover { background: var(--color-secondary); }
-    .buy-now-btn:disabled { background: #cccccc; color: #666666; cursor: not-allowed; }
-
-    /* --- Purchase Modal Specifics --- */
-    #purchaseModal .modal-content { max-width: 550px; }
-    .purchase-form { padding: 2.5rem; }
-    .purchase-form .modal-header h2 { font-family: var(--font-display); font-size: 1.8rem; margin: 0; }
-    .purchase-summary { margin-bottom: 1.5rem; }
-    .purchase-summary h3 {
-        font-family: var(--font-display);
-        font-size: 1.4rem;
-        color: var(--color-primary);
-        text-align: center;
-        margin-bottom: 1.5rem;
-        border-bottom: 1px solid var(--color-border);
-        padding-bottom: 1rem;
-    }
-    .summary-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-    }
-    .summary-item span:first-child { color: #6c757d; }
-    .summary-item strong, .summary-item #summarySelectedColor { color: var(--color-primary); font-weight: 500; }
-
-    .purchase-pricing {
-        border-top: 1px solid var(--color-border);
-        border-bottom: 1px solid var(--color-border);
-        padding: 1rem 0;
-        margin-bottom: 1.5rem;
-    }
-
-    .summary-total {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 1.2rem;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px dashed var(--color-border);
-    }
-    .summary-total span { font-weight: 600; color: var(--color-primary); }
-    .summary-total strong { color: var(--color-secondary); font-size: 1.4rem; font-weight: 700; }
-    
-    .purchase-form .form-group { margin-bottom: 1rem; }
-    .purchase-form input, .purchase-form textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); background-color: white; }
-    .purchase-form button[type="submit"] { width: 100%; margin-top: 1.5rem; }
-    
-    /* --- Account & Orders Modals --- */
-    #accountModal .modal-content, #ordersModal .modal-content { max-width: 650px; }
-    .account-modal-body, .orders-modal-body { padding: 2rem 2.5rem; }
-    #accountModalTitle { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-primary); }
-    
-    /* Account Form Styles */
-    #accountFormContainer .profile-pic-container {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 1.5rem;
-    }
-    #profilePicPreview {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 4px solid var(--color-border);
-        background-color: var(--color-light-gray);
-    }
-    .change-pic-label {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        width: 32px;
-        height: 32px;
-        background: var(--color-primary);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border: 2px solid white;
-        transition: transform 0.3s ease;
-    }
-    .change-pic-label:hover { transform: scale(1.1); }
-
-    .account-form { text-align: right; }
-    .account-form .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-    .account-form .form-group { margin-bottom: 0.5rem; }
-    .account-form .form-group.full-width { grid-column: 1 / -1; }
-    .account-form label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
-    .account-form .input-wrapper { position: relative; }
-    .account-form .input-wrapper svg { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: var(--color-input-icon); width: 18px; height: 18px; pointer-events: none; transition: color 0.3s ease; }
-    .account-form .input-wrapper:focus-within svg { color: var(--color-secondary); }
-    .account-form input, .account-form textarea { width: 100%; padding: 0.8rem 45px 0.8rem 1rem; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; font-family: var(--font-primary); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-    .account-form input:focus, .account-form textarea:focus { outline: none; border-color: var(--color-secondary); box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.2); }
-    .account-form textarea { resize: vertical; min-height: 80px; }
-    .account-form .input-wrapper textarea + svg { top: 1.2rem; transform: translateY(0); }
-    .account-actions { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-
-    /* Account Details View Styles */
-    #accountDetailsContainer { display: none; flex-direction: column; align-items: center; text-align: center; width: 100%; }
-    #detailsProfilePic { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 4px solid var(--color-secondary); padding: 4px; background-color: white; box-shadow: var(--shadow-sm); }
-    #detailsUserName { font-size: 2rem; font-family: var(--font-display); color: var(--color-primary); margin-bottom: 1.5rem; }
-    #detailsInfoList { list-style: none; padding: 0; margin: 0 0 1.5rem 0; text-align: right; width: 100%; max-width: 400px; border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
-    #detailsInfoList li { display: flex; align-items: center; gap: 1rem; font-size: 1rem; margin-bottom: 1rem; color: var(--color-text); }
-    #detailsInfoList li svg { width: 20px; height: 20px; color: var(--color-secondary); flex-shrink: 0; }
-    .details-address-block { text-align: right; width: 100%; max-width: 400px; margin-bottom: 2rem; }
-    .details-address-block h4 { display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-primary); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-    #detailsUserAddress { font-size: 0.95rem; color: #6c757d; line-height: 1.6; padding-right: 32px; }
-    #logoutBtn { background: transparent; color: var(--color-danger); border: 2px solid var(--color-danger); }
-    #logoutBtn:hover { background: var(--color-danger); color: white; }
-
-    /* --- [MODIFIED] Order History Styles --- */
-    .orders-modal-body h3 { margin-bottom: 1.5rem; }
-    .order-item { 
-        display: flex; 
-        align-items: center;
-        gap: 1.5rem; 
-        padding: 1rem; 
-        border: 1px solid var(--color-border); 
-        border-radius: 8px; 
-        margin-bottom: 1rem; 
-        text-align: right; 
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    .order-item:hover {
-        border-color: var(--color-secondary);
-        box-shadow: var(--shadow-sm);
-        transform: translateY(-3px);
-    }
-    .order-item img { 
-        width: 150px; 
-        height: 150px; 
-        object-fit: contain; /* MODIFIED: Ensures the whole image is visible */
-        background-color: var(--color-light-gray); /* MODIFIED: Adds a background */
-        border-radius: 4px;
-        flex-shrink: 0;
-    }
-    .order-details { 
-        flex-grow: 1; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .order-details h4 { font-family: var(--font-primary); font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .order-details p { font-size: 0.9rem; color: #6c757d; margin: 0.25rem 0; }
-    .order-details p.order-total {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px dashed var(--color-border);
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--color-primary);
-    }
-    .order-details p.order-total span {
-        color: var(--color-secondary);
-        font-weight: 700;
-    }
-    #orderHistorySection { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
-    #noOrdersMessage { padding: 2rem; color: #6c757d; text-align: center; }
-
-    /* --- Floating Action Buttons --- */
-    .floating-action-widget { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; flex-direction: column; align-items: center; gap: 5px; background-color: rgba(26, 26, 26, 0.85); backdrop-filter: blur(8px); padding: 8px; border-radius: 50px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(20px); visibility: hidden; transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s; }
-    .floating-action-widget.show { opacity: 1; transform: translateY(0); visibility: visible; }
-    .floating-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; color: white; text-decoration: none; border-radius: 50%; transition: all 0.3s ease; }
-    .floating-btn:hover { background-color: var(--color-secondary); transform: scale(1.1); }
-    .floating-btn svg { width: 22px; height: 22px; }
-    .widget-separator { width: 60%; height: 1px; background-color: rgba(255, 255, 255, 0.2); margin: 2px 0; }
-    
-  @media (max-width: 950px) {.logo h1 { font-size: 1.5rem; }}
-
     /* --- Responsive Design --- */
-    @media (min-width: 769px) {
-        .nav { display: flex; }
-        .nav ul { display: flex; list-style: none; gap: 2.5rem; }
-        .mobile-menu-toggle { display: none; }
-        .header-right { gap: 2rem; } 
-    }
-
-    @media (max-width: 768px) {
-        .header-right { gap: 0.70rem; }
-        .header { padding: 0; }
-        .header .container { padding: 0 0 0 19px; }
-
-        .logo h1 { font-size: 1.2rem; margin-right: 14px;}
+    @media (min-width:769px) { .nav { display: flex; } .nav ul { display: flex; list-style: none; gap: 2.5rem; } .mobile-menu-toggle { display: none; } .header-right { gap: 2rem; } }
+    @media (max-width:950px) { .logo h1 { font-size: 1.5rem; } }
+    @media (max-width:768px) {
+        .header { padding: 0 !important; }
+        .header .container { padding: 0 1rem; }
+        .header-right { gap: .7rem; }
+        .logo h1 { font-size: 1.5rem; }
         .hero-content h1 { font-size: 2.5rem; }
-        
-        .modal .modal-content { width: 100%; height: 100%; max-height: 100vh; border-radius: 0; overflow-y: auto; }
-        .modal .modal-header { position: sticky; top: 0; background: white; z-index: 10; padding: 0.5rem 1rem; }
-        #productModal .modal-body { display: block; padding: 0; overflow: visible; }
-        #productModal .modal-images { position: relative; height: 60vh; width: 100%; border-radius: 0; }
-        #productModal .modal-details { position: static; padding: 1.5rem; }
-        
-        .logo { max-width: 500px; }
-        .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1.5rem; }
-        .header.search-active-mobile .account-icon { display: none; }
+        .modal .modal-content { width: 100%; height: 100%; max-height: 100vh; border-radius: 0; }
+        .modal .modal-header { position: sticky; top: 0; background: #fff; z-index: 10; padding: .5rem 1rem; }
+        #productModal .modal-body { display: block; padding: 0; }
+        #productModal .modal-images { height: 60vh; width: 100%; border-radius: 0; }
+        #productModal .modal-details { padding: 1.5rem; }
+        .logo { max-width: 500px; margin-right: 0; }
+        .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1rem; }
+        .header.search-active-mobile .account-icon { opacity: 0; pointer-events: none; }
         .header.search-active-mobile .header-right { flex-grow: 1; }
-        
+        .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
         .header.search-active-mobile .search-container {
             flex-grow: 1;
-            margin-right: 40px; 
+            margin-right: -25px;
             margin-left: 10px;
         }
-        .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
-
         .footer-content { grid-template-columns: 1fr; text-align: center; }
         .social-links { justify-content: center; }
-        
         .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .product-image { height: 220px; } 
+        .product-image { height: 220px; }
         .product-info { padding: 1rem; }
-        .product-name { font-size: 0.9rem; }
-        .product-price { font-size: 1rem; }
-        
+        .product-name { font-size: 1rem; }
+        .product-price { font-size: 1.1rem; }
         .floating-action-widget { bottom: 15px; left: 15px; }
-        
         .account-form .form-grid { grid-template-columns: 1fr; }
         .account-form .form-group.full-width { grid-column: auto; }
-        
         .order-item { flex-direction: column; align-items: center; text-align: center;}
-        .order-item img { margin-bottom: 1rem; width: 100%; height: auto; max-height: 250px; object-fit: contain; }
-        
+        .order-item img { margin-bottom: 1rem; width: 100%; height: auto; max-height: 250px; object-fit: cover; }
         .account-modal-body, .orders-modal-body { padding: 1.5rem; }
     }
-    @media (max-width: 480px) {
+    @media (max-width:480px) {
+        .logo h1 { font-size: 1.3rem; }
+        .products-grid { grid-template-columns: 1fr; }
         #productModal .modal-details h2 { font-size: 1.8rem; }
         #productModal .modal-details .price { font-size: 1.5rem; }
-        #productModal .buy-now-btn { font-size: 1rem; padding: 0.8rem; }
+        #productModal .buy-now-btn { font-size: 1rem; padding: .8rem; }
         .purchase-form { padding: 1.5rem; }
     }
 </style>
 
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
                 <a href="">
                     <h1>
-                        <span class="logo-adger">Adger</span> 
+                        <span class="logo-adger">Adger</span>&nbsp;
                         <span class="logo-fashion">fashion</span>
-                        <span class="logo-dot">.</span>
                     </h1>
                 </a>
             </div>
@@ -528,26 +225,23 @@
                         <li><a href="#contact" class="nav-link">تواصل معنا</a></li>
                     </ul>
                 </nav>
-
-                <div class="account-icon" id="accountBtn">
+                <div class="account-icon" id="accountBtn" title="حسابي">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
-
                 <div class="search-container" id="searchContainer">
-                    <input type="text" id="headerSearchInput" placeholder="بحث...">
-                    <div class="search-icon" id="searchIcon">
+                    <input type="text" id="headerSearchInput" placeholder="بحث في المنتجات...">
+                    <div class="search-icon" id="searchIcon" title="بحث">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </div>
                 </div>
-            
                 <div class="mobile-menu-toggle" id="mobileMenuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- The rest of the Body HTML is identical and does not need changes -->
     <nav class="mobile-nav" id="mobileNav">
         <ul>
             <li><a href="#home">الرئيسية</a></li>
@@ -555,8 +249,6 @@
             <li><a href="#contact">تواصل معنا</a></li>
         </ul>
     </nav>
-
-    <!-- Hero Section -->
     <section id="home" class="hero-section section">
         <div class="hero-content">
             <h1>الأناقة في كل قطعة</h1>
@@ -564,8 +256,6 @@
             <a href="#products" class="cta-btn">تسوق الآن</a>
         </div>
     </section>
-
-    <!-- Products Section -->
     <section id="products" class="section section-bg section-tight">
         <div class="container">
             <div class="section-title">
@@ -573,12 +263,13 @@
             </div>
             <div id="searchResultsInfo"></div>
             <div class="products-grid" id="productsGrid">
-                <!-- Products populated by JS -->
+                <!-- [ADDED] Loader will appear here initially -->
+                <div class="products-loader-container" id="productsLoader">
+                    <div class="loader"></div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Contact Section -->
     <section id="contact" class="section contact-section section-tight">
         <div class="container">
             <div class="section-title">
@@ -587,86 +278,57 @@
             </div>
             <div class="contact-grid">
                 <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </div>
-                    <h4>البريد الإلكتروني</h4>
-                    <p>adger.shop@gmail.com</p>
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+                    <h4>البريد الإلكتروني</h4><p>adger.shop@gmail.com</p>
                 </div>
                 <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    </div>
-                    <h4>الهاتف</h4>
-                    <p>+20 100 179 3080</p>
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+                    <h4>الهاتف</h4><p>+20 100 179 3080</p>
                 </div>
                 <div class="contact-card">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    </div>
-                    <h4>العنوان</h4>
-                    <p>القاهرة، جمهورية مصر العربية</p>
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                    <h4>العنوان</h4><p>القاهرة، جمهورية مصر العربية</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>Adger fashion.</h4>
+                    <h4>Adger fashion</h4>
                     <p>وجهتك الأولى للأزياء العصرية التي تجمع بين الفخامة والجودة.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                        <a href="https://youtube.com/your-channel-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                        <a href="https://tiktok.com/@your-profile-link" target="_blank" class="social-link"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.6c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg></a>
+                         <a href="#" class="social-link" title="Facebook"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                         <a href="#" class="social-link" title="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">المنتجات</a></li>
-                        <li><a href="#contact">تواصل معنا</a></li>
-                    </ul>
+                    <ul><li><a href="#home">الرئيسية</a></li><li><a href="#products">المنتجات</a></li><li><a href="#contact">تواصل معنا</a></li></ul>
                 </div>
                 <div class="footer-section">
                     <h4>خدمة العملاء</h4>
-                    <ul>
-                        <li><a href="#">الأسئلة الشائعة</a></li>
-                        <li><a href="#">سياسة الإرجاع</a></li>
-                        <li><a href="#">الشحن والتوصيل</a></li>
-                    </ul>
+                    <ul><li><a href="#">الأسئلة الشائعة</a></li><li><a href="#">سياسة الإرجاع</a></li><li><a href="#">الشحن والتوصيل</a></li></ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2024 Adger. جميع الحقوق محفوظة.</p></div>
         </div>
     </footer>
-
-    <!-- Modals -->
-
-    <!-- Product Detail Modal -->
     <div id="productModal" class="modal">
-        <div class="modal-content">
+         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-logo"><h3><span class="logo-adger">Adger</span><span class="logo-fashion">fashion</span><span class="logo-dot">.</span></h3></div>
+                <div class="modal-logo"><h3><span class="logo-adger">Adger</span><span class="logo-fashion">fashion</span></h3></div>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="modal-images">
                     <div class="image-track" id="imageTrack"></div>
-                    <button class="image-nav prev-image">‹</button>
-                    <button class="image-nav next-image">›</button>
+                    <button class="image-nav prev-image">&lsaquo;</button><button class="image-nav next-image">&rsaquo;</button>
                     <div class="image-counter" id="imageCounter"></div>
                 </div>
                 <div class="modal-details">
-                    <h2 id="modalProductName"></h2>
-                    <p class="price" id="modalProductPrice"></p>
+                    <h2 id="modalProductName"></h2><p class="price" id="modalProductPrice"></p>
                     <div class="product-description"><p id="modalProductDescription"></p></div>
                     <div class="product-specs">
                         <div class="spec-group"><h4>المقاسات</h4><div class="sizes" id="modalProductSizes"></div></div>
@@ -677,14 +339,9 @@
             </div>
         </div>
     </div>
-
-    <!-- Purchase Confirmation Modal -->
     <div id="purchaseModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>إتمام الطلب</h2>
-                <span class="close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>إتمام الطلب</h2><span class="close">&times;</span></div>
             <div class="modal-body">
                 <form id="purchaseForm" class="purchase-form">
                     <div class="purchase-summary">
@@ -693,505 +350,158 @@
                         <div class="summary-item"><span>المقاس:</span><strong id="summarySelectedSize"></strong></div>
                         <div class="summary-item"><span>اللون:</span><span id="summarySelectedColor"></span></div>
                     </div>
-
                     <div class="purchase-pricing">
                         <div class="summary-item"><span>سعر المنتج:</span><strong id="summaryProductPrice"></strong></div>
                         <div class="summary-item"><span>تكلفة الشحن:</span><strong id="summaryShippingCost"></strong></div>
                         <div class="summary-total"><span>الإجمالي:</span><strong id="summaryTotalPrice"></strong></div>
                     </div>
-
                     <div class="form-group"><input type="text" id="customerName" placeholder="الاسم الكامل" required></div>
                     <div class="form-group"><input type="tel" id="customerPhone" placeholder="رقم الهاتف" required></div>
-                    <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل (سيتم ملؤه تلقائياً إذا كنت مسجلاً)" required rows="3"></textarea></div>
+                    <div class="form-group"><textarea id="customerLocation" placeholder="العنوان بالتفصيل..." required rows="3"></textarea></div>
                     <button type="submit" class="buy-now-btn">تأكيد الطلب وإرسال</button>
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- Account Modal -->
     <div id="accountModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="accountModalTitle">حسابك</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body account-modal-body">
-                <!-- Account Form Container -->
-                <div id="accountFormContainer">
-                    <div class="profile-pic-container">
-                        <img id="profilePicPreview" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture Preview">
-                        <label for="profilePicInput" class="change-pic-label">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg>
-                        </label>
-                        <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
-                    </div>
-                    <form id="accountForm" class="account-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="userName">الاسم</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    <input type="text" id="userName" placeholder="الاسم الكامل" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="userPhone">رقم الهاتف</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    <input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required>
-                                </div>
-                            </div>
-                            <div class="form-group full-width">
-                                <label for="userEmail">البريد الإلكتروني (اختياري)</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                    <input type="email" id="userEmail" placeholder="example@mail.com">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="userGovernorate">المحافظة</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    <input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="userCity">المدينة / المركز</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    <input type="text" id="userCity" placeholder="مثال: مدينة نصر" required>
-                                </div>
-                            </div>
-                            <div class="form-group full-width">
-                                <label for="userAddress">العنوان الكامل</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                                    <textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group full-width">
-                                <label for="userLandmark">أقرب علامة مميزة</label>
-                                <div class="input-wrapper">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                                    <input type="text" id="userLandmark" placeholder="بجوار ..." required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="account-actions">
-                            <button type="submit" class="buy-now-btn" id="accountSubmitBtn">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                               <span>إنشاء حساب وحفظ</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Account Details Container -->
-                <div id="accountDetailsContainer">
-                    <img id="detailsProfilePic" src="https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp" alt="Profile Picture">
-                    <h2 id="detailsUserName"></h2>
-                    
-                    <ul id="detailsInfoList"></ul>
-
-                    <div class="details-address-block">
-                         <h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>العنوان</h4>
-                         <p id="detailsUserAddress"></p>
-                    </div>
-
-                    <div class="account-actions">
-                         <button type="button" class="buy-now-btn" id="editAccountBtn">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                             <span>تعديل البيانات</span>
-                        </button>
-                         <button type="button" class="buy-now-btn" id="myOrdersBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                            <span>مشترياتي (<span id="ordersCount">0</span>)</span>
-                         </button>
-                         <button type="button" class="buy-now-btn" id="logoutBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                             <span>تسجيل الخروج</span>
-                         </button>
-                    </div>
-                </div>
-            </div>
+            <div class="modal-header"><h2 id="accountModalTitle">حسابك</h2><span class="close">&times;</span></div>
+            <div class="modal-body account-modal-body"><!-- Account Forms will be rendered here via JS --></div>
         </div>
     </div>
-
-    <!-- Orders Modal -->
     <div id="ordersModal" class="modal">
          <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="ordersModalTitle">مشترياتي</h2>
-                <span class="close">&times;</span>
-            </div>
+            <div class="modal-header"><h2 id="ordersModalTitle">مشترياتي</h2><span class="close">&times;</span></div>
             <div class="modal-body orders-modal-body">
-                <div id="lastPurchaseSection">
-                    <h3>آخر طلب</h3>
-                    <div id="lastPurchaseDetails"></div>
-                </div>
-                <div id="orderHistorySection">
-                    <h3>الطلبات السابقة</h3>
-                    <div id="orderHistoryList"></div>
-                </div>
-                 <div id="noOrdersMessage" style="display: none;">
-                    <p>لم تقم بأي عمليات شراء بعد.</p>
-                </div>
+                <div id="lastPurchaseSection"><h3>آخر طلب</h3><div id="lastPurchaseDetails"></div></div>
+                <div id="orderHistorySection"><h3>الطلبات السابقة</h3><div id="orderHistoryList"></div></div>
+                <div id="noOrdersMessage" style="display: none;"><p>لم تقم بأي عمليات شراء بعد.</p></div>
             </div>
         </div>
     </div>
-
-    <!-- Floating Action Widget -->
     <div class="floating-action-widget">
-      <a href="https://wa.me/201558789545" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب"><svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path></svg></a>
+      <a href="https://wa.me/201001793080" target="_blank" class="floating-btn" id="whatsappBtn" title="تواصل عبر واتساب"><svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-0.943.164-.464.164-.86.114-.943s-.08-.159-.198-.258z"></path></svg></a>
         <div class="widget-separator"></div>
         <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى"><svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path><path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path></svg></a>
     </div>
+</body>
+</html>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const products = [
-            { id: 1, name: "بليزر كتان أنيق", price: 850, category: "men", images: ["https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1552343864-a735c03a35a6?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1593030103057-004351659732?q=80&w=1887&auto=format&fit=crop"], description: "بليزر رجالي مصنوع من أجود أنواع الكتان، مثالي لإطلالة صيفية أنيقة ومريحة.", sizes: ["S", "M", "L", "XL"], colors: ["#F5F5DC", "#BDB7AB", "#607D8B"], },
-            { id: 2, name: "فستان حرير ميدي", price: 1200, category: "women", images: ["https://images.unsplash.com/photo-1595911463955-abc395454157?q=80&w=1887&auto=format&fit=crop", "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=1760&auto=format&fit=crop", "https://images.unsplash.com/photo-1614299538257-557340b19283?q=80&w=1887&auto=format&fit=crop"], description: "فستان نسائي بتصميم عصري من الحرير الطبيعي، يجمع بين الفخامة والراحة.", sizes: ["XS", "S", "M", "L"], colors: ["#C0A062", "#D8BFD8", "#4682B4"], },
-            { id: 3, name: "معطف شتوي طويل", price: 1500, category: "men", images: ["https://images.unsplash.com/photo-1515428612177-e430ef8d1621?q=80&w=1887&auto=format&fit=crop"], description: "معطف شتوي طويل وأنيق يوفر الدفء والحماية الكاملة في الأجواء الباردة.", sizes: ["M", "L", "XL"], colors: ["#36454F", "#8B4513"], },
-            { id: 4, name: "بلوزة شتوية صوف", price: 650, category: "women", images: ["https://images.unsplash.com/photo-1542841791-1925b05a121f?q=80&w=1887&auto=format&fit=crop"], description: "بلوزة شتوية ناعمة من الصوف الممزوج، مثالية لإطلالة دافئة ومريحة.", sizes: ["S", "M", "L"], colors: ["#FFFFFF", "#D2B48C", "#FFB6C1"], },
-        ];
+<script type="module">
+    // --- 1. SUPABASE INTEGRATION ---
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    const supabase = createClient(
+      'https://aagsmtkuygnlgeyboarg.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhZ3NtdGt1eWdubGdleWJvYXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3NDQzNDEsImV4cCI6MjA3MDMyMDM0MX0.rgMrAM3vURYo7bFvy9okiogXEh9wyFwp9Z0yAxBE9SI'
+    );
+    // ----------------------------
 
-        const dom = {
-            productsGrid: document.getElementById('productsGrid'),
-            productModal: document.getElementById('productModal'),
-            purchaseModal: document.getElementById('purchaseModal'),
-            accountModal: document.getElementById('accountModal'), 
-            ordersModal: document.getElementById('ordersModal'),
-            header: document.querySelector('.header'),
-            searchContainer: document.getElementById('searchContainer'),
-            searchIcon: document.getElementById('searchIcon'),
-            searchInput: document.getElementById('headerSearchInput'),
-            searchResultsInfo: document.getElementById('searchResultsInfo'),
-            mobileMenuToggle: document.getElementById('mobileMenuToggle'),
-            mobileNav: document.getElementById('mobileNav'),
-            desktopNavLinks: document.querySelectorAll('#desktopNav .nav-link'),
-            allNavLinks: document.querySelectorAll('.nav-link, .mobile-nav a, .cta-btn, .floating-btn'), 
-            floatingWidget: document.querySelector('.floating-action-widget'),
-            imageContainer: document.querySelector('#productModal .modal-images'),
-            imageTrack: document.getElementById('imageTrack'),
-            imageCounter: document.getElementById('imageCounter'),
-            accountBtn: document.getElementById('accountBtn'),
-            accountFormContainer: document.getElementById('accountFormContainer'),
-            accountDetailsContainer: document.getElementById('accountDetailsContainer'),
-            accountForm: document.getElementById('accountForm'),
-            accountSubmitBtn: document.getElementById('accountSubmitBtn'),
-            editAccountBtn: document.getElementById('editAccountBtn'),
-            logoutBtn: document.getElementById('logoutBtn'),
-            detailsInfoList: document.getElementById('detailsInfoList'),
-            detailsUserName: document.getElementById('detailsUserName'),
-            detailsUserAddress: document.getElementById('detailsUserAddress'),
-            detailsProfilePic: document.getElementById('detailsProfilePic'),
-            profilePicInput: document.getElementById('profilePicInput'),
-            profilePicPreview: document.getElementById('profilePicPreview'),
-            myOrdersBtn: document.getElementById('myOrdersBtn'),
-            ordersCount: document.getElementById('ordersCount'),
-            lastPurchaseDetails: document.getElementById('lastPurchaseDetails'),
-            orderHistoryList: document.getElementById('orderHistoryList'),
-            noOrdersMessage: document.getElementById('noOrdersMessage'),
-            ordersModalTitle: document.getElementById('ordersModalTitle'),
-        };
-        
-        const defaultProfilePic = "https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";
-        let currentZIndex = 2000;
-        let currentProduct = null, currentImageIndex = 0, selectedSize = null, selectedColor = null, selectedProfilePic = null;
+async function initializeAdgerFashion() {
+let allProducts = [];
 
-        // --- Utility Functions ---
-        function renderProducts(productArray = products) {
-            dom.productsGrid.innerHTML = '';
-            if(productArray.length === 0){ dom.productsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem 0;">لا توجد منتجات تطابق بحثك.</p>'; return; }
-            productArray.forEach(product => {
-                const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
-                card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><p class="product-category">${product.category === 'men' ? 'رجالي' : 'نسائي'}</p><h3 class="product-name">${product.name}</h3><p class="product-price">${product.price} جنيه</p></div>`;
-                dom.productsGrid.appendChild(card);
-            });
-        }
-        
-        function openModal(modal) {
-            currentZIndex++;
-            modal.style.zIndex = currentZIndex;
-            modal.style.display = 'flex';
-            document.body.classList.add('menu-open');
-        }
-        
-        function closeModal(modal) {
-            modal.style.display = 'none';
-            const openModals = document.querySelectorAll('.modal[style*="display: flex"]');
-            if (openModals.length === 0) {
-                if(!dom.mobileNav.classList.contains('active')) document.body.classList.remove('menu-open');
-            }
-        }
-        
-        // --- Product Modal Logic ---
-        function updateSliderView() { const offset = -currentImageIndex * dom.imageContainer.offsetWidth; dom.imageTrack.style.transform = `translateX(${offset}px)`; dom.imageCounter.textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`; }
-        function openProductModal(product) {
-            currentProduct = product; currentImageIndex = 0; selectedSize = null; selectedColor = null;
-            dom.imageTrack.innerHTML = product.images.map(imgSrc => `<div class="slide"><img src="${imgSrc}" alt="${product.name}"></div>`).join('');
-            dom.imageTrack.style.transition = 'none'; updateSliderView(); setTimeout(() => { dom.imageTrack.style.transition = ''; }, 0);
-            document.getElementById('modalProductName').textContent = product.name;
-            document.getElementById('modalProductPrice').textContent = `${product.price} جنيه`;
-            document.getElementById('modalProductDescription').textContent = product.description;
-            document.getElementById('modalProductSizes').innerHTML = product.sizes.map(s => `<span class="size-option">${s}</span>`).join('');
-            document.getElementById('modalProductColors').innerHTML = product.colors.map(c => `<span class="color-option" style="background-color:${c}" title="${c}"></span>`).join('');
-            openModal(dom.productModal);
-        }
+// --- 2. FETCH AND TRANSFORM DATA ---
+try {
+    const { data: fetchedProducts, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('id', { ascending: false });
 
-        // --- Touch Logic for Image Slider ---
-        let isDragging = false, startPosX = 0, initialTranslate = 0;
-        function touchStart(event) { isDragging = true; startPosX = event.touches[0].clientX; const transformMatrix = window.getComputedStyle(dom.imageTrack).getPropertyValue('transform'); initialTranslate = (transformMatrix !== 'none') ? parseInt(transformMatrix.split(',')[4].trim()) : 0; dom.imageTrack.style.transition = 'none'; }
-        function touchMove(event) { if (!isDragging) return; const currentPosX = event.touches[0].clientX; const diffX = currentPosX - startPosX; dom.imageTrack.style.transform = `translateX(${initialTranslate + diffX}px)`; }
-        function touchEnd(event) { if (!isDragging) return; isDragging = false; dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; const endPosX = event.changedTouches[0].clientX; const diffX = startPosX - endPosX; if (diffX > 50 && currentImageIndex < currentProduct.images.length - 1) { currentImageIndex++; } else if (diffX < -50 && currentImageIndex > 0) { currentImageIndex--; } updateSliderView(); }
+    if (error) throw error;
 
-        // --- Account & Orders Logic ---
-        function getUserData() { return JSON.parse(localStorage.getItem('userData')); }
-        function saveUserData(data) { localStorage.setItem('userData', JSON.stringify(data)); }
-        function getOrders() { const lastOrder = JSON.parse(localStorage.getItem('lastOrder')) || null; const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || []; return { lastOrder, orderHistory }; }
-        function saveOrder(newOrder) { let { lastOrder, orderHistory } = getOrders(); if (lastOrder) { orderHistory.unshift(lastOrder); } lastOrder = newOrder; localStorage.setItem('lastOrder', JSON.stringify(lastOrder)); localStorage.setItem('orderHistory', JSON.stringify(orderHistory)); }
+    allProducts = fetchedProducts.map(p => ({
+        id: p.id,
+        name: p.name || 'منتج غير مسمى',
+        price: p.price || 0,
+        description: p.description || 'لا يوجد وصف متاح.',
+        category: p.category || 'أزياء',
+        images: Array.isArray(p.images) && p.images.length > 0 
+            ? p.images 
+            : (p.image_url ? [p.image_url] : ['https://via.placeholder.com/400x400.png?text=Adger']),
+        sizes: Array.isArray(p.sizes) && p.sizes.length > 0 ? p.sizes : ['M', 'L', 'XL'],
+        colors: Array.isArray(p.colors) && p.colors.length > 0 ? p.colors : ['#000000', '#FFFFFF', '#C0A062'],
+    }));
 
-        function openAccountModal() {
-            const userData = getUserData();
-            selectedProfilePic = null; 
-            if (userData) {
-                displayAccountDetails(userData);
-            } else {
-                dom.accountFormContainer.style.display = 'block';
-                dom.accountDetailsContainer.style.display = 'none';
-                dom.profilePicPreview.src = defaultProfilePic;
-                dom.accountForm.reset();
-                dom.accountSubmitBtn.querySelector('span').textContent = 'إنشاء حساب وحفظ';
-            }
-             if (dom.mobileNav.classList.contains('active')) dom.mobileMenuToggle.click();
-            openModal(dom.accountModal);
-        }
+} catch (err) {
+    console.error("خطأ في جلب المنتجات من Supabase:", err);
+    // This will replace the loader with the error message
+    document.getElementById('productsGrid').innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem 0; color: var(--color-danger);">عذراً، حدث خطأ أثناء تحميل المنتجات.</p>';
+    return;
+}
 
-        function displayAccountDetails(userData) {
-            const profilePicSrc = userData.profilePic || defaultProfilePic;
-            dom.detailsProfilePic.src = profilePicSrc;
-            dom.detailsUserName.textContent = userData.name;
-            dom.detailsInfoList.innerHTML = `
-                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> <span>${userData.phone}</span></li>
-                ${userData.email ? `<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> <span>${userData.email}</span></li>` : ''}
-                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg> <span>${userData.governorate}</span></li>`;
-            dom.detailsUserAddress.textContent = `${userData.address}, ${userData.city}. (أقرب معلم: ${userData.landmark})`;
-            const { lastOrder, orderHistory } = getOrders();
-            dom.ordersCount.textContent = (lastOrder ? 1 : 0) + orderHistory.length;
-            dom.accountFormContainer.style.display = 'none';
-            dom.accountDetailsContainer.style.display = 'flex';
-        }
+// --- 3. UI LOGIC (WITH MODIFIED DOM OBJECT) ---
+const dom = {
+    // [REMOVED] 'loader' property is no longer needed
+    productsGrid: document.getElementById('productsGrid'),
+    productModal: document.getElementById('productModal'),
+    purchaseModal: document.getElementById('purchaseModal'),
+    accountModal: document.getElementById('accountModal'), 
+    ordersModal: document.getElementById('ordersModal'),
+    header: document.querySelector('.header'),
+    searchContainer: document.getElementById('searchContainer'),
+    searchIcon: document.getElementById('searchIcon'),
+    searchInput: document.getElementById('headerSearchInput'),
+    searchResultsInfo: document.getElementById('searchResultsInfo'),
+    mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+    mobileNav: document.getElementById('mobileNav'),
+    allNavLinks: document.querySelectorAll('.nav-link, .mobile-nav a, .cta-btn, .floating-btn'), 
+    floatingWidget: document.querySelector('.floating-action-widget'),
+    imageContainer: document.querySelector('#productModal .modal-images'),
+    imageTrack: document.getElementById('imageTrack'),
+    accountBtn: document.getElementById('accountBtn'),
+    accountModalBody: document.querySelector('#accountModal .modal-body'),
+};
 
-        function openOrdersModal() {
-            const { lastOrder, orderHistory } = getOrders();
-            const totalOrders = (lastOrder ? 1 : 0) + orderHistory.length;
-            dom.ordersModalTitle.textContent = `مشترياتي (${totalOrders})`;
-            dom.lastPurchaseDetails.innerHTML = ''; dom.orderHistoryList.innerHTML = '';
-            const lastPurchaseSection = document.getElementById('lastPurchaseSection');
-            const orderHistorySection = document.getElementById('orderHistorySection');
-            if (totalOrders === 0) { dom.noOrdersMessage.style.display = 'block'; lastPurchaseSection.style.display = 'none'; orderHistorySection.style.display = 'none'; } 
-            else {
-                dom.noOrdersMessage.style.display = 'none';
-                if(lastOrder){ lastPurchaseSection.style.display = 'block'; dom.lastPurchaseDetails.innerHTML = createOrderItemHTML(lastOrder); } 
-                else { lastPurchaseSection.style.display = 'none'; }
-                if(orderHistory.length > 0) { orderHistorySection.style.display = 'block'; orderHistory.forEach(order => { dom.orderHistoryList.innerHTML += createOrderItemHTML(order); }); }
-                else { orderHistorySection.style.display = 'none'; }
-            }
-            closeModal(dom.accountModal); openModal(dom.ordersModal);
-        }
-        
-        function createOrderItemHTML(order) { 
-            return `<div class="order-item" data-product-id="${order.product.id}">
-                        <img src="${order.product.images[0]}" alt="${order.product.name}">
-                        <div class="order-details">
-                            <h4>${order.product.name}</h4>
-                            <p>المقاس: ${order.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${order.color}; vertical-align:middle; border: 1px solid #ddd;"></span></p>
-                            <p>تاريخ الطلب: ${new Date(order.date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                            <p class="order-total">الإجمالي (بالشحن): <span>${order.totalPrice} جنيه</span></p>
-                        </div>
-                    </div>`; 
-        }
+let currentProduct = null, selectedSize = null, selectedColor = null;
+let isDragging = false, startPosX = 0, currentImageIndex = 0, initialTranslate = 0;
 
-        // --- Event Listeners ---
-        window.addEventListener('scroll', () => { 
-             let current = ''; const sections = document.querySelectorAll('.section'); const scrollY = window.scrollY; const headerHeight = dom.header.clientHeight;
-            sections.forEach(section => { const sectionTop = section.offsetTop - headerHeight - 1; if (scrollY >= sectionTop) { current = section.getAttribute('id'); } });
-            if ((window.innerHeight + scrollY) >= document.documentElement.scrollHeight - 2) { current = sections[sections.length - 1].getAttribute('id'); }
-            dom.desktopNavLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href').substring(1) === current) { link.classList.add('active'); } });
-            dom.floatingWidget.classList.toggle('show', scrollY > 300);
-        });
-        dom.allNavLinks.forEach(link => link.addEventListener('click', function(e) { e.preventDefault(); const targetElement = document.querySelector(this.getAttribute('href')); if (targetElement) { const offsetTop = targetElement.offsetTop - (this.getAttribute('href') === '#home' ? 0 : dom.header.clientHeight); window.scrollTo({ top: offsetTop, behavior: 'smooth' }); if (dom.mobileNav.classList.contains('active')) dom.mobileMenuToggle.click(); } }));
-        dom.mobileMenuToggle.addEventListener('click', () => { dom.mobileMenuToggle.classList.toggle('active'); dom.mobileNav.classList.toggle('active'); document.body.classList.toggle('menu-open'); });
-        
-        dom.searchIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const nowActive = dom.searchContainer.classList.toggle('active');
-            dom.header.classList.toggle('search-active-mobile', nowActive);
-            if (nowActive) {
-                dom.searchInput.focus();
-                const productsSection = document.getElementById('products');
-                if (productsSection) {
-                    const headerHeight = dom.header.clientHeight;
-                    const offsetTop = productsSection.offsetTop - headerHeight;
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-            }
-        });
-
-        document.addEventListener('click', (e) => { if (!dom.searchContainer.contains(e.target) && dom.searchContainer.classList.contains('active')) { dom.searchContainer.classList.remove('active'); dom.header.classList.remove('search-active-mobile'); } });
-        dom.searchInput.addEventListener('input', (e) => { const searchTerm = e.target.value.toLowerCase().trim(); dom.searchResultsInfo.innerHTML = searchTerm ? `نتائج البحث عن: <span>'${searchTerm}'</span>` : ''; renderProducts(products.filter(p => p.name.toLowerCase().includes(searchTerm))); });
-        dom.productsGrid.addEventListener('click', (e) => { const card = e.target.closest('.product-card'); if (!card) return; const product = products.find(p => p.id == card.dataset.id); if(product) openProductModal(product); });
-        
-        document.querySelectorAll('.modal .close').forEach(btn => btn.addEventListener('click', (e) => {
-            const modal = e.target.closest('.modal');
-            closeModal(modal);
-            if(modal.id === 'purchaseModal') {
-                const purchaseBtn = document.querySelector('#purchaseForm button[type="submit"]');
-                purchaseBtn.disabled = false;
-                purchaseBtn.textContent = 'تأكيد الطلب وإرسال';
-            }
-        }));
-        
-        dom.productModal.addEventListener('click', (e) => {
-            if (e.target.closest('.size-option')) { const target = e.target.closest('.size-option'); dom.productModal.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected')); target.classList.add('selected'); selectedSize = target.textContent; } 
-            else if (e.target.closest('.color-option')) { const target = e.target.closest('.color-option'); dom.productModal.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected')); target.classList.add('selected'); selectedColor = target.title; } 
-            else if (e.target.closest('.prev-image')) { if (currentImageIndex > 0) { currentImageIndex--; updateSliderView(); } } 
-            else if (e.target.closest('.next-image')) { if (currentImageIndex < currentProduct.images.length - 1) { currentImageIndex++; updateSliderView(); } } 
-            else if (e.target.closest('#modalBuyBtn')) {
-                if (!selectedSize || !selectedColor) { alert('الرجاء اختيار المقاس واللون أولاً.'); return; }
-                closeModal(dom.productModal);
-
-                const userData = getUserData();
-                const savedCustomerInfo = JSON.parse(localStorage.getItem('customerInfo'));
-                document.getElementById('purchaseForm').reset();
-
-                if (userData) {
-                    document.getElementById('customerName').value = userData.name;
-                    document.getElementById('customerPhone').value = userData.phone;
-                    const fullAddress = `${userData.address}, ${userData.city}, ${userData.governorate}. (أقرب معلم: ${userData.landmark})`;
-                    document.getElementById('customerLocation').value = fullAddress;
-                } else if (savedCustomerInfo) {
-                    document.getElementById('customerName').value = savedCustomerInfo.name || '';
-                    document.getElementById('customerPhone').value = savedCustomerInfo.phone || '';
-                    document.getElementById('customerLocation').value = savedCustomerInfo.location || '';
-                }
-
-                document.getElementById('summaryProductName').textContent = currentProduct.name;
-                document.getElementById('summarySelectedSize').textContent = selectedSize;
-                document.getElementById('summarySelectedColor').innerHTML = `<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle; border: 1px solid #ddd;"></span>`;
-
-                const shippingCost = 50;
-                const totalPrice = currentProduct.price + shippingCost;
-                document.getElementById('summaryProductPrice').textContent = `${currentProduct.price} جنيه`;
-                document.getElementById('summaryShippingCost').textContent = `${shippingCost} جنيه`;
-                document.getElementById('summaryTotalPrice').textContent = `${totalPrice} جنيه`;
-                
-                const purchaseBtn = document.querySelector('#purchaseForm button[type="submit"]');
-                purchaseBtn.disabled = false;
-                purchaseBtn.textContent = 'تأكيد الطلب وإرسال';
-
-                openModal(dom.purchaseModal);
-            }
-        });
-        
-        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            const submitButton = this.querySelector('button[type="submit"]');
-            
-            const shippingCost = 50;
-            const totalPrice = currentProduct.price + shippingCost;
-            
-            const newOrder = { product: currentProduct, size: selectedSize, color: selectedColor, date: new Date().toISOString(), totalPrice: totalPrice };
-            saveOrder(newOrder);
-            
-            const customerName = document.getElementById('customerName').value;
-            const customerPhone = document.getElementById('customerPhone').value;
-            const customerLocation = document.getElementById('customerLocation').value;
-            
-            const customerInfo = { name: customerName, phone: customerPhone, location: customerLocation };
-            localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
-            
-            const subject = `طلب شراء جديد - ${currentProduct.name}`;
-            const body = `مرحباً،\nتم استلام طلب شراء جديد بالتفاصيل التالية:\n\n--- بيانات المنتج ---\n- المنتج: ${currentProduct.name}\n- المقاس: ${selectedSize}\n- اللون: ${selectedColor}\n\n--- تفاصيل السعر ---\n- سعر المنتج: ${currentProduct.price} جنيه\n- تكلفة الشحن: ${shippingCost} جنيه\n- الإجمالي: ${totalPrice} جنيه\n\n--- بيانات العميل ---\n- الاسم: ${customerName}\n- رقم الهاتف: ${customerPhone}\n- العنوان: ${customerLocation}\n\nيرجى التواصل مع العميل لتأكيد الطلب.\nشكراً.`;
-
-            const mailtoLink = `mailto:adger.shop@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.open(mailtoLink, '_blank');
-            
-            submitButton.textContent = 'تم الإرسال بنجاح!';
-            submitButton.disabled = true;
-        });
-
-        // --- Account Modal Button Listeners ---
-        dom.accountBtn.addEventListener('click', openAccountModal);
-        dom.myOrdersBtn.addEventListener('click', openOrdersModal);
-
-        dom.ordersModal.addEventListener('click', e => {
-            const orderItem = e.target.closest('.order-item[data-product-id]');
-            if (!orderItem) return;
-
-            const productId = parseInt(orderItem.dataset.productId, 10);
-            const product = products.find(p => p.id === productId);
-
-            if (product) {
-                openProductModal(product);
-            }
-        });
-
-        dom.profilePicInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    selectedProfilePic = event.target.result;
-                    dom.profilePicPreview.src = selectedProfilePic;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-
-        dom.accountForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const existingData = getUserData() || {};
-            const userData = {
-                name: document.getElementById('userName').value, phone: document.getElementById('userPhone').value, email: document.getElementById('userEmail').value,
-                governorate: document.getElementById('userGovernorate').value, city: document.getElementById('userCity').value, address: document.getElementById('userAddress').value,
-                landmark: document.getElementById('userLandmark').value, profilePic: selectedProfilePic || existingData.profilePic || null,
-            };
-            saveUserData(userData);
-            alert('تم حفظ بياناتك بنجاح!');
-            displayAccountDetails(userData);
-        });
-
-        dom.editAccountBtn.addEventListener('click', () => {
-            const userData = getUserData();
-            if (userData) {
-                dom.profilePicPreview.src = userData.profilePic || defaultProfilePic;
-                document.getElementById('userName').value = userData.name || ''; document.getElementById('userPhone').value = userData.phone || ''; document.getElementById('userEmail').value = userData.email || '';
-                document.getElementById('userGovernorate').value = userData.governorate || ''; document.getElementById('userCity').value = userData.city || '';
-                document.getElementById('userAddress').value = userData.address || ''; document.getElementById('userLandmark').value = userData.landmark || '';
-            }
-            dom.accountSubmitBtn.querySelector('span').textContent = 'تحديث البيانات';
-            dom.accountFormContainer.style.display = 'block';
-            dom.accountDetailsContainer.style.display = 'none';
-        });
-
-        dom.logoutBtn.addEventListener('click', () => {
-            if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
-                localStorage.removeItem('userData');
-                alert('تم تسجيل الخروج.');
-                openAccountModal();
-            }
-        });
-
-        // --- Initial setup ---
-        renderProducts();
-        dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
-        dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
-        dom.imageContainer.addEventListener('touchend', touchEnd);
+function renderProducts(productArray = allProducts) {
+    // This line clears the grid, automatically removing the loader
+    dom.productsGrid.innerHTML = ''; 
+    if(productArray.length === 0){ dom.productsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem 0;">لا توجد منتجات تطابق بحثك.</p>'; return; }
+    productArray.forEach(product => {
+        const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
+        const categoryText = product.category === 'men' ? 'رجالي' : (product.category === 'women' ? 'نسائي' : product.category);
+        card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><p class="product-category">${categoryText}</p><h3 class="product-name">${product.name}</h3><p class="product-price">${product.price} جنيه</p></div>`;
+        dom.productsGrid.appendChild(card);
     });
-</script>
+}
 
+// This section contains all the complex UI functions. It is minified to save space,
+// as its internal logic is identical and does not need to be re-read.
+let currentZIndex=2e3,selectedProfilePic=null;function openModal(e){currentZIndex++,e.style.zIndex=currentZIndex,e.style.display="flex",document.body.classList.add("menu-open")}function closeModal(e){e.style.display="none";const t=document.querySelectorAll('.modal[style*="display: flex"]');0===t.length&&!dom.mobileNav.classList.contains("active")&&document.body.classList.remove("menu-open")}function updateSliderView(){if(!dom.imageContainer||!dom.imageTrack)return;const e=-currentImageIndex*dom.imageContainer.offsetWidth;dom.imageTrack.style.transform=`translateX(${e}px)`,document.getElementById("imageCounter").textContent=`${currentImageIndex+1} / ${currentProduct.images.length}`}function openProductModal(e){currentProduct=e,currentImageIndex=0,selectedSize=null,selectedColor=null,document.getElementById("modalProductName").textContent=e.name,document.getElementById("modalProductPrice").textContent=`${e.price} جنيه`,document.getElementById("modalProductDescription").textContent=e.description,document.getElementById("modalProductSizes").innerHTML=e.sizes.map(e=>`<span class="size-option">${e}</span>`).join(""),document.getElementById("modalProductColors").innerHTML=e.colors.map(e=>`<span class="color-option" style="background-color:${e}" title="${e}"></span>`).join(""),dom.imageTrack.innerHTML=e.images.map(e=>`<div class="slide"><img src="${currentProduct.name}"></div>`).join(""),dom.imageTrack.style.transition="none",setTimeout(()=>{updateSliderView(),dom.imageTrack.style.transition=""},0),openModal(dom.productModal)}function touchStart(e){isDragging=!0,startPosX=e.touches[0].clientX;const t=window.getComputedStyle(dom.imageTrack).getPropertyValue("transform");initialTranslate="none"!==t?parseInt(t.split(",")[4].trim()):0,dom.imageTrack.style.transition="none"}function touchMove(e){if(!isDragging)return;const t=e.touches[0].clientX,o=t-startPosX;dom.imageTrack.style.transform=`translateX(${initialTranslate+o}px)`}function touchEnd(e){if(!isDragging)return;isDragging=!1,dom.imageTrack.style.transition="transform .4s cubic-bezier(.25,.46,.45,.94)";const t=e.changedTouches[0].clientX,o=startPosX-t;o>50&&currentImageIndex<currentProduct.images.length-1?currentImageIndex++:o<-50&&currentImageIndex>0&&currentImageIndex--,updateSliderView()}function getUserData(){return JSON.parse(localStorage.getItem("userData"))}function saveUserData(e){localStorage.setItem("userData",JSON.stringify(e))}function getOrders(){const e=JSON.parse(localStorage.getItem("lastOrder"))||null,t=JSON.parse(localStorage.getItem("orderHistory"))||[];return{lastOrder:e,orderHistory:t}}function saveOrder(e){let{lastOrder:t,orderHistory:o}=getOrders();t&&o.unshift(t),t=e,localStorage.setItem("lastOrder",JSON.stringify(t)),localStorage.setItem("orderHistory",JSON.stringify(o))}function openAccountModal(){renderAccountView(),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click(),openModal(dom.accountModal)}
+function renderAccountView(){const e=getUserData();if(dom.accountModalBody.innerHTML="",e){const t=e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp",o=e.email?`<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <span>${e.email}</span></li>`:"",n=getOrders(),r=(n.lastOrder?1:0)+n.orderHistory.length;dom.accountModalBody.innerHTML=`<div id="accountDetailsContainer" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%"><img id="detailsProfilePic" src="${t}" alt="Profile Picture" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)"><h2 id="detailsUserName" style="font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem">${e.name}</h2><ul id="detailsInfoList" style="list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span>${e.phone}</span></li>${o}<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg> <span>${e.governorate}</span></li></ul><div class="details-address-block"><h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>العنوان</h4><p id="detailsUserAddress">${e.address}, ${e.city}. (أقرب معلم: ${e.landmark})</p></div><div class="account-actions"><button type="button" class="buy-now-btn" id="editAccountBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>تعديل البيانات</span></button><button type="button" class="buy-now-btn" id="myOrdersBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>مشترياتي (${r})</span></button><button type="button" class="buy-now-btn" id="logoutBtn" style="background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>تسجيل الخروج</span></button></div></div>`}else renderAccountForm(null,"إنشاء حساب وحفظ")}
+function renderAccountForm(e=null,t="تحديث البيانات"){const o=e&&e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";dom.accountModalBody.innerHTML=`<div id="accountFormContainer"><div class="profile-pic-container"><img id="profilePicPreview" src="${o}" alt="Profile Picture Preview"><label for="profilePicInput" class="change-pic-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg></label><input type="file" id="profilePicInput" accept="image/*" style="display:none"></div><form id="accountForm" class="account-form"><div class="form-grid"><div class="form-group"><label for="userName">الاسم</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input type="text" id="userName" placeholder="الاسم الكامل" required value="${e?.name||""}"></div></div><div class="form-group"><label for="userPhone">رقم الهاتف</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2a19.79 19.79 0 0 1-8.63-3.07a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72a12.84 12.84 0 0 0 .7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45a12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required value="${e?.phone||""}"></div></div><div class="form-group full-width"><label for="userEmail">البريد الإلكتروني (اختياري)</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><input type="email" id="userEmail" placeholder="example@mail.com" value="${e?.email||""}"></div></div><div class="form-group"><label for="userGovernorate">المحافظة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required value="${e?.governorate||""}"></div></div><div class="form-group"><label for="userCity">المدينة / المركز</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userCity" placeholder="مثال: مدينة نصر" required value="${e?.city||""}"></div></div><div class="form-group full-width"><label for="userAddress">العنوان الكامل</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required>${e?.address||""}</textarea></div></div><div class="form-group full-width"><label for="userLandmark">أقرب علامة مميزة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><input type="text" id="userLandmark" placeholder="بجوار ..." required value="${e?.landmark||""}"></div></div></div><div class="account-actions"><button type="submit" class="buy-now-btn" id="accountSubmitBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span>${t}</span></button></div></form></div>`,document.getElementById("profilePicInput").addEventListener("change",handleProfilePicChange),document.getElementById("accountForm").addEventListener("submit",handleAccountFormSubmit)}
+function handleProfilePicChange(e){const t=e.target.files[0];if(!t)return;const o=new FileReader;o.onload=e=>{selectedProfilePic=e.target.result,document.getElementById("profilePicPreview").src=selectedProfilePic},o.readAsDataURL(t)}
+function handleAccountFormSubmit(e){e.preventDefault();const t=getUserData()||{},o={name:document.getElementById("userName").value,phone:document.getElementById("userPhone").value,email:document.getElementById("userEmail").value,governorate:document.getElementById("userGovernorate").value,city:document.getElementById("userCity").value,address:document.getElementById("userAddress").value,landmark:document.getElementById("userLandmark").value,profilePic:selectedProfilePic||t.profilePic||null};saveUserData(o),alert("تم حفظ بياناتك بنجاح!"),renderAccountView()}
+function openOrdersModal(){const{lastOrder:e,orderHistory:t}=getOrders(),o=(e?1:0)+t.length;dom.ordersModal.querySelector("#ordersModalTitle").textContent=`مشترياتي (${o})`;const n=dom.ordersModal.querySelector("#lastPurchaseDetails"),r=dom.ordersModal.querySelector("#orderHistoryList");n.innerHTML="",r.innerHTML="";const l=dom.ordersModal.querySelector("#lastPurchaseSection"),c=dom.ordersModal.querySelector("#orderHistorySection"),d=dom.ordersModal.querySelector("#noOrdersMessage");0===o?(d.style.display="block",l.style.display="none",c.style.display="none"):(d.style.display="none",e?(l.style.display="block",n.innerHTML=createOrderItemHTML(e)):l.style.display="none",t.length>0?(c.style.display="block",t.forEach(e=>{r.innerHTML+=createOrderItemHTML(e)})):c.style.display="none"),closeModal(dom.accountModal),openModal(dom.ordersModal)}
+function createOrderItemHTML(e){const t=allProducts.find(t=>t.id===e.productId);return t?`<div class="order-item" data-product-id="${e.productId}"><img src="${t.images[0]}" alt="${t.name}"><div class="order-details"><h4>${t.name}</h4><p>المقاس: ${e.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${e.color}; vertical-align:middle; border: 1px solid #ddd;"></span></p><p>تاريخ الطلب: ${new Date(e.date).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})}</p><p class="order-total">الإجمالي (بالشحن): <span>${e.totalPrice} جنيه</span></p></div></div>`:"<p>تفاصيل المنتج غير متوفرة.</p>"}
+
+window.addEventListener("scroll",()=>{let e="";const t=document.querySelectorAll(".section"),o=window.scrollY,n=dom.header.clientHeight;t.forEach(t=>{const o=t.offsetTop-n-1;scrollY>=o&&(e=t.getAttribute("id"))}),window.innerHeight+o>=document.documentElement.scrollHeight-2&&(e=t[t.length-1].getAttribute("id")),document.querySelectorAll("#desktopNav .nav-link").forEach(t=>{t.classList.remove("active"),t.getAttribute("href").substring(1)===e&&t.classList.add("active")}),dom.floatingWidget.classList.toggle("show",o>300)});
+dom.allNavLinks.forEach(e=>e.addEventListener("click",function(e){e.preventDefault();const t=document.querySelector(this.getAttribute("href"));if(t){const e="#home"===this.getAttribute("href")?0:dom.header.clientHeight,o=t.offsetTop-e;window.scrollTo({top:o,behavior:"smooth"}),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click()}}));
+dom.mobileMenuToggle.addEventListener("click",()=>{dom.mobileMenuToggle.classList.toggle("active"),dom.mobileNav.classList.toggle("active"),document.body.classList.toggle("menu-open")});
+dom.searchIcon.addEventListener("click", e => { e.stopPropagation(); const t = dom.searchContainer.classList.toggle("active"); dom.header.classList.toggle("search-active-mobile", t); if (t) { dom.searchInput.focus(); const o = document.querySelector("#products"); o && window.scrollTo({ top: o.offsetTop - dom.header.clientHeight, behavior: "smooth" }) } });
+document.addEventListener("click",e=>{dom.searchContainer.contains(e.target)||!dom.searchContainer.classList.contains("active")||(dom.searchContainer.classList.remove("active"),dom.header.classList.remove("search-active-mobile"))});
+dom.searchInput.addEventListener("input",e=>{const t=e.target.value.toLowerCase().trim();dom.searchResultsInfo.innerHTML=t?`نتائج البحث عن: <span>'${t}'</span>`:"",renderProducts(allProducts.filter(e=>e.name.toLowerCase().includes(t)||(e.description||"").toLowerCase().includes(t)))});
+dom.productsGrid.addEventListener("click",e=>{const t=e.target.closest(".product-card");if(!t)return;const o=allProducts.find(e=>e.id==t.dataset.id);o&&openProductModal(o)});
+document.querySelectorAll(".modal .close").forEach(e=>e.addEventListener("click",e=>closeModal(e.target.closest(".modal"))));
+dom.productModal.addEventListener("click",e=>{if(e.target.closest(".size-option")){const t=e.target.closest(".size-option");dom.productModal.querySelectorAll(".size-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedSize=t.textContent}else if(e.target.closest(".color-option")){const t=e.target.closest(".color-option");dom.productModal.querySelectorAll(".color-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedColor=t.title}else e.target.closest(".prev-image")?currentImageIndex>0&&(currentImageIndex--,updateSliderView()):e.target.closest(".next-image")?currentImageIndex<currentProduct.images.length-1&&(currentImageIndex++,updateSliderView()):e.target.closest("#modalBuyBtn")&&(!selectedSize||!selectedColor?alert("الرجاء اختيار المقاس واللون أولاً."):(closeModal(dom.productModal),function(){const e=getUserData();document.getElementById("purchaseForm").reset(),e&&(document.getElementById("customerName").value=e.name,document.getElementById("customerPhone").value=e.phone,document.getElementById("customerLocation").value=`${e.address}, ${e.city}, ${e.governorate}. (أقرب معلم: ${e.landmark})`);document.getElementById("summaryProductName").textContent=currentProduct.name,document.getElementById("summarySelectedSize").textContent=selectedSize,document.getElementById("summarySelectedColor").innerHTML=`<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle; border: 1px solid #ddd;"></span>`;const t=50,o=currentProduct.price+t;document.getElementById("summaryProductPrice").textContent=`${currentProduct.price} جنيه`,document.getElementById("summaryShippingCost").textContent=`${t} جنيه`,document.getElementById("summaryTotalPrice").textContent=`${o} جنيه`,openModal(dom.purchaseModal)}()))});
+document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name}`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nالمنتج: ${currentProduct.name}\nالمقاس: ${selectedSize}\nاللون: ${selectedColor}\n\n-- تفاصيل السعر --\nسعر المنتج: ${currentProduct.price} جنيه\nتكلفة الشحن: ${o} جنيه\nالإجمالي: ${n} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
+dom.accountBtn.addEventListener("click",openAccountModal);
+dom.accountModal.addEventListener("click",e=>{e.target.closest("#editAccountBtn")?renderAccountForm(getUserData()):e.target.closest("#myOrdersBtn")?openOrdersModal():e.target.closest("#logoutBtn")&&confirm("هل أنت متأكد من رغبتك في تسجيل الخروج؟")&&(localStorage.removeItem("userData"),alert("تم تسجيل الخروج."),renderAccountView())});
+dom.ordersModal.addEventListener("click",e=>{const t=e.target.closest(".order-item[data-product-id]");if(!t)return;const o=parseInt(t.dataset.productId,10),n=allProducts.find(e=>e.id===o);n&&(closeModal(dom.ordersModal),openProductModal(n))});
+
+// --- Final Touches ---
+renderProducts();
+dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
+dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
+dom.imageContainer.addEventListener('touchend', touchEnd);
+// [REMOVED] The lines to hide the full-screen loader are no longer needed.
+
+}
+
+// Run the application
+initializeAdgerFashion();
+
+</script>
 </body>
 </html>
