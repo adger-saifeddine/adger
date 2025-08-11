@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger fashion-uploders</title>
+    <link rel="icon" href="https://i.postimg.cc/zGWrSjKd/clothing-store-logo-burgundy.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #c0a062;
+    --primary-hover: #a08450;
+    --dark-color: #2c3e50;
+    --light-color: #ffffff;
+    --grey-color: #f0f2f5;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --error-color: #e74c3c;
+    --success-color: #2ecc71;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    text-align: right;
+    background-color: var(--grey-color);
+    color: var(--text-color);
+  }
+  
+  /* --- شاشة التحميل (بنمط نقاط متحركة) --- */
+  #page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--grey-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .dots-loader {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dots-loader .dot {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    animation: dots-anim 1.2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
+  .dots-loader .dot-1 {
+    background-color: var(--primary-color);
+    animation-delay: -0.6s; 
+  }
+  .dots-loader .dot-2 {
+    background-color: var(--dark-color);
+  }
+  @keyframes dots-anim {
+    0%, 100% {
+        transform: translateX(-20px);
+    }
+    50% {
+        transform: translateX(20px);
+    }
+  }
+
+  /* --- بوابة كلمة المرور (مخفية افتراضياً) --- */
+  #password-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .password-box {
+    background: var(--light-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 380px;
+  }
+  .password-box h2 { margin-top: 0; color: var(--dark-color); }
+  #passwordInput { text-align: center; letter-spacing: 3px; font-size: 1.2rem; }
+  #password-error { color: var(--error-color); min-height: 20px; font-size: 0.9rem; margin-top: 10px; }
+
+  /* --- الحاوية الرئيسية (مخفية افتراضياً) --- */
+  .container-wrapper {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .container {
+    max-width: 700px;
+    width: 100%;
+    background-color: var(--light-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+  }
+
+  h1 { text-align: center; color: var(--dark-color); margin-bottom: 30px; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-weight: bold; color: #555; margin-bottom: 8px; }
+  p.help-text { font-size: 0.85rem; color: #777; margin: 5px 0 0; }
+  input, textarea { width: 100%; padding: 12px 15px; margin-top: 5px; border: 1px solid var(--border-color); border-radius: 6px; font-family: 'Cairo', sans-serif; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+  input:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(192, 160, 98, 0.2); }
+  
+  /* --- حقل رفع الصور المخصص --- */
+  #file-drop-zone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 30px; text-align: center; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; margin-top: 5px; }
+  #file-drop-zone:hover, #file-drop-zone.dragover { background-color: #fafafa; border-color: var(--primary-color); }
+  #file-drop-zone .icon { font-size: 2.5rem; color: var(--primary-color); }
+  #file-drop-zone p { margin: 10px 0 0; color: #666; }
+  #fileInput { display: none; }
+  #image-preview-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+  .image-preview-wrapper { position: relative; width: 100px; height: 100px; }
+  .image-preview { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); }
+
+  /* --- منتقي الألوان --- */
+  .color-picker-container { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+  #colorInput { width: 50px; height: 50px; padding: 2px; cursor: pointer; border: 1px solid var(--border-color); border-radius: 8px; }
+  #addColorBtn { width: auto; margin-top: 0; padding: 10px 20px; }
+  #colorsList { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; padding: 15px; border: 1px solid #eee; border-radius: 8px; min-height: 50px; background-color: #fafafa; }
+  .color-swatch-wrapper { position: relative; }
+  .color-swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--light-color); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .remove-color { position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; background: var(--dark-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; line-height: 1; opacity: 0; transition: opacity 0.2s, transform 0.2s; transform: scale(0.8); }
+  .color-swatch-wrapper:hover .remove-color { opacity: 1; transform: scale(1); }
+
+  /* --- زر الرفع والحالة --- */
+  #uploadBtn, #passwordBtn { margin-top: 25px; padding: 15px 20px; font-size: 1.1rem; cursor: pointer; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; width: 100%; font-weight: bold; font-family: 'Cairo', sans-serif; transition: background-color 0.3s, transform 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  #uploadBtn:disabled, #passwordBtn:disabled { background-color: #ccc; cursor: not-allowed; }
+  #uploadBtn:hover:not(:disabled) { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(192, 160, 98, 0.3); }
+  .spinner { width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: var(--light-color); animation: spin-btn 1s ease-in-out infinite; }
+  @keyframes spin-btn { to { transform: rotate(360deg); } }
+
+  #status { font-weight: bold; text-align: center; margin-top: 20px; padding: 12px; border-radius: 6px; display: none; }
+  #status.success { background-color: #e9f9ee; color: var(--success-color); display: block; }
+  #status.error { background-color: #fbecec; color: var(--error-color); display: block; }
+  #status.info { background-color: #eaf5fa; color: #3498db; display: block; }
+</style>
+</head>
+<body>
+  
+  <div id="page-loader">
+    <div class="dots-loader">
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+    </div>
+  </div>
+
+  <div id="password-gate">
+    <div class="password-box">
+      <h2>الرجاء إدخال كلمة المرور</h2>
+      <p>للوصول إلى لوحة التحكم</p>
+      <input type="password" id="passwordInput" placeholder="•••••">
+      <p id="password-error"></p>
+      <button id="passwordBtn">دخول</button>
+    </div>
+  </div>
+
+  <div class="container-wrapper">
+    <div class="container">
+        <h1>رفع منتج جديد</h1>
+
+        <div class="form-group">
+        <label for="productName">اسم المنتج</label>
+        <input type="text" id="productName" placeholder="أدخل اسم المنتج" required />
+        </div>
+
+        <div class="form-group">
+        <label for="productDesc">وصف المنتج</label>
+        <textarea id="productDesc" rows="4" placeholder="أدخل وصف المنتج"></textarea>
+        </div>
+
+        <div class="form-group">
+        <label for="productPrice">السعر (بالجنيه المصري)</label>
+        <!-- === التعديل هنا === -->
+        <input type="number" step="1" id="productPrice" placeholder="مثال: 499" required />
+        </div>
+        
+        <div class="form-group">
+        <label for="fileInput">صور المنتج</label>
+        <label for="fileInput" id="file-drop-zone">
+            <div class="icon">🖼️</div>
+            <p>اسحب الصور إلى هنا أو انقر للاختيار</p>
+            <p class="help-text">(يمكنك اختيار أكثر من صورة)</p>
+        </label>
+        <input type="file" id="fileInput" accept="image/*" multiple required />
+        <div id="image-preview-container"></div>
+        </div>
+
+        <div class="form-group">
+        <label for="productSizes">المقاسات المتاحة</label>
+        <input type="text" id="productSizes" placeholder="مثال: M, L, XL" />
+        <p class="help-text">افصل بين كل مقاس بفاصلة (,)</p>
+        </div>
+
+        <div class="form-group">
+        <label>الألوان المتاحة</label>
+        <div class="color-picker-container">
+            <input type="color" id="colorInput" value="#c0a062">
+            <button type="button" id="addColorBtn">إضافة لون</button>
+        </div>
+        <div id="colorsList"></div>
+        </div>
+
+        <button id="uploadBtn">
+        <span id="btn-text">رفع المنتج</span>
+        <div class="spinner" id="btn-spinner" style="display: none;"></div>
+        </button>
+        <p id="status"></p>
+    </div>
+  </div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // --- تهيئة Supabase ---
+  const supabase = createClient(
+    'https://aagsmtkuygnlgeyboarg.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhZ3NtdGt1eWdubGdleWJvYXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3NDQzNDEsImV4cCI6MjA3MDMyMDM0MX0.rgMrAM3vURYo7bFvy9okiogXEh9wyFwp9Z0yAxBE9SI'
+  );
+
+  // --- عناصر الواجهة الرسومية ---
+  const containerWrapper = document.querySelector('.container-wrapper');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const btnText = document.getElementById('btn-text');
+  const btnSpinner = document.getElementById('btn-spinner');
+  const statusEl = document.getElementById('status');
+
+  // --- منطق بوابة كلمة المرور وشاشة التحميل ---
+  const PASSWORD = '11523';
+  const pageLoader = document.getElementById('page-loader');
+  const passwordGate = document.getElementById('password-gate');
+  const passwordInput = document.getElementById('passwordInput');
+  const passwordBtn = document.getElementById('passwordBtn');
+  const passwordError = document.getElementById('password-error');
+
+  function showMainContent() {
+    containerWrapper.style.display = 'flex';
+    setTimeout(() => {
+        containerWrapper.style.opacity = '1';
+    }, 50);
+  }
+
+  function showPasswordGate() {
+    passwordGate.style.display = 'flex';
+    setTimeout(() => {
+        passwordGate.style.opacity = '1';
+    }, 50);
+  }
+
+  function hidePageLoader() {
+    pageLoader.style.opacity = '0';
+    setTimeout(() => {
+        pageLoader.style.display = 'none';
+    }, 500);
+  }
+  
+  function checkAuth() {
+    if (sessionStorage.getItem('isAuthenticated') === 'true') {
+        showMainContent();
+    } else {
+        showPasswordGate();
+    }
+    hidePageLoader();
+  }
+  
+  function handleLogin() {
+    if (passwordInput.value === PASSWORD) {
+      sessionStorage.setItem('isAuthenticated', 'true');
+      passwordGate.style.opacity = '0';
+      setTimeout(() => {
+        passwordGate.style.display = 'none';
+        showMainContent();
+      }, 400);
+    } else {
+      passwordError.textContent = 'كلمة المرور غير صحيحة.';
+      passwordInput.style.border = '1px solid var(--error-color)';
+    }
+  }
+  
+  passwordBtn.addEventListener('click', handleLogin);
+  passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
+  
+  document.addEventListener('DOMContentLoaded', checkAuth);
+
+
+  // --- منطق معالجة الصور المخصصة ---
+  const fileInput = document.getElementById('fileInput');
+  const dropZone = document.getElementById('file-drop-zone');
+  const previewContainer = document.getElementById('image-preview-container');
+  let selectedFiles = [];
+
+  function updateFilePreview() {
+    previewContainer.innerHTML = '';
+    selectedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-preview-wrapper';
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'image-preview';
+            img.title = file.name;
+            wrapper.appendChild(img);
+            previewContainer.appendChild(wrapper);
+        };
+        reader.readAsDataURL(file);
+    });
+  }
+
+  fileInput.addEventListener('change', (e) => {
+    selectedFiles = Array.from(e.target.files);
+    updateFilePreview();
+  });
+  
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
+  dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      fileInput.files = files;
+      const changeEvent = new Event('change');
+      fileInput.dispatchEvent(changeEvent);
+  });
+
+
+  // --- منطق معالجة الألوان ---
+  const colorInput = document.getElementById('colorInput');
+  const addColorBtn = document.getElementById('addColorBtn');
+  const colorsList = document.getElementById('colorsList');
+  let selectedColors = [];
+
+  function renderSelectedColors() {
+    colorsList.innerHTML = '';
+    selectedColors.forEach((color, index) => {
+      const swatchWrapper = document.createElement('div');
+      swatchWrapper.className = 'color-swatch-wrapper';
+      const colorSwatch = document.createElement('div');
+      colorSwatch.className = 'color-swatch';
+      colorSwatch.style.backgroundColor = color;
+      const removeBtn = document.createElement('span');
+      removeBtn.className = 'remove-color';
+      removeBtn.innerHTML = '&times;';
+      removeBtn.title = `إزالة اللون ${color}`;
+      removeBtn.onclick = () => { selectedColors.splice(index, 1); renderSelectedColors(); };
+      swatchWrapper.appendChild(colorSwatch);
+      swatchWrapper.appendChild(removeBtn);
+      colorsList.appendChild(swatchWrapper);
+    });
+  }
+
+  addColorBtn.addEventListener('click', () => {
+    const newColor = colorInput.value;
+    if (!selectedColors.includes(newColor)) {
+      selectedColors.push(newColor);
+      renderSelectedColors();
+    } else {
+      alert("هذا اللون تم اختياره بالفعل.");
+    }
+  });
+
+
+  // --- منطق رفع المنتج ---
+  function setStatus(message, type = 'info') { statusEl.textContent = message; statusEl.className = type; }
+  function toggleLoading(isLoading) { uploadBtn.disabled = isLoading; btnText.style.display = isLoading ? 'none' : 'inline'; btnSpinner.style.display = isLoading ? 'block' : 'none'; }
+
+  uploadBtn.addEventListener('click', async () => {
+    const name = document.getElementById('productName').value.trim();
+    const description = document.getElementById('productDesc').value.trim();
+    const price = document.getElementById('productPrice').value;
+    const sizesStr = document.getElementById('productSizes').value.trim();
+    const sizes = sizesStr ? sizesStr.split(',').map(s => s.trim().toUpperCase()) : [];
+    const colors = selectedColors;
+
+    if (!name || !price || selectedFiles.length === 0) { setStatus('يرجى ملء الاسم والسعر واختيار صورة واحدة على الأقل.', 'error'); return; }
+
+    toggleLoading(true);
+    setStatus(`جاري رفع ${selectedFiles.length} صورة...`, 'info');
+
+    try {
+      const uploadPromises = selectedFiles.map(file => {
+        const filePath = `products/${Date.now()}_${file.name}`;
+        return supabase.storage.from('adger').upload(filePath, file);
+      });
+      const uploadResults = await Promise.all(uploadPromises);
+      const uploadError = uploadResults.find(result => result.error);
+      if (uploadError) { throw new Error(`فشل رفع إحدى الصور: ${uploadError.error.message}`); }
+      setStatus('تم رفع الصور بنجاح، جاري حفظ البيانات...', 'info');
+      const images = uploadResults.map(result => supabase.storage.from('adger').getPublicUrl(result.data.path).data.publicUrl);
+      const { error: insertError } = await supabase.from('products').insert([{ name, description, price: parseFloat(price), images, sizes, colors }]);
+      if (insertError) { throw new Error(`فشل حفظ بيانات المنتج: ${insertError.message}`); }
+      setStatus('تم رفع المنتج بنجاح! سيتم توجيهك الآن...', 'success');
+      alert('تم الرفع بنجاح!');
+      setTimeout(() => { window.location.href = 'adgerfashion.html'; }, 1500);
+    } catch (error) {
+      console.error(error);
+      setStatus(`حدث خطأ: ${error.message}`, 'error');
+      toggleLoading(false);
+    }
+  });
+</script>
+</body>
+</html>
