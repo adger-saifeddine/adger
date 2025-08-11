@@ -83,25 +83,21 @@
     /* --- Header Search --- */
     .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; }
     .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-
-    /* --- [!الحل هنا!] --- */
+    
     #headerSearchInput {
         border: none; background: transparent; outline: none; width: 0;
         padding: 5px 10px 5px 40px;
         opacity: 0; font-size: 0.9rem; 
         height: 38px;
         box-sizing: border-box; border-radius: 50px; font-family: var(--font-primary);
-        /* إزالة الحركة من الحالة الافتراضية */
         transition: none;
     }
     
     .search-container.active #headerSearchInput {
         width: 180px;
         opacity: 1;
-        /* إضافة الحركة هنا فقط (عند الفتح) */
         transition: all 0.4s ease;
     }
-    /* --- نهاية الحل --- */
     
     .search-icon {
         position: absolute;
@@ -147,8 +143,22 @@
     #searchResultsInfo { text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--color-text); }
     #searchResultsInfo span { font-weight: 600; color: var(--color-secondary); }
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-    .product-card { background: white; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column; }
-    .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+    
+    /* --- [!الحل هنا!] --- */
+    .product-card {
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        -webkit-tap-highlight-color: transparent; /* لمنع التحديد الأزرق عند النقر */
+    }
+    /* تم إلغاء تأثير الـ hover بناءً على طلبك */
+  
+    /* --- نهاية الحل --- */
+
     .product-image { height: 300px; background-color: #f1f1f1; position: relative; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; }
     .product-info { padding: 1.5rem; text-align: right; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
