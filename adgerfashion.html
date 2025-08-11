@@ -139,27 +139,35 @@
     .product-image { height: 300px; background-color: #f1f1f1; position: relative; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; }
     
-    /* --- [!الحل هنا!] تم تعديل محاذاة كل النصوص داخل البطاقة --- */
+    /* --- [!الحل هنا!] تم زيادة الحشو الرأسي لزيادة المسافات --- */
     .product-info {
-        padding: 1.5rem;
-        text-align: right; /* تم التغيير من center إلى right */
+        padding: 2rem 1.5rem; /*  <-- تم زيادة الحشو الرأسي */
+        text-align: right;
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
-    .product-category { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
     .product-name {
         font-family: var(--font-primary);
         font-size: 1.2rem;
         font-weight: 600;
-        margin-bottom: 0.5rem;
         color: var(--color-primary);
-        flex-grow: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--color-secondary); margin-top: 1rem; }
+    .product-category {
+        font-size: 0.8rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--color-secondary);
+    }
     
     /* --- Other Styles (unchanged) --- */
     .contact-section{padding-bottom:6rem}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.contact-card{text-align:center;padding:2rem}.contact-card .icon{margin-bottom:1rem;color:var(--color-secondary)}.contact-card h4{font-family:var(--font-primary);font-weight:600;margin-bottom:.5rem}.contact-card p{color:#6c757d;font-size:.9rem}.footer{background:var(--color-primary);color:rgba(255,255,255,.8);padding:4rem 0 2rem}.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}.footer-section h4{margin-bottom:1.5rem;color:#fff;font-size:1.2rem}.footer-section ul{list-style:none}.footer-section ul li{margin-bottom:.75rem}.footer-section ul li a{color:rgba(255,255,255,.8);text-decoration:none;transition:all .3s ease}.footer-section ul li a:hover{color:var(--color-secondary)}.social-links{display:flex;gap:1rem;margin-top:1rem}.social-link{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;text-decoration:none;transition:all .3s ease}.social-link:hover{background:var(--color-secondary);transform:translateY(-3px)}.footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem}.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center}.modal-content{background-color:#fff;border-radius:12px;width:90%;max-width:900px;max-height:95vh;overflow:hidden;position:relative;display:flex;flex-direction:column;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.modal-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;border-bottom:1px solid var(--color-border);width:100%;flex-shrink:0}.modal-logo h3{font-family:var(--font-logo);font-size:1.6rem;font-weight:700;margin:0;line-height:1}.close{position:static;color:#888;font-size:35px;font-weight:300;cursor:pointer;background:0 0;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:background .3s ease,color .3s ease;line-height:1}.close:hover{background:var(--color-light-gray);color:var(--color-primary)}.modal-body{overflow-y:auto;flex-grow:1}#productModal .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2.5rem;align-items:start}
@@ -226,16 +234,13 @@
             aspect-ratio: 1 / 1; 
         }
         .product-info {
-            padding: 0.75rem; 
+            padding: 1rem 0.75rem;  /*  <-- تم زيادة الحشو الرأسي للجوال */
         }
         .product-name {
             font-size: 0.9rem; 
-            margin-bottom: 0.25rem; 
         }
         .product-price {
             font-size: 1rem; 
-            margin-top: auto; 
-            padding-top: 0.5rem; 
         }
     }
 
@@ -430,8 +435,7 @@
     </div>
 
 <script type="module">
-    // --- JavaScript remains completely unchanged from the previous version ---
-    // --- The fixes were purely in CSS ---
+    // --- JavaScript remains completely unchanged, the fix is purely in CSS ---
     
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
     const supabase = createClient(
@@ -499,7 +503,7 @@ function renderProducts(productArray = allProducts) {
     productArray.forEach(product => {
         const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
         const categoryText = product.category === 'men' ? 'رجالي' : (product.category === 'women' ? 'نسائي' : product.category);
-        card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><p class="product-category">${categoryText}</p><h3 class="product-name">${product.name}</h3><p class="product-price">${product.price} جنيه</p></div>`;
+        card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><h3 class="product-name">${product.name}</h3><p class="product-category">${categoryText}</p><p class="product-price">${product.price.toFixed(2)} جنيه</p></div>`;
         dom.productsGrid.appendChild(card);
     });
 }
@@ -510,7 +514,7 @@ function openProductModal(product) {
     selectedSize = null;
     selectedColor = null;
     document.getElementById("modalProductName").textContent = product.name;
-    document.getElementById("modalProductPrice").textContent = `${product.price} جنيه`;
+    document.getElementById("modalProductPrice").textContent = `${product.price.toFixed(2)} جنيه`;
     document.getElementById("modalProductDescription").textContent = product.description;
     const sizesContainer = document.getElementById("modalProductSizes");
     sizesContainer.innerHTML = product.sizes && product.sizes.length > 0
@@ -548,7 +552,7 @@ function renderAccountView(){const e=getUserData();if(dom.accountModalBody.inner
 function renderAccountForm(e=null,t="تحديث البيانات"){const o=e&&e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";dom.accountModalBody.innerHTML=`<div id="accountFormContainer"><div class="profile-pic-container"><img id="profilePicPreview" src="${o}" alt="Profile Picture Preview"><label for="profilePicInput" class="change-pic-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg></label><input type="file" id="profilePicInput" accept="image/*" style="display:none"></div><form id="accountForm" class="account-form"><div class="form-grid"><div class="form-group"><label for="userName">الاسم</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input type="text" id="userName" placeholder="الاسم الكامل" required value="${e?.name||""}"></div></div><div class="form-group"><label for="userPhone">رقم الهاتف</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2a19.79 19.79 0 0 1-8.63-3.07a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72a12.84 12.84 0 0 0 .7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45a12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required value="${e?.phone||""}"></div></div><div class="form-group full-width"><label for="userEmail">البريد الإلكتروني (اختياري)</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><input type="email" id="userEmail" placeholder="example@mail.com" value="${e?.email||""}"></div></div><div class="form-group"><label for="userGovernorate">المحافظة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required value="${e?.governorate||""}"></div></div><div class="form-group"><label for="userCity">المدينة / المركز</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userCity" placeholder="مثال: مدينة نصر" required value="${e?.city||""}"></div></div><div class="form-group full-width"><label for="userAddress">العنوان الكامل</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required>${e?.address||""}</textarea></div></div><div class="form-group full-width"><label for="userLandmark">أقرب علامة مميزة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><input type="text" id="userLandmark" placeholder="بجوار ..." required value="${e?.landmark||""}"></div></div></div><div class="account-actions"><button type="submit" class="buy-now-btn" id="accountSubmitBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span>${t}</span></button></div></form></div>`,document.getElementById("profilePicInput").addEventListener("change",handleProfilePicChange),document.getElementById("accountForm").addEventListener("submit",handleAccountFormSubmit)}
 function handleProfilePicChange(e){const t=e.target.files[0];if(!t)return;const o=new FileReader;o.onload=e=>{selectedProfilePic=e.target.result,document.getElementById("profilePicPreview").src=selectedProfilePic},o.readAsDataURL(t)}
 function handleAccountFormSubmit(e){e.preventDefault();const t=getUserData()||{},o={name:document.getElementById("userName").value,phone:document.getElementById("userPhone").value,email:document.getElementById("userEmail").value,governorate:document.getElementById("userGovernorate").value,city:document.getElementById("userCity").value,address:document.getElementById("userAddress").value,landmark:document.getElementById("userLandmark").value,profilePic:selectedProfilePic||t.profilePic||null};saveUserData(o),alert("تم حفظ بياناتك بنجاح!"),renderAccountView()}
-function createOrderItemHTML(e){const t=allProducts.find(t=>t.id===e.productId);return t?`<div class="order-item" data-product-id="${e.productId}"><img src="${t.images[0]}" alt="${t.name}"><div class="order-details"><h4>${t.name}</h4><p>المقاس: ${e.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${e.color}; vertical-align:middle; border: 1px solid #ddd;"></span></p><p>تاريخ الطلب: ${new Date(e.date).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})}</p><p class="order-total">الإجمالي (بالشحن): <span>${e.totalPrice} جنيه</span></p></div></div>`:"<p>تفاصيل المنتج غير متوفرة.</p>"}
+function createOrderItemHTML(e){const t=allProducts.find(t=>t.id===e.productId);return t?`<div class="order-item" data-product-id="${e.productId}"><img src="${t.images[0]}" alt="${t.name}"><div class="order-details"><h4>${t.name}</h4><p>المقاس: ${e.size} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${e.color}; vertical-align:middle; border: 1px solid #ddd;"></span></p><p>تاريخ الطلب: ${new Date(e.date).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})}</p><p class="order-total">الإجمالي (بالشحن): <span>${parseFloat(e.totalPrice).toFixed(2)} جنيه</span></p></div></div>`:"<p>تفاصيل المنتج غير متوفرة.</p>"}
 
 // Event Listeners
 window.addEventListener("scroll",()=>{let e="";const t=document.querySelectorAll(".section"),o=window.scrollY,n=dom.header.clientHeight;t.forEach(t=>{const o=t.offsetTop-n-1;scrollY>=o&&(e=t.getAttribute("id"))}),window.innerHeight+o>=document.documentElement.scrollHeight-2&&(e=t[t.length-1].getAttribute("id")),document.querySelectorAll("#desktopNav .nav-link").forEach(t=>{t.classList.remove("active"),t.getAttribute("href").substring(1)===e&&t.classList.add("active")}),dom.floatingWidget.classList.toggle("show",o>300)});
@@ -559,8 +563,8 @@ document.addEventListener("click",e=>{dom.searchContainer.contains(e.target)||!d
 dom.searchInput.addEventListener("input",e=>{const t=e.target.value.toLowerCase().trim();dom.searchResultsInfo.innerHTML=t?`نتائج البحث عن: <span>'${t}'</span>`:"",renderProducts(allProducts.filter(e=>e.name.toLowerCase().includes(t)||(e.description||"").toLowerCase().includes(t)))});
 dom.productsGrid.addEventListener("click",e=>{const t=e.target.closest(".product-card");if(!t)return;const o=allProducts.find(e=>e.id==t.dataset.id);o&&openProductModal(o)});
 document.querySelectorAll(".modal .close").forEach(e=>e.addEventListener("click",e=>closeModal(e.target.closest(".modal"))));
-dom.productModal.addEventListener("click",e=>{if(e.target.closest(".size-option")){const t=e.target.closest(".size-option");dom.productModal.querySelectorAll(".size-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedSize=t.textContent}else if(e.target.closest(".color-option")){const t=e.target.closest(".color-option");dom.productModal.querySelectorAll(".color-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedColor=t.title}else e.target.closest(".prev-image")?currentImageIndex>0&&(currentImageIndex--,updateSliderView()):e.target.closest(".next-image")?currentImageIndex<currentProduct.images.length-1&&(currentImageIndex++,updateSliderView()):e.target.closest("#modalBuyBtn")&&(!selectedSize||!selectedColor?alert("الرجاء اختيار المقاس واللون أولاً."):(closeModal(dom.productModal),function(){const e=getUserData();document.getElementById("purchaseForm").reset(),e&&(document.getElementById("customerName").value=e.name,document.getElementById("customerPhone").value=e.phone,document.getElementById("customerLocation").value=`${e.address}, ${e.city}, ${e.governorate}. (أقرب معلم: ${e.landmark})`);document.getElementById("summaryProductName").textContent=currentProduct.name,document.getElementById("summarySelectedSize").textContent=selectedSize,document.getElementById("summarySelectedColor").innerHTML=`<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle; border: 1px solid #ddd;"></span>`;const t=50,o=currentProduct.price+t;document.getElementById("summaryProductPrice").textContent=`${currentProduct.price} جنيه`,document.getElementById("summaryShippingCost").textContent=`${t} جنيه`,document.getElementById("summaryTotalPrice").textContent=`${o} جنيه`,openModal(dom.purchaseModal)}()))});
-document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name}`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nالمنتج: ${currentProduct.name}\nالمقاس: ${selectedSize}\nاللون: ${selectedColor}\n\n-- تفاصيل السعر --\nسعر المنتج: ${currentProduct.price} جنيه\nتكلفة الشحن: ${o} جنيه\nالإجمالي: ${n} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
+dom.productModal.addEventListener("click",e=>{if(e.target.closest(".size-option")){const t=e.target.closest(".size-option");dom.productModal.querySelectorAll(".size-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedSize=t.textContent}else if(e.target.closest(".color-option")){const t=e.target.closest(".color-option");dom.productModal.querySelectorAll(".color-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedColor=t.title}else e.target.closest(".prev-image")?currentImageIndex>0&&(currentImageIndex--,updateSliderView()):e.target.closest(".next-image")?currentImageIndex<currentProduct.images.length-1&&(currentImageIndex++,updateSliderView()):e.target.closest("#modalBuyBtn")&&(!selectedSize||!selectedColor?alert("الرجاء اختيار المقاس واللون أولاً."):(closeModal(dom.productModal),function(){const e=getUserData();document.getElementById("purchaseForm").reset(),e&&(document.getElementById("customerName").value=e.name,document.getElementById("customerPhone").value=e.phone,document.getElementById("customerLocation").value=`${e.address}, ${e.city}, ${e.governorate}. (أقرب معلم: ${e.landmark})`);document.getElementById("summaryProductName").textContent=currentProduct.name,document.getElementById("summarySelectedSize").textContent=selectedSize,document.getElementById("summarySelectedColor").innerHTML=`<span style="display:inline-block; width:20px; height:20px; border-radius:50%; background-color:${selectedColor}; vertical-align:middle; border: 1px solid #ddd;"></span>`;const t=50,o=currentProduct.price+t;document.getElementById("summaryProductPrice").textContent=`${currentProduct.price.toFixed(2)} جنيه`,document.getElementById("summaryShippingCost").textContent=`${t.toFixed(2)} جنيه`,document.getElementById("summaryTotalPrice").textContent=`${o.toFixed(2)} جنيه`,openModal(dom.purchaseModal)}()))});
+document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name}`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nالمنتج: ${currentProduct.name}\nالمقاس: ${selectedSize}\nاللون: ${selectedColor}\n\n-- تفاصيل السعر --\nسعر المنتج: ${currentProduct.price.toFixed(2)} جنيه\nتكلفة الشحن: ${o.toFixed(2)} جنيه\nالإجمالي: ${n.toFixed(2)} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
 dom.accountBtn.addEventListener("click",openAccountModal);
 dom.accountModal.addEventListener("click",e=>{e.target.closest("#editAccountBtn")?renderAccountForm(getUserData()):e.target.closest("#myOrdersBtn")?openOrdersModal():e.target.closest("#logoutBtn")&&confirm("هل أنت متأكد من رغبتك في تسجيل الخروج؟")&&(localStorage.removeItem("userData"),alert("تم تسجيل الخروج."),renderAccountView())});
 dom.ordersModal.addEventListener("click",e=>{const t=e.target.closest(".order-item[data-product-id]");if(!t)return;const o=parseInt(t.dataset.productId,10),n=allProducts.find(e=>e.id===o);n&&(closeModal(dom.ordersModal),openProductModal(n))});
