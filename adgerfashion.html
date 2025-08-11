@@ -57,7 +57,7 @@
     /* --- Header --- */
     .header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 0 14px !important; height: var(--header-height); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; }
     .header .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .logo { transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease; overflow: hidden; white-space: nowrap; }
+    .logo { transition: max-width 0.4s ease, opacity 0.3s ease; overflow: hidden; white-space: nowrap; }
     .logo a { text-decoration: none; color: inherit; }
     .logo h1 {
         font-family: var(--font-logo);
@@ -71,25 +71,38 @@
     .logo-adger { background: linear-gradient(45deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .logo-fashion { background: linear-gradient(90deg, #C0A062, #e6c8e1, #a9c5df, #C0A062); background-size: 300% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: animate-gradient-text 6s linear infinite; }
     @keyframes animate-gradient-text { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .header-right { display: flex; align-items: center; gap: 1rem; }
+    .header-right { display: flex; align-items: center; gap: 1rem; transition: gap 0.4s ease; }
     .nav { display: none; }
     .nav a { color: var(--color-text); text-decoration: none; font-weight: 600; transition: color 0.3s ease; position: relative; padding: 5px 0; }
     .nav a::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--color-secondary); transition: width 0.3s ease; }
     .nav a:hover, .nav a.active { color: var(--color-secondary); }
     .nav a.active::after { width: 100%; }
-    .account-icon { cursor: pointer; color: var(--color-primary); transition: transform 0.3s ease, opacity 0.3s ease, display 0.4s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .account-icon { cursor: pointer; color: var(--color-primary); transition: transform 0.3s ease, opacity 0.3s ease, max-width 0.4s ease; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .account-icon:hover { transform: scale(1.1); color: var(--color-secondary); }
 
     /* --- Header Search --- */
-    .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; transition: all 0.4s ease; }
+    .search-container { position: relative; display: flex; align-items: center; background: var(--color-light-gray); border-radius: 50px; }
     .search-container.active { box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+    /* --- [!الحل هنا!] --- */
     #headerSearchInput {
         border: none; background: transparent; outline: none; width: 0;
         padding: 5px 10px 5px 40px;
-        opacity: 0; font-size: 0.9rem; transition: all 0.4s ease; height: 38px;
+        opacity: 0; font-size: 0.9rem; 
+        height: 38px;
         box-sizing: border-box; border-radius: 50px; font-family: var(--font-primary);
+        /* إزالة الحركة من الحالة الافتراضية */
+        transition: none;
     }
-    .search-container.active #headerSearchInput { width: 180px; opacity: 1; }
+    
+    .search-container.active #headerSearchInput {
+        width: 180px;
+        opacity: 1;
+        /* إضافة الحركة هنا فقط (عند الفتح) */
+        transition: all 0.4s ease;
+    }
+    /* --- نهاية الحل --- */
+    
     .search-icon {
         position: absolute;
         top: 50%;
@@ -107,7 +120,7 @@
     .search-icon:hover { color: var(--color-secondary); }
 
     /* --- Mobile Navigation & Hero --- */
-    .mobile-menu-toggle { display: flex; flex-direction: column; gap: 5px; width: 24px; height: 20px; cursor: pointer; z-index: 1010; flex-shrink: 0; }
+    .mobile-menu-toggle { display: flex; flex-direction: column; gap: 5px; width: 24px; height: 20px; cursor: pointer; z-index: 1010; flex-shrink: 0; transition: opacity 0.4s ease, max-width 0.4s ease; }
     .mobile-menu-toggle span { width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease-in-out; }
     .mobile-menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
@@ -138,36 +151,10 @@
     .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
     .product-image { height: 300px; background-color: #f1f1f1; position: relative; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; }
-    
-    /* --- [!الحل هنا!] تم زيادة الحشو الرأسي لزيادة المسافات --- */
-    .product-info {
-        padding: 2rem 1.5rem; /*  <-- تم زيادة الحشو الرأسي */
-        text-align: right;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .product-name {
-        font-family: var(--font-primary);
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--color-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .product-category {
-        font-size: 0.8rem;
-        color: #6c757d;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .product-price {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--color-secondary);
-    }
+    .product-info { padding: 1.5rem; text-align: right; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-name { font-family: var(--font-primary); font-size: 1.2rem; font-weight: 600; color: var(--color-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px; }
+    .product-category { font-size: 0.8rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--color-secondary); }
     
     /* --- Other Styles (unchanged) --- */
     .contact-section{padding-bottom:6rem}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.contact-card{text-align:center;padding:2rem}.contact-card .icon{margin-bottom:1rem;color:var(--color-secondary)}.contact-card h4{font-family:var(--font-primary);font-weight:600;margin-bottom:.5rem}.contact-card p{color:#6c757d;font-size:.9rem}.footer{background:var(--color-primary);color:rgba(255,255,255,.8);padding:4rem 0 2rem}.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}.footer-section h4{margin-bottom:1.5rem;color:#fff;font-size:1.2rem}.footer-section ul{list-style:none}.footer-section ul li{margin-bottom:.75rem}.footer-section ul li a{color:rgba(255,255,255,.8);text-decoration:none;transition:all .3s ease}.footer-section ul li a:hover{color:var(--color-secondary)}.social-links{display:flex;gap:1rem;margin-top:1rem}.social-link{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;text-decoration:none;transition:all .3s ease}.social-link:hover{background:var(--color-secondary);transform:translateY(-3px)}.footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem}.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center}.modal-content{background-color:#fff;border-radius:12px;width:90%;max-width:900px;max-height:95vh;overflow:hidden;position:relative;display:flex;flex-direction:column;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.modal-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;border-bottom:1px solid var(--color-border);width:100%;flex-shrink:0}.modal-logo h3{font-family:var(--font-logo);font-size:1.6rem;font-weight:700;margin:0;line-height:1}.close{position:static;color:#888;font-size:35px;font-weight:300;cursor:pointer;background:0 0;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:background .3s ease,color .3s ease;line-height:1}.close:hover{background:var(--color-light-gray);color:var(--color-primary)}.modal-body{overflow-y:auto;flex-grow:1}#productModal .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2.5rem;align-items:start}
@@ -179,24 +166,14 @@
     @media (max-width:950px) { .logo h1 { font-size: 1.5rem; } }
     
     @media (min-width: 992px) {
-        .products-grid {
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        }
-        .product-image {
-            height: 380px;
-        }
-        .product-name {
-            font-size: 1.3rem;
-        }
-        .product-price {
-            font-size: 1.4rem;
-        }
+        .products-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        .product-image { height: 380px; }
+        .product-name { font-size: 1.3rem; }
+        .product-price { font-size: 1.4rem; }
     }
 
     @media (max-width:768px) {
-        .container {
-            padding: 0 15px;
-        }
+        .container { padding: 0 15px; }
         .header { padding: 0 !important; }
         .header .container { padding: 0 1rem; }
         .header-right { gap: .7rem; }
@@ -208,11 +185,6 @@
         #productModal .modal-images { height: 60vh; width: 100%; border-radius: 0; }
         #productModal .modal-details { padding: 1.5rem; }
         .logo { max-width: 500px; margin-right: 0; }
-        .header.search-active-mobile .logo { max-width: 0; opacity: 0; margin-left: -1rem; }
-        .header.search-active-mobile .account-icon { opacity: 0; pointer-events: none; }
-        .header.search-active-mobile .header-right { flex-grow: 1; }
-        .header.search-active-mobile #headerSearchInput { width: 100%; opacity: 1; }
-        .header.search-active-mobile .search-container { flex-grow: 1; margin-right: -25px; margin-left: 10px; }
         .footer-content { grid-template-columns: 1fr; text-align: center; }
         .social-links { justify-content: center; }
         .floating-action-widget { bottom: 15px; left: 15px; }
@@ -221,26 +193,41 @@
         .order-item { flex-direction: column; align-items: center; text-align: center;}
         .order-item img { margin-bottom: 1rem; width: 100%; height: auto; max-height: 250px; object-fit: cover; }
         .account-modal-body, .orders-modal-body { padding: 1.5rem; }
+        .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .product-card { border-radius: 12px; }
+        .product-image { height: auto; aspect-ratio: 1 / 1; }
+        .product-info { padding: 1rem 0.75rem; }
+        .product-name { font-size: 0.9rem; }
+        .product-price { font-size: 1rem; }
 
-        .products-grid { 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 1rem;
+        .header.search-active-mobile .logo {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
         }
-        .product-card {
-            border-radius: 12px;
+        
+        .header.search-active-mobile .account-icon,
+        .header.search-active-mobile .mobile-menu-toggle {
+            max-width: 0;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
         }
-        .product-image {
-            height: auto; 
-            aspect-ratio: 1 / 1; 
+        
+        .header.search-active-mobile .header-right {
+            flex-grow: 1;
+            gap: 0; /* إلغاء الفجوة لضمان عدم وجود مسافات إضافية */
         }
-        .product-info {
-            padding: 1rem 0.75rem;  /*  <-- تم زيادة الحشو الرأسي للجوال */
+        
+        /* هنا نضمن أن حقل الإدخال يستفيد من الحركة عند الفتح في الموبايل أيضًا */
+        .header.search-active-mobile #headerSearchInput {
+            width: 100%;
+            opacity: 1;
         }
-        .product-name {
-            font-size: 0.9rem; 
-        }
-        .product-price {
-            font-size: 1rem; 
+        
+        .header.search-active-mobile .search-container {
+            flex-grow: 1;
+            margin: 0; /* إزالة أي هوامش لضمان التمدد الكامل */
         }
     }
 
