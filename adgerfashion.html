@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
     /* --- Base & Reset --- */
     :root {
@@ -144,7 +143,6 @@
     #searchResultsInfo span { font-weight: 600; color: var(--color-secondary); }
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
     
-    /* --- [!الحل هنا!] --- */
     .product-card {
         background: white;
         border: 1px solid var(--color-border);
@@ -153,11 +151,8 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        -webkit-tap-highlight-color: transparent; /* لمنع التحديد الأزرق عند النقر */
+        -webkit-tap-highlight-color: transparent; 
     }
-    /* تم إلغاء تأثير الـ hover بناءً على طلبك */
-  
-    /* --- نهاية الحل --- */
 
     .product-image { height: 300px; background-color: #f1f1f1; position: relative; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; }
@@ -183,7 +178,12 @@
     }
 
     @media (max-width:768px) {
-        .container { padding: 0 15px; }
+        /* --- بداية التعديل المطلوب --- */
+        .container { 
+            padding: 0 0.5rem; /* جعل الحشوة الجانبية مساوية للفجوة بين المنتجات */
+        }
+        /* --- نهاية التعديل --- */
+
         .header { padding: 0 !important; }
         .header .container { padding: 0 1rem; }
         .header-right { gap: .7rem; }
@@ -203,12 +203,24 @@
         .order-item { flex-direction: column; align-items: center; text-align: center;}
         .order-item img { margin-bottom: 1rem; width: 100%; height: auto; max-height: 250px; object-fit: cover; }
         .account-modal-body, .orders-modal-body { padding: 1.5rem; }
-        .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        
+        .products-grid { 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 0.5rem;
+        }
+        
         .product-card { border-radius: 12px; }
         .product-image { height: auto; aspect-ratio: 1 / 1; }
         .product-info { padding: 1rem 0.75rem; }
         .product-name { font-size: 0.9rem; }
         .product-price { font-size: 1rem; }
+
+        #products.section-tight {
+            padding-top: 1.5rem;
+        }
+        #products .section-title {
+            margin-bottom: 1.5rem;
+        }
 
         .header.search-active-mobile .logo {
             max-width: 0;
@@ -226,10 +238,9 @@
         
         .header.search-active-mobile .header-right {
             flex-grow: 1;
-            gap: 0; /* إلغاء الفجوة لضمان عدم وجود مسافات إضافية */
+            gap: 0;
         }
         
-        /* هنا نضمن أن حقل الإدخال يستفيد من الحركة عند الفتح في الموبايل أيضًا */
         .header.search-active-mobile #headerSearchInput {
             width: 100%;
             opacity: 1;
@@ -237,7 +248,7 @@
         
         .header.search-active-mobile .search-container {
             flex-grow: 1;
-            margin: 0; /* إزالة أي هوامش لضمان التمدد الكامل */
+            margin: 0;
         }
     }
 
@@ -430,6 +441,7 @@
         <div class="widget-separator"></div>
         <a href="#home" class="floating-btn" id="scrollTopBtn" title="العودة للأعلى"><svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 0 1-.708-.708l6-6z"></path><path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path></svg></a>
     </div>
+</body>
 
 <script type="module">
     // --- JavaScript remains completely unchanged, the fix is purely in CSS ---
