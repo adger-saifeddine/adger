@@ -742,7 +742,9 @@ function openOrdersModal() {
         
         const allOrders = lastOrder ? [lastOrder, ...orderHistory] : [...orderHistory];
         const totalValue = allOrders.reduce((sum, order) => sum + parseFloat(order.totalPrice || 0), 0);
-        totalPriceEl.innerHTML = `<span>إجمالي قيمة المشتريات:</span> <strong>${totalValue.toFixed(2)} جنيه</strong>`;
+        // --- START: MODIFIED CODE ---
+        totalPriceEl.innerHTML = `<span>إجمالي قيمة المشتريات:</span> <strong>${totalValue.toFixed(2)}&nbsp;جنيه</strong>`;
+        // --- END: MODIFIED CODE ---
         totalPriceEl.style.display = 'block';
 
         if (lastOrder) {
