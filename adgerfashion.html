@@ -163,8 +163,23 @@
     
     /* --- Other Styles --- */
     .contact-section{padding-bottom:6rem}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.contact-card{text-align:center;padding:2rem}.contact-card .icon{margin-bottom:1rem;color:var(--color-secondary)}.contact-card h4{font-family:var(--font-primary);font-weight:600;margin-bottom:.5rem}.contact-card p{color:#6c757d;font-size:.9rem}.footer{background:var(--color-primary);color:rgba(255,255,255,.8);padding:4rem 0 2rem}.footer-content{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}.footer-section h4{margin-bottom:1.5rem;color:#fff;font-size:1.2rem}.footer-section ul{list-style:none}.footer-section ul li{margin-bottom:.75rem}.footer-section ul li a{color:rgba(255,255,255,.8);text-decoration:none;transition:all .3s ease}.footer-section ul li a:hover{color:var(--color-secondary)}.social-links{display:flex;gap:1rem;margin-top:1rem}.social-link{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;text-decoration:none;transition:all .3s ease}.social-link:hover{background:var(--color-secondary);transform:translateY(-3px)}.footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem}.modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.6);backdrop-filter:blur(5px);align-items:center;justify-content:center}.modal-content{background-color:#fff;border-radius:12px;width:90%;max-width:900px;max-height:95vh;overflow:hidden;position:relative;display:flex;flex-direction:column;animation:modalFadeIn .3s ease-out}@keyframes modalFadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.modal-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;border-bottom:1px solid var(--color-border);width:100%;flex-shrink:0}.modal-logo h3{font-family:var(--font-logo);font-size:1.6rem;font-weight:700;margin:0;line-height:1}.close{position:static;color:#888;font-size:35px;font-weight:300;cursor:pointer;background:0 0;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:background .3s ease,color .3s ease;line-height:1}.close:hover{background:var(--color-light-gray);color:var(--color-primary)}.modal-body{overflow-y:auto;flex-grow:1}#productModal .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2.5rem;align-items:start}
+    
+    /* --- CSS MODIFICATION: Image slider improvements --- */
     .modal-images{position:relative;width:100%;height:550px;max-height:550px;overflow:hidden;border-radius:8px;background-color:#f1f1f1;cursor:grab;touch-action:pan-y; direction: ltr;}
-    .modal-images:active{cursor:grabbing}.image-track{display:flex;height:100%;will-change: transform;}.slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center}.slide img{width:100%;height:100%;object-fit:cover;-webkit-user-select:none;user-select:none;pointer-events:none}.image-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:1.5rem;cursor:pointer;transition:background .3s ease;display:flex;align-items:center;justify-content:center;z-index:10}.image-nav:hover{background:rgba(0,0,0,.7)}.prev-image{left:15px}.next-image{right:15px}.image-counter{position:absolute;bottom:15px;right:15px;color:var(--color-text);background:rgba(255,255,255,.8);padding:5px 10px;border-radius:5px;font-size:.9rem;font-weight:500;z-index:10; direction: rtl;}.modal-details{display:flex;flex-direction:column;gap:1rem}.modal-details h2{font-size:2.2rem;margin-bottom:.5rem}.modal-details .price{font-size:1.8rem;font-weight:600;color:var(--color-secondary);margin-bottom:1rem}.spec-group{margin-bottom:1.5rem}.spec-group h4{font-family:var(--font-primary);font-size:1rem;font-weight:600;margin-bottom:.75rem}.sizes,.colors{display:flex;gap:.5rem;flex-wrap:wrap}.size-option,.color-option{border:2px solid var(--color-border);border-radius:5px;cursor:pointer;transition:all .3s ease}.size-option{padding:.5rem 1rem;font-family:Poppins,sans-serif}.color-option{width:35px;height:35px;border-radius:50%}.size-option.selected,.color-option.selected{border-color:var(--color-primary);background-color:var(--color-primary);color:#fff}.color-option.selected{transform:scale(1.1)}.buy-now-btn{width:100%;padding:1rem;background:var(--color-primary);color:#fff;border:none;border-radius:8px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.75rem;font-family:var(--font-primary)}.buy-now-btn:hover{background:var(--color-secondary)}.buy-now-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}#purchaseModal .modal-content{max-width:550px}.purchase-form{padding:2.5rem}.purchase-form .modal-header h2{font-family:var(--font-display);font-size:1.8rem;margin:0}.purchase-summary{margin-bottom:1.5rem}.purchase-summary h3{font-family:var(--font-display);font-size:1.4rem;color:var(--color-primary);text-align:center;margin-bottom:1.5rem;border-bottom:1px solid var(--color-border);padding-bottom:1rem}.summary-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;font-size:1rem}.summary-item span:first-child{color:#6c757d}.summary-item strong,.summary-item #summarySelectedColor{color:var(--color-primary);font-weight:600}.purchase-pricing{border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:1rem 0;margin-bottom:1.5rem}.summary-total{display:flex;justify-content:space-between;align-items:center;font-size:1.2rem;margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--color-border)}.summary-total span{font-weight:600;color:var(--color-primary)}.summary-total strong{color:var(--color-secondary);font-size:1.4rem;font-weight:700}.purchase-form .form-group{margin-bottom:1rem}.purchase-form input,.purchase-form textarea{width:100%;padding:.8rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);background-color:#fff}.purchase-form button[type=submit]{width:100%;margin-top:1.5rem}#accountModal .modal-content,#ordersModal .modal-content{max-width:650px}.account-modal-body,.orders-modal-body{padding:2rem 2.5rem}#accountModalTitle{font-family:var(--font-display);font-size:1.8rem;color:var(--color-primary)}#accountFormContainer .profile-pic-container{position:relative;width:120px;height:120px;margin:0 auto 1.5rem}#profilePicPreview{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--color-border);background-color:var(--color-light-gray)}.change-pic-label{position:absolute;bottom:5px;right:5px;width:32px;height:32px;background:var(--color-primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff;transition:transform .3s ease}.change-pic-label:hover{transform:scale(1.1)}.account-form{text-align:right}.account-form .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}.account-form .form-group{margin-bottom:.5rem}.account-form .form-group.full-width{grid-column:1 / -1}.account-form label{display:block;margin-bottom:.5rem;font-weight:600;font-size:.9rem}.account-form .input-wrapper{position:relative}.account-form .input-wrapper svg{position:absolute;top:50%;right:15px;transform:translateY(-50%);color:var(--color-input-icon);width:18px;height:18px;pointer-events:none;transition:color .3s ease}.account-form .input-wrapper:focus-within svg{color:var(--color-secondary)}.account-form input,.account-form textarea{width:100%;padding:.8rem 45px .8rem 1rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);transition:border-color .3s ease,box-shadow .3s ease}.account-form input:focus,.account-form textarea:focus{outline:0;border-color:var(--color-secondary);box-shadow:0 0 0 3px rgba(192,160,98,.2)}.account-form textarea{resize:vertical;min-height:80px}.account-form .input-wrapper textarea+svg{top:1.2rem;transform:translateY(0)}.account-actions{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}#accountDetailsContainer{display:none;flex-direction:column;align-items:center;text-align:center;width:100%}#detailsProfilePic{width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)}#detailsUserName{font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem}#detailsInfoList{list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem}#detailsInfoList li{display:flex;align-items:center;gap:1rem;font-size:1rem;margin-bottom:1rem;color:var(--color-text)}#detailsInfoList li svg{width:20px;height:20px;color:var(--color-secondary);flex-shrink:0}.details-address-block{text-align:right;width:100%;max-width:400px;margin-bottom:2rem}.details-address-block h4{display:flex;align-items:center;gap:.75rem;font-family:var(--font-primary);font-size:1.1rem;font-weight:600;margin-bottom:.5rem}#detailsUserAddress{font-size:.95rem;color:#6c757d;line-height:1.6;padding-right:32px}#logoutBtn{background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)}#logoutBtn:hover{background:var(--color-danger);color:#fff}.orders-modal-body h3{margin-bottom:1.5rem}.order-item{display:flex;align-items:center;gap:1.5rem;padding:1rem;border:1px solid var(--color-border);border-radius:8px;margin-bottom:1rem;text-align:right;cursor:pointer;transition:all .3s ease}.order-item:hover{border-color:var(--color-secondary);box-shadow:var(--shadow-sm);transform:translateY(-3px)}.order-item img{width:150px;height:150px;object-fit:cover;background-color:var(--color-light-gray);border-radius:4px;flex-shrink:0}.order-details{flex-grow:1;display:flex;flex-direction:column;justify-content:center}
+    .modal-images:active{cursor:grabbing}
+    .image-track{
+        display:flex;
+        height:100%;
+        /* This hints the browser to optimize animations for the transform property */
+        will-change: transform;
+    }
+    .image-track.transitioning {
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .slide img{width:100%;height:100%;object-fit:cover;-webkit-user-select:none;user-select:none;pointer-events:none}
+    
+    .image-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:1.5rem;cursor:pointer;transition:background .3s ease;display:flex;align-items:center;justify-content:center;z-index:10}.image-nav:hover{background:rgba(0,0,0,.7)}.prev-image{left:15px}.next-image{right:15px}.image-counter{position:absolute;bottom:15px;right:15px;color:var(--color-text);background:rgba(255,255,255,.8);padding:5px 10px;border-radius:5px;font-size:.9rem;font-weight:500;z-index:10; direction: rtl;}.modal-details{display:flex;flex-direction:column;gap:1rem}.modal-details h2{font-size:2.2rem;margin-bottom:.5rem}.modal-details .price{font-size:1.8rem;font-weight:600;color:var(--color-secondary);margin-bottom:1rem}.spec-group{margin-bottom:1.5rem}.spec-group h4{font-family:var(--font-primary);font-size:1rem;font-weight:600;margin-bottom:.75rem}.sizes,.colors{display:flex;gap:.5rem;flex-wrap:wrap}.size-option,.color-option{border:2px solid var(--color-border);border-radius:5px;cursor:pointer;transition:all .3s ease}.size-option{padding:.5rem 1rem;font-family:Poppins,sans-serif}.color-option{width:35px;height:35px;border-radius:50%}.size-option.selected,.color-option.selected{border-color:var(--color-primary);background-color:var(--color-primary);color:#fff}.color-option.selected{transform:scale(1.1)}.buy-now-btn{width:100%;padding:1rem;background:var(--color-primary);color:#fff;border:none;border-radius:8px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.75rem;font-family:var(--font-primary)}.buy-now-btn:hover{background:var(--color-secondary)}.buy-now-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}#purchaseModal .modal-content{max-width:550px}.purchase-form{padding:2.5rem}.purchase-form .modal-header h2{font-family:var(--font-display);font-size:1.8rem;margin:0}.purchase-summary{margin-bottom:1.5rem}.purchase-summary h3{font-family:var(--font-display);font-size:1.4rem;color:var(--color-primary);text-align:center;margin-bottom:1.5rem;border-bottom:1px solid var(--color-border);padding-bottom:1rem}.summary-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;font-size:1rem}.summary-item span:first-child{color:#6c757d}.summary-item strong,.summary-item #summarySelectedColor{color:var(--color-primary);font-weight:600}.purchase-pricing{border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:1rem 0;margin-bottom:1.5rem}.summary-total{display:flex;justify-content:space-between;align-items:center;font-size:1.2rem;margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--color-border)}.summary-total span{font-weight:600;color:var(--color-primary)}.summary-total strong{color:var(--color-secondary);font-size:1.4rem;font-weight:700}.purchase-form .form-group{margin-bottom:1rem}.purchase-form input,.purchase-form textarea{width:100%;padding:.8rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);background-color:#fff}.purchase-form button[type=submit]{width:100%;margin-top:1.5rem}#accountModal .modal-content,#ordersModal .modal-content{max-width:650px}.account-modal-body,.orders-modal-body{padding:2rem 2.5rem}#accountModalTitle{font-family:var(--font-display);font-size:1.8rem;color:var(--color-primary)}#accountFormContainer .profile-pic-container{position:relative;width:120px;height:120px;margin:0 auto 1.5rem}#profilePicPreview{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--color-border);background-color:var(--color-light-gray)}.change-pic-label{position:absolute;bottom:5px;right:5px;width:32px;height:32px;background:var(--color-primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff;transition:transform .3s ease}.change-pic-label:hover{transform:scale(1.1)}.account-form{text-align:right}.account-form .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}.account-form .form-group{margin-bottom:.5rem}.account-form .form-group.full-width{grid-column:1 / -1}.account-form label{display:block;margin-bottom:.5rem;font-weight:600;font-size:.9rem}.account-form .input-wrapper{position:relative}.account-form .input-wrapper svg{position:absolute;top:50%;right:15px;transform:translateY(-50%);color:var(--color-input-icon);width:18px;height:18px;pointer-events:none;transition:color .3s ease}.account-form .input-wrapper:focus-within svg{color:var(--color-secondary)}.account-form input,.account-form textarea{width:100%;padding:.8rem 45px .8rem 1rem;border:1px solid var(--color-border);border-radius:8px;font-size:1rem;font-family:var(--font-primary);transition:border-color .3s ease,box-shadow .3s ease}.account-form input:focus,.account-form textarea:focus{outline:0;border-color:var(--color-secondary);box-shadow:0 0 0 3px rgba(192,160,98,.2)}.account-form textarea{resize:vertical;min-height:80px}.account-form .input-wrapper textarea+svg{top:1.2rem;transform:translateY(0)}.account-actions{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}#accountDetailsContainer{display:none;flex-direction:column;align-items:center;text-align:center;width:100%}#detailsProfilePic{width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)}#detailsUserName{font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem}#detailsInfoList{list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem}#detailsInfoList li{display:flex;align-items:center;gap:1rem;font-size:1rem;margin-bottom:1rem;color:var(--color-text)}#detailsInfoList li svg{width:20px;height:20px;color:var(--color-secondary);flex-shrink:0}.details-address-block{text-align:right;width:100%;max-width:400px;margin-bottom:2rem}.details-address-block h4{display:flex;align-items:center;gap:.75rem;font-family:var(--font-primary);font-size:1.1rem;font-weight:600;margin-bottom:.5rem}#detailsUserAddress{font-size:.95rem;color:#6c757d;line-height:1.6;padding-right:32px}#logoutBtn{background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)}#logoutBtn:hover{background:var(--color-danger);color:#fff}.orders-modal-body h3{margin-bottom:1.5rem}.order-item{display:flex;align-items:center;gap:1.5rem;padding:1rem;border:1px solid var(--color-border);border-radius:8px;margin-bottom:1rem;text-align:right;cursor:pointer;transition:all .3s ease}.order-item:hover{border-color:var(--color-secondary);box-shadow:var(--shadow-sm);transform:translateY(-3px)}.order-item img{width:150px;height:150px;object-fit:cover;background-color:var(--color-light-gray);border-radius:4px;flex-shrink:0}.order-details{flex-grow:1;display:flex;flex-direction:column;justify-content:center}
 
     .order-details h4 {
         font-family: var(--font-primary);
@@ -330,7 +345,6 @@
 <body>
 
 <!-- HTML Body is unchanged -->
-
 <header class="header">
     <div class="container">
         <div class="logo">
@@ -570,8 +584,13 @@ const dom = {
 
 let currentProduct = null, selectedSize = null, selectedColor = null;
 // --- START: MODIFIED CODE ---
-// Added startTime for velocity calculation
-let isDragging = false, startPosX = 0, currentImageIndex = 0, initialTranslate = 0, startTime = 0;
+// Re-architected state variables for the new, robust slider logic
+let isDragging = false,
+    startPosX = 0,
+    currentTranslate = 0,
+    previousTranslate = 0,
+    startTime = 0,
+    currentImageIndex = 0;
 // --- END: MODIFIED CODE ---
 
 function renderProducts(productArray = allProducts) {
@@ -611,9 +630,7 @@ function openProductModal(product) {
     } else { colorSpecGroup.style.display = 'none'; colorsContainer.innerHTML = ''; }
 
     dom.imageTrack.innerHTML = product.images.map(imgUrl => `<div class="slide"><img src="${imgUrl}" alt="${product.name}"></div>`).join("");
-    dom.imageTrack.style.transition = 'none'; 
-    updateSliderView();
-    setTimeout(() => { dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; }, 50);
+    updateSliderPosition();
     openModal(dom.productModal);
 }
 
@@ -658,89 +675,81 @@ function openModal(modalElement) {
 }
 
 function closeModal(e){e.style.display="none";const t=document.querySelectorAll('.modal[style*="display: flex"]');0===t.length&&!dom.mobileNav.classList.contains("active")&&document.body.classList.remove("menu-open")}
-function updateSliderView(){if(!dom.imageContainer||!dom.imageTrack)return;const e=-currentImageIndex*dom.imageContainer.offsetWidth;dom.imageTrack.style.transform=`translateX(${e}px)`,document.getElementById("imageCounter").textContent=`${currentImageIndex+1} / ${currentProduct.images.length}`}
 
-// --- START: MODIFIED CODE (Touch Handlers) ---
-function touchStart(e){
-    isDragging=true;
-    startTime = Date.now(); // Record start time for velocity calculation
-    startPosX=e.touches[0].clientX;
-    const t=window.getComputedStyle(dom.imageTrack).getPropertyValue("transform");
-    initialTranslate="none"!==t?parseInt(t.split(",")[4].trim()):0;
-    dom.imageTrack.style.transition="none";
+// --- START: MODIFIED CODE (Complete Slider Logic) ---
+function updateSliderPosition() {
+    if (!dom.imageContainer || !dom.imageTrack) return;
+    // Set the transform directly
+    dom.imageTrack.style.transform = `translateX(${currentTranslate}px)`;
+    // Update the counter
+    document.getElementById("imageCounter").textContent = `${currentImageIndex + 1} / ${currentProduct.images.length}`;
+}
+
+function touchStart(e) {
+    isDragging = true;
+    startTime = Date.now();
+    startPosX = e.touches[0].clientX;
+    // Store the starting position of the track
+    previousTranslate = -currentImageIndex * dom.imageContainer.offsetWidth;
+    // Remove the transition class to allow for smooth, non-animated dragging
+    dom.imageTrack.classList.remove('transitioning');
 }
 
 function touchMove(e) {
     if (!isDragging) return;
-
     const currentX = e.touches[0].clientX;
     let dragDistance = currentX - startPosX;
-    const isAtFirstImage = currentImageIndex === 0;
-    const isAtLastImage = currentImageIndex === currentProduct.images.length - 1;
-
-    if ((isAtFirstImage && dragDistance > 0) || (isAtLastImage && dragDistance < 0)) {
-        const resistanceFactor = 3;
-        dragDistance /= resistanceFactor;
+    
+    // Apply elastic resistance when dragging past the boundaries
+    if ((currentImageIndex === 0 && dragDistance > 0) || (currentImageIndex === currentProduct.images.length - 1 && dragDistance < 0)) {
+        dragDistance /= 3; // The higher the number, the more resistance
     }
     
-    dom.imageTrack.style.transform = `translateX(${initialTranslate + dragDistance}px)`;
+    currentTranslate = previousTranslate + dragDistance;
+    updateSliderPosition();
 }
 
-function touchEnd(e){
-    if(!isDragging)return;
-    isDragging=false;
-    dom.imageTrack.style.transition="transform .4s cubic-bezier(.25,.46,.45,.94)";
-    
-    const dragOffset = startPosX - e.changedTouches[0].clientX;
+function touchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Add transition back for the snap-back animation
+    dom.imageTrack.classList.add('transitioning');
+
+    const dragOffset = currentTranslate - previousTranslate;
     const swipeDuration = Date.now() - startTime;
     const swipeVelocity = Math.abs(dragOffset / swipeDuration);
 
+    // Thresholds for deciding if a swipe was intentional
     const thresholdDistance = dom.imageContainer.offsetWidth / 4; // Swipe at least a quarter of the image
-    const thresholdVelocity = 0.4; // A reasonably fast flick (pixels per millisecond)
+    const thresholdVelocity = 0.3; // A reasonably fast flick (pixels per millisecond)
 
-    const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
-    const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+    // Determine if we should move to the next or previous slide
+    const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+    const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
 
-    if(isNextSwipe && currentImageIndex < currentProduct.images.length - 1) {
+    if (isNextSwipe && currentImageIndex < currentProduct.images.length - 1) {
         currentImageIndex++;
     } else if (isPrevSwipe && currentImageIndex > 0) {
         currentImageIndex--;
     }
-    
-    updateSliderView();
-}
-// --- END: MODIFIED CODE (Touch Handlers) ---
 
-// --- START: NEW CODE (Resize Handler) ---
-/**
- * Debounce function to limit the rate at which a function gets called.
- * @param {Function} func The function to debounce.
- * @param {number} delay The delay in milliseconds.
- * @returns {Function} The debounced function.
- */
-function debounce(func, delay) {
-    let timeout;
-    return function(...args) {
-        const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), delay);
-    };
+    // Snap to the correct final position
+    currentTranslate = -currentImageIndex * dom.imageContainer.offsetWidth;
+    updateSliderPosition();
 }
 
-/** Handles window resize to keep the slider aligned. */
+/** Handles window resize to keep the slider aligned perfectly without visual glitches. */
 function handleResize() {
-    // Only update if the product modal is currently visible
     if (dom.productModal.style.display === 'flex') {
-        // Temporarily disable transition for instant repositioning
-        dom.imageTrack.style.transition = 'none';
-        updateSliderView();
-        // Re-enable transition after a short delay
-        setTimeout(() => {
-            dom.imageTrack.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        }, 50);
+        // Temporarily disable transition for an instant, non-animated adjustment
+        dom.imageTrack.classList.remove('transitioning');
+        // Recalculate and snap to the correct position based on the new window size
+        currentTranslate = -currentImageIndex * dom.imageContainer.offsetWidth;
+        updateSliderPosition();
     }
 }
-// --- END: NEW CODE (Resize Handler) ---
+// --- END: MODIFIED CODE ---
 
 function getUserData(){return JSON.parse(localStorage.getItem("userData"))}function saveUserData(e){localStorage.setItem("userData",JSON.stringify(e))}function getOrders(){const e=JSON.parse(localStorage.getItem("lastOrder"))||null,t=JSON.parse(localStorage.getItem("orderHistory"))||[];return{lastOrder:e,orderHistory:t}}function saveOrder(e){let{lastOrder:t,orderHistory:o}=getOrders();t&&o.unshift(t),t=e,localStorage.setItem("lastOrder",JSON.stringify(t)),localStorage.setItem("orderHistory",JSON.stringify(o))}function openAccountModal(){renderAccountView(),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click(),openModal(dom.accountModal)}
 function renderAccountView(){const e=getUserData();if(dom.accountModalBody.innerHTML="",e){const t=e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp",o=e.email?`<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <span>${e.email}</span></li>`:"",n=getOrders(),r=(n.lastOrder?1:0)+n.orderHistory.length;dom.accountModalBody.innerHTML=`<div id="accountDetailsContainer" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%"><img id="detailsProfilePic" src="${t}" alt="Profile Picture" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)"><h2 id="detailsUserName" style="font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem">${e.name}</h2><ul id="detailsInfoList" style="list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span>${e.phone}</span></li>${o}<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg> <span>${e.governorate}</span></li></ul><div class="details-address-block"><h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>العنوان</h4><p id="detailsUserAddress">${e.address}, ${e.city}. (أقرب معلم: ${e.landmark})</p></div><div class="account-actions"><button type="button" class="buy-now-btn" id="editAccountBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>تعديل البيانات</span></button><button type="button" class="buy-now-btn" id="myOrdersBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>مشترياتي (${r})</span></button><button type="button" class="buy-now-btn" id="logoutBtn" style="background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>تسجيل الخروج</span></button></div></div>`}else renderAccountForm(null,"إنشاء حساب وحفظ")}
@@ -778,7 +787,7 @@ document.addEventListener("click",e=>{dom.searchContainer.contains(e.target)||!d
 dom.searchInput.addEventListener("input",e=>{const t=e.target.value.toLowerCase().trim();dom.searchResultsInfo.innerHTML=t?`نتائج البحث عن: <span>'${t}'</span>`:"",renderProducts(allProducts.filter(e=>e.name.toLowerCase().includes(t)||(e.description||"").toLowerCase().includes(t)||e.displayId.toLowerCase().includes(t)))});
 dom.productsGrid.addEventListener("click",e=>{const t=e.target.closest(".product-card");if(!t)return;const o=allProducts.find(e=>e.id==t.dataset.id);o&&openProductModal(o)});
 document.querySelectorAll(".modal .close").forEach(closeBtn=>{closeBtn.addEventListener("click", (e) => { const modalToClose = e.target.closest(".modal"); if (modalToClose.id === 'productModal' && sessionStorage.getItem('returnToOrders') === 'true') { const savedScrollPosition = sessionStorage.getItem('ordersModalScrollPosition') || '0'; sessionStorage.removeItem('returnToOrders'); sessionStorage.removeItem('ordersModalScrollPosition'); closeModal(modalToClose); openOrdersModal(); const ordersModalBody = dom.ordersModal.querySelector('.modal-body'); requestAnimationFrame(() => { ordersModalBody.scrollTop = parseInt(savedScrollPosition, 10); }); } else { closeModal(modalToClose); } });});
-dom.productModal.addEventListener("click",e=>{if(e.target.closest(".size-option")){const t=e.target.closest(".size-option");dom.productModal.querySelectorAll(".size-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedSize=t.textContent}else if(e.target.closest(".color-option")){const t=e.target.closest(".color-option");dom.productModal.querySelectorAll(".color-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedColor=t.title}else if(e.target.closest(".prev-image")){currentImageIndex>0&&(currentImageIndex--,updateSliderView())}else if(e.target.closest(".next-image")){currentImageIndex<currentProduct.images.length-1&&(currentImageIndex++,updateSliderView())}else if(e.target.closest("#modalBuyBtn")){const needsSize=currentProduct.sizes.length>0;const needsColor=currentProduct.colors.length>0;if((needsSize&&!selectedSize)||(needsColor&&!selectedColor)){let alertMessage="الرجاء اختيار";if(needsSize&&!selectedSize)alertMessage+=" المقاس";if((needsSize&&!selectedSize)&&(needsColor&&!selectedColor))alertMessage+=" و";if(needsColor&&!selectedColor)alertMessage+=" اللون";alertMessage+=" أولاً.";alert(alertMessage)}else{closeModal(dom.productModal);openPurchaseModal()}}});
+dom.productModal.addEventListener("click",e=>{if(e.target.closest(".size-option")){const t=e.target.closest(".size-option");dom.productModal.querySelectorAll(".size-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedSize=t.textContent}else if(e.target.closest(".color-option")){const t=e.target.closest(".color-option");dom.productModal.querySelectorAll(".color-option").forEach(e=>e.classList.remove("selected")),t.classList.add("selected"),selectedColor=t.title}else if(e.target.closest(".prev-image")){currentImageIndex>0&&(currentImageIndex--,currentTranslate=-currentImageIndex*dom.imageContainer.offsetWidth,dom.imageTrack.classList.add('transitioning'),updateSliderPosition())}else if(e.target.closest(".next-image")){currentImageIndex<currentProduct.images.length-1&&(currentImageIndex++,currentTranslate=-currentImageIndex*dom.imageContainer.offsetWidth,dom.imageTrack.classList.add('transitioning'),updateSliderPosition())}else if(e.target.closest("#modalBuyBtn")){const needsSize=currentProduct.sizes.length>0;const needsColor=currentProduct.colors.length>0;if((needsSize&&!selectedSize)||(needsColor&&!selectedColor)){let alertMessage="الرجاء اختيار";if(needsSize&&!selectedSize)alertMessage+=" المقاس";if((needsSize&&!selectedSize)&&(needsColor&&!selectedColor))alertMessage+=" و";if(needsColor&&!selectedColor)alertMessage+=" اللون";alertMessage+=" أولاً.";alert(alertMessage)}else{closeModal(dom.productModal);openPurchaseModal()}}});
 document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name} (${currentProduct.displayId})`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nرقم المنتج: ${currentProduct.displayId}\nالمنتج: ${currentProduct.name}\n${selectedSize?'المقاس: '+selectedSize+'\n':''}${selectedColor?'اللون: '+selectedColor+'\n':''}\n-- تفاصيل السعر --\nسعر المنتج: ${formatNumber(currentProduct.price)} جنيه\nتكلفة الشحن: ${formatNumber(o)} جنيه\nالإجمالي: ${formatNumber(n)} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
 dom.accountBtn.addEventListener("click",openAccountModal);
 dom.accountModal.addEventListener("click",e=>{e.target.closest("#editAccountBtn")?renderAccountForm(getUserData()):e.target.closest("#myOrdersBtn")?openOrdersModal():e.target.closest("#logoutBtn")&&confirm("هل أنت متأكد من رغبتك في تسجيل الخروج؟")&&(localStorage.removeItem("userData"),alert("تم تسجيل الخروج."),renderAccountView())});
@@ -789,10 +798,7 @@ renderProducts();
 dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
 dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
 dom.imageContainer.addEventListener('touchend', touchEnd);
-// --- START: NEW CODE ---
-// Add the debounced resize listener
-window.addEventListener('resize', debounce(handleResize, 150));
-// --- END: NEW CODE ---
+window.addEventListener('resize', handleResize); // Add the resize listener
 
 }
 
