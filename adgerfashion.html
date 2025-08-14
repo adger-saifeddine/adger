@@ -189,11 +189,10 @@
         color: var(--color-text);
         font-weight: 600;
     }
-    /* --- CSS MODIFICATION: This rule has been changed to match the user's request --- */
     .orders-total-price strong {
-        font-family: var(--font-primary); /* Changed from --font-display */
-        font-size: 1.1rem;               /* Changed from 1.4rem */
-        font-weight: 700;                /* Added to match individual order total */
+        font-family: var(--font-primary);
+        font-size: 1.1rem;
+        font-weight: 700;
         color: var(--color-secondary);
         margin-right: 0.5rem;
     }
@@ -209,7 +208,6 @@
         display: block;
     }
 
-    /* --- CSS MODIFICATION: Style for separate product ID in orders --- */
     .order-product-id {
         font-size: 0.9rem;
         font-family: 'Poppins', sans-serif;
@@ -218,10 +216,8 @@
         background-color: var(--color-light-gray);
         padding: 2px 10px;
         border-radius: 20px;
-        display: inline-block; /* Kept for robustness */
-        margin-bottom: 0.5rem; /* Space between ID and next element */
-        
-        /* THIS IS THE FIX: Prevents the item from stretching in its flex container */
+        display: inline-block;
+        margin-bottom: 0.5rem;
         align-self: flex-start; 
     }
 
@@ -259,7 +255,6 @@
         .account-form .form-group.full-width { grid-column: auto; }
         .order-item { flex-direction: column; align-items: center; text-align: center;}
         
-        /* The requested change: Center the product ID only on mobile screens */
         .order-product-id {
             align-self: center;
         }
@@ -528,6 +523,22 @@
 async function initializeAdgerFashion() {
 let allProducts = [];
 
+/**
+ * Formats a number to include commas as thousands separators and two decimal places.
+ * @param {number} num The number to format.
+ * @returns {string} The formatted number string.
+ */
+function formatNumber(num) {
+    if (typeof num !== 'number') {
+        return num; // Return as-is if not a number
+    }
+    // Use 'en-US' locale to ensure comma separators.
+    return num.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
 try {
     const { data: fetchedProducts, error } = await supabase
         .from('products')
@@ -586,7 +597,7 @@ function renderProducts(productArray = allProducts) {
     productArray.forEach(product => {
         const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
         const categoryText = product.category === 'men' ? 'رجالي' : (product.category === 'women' ? 'نسائي' : product.category);
-        card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><h3 class="product-name">${product.name}</h3><p class="product-category">${categoryText}</p><p class="product-price">${product.price.toFixed(2)} جنيه</p></div>`;
+        card.innerHTML = `<div class="product-image"><img src="${product.images[0]}" alt="${product.name}" loading="lazy"></div><div class="product-info"><h3 class="product-name">${product.name}</h3><p class="product-category">${categoryText}</p><p class="product-price">${formatNumber(product.price)} جنيه</p></div>`;
         dom.productsGrid.appendChild(card);
     });
 }
@@ -599,8 +610,7 @@ function openProductModal(product) {
     
     document.getElementById("modalProductName").textContent = product.name;
     document.getElementById("modalProductId").textContent = `رقم المنتج: ${product.displayId}`;
-
-    document.getElementById("modalProductPrice").textContent = `${product.price.toFixed(2)} جنيه`;
+    document.getElementById("modalProductPrice").textContent = `${formatNumber(product.price)} جنيه`;
     document.getElementById("modalProductDescription").textContent = product.description;
     
     const sizesContainer = document.getElementById("modalProductSizes");
@@ -669,10 +679,9 @@ function openPurchaseModal() {
 
     const shippingCost = 50;
     const totalPrice = currentProduct.price + shippingCost;
-    document.getElementById("summaryProductPrice").textContent = `${currentProduct.price.toFixed(2)} جنيه`;
-    document.getElementById("summaryShippingCost").textContent = `${shippingCost.toFixed(2)} جنيه`;
-    document.getElementById("summaryTotalPrice").textContent = `${totalPrice.toFixed(2)} جنيه`;
-
+    document.getElementById("summaryProductPrice").textContent = `${formatNumber(currentProduct.price)} جنيه`;
+    document.getElementById("summaryShippingCost").textContent = `${formatNumber(shippingCost)} جنيه`;
+    document.getElementById("summaryTotalPrice").textContent = `${formatNumber(totalPrice)} جنيه`;
     openModal(dom.purchaseModal);
 }
 
@@ -686,7 +695,39 @@ function openModal(modalElement) {
     document.body.classList.add('menu-open');
 }
 
-function closeModal(e){e.style.display="none";const t=document.querySelectorAll('.modal[style*="display: flex"]');0===t.length&&!dom.mobileNav.classList.contains("active")&&document.body.classList.remove("menu-open")}function updateSliderView(){if(!dom.imageContainer||!dom.imageTrack)return;const e=-currentImageIndex*dom.imageContainer.offsetWidth;dom.imageTrack.style.transform=`translateX(${e}px)`,document.getElementById("imageCounter").textContent=`${currentImageIndex+1} / ${currentProduct.images.length}`}function touchStart(e){isDragging=!0,startPosX=e.touches[0].clientX;const t=window.getComputedStyle(dom.imageTrack).getPropertyValue("transform");initialTranslate="none"!==t?parseInt(t.split(",")[4].trim()):0,dom.imageTrack.style.transition="none"}function touchMove(e){if(!isDragging)return;const t=e.touches[0].clientX,o=t-startPosX;dom.imageTrack.style.transform=`translateX(${initialTranslate+o}px)`}function touchEnd(e){if(!isDragging)return;isDragging=!1,dom.imageTrack.style.transition="transform .4s cubic-bezier(.25,.46,.45,.94)";const t=e.changedTouches[0].clientX,o=startPosX-t;o>50&&currentImageIndex<currentProduct.images.length-1?currentImageIndex++:o<-50&&currentImageIndex>0&&currentImageIndex--,updateSliderView()}function getUserData(){return JSON.parse(localStorage.getItem("userData"))}function saveUserData(e){localStorage.setItem("userData",JSON.stringify(e))}function getOrders(){const e=JSON.parse(localStorage.getItem("lastOrder"))||null,t=JSON.parse(localStorage.getItem("orderHistory"))||[];return{lastOrder:e,orderHistory:t}}function saveOrder(e){let{lastOrder:t,orderHistory:o}=getOrders();t&&o.unshift(t),t=e,localStorage.setItem("lastOrder",JSON.stringify(t)),localStorage.setItem("orderHistory",JSON.stringify(o))}function openAccountModal(){renderAccountView(),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click(),openModal(dom.accountModal)}
+function closeModal(e){e.style.display="none";const t=document.querySelectorAll('.modal[style*="display: flex"]');0===t.length&&!dom.mobileNav.classList.contains("active")&&document.body.classList.remove("menu-open")}function updateSliderView(){if(!dom.imageContainer||!dom.imageTrack)return;const e=-currentImageIndex*dom.imageContainer.offsetWidth;dom.imageTrack.style.transform=`translateX(${e}px)`,document.getElementById("imageCounter").textContent=`${currentImageIndex+1} / ${currentProduct.images.length}`}function touchStart(e){isDragging=!0,startPosX=e.touches[0].clientX;const t=window.getComputedStyle(dom.imageTrack).getPropertyValue("transform");initialTranslate="none"!==t?parseInt(t.split(",")[4].trim()):0,dom.imageTrack.style.transition="none"}
+
+// --- START: MODIFIED CODE ---
+/**
+ * Handles the touch move event for the image slider.
+ * It provides a smooth dragging experience and adds a resistance
+ * "bounce" effect when swiping beyond the first or last image.
+ * @param {TouchEvent} e The touch event object.
+ */
+function touchMove(e) {
+    if (!isDragging) return;
+
+    const currentX = e.touches[0].clientX;
+    let dragDistance = currentX - startPosX;
+    const isAtFirstImage = currentImageIndex === 0;
+    const isAtLastImage = currentImageIndex === currentProduct.images.length - 1;
+
+    // If at the first image and trying to swipe right (to go to a non-existent "previous")
+    // or if at the last image and trying to swipe left (to go to a non-existent "next"),
+    // apply resistance to the drag to create a "bounce" or "elastic" effect.
+    if ((isAtFirstImage && dragDistance > 0) || (isAtLastImage && dragDistance < 0)) {
+        // The resistance factor (e.g., 3) makes the swipe feel "heavier"
+        // at the boundaries, providing clear feedback without a jarring stop.
+        const resistanceFactor = 3;
+        dragDistance /= resistanceFactor;
+    }
+    
+    // Apply the new transform with the calculated (and possibly resisted) drag distance.
+    dom.imageTrack.style.transform = `translateX(${initialTranslate + dragDistance}px)`;
+}
+// --- END: MODIFIED CODE ---
+
+function touchEnd(e){if(!isDragging)return;isDragging=!1,dom.imageTrack.style.transition="transform .4s cubic-bezier(.25,.46,.45,.94)";const t=e.changedTouches[0].clientX,o=startPosX-t;o>50&&currentImageIndex<currentProduct.images.length-1?currentImageIndex++:o<-50&&currentImageIndex>0&&currentImageIndex--,updateSliderView()}function getUserData(){return JSON.parse(localStorage.getItem("userData"))}function saveUserData(e){localStorage.setItem("userData",JSON.stringify(e))}function getOrders(){const e=JSON.parse(localStorage.getItem("lastOrder"))||null,t=JSON.parse(localStorage.getItem("orderHistory"))||[];return{lastOrder:e,orderHistory:t}}function saveOrder(e){let{lastOrder:t,orderHistory:o}=getOrders();t&&o.unshift(t),t=e,localStorage.setItem("lastOrder",JSON.stringify(t)),localStorage.setItem("orderHistory",JSON.stringify(o))}function openAccountModal(){renderAccountView(),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click(),openModal(dom.accountModal)}
 function renderAccountView(){const e=getUserData();if(dom.accountModalBody.innerHTML="",e){const t=e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp",o=e.email?`<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> <span>${e.email}</span></li>`:"",n=getOrders(),r=(n.lastOrder?1:0)+n.orderHistory.length;dom.accountModalBody.innerHTML=`<div id="accountDetailsContainer" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%"><img id="detailsProfilePic" src="${t}" alt="Profile Picture" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:4px solid var(--color-secondary);padding:4px;background-color:#fff;box-shadow:var(--shadow-sm)"><h2 id="detailsUserName" style="font-size:2rem;font-family:var(--font-display);color:var(--color-primary);margin-bottom:1.5rem">${e.name}</h2><ul id="detailsInfoList" style="list-style:none;padding:0;margin:0 0 1.5rem;text-align:right;width:100%;max-width:400px;border-top:1px solid var(--color-border);padding-top:1.5rem"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span>${e.phone}</span></li>${o}<li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg> <span>${e.governorate}</span></li></ul><div class="details-address-block"><h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>العنوان</h4><p id="detailsUserAddress">${e.address}, ${e.city}. (أقرب معلم: ${e.landmark})</p></div><div class="account-actions"><button type="button" class="buy-now-btn" id="editAccountBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>تعديل البيانات</span></button><button type="button" class="buy-now-btn" id="myOrdersBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>مشترياتي (${r})</span></button><button type="button" class="buy-now-btn" id="logoutBtn" style="background:0 0;color:var(--color-danger);border:2px solid var(--color-danger)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>تسجيل الخروج</span></button></div></div>`}else renderAccountForm(null,"إنشاء حساب وحفظ")}
 function renderAccountForm(e=null,t="تحديث البيانات"){const o=e&&e.profilePic||"https://i.postimg.cc/8kqjq5Wy/logo-af-amazing-option-3.webp";dom.accountModalBody.innerHTML=`<div id="accountFormContainer"><div class="profile-pic-container"><img id="profilePicPreview" src="${o}" alt="Profile Picture Preview"><label for="profilePicInput" class="change-pic-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/><path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/></svg></label><input type="file" id="profilePicInput" accept="image/*" style="display:none"></div><form id="accountForm" class="account-form"><div class="form-grid"><div class="form-group"><label for="userName">الاسم</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input type="text" id="userName" placeholder="الاسم الكامل" required value="${e?.name||""}"></div></div><div class="form-group"><label for="userPhone">رقم الهاتف</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2a19.79 19.79 0 0 1-8.63-3.07a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72a12.84 12.84 0 0 0 .7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45a12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><input type="tel" id="userPhone" placeholder="01xxxxxxxxx" required value="${e?.phone||""}"></div></div><div class="form-group full-width"><label for="userEmail">البريد الإلكتروني (اختياري)</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><input type="email" id="userEmail" placeholder="example@mail.com" value="${e?.email||""}"></div></div><div class="form-group"><label for="userGovernorate">المحافظة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userGovernorate" placeholder="مثال: القاهرة" required value="${e?.governorate||""}"></div></div><div class="form-group"><label for="userCity">المدينة / المركز</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><input type="text" id="userCity" placeholder="مثال: مدينة نصر" required value="${e?.city||""}"></div></div><div class="form-group full-width"><label for="userAddress">العنوان الكامل</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8.11 2.79"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><textarea id="userAddress" rows="2" placeholder="الشارع، رقم المبنى، رقم الشقة" required>${e?.address||""}</textarea></div></div><div class="form-group full-width"><label for="userLandmark">أقرب علامة مميزة</label><div class="input-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><input type="text" id="userLandmark" placeholder="بجوار ..." required value="${e?.landmark||""}"></div></div></div><div class="account-actions"><button type="submit" class="buy-now-btn" id="accountSubmitBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span>${t}</span></button></div></form></div>`,document.getElementById("profilePicInput").addEventListener("change",handleProfilePicChange),document.getElementById("accountForm").addEventListener("submit",handleAccountFormSubmit)}
 function handleProfilePicChange(e){const t=e.target.files[0];if(!t)return;const o=new FileReader;o.onload=e=>{selectedProfilePic=e.target.result,document.getElementById("profilePicPreview").src=selectedProfilePic},o.readAsDataURL(t)}
@@ -695,7 +736,6 @@ function handleAccountFormSubmit(e){e.preventDefault();const t=getUserData()||{}
 function createOrderItemHTML(order) {
     const product = allProducts.find(p => p.id === order.productId);
     if (!product) return "<p>تفاصيل المنتج غير متوفرة.</p>";
-
     return `<div class="order-item" data-product-id="${order.productId}">
                 <img src="${product.images[0]}" alt="${product.name}">
                 <div class="order-details">
@@ -703,7 +743,7 @@ function createOrderItemHTML(order) {
                     <p class="order-product-id">${product.displayId}</p>
                     <p>المقاس: ${order.size || 'N/A'} | اللون: <span style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:${order.color || '#ccc'}; vertical-align:middle; border: 1px solid #ddd;"></span></p>
                     <p>تاريخ الطلب: ${new Date(order.date).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})}</p>
-                    <p class="order-total">الإجمالي (بالشحن): <span>${parseFloat(order.totalPrice).toFixed(2)} جنيه</span></p>
+                    <p class="order-total">الإجمالي (بالشحن): <span>${formatNumber(parseFloat(order.totalPrice))} جنيه</span></p>
                 </div>
             </div>`;
 }
@@ -742,9 +782,7 @@ function openOrdersModal() {
         
         const allOrders = lastOrder ? [lastOrder, ...orderHistory] : [...orderHistory];
         const totalValue = allOrders.reduce((sum, order) => sum + parseFloat(order.totalPrice || 0), 0);
-        // --- START: MODIFIED CODE ---
-        totalPriceEl.innerHTML = `<span>إجمالي قيمة المشتريات:</span> <strong>${totalValue.toFixed(2)}&nbsp;جنيه</strong>`;
-        // --- END: MODIFIED CODE ---
+        totalPriceEl.innerHTML = `<span>إجمالي قيمة المشتريات:</span> <strong>${formatNumber(totalValue)}&nbsp;جنيه</strong>`;
         totalPriceEl.style.display = 'block';
 
         if (lastOrder) {
@@ -773,7 +811,6 @@ document.addEventListener("click",e=>{dom.searchContainer.contains(e.target)||!d
 dom.searchInput.addEventListener("input",e=>{const t=e.target.value.toLowerCase().trim();dom.searchResultsInfo.innerHTML=t?`نتائج البحث عن: <span>'${t}'</span>`:"",renderProducts(allProducts.filter(e=>e.name.toLowerCase().includes(t)||(e.description||"").toLowerCase().includes(t)||e.displayId.toLowerCase().includes(t)))});
 dom.productsGrid.addEventListener("click",e=>{const t=e.target.closest(".product-card");if(!t)return;const o=allProducts.find(e=>e.id==t.dataset.id);o&&openProductModal(o)});
 
-// --- START: MODIFIED CODE ---
 document.querySelectorAll(".modal .close").forEach(closeBtn => {
     closeBtn.addEventListener("click", (e) => {
         const modalToClose = e.target.closest(".modal");
@@ -806,7 +843,6 @@ document.querySelectorAll(".modal .close").forEach(closeBtn => {
         }
     });
 });
-// --- END: MODIFIED CODE ---
 
 dom.productModal.addEventListener("click",e=>{
     if(e.target.closest(".size-option")){
@@ -834,11 +870,10 @@ dom.productModal.addEventListener("click",e=>{
         }
     }
 });
-document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name} (${currentProduct.displayId})`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nرقم المنتج: ${currentProduct.displayId}\nالمنتج: ${currentProduct.name}\n${selectedSize?'المقاس: '+selectedSize+'\n':''}${selectedColor?'اللون: '+selectedColor+'\n':''}\n-- تفاصيل السعر --\nسعر المنتج: ${currentProduct.price.toFixed(2)} جنيه\nتكلفة الشحن: ${o.toFixed(2)} جنيه\nالإجمالي: ${n.toFixed(2)} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
+document.getElementById("purchaseForm").addEventListener("submit",function(e){e.preventDefault();const t=this.querySelector('button[type="submit"]'),o=50,n=currentProduct.price+o;saveOrder({productId:currentProduct.id,size:selectedSize,color:selectedColor,date:(new Date).toISOString(),totalPrice:n});const r=document.getElementById("customerName").value,l=document.getElementById("customerPhone").value,c=document.getElementById("customerLocation").value,d=`طلب شراء جديد - ${currentProduct.name} (${currentProduct.displayId})`,s=`تم استلام طلب شراء جديد:\n\n-- تفاصيل المنتج --\nرقم المنتج: ${currentProduct.displayId}\nالمنتج: ${currentProduct.name}\n${selectedSize?'المقاس: '+selectedSize+'\n':''}${selectedColor?'اللون: '+selectedColor+'\n':''}\n-- تفاصيل السعر --\nسعر المنتج: ${formatNumber(currentProduct.price)} جنيه\nتكلفة الشحن: ${formatNumber(o)} جنيه\nالإجمالي: ${formatNumber(n)} جنيه\n\n-- بيانات العميل --\nالاسم: ${r}\nالهاتف: ${l}\nالعنوان: ${c}\n\nيرجى التواصل معه لتأكيد الطلب.`,a=`mailto:adger.shop@gmail.com?subject=${encodeURIComponent(d)}&body=${encodeURIComponent(s)}`;window.open(a,"_blank"),t.textContent="تم الإرسال بنجاح!",t.disabled=!0});
 dom.accountBtn.addEventListener("click",openAccountModal);
 dom.accountModal.addEventListener("click",e=>{e.target.closest("#editAccountBtn")?renderAccountForm(getUserData()):e.target.closest("#myOrdersBtn")?openOrdersModal():e.target.closest("#logoutBtn")&&confirm("هل أنت متأكد من رغبتك في تسجيل الخروج؟")&&(localStorage.removeItem("userData"),alert("تم تسجيل الخروج."),renderAccountView())});
 
-// --- START: MODIFIED CODE ---
 dom.ordersModal.addEventListener("click", e => {
     const orderItem = e.target.closest(".order-item[data-product-id]");
     if (!orderItem) return;
@@ -858,7 +893,6 @@ dom.ordersModal.addEventListener("click", e => {
         openProductModal(product);
     }
 });
-// --- END: MODIFIED CODE ---
 
 // --- Final Touches ---
 renderProducts();
