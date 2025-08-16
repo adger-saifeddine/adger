@@ -943,32 +943,22 @@
             transition: all 0.3s ease;
         }
 
-        /* --- START: NEW CSS FOR PRICE FILTER BAR --- */
+        /* --- START: IMPROVED CSS FOR PRICE FILTER BAR --- */
         .price-filter-bar {
             position: fixed;
             top: 125px; /* (sub-header top 74px + height 51px) */
             left: 0;
             right: 0;
             background-color: #f8f8f8;
-            padding: 8px 20px;
+            padding: 12px 20px; /* **IMPROVED PADDING** */
             display: flex;
             gap: 10px;
             align-items: center;
             overflow-x: auto;
             z-index: 998;
             border-bottom: 1px solid #e0e0e0;
-            height: 30px; /* الارتفاع الكلي سيكون حوالي 46px مع padding */
             scrollbar-width: none;
             -ms-overflow-style: none;
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-            transform: translateY(-100%);
-            opacity: 0;
-            visibility: hidden;
-        }
-        .price-filter-bar.visible {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
         }
 
         .price-filter-bar::-webkit-scrollbar { display: none; }
@@ -977,10 +967,11 @@
             background-color: white;
             border: 1px solid #ccc;
             border-radius: 20px;
-            padding: 5px 15px;
+            padding: 6px 16px;
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             font-size: 14px;
+            font-weight: 600;
             white-space: nowrap;
             transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.1s ease;
             user-select: none;
@@ -997,7 +988,7 @@
             color: #fff;
             border-color: #000;
         }
-        /* --- END: NEW CSS FOR PRICE FILTER BAR --- */
+        /* --- END: IMPROVED CSS FOR PRICE FILTER BAR --- */
 
         body {
             font-family: Arial, sans-serif;
@@ -1013,24 +1004,16 @@
             gap: 10px;
             justify-content: center;
             padding: 20px;
-            margin-top: 125px; /* لتجنب التداخل مع sub-header */
-            transition: margin-top 0.3s ease; /* Animation for smooth transition */
+            /* **PERMANENT MARGIN-TOP TO AVOID OVERLAP** */
+            margin-top: 185px; 
         }
         
-        /* Adjust gallery margin when price filter is active */
-        body.price-filter-active .gallery {
-            margin-top: 180px; /* 125px + 55px for price bar */
-        }
-
         @media (max-width: 768px) {
-            .gallery {
-                margin-top: 107px; /* For sub-header */
-            }
             .price-filter-bar {
-                top: 107px; /* (sub-header mobile top 56px + height 51px) */
+                top: 107px;
             }
-            body.price-filter-active .gallery {
-                margin-top: 155px; /* 107px + 48px for price bar */
+             .gallery {
+                margin-top: 165px; 
             }
         }
         
@@ -1305,10 +1288,8 @@
     </style>
 </head>
 <body>
-    <!-- الخلفية العلوية -->
     <div class="top-background"></div>
 
-    <!-- Sub Header -->
     <div class="sub-header">
         <nav>
             <a href="#" onclick="selectItem('الكل', this)" style="font-family: Cairo, sans-serif;">الكل</a>
@@ -1336,13 +1317,10 @@
         </nav>
     </div>
 
-    <!-- NEW: Price Filter Bar -->
     <div id="price-filter-bar" class="price-filter-bar"></div>
-
 
     <div id="gallery" class="gallery"></div>
 
-    <!-- النقطتان الدائريتان للتحميل -->
     <div id="loading-spinner">
         <div class="spinner">
             <div></div>
@@ -1350,10 +1328,9 @@
         </div>
     </div>
 
-    <!-- رسالة "لا توجد نتائج" -->
     <div id="no-results-message">
         <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24" 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="8" y1="8" x2="14" y2="14"></line>
@@ -1365,7 +1342,7 @@
         </p>
     </div>
 <script>
-    // --- قاموس البحث المتقدم ---
+    // --- قاموس البحث المتقدم (بدون تغيير) ---
     let keywordMap = {
         'خصومات': ['خصومات', 'خصم', 'تخفيضات', 'تخفيض', 'عروض', 'عرض'],
         'إلكترونيات': ['إلكترونيات', 'الكترونيات', 'الكتروني', 'جوال', 'هاتف', 'محمول', 'تابلت'],
@@ -1390,65 +1367,110 @@
         'مدرسة': ['مدرسة', 'مدرسه']
     };
 
-    // متغيرات عالمية لتتبع المنتجات
+    // --- المتغيرات العامة ---
     let filteredProducts = [];
-    let originalSearchResults = []; // --- NEW: To store results before price filtering
+    let originalSearchResults = []; // لتخزين نتائج البحث قبل تطبيق فلتر السعر
+    let activePriceFilter = { min: null, max: null }; // لتخزين فلتر السعر النشط
     const itemsPerLoad = 20;
     let loadedItems = 0;
 
-    // دالة لتطبيع النصوص العربية
     function normalizeArabic(text) {
         if (!text) return '';
-        return text
-            .toLowerCase()
-            .replace(/أ|إ|آ/g, 'ا')
-            .replace(/ى/g, 'ي')
-            .replace(/^ال/, '');
+        return text.toLowerCase().replace(/أ|إ|آ/g, 'ا').replace(/ى/g, 'ي').replace(/^ال/, '');
     }
     
-    // --- START: NEW FUNCTIONS FOR PRICE FILTER ---
+    // --- START: NEW AND MODIFIED FUNCTIONS ---
 
+    /**
+     * **(TASK 2): Smart scrolling for horizontal menus.**
+     */
+    function smartScroll(element, container) {
+        const elementRect = element.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const scrollAmount = container.offsetWidth * 0.7;
+
+        if (elementRect.right > containerRect.right - 30) {
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        } 
+        else if (elementRect.left < containerRect.left + 30) {
+            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+    }
+
+    /**
+     * **(TASK 3): Renders price bracket filters.**
+     */
     function renderPriceFilters() {
         const priceFilterBar = document.getElementById('price-filter-bar');
-        priceFilterBar.innerHTML = ''; // Clear existing filters
+        priceFilterBar.innerHTML = '';
 
-        const prices = [50, 100, 200, 350, 500, 750, 1000, 2000, 5000];
+        const priceBrackets = [50, 100, 200, 350, 500, 750, 1000, 2000, 5000];
         
         const allButton = document.createElement('div');
         allButton.className = 'price-filter-item active';
         allButton.textContent = 'كل الأسعار';
-        allButton.onclick = () => applyPriceFilter(null, allButton);
+        allButton.onclick = () => applyPriceFilter(null, null, allButton);
         priceFilterBar.appendChild(allButton);
-
-        prices.forEach(price => {
+        
+        let lastPrice = 0;
+        priceBrackets.forEach(price => {
             const button = document.createElement('div');
             button.className = 'price-filter-item';
-            button.textContent = `أقل من ${price}`;
-            button.onclick = () => applyPriceFilter(price, button);
+            
+            const min = lastPrice + 1;
+            const max = price;
+
+            if (lastPrice === 0) {
+                button.textContent = `حتى ${max}`;
+            } else {
+                button.textContent = `${min} - ${max}`;
+            }
+
+            button.onclick = () => applyPriceFilter(min, max, button);
             priceFilterBar.appendChild(button);
+            lastPrice = price;
         });
     }
 
-    function applyPriceFilter(maxPrice, clickedElement) {
-        window.scrollTo(0, 0); // Scroll to top for better UX
-        const gallery = document.getElementById('gallery');
-        const noResultsMessage = document.getElementById('no-results-message');
+    /**
+     * **MODIFIED: Applies price bracket filtering.**
+     */
+    function applyPriceFilter(minPrice, maxPrice, clickedElement) {
+        activePriceFilter = { min: minPrice, max: maxPrice };
+        
+        smartScroll(clickedElement, clickedElement.parentElement);
 
         const allButtons = document.querySelectorAll('.price-filter-item');
         allButtons.forEach(btn => btn.classList.remove('active'));
-        if (clickedElement) {
-            clickedElement.classList.add('active');
-        }
+        if (clickedElement) clickedElement.classList.add('active');
 
+        // Re-render products with the new price filter
+        renderProducts();
+    }
+    
+    /**
+     * **NEW: Central function to render products based on current filters.**
+     */
+    function renderProducts() {
+        window.scrollTo(0, 0);
+        const gallery = document.getElementById('gallery');
+        const noResultsMessage = document.getElementById('no-results-message');
         gallery.innerHTML = '';
         noResultsMessage.style.display = 'none';
-        
-        if (maxPrice === null) {
-            filteredProducts = [...originalSearchResults];
-        } else {
-            filteredProducts = originalSearchResults.filter(p => parseInt(p.price) <= maxPrice);
-        }
 
+        let productsToDisplay = originalSearchResults;
+
+        // Apply the active price filter
+        if (activePriceFilter.min !== null) {
+            const { min, max } = activePriceFilter;
+            const effectiveMin = min === 1 ? 0 : min;
+            productsToDisplay = productsToDisplay.filter(p => {
+                const price = parseInt(p.price);
+                return price >= effectiveMin && price <= max;
+            });
+        }
+        
+        filteredProducts = productsToDisplay;
         loadedItems = 0;
 
         if (filteredProducts.length > 0) {
@@ -1458,30 +1480,19 @@
         }
     }
 
-    // --- END: NEW FUNCTIONS FOR PRICE FILTER ---
+
+    // --- END: NEW AND MODIFIED FUNCTIONS ---
     
-    // دالة لجلب وتصفية المنتجات
+    // **(ORIGINAL SEARCH LOGIC - UNCHANGED)**
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
         const searchTermDisplay = document.getElementById('search-term-display');
-        const priceFilterBar = document.getElementById('price-filter-bar');
         const loadingSpinner = document.getElementById('loading-spinner');
 
         gallery.innerHTML = '';
         noResultsMessage.style.display = 'none';
         loadingSpinner.style.display = 'block';
-        
-        // --- MODIFICATION: Show/Hide price filter bar ---
-        if (searchTerm && searchTerm.toLowerCase() !== 'الكل' && searchTerm !== '') {
-            document.body.classList.add('price-filter-active');
-            priceFilterBar.classList.add('visible');
-            renderPriceFilters();
-        } else {
-            document.body.classList.remove('price-filter-active');
-            priceFilterBar.classList.remove('visible');
-        }
-        // --- End Modification ---
 
         fetch('products.json')
             .then(response => response.json())
@@ -1511,18 +1522,11 @@
                 }
                 
                 shuffleArray(initialFilter);
-                filteredProducts = [...initialFilter];
-                originalSearchResults = [...initialFilter];
-                loadedItems = 0;
-                
+                originalSearchResults = [...initialFilter]; // Save search results
                 loadingSpinner.style.display = 'none';
-
-                if (filteredProducts.length > 0) {
-                    loadProducts(0, itemsPerLoad);
-                } else {
-                    noResultsMessage.style.display = 'block';
-                    searchTermDisplay.textContent = searchTerm;
-                }
+                
+                // Now, render these results using the current price filter
+                renderProducts(); 
             })
             .catch(error => {
                 loadingSpinner.style.display = 'none';
@@ -1533,7 +1537,6 @@
             });
     }
 
-    // دالة لتحميل المنتجات
     function loadProducts(startIndex, count) {
         const gallery = document.getElementById('gallery');
         const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -1575,7 +1578,6 @@
         startRotatingText(".rotating-text1212:not(.rotating)");
     }
 
-    // مراقب التحميل الكسول
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1587,12 +1589,11 @@
         });
     }, { rootMargin: "0px 0px 200px 0px" });
 
-    // دالة لتدوير النصوص
     function startRotatingText(selector) {
         document.querySelectorAll(selector).forEach(element => {
             if (element.classList.contains('rotating')) return;
             element.classList.add('rotating');
-            const texts = JSON.parse(element.getAttribute("data-texts"));
+            const texts = JSON.parse(element.getAttribute("data-texts") || "[]");
             if (!texts || texts.length < 2) return;
             let currentIndex = 0;
             setInterval(() => {
@@ -1608,17 +1609,20 @@
         });
     }
     
-    // تحميل المنتجات عند التمرير
     document.addEventListener('scroll', function () {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && loadedItems < filteredProducts.length) {
             loadProducts(loadedItems, itemsPerLoad);
         }
     });
 
-    // دالة لتحريك الخط وتنفيذ البحث
     function selectItem(item, element) {
-        window.scrollTo(0, 0);
+        // Reset the price filter to "All Prices" when changing category
+        activePriceFilter = { min: null, max: null };
+        renderPriceFilters(); // Re-render to set "All Prices" as active
+
         fetchAndFilterProducts(item === 'الكل' ? '' : item);
+
+        smartScroll(element, element.closest('nav'));
 
         const allItems = document.querySelectorAll('.sub-header nav a');
         allItems.forEach(i => i.classList.remove('active'));
@@ -1630,11 +1634,8 @@
 
         underline.style.width = `${itemRect.width}px`;
         underline.style.left = `${itemRect.left - navRect.left}px`;
-
-        element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 
-    // دالة لخلط مصفوفة عشوائيًا
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -1642,11 +1643,11 @@
         }
     }
 
-    // عند تحميل الصفحة
     window.onload = function () {
+        renderPriceFilters(); // Render price bar on page load
         const defaultItem = document.querySelector('.sub-header nav a');
         if (defaultItem) {
-            selectItem('الكل', defaultItem); // Load all products initially
+            selectItem('الكل', defaultItem);
         }
     };
 </script>
