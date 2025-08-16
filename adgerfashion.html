@@ -235,25 +235,26 @@
     .modal-details h2{font-size:2.2rem; font-family: var(--font-primary);}
     .modal-details .price{font-size:1.8rem;font-weight:600;color:var(--color-secondary)}
     
-    /* --- MODIFIED: Product Features Container --- */
+    /* --- NEW: Product Features Container --- */
     .product-features-container {
-        background-color: #fdf8ec;
+        background-color: #fdf8ec; /* Light gold/beige, similar concept to policies header */
         border: 1px solid #f0e6d2;
-        padding: 0.75rem 1rem;
+        padding: 1.25rem;
         border-radius: 8px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+        margin-top: -0.5rem; /* Pull it closer to the price */
+        margin-bottom: 0.5rem; /* Space before next element */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
     .feature-item {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        text-align: center;
     }
     .feature-item svg {
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 26px;
         color: var(--color-secondary);
         flex-shrink: 0;
     }
@@ -261,7 +262,7 @@
         font-family: var(--font-primary);
         font-size: 0.9rem;
         font-weight: 600;
-        color: #5d4a2b;
+        color: #5d4a2b; /* Darker gold/brown for better text contrast */
         line-height: 1.4;
     }
 
@@ -518,7 +519,15 @@
     /* --- Responsive Design --- */
     @media (min-width:769px) { .nav { display: flex; } .nav ul { display: flex; list-style: none; gap: 2.5rem; } .mobile-menu-toggle { display: none; } .header-right { gap: 2rem; } }
     @media (max-width:950px) { 
-        .logo h1 { font-size: 1.5rem; }
+        .logo h1 { font-size: 1.5rem; } 
+        .product-features-container {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+            gap: 0.8rem;
+        }
+        .feature-item span {
+            font-size: 0.85rem;
+        }
     }
 
     @media (min-width: 992px) {
@@ -678,20 +687,8 @@
         #productModal .modal-details .price { font-size: 1.5rem; }
         #productModal .buy-now-btn { font-size: 1rem; padding: .8rem; }
         .purchase-form { padding: 1.5rem; }
-        
         .product-features-container {
-            flex-wrap: wrap; /* Allow wrapping on very small screens if needed */
-            padding: 0.5rem;
-        }
-        .feature-item {
-            gap: 0.5rem;
-        }
-        .feature-item svg {
-            width: 20px;
-            height: 20px;
-        }
-        .feature-item span {
-            font-size: 0.75rem;
+            grid-template-columns: 1fr;
         }
     }
 
@@ -843,22 +840,26 @@
                     <button id="copyIdBtn" title="نسخ الرقم"></button>
                 </div>
                 <p class="price" id="modalProductPrice"></p>
-                <!-- MODIFIED FEATURES SECTION -->
+                <!-- NEW FEATURES SECTION -->
                 <div class="product-features-container">
                     <div class="feature-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                        <span>شحن سريع</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        <span>شحن سريع لجميع المحافظات</span>
                     </div>
                     <div class="feature-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>دفع آمن</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>دفع آمن عند الاستلام</span>
                     </div>
                     <div class="feature-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        <span>جودة عالية</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <span>ضمان جودة عالية</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        <span>استبدال واسترجاع سهل</span>
                     </div>
                 </div>
-                <!-- END MODIFIED FEATURES SECTION -->
+                <!-- END NEW FEATURES SECTION -->
                 <div class="spec-group">
                     <h4>الكمية</h4>
                     <div class="quantity-selector">
