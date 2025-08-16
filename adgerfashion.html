@@ -236,19 +236,21 @@
 
     /* --- Trust Features Banner in Product Modal --- */
     .product-features-banner {
-        background-color: #fdf8ef; /* Light gold/beige */
-        color: #856404; /* Darker gold for text */
+        background-color: #fdf8ef;
+        color: #856404;
         padding: 0.75rem 1.5rem;
         border-radius: 8px;
-        font-weight: 600;
         font-family: var(--font-primary);
         width: 100%;
         box-sizing: border-box;
         display: flex;
-        justify-content: flex-start; /* <<< THIS IS THE CHANGE: Starts items from the right in RTL */
         align-items: center;
-        gap: 2.5rem; /* Space between items */
+        gap: 1.5rem; 
         border: 1px solid #ffeeba;
+        /* === NEW STYLES FOR SCROLLING === */
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start; /* Start from right in RTL */
     }
 
     .feature-item {
@@ -256,13 +258,28 @@
         align-items: center;
         gap: 0.6rem;
         font-size: 0.9rem;
+        font-weight: 600;
+        flex-shrink: 0; /* Prevent items from shrinking */
     }
 
     .feature-item svg {
         width: 22px;
         height: 22px;
-        color: var(--color-secondary); /* Use the brand's gold color */
+        color: var(--color-secondary);
         flex-shrink: 0;
+    }
+    
+    /* Custom Scrollbar for the features banner */
+    .product-features-banner::-webkit-scrollbar {
+        height: 6px;
+    }
+    .product-features-banner::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    .product-features-banner::-webkit-scrollbar-thumb {
+        background-color: var(--color-secondary);
+        border-radius: 10px;
     }
 
 
@@ -578,7 +595,6 @@
         #productModal .modal-details h2 { font-size: 2rem; }
         
         .product-features-banner { 
-            flex-wrap: wrap; 
             gap: 1.5rem; 
             padding: 0.75rem;
         }
