@@ -943,36 +943,36 @@
                     transition: all 0.3s ease;
                 }
 
-                /* === تعديل: شريط تصفية الأسعار ظاهر دائماً === */
+                /* === شريط تصفية الأسعار === */
                 #price-filter-bar {
-                    display: flex; /* ظاهر بشكل دائم */
-                    align-items: center; /* توسيط الأزرار عمودياً */
-                    box-sizing: border-box; /* لضمان حساب الارتفاع بشكل صحيح */
-                    min-height: 50px; /* تحديد أقل ارتفاع لمنع القفز عند التحميل */
-                    position: fixed; /* تثبيت الشريط */
-                    top: 125px; /* أسفل شريط الفئات */
+                    display: flex; 
+                    align-items: center; 
+                    box-sizing: border-box;
+                    min-height: 50px; 
+                    position: fixed; 
+                    top: 125px; 
                     left: 0;
                     right: 0;
-                    padding: 10px; /* تم التعديل لجعل المسافة متساوية */
+                    padding: 10px;
                     background-color: #f8f8f8;
                     border-bottom: 1px solid #e0e0e0;
                     overflow-x: auto;
                     white-space: nowrap;
-                    z-index: 998; /* تحت شريط الفئات */
-                    scrollbar-width: none; /* إخفاء شريط التمرير */
+                    z-index: 998; 
+                    scrollbar-width: none; 
                     -ms-overflow-style: none;
-                    transition: top 0.4s ease; /* إضافة تأثير انتقال سلس للإخفاء والإظهار */
+                    transition: top 0.4s ease; 
                 }
                 #price-filter-bar::-webkit-scrollbar {
-                    display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
+                    display: none; 
                 }
 
                 /* === START: تعديل ارتفاع شريط الأسعار للهواتف === */
                 @media (max-width: 769px) {
                     #price-filter-bar {
-                       top: 107px; /* ضبط المسافة للأجهزة الأصغر */
-                       min-height: 45px; /* تقليل الارتفاع الأدنى */
-                       padding: 8px 10px;  /* تقليل الحشوة العمودية */
+                       top: 107px; 
+                       min-height: 42px; /* تقليل الارتفاع الأدنى أكثر */
+                       padding: 6px 10px;  /* تقليل الحشوة العمودية أكثر */
                     }
                 }
                 /* === END: تعديل ارتفاع شريط الأسعار للهواتف === */
@@ -987,9 +987,9 @@
                     cursor: pointer;
                     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
                     font-size: 14px;
-                    flex-shrink: 0; /* منع الأزرار من الانكماش */
-                    -webkit-tap-highlight-color: transparent; /* لإزالة الخلفية الزرقاء عند النقر */
-                    outline: none; /* لإزالة أي إطار تحديد عند التركيز */
+                    flex-shrink: 0; 
+                    -webkit-tap-highlight-color: transparent; 
+                    outline: none; 
                 }
                 #price-filter-bar button:hover {
                     background-color: #f0f0f0;
@@ -1000,15 +1000,14 @@
                     color: #fff;
                     border-color: #000;
                 }
-                 /* === نهاية التعديل === */
-
+                 
                 /* START: تعديل لضمان الإخفاء الكامل */
                 #price-filter-bar.hidden-by-scroll {
-                    top: 60px; /* تم تقليل القيمة من 70px لضمان الاختفاء التام */
+                    top: 60px; 
                 }
                 @media (max-width: 769px) {
                     #price-filter-bar.hidden-by-scroll {
-                        top: 40px; /* تم تقليل القيمة من 50px للشاشات الصغيرة */
+                        top: 40px; 
                     }
                 }
                 /* END: تعديل لضمان الإخفاء الكامل */
@@ -1017,7 +1016,7 @@
                 .menu-popup {
                     position: fixed;
                     top: 0;
-                    right: -300px; /* ابدأ من خارج الشاشة */
+                    right: -300px; 
                     width: 280px;
                     height: 100%;
                     background-color: white;
@@ -1026,10 +1025,10 @@
                     transition: right 0.3s ease-in-out;
                     padding: 20px;
                     box-sizing: border-box;
-                    display: none; /* مخفي بشكل افتراضي */
+                    display: none; 
                 }
                 .menu-popup.active {
-                    right: 0; /* الظهور عند تفعيل الكلاس */
+                    right: 0; 
                 }
                 .menu-popup .back-arrow {
                     position: absolute;
@@ -1057,11 +1056,11 @@
                     gap: 10px;
                     justify-content: center;
                     padding: 20px;
-                    margin-top: 170px; /* تعديل: زيادة المسافة العلوية لاستيعاب الشريطين مع إضافة هامش */
+                    margin-top: 170px; 
                 }
                 @media (max-width: 769px) {
                     .gallery {
-                       margin-top: 143px; /* تعديل: ضبط المسافة العلوية للشاشات الصغيرة */
+                       margin-top: 135px; /* تم تعديل هذه القيمة لتناسب الارتفاع الجديد للشريط */
                     }
                 }
                 
@@ -1302,20 +1301,20 @@
                     display: block;
                     text-align: center;
                     margin-top: 20px;
-                    margin-bottom: 80px; /* تعديل: تمت زيادة الهامش السفلي ليساوي المسافة العلوية (190px من المعرض + 20px من الهامش العلوي) */
+                    margin-bottom: 80px; 
                     padding: 20px;
                     border-radius: 10px;
                 }
                 @media (max-width: 769px) {
                     #loading-spinner {
-                        margin-bottom: 43px; /* تعديل للشاشات الصغيرة: (167px من المعرض + 20px من الهامش العلوي) */
+                        margin-bottom: 43px; 
                     }
                 }
 
                 .spinner {
                     display: inline-block;
                     position: relative;
-                    width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
+                    width: 60px; 
                     height: 20px;
                 }
                 .spinner div {
@@ -1326,20 +1325,20 @@
                     animation: dot-flashing 1s infinite linear alternate;
                 }
                 .spinner div:first-child {
-                    background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
+                    background-color: #ff0000; 
                     left: 0;
                 }
                 .spinner div:last-child {
-                    background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
+                    background-color: #0000ff; 
                     right: 0;
-                    animation-delay: 0.5s; /* تأخير لتبادل الحركة */
+                    animation-delay: 0.5s; 
                 }
                 @keyframes dot-flashing {
                     0% {
                         transform: scale(1);
                     }
                     50% {
-                        transform: scale(1.5); /* الدائرة تكبر */
+                        transform: scale(1.5); 
                     }
                     100% {
                         transform: scale(1);
