@@ -1912,10 +1912,14 @@ function loadProducts(startIndex, count) {
     startRotatingText(".rotating-text1212:not(.rotating)");
 }
 
-// دوال لتصفية الأسعار
+// === بداية التعديل: تعريف نطاقات الأسعار وتحديث دوال التصفية ===
+
+// تعريف نطاقات الأسعار بشكل عام لتكون متاحة للدوال
+const priceRanges = [50, 100, 200, 500, 1000, 5000];
+
 function generatePriceFilterBar() {
     const priceBar = document.getElementById('price-filter-bar');
-    const priceRanges = [50, 100, 200, 500, 1000, 5000];
+    priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
     
     // زر "كل الأسعار"
     const allButton = document.createElement('button');
@@ -1937,21 +1941,35 @@ function filterByPrice(maxPrice, clickedButton) {
     gallery.innerHTML = ''; // مسح المعرض الحالي
     
     // تحديث واجهة المستخدم للأزرار
-    resetPriceFilterUI(false); // لا نزيل التفعيل القديم بعد
+    resetPriceFilterUI(false); 
     clickedButton.classList.add('active-price-filter');
 
-
     if (maxPrice === null) {
-        // عرض كل المنتجات من البحث الأصلي
+        // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
         filteredProducts = [...originalFilteredProducts];
     } else {
-        // تصفية المنتجات بناءً على السعر
-        filteredProducts = originalFilteredProducts.filter(p => parseInt(p.price) <= maxPrice);
+        // حالة نطاق سعر محدد
+        let minPrice = 0;
+        const maxPriceIndex = priceRanges.indexOf(maxPrice);
+
+        // إذا لم يكن هذا هو النطاق الأول، نحدد السعر الأدنى من النطاق السابق
+        if (maxPriceIndex > 0) {
+            minPrice = priceRanges[maxPriceIndex - 1];
+        }
+        
+        // تصفية المنتجات بناءً على النطاق (أكبر من السعر الأدنى وحتى السعر الأقصى)
+        filteredProducts = originalFilteredProducts.filter(p => {
+            const productPrice = parseInt(p.price);
+            return productPrice > minPrice && productPrice <= maxPrice;
+        });
     }
     
     loadedItems = 0; // إعادة تعيين عداد التحميل
     loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
 }
+
+// === نهاية التعديل ===
+
 
 function resetPriceFilterUI(activateFirst = true) {
     const buttons = document.querySelectorAll('#price-filter-bar button');
