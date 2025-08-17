@@ -1522,7 +1522,7 @@
             // --- START: تعديل كود إخفاء وإظهار شريط الأسعار عند التمرير (مع تأخير) ---
             let lastScrollY = window.scrollY;
             let scrollDownStart = null; // لتتبع نقطة بداية التمرير لأسفل
-            const scrollThreshold = 40; // المسافة بالبكسل التي يجب تمريرها لأسفل قبل إخفاء الشريط
+            const scrollThreshold = 45; // المسافة بالبكسل التي يجب تمريرها لأسفل قبل إخفاء الشريط
 
             window.addEventListener('scroll', () => {
                 const priceBar = document.getElementById('price-filter-bar');
