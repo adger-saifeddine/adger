@@ -967,16 +967,6 @@
                     display: none; 
                 }
 
-                /* === START: تعديل ارتفاع شريط الأسعار للهواتف === */
-                @media (max-width: 769px) {
-                    #price-filter-bar {
-                       top: 107px; 
-                       min-height: 42px; /* تقليل الارتفاع الأدنى أكثر */
-                       padding: 6px 10px;  /* تقليل الحشوة العمودية أكثر */
-                    }
-                }
-                /* === END: تعديل ارتفاع شريط الأسعار للهواتف === */
-
                 #price-filter-bar button {
                     font-family: 'Cairo', sans-serif;
                     background-color: #fff;
@@ -1057,11 +1047,6 @@
                     justify-content: center;
                     padding: 20px;
                     margin-top: 170px; 
-                }
-                @media (max-width: 769px) {
-                    .gallery {
-                       margin-top: 135px; /* تم تعديل هذه القيمة لتناسب الارتفاع الجديد للشريط */
-                    }
                 }
                 
                 .image-container {
@@ -1344,6 +1329,26 @@
                         transform: scale(1);
                     }
                 }
+
+                /* === START: تعديل ارتفاع شريط الأسعار للهواتف (أصغر) === */
+                @media (max-width: 769px) {
+                    #price-filter-bar {
+                       top: 107px; 
+                       min-height: 38px; /* تقليل الارتفاع الأدنى أكثر */
+                       padding: 4px 10px;  /* تقليل الحشوة العمودية أكثر */
+                    }
+
+                    /* === تعديل: تصغير الأزرار نفسها للهواتف === */
+                    #price-filter-bar button {
+                        padding: 4px 12px; /* تقليل حشوة الأزرار */
+                        font-size: 13px;   /* تصغير حجم الخط */
+                    }
+
+                    .gallery {
+                       margin-top: 130px; /* تعديل المسافة العلوية لتناسب الشريط الأصغر */
+                    }
+                }
+                /* === END: تعديل ارتفاع شريط الأسعار للهواتف === */
             </style>
         </head>
         <body>
