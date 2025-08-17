@@ -294,6 +294,11 @@
             text-align: left;
             margin-left: 10px;
         }
+        @media (max-width: 767px) {
+            .search-item small {
+                display: none;
+            }
+        }
 
         .search-item .delete-button {
             background: none;
@@ -349,15 +354,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        
-        @media (max-width: 767px) {
-             .search-history-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-             .search-item small {
-                display: none;
-            }
         }
 
         .modal {
@@ -504,9 +500,10 @@
                 height: 21px;
             }
         }
-
+        
+       
         /* --- START: MODIFIED IMAGE GRID STYLES --- */
-
+        
         .image-grid {
             display: grid;
             gap: 20px;
@@ -532,15 +529,12 @@
             display: flex;
             align-items: center;
             padding: 12px;
-            
-            /* Glassmorphism Effect */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2);
-            
             cursor: pointer;
             transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
             overflow: hidden;
@@ -578,24 +572,44 @@
 
         /* --- Responsive Layout for Image Grid --- */
 
-        /* Default (Mobile): 2 columns */
+        /* Default (Mobile): 2 columns with IMPROVED sizes */
         .image-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             padding: 15px;
         }
-        .image-item { padding: 8px; }
-        .image-item img { width: 60px; height: 60px; }
-        .image-item span { font-size: 14px; margin-right: 10px; max-width: 110px; }
+        .image-item { 
+            padding: 10px;
+        }
+        .image-item img { 
+            width: 70px; 
+            height: 70px; 
+        }
+        .image-item span { 
+            font-size: 14px; 
+            margin-right: 8px;
+        }
 
-        /* Very Small Mobile Screens */
-        @media (max-width: 400px) {
-            .image-item {
-                flex-direction: column;
-                text-align: center;
+        /* Very Small Screens (< 499px): Stack items vertically for a better look */
+        @media (max-width: 499px) {
+            .image-grid {
+                gap: 12px;
             }
-            .image-item img { margin-bottom: 8px; }
-            .image-item span { margin-right: 0; }
+            .image-item {
+                flex-direction: column; /* Stack image on top of text */
+                text-align: center;
+                padding: 12px;
+            }
+            .image-item img { 
+                width: 90px; /* Make image larger when stacked */
+                height: 90px;
+                margin-bottom: 10px; /* Add space between image and text */
+            }
+            .image-item span { 
+                margin-right: 0; /* Remove side margin */
+                font-size: 15px; /* Increase font size */
+                max-width: 100%;
+            }
         }
         
         /* Tablet: 3 columns */
@@ -605,23 +619,38 @@
                 gap: 20px;
                 padding: 20px;
             }
-            .image-item img { width: 90px; height: 90px; }
-            .image-item span { font-size: 16px; }
+             .image-item {
+                flex-direction: row;
+                text-align: right;
+                padding: 12px;
+             }
+            .image-item img { 
+                width: 90px; 
+                height: 90px;
+                margin-bottom: 0;
+            }
+            .image-item span { 
+                font-size: 16px;
+                margin-right: 15px;
+            }
         }
 
         /* Large Screens (Desktop): 2 ROWS ONLY */
         @media (min-width: 1024px) {
             .image-grid {
-                /* Unset column-based layout and set row-based layout */
                 grid-template-columns: none;
                 grid-template-rows: repeat(2, 1fr);
-                grid-auto-flow: column; /* This is the key property */
+                grid-auto-flow: column;
                 gap: 20px;
                 padding: 30px;
             }
-            .image-item { padding: 12px; flex-direction: row; }
-            .image-item img { width: 100px; height: 100px; margin-bottom: 0;}
-            .image-item span { font-size: 18px; margin-right: 15px; }
+            .image-item img { 
+                width: 100px; 
+                height: 100px;
+            }
+            .image-item span { 
+                font-size: 18px;
+            }
         }
 
         /* --- END: MODIFIED IMAGE GRID STYLES --- */
