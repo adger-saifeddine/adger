@@ -838,598 +838,509 @@
       
 
 
-                  <!DOCTYPE html>
-
+                <!DOCTYPE html>
 <html lang="ar">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Example Page</title>
-            <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-            <style>
-                /* الخلفية العلوية */
-                .top-background {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 12px;
-                    background-color: white;
-                    z-index: 1000;
-                }
-                @media (max-width: 768px) {
-                    .top-background {
-                        height: 1px;
-                    }
-                }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* الخلفية العلوية */
+        .top-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background-color: white;
+            z-index: 1000;
+        }
+        @media (max-width: 768px) {
+            .top-background {
+                height: 1px;
+            }
+        }
 
-/* الشريط العلوي الثابت */
+        /* الشريط العلوي الثابت */
+        .header {
+            position: fixed;
+            top: 12px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 66px;
+            background-color: white;
+            padding: 0 20px;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
             .header {
-                position: fixed;
-                top: 12px;
-                left: 0;
-                right: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 66px;
-                background-color: white;
-                padding: 0 20px;
-                z-index: 1;
+                top: 1px;
             }
-            @media (max-width: 768px) {
-                .header {
-                    top: 1px;
-                }
-            }
-    
-            /* الشريط الأبيض الثابت أسفل الشريط العلوي */
-            .sub-header {
-                position: fixed;
-                top: 74px;
-                left: 0;
-                right: 0;
-                height: 51px;
-                background-color: white;
-                text-shadow: none;
-                z-index: 999;
-                display: flex;
-                align-items: center;
-                padding: 0 20px;
-                overflow-x: auto;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-            @media (max-width: 769px) {
-                .sub-header {
-                    top: 56px;
-                }
-            }
-    
-            .sub-header::-webkit-scrollbar {
-                display: none;
-            }
-    
-            .sub-header nav {
-                display: flex;
-                gap: 30px;
-                position: relative;
-                white-space: nowrap;
-            }
-            @media (max-width: 499px) {
-                .sub-header nav {
-                    gap: 22px;
-                    margin-right: -9px;
-                }
-            }
-            @media (max-width: 769px) {
-                .sub-header nav {
-                    margin-right: -9px;
-                }
-            }
-    
-            .sub-header nav a {
-                text-decoration: none;
-                color: #333;
-                font-size: 16px;
-                cursor: pointer;
-                padding: 10px 0;
-            }
-    
-            .underline {
-                position: absolute;
-                bottom: 0;
-                height: 2px;
-                background-color: #000000;
-                transition: all 0.3s ease;
-            }
+        }
 
-            /* === تعديل: شريط تصفية الأسعار ظاهر دائماً === */
+        /* === تعديل: شريط تصفية الأسعار ظاهر دائماً ومكان شريط الفئات === */
+        #price-filter-bar {
+            display: flex; /* ظاهر بشكل دائم */
+            align-items: center; /* توسيط الأزرار عمودياً */
+            box-sizing: border-box; /* لضمان حساب الارتفاع بشكل صحيح */
+            min-height: 50px; /* تحديد أقل ارتفاع لمنع القفز عند التحميل */
+            position: fixed; /* تثبيت الشريط */
+            top: 74px; /* أسفل الشريط العلوي الرئيسي */
+            left: 0;
+            right: 0;
+            padding: 10px; /* تم التعديل لجعل المسافة متساوية */
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #e0e0e0;
+            overflow-x: auto;
+            white-space: nowrap;
+            z-index: 999; /* تحت الشريط الرئيسي */
+            scrollbar-width: none; /* إخفاء شريط التمرير */
+            -ms-overflow-style: none;
+        }
+        #price-filter-bar::-webkit-scrollbar {
+            display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
+        }
+        @media (max-width: 769px) {
             #price-filter-bar {
-                display: flex; /* ظاهر بشكل دائم */
-                align-items: center; /* توسيط الأزرار عمودياً */
-                box-sizing: border-box; /* لضمان حساب الارتفاع بشكل صحيح */
-                min-height: 50px; /* تحديد أقل ارتفاع لمنع القفز عند التحميل */
-                position: fixed; /* تثبيت الشريط */
-                top: 125px; /* أسفل شريط الفئات */
-                left: 0;
-                right: 0;
-                padding: 10px; /* تم التعديل لجعل المسافة متساوية */
-                background-color: #f8f8f8;
-                border-bottom: 1px solid #e0e0e0;
-                overflow-x: auto;
-                white-space: nowrap;
-                z-index: 998; /* تحت شريط الفئات */
-                scrollbar-width: none; /* إخفاء شريط التمرير */
-                -ms-overflow-style: none;
+                top: 56px; /* ضبط المسافة للأجهزة الأصغر */
             }
-            #price-filter-bar::-webkit-scrollbar {
-                display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
-            }
-            @media (max-width: 769px) {
-                #price-filter-bar {
-                   top: 107px; /* ضبط المسافة للأجهزة الأصغر */
-                }
-            }
-            #price-filter-bar button {
-                font-family: 'Cairo', sans-serif;
-                background-color: #fff;
-                border: 1px solid #ccc;
-                border-radius: 20px;
-                padding: 5px 15px;
-                margin-left: 10px;
-                cursor: pointer;
-                transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-                font-size: 14px;
-                flex-shrink: 0; /* منع الأزرار من الانكماش */
-            }
-            #price-filter-bar button:hover {
-                background-color: #f0f0f0;
-                border-color: #aaa;
-            }
-            #price-filter-bar button.active-price-filter {
-                background-color: #000;
-                color: #fff;
-                border-color: #000;
-            }
-             /* === نهاية التعديل === */
-    
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                direction: rtl;
-            }
-    
+        }
+        #price-filter-bar button {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 5px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            font-size: 14px;
+            flex-shrink: 0; /* منع الأزرار من الانكماش */
+        }
+        #price-filter-bar button:hover {
+            background-color: #f0f0f0;
+            border-color: #aaa;
+        }
+        #price-filter-bar button.active-price-filter {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+        }
+        /* === نهاية التعديل === */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            direction: rtl;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 130px; /* تعديل: تقليل المسافة العلوية بعد إزالة شريط الفئات */
+        }
+        @media (max-width: 769px) {
             .gallery {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
-                padding: 20px;
-                margin-top: 170px; /* تعديل: زيادة المسافة العلوية لاستيعاب الشريطين مع إضافة هامش */
+                margin-top: 110px; /* تعديل: ضبط المسافة العلوية للشاشات الصغيرة */
             }
-            @media (max-width: 769px) {
-                .gallery {
-                   margin-top: 145px; /* تعديل: ضبط المسافة العلوية للشاشات الصغيرة */
-                }
-            }
-            
-            .image-container {
-                flex: 1 1 calc(16.666% - 20px);
-                max-width: calc(16.666% - 20px);
-                box-sizing: border-box;
-                position: relative;
-            }
-    
-            .image-frame {
-                border: 2px solid #cfcfcf;
-                border-radius: 32px;
-                padding: 0;
-                text-align: center;
-                background-color: #ffffff;
-                position: relative;
-            }
-    
+        }
+
+        .image-container {
+            flex: 1 1 calc(16.666% - 20px);
+            max-width: calc(16.666% - 20px);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .image-frame {
+            border: 2px solid #cfcfcf;
+            border-radius: 32px;
+            padding: 0;
+            text-align: center;
+            background-color: #ffffff;
+            position: relative;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            background-color: #f1f1f1a9;
+            border-radius: 30.2px;
+        }
+        @media only screen and (max-width: 767px) {
             .image-wrapper {
-                position: relative;
-                width: 100%;
-                padding-top: 100%;
-                background-color: #f1f1f1a9;
-                border-radius: 30.2px;
+                background-color: #f3f3f39c;
             }
-            @media only screen and (max-width: 767px) {
-                .image-wrapper  {
-                    background-color: #f3f3f39c;
-                }
-            }
-    
-            .image-frame img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                border-radius: 30.2px;
-                opacity: 0;
-                transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
-            }
-    
-            .image-frame img.loaded {
-                opacity: 1;
-            }
-    
-            .image-frame img.white-bg {
-                background-color: #d3d3d3;
-            }
-    
+        }
+
+        .image-frame img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 30.2px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
+        }
+
+        .image-frame img.loaded {
+            opacity: 1;
+        }
+
+        .image-frame img.white-bg {
+            background-color: #d3d3d3;
+        }
+
+        .text-under {
+            margin-top: -4px;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: right;
+            padding: 10px;
+        }
+
+        .text-under h1 {
+            font-family: Cairo, sans-serif;
+            color: #333;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        @media (max-width: 1268px) {
             .text-under {
-                margin-top: -4px;
-                font-size: 14px;
-                line-height: 1.5;
-                text-align: right;
-                padding: 10px;
-            }
-    
-            .text-under h1 {
-                font-family: Cairo, sans-serif;
-                color: #333;
-                font-size: 15px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 100%;
-            }
-    
-            @media (max-width: 1268px) {
-                .text-under {
-                    margin-top: -7px;
-                }
-                .text-under h1 {
-                    font-size: 14px !important;
-                }
-            }
-    
-            .add-to-cart {
-                position: absolute;
-                bottom: 12px;
-                left: 12px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                transition: background-color 0.3s;
-            }
-            .add-to-cart:hover {
-                background-color: #000000;
-            }
-    
-            @media (max-width: 1268px) {
-                .add-to-cart {
-                    left: 10px;
-                    bottom: 10px;
-                    width: 20px;
-                    height: 20px;
-                    padding: 5px;
-                }
-                .add-to-cart svg {
-                    width: 12px;
-                    height: 12px;
-                }
-            }
-    
-            .add-to-cart svg {
-                width: 24px;
-                height: 24px;
-                color: #000000;
-            }
-            .add-to-cart:hover svg {
-                color: #ffffff;
-            }
-    
-            .add-to-cart.checked {
-                background-color: #28a745;
-            }
-    
-            .add-to-cart.checked svg {
-                display: none;
-            }
-    
-            .add-to-cart.checked::before {
-                content: "✓";
-                font-size: 24px;
-                color: #ffffff;
-            }
-    
-            @media (max-width: 1024px) and (min-width: 769px) {
-                .image-container {
-                    flex: 1 1 calc(25% - 10px);
-                    max-width: calc(25% - 10px);
-                }
-            }
-    
-            @media (max-width: 768px) {
-                .gallery {
-                    padding-left: 5px;
-                    padding-right: 5px;
-                    margin-bottom: -25px;
-                }
-                .image-container {
-                    flex: 1 1 calc(50% - 5px);
-                    max-width: calc(50% - 5px);
-                }
-            }
-    
-            @media (min-width: 1121px) {
-                .text-under h1 {
-                    font-size: 16px;
-                }
-            }
-    
-            @media (min-width: 1025px) {
-                .image-container {
-                    flex: 1 1 calc(20% - 20px);
-                    max-width: calc(20% - 20px);
-                }
-            }
-    
-            .hidden {
-                display: none;
-            }
-    
-            .container {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                width: 100%;
                 margin-top: -7px;
             }
-    
-            @media (max-width: 1268px) {
-                .container {
-                    margin-top: -7px;
-                }
-                .zero {
-                    font-size: 20px !important;
-                }
-                .number {
-                    font-size: 16px !important;
-                }
-                .letter {
-                    font-size: 14px !important;
-                }
+            .text-under h1 {
+                font-size: 14px !important;
             }
-    
-            .rotating-text1212 {
-                font-family: 'Cairo', sans-serif;
-                color: #ff0000;
-                font-size: 12px;
-                margin-top: 2px;
-                margin-right: 8.6px;
-                text-transform: uppercase;
-                transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-                opacity: 1;
-                transform: translateY(0);
-            }
-    
-            .image-frame a,
-            .image-frame a *,
-            .image-frame a *:focus,
-            .image-frame a img {
-                outline: none !important;
-                border: none !important;
-                -webkit-tap-highlight-color: transparent !important;
-            }
-    
-            .image-frame a:focus,
-            .image-frame a img:focus {
-                outline: none !important;
-            }
-    
-            .product {
-                display: block;
-            }
-    
-            #no-results-message {
-                display: none;
-                text-align: center;
-                font-size: 20px;
-                color: #202020;
-                margin-top: 20px;
-                padding: 20px;
-                border-radius: 10px;
-            }
-    
-            /* أسلوب دائرة التحميل */
-            #loading-spinner {
-                display: block;
-                text-align: center;
-                margin-top: 20px;
-                margin-bottom: 80px; /* تعديل: تمت زيادة الهامش السفلي ليساوي المسافة العلوية (190px من المعرض + 20px من الهامش العلوي) */
-                padding: 20px;
-                border-radius: 10px;
-            }
-            @media (max-width: 769px) {
-                #loading-spinner {
-                    margin-bottom: 45px; /* تعديل للشاشات الصغيرة: (167px من المعرض + 20px من الهامش العلوي) */
-                }
-            }
+        }
 
-            .spinner {
-                display: inline-block;
-                position: relative;
-                width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
-                height: 20px;
-            }
-            .spinner div {
-                position: absolute;
+        .add-to-cart {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #000000;
+        }
+
+        @media (max-width: 1268px) {
+            .add-to-cart {
+                left: 10px;
+                bottom: 10px;
                 width: 20px;
                 height: 20px;
-                border-radius: 50%;
-                animation: dot-flashing 1s infinite linear alternate;
+                padding: 5px;
             }
-            .spinner div:first-child {
-                background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
-                left: 0;
+            .add-to-cart svg {
+                width: 12px;
+                height: 12px;
             }
-            .spinner div:last-child {
-                background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
-                right: 0;
-                animation-delay: 0.5s; /* تأخير لتبادل الحركة */
-            }
-            @keyframes dot-flashing {
-                0% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.5); /* الدائرة تكبر */
-                }
-                100% {
-                    transform: scale(1);
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <!-- الخلفية العلوية -->
-        <div class="top-background"></div>
-    
-        <!-- Sub Header -->
-        <div class="sub-header">
-            <nav>
-                <a href="#" onclick="selectItem('الكل', this)" style="font-family: Cairo, sans-serif;">الكل</a>
-                <a onclick="selectItem('خصومات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">خصومات</a>
-                <a onclick="selectItem('إلكترونيات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إلكترونيات</a>
-               <a onclick="selectItem('إكسسوارات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إكسسوارات</a>
-               <a onclick="selectItem('موضة', this)" class="menu-item" style="font-family: Cairo, sans-serif;">موضة</a>
-               <a onclick="selectItem('كتب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كتب</a>
-               <a onclick="selectItem('فن', this)" class="menu-item" style="font-family: Cairo, sans-serif;">فن</a>
-               <a onclick="selectItem('أدوات رياضية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أدوات رياضية</a>
-               <a onclick="selectItem('حقائب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">حقائب</a>
-               <a onclick="selectItem('ساعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ساعات</a>
-               <a onclick="selectItem('البيت', this)" class="menu-item" style="font-family: Cairo, sans-serif;">البيت</a>
-               <a onclick="selectItem('اختراعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">اختراعات</a>
-               
-               <a onclick="selectItem('أحذية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أحذية</a>
-               <a onclick="selectItem('ديكور', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ديكور</a>
-               <a onclick="selectItem('ألعاب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ألعاب</a>
-               <a onclick="selectItem('أجهزة منزلية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أجهزة منزلية</a>
-               <a onclick="selectItem('مستلزمات السفر', this)" class="menu-item" style="font-family: Cairo, sans-serif;">مستلزمات السفر</a>
-               <a onclick="selectItem('منتجات العناية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">منتجات العناية</a>
-               <a onclick="selectItem('معدات الطبخ', this)" class="menu-item" style="font-family: Cairo, sans-serif;">معدات الطبخ</a>
-               <a onclick="selectItem('كمبيوترات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كمبيوترات</a>
-               <a onclick="selectItem('كاميرات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كاميرات</a>
-                
-                <div class="underline"></div>
-            </nav>
-        </div>
+        }
 
-        <!-- شريط تصفية الأسعار (ظاهر دائماً) -->
-        <div id="price-filter-bar"></div>
-    
-        <!-- نافذة القائمة الجانبية -->
-        <div class="menu-popup" id="menuPopup">
-            <div class="back-arrow" onclick="toggleMenu()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
-                </svg>
-            </div>
-            <p onclick="window.location.href='account.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">حسابي</span>
-            </p>
-            <p onclick="window.location.href='about.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">سياسات وأحكام</span>
-            </p>
-            <p onclick="window.location.href='return.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">طلب استرجاع</span>
-            </p>
-            <p onclick="window.location.href='deals.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">صفقة رابحة</span>
-            </p>
-            <p onclick="window.location.href='wholesale.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">شراء بالجملة</span>
-            </p>
-            <p onclick="window.location.href='companies.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">شركات عالمية</span>
-            </p>
-            <p onclick="window.location.href='categories.html'" 
-               style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-               onmouseover="this.style.color='#888'" 
-               onmouseout="this.style.color='black'"
-               ontouchstart="this.style.color='#888'" 
-               ontouchend="setTimeout(() => this.style.color='black', 300)">
-                <span style="pointer-events: none;">الفئات</span>
-            </p>
+        .add-to-cart svg {
+            width: 24px;
+            height: 24px;
+            color: #000000;
+        }
+        .add-to-cart:hover svg {
+            color: #ffffff;
+        }
+
+        .add-to-cart.checked {
+            background-color: #28a745;
+        }
+
+        .add-to-cart.checked svg {
+            display: none;
+        }
+
+        .add-to-cart.checked::before {
+            content: "✓";
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .image-container {
+                flex: 1 1 calc(25% - 10px);
+                max-width: calc(25% - 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                padding-left: 5px;
+                padding-right: 5px;
+                margin-bottom: -25px;
+            }
+            .image-container {
+                flex: 1 1 calc(50% - 5px);
+                max-width: calc(50% - 5px);
+            }
+        }
+
+        @media (min-width: 1121px) {
+            .text-under h1 {
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .image-container {
+                flex: 1 1 calc(20% - 20px);
+                max-width: calc(20% - 20px);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+            margin-top: -7px;
+        }
+
+        @media (max-width: 1268px) {
+            .container {
+                margin-top: -7px;
+            }
+            .zero {
+                font-size: 20px !important;
+            }
+            .number {
+                font-size: 16px !important;
+            }
+            .letter {
+                font-size: 14px !important;
+            }
+        }
+
+        .rotating-text1212 {
+            font-family: 'Cairo', sans-serif;
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 2px;
+            margin-right: 8.6px;
+            text-transform: uppercase;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-frame a,
+        .image-frame a *,
+        .image-frame a *:focus,
+        .image-frame a img {
+            outline: none !important;
+            border: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        .image-frame a:focus,
+        .image-frame a img:focus {
+            outline: none !important;
+        }
+
+        .product {
+            display: block;
+        }
+
+        #no-results-message {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            color: #202020;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* أسلوب دائرة التحميل */
+        #loading-spinner {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 80px; /* تعديل: تمت زيادة الهامش السفلي ليساوي المسافة العلوية (190px من المعرض + 20px من الهامش العلوي) */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        @media (max-width: 769px) {
+            #loading-spinner {
+                margin-bottom: 45px; /* تعديل للشاشات الصغيرة: (167px من المعرض + 20px من الهامش العلوي) */
+            }
+        }
+
+        .spinner {
+            display: inline-block;
+            position: relative;
+            width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
+            height: 20px;
+        }
+        .spinner div {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: dot-flashing 1s infinite linear alternate;
+        }
+        .spinner div:first-child {
+            background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
+            left: 0;
+        }
+        .spinner div:last-child {
+            background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
+            right: 0;
+            animation-delay: 0.5s; /* تأخير لتبادل الحركة */
+        }
+        @keyframes dot-flashing {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5); /* الدائرة تكبر */
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية العلوية -->
+    <div class="top-background"></div>
+
+    <!-- ===== التعديل الأول: تمت إضافة زر "كل الأسعار" بشكل ثابت في HTML ===== -->
+    <div id="price-filter-bar">
+        <!-- زر "كل الأسعار" يظهر مسبقًا عند تحميل الصفحة -->
+        <button onclick="filterByPrice(null, this)" class="active-price-filter">كل الأسعار</button>
+    </div>
+
+    <!-- نافذة القائمة الجانبية -->
+    <div class="menu-popup" id="menuPopup">
+        <div class="back-arrow" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
         </div>
-    
-        <div id="gallery" class="gallery"></div>
-    
-        <!-- النقطتان الدائريتان للتحميل -->
-        <div id="loading-spinner">
-            <div class="spinner">
-                <div></div>
-                <div></div>
-            </div>
+        <p onclick="window.location.href='account.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">حسابي</span>
+        </p>
+        <p onclick="window.location.href='about.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">سياسات وأحكام</span>
+        </p>
+        <p onclick="window.location.href='return.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">طلب استرجاع</span>
+        </p>
+        <p onclick="window.location.href='deals.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">صفقة رابحة</span>
+        </p>
+        <p onclick="window.location.href='wholesale.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شراء بالجملة</span>
+        </p>
+        <p onclick="window.location.href='companies.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شركات عالمية</span>
+        </p>
+        <p onclick="window.location.href='categories.html'"
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'"
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'"
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">الفئات</span>
+        </p>
+    </div>
+
+    <div id="gallery" class="gallery"></div>
+
+    <!-- النقطتان الدائريتان للتحميل -->
+    <div id="loading-spinner">
+        <div class="spinner">
+            <div></div>
+            <div></div>
         </div>
-    
+    </div>
+
     <!DOCTYPE html>
 <html>
 <head>
     <!-- يمكنك إضافة العناصر الأخرى مثل meta و CSS هنا -->
 </head>
 <body>
-    <!-- رسالة "لا توجد نتائج" -->
-    <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px;">
-        <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                <line x1="8" y1="8" x2="14" y2="14"></line>
-                <line x1="14" y1="8" x2="8" y2="14"></line>
-            </svg>
-        </div>
-        <p style="font-size: 24px; margin-top: 10px;">
-            لا توجد نتائج لـ "<span id="search-term-display"></span>"
-        </p>
+<!-- رسالة "لا توجد نتائج" -->
+<div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px;">
+    <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="8" x2="14" y2="14"></line>
+            <line x1="14" y1="8" x2="8" y2="14"></line>
+        </svg>
     </div>
+    <p style="font-size: 24px; margin-top: 10px;">
+        لا توجد نتائج لـ "<span id="search-term-display"></span>"
+    </p>
+</div>
 <script>
     // --- قاموس البحث المتقدم ---
     let keywordMap = {
@@ -1708,12 +1619,6 @@ if (document.querySelector('.cart-icon')) {
 document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
 }
 
-// دالة لتحريك الخط عند النقر على عناصر القائمة
-const menuItems = document.querySelectorAll('.menu-item');
-menuItems.forEach(item => {
-item.addEventListener('click', () => window.scrollTo(0, 0));
-});
-
 // دالة لإظهار أو إخفاء القائمة الجانبية
 function toggleMenu() {
 const menuPopup = document.getElementById('menuPopup');
@@ -1854,22 +1759,19 @@ fetch('products.json')
         filteredProducts = [...tempFiltered]; // تحديث القائمة الرئيسية
         originalFilteredProducts = [...tempFiltered]; // حفظ نسخة من النتائج
 
-        // === بداية التعديل: توليد شريط الأسعار بناءً على النتائج المتاحة ===
         const availablePriceRanges = priceRanges.filter(maxPrice => {
             let minPrice = 0;
             const maxPriceIndex = priceRanges.indexOf(maxPrice);
             if (maxPriceIndex > 0) {
                 minPrice = priceRanges[maxPriceIndex - 1];
             }
-            // التحقق مما إذا كان أي منتج في القائمة الأصلية يقع في هذا النطاق
             return originalFilteredProducts.some(p => {
                 const productPrice = parseInt(p.price);
                 return productPrice > minPrice && productPrice <= maxPrice;
             });
         });
 
-        generatePriceFilterBar(availablePriceRanges); // توليد الشريط مع النطاقات المتاحة فقط
-        // === نهاية التعديل ===
+        generatePriceFilterBar(availablePriceRanges); 
 
         loadedItems = 0;
         removeLoadingAnimation();
@@ -1942,29 +1844,24 @@ startRotatingText(".rotating-text1212:not(.rotating)");
 
 }
 
-// === بداية التعديل: تحديث دالة توليد شريط الأسعار ===
+// ===== التعديل الثاني: تحديث دالة توليد شريط الأسعار =====
 function generatePriceFilterBar(availableRanges = priceRanges) {
-const priceBar = document.getElementById('price-filter-bar');
-priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
-// زر "كل الأسعار" يظهر دائماً
-const allButton = document.createElement('button');
-allButton.textContent = 'كل الأسعار';
-allButton.onclick = () => filterByPrice(null, allButton);
-priceBar.appendChild(allButton);
+    const priceBar = document.getElementById('price-filter-bar');
+    
+    // أولاً، إزالة الأزرار الديناميكية القديمة فقط (التي تمثل نطاقات الأسعار)
+    const oldDynamicButtons = priceBar.querySelectorAll('.dynamic-price-button');
+    oldDynamicButtons.forEach(btn => btn.remove());
 
-// أزرار نطاقات الأسعار المتاحة فقط
-availableRanges.forEach(price => {
-    const button = document.createElement('button');
-    button.textContent = `أقل من ${price} جنيه`;
-    button.onclick = () => filterByPrice(price, button);
-    priceBar.appendChild(button);
-});
-
-// إعادة تعيين واجهة المستخدم بعد توليد الأزرار
-resetPriceFilterUI(true);
-
+    // ثانياً، إضافة أزرار نطاقات الأسعار المتاحة ديناميكيًا بعد الزر الثابت
+    availableRanges.forEach(price => {
+        const button = document.createElement('button');
+        button.textContent = `أقل من ${price} جنيه`;
+        button.onclick = () => filterByPrice(price, button);
+        // إضافة فئة خاصة لهذه الأزرار لتسهيل إزالتها في التحديثات اللاحقة
+        button.classList.add('dynamic-price-button');
+        priceBar.appendChild(button);
+    });
 }
-// === نهاية التعديل ===
 
 function filterByPrice(maxPrice, clickedButton) {
 const gallery = document.getElementById('gallery');
@@ -2102,34 +1999,6 @@ if (window.scrollY >= (gallery.scrollHeight - triggerHeight) && loadedItems < fi
 
 });
 
-// دالة لتحريك الخط وتنفيذ البحث
-function selectItem(item, element) {
-const searchBox = document.getElementById('search-box');
-if (searchBox) {
-    searchBox.value = item === 'الكل' ? '' : item;
-}
-
-fetchAndFilterProducts(item === 'الكل' ? '' : item);
-
-const allItems = document.querySelectorAll('.sub-header nav a');
-allItems.forEach(item => item.classList.remove('active'));
-element.classList.add('active');
-
-const underline = document.querySelector('.underline');
-const itemRect = element.getBoundingClientRect();
-const navRect = element.parentElement.getBoundingClientRect();
-
-underline.style.width = `${itemRect.width}px`;
-underline.style.left = `${itemRect.left - navRect.left}px`;
-
-element.scrollIntoView({
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'center'
-});
-
-}
-
 // دالة لخلط مصفوفة عشوائيًا
 function shuffleArray(array) {
 for (let i = array.length - 1; i > 0; i--) {
@@ -2140,15 +2009,6 @@ const j = Math.floor(Math.random() * (i + 1));
 
 // عند تحميل الصفحة
 window.onload = function () {
-const defaultItem = document.querySelector('.sub-header nav a');
-const underline = document.querySelector('.underline');
-if (defaultItem && underline) {
-const itemRect = defaultItem.getBoundingClientRect();
-const navRect = defaultItem.parentElement.getBoundingClientRect();
-defaultItem.classList.add('active');
-underline.style.width = `${itemRect.width}px`;
-underline.style.left = `${itemRect.left - navRect.left}px`;
-}
 const searchTerm = getSearchTermFromURL();
 const searchBox = document.getElementById('search-box');
 if (searchBox && searchTerm) {
@@ -2166,8 +2026,6 @@ fetchAndFilterProducts(searchTerm || '');
 
 </body>
 </html>
-
-
 
 
 
