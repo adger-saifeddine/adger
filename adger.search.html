@@ -943,30 +943,34 @@
                     transition: all 0.3s ease;
                 }
 
-                /* === شريط تصفية الأسعار === */
+                /* === تعديل: شريط تصفية الأسعار ظاهر دائماً === */
                 #price-filter-bar {
-                    display: flex; 
-                    align-items: center; 
-                    box-sizing: border-box;
-                    min-height: 50px; 
-                    position: fixed; 
-                    top: 125px; 
+                    display: flex; /* ظاهر بشكل دائم */
+                    align-items: center; /* توسيط الأزرار عمودياً */
+                    box-sizing: border-box; /* لضمان حساب الارتفاع بشكل صحيح */
+                    min-height: 50px; /* تحديد أقل ارتفاع لمنع القفز عند التحميل */
+                    position: fixed; /* تثبيت الشريط */
+                    top: 125px; /* أسفل شريط الفئات */
                     left: 0;
                     right: 0;
-                    padding: 10px;
+                    padding: 10px; /* تم التعديل لجعل المسافة متساوية */
                     background-color: #f8f8f8;
                     border-bottom: 1px solid #e0e0e0;
                     overflow-x: auto;
                     white-space: nowrap;
-                    z-index: 998; 
-                    scrollbar-width: none; 
+                    z-index: 998; /* تحت شريط الفئات */
+                    scrollbar-width: none; /* إخفاء شريط التمرير */
                     -ms-overflow-style: none;
-                    transition: top 0.4s ease; 
+                    transition: top 0.4s ease; /* إضافة تأثير انتقال سلس للإخفاء والإظهار */
                 }
                 #price-filter-bar::-webkit-scrollbar {
-                    display: none; 
+                    display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
                 }
-
+                @media (max-width: 769px) {
+                    #price-filter-bar {
+                       top: 107px; /* ضبط المسافة للأجهزة الأصغر */
+                    }
+                }
                 #price-filter-bar button {
                     font-family: 'Cairo', sans-serif;
                     background-color: #fff;
@@ -977,9 +981,9 @@
                     cursor: pointer;
                     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
                     font-size: 14px;
-                    flex-shrink: 0; 
-                    -webkit-tap-highlight-color: transparent; 
-                    outline: none; 
+                    flex-shrink: 0; /* منع الأزرار من الانكماش */
+                    -webkit-tap-highlight-color: transparent; /* لإزالة الخلفية الزرقاء عند النقر */
+                    outline: none; /* لإزالة أي إطار تحديد عند التركيز */
                 }
                 #price-filter-bar button:hover {
                     background-color: #f0f0f0;
@@ -990,14 +994,15 @@
                     color: #fff;
                     border-color: #000;
                 }
-                 
+                 /* === نهاية التعديل === */
+
                 /* START: تعديل لضمان الإخفاء الكامل */
                 #price-filter-bar.hidden-by-scroll {
-                    top: 60px; 
+                    top: 60px; /* تم تقليل القيمة من 70px لضمان الاختفاء التام */
                 }
                 @media (max-width: 769px) {
                     #price-filter-bar.hidden-by-scroll {
-                        top: 40px; 
+                        top: 40px; /* تم تقليل القيمة من 50px للشاشات الصغيرة */
                     }
                 }
                 /* END: تعديل لضمان الإخفاء الكامل */
@@ -1006,7 +1011,7 @@
                 .menu-popup {
                     position: fixed;
                     top: 0;
-                    right: -300px; 
+                    right: -300px; /* ابدأ من خارج الشاشة */
                     width: 280px;
                     height: 100%;
                     background-color: white;
@@ -1015,10 +1020,10 @@
                     transition: right 0.3s ease-in-out;
                     padding: 20px;
                     box-sizing: border-box;
-                    display: none; 
+                    display: none; /* مخفي بشكل افتراضي */
                 }
                 .menu-popup.active {
-                    right: 0; 
+                    right: 0; /* الظهور عند تفعيل الكلاس */
                 }
                 .menu-popup .back-arrow {
                     position: absolute;
@@ -1046,7 +1051,12 @@
                     gap: 10px;
                     justify-content: center;
                     padding: 20px;
-                    margin-top: 170px; 
+                    margin-top: 170px; /* تعديل: زيادة المسافة العلوية لاستيعاب الشريطين مع إضافة هامش */
+                }
+                @media (max-width: 769px) {
+                    .gallery {
+                       margin-top: 143px; /* تعديل: ضبط المسافة العلوية للشاشات الصغيرة */
+                    }
                 }
                 
                 .image-container {
@@ -1286,20 +1296,20 @@
                     display: block;
                     text-align: center;
                     margin-top: 20px;
-                    margin-bottom: 80px; 
+                    margin-bottom: 80px; /* تعديل: تمت زيادة الهامش السفلي ليساوي المسافة العلوية (190px من المعرض + 20px من الهامش العلوي) */
                     padding: 20px;
                     border-radius: 10px;
                 }
                 @media (max-width: 769px) {
                     #loading-spinner {
-                        margin-bottom: 43px; 
+                        margin-bottom: 43px; /* تعديل للشاشات الصغيرة: (167px من المعرض + 20px من الهامش العلوي) */
                     }
                 }
 
                 .spinner {
                     display: inline-block;
                     position: relative;
-                    width: 60px; 
+                    width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
                     height: 20px;
                 }
                 .spinner div {
@@ -1310,45 +1320,25 @@
                     animation: dot-flashing 1s infinite linear alternate;
                 }
                 .spinner div:first-child {
-                    background-color: #ff0000; 
+                    background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
                     left: 0;
                 }
                 .spinner div:last-child {
-                    background-color: #0000ff; 
+                    background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
                     right: 0;
-                    animation-delay: 0.5s; 
+                    animation-delay: 0.5s; /* تأخير لتبادل الحركة */
                 }
                 @keyframes dot-flashing {
                     0% {
                         transform: scale(1);
                     }
                     50% {
-                        transform: scale(1.5); 
+                        transform: scale(1.5); /* الدائرة تكبر */
                     }
                     100% {
                         transform: scale(1);
                     }
                 }
-
-                /* === START: تعديل نهائي لحجم وحشوة شريط الأسعار للهواتف === */
-                @media (max-width: 769px) {
-                    #price-filter-bar {
-                       top: 107px; 
-                       min-height: 36px; /* ارتفاع أنحف للشريط */
-                       padding: 4px 10px;  /* حشوة خارجية للشريط */
-                    }
-
-                    /* تصغير الزر مع حشوة داخلية واسعة نسبياً */
-                    #price-filter-bar button {
-                        padding: 4px 13px; /* حشوة متوازنة حول النص الصغير */
-                        font-size: 12px;   /* تصغير حجم الخط بشكل ملحوظ */
-                    }
-
-                    .gallery {
-                       margin-top: 148px; /* تعديل المسافة العلوية بدقة لتناسب الشريط الجديد */
-                    }
-                }
-                /* === END: تعديل نهائي لحجم وحشوة شريط الأسعار للهواتف === */
             </style>
         </head>
         <body>
@@ -1384,11 +1374,8 @@
                 </nav>
             </div>
 
-            <!-- === START: تعديل لجعل زر "كل الأسعار" يظهر دائماً === -->
-            <div id="price-filter-bar">
-                <button class="active-price-filter">كل الأسعار</button>
-            </div>
-            <!-- === END: تعديل === -->
+            <!-- شريط تصفية الأسعار (ظاهر دائماً) -->
+            <div id="price-filter-bar"></div>
         
             <!-- نافذة القائمة الجانبية -->
             <div class="menu-popup" id="menuPopup">
@@ -2039,7 +2026,7 @@
             // === بداية التعديل: تحديث دالة توليد شريط الأسعار ===
             function generatePriceFilterBar(availableRanges = priceRanges) {
             const priceBar = document.getElementById('price-filter-bar');
-            priceBar.innerHTML = ''; // مسح الأزرار القديمة (بما في ذلك الزر الثابت) قبل الإنشاء
+            priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
             // زر "كل الأسعار" يظهر دائماً
             const allButton = document.createElement('button');
             allButton.textContent = 'كل الأسعار';
