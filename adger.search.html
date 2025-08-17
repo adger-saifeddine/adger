@@ -1760,10 +1760,6 @@ let filteredProducts = [];
 let originalFilteredProducts = []; // لتخزين نتائج البحث الأصلية
 const itemsPerLoad = 20;
 let loadedItems = 0;
-// === بداية التعديل: إضافة متغير لتخزين مصطلح البحث الحالي ===
-let currentSearchTerm = '';
-// === نهاية التعديل ===
-
 
 // دالة لإظهار أداة التحميل
 function showLoadingAnimation() {
@@ -1783,10 +1779,6 @@ function fetchAndFilterProducts(searchTerm) {
     const noResultsMessage = document.getElementById('no-results-message');
     const searchTermDisplay = document.getElementById('search-term-display');
     const searchBox = document.getElementById('search-box');
-
-    // === بداية التعديل: تحديث متغير مصطلح البحث الحالي ===
-    currentSearchTerm = searchTerm;
-    // === نهاية التعديل ===
 
     if (searchBox) {
         searchBox.value = searchTerm;
@@ -1942,49 +1934,50 @@ function generatePriceFilterBar() {
     });
 }
 
+// === بداية التعديل: تحديث دالة تصفية الأسعار لعرض رسالة "لا توجد نتائج" ===
 function filterByPrice(maxPrice, clickedButton) {
     const gallery = document.getElementById('gallery');
     const noResultsMessage = document.getElementById('no-results-message');
     const searchTermDisplay = document.getElementById('search-term-display');
 
-    gallery.innerHTML = ''; 
-    noResultsMessage.style.display = 'none';
+    gallery.innerHTML = ''; // امسح المعرض الحالي
+    noResultsMessage.style.display = 'none'; // إخفاء الرسالة مبدئياً
 
+    // تحديث واجهة المستخدم للأزرار
     resetPriceFilterUI(false); 
     clickedButton.classList.add('active-price-filter');
 
     if (maxPrice === null) {
+        // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
         filteredProducts = [...originalFilteredProducts];
     } else {
+        // حالة نطاق سعر محدد
         let minPrice = 0;
         const maxPriceIndex = priceRanges.indexOf(maxPrice);
+
+        // إذا لم يكن هذا هو النطاق الأول، نحدد السعر الأدنى من النطاق السابق
         if (maxPriceIndex > 0) {
             minPrice = priceRanges[maxPriceIndex - 1];
         }
+        
+        // تصفية المنتجات بناءً على النطاق
         filteredProducts = originalFilteredProducts.filter(p => {
             const productPrice = parseInt(p.price);
             return productPrice > minPrice && productPrice <= maxPrice;
         });
     }
     
+    // التحقق من وجود نتائج وعرضها أو عرض رسالة "لا توجد نتائج"
     if (filteredProducts.length > 0) {
-        loadedItems = 0;
-        loadProducts(0, itemsPerLoad);
+        loadedItems = 0; // إعادة تعيين عداد التحميل
+        loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
     } else {
-        // === بداية التعديل: إنشاء رسالة مدمجة لعدم وجود نتائج ===
-        let finalDisplayTerm;
-        // إذا كان هناك مصطلح بحث أصلي (وليس "الكل")، قم بدمجه
-        if (currentSearchTerm && currentSearchTerm.toLowerCase() !== 'الكل') {
-            finalDisplayTerm = `${currentSearchTerm} - ${clickedButton.textContent}`;
-        } else {
-            // وإلا، اعرض فقط فلتر السعر
-            finalDisplayTerm = clickedButton.textContent;
-        }
-        searchTermDisplay.textContent = finalDisplayTerm;
+        // إذا لم توجد نتائج، أظهر الرسالة المخصصة
+        searchTermDisplay.textContent = clickedButton.textContent; // استخدم نص الزر كرسالة
         noResultsMessage.style.display = 'block';
-        // === نهاية التعديل ===
     }
 }
+// === نهاية التعديل ===
 
 
 function resetPriceFilterUI(activateFirst = true) {
