@@ -856,9 +856,20 @@
                     background-color: white;
                     z-index: 1000;
                 }
+                /* === تعديل: تم إزالة تصغير ارتفاع الخلفية على الشاشات الصغيرة === */
                 @media (max-width: 768px) {
-                    .top-background {
-                        height: 1px;
+                    /* لا يوجد تغيير في الارتفاع الآن */
+                    .header {
+                        top: 12px; /* تعديل ليتناسب مع الخلفية الثابتة */
+                    }
+                     .sub-header {
+                        top: 78px; /* تعديل ليتناسب مع الهيدر */
+                    }
+                    #price-filter-bar {
+                       top: 129px; /* تعديل ليتناسب مع ما فوقه */
+                    }
+                    .gallery {
+                       margin-top: 175px; /* توحيد الهامش العلوي */
                     }
                 }
         
@@ -876,16 +887,11 @@
                     padding: 0 20px;
                     z-index: 1;
                 }
-                @media (max-width: 768px) {
-                    .header {
-                        top: 1px;
-                    }
-                }
         
                 /* الشريط الأبيض الثابت أسفل الشريط العلوي */
                 .sub-header {
                     position: fixed;
-                    top: 74px;
+                    top: 78px; /* تم التعديل ليكون أسفل الهيدر */
                     left: 0;
                     right: 0;
                     height: 51px;
@@ -898,11 +904,6 @@
                     overflow-x: auto;
                     scrollbar-width: none;
                     -ms-overflow-style: none;
-                }
-                @media (max-width: 769px) {
-                    .sub-header {
-                        top: 56px;
-                    }
                 }
         
                 .sub-header::-webkit-scrollbar {
@@ -943,29 +944,24 @@
                     transition: all 0.3s ease;
                 }
 
-                /* === تعديل: شريط تصفية الأسعار ظاهر دائماً === */
+                /* شريط تصفية الأسعار */
                 #price-filter-bar {
-                    display: flex; /* ظاهر بشكل دائم */
-                    position: fixed; /* تثبيت الشريط */
-                    top: 125px; /* أسفل شريط الفئات */
+                    display: flex;
+                    position: fixed;
+                    top: 129px; /* أسفل شريط الفئات */
                     left: 0;
                     right: 0;
-                    padding: 10px; /* تم التعديل لجعل المسافة متساوية */
+                    padding: 10px;
                     background-color: #f8f8f8;
                     border-bottom: 1px solid #e0e0e0;
                     overflow-x: auto;
                     white-space: nowrap;
-                    z-index: 998; /* تحت شريط الفئات */
-                    scrollbar-width: none; /* إخفاء شريط التمرير */
+                    z-index: 998;
+                    scrollbar-width: none;
                     -ms-overflow-style: none;
                 }
                 #price-filter-bar::-webkit-scrollbar {
-                    display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
-                }
-                @media (max-width: 769px) {
-                    #price-filter-bar {
-                       top: 107px; /* ضبط المسافة للأجهزة الأصغر */
-                    }
+                    display: none;
                 }
                 #price-filter-bar button {
                     font-family: 'Cairo', sans-serif;
@@ -977,7 +973,7 @@
                     cursor: pointer;
                     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
                     font-size: 14px;
-                    flex-shrink: 0; /* منع الأزرار من الانكماش */
+                    flex-shrink: 0;
                 }
                 #price-filter-bar button:hover {
                     background-color: #f0f0f0;
@@ -988,7 +984,6 @@
                     color: #fff;
                     border-color: #000;
                 }
-                 /* === نهاية التعديل === */
         
                 body {
                     font-family: Arial, sans-serif;
@@ -1004,12 +999,7 @@
                     gap: 10px;
                     justify-content: center;
                     padding: 20px;
-                    margin-top: 175px; /* تعديل: زيادة المسافة العلوية لاستيعاب الشريطين */
-                }
-                @media (max-width: 769px) {
-                    .gallery {
-                       margin-top: 155px;
-                    }
+                    margin-top: 175px; /* زيادة المسافة العلوية لاستيعاب الشريطين */
                 }
                 
                 .image-container {
@@ -1612,18 +1602,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateWelcomeMessage();
     loadKeywordMap(); // تحميل القاموس عند بدء التشغيل
 
-    // ================= START: ROBUST AND PRECISE SCROLL LOGIC =================
     const priceFilterBar = document.getElementById('price-filter-bar');
-
     if (priceFilterBar) {
-        // دالة مساعدة للحصول على جميع الأزرار التي تتقاطع مع مساحة عرض الشريط
         const getIntersectingButtons = () => {
             const allButtons = Array.from(priceFilterBar.querySelectorAll('button'));
             const barRect = priceFilterBar.getBoundingClientRect();
 
             return allButtons.filter(button => {
                 const buttonRect = button.getBoundingClientRect();
-                // يعتبر الزر مرئيًا إذا كان هناك أي تداخل بينه وبين الشريط
                 const isOverlapping = buttonRect.left < barRect.right && buttonRect.right > barRect.left;
                 return isOverlapping;
             });
@@ -1640,21 +1626,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const visibleButtons = getIntersectingButtons();
             if (visibleButtons.length === 0) return;
 
-            // تحديد حالة التمرير الحالية
             const tolerance = 5;
             const isAtStart = bar.scrollLeft >= -tolerance;
             const maxScroll = -(bar.scrollWidth - bar.clientWidth);
             const isAtEnd = bar.scrollLeft <= (maxScroll + tolerance);
             
-            // تحديد الأزرار الرئيسية. في RTL، الترتيب البصري معكوس عن ترتيب DOM
-            // visibleButtons[0] هو الأيمن (الأول بصريًا)
-            // visibleButtons[last] هو الأيسر (الأخير بصريًا)
             const firstVisible = visibleButtons[0];
             const secondVisible = visibleButtons.length > 1 ? visibleButtons[1] : null;
             const lastVisible = visibleButtons[visibleButtons.length - 1];
             const secondToLastVisible = visibleButtons.length > 1 ? visibleButtons[visibleButtons.length - 2] : null;
 
-            // حساب عرض العنصر الواحد للتمرير
             const sampleButton = visibleButtons[0];
             const buttonStyle = window.getComputedStyle(sampleButton);
             const marginLeft = parseFloat(buttonStyle.marginLeft);
@@ -1662,24 +1643,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let scrollSteps = 0;
 
-            // --- تحديد عدد خطوات التمرير بناءً على الزر المنقور ---
-            
-            // منطق التقدم (التحرك لليسار)
             if (!isAtEnd) {
                 if (clickedButton === lastVisible) scrollSteps = 2;
                 else if (clickedButton === secondToLastVisible) scrollSteps = 1;
             }
 
-            // منطق الرجوع (التحرك لليمين)
-            if (!isAtStart && scrollSteps === 0) { // ننفذ هذا فقط إذا لم يتم تحديد تمرير للأمام
-                if (clickedButton === firstVisible) scrollSteps = -2; // سالب للرجوع
+            if (!isAtStart && scrollSteps === 0) {
+                if (clickedButton === firstVisible) scrollSteps = -2;
                 else if (clickedButton === secondVisible) scrollSteps = -1;
             }
 
-            // --- تنفيذ التمرير إذا تم تحديد عدد خطوات ---
             if (scrollSteps !== 0) {
-                // في RTL، التمرير للأمام يتطلب قيمة سالبة لـ 'left'، والرجوع يتطلب قيمة موجبة.
-                // لذلك نعكس إشارة scrollSteps
                 const scrollAmount = -scrollSteps * singleItemWidth;
                 bar.scrollBy({
                     left: scrollAmount,
@@ -1688,7 +1662,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    // ================== END: ROBUST AND PRECISE SCROLL LOGIC ==================
 });
 
 // ربط حدث النقر على أيقونة العربة
@@ -1756,7 +1729,7 @@ menuPopup.addEventListener('touchmove', (event) => {
 
 // متغيرات عالمية لتتبع المنتجات
 let filteredProducts = [];
-let originalFilteredProducts = []; // لتخزين نتائج البحث الأصلية
+let originalFilteredProducts = [];
 const itemsPerLoad = 20;
 let loadedItems = 0;
 
@@ -1772,10 +1745,10 @@ function removeLoadingAnimation() {
     if(loadingSpinner) loadingSpinner.style.display = 'none';
 }
 
-// تعريف نطاقات الأسعار بشكل عام لتكون متاحة للدوال
+// تعريف نطاقات الأسعار بشكل عام
 const priceRanges = [50, 100, 200, 500, 1000, 5000];
 
-// دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
+// دالة لجلب وتصفية المنتجات
 function fetchAndFilterProducts(searchTerm) {
     const gallery = document.getElementById('gallery');
     const noResultsMessage = document.getElementById('no-results-message');
@@ -1840,24 +1813,28 @@ function fetchAndFilterProducts(searchTerm) {
             }
             
             shuffleArray(tempFiltered);
-            filteredProducts = [...tempFiltered]; // تحديث القائمة الرئيسية
-            originalFilteredProducts = [...tempFiltered]; // حفظ نسخة من النتائج
+            filteredProducts = [...tempFiltered];
+            originalFilteredProducts = [...tempFiltered];
 
-            // === بداية التعديل: توليد شريط الأسعار بناءً على النتائج المتاحة ===
-            const availablePriceRanges = priceRanges.filter(maxPrice => {
-                let minPrice = 0;
-                const maxPriceIndex = priceRanges.indexOf(maxPrice);
-                if (maxPriceIndex > 0) {
-                    minPrice = priceRanges[maxPriceIndex - 1];
-                }
-                // التحقق مما إذا كان أي منتج في القائمة الأصلية يقع في هذا النطاق
-                return originalFilteredProducts.some(p => {
-                    const productPrice = parseInt(p.price);
-                    return productPrice > minPrice && productPrice <= maxPrice;
+            // === بداية التعديل: إظهار "كل الأسعار" فقط إذا كانت نتيجة البحث منتج واحد أو أقل ===
+            if (originalFilteredProducts.length <= 1) {
+                // إذا كانت النتيجة منتجًا واحدًا أو أقل، مرر مصفوفة فارغة لعرض زر "كل الأسعار" فقط
+                generatePriceFilterBar([]);
+            } else {
+                // وإلا، قم بحساب النطاقات المتاحة كالمعتاد
+                const availablePriceRanges = priceRanges.filter(maxPrice => {
+                    let minPrice = 0;
+                    const maxPriceIndex = priceRanges.indexOf(maxPrice);
+                    if (maxPriceIndex > 0) {
+                        minPrice = priceRanges[maxPriceIndex - 1];
+                    }
+                    return originalFilteredProducts.some(p => {
+                        const productPrice = parseInt(p.price);
+                        return productPrice > minPrice && productPrice <= maxPrice;
+                    });
                 });
-            });
-
-            generatePriceFilterBar(availablePriceRanges); // توليد الشريط مع النطاقات المتاحة فقط
+                generatePriceFilterBar(availablePriceRanges);
+            }
             // === نهاية التعديل ===
 
             loadedItems = 0;
@@ -1931,18 +1908,15 @@ function loadProducts(startIndex, count) {
 }
 
 
-// === بداية التعديل: تحديث دالة توليد شريط الأسعار ===
 function generatePriceFilterBar(availableRanges = priceRanges) {
     const priceBar = document.getElementById('price-filter-bar');
-    priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
+    priceBar.innerHTML = '';
     
-    // زر "كل الأسعار" يظهر دائماً
     const allButton = document.createElement('button');
     allButton.textContent = 'كل الأسعار';
     allButton.onclick = () => filterByPrice(null, allButton);
     priceBar.appendChild(allButton);
 
-    // أزرار نطاقات الأسعار المتاحة فقط
     availableRanges.forEach(price => {
         const button = document.createElement('button');
         button.textContent = `أقل من ${price} جنيه`;
@@ -1950,51 +1924,40 @@ function generatePriceFilterBar(availableRanges = priceRanges) {
         priceBar.appendChild(button);
     });
 
-    // إعادة تعيين واجهة المستخدم بعد توليد الأزرار
     resetPriceFilterUI(true);
 }
-// === نهاية التعديل ===
 
 function filterByPrice(maxPrice, clickedButton) {
     const gallery = document.getElementById('gallery');
     const noResultsMessage = document.getElementById('no-results-message');
     const searchTermDisplay = document.getElementById('search-term-display');
 
-    gallery.innerHTML = ''; // امسح المعرض الحالي
-    noResultsMessage.style.display = 'none'; // إخفاء الرسالة مبدئياً
+    gallery.innerHTML = '';
+    noResultsMessage.style.display = 'none';
 
-    // تحديث واجهة المستخدم للأزرار
     resetPriceFilterUI(false); 
     if (clickedButton) {
         clickedButton.classList.add('active-price-filter');
     }
 
     if (maxPrice === null) {
-        // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
         filteredProducts = [...originalFilteredProducts];
     } else {
-        // حالة نطاق سعر محدد
         let minPrice = 0;
         const maxPriceIndex = priceRanges.indexOf(maxPrice);
-
-        // إذا لم يكن هذا هو النطاق الأول، نحدد السعر الأدنى من النطاق السابق
         if (maxPriceIndex > 0) {
             minPrice = priceRanges[maxPriceIndex - 1];
         }
-        
-        // تصفية المنتجات بناءً على النطاق
         filteredProducts = originalFilteredProducts.filter(p => {
             const productPrice = parseInt(p.price);
             return productPrice > minPrice && productPrice <= maxPrice;
         });
     }
     
-    // التحقق من وجود نتائج وعرضها أو عرض رسالة "لا توجد نتائج"
     if (filteredProducts.length > 0) {
-        loadedItems = 0; // إعادة تعيين عداد التحميل
-        loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
+        loadedItems = 0;
+        loadProducts(0, itemsPerLoad);
     } else {
-        // إذا لم توجد نتائج، أظهر الرسالة المخصصة
         searchTermDisplay.textContent = clickedButton ? clickedButton.textContent : 'الفلتر المحدد';
         noResultsMessage.style.display = 'block';
     }
@@ -2009,7 +1972,6 @@ function resetPriceFilterUI(activateFirst = true) {
     }
 }
 
-// مراقب التحميل الكسول
 const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -2026,7 +1988,6 @@ const observer = new IntersectionObserver((entries, observer) => {
     });
 }, { rootMargin: "0px 0px 200px 0px" });
 
-// دالة للتحقق من خلفية الصورة البيضاء
 function isWhiteBackground(img) {
     try {
         const canvas = document.createElement('canvas');
@@ -2053,8 +2014,6 @@ function isWhiteBackground(img) {
     }
 }
 
-
-// دالة لتدوير النصوص
 function startRotatingText(selector) {
     document.querySelectorAll(selector).forEach(element => {
         element.classList.add('rotating');
@@ -2074,18 +2033,15 @@ function startRotatingText(selector) {
     });
 }
 
-// دالة لقراءة معلمة البحث من URL
 function getSearchTermFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('search') || '';
 }
 
-// تحميل المنتجات عند التمرير
 document.addEventListener('scroll', function () {
     const gallery = document.getElementById('gallery');
     if(!gallery) return;
     const triggerHeight = window.innerHeight * 1.5;
-    // التأكد من أن gallery.scrollHeight أكبر من triggerHeight لتجنب التحميل غير الضروري
     if (gallery.scrollHeight <= triggerHeight) return;
 
     if (window.scrollY >= (gallery.scrollHeight - triggerHeight) && loadedItems < filteredProducts.length) {
@@ -2093,8 +2049,6 @@ document.addEventListener('scroll', function () {
     }
 });
 
-
-// دالة لتحريك الخط وتنفيذ البحث
 function selectItem(item, element) {
     const searchBox = document.getElementById('search-box');
 
@@ -2122,7 +2076,6 @@ function selectItem(item, element) {
     });
 }
 
-// دالة لخلط مصفوفة عشوائيًا
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -2130,7 +2083,6 @@ function shuffleArray(array) {
     }
 }
 
-// عند تحميل الصفحة
 window.onload = function () {
     const defaultItem = document.querySelector('.sub-header nav a');
     const underline = document.querySelector('.underline');
@@ -2147,13 +2099,9 @@ window.onload = function () {
     if (searchBox && searchTerm) {
         searchBox.value = searchTerm;
     }
-    // ستقوم هذه الدالة الآن بمعالجة كل شيء، بما في ذلك توليد شريط الأسعار ديناميكيًا
     fetchAndFilterProducts(searchTerm || '');
 };
 
-// مثال لإضافة كلمات مفتاحية جديدة
-// addKeywords('كتب', ['مكتبة', 'قراءة']);
-// addKeywords('جديدة', ['منتج جديد', 'إصدار جديد']);
 </script>
 </body>
 </html>
