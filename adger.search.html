@@ -1519,8 +1519,10 @@
             .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
             }
 
-            // --- START: تعديل كود إخفاء وإظهار شريط الأسعار عند التمرير ليصبح فوريًا ---
+            // --- START: تعديل كود إخفاء وإظهار شريط الأسعار عند التمرير (مع تأخير) ---
             let lastScrollY = window.scrollY;
+            let scrollDownStart = null; // لتتبع نقطة بداية التمرير لأسفل
+            const scrollThreshold = 100; // المسافة بالبكسل التي يجب تمريرها لأسفل قبل إخفاء الشريط
 
             window.addEventListener('scroll', () => {
                 const priceBar = document.getElementById('price-filter-bar');
@@ -1528,20 +1530,30 @@
 
                 const currentScrollY = window.scrollY;
 
-                // الشرط الأول: إذا كان المستخدم قريبًا جدًا من أعلى الصفحة، أظهر الشريط دائمًا
+                // الشرط الأول: إظهار الشريط دائمًا إذا كان المستخدم قريبًا من أعلى الصفحة
                 if (currentScrollY < 10) {
                     priceBar.classList.remove('hidden-by-scroll');
+                    scrollDownStart = null; // إعادة تعيين التتبع
                 } 
-                // الشرط الثاني: إذا كان المستخدم يتمرر لأسفل (ولو قليلاً)
+                // الشرط الثاني: إذا كان المستخدم يتمرر لأسفل
                 else if (currentScrollY > lastScrollY) {
-                    priceBar.classList.add('hidden-by-scroll');
+                    // إذا كانت هذه هي بداية التمرير لأسفل، سجل نقطة البداية
+                    if (scrollDownStart === null) {
+                        scrollDownStart = lastScrollY;
+                    }
+                    
+                    // إخفاء الشريط فقط إذا تم تجاوز مسافة التمرير المحددة
+                    if (currentScrollY - scrollDownStart > scrollThreshold) {
+                        priceBar.classList.add('hidden-by-scroll');
+                    }
                 } 
                 // الشرط الثالث: إذا كان المستخدم يتمرر لأعلى
                 else if (currentScrollY < lastScrollY) {
                     priceBar.classList.remove('hidden-by-scroll');
+                    scrollDownStart = null; // إعادة تعيين التتبع لأن الاتجاه تغير
                 }
                 
-                // تحديث موضع التمرير الأخير لتحديد الاتجاه في المرة القادمة
+                // تحديث موضع التمرير الأخير للحدث القادم
                 lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; 
             });
             // --- END: تعديل كود إخفاء وإظهار شريط الأسعار ---
@@ -2236,12 +2248,6 @@
             </script>
         </body>
 </html>
-
-
-
-
-
-
 
 
 
