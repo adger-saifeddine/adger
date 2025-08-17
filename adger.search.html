@@ -838,8 +838,7 @@
       
 
 
-                  <!DOCTYPE html>
-
+                <!DOCTYPE html>
 <html lang="ar">
         <head>
             <meta charset="UTF-8">
@@ -962,6 +961,7 @@
                 z-index: 998; /* تحت شريط الفئات */
                 scrollbar-width: none; /* إخفاء شريط التمرير */
                 -ms-overflow-style: none;
+                transition: top 0.4s ease; /* /* START: إضافة تأثير انتقال سلس للإخفاء والإظهار */
             }
             #price-filter-bar::-webkit-scrollbar {
                 display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
@@ -993,6 +993,17 @@
                 border-color: #000;
             }
              /* === نهاية التعديل === */
+
+            /* START: CSS لإخفاء شريط الأسعار عند التمرير */
+            #price-filter-bar.hidden-by-scroll {
+                top: 74px; /* تحريك الشريط ليختفي خلف شريط الفئات */
+            }
+            @media (max-width: 769px) {
+                #price-filter-bar.hidden-by-scroll {
+                    top: 56px; /* ضبط الموضع للشاشات الصغيرة */
+                }
+            }
+            /* END: CSS لإخفاء شريط الأسعار عند التمرير */
     
             body {
                 font-family: Arial, sans-serif;
@@ -1484,6 +1495,29 @@ return text
 .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
 }
 
+// --- START: كود إخفاء وإظهار شريط الأسعار عند التمرير ---
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const priceBar = document.getElementById('price-filter-bar');
+    if (!priceBar) return;
+
+    const currentScrollY = window.scrollY;
+    const hideThreshold = 150; // حد التمرير قبل بدء الإخفاء
+
+    if (currentScrollY > lastScrollY && currentScrollY > hideThreshold) {
+        // التمرير لأسفل وبعد تجاوز الحد
+        priceBar.classList.add('hidden-by-scroll');
+    } else if (currentScrollY < lastScrollY) {
+        // التمرير لأعلى
+        priceBar.classList.remove('hidden-by-scroll');
+    }
+    
+    // تحديث موضع التمرير الأخير
+    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; 
+});
+// --- END: كود إخفاء وإظهار شريط الأسعار عند التمرير ---
+
 // استرجاع بيانات المستخدم من localStorage
 const username = localStorage.getItem('username');
 const welcomeMessage = document.getElementById('welcomeMessage');
@@ -1855,20 +1889,25 @@ fetch('products.json')
         originalFilteredProducts = [...tempFiltered]; // حفظ نسخة من النتائج
 
         // === بداية التعديل: توليد شريط الأسعار بناءً على النتائج المتاحة ===
-        const availablePriceRanges = priceRanges.filter(maxPrice => {
-            let minPrice = 0;
-            const maxPriceIndex = priceRanges.indexOf(maxPrice);
-            if (maxPriceIndex > 0) {
-                minPrice = priceRanges[maxPriceIndex - 1];
-            }
-            // التحقق مما إذا كان أي منتج في القائمة الأصلية يقع في هذا النطاق
-            return originalFilteredProducts.some(p => {
-                const productPrice = parseInt(p.price);
-                return productPrice > minPrice && productPrice <= maxPrice;
+        if (originalFilteredProducts.length <= 1) {
+            // إذا كانت النتيجة واحدة أو أقل، يتم توليد الشريط بدون نطاقات أسعار
+            generatePriceFilterBar([]);
+        } else {
+            // إذا كانت هناك نتائج متعددة، يتم حساب النطاقات المتاحة
+            const availablePriceRanges = priceRanges.filter(maxPrice => {
+                let minPrice = 0;
+                const maxPriceIndex = priceRanges.indexOf(maxPrice);
+                if (maxPriceIndex > 0) {
+                    minPrice = priceRanges[maxPriceIndex - 1];
+                }
+                // التحقق مما إذا كان أي منتج في القائمة الأصلية يقع في هذا النطاق
+                return originalFilteredProducts.some(p => {
+                    const productPrice = parseInt(p.price);
+                    return productPrice > minPrice && productPrice <= maxPrice;
+                });
             });
-        });
-
-        generatePriceFilterBar(availablePriceRanges); // توليد الشريط مع النطاقات المتاحة فقط
+            generatePriceFilterBar(availablePriceRanges); // توليد الشريط مع النطاقات المتاحة فقط
+        }
         // === نهاية التعديل ===
 
         loadedItems = 0;
@@ -2166,8 +2205,6 @@ fetchAndFilterProducts(searchTerm || '');
 
 </body>
 </html>
-
-
 
 
 
