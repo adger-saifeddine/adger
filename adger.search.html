@@ -958,10 +958,10 @@
                 border-bottom: 1px solid #e0e0e0;
                 overflow-x: auto;
                 white-space: nowrap;
-                z-index: 998; /* تحت شريط الفئات */
+                z-index: -444; /* تحت شريط الفئات */
                 scrollbar-width: none; /* إخفاء شريط التمرير */
                 -ms-overflow-style: none;
-                transition: top 0.4s ease; /* /* START: إضافة تأثير انتقال سلس للإخفاء والإظهار */
+                transition: top 0.4s ease; /* إضافة تأثير انتقال سلس للإخفاء والإظهار */
             }
             #price-filter-bar::-webkit-scrollbar {
                 display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
@@ -994,13 +994,16 @@
             }
              /* === نهاية التعديل === */
 
-            /* START: CSS لإخفاء شريط الأسعار عند التمرير */
+            /* START: تعديل CSS لإخفاء شريط الأسعار بالكامل عند التمرير */
             #price-filter-bar.hidden-by-scroll {
-                top: 74px; /* تحريك الشريط ليختفي خلف شريط الفئات */
+                /* يتحرك الشريط لأعلى ليختفي تمامًا خلف شريط الفئات. */
+                /* قيمة top الجديدة (70px) أقل من موضع شريط الفئات (74px)، مما يضمن اختفائه الكامل. */
+                top: 70px; 
             }
             @media (max-width: 769px) {
                 #price-filter-bar.hidden-by-scroll {
-                    top: 56px; /* ضبط الموضع للشاشات الصغيرة */
+                    /* للشاشات الصغيرة، شريط الفئات عند 56px. */
+                    top: 50px; /* قيمة تضمن اختفائه الكامل */
                 }
             }
             /* END: CSS لإخفاء شريط الأسعار عند التمرير */
@@ -1495,7 +1498,7 @@ return text
 .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
 }
 
-// --- START: كود إخفاء وإظهار شريط الأسعار عند التمرير ---
+// --- START: تعديل كود إخفاء وإظهار شريط الأسعار عند التمرير ليصبح فوريًا ---
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
@@ -1503,20 +1506,24 @@ window.addEventListener('scroll', () => {
     if (!priceBar) return;
 
     const currentScrollY = window.scrollY;
-    const hideThreshold = 150; // حد التمرير قبل بدء الإخفاء
 
-    if (currentScrollY > lastScrollY && currentScrollY > hideThreshold) {
-        // التمرير لأسفل وبعد تجاوز الحد
+    // الشرط الأول: إذا كان المستخدم قريبًا جدًا من أعلى الصفحة، أظهر الشريط دائمًا
+    if (currentScrollY < 10) {
+        priceBar.classList.remove('hidden-by-scroll');
+    } 
+    // الشرط الثاني: إذا كان المستخدم يتمرر لأسفل (ولو قليلاً)
+    else if (currentScrollY > lastScrollY) {
         priceBar.classList.add('hidden-by-scroll');
-    } else if (currentScrollY < lastScrollY) {
-        // التمرير لأعلى
+    } 
+    // الشرط الثالث: إذا كان المستخدم يتمرر لأعلى
+    else if (currentScrollY < lastScrollY) {
         priceBar.classList.remove('hidden-by-scroll');
     }
     
-    // تحديث موضع التمرير الأخير
+    // تحديث موضع التمرير الأخير لتحديد الاتجاه في المرة القادمة
     lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; 
 });
-// --- END: كود إخفاء وإظهار شريط الأسعار عند التمرير ---
+// --- END: تعديل كود إخفاء وإظهار شريط الأسعار ---
 
 // استرجاع بيانات المستخدم من localStorage
 const username = localStorage.getItem('username');
@@ -2006,47 +2013,51 @@ resetPriceFilterUI(true);
 // === نهاية التعديل ===
 
 function filterByPrice(maxPrice, clickedButton) {
-const gallery = document.getElementById('gallery');
-const noResultsMessage = document.getElementById('no-results-message');
-const searchTermDisplay = document.getElementById('search-term-display');
-gallery.innerHTML = ''; // امسح المعرض الحالي
-noResultsMessage.style.display = 'none'; // إخفاء الرسالة مبدئياً
+    // --- START: إضافة سطر التمرير لأعلى الصفحة عند النقر على فلاتر السعر ---
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // --- END: إضافة سطر التمرير لأعلى الصفحة ---
 
-// تحديث واجهة المستخدم للأزرار
-resetPriceFilterUI(false); 
-if (clickedButton) {
-    clickedButton.classList.add('active-price-filter');
-}
+    const gallery = document.getElementById('gallery');
+    const noResultsMessage = document.getElementById('no-results-message');
+    const searchTermDisplay = document.getElementById('search-term-display');
+    gallery.innerHTML = ''; // امسح المعرض الحالي
+    noResultsMessage.style.display = 'none'; // إخفاء الرسالة مبدئياً
 
-if (maxPrice === null) {
-    // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
-    filteredProducts = [...originalFilteredProducts];
-} else {
-    // حالة نطاق سعر محدد
-    let minPrice = 0;
-    const maxPriceIndex = priceRanges.indexOf(maxPrice);
-
-    // إذا لم يكن هذا هو النطاق الأول، نحدد السعر الأدنى من النطاق السابق
-    if (maxPriceIndex > 0) {
-        minPrice = priceRanges[maxPriceIndex - 1];
+    // تحديث واجهة المستخدم للأزرار
+    resetPriceFilterUI(false); 
+    if (clickedButton) {
+        clickedButton.classList.add('active-price-filter');
     }
-    
-    // تصفية المنتجات بناءً على النطاق
-    filteredProducts = originalFilteredProducts.filter(p => {
-        const productPrice = parseInt(p.price);
-        return productPrice > minPrice && productPrice <= maxPrice;
-    });
-}
 
-// التحقق من وجود نتائج وعرضها أو عرض رسالة "لا توجد نتائج"
-if (filteredProducts.length > 0) {
-    loadedItems = 0; // إعادة تعيين عداد التحميل
-    loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
-} else {
-    // إذا لم توجد نتائج، أظهر الرسالة المخصصة
-    searchTermDisplay.textContent = clickedButton ? clickedButton.textContent : 'الفلتر المحدد';
-    noResultsMessage.style.display = 'block';
-}
+    if (maxPrice === null) {
+        // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
+        filteredProducts = [...originalFilteredProducts];
+    } else {
+        // حالة نطاق سعر محدد
+        let minPrice = 0;
+        const maxPriceIndex = priceRanges.indexOf(maxPrice);
+
+        // إذا لم يكن هذا هو النطاق الأول، نحدد السعر الأدنى من النطاق السابق
+        if (maxPriceIndex > 0) {
+            minPrice = priceRanges[maxPriceIndex - 1];
+        }
+        
+        // تصفية المنتجات بناءً على النطاق
+        filteredProducts = originalFilteredProducts.filter(p => {
+            const productPrice = parseInt(p.price);
+            return productPrice > minPrice && productPrice <= maxPrice;
+        });
+    }
+
+    // التحقق من وجود نتائج وعرضها أو عرض رسالة "لا توجد نتائج"
+    if (filteredProducts.length > 0) {
+        loadedItems = 0; // إعادة تعيين عداد التحميل
+        loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
+    } else {
+        // إذا لم توجد نتائج، أظهر الرسالة المخصصة
+        searchTermDisplay.textContent = clickedButton ? clickedButton.textContent : 'الفلتر المحدد';
+        noResultsMessage.style.display = 'block';
+    }
 
 }
 
