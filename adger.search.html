@@ -966,11 +966,17 @@
                 #price-filter-bar::-webkit-scrollbar {
                     display: none; /* إخفاء شريط التمرير لمتصفحات WebKit */
                 }
+
+                /* === START: تعديل ارتفاع شريط الأسعار للهواتف === */
                 @media (max-width: 769px) {
                     #price-filter-bar {
                        top: 107px; /* ضبط المسافة للأجهزة الأصغر */
+                       min-height: 45px; /* تقليل الارتفاع الأدنى */
+                       padding: 8px 10px;  /* تقليل الحشوة العمودية */
                     }
                 }
+                /* === END: تعديل ارتفاع شريط الأسعار للهواتف === */
+
                 #price-filter-bar button {
                     font-family: 'Cairo', sans-serif;
                     background-color: #fff;
