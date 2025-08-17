@@ -1611,7 +1611,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
     updateWelcomeMessage();
     loadKeywordMap(); // تحميل القاموس عند بدء التشغيل
-    generatePriceFilterBar(); // إنشاء أزرار الأسعار
 
     // ================= START: ROBUST AND PRECISE SCROLL LOGIC =================
     const priceFilterBar = document.getElementById('price-filter-bar');
@@ -1773,6 +1772,9 @@ function removeLoadingAnimation() {
     if(loadingSpinner) loadingSpinner.style.display = 'none';
 }
 
+// تعريف نطاقات الأسعار بشكل عام لتكون متاحة للدوال
+const priceRanges = [50, 100, 200, 500, 1000, 5000];
+
 // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
 function fetchAndFilterProducts(searchTerm) {
     const gallery = document.getElementById('gallery');
@@ -1786,7 +1788,6 @@ function fetchAndFilterProducts(searchTerm) {
 
     gallery.innerHTML = '';
     noResultsMessage.style.display = 'none';
-    resetPriceFilterUI(); // إعادة تعيين أزرار الأسعار مع كل بحث جديد
     showLoadingAnimation(); 
 
     fetch('products.json')
@@ -1797,7 +1798,7 @@ function fetchAndFilterProducts(searchTerm) {
             if (priceMatch) {
                 const maxPrice = parseInt(priceMatch[1]);
                 let minPrice = 0;
-                const priceRanges = [
+                const priceRangesData = [
                     {max: 99, min: 0}, {max: 200, min: 100}, {max: 350, min: 201},
                     {max: 500, min: 351}, {max: 750, min: 501}, {max: 1000, min: 751},
                     {max: 1500, min: 1001}, {max: 2000, min: 1501}, {max: 3000, min: 2001},
@@ -1805,7 +1806,7 @@ function fetchAndFilterProducts(searchTerm) {
                     {max: 15000, min: 10001}, {max: 20000, min: 15001}, {max: 30000, min: 20001},
                     {max: 50000, min: 30001}, {max: 75000, min: 50001}, {max: 100000, min: 75001}
                 ];
-                const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                const foundRange = priceRangesData.find(range => maxPrice <= range.max);
                 minPrice = foundRange ? foundRange.min : 0;
                 tempFiltered = products.filter(product => {
                     const productPrice = parseInt(product.price);
@@ -1841,6 +1842,23 @@ function fetchAndFilterProducts(searchTerm) {
             shuffleArray(tempFiltered);
             filteredProducts = [...tempFiltered]; // تحديث القائمة الرئيسية
             originalFilteredProducts = [...tempFiltered]; // حفظ نسخة من النتائج
+
+            // === بداية التعديل: توليد شريط الأسعار بناءً على النتائج المتاحة ===
+            const availablePriceRanges = priceRanges.filter(maxPrice => {
+                let minPrice = 0;
+                const maxPriceIndex = priceRanges.indexOf(maxPrice);
+                if (maxPriceIndex > 0) {
+                    minPrice = priceRanges[maxPriceIndex - 1];
+                }
+                // التحقق مما إذا كان أي منتج في القائمة الأصلية يقع في هذا النطاق
+                return originalFilteredProducts.some(p => {
+                    const productPrice = parseInt(p.price);
+                    return productPrice > minPrice && productPrice <= maxPrice;
+                });
+            });
+
+            generatePriceFilterBar(availablePriceRanges); // توليد الشريط مع النطاقات المتاحة فقط
+            // === نهاية التعديل ===
 
             loadedItems = 0;
             removeLoadingAnimation();
@@ -1912,29 +1930,31 @@ function loadProducts(startIndex, count) {
     startRotatingText(".rotating-text1212:not(.rotating)");
 }
 
-// تعريف نطاقات الأسعار بشكل عام لتكون متاحة للدوال
-const priceRanges = [50, 100, 200, 500, 1000, 5000];
 
-function generatePriceFilterBar() {
+// === بداية التعديل: تحديث دالة توليد شريط الأسعار ===
+function generatePriceFilterBar(availableRanges = priceRanges) {
     const priceBar = document.getElementById('price-filter-bar');
     priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
     
-    // زر "كل الأسعار"
+    // زر "كل الأسعار" يظهر دائماً
     const allButton = document.createElement('button');
     allButton.textContent = 'كل الأسعار';
     allButton.onclick = () => filterByPrice(null, allButton);
     priceBar.appendChild(allButton);
 
-    // أزرار نطاقات الأسعار
-    priceRanges.forEach(price => {
+    // أزرار نطاقات الأسعار المتاحة فقط
+    availableRanges.forEach(price => {
         const button = document.createElement('button');
         button.textContent = `أقل من ${price} جنيه`;
         button.onclick = () => filterByPrice(price, button);
         priceBar.appendChild(button);
     });
-}
 
-// === بداية التعديل: تحديث دالة تصفية الأسعار لعرض رسالة "لا توجد نتائج" ===
+    // إعادة تعيين واجهة المستخدم بعد توليد الأزرار
+    resetPriceFilterUI(true);
+}
+// === نهاية التعديل ===
+
 function filterByPrice(maxPrice, clickedButton) {
     const gallery = document.getElementById('gallery');
     const noResultsMessage = document.getElementById('no-results-message');
@@ -1945,7 +1965,9 @@ function filterByPrice(maxPrice, clickedButton) {
 
     // تحديث واجهة المستخدم للأزرار
     resetPriceFilterUI(false); 
-    clickedButton.classList.add('active-price-filter');
+    if (clickedButton) {
+        clickedButton.classList.add('active-price-filter');
+    }
 
     if (maxPrice === null) {
         // حالة "كل الأسعار": عرض كل المنتجات من البحث الأصلي
@@ -1973,11 +1995,10 @@ function filterByPrice(maxPrice, clickedButton) {
         loadProducts(0, itemsPerLoad); // تحميل المنتجات المصفاة
     } else {
         // إذا لم توجد نتائج، أظهر الرسالة المخصصة
-        searchTermDisplay.textContent = clickedButton.textContent; // استخدم نص الزر كرسالة
+        searchTermDisplay.textContent = clickedButton ? clickedButton.textContent : 'الفلتر المحدد';
         noResultsMessage.style.display = 'block';
     }
 }
-// === نهاية التعديل ===
 
 
 function resetPriceFilterUI(activateFirst = true) {
@@ -2126,10 +2147,8 @@ window.onload = function () {
     if (searchBox && searchTerm) {
         searchBox.value = searchTerm;
     }
+    // ستقوم هذه الدالة الآن بمعالجة كل شيء، بما في ذلك توليد شريط الأسعار ديناميكيًا
     fetchAndFilterProducts(searchTerm || '');
-    
-    // تعديل: تفعيل زر "كل الأسعار" عند تحميل الصفحة
-    resetPriceFilterUI(true);
 };
 
 // مثال لإضافة كلمات مفتاحية جديدة
