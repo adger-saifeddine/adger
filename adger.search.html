@@ -1374,8 +1374,11 @@
                 </nav>
             </div>
 
-            <!-- شريط تصفية الأسعار (ظاهر دائماً) -->
-            <div id="price-filter-bar"></div>
+            <!-- === START: تعديل لجعل زر "كل الأسعار" يظهر دائماً === -->
+            <div id="price-filter-bar">
+                <button class="active-price-filter">كل الأسعار</button>
+            </div>
+            <!-- === END: تعديل === -->
         
             <!-- نافذة القائمة الجانبية -->
             <div class="menu-popup" id="menuPopup">
@@ -2026,7 +2029,7 @@
             // === بداية التعديل: تحديث دالة توليد شريط الأسعار ===
             function generatePriceFilterBar(availableRanges = priceRanges) {
             const priceBar = document.getElementById('price-filter-bar');
-            priceBar.innerHTML = ''; // مسح الأزرار القديمة قبل الإنشاء
+            priceBar.innerHTML = ''; // مسح الأزرار القديمة (بما في ذلك الزر الثابت) قبل الإنشاء
             // زر "كل الأسعار" يظهر دائماً
             const allButton = document.createElement('button');
             allButton.textContent = 'كل الأسعار';
