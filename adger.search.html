@@ -838,18 +838,7 @@
       
 
 
-
-
-
-
-
-
-
-
-
-            
-
-         <!DOCTYPE html>
+                  <!DOCTYPE html>
 
 <html lang="ar">
         <head>
@@ -1263,11 +1252,17 @@
             #loading-spinner {
                 display: block;
                 text-align: center;
-                margin-top: 20px; /* المسافة العلوية مشابهة لرسالة 'لا توجد نتائج' */
-                margin-bottom: 20px; /* تعديل: إضافة مسافة سفلية متساوية */
-                padding: 20px;    /* المسافة الداخلية للتناسق */
+                margin-top: 20px;
+                margin-bottom: 210px; /* تعديل: تمت زيادة الهامش السفلي ليساوي المسافة العلوية (190px من المعرض + 20px من الهامش العلوي) */
+                padding: 20px;
                 border-radius: 10px;
             }
+            @media (max-width: 769px) {
+                #loading-spinner {
+                    margin-bottom: 187px; /* تعديل للشاشات الصغيرة: (167px من المعرض + 20px من الهامش العلوي) */
+                }
+            }
+
             .spinner {
                 display: inline-block;
                 position: relative;
@@ -2171,6 +2166,7 @@ fetchAndFilterProducts(searchTerm || '');
 
 </body>
 </html>
+
 
 
 
