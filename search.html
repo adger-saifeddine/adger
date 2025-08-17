@@ -1,3 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger</title>
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- بيانات Open Graph -->
+    <meta property="og:title" content="Adger - التسوق الإلكتروني">
+    <meta property="og:description" content="مرحبًا بك في أدجر، وجهتك الأولى للتسوق الإلكتروني حيث تجد كل ما تبحث عنه بأسعار تنافسية وجودة عالية.">
+    <meta property="og:image" content="https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg">
+    <meta property="og:url" content="https://adger-saifeddine.github.io/adger/">
+    <meta property="og:type" content="website">
+
+    <!-- بيانات منظمة Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Adger",
+      "url": "https://adger-saifeddine.github.io/adger/",
+      "logo": "https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg"
+    }
+    </script>
+
+    <!-- نص برمجي لتغيير الفيكون بناءً على نوع الجهاز -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function isDesktop() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.includes('windows') || userAgent.includes('macintosh') || userAgent.includes('linux') && !userAgent.includes('android');
+        }
+        if (isDesktop()) {
+            document.querySelector('link[rel="icon"]').href = 'logo2.png';
+        }
+    });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -304,133 +350,13 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #0044ffa4;
-        }
-
-        .image-item {
-            display: flex;
-            align-items: center;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            background-color: #ffffff;
-            padding: 12px;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-focus-ring-color: transparent;
-        }
-
-        .image-item img {
-            width: 120px;
-            max-height: 120px;
-            object-fit: cover;
-            border-radius: 12px;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-focus-ring-color: transparent;
-        }
-
-        .image-item span {
-            font-size: 18px;
-            color: #333;
-            font-weight: 600;
-            margin-right: 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-              font-family: 'Cairo', sans-serif;
-        }
-
-        .image-item:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
+        
         @media (max-width: 767px) {
-            .search-history-grid {
+             .search-history-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .image-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .image-item {
-                padding: 8px; /* Reduced padding for smaller white box */
-            }
-            .image-item img {
-                width: 80px;
-                max-height: 80px;
-            }
-            .image-item span {
-                font-size: 14px; /* Smaller font size */
-                margin-right: 6px; /* Closer to image */
-                max-width: 110px; /* Adjusted to fit text */
-                  font-family: 'Cairo', sans-serif;
-            }
-            .search-item small {
+             .search-item small {
                 display: none;
-            }
-        }
-
-        @media (max-width: 499px) {
-            .image-grid {
-                gap: 5px; /* Smaller gap between items and blue background */
-                padding: 10px; /* Reduced padding for the grid container */
-            }
-            .image-item {
-                padding: 6px; /* Further reduced padding for smaller white box */
-            }
-            .image-item img {
-                width: 80px;
-                max-height: 80px;
-            }
-            .image-item span {
-                font-size: 10px; /* Even smaller font size for very small screens */
-                margin-right: 4px; /* Even closer to image */
-                max-width: 120px; /* Increased to ensure full text visibility */
-            }
-        }
-
-        @media (min-width: 768px) and (max-width: 1500px) {
-            .image-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .image-item img {
-                width: 100px;
-                max-height: 100px;
-            }
-            .image-item span {
-                font-size: 16px;
-                max-width: 120px;
-            }
-        }
-
-        @media (min-width: 1201px) and (max-width: 1800px) {
-            .image-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .image-item img {
-                width: 100px;
-                max-height: 100px;
-            }
-            .image-item span {
-                font-size: 16px;
-                max-width: 120px;
-            }
-        }
-
-        @media (min-width: 2001px) {
-            .image-grid {
-                grid-template-columns: repeat(6, 1fr);
             }
         }
 
@@ -578,6 +504,128 @@
                 height: 21px;
             }
         }
+
+        /* --- START: MODIFIED IMAGE GRID STYLES --- */
+
+        .image-grid {
+            display: grid;
+            gap: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            
+            /* The 3D Animated Background */
+            background: linear-gradient(135deg, #1f005c, #0044ff, #00a2ff, #2e1a47);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .image-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2);
+            
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .image-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .image-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .image-item span {
+            font-size: 18px;
+            font-weight: 600;
+            margin-right: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            font-family: 'Cairo', sans-serif;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Responsive Layout for Image Grid --- */
+
+        /* Default (Mobile): 2 columns */
+        .image-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+        .image-item { padding: 8px; }
+        .image-item img { width: 60px; height: 60px; }
+        .image-item span { font-size: 14px; margin-right: 10px; max-width: 110px; }
+
+        /* Very Small Mobile Screens */
+        @media (max-width: 400px) {
+            .image-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .image-item img { margin-bottom: 8px; }
+            .image-item span { margin-right: 0; }
+        }
+        
+        /* Tablet: 3 columns */
+        @media (min-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 20px;
+            }
+            .image-item img { width: 90px; height: 90px; }
+            .image-item span { font-size: 16px; }
+        }
+
+        /* Large Screens (Desktop): 2 ROWS ONLY */
+        @media (min-width: 1024px) {
+            .image-grid {
+                /* Unset column-based layout and set row-based layout */
+                grid-template-columns: none;
+                grid-template-rows: repeat(2, 1fr);
+                grid-auto-flow: column; /* This is the key property */
+                gap: 20px;
+                padding: 30px;
+            }
+            .image-item { padding: 12px; flex-direction: row; }
+            .image-item img { width: 100px; height: 100px; margin-bottom: 0;}
+            .image-item span { font-size: 18px; margin-right: 15px; }
+        }
+
+        /* --- END: MODIFIED IMAGE GRID STYLES --- */
+
     </style>
 </head>
 <body>
@@ -703,6 +751,9 @@
             <span>فن</span>
         </div>
     </div>
+
+</body>
+</html>
 </body>
 </html>
     <script>
