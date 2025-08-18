@@ -20,16 +20,15 @@
             background: #f5f5f5;
             position: relative;
             overflow-y: auto;
-            padding-bottom: 80px; /* To ensure the input container doesn't overlap messages */
         }
         
         #messages {
             padding: 15px;
+            padding-bottom: 150px; /* Extra space for visibility above input area */
         }
         
         .message-container {
             margin-bottom: 15px;
-            padding: 10px;
         }
         
         .message-content {
@@ -37,19 +36,18 @@
             padding: 12px 15px;
             border-radius: 20px;
             background-color: #f1f1f1;
-            margin-top: 0; /* Remove top margin since the author name is now above */
             max-width: 85%;
             word-break: break-word;
-            display: inline-block; /* This allows the background to fit the content width */
-            width: fit-content; /* Adjusts width to content */
+            display: inline-block;
+            width: fit-content;
         }
 
         .message-text {
-            padding-right: 70px;
+            padding-left: 25px; /* Space for reply icon */
+            padding-right: 70px; /* Space for timestamp */
             line-height: 1.4;
-            word-wrap: break-word; /* Ensures long words can break */
-            white-space: pre-wrap; /* Preserves spaces and line breaks */
-            max-width: 300px; /* Assuming a character width of roughly 5-6 pixels, this will roughly fit 55 characters in one line */
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .message-meta {
@@ -58,15 +56,36 @@
             right: 12px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px; /* Increased gap */
+        }
+
+        /* New Reply Icon Style */
+        .reply-icon {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            position: absolute; /* Position it inside the message bubble */
+            bottom: 7px;
+            left: 15px;
+        }
+        .reply-icon:hover {
+            opacity: 1;
+        }
+        .reply-icon svg {
+             width: 100%;
+             height: 100%;
+             fill: #555;
         }
 
         .message-author {
             font-weight: 600;
             font-size: 0.85em;
             color: #444;
-            display: block; /* Make sure the author name is on its own line */
-            margin-bottom: 4px; /* Small gap between name and message */
+            display: block;
+            margin-bottom: 4px;
+            padding: 0 10px;
         }
 
         .message-timestamp {
@@ -76,23 +95,32 @@
             direction: ltr;
             white-space: nowrap;
         }
+        
+        .replies-section {
+            padding-right: 25px; /* Indent replies */
+            margin-top: 10px;
+            border-right: 2px solid #e0e0e0;
+        }
+
+        .reply-text {
+            margin-top: 8px;
+        }
 
         .reply-text .message-content {
-            background-color: #31313111;
-            margin-left: 4px;
+            background-color: #e9e9e9; /* Slightly different color for replies */
         }
         
         .hidden-message {
             width: 100%;
-            background-color: #f5f5f5; /* Light gray background */
+            background-color: #f5f5f5;
             color: #000000;
             padding: 10px 12px;
             font-size: 15px;
             position: fixed;
-            top: -1px; /* Adjust based on the height of #inputContainer */
+            top: 0;
             left: 0;
-            z-index: 1;
-            display: flex;
+            z-index: 10;
+            display: none; /* Hidden by default, shown by JS */
             flex-direction: row-reverse;
             align-items: center;
             gap: 2px;
@@ -100,82 +128,96 @@
         }
 
         .back-arrow {
-            width: 24px; /* Match the size from previous examples */
+            width: 24px;
             height: 24px;
             cursor: pointer;
         }
 
         .back-arrow svg {
-            width: 16px; /* Inner SVG size reduced to match previous arrow */
+            width: 16px;
             height: 16px;
-            margin-top: 5px; /* Added to match previous example */
-            fill: none; /* Use stroke instead for better visibility */
+            margin-top: 5px;
+            fill: none;
             stroke: rgb(0, 0, 0);
             stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
         }
 
         #hiddenMessageText {
-            margin-right: 10px; /* Adjusted to match the spacing in your example */
+            margin-right: 10px;
         }
 
-        /* حقل 2 */
-        #field2 {
+        #inputContainer {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: white;
-            display: flex;
-            padding: 15px;
             border-top: 1px solid #ddd;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        #replyContext {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.8em;
+            color: #555;
+            display: none; /* Hidden by default */
+            justify-content: space-between;
+            align-items: center;
+        }
+        #replyContextText {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80%;
+        }
+        #cancelReply {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 0 5px;
+        }
+
+        #field2 {
+            display: flex;
+            padding: 15px;
         }
         
         #field2 textarea {
             flex: 1;
-            padding: 0 15px; /* تعديل الـ padding لإزالة المساحة العلوية والسفلية */
+            padding: 10px 15px;
             border: 1px solid #ccc;
             border-radius: 25px;
             margin-right: 10px;
             font-size: 14px;
             outline: none;
-            direction: rtl; /* اتجاه النص من اليمين لليسار */
-            text-align: right; /* محاذاة النص إلى اليمين */
-            resize: none; /* منع تغيير حجم الحقل */
-            height: 40px; /* ارتفاع الحقل */
-            line-height: 40px; /* جعل النص في المنتصف عموديًا */
-            overflow: hidden; /* إخفاء أي نص يتجاوز السطر الواحد */
-            white-space: nowrap; /* منع التفاف النص */
+            direction: rtl;
+            text-align: right;
+            resize: none;
+            min-height: 40px;
+            line-height: 1.4;
         }
 
-        #field2 textarea::placeholder {
-            direction: rtl; /* اتجاه النص في placeholder */
-            text-align: right; /* محاذاة النص في placeholder */
-            line-height: 40px; /* جعل النص في المنتصف عموديًا */
-        }
-        
         #field2 button {
-            padding: 0 30px; /* تعديل الـ padding ليكون أفقيًا فقط */
-            height: 40px; /* جعل الارتفاع مطابقًا لحقل النص */
-            margin-right: -5px; /* تعديل المسافة لتكون متناسقة */
+            padding: 0 30px;
+            height: 40px;
+            align-self: center;
             border: none;
             background-color: #000;
             color: white;
             border-radius: 25px;
             cursor: pointer;
-            transition: opacity 0.2s;
-            display: flex; /* للمحاذاة العمودية */
-            align-items: center; /* محاذاة النص عموديًا */
-            justify-content: center; /* محاذاة النص أفقيًا */
+            transition: background-color 0.2s;
         }
-
-        #field2 button:active {
-            opacity: 0.8;
+        #field2 button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
         }
         
-        #emptyState {
-            display: none;
+        #emptyState, #loadingSpinner {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -183,24 +225,8 @@
             text-align: center;
         }
         
-        #emptyState span {
-            font-size: 48px;
-            opacity: 0.6;
-        }
-        
-        #emptyState p {
-            font-size: 16px;
-            color: #666;
-            margin-top: 8px;
-        }
-        
-        #loadingSpinner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-        }
+        #emptyState span { font-size: 48px; opacity: 0.6; }
+        #emptyState p { font-size: 16px; color: #666; margin-top: 8px; }
         
         .spinner {
             width: 35px;
@@ -211,45 +237,38 @@
             animation: spin 1s linear infinite;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Specific styling for admin messages */
         .message-container .message-content[data-author="admin"] {
             background-color: rgba(0, 89, 255, 0.1);
         }
     </style>
 </head>
 <body>
-    <div style="padding-bottom: 12px; color: #ffffff;">النص الأول</div>
-
-    <div id="messages"></div>
-    <div id="emptyState">
-        <span>📭</span>
-        <p>لا توجد رسائل</p>
-    </div><br><br>
-    <div id="loadingSpinner">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- حقل 2 -->
-    <div id="field2">
-        <textarea id="commentText" placeholder="اكتب رسالتك هنا..." required></textarea>
-        <button id="submitButton">إرسال</button>
-    </div>
-
     <div id="hiddenMessage" class="hidden-message">
         <div class="back-arrow">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
         </div>
-        <span id="hiddenMessageText">النص المخفي</span>
+        <span id="hiddenMessageText"></span>
     </div>
-</body>
-</html>
+
+    <div id="messages"></div>
+    <div id="emptyState" style="display: none;">
+        <span>📭</span>
+        <p>لا توجد رسائل</p>
+    </div>
+    <div id="loadingSpinner"><div class="spinner"></div></div>
+
+    <div id="inputContainer">
+        <div id="replyContext">
+            <span id="replyContextText"></span>
+            <span id="cancelReply">&times;</span>
+        </div>
+        <div id="field2">
+            <textarea id="commentText" placeholder="اكتب رسالتك هنا..." required></textarea>
+            <button id="submitButton">إرسال</button>
+        </div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -265,60 +284,55 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const messagesRef = database.ref('messages');
 
+        // --- 1. Get Chat ID from URL (New Feature) ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const chatId = urlParams.get('id');
+        
+        if (!chatId) {
+            document.body.innerHTML = '<h1 style="text-align: center; margin-top: 50px; font-family: Cairo, sans-serif;">خطأ: لم يتم تحديد معرف للدردشة. يرجى التأكد من أن الرابط يحتوي على ?id=...</h1>';
+            return;
+        }
+
+        // --- 2. Create a unique reference for this chat ID (New Feature) ---
+        const messagesRef = database.ref('chats/' + chatId);
+
+        // --- DOM Elements ---
         const loadingSpinner = document.getElementById('loadingSpinner');
-        loadingSpinner.style.display = 'block';
+        const messagesDiv = document.getElementById('messages');
+        const emptyStateDiv = document.getElementById('emptyState');
+        const submitButton = document.getElementById('submitButton');
+        const commentText = document.getElementById('commentText');
+        const replyContext = document.getElementById('replyContext');
+        const replyContextText = document.getElementById('replyContextText');
+        const cancelReplyButton = document.getElementById('cancelReply');
 
+        let replyingToMessageId = null; // State for tracking replies
+
+        // --- Initial Load ---
         messagesRef.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
-            document.getElementById('messages').innerHTML = '';
-
+            checkEmptyState(snapshot);
             if (snapshot.exists()) {
                 snapshot.forEach(child => {
                     createMessageElement(child.key, child.val());
                 });
-                document.getElementById('emptyState').style.display = 'none';
-            } else {
-                document.getElementById('emptyState').style.display = 'block';
             }
         }).catch(error => {
             console.error('خطأ في التحميل:', error);
             loadingSpinner.style.display = 'none';
         });
 
-        document.getElementById('submitButton').addEventListener('click', e => {
-            e.preventDefault();
-            const textInput = document.getElementById('commentText'); // تعديل ليطابق الـ ID الصحيح
-            const message = textInput.value.trim();
-            const username = localStorage.getItem('username');
-            const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
+        // --- Event Listeners ---
+        submitButton.addEventListener('click', sendMessage);
+        cancelReplyButton.addEventListener('click', cancelReply);
 
-            if (!username) {
-                alert('الرجاء تسجيل الدخول أولاً');
-                window.location.href = 'account.html';
-                return;
-            }
-
-            if (message) {
-                messagesRef.push({
-                    text: message,
-                    author: username,
-                    replies: [],
-                    timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    hiddenMessage: hiddenMessage || ''
-                }).then(() => {
-                    textInput.value = '';
-                    textInput.focus();
-                }).catch(error => {
-                    console.error('خطأ في الإرسال:', error);
-                });
-            }
-        });
-
+        // --- Real-time Listeners ---
         messagesRef.on('child_added', snapshot => {
-            createMessageElement(snapshot.key, snapshot.val());
-            document.getElementById('emptyState').style.display = 'none';
+            if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
+                createMessageElement(snapshot.key, snapshot.val());
+            }
+            checkEmptyState();
         });
 
         messagesRef.on('child_removed', snapshot => {
@@ -327,111 +341,145 @@
             checkEmptyState();
         });
 
+        // --- Core Functions ---
+        async function sendMessage() {
+            // This check from your working code is essential
+            const username = localStorage.getItem('username');
+            if (!username) {
+                alert('الرجاء تسجيل الدخول أولاً');
+                // Optional: redirect to login/account page
+                // window.location.href = 'account.html';
+                return;
+            }
+
+            const message = commentText.value.trim();
+            if (!message) return;
+
+            submitButton.disabled = true;
+
+            const data = {
+                text: message,
+                author: username,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            try {
+                // --- 3. Logic to handle both new messages and replies (New Feature) ---
+                if (replyingToMessageId) {
+                    // Send as a reply
+                    const replyRef = messagesRef.child(replyingToMessageId).child('replies');
+                    await replyRef.push(data);
+                    cancelReply();
+                } else {
+                    // Send as a new message
+                    const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
+                    if (hiddenMessage.trim()) data.hiddenMessage = hiddenMessage;
+                    await messagesRef.push(data);
+                }
+                commentText.value = '';
+            } catch (error) {
+                console.error('خطأ في الإرسال:', error);
+                alert('حدث خطأ أثناء إرسال الرسالة.');
+            } finally {
+                submitButton.disabled = false;
+                commentText.focus();
+            }
+        }
+
         function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
             const container = document.createElement('div');
             container.className = 'message-container';
             container.dataset.messageId = id;
 
             const formattedTime = formatTimestamp(timestamp);
-
-            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px;">${hiddenMessage}</div><hr style="margin: 5px 0;">` : '';
+            let hiddenMsgHTML = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px; opacity: 0.7; border-bottom: 1px solid #ddd; padding-bottom: 5px;">${hiddenMessage}</div>` : '';
 
             container.innerHTML = `
                 <span class="message-author">${author}</span>
                 <div class="message-content" data-author="${author}">
-                    ${hiddenMsg}
+                    ${hiddenMsgHTML}
                     <div class="message-text">${text}</div>
                     <div class="message-meta">
                         <span class="message-timestamp">${formattedTime}</span>
                     </div>
+                    <!-- 4. Added Reply Icon to UI (New Feature) -->
+                    <div class="reply-icon" title="رد">
+                       <svg viewBox="0 0 24 24"><path d="M10,9V5L3,12L10,19V14.9C15,14.9,18.5,16.5,21,20C20,15,17,10,10,9Z" /></svg>
+                    </div>
                 </div>
+                <div class="replies-section"></div>
             `;
+            
+            messagesDiv.appendChild(container);
 
+            // Add event listener to the new reply icon
+            container.querySelector('.reply-icon').addEventListener('click', () => {
+                replyingToMessageId = id;
+                replyContextText.textContent = `الرد على: "${text.substring(0, 30)}..."`;
+                replyContext.style.display = 'flex';
+                commentText.focus();
+            });
+
+            const repliesSection = container.querySelector('.replies-section');
             if (replies) {
                 Object.entries(replies).forEach(([replyId, reply]) => {
-                    addReply(container, replyId, reply);
+                    addReply(repliesSection, replyId, reply);
                 });
             }
-
-            document.getElementById('messages').appendChild(container);
-            container.scrollIntoView({ behavior: 'smooth' });
-
-            database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
-                addReply(container, snapshot.key, snapshot.val());
+            // Listen for new replies on this specific message
+            messagesRef.child(id).child('replies').on('child_added', snapshot => {
+                addReply(repliesSection, snapshot.key, snapshot.val());
             });
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
 
-        function addReply(container, replyId, {author, text, timestamp}) {
-            if (!container.querySelector(`[data-reply-id="${replyId}"]`)) {
-                const replyDiv = document.createElement('div');
-                replyDiv.className = 'reply-text';
-                replyDiv.dataset.replyId = replyId;
+        function addReply(repliesSection, replyId, {author, text, timestamp}) {
+            // Prevent adding duplicate replies on screen
+            if (repliesSection.querySelector(`[data-reply-id="${replyId}"]`)) return;
+            
+            const replyDiv = document.createElement('div');
+            replyDiv.className = 'reply-text';
+            replyDiv.dataset.replyId = replyId;
 
-                const formattedTime = formatTimestamp(timestamp);
-
-                replyDiv.innerHTML = `
-                    <span class="message-author">${author}</span>
-                    <div class="message-content">
-                        <div class="message-text">${text}</div>
-                        <div class="message-meta">
-                            <span class="message-timestamp">${formattedTime}</span>
-                        </div>
+            replyDiv.innerHTML = `
+                <span class="message-author">${author}</span>
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                    <div class="message-meta">
+                        <span class="message-timestamp">${formatTimestamp(timestamp)}</span>
                     </div>
-                `;
-                container.appendChild(replyDiv);
-                replyDiv.scrollIntoView({ behavior: 'smooth' });
-            }
+                </div>
+            `;
+            repliesSection.appendChild(replyDiv);
+        }
+
+        function cancelReply() {
+            replyingToMessageId = null;
+            replyContext.style.display = 'none';
         }
 
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
-
             const messageDate = new Date(timestamp);
-            const currentDate = new Date();
-
-            // تحقق إذا كان التاريخ في نفس اليوم
-            if (
-                messageDate.getDate() === currentDate.getDate() &&
-                messageDate.getMonth() === currentDate.getMonth() &&
-                messageDate.getFullYear() === currentDate.getFullYear()
-            ) {
-                // إذا كان في نفس اليوم، نعرض الوقت مع تحديد صباحًا أو مساءً
-                const hours = messageDate.getHours();
-                const minutes = messageDate.getMinutes().toString().padStart(2, '0');
-                const period = hours >= 12 ? 'مساءً' : 'صباحًا';
-                const formattedHours = hours % 12 || 12; // تحويل إلى تنسيق 12 ساعة
-
-                return `${formattedHours}:${minutes} ${period}`;
-            } else {
-                // إذا مر يوم أو أكثر، نعرض التاريخ فقط
-                const options = {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                };
-                return messageDate.toLocaleDateString('ar-EG', options);
-            }
+            return messageDate.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+        
+        function checkEmptyState(snapshot) {
+            const check = snap => emptyStateDiv.style.display = snap.exists() ? 'none' : 'block';
+            if (snapshot) check(snapshot);
+            else messagesRef.once('value').then(check);
         }
 
-        function checkEmptyState() {
-            messagesRef.once('value').then(snapshot => {
-                document.getElementById('emptyState').style.display =
-                    snapshot.exists() ? 'none' : 'block';
-            });
+        // Handle the top info bar based on URL parameters
+        const messageParam = urlParams.get('message');
+        const hiddenMessageDiv = document.getElementById('hiddenMessage');
+        if (messageParam) {
+            document.getElementById('hiddenMessageText').textContent = messageParam;
+            hiddenMessageDiv.style.display = 'flex';
+            document.body.style.paddingTop = `${hiddenMessageDiv.offsetHeight}px`;
         }
-
-        // Get the message from the URL parameters and set it in the hiddenMessage div
-        const urlParams = new URLSearchParams(window.location.search);
-        const message = urlParams.get('message');
-        if (message) {
-            const hiddenMessageDiv = document.getElementById('hiddenMessageText');
-            hiddenMessageDiv.textContent = message;
-        }
-
-        // Add event listener for the back arrow
-        document.querySelector('.back-arrow').addEventListener('click', function() {
-            window.history.back();
-        });
+        document.querySelector('.back-arrow').addEventListener('click', () => window.history.back());
     });
 </script>
 </body>
