@@ -263,7 +263,7 @@
     <div id="messages"></div>
     <div id="emptyState">
         <span>📭</span>
-        <p>لا توجد رسائل لهذا المنتج</p>
+        <p>لا توجد رسائل لهذا الموضوع</p>
     </div><br><br>
     <div id="loadingSpinner">
         <div class="spinner"></div>
@@ -300,26 +300,30 @@
         const messagesRef = database.ref('messages');
 
         // --- START OF MODIFICATION ---
-        // 1. Get product ID and other parameters from URL
+        // 1. Get the product identifier from the 'message' parameter in the URL.
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('productId');
-        const message = urlParams.get('message');
-
-        // 2. If no product ID is found, show an error and stop the script.
-        if (!productId) {
-            document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد رقم المنتج في الرابط.</p>';
-            document.getElementById('field2').style.display = 'none'; // Hide input field
-            return; // Stop execution
-        }
-
-        // 3. Create a Firebase query to filter messages by the current productId
-        const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productId);
-        // --- END OF MODIFICATION ---
-
+        const productIdentifier = urlParams.get('message');
+        
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        // Use the query to load only relevant messages initially
+        // 2. Check if the product identifier exists. If not, show an error and stop.
+        if (!productIdentifier) {
+            loadingSpinner.style.display = 'none';
+            document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد موضوع الرسائل في الرابط.</p>';
+            document.getElementById('field2').style.display = 'none'; // Hide the input field
+            document.getElementById('hiddenMessage').style.display = 'none'; // Hide the top bar
+            return; // Stop the script
+        }
+        
+        // 3. Set the text in the top 'hidden message' bar.
+        document.getElementById('hiddenMessageText').textContent = productIdentifier;
+
+        // 4. Create a Firebase query to filter messages where 'productId' field matches our text identifier.
+        const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productIdentifier);
+        // --- END OF MODIFICATION ---
+
+        // Use the query to load only the relevant messages.
         productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '';
@@ -340,8 +344,9 @@
         document.getElementById('submitButton').addEventListener('click', e => {
             e.preventDefault();
             const textInput = document.getElementById('commentText');
-            const messageText = textInput.value.trim();
+            const message = textInput.value.trim();
             const username = localStorage.getItem('username');
+            // This is our product identifier from the top bar
             const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
 
             if (!username) {
@@ -350,16 +355,17 @@
                 return;
             }
 
-            if (messageText) {
+            if (message) {
                 // --- START OF MODIFICATION ---
-                // 4. Add the productId to the new message object before sending
+                // 5. When pushing a new message, add the 'productId' field with our identifier text.
+                // This makes it filterable for other users viewing the same page.
                 messagesRef.push({
-                    text: messageText,
+                    text: message,
                     author: username,
-                    productId: productId, // Save the product ID with the message
+                    productId: hiddenMessage, // The filterable identifier
                     replies: [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    hiddenMessage: hiddenMessage || ''
+                    hiddenMessage: hiddenMessage || '' // For display inside the message bubble
                 }).then(() => {
                     textInput.value = '';
                     textInput.focus();
@@ -368,7 +374,7 @@
             }
         });
 
-        // Use the query to listen for newly added messages for this product ONLY
+        // Listen for new messages that match our query.
         productMessagesQuery.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
@@ -376,7 +382,7 @@
             document.getElementById('emptyState').style.display = 'none';
         });
 
-        // Use the query to listen for removed messages for this product ONLY
+        // Listen for removed messages that match our query.
         productMessagesQuery.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
@@ -389,7 +395,9 @@
             container.dataset.messageId = id;
 
             const formattedTime = formatTimestamp(timestamp);
-            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px;">${hiddenMessage}</div><hr style="margin: 5px 0;">` : '';
+            // Show the 'hiddenMessage' inside the bubble if it exists.
+            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px; color: #555; background: #e0e0e0; padding: 5px 8px; border-radius: 8px;">رد على: ${hiddenMessage}</div>` : '';
+
 
             container.innerHTML = `
                 <span class="message-author">${author}</span>
@@ -450,7 +458,7 @@
                 replyDiv.dataset.replyId = replyId;
 
                 const formattedTime = formatTimestamp(timestamp);
-
+                
                 replyDiv.innerHTML = `
                     <div class="reply-main-content">
                         <span class="message-author">${author}</span>
@@ -462,7 +470,7 @@
                         </div>
                     </div>
                 `;
-                
+
                 container.appendChild(replyDiv);
                 replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
@@ -470,7 +478,7 @@
 
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
-            const messageDate = new new Date(timestamp);
+            const messageDate = new Date(timestamp);
             const currentDate = new Date();
             if (
                 messageDate.getDate() === currentDate.getDate() &&
@@ -489,14 +497,10 @@
         }
 
         function checkEmptyState() {
-            // Use the query to check if there are messages for this specific product
+            // Check empty state using our specific product query.
             productMessagesQuery.once('value').then(snapshot => {
                 document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
-        }
-
-        if (message) {
-            document.getElementById('hiddenMessageText').textContent = message;
         }
 
         document.querySelector('.back-arrow').addEventListener('click', () => {
