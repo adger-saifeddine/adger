@@ -236,8 +236,20 @@
             display: none;
         }
 
-        #emptyState span { font-size: 48px; opacity: 0.6; }
-        #emptyState p { font-size: 16px; color: #666; margin-top: 8px; }
+        /* --- MODIFIED FOR BETTER VISIBILITY --- */
+        #emptyState span {
+            font-size: 48px;
+            opacity: 1; /* Made fully visible */
+            color: #555; /* Gave it a darker color */
+        }
+        #emptyState p {
+            font-size: 17px;
+            color: #333; /* Darker text color */
+            margin-top: 8px;
+            font-weight: 600; /* Made text bolder */
+        }
+        /* --- END OF MODIFICATION --- */
+
 
         .spinner {
             width: 35px;
@@ -264,14 +276,14 @@
     <div id="messages"></div>
     <div id="emptyState">
         <span>📭</span>
-        <p>لا توجد رسائل لهذا الموضوع</p>
+        <p>لا توجد أسئلة</p> <!-- Text changed here -->
     </div><br><br>
     <div id="loadingSpinner">
         <div class="spinner"></div>
     </div>
 
     <div id="field2">
-        <textarea id="commentText" placeholder="اكتب رسالتك هنا..." required></textarea>
+        <textarea id="commentText" placeholder="اكتب سؤالك..." required></textarea> <!-- Placeholder changed here -->
         <button id="submitButton">إرسال</button>
     </div>
 
