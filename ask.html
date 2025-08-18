@@ -263,7 +263,7 @@
     <div id="messages"></div>
     <div id="emptyState">
         <span>📭</span>
-        <p>لا توجد رسائل</p>
+        <p>لا توجد رسائل لهذا المنتج</p>
     </div><br><br>
     <div id="loadingSpinner">
         <div class="spinner"></div>
@@ -299,10 +299,28 @@
         const database = firebase.database();
         const messagesRef = database.ref('messages');
 
+        // --- START OF CHANGE ---
+        // 1. Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('productId');
+        const message = urlParams.get('message');
+
+        // If no product ID is provided in the URL, stop execution
+        if (!productId) {
+            document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد رقم المنتج.</p>';
+            document.getElementById('field2').style.display = 'none'; // Hide the message input
+            return;
+        }
+
+        // 2. Create a query to filter messages by product ID
+        const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productId);
+        // --- END OF CHANGE ---
+
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        messagesRef.once('value').then(snapshot => {
+        // Use the query instead of the general messagesRef to load initial data
+        productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '';
 
@@ -322,7 +340,7 @@
         document.getElementById('submitButton').addEventListener('click', e => {
             e.preventDefault();
             const textInput = document.getElementById('commentText');
-            const message = textInput.value.trim();
+            const messageText = textInput.value.trim();
             const username = localStorage.getItem('username');
             const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
 
@@ -332,10 +350,13 @@
                 return;
             }
 
-            if (message) {
+            if (messageText) {
+                // --- START OF CHANGE ---
+                // 3. Add productId when pushing a new message
                 messagesRef.push({
-                    text: message,
+                    text: messageText,
                     author: username,
+                    productId: productId, // Save the product ID with the message
                     replies: [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP,
                     hiddenMessage: hiddenMessage || ''
@@ -343,22 +364,26 @@
                     textInput.value = '';
                     textInput.focus();
                 }).catch(error => console.error('خطأ في الإرسال:', error));
+                // --- END OF CHANGE ---
             }
         });
 
-        messagesRef.on('child_added', snapshot => {
+        // Use the query to listen for new messages for this product
+        productMessagesQuery.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
             }
             document.getElementById('emptyState').style.display = 'none';
         });
 
-        messagesRef.on('child_removed', snapshot => {
+        // Use the query to listen for removed messages for this product
+        productMessagesQuery.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
             checkEmptyState();
         });
-
+        
+        // The data passed to this function is already filtered, so no changes needed here.
         function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
             const container = document.createElement('div');
             container.className = 'message-container';
@@ -413,12 +438,14 @@
 
             document.getElementById('messages').appendChild(container);
             container.scrollIntoView({ behavior: 'smooth' });
-
+            
+            // This part for replies remains the same as it's nested under a specific message
             database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
                 addReply(container, snapshot.key, snapshot.val());
             });
         }
-
+        
+        // No changes needed for the reply function
         function addReply(container, replyId, {author, text, timestamp}) {
             if (!container.querySelector(`[data-reply-id="${replyId}"]`)) {
                 const replyDiv = document.createElement('div');
@@ -427,8 +454,6 @@
 
                 const formattedTime = formatTimestamp(timestamp);
 
-                // --- START OF CHANGE ---
-                // The reply-indicator div has been removed from here.
                 replyDiv.innerHTML = `
                     <div class="reply-main-content">
                         <span class="message-author">${author}</span>
@@ -440,13 +465,13 @@
                         </div>
                     </div>
                 `;
-                // --- END OF CHANGE ---
 
                 container.appendChild(replyDiv);
                 replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
+        // No changes needed for the timestamp formatting function
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
             const messageDate = new Date(timestamp);
@@ -468,13 +493,13 @@
         }
 
         function checkEmptyState() {
-            messagesRef.once('value').then(snapshot => {
+            // Use the query to check if there are messages for this product
+            productMessagesQuery.once('value').then(snapshot => {
                 document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
         }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const message = urlParams.get('message');
+        
+        // This part remains the same
         if (message) {
             document.getElementById('hiddenMessageText').textContent = message;
         }
