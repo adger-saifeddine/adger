@@ -43,7 +43,6 @@
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -504,22 +503,22 @@
                 height: 21px;
             }
         }
-
-        /* --- START: MODIFIED IMAGE GRID STYLES --- */
+        
+        /* --- START: IMPROVED IMAGE GRID STYLES --- */
 
         .image-grid {
             display: grid;
             gap: 20px;
             padding: 30px;
             margin-top: 20px;
-            
-            /* The 3D Animated Background */
-            background: linear-gradient(135deg, #0099ff, #00ccff, #0084ff, #00aeff);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+
+            /* The Improved 3D Animated Background */
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #23a6d5);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
         }
 
         @keyframes gradientAnimation {
@@ -528,32 +527,69 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Floating shapes for 3D effect */
+        .image-grid::before,
+        .image-grid::after {
+            content: '';
+            position: absolute;
+            z-index: 0; /* Behind the items */
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+
+        .image-grid::before {
+            width: 350px;
+            height: 350px;
+            top: -120px;
+            left: -150px;
+            animation: moveShape1 20s infinite alternate ease-in-out;
+        }
+
+        .image-grid::after {
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            right: -100px;
+            animation: moveShape2 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveShape1 {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(50px, 100px) rotate(180deg); }
+        }
+
+        @keyframes moveShape2 {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(-80px, -40px) rotate(-180deg); }
+        }
+        
         .image-item {
             display: flex;
             align-items: center;
             padding: 12px;
-            
-            /* Glassmorphism Effect */
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2);
-            
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-            overflow: hidden;
             position: relative;
-            z-index: 1;
+            z-index: 1; /* Keep items above floating shapes */
+            overflow: hidden;
+            cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+            
+            /* Enhanced Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
 
         .image-item:hover {
             transform: translateY(-8px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         .image-item img {
@@ -573,7 +609,7 @@
             max-width: 150px;
             font-family: 'Cairo', sans-serif;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
         }
 
         /* --- Responsive Layout for Image Grid --- */
@@ -614,7 +650,7 @@
             .image-item span { font-size: 18px; margin-right: 15px; }
         }
 
-        /* --- END: MODIFIED IMAGE GRID STYLES --- */
+        /* --- END: IMPROVED IMAGE GRID STYLES --- */
 
     </style>
 </head>
@@ -622,7 +658,7 @@
     <div class="header-background"></div>
 
     <button class="back-button" id="back-button">
-        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
         </svg>          
     </button>
@@ -638,6 +674,7 @@
     </div>
 
     <div class="search-container">
+        <!-- The 'autofocus' attribute helps trigger the keyboard on page load -->
         <input type="text" id="search-input" placeholder="ابحث هنا" autocomplete="off" autofocus inputmode="search">
         <button class="clear-button" id="clear-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -742,10 +779,6 @@
         </div>
     </div>
 
-</body>
-</html>
-</body>
-</html>
     <script>
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
@@ -955,6 +988,8 @@
         displaySearchHistory();
         displayLastSearchTerm();
         
+        // This Javascript function helps ensure the keyboard appears on load,
+        // supplementing the 'autofocus' HTML attribute.
         window.addEventListener('load', function () {
             setTimeout(() => {
                 searchInput.focus();
@@ -995,4 +1030,7 @@
             }
             displaySearchHistory();
         };
-        </script>
+    </script>
+
+</body>
+</html>
