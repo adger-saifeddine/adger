@@ -26,6 +26,8 @@
 
         #messages {
             padding: 15px;
+            display: flex;
+            flex-direction: column-reverse; /* This helps keep the input in view on mobile */
         }
 
         .message-container {
@@ -114,25 +116,24 @@
             margin-right: 30px; /* Indent replies */
         }
 
-        .reply-indicator {
-            margin-left: 8px;
-            margin-top: 12px;
-            color: #888;
-        }
-
-        .reply-indicator svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
-
         .reply-main-content {
             flex: 1;
         }
 
         .reply-text .message-content {
             background-color: #e9e9e9;
+        }
+
+        /* --- STYLE FOR "REPLY TO" TEXT --- */
+        .reply-to-user {
+            font-size: 0.8em;
+            color: #555;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+        .reply-to-user strong {
+            color: #000;
         }
 
         .hidden-message {
@@ -317,20 +318,14 @@
 
         const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productIdentifier);
 
+        // This part is only to handle the initial loading state (spinner and empty message)
         productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
-            document.getElementById('messages').innerHTML = '';
-
-            if (snapshot.exists()) {
-                snapshot.forEach(child => {
-                    createMessageElement(child.key, child.val());
-                });
-                document.getElementById('emptyState').style.display = 'none';
-            } else {
+            if (!snapshot.exists()) {
                 document.getElementById('emptyState').style.display = 'block';
             }
         }).catch(error => {
-            console.error('خطأ في التحميل:', error);
+            console.error('خطأ في التحميل الأولي:', error);
             loadingSpinner.style.display = 'none';
         });
 
@@ -353,8 +348,7 @@
                     author: username,
                     productId: hiddenMessage,
                     replies: [],
-                    timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    hiddenMessage: hiddenMessage || ''
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
                     textInput.value = '';
                     textInput.focus();
@@ -362,6 +356,7 @@
             }
         });
 
+        // The 'child_added' event will handle both initial loading and new messages
         productMessagesQuery.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
@@ -375,7 +370,7 @@
             checkEmptyState();
         });
 
-        function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
+        function createMessageElement(id, {text, author, replies, timestamp}) {
             const container = document.createElement('div');
             container.className = 'message-container';
             container.dataset.messageId = id;
@@ -407,8 +402,7 @@
                     return;
                 }
                 
-                // --- MODIFICATION: Show original message in prompt ---
-                const replyText = prompt(`الرد على:\n"${text}"`);
+                const replyText = prompt(`الرد على ${author}:\n"${text}"`);
                 
                 if (replyText && replyText.trim() !== '') {
                     const messageId = container.dataset.messageId;
@@ -423,20 +417,21 @@
 
             if (replies) {
                 Object.values(replies).forEach((reply, index) => {
-                    addReply(container, Object.keys(replies)[index], reply);
+                    addReply(container, Object.keys(replies)[index], reply, author); // Pass original author
                 });
             }
 
-            document.getElementById('messages').appendChild(container);
-            // --- MODIFICATION: Removed automatic scroll ---
-            // container.scrollIntoView({ behavior: 'smooth' });
+            // --- CHANGE: Prepend to show newest messages on top ---
+            document.getElementById('messages').prepend(container);
 
             database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
-                addReply(container, snapshot.key, snapshot.val());
+                // Pass original author to the reply function
+                addReply(container, snapshot.key, snapshot.val(), author);
             });
         }
 
-        function addReply(container, replyId, {author, text, timestamp}) {
+        // --- CHANGE: Added 'originalAuthor' parameter ---
+        function addReply(container, replyId, {author, text, timestamp}, originalAuthor) {
             if (!container.querySelector(`[data-reply-id="${replyId}"]`)) {
                 const replyDiv = document.createElement('div');
                 replyDiv.className = 'reply-text';
@@ -444,10 +439,14 @@
 
                 const formattedTime = formatTimestamp(timestamp);
                 
+                // --- CHANGE: Added the "reply to user" element ---
+                const replyToElement = `<div class="reply-to-user">رد على: <strong>${originalAuthor}</strong></div>`;
+
                 replyDiv.innerHTML = `
                     <div class="reply-main-content">
                         <span class="message-author">${author}</span>
                         <div class="message-content">
+                            ${replyToElement}
                             <div class="message-text">${text}</div>
                             <div class="message-meta">
                                 <span class="message-timestamp">${formattedTime}</span>
@@ -457,8 +456,6 @@
                 `;
 
                 container.appendChild(replyDiv);
-                // --- MODIFICATION: Removed automatic scroll ---
-                // replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
