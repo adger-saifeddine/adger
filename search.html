@@ -43,6 +43,7 @@
 
 </body>
 </html>
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -69,17 +70,6 @@
                 font-family: Arial, sans-serif !important;
                 margin-top: -50px;
             }
-        }
-
-        /* --- الطبقة الشفافة التي ستلتقط أول نقرة --- */
-        #focus-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: transparent; /* غير مرئية */
-            z-index: 9998; /* فوق كل شيء تقريبًا */
         }
 
         .header-background {
@@ -514,18 +504,22 @@
                 height: 21px;
             }
         }
-        
+
+        /* --- START: MODIFIED IMAGE GRID STYLES --- */
+
         .image-grid {
             display: grid;
             gap: 20px;
             padding: 30px;
             margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
-            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #23a6d5);
+            
+            /* The 3D Animated Background */
+            background: linear-gradient(135deg, #ff0077, #ff6600, #ff5e00, #ff5e00);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         @keyframes gradientAnimation {
@@ -534,66 +528,32 @@
             100% { background-position: 0% 50%; }
         }
 
-        .image-grid::before,
-        .image-grid::after {
-            content: '';
-            position: absolute;
-            z-index: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            filter: blur(60px);
-            opacity: 0.8;
-        }
-
-        .image-grid::before {
-            width: 350px;
-            height: 350px;
-            top: -120px;
-            left: -150px;
-            animation: moveShape1 20s infinite alternate ease-in-out;
-        }
-
-        .image-grid::after {
-            width: 300px;
-            height: 300px;
-            bottom: -100px;
-            right: -100px;
-            animation: moveShape2 25s infinite alternate ease-in-out;
-        }
-
-        @keyframes moveShape1 {
-            from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(50px, 100px) rotate(180deg); }
-        }
-
-        @keyframes moveShape2 {
-            from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(-80px, -40px) rotate(-180deg); }
-        }
-        
         .image-item {
             display: flex;
             align-items: center;
             padding: 12px;
+            
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2);
+            
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
             position: relative;
             z-index: 1;
-            overflow: hidden;
-            cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
         }
 
         .image-item:hover {
             transform: translateY(-8px) scale(1.05);
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         .image-item img {
@@ -613,9 +573,12 @@
             max-width: 150px;
             font-family: 'Cairo', sans-serif;
             color: #ffffff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        
+
+        /* --- Responsive Layout for Image Grid --- */
+
+        /* Default (Mobile): 2 columns. This now applies from 0px to 767px */
         .image-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
@@ -625,6 +588,7 @@
         .image-item img { width: 60px; height: 60px; }
         .image-item span { font-size: 14px; margin-right: 10px; max-width: 110px; }
 
+        /* Tablet: 3 columns */
         @media (min-width: 768px) {
             .image-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -635,11 +599,13 @@
             .image-item span { font-size: 16px; }
         }
 
+        /* Large Screens (Desktop): 2 ROWS ONLY */
         @media (min-width: 1024px) {
             .image-grid {
+                /* Unset column-based layout and set row-based layout */
                 grid-template-columns: none;
                 grid-template-rows: repeat(2, 1fr);
-                grid-auto-flow: column;
+                grid-auto-flow: column; /* This is the key property */
                 gap: 20px;
                 padding: 30px;
             }
@@ -647,11 +613,12 @@
             .image-item img { width: 100px; height: 100px; margin-bottom: 0;}
             .image-item span { font-size: 18px; margin-right: 15px; }
         }
+
+        /* --- END: MODIFIED IMAGE GRID STYLES --- */
+
     </style>
 </head>
 <body>
-    <div id="focus-overlay"></div>
-
     <div class="header-background"></div>
 
     <button class="back-button" id="back-button">
@@ -775,14 +742,17 @@
         </div>
     </div>
 
+</body>
+</html>
+</body>
+</html>
     <script>
-        // ... كل الكود الخاص بالبحث والحفظ يبقى كما هو ...
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
         const confirmYes = document.getElementById('confirm-yes');
         const confirmNo = document.getElementById('confirm-no');
         
-        let isAllHistoryShown = false;
+        let isAllHistoryShown = false; // متغير لتتبع ما إذا تم عرض جميع العناصر
         
         deleteAllButton.addEventListener('click', () => {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -793,7 +763,7 @@
         
         confirmYes.addEventListener('click', () => {
             localStorage.removeItem('searchHistory');
-            isAllHistoryShown = false;
+            isAllHistoryShown = false; // إعادة تعيين الحالة عند الحذف الكلي
             displaySearchHistory();
             modal.style.display = 'none';
         });
@@ -842,23 +812,23 @@
             return searchTerm === "ابحث هنا";
         }
         
-        function performSearchRedirect(searchTerm) {
+        searchButton.addEventListener('click', function () {
+            const searchTerm = searchInput.value.trim() || currentSearchText;
             if (searchTerm && !isDefaultSearchText(searchTerm)) {
                 saveSearchTerm(searchTerm);
                 saveLastSearchTerm(searchTerm);
                 window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
             }
-        }
-
-        searchButton.addEventListener('click', function () {
-            const searchTerm = searchInput.value.trim() || currentSearchText;
-            performSearchRedirect(searchTerm);
         });
         
         searchInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
                 const searchTerm = searchInput.value.trim();
-                performSearchRedirect(searchTerm);
+                if (searchTerm && !isDefaultSearchText(searchTerm)) {
+                    saveSearchTerm(searchTerm);
+                    saveLastSearchTerm(searchTerm);
+                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+                }
             }
         });
         
@@ -873,7 +843,7 @@
         });
         
         function saveSearchTerm(term) {
-            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const existingIndex = searchHistory.findIndex(entry => entry.term === term);
         
             if (existingIndex !== -1) {
@@ -905,55 +875,57 @@
             const isMobile = window.matchMedia("(max-width: 1522px)").matches;
             const maxItems = isMobile ? 12 : 22;
         
-            let itemsToDisplay = searchHistory;
-            if (!isAllHistoryShown && searchHistory.length > maxItems) {
-                itemsToDisplay = searchHistory.slice(0, maxItems);
-            }
-
-            itemsToDisplay.forEach((entry, index) => {
-                const searchItem = document.createElement('div');
-                searchItem.className = 'search-item';
-                const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
-                searchItem.innerHTML = 
-                    `<span>${displayTerm}</span>
-                    <small>${entry.date}</small>
-                    <button class="delete-button">✖</button>`;
-    
-                searchItem.addEventListener('click', function (e) {
-                    if (e.target.className !== 'delete-button') {
-                        performSearchRedirect(entry.term);
+            searchHistory.forEach((entry, index) => {
+                if (isAllHistoryShown || index < maxItems || searchHistory.length <= maxItems) {
+                    const searchItem = document.createElement('div');
+                    searchItem.className = 'search-item';
+                    const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
+                    searchItem.innerHTML = 
+                        `<span>${displayTerm}</span>
+                        <small>${entry.date}</small>
+                        <button class="delete-button">✖</button>`;
+        
+                    searchItem.addEventListener('click', function () {
+                        saveSearchTerm(entry.term);
+                        saveLastSearchTerm(entry.term);
+                        window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
+                    });
+        
+                    searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        searchItem.remove();
+                        removeSearchTermFromHistory(entry.term);
+                    });
+        
+                    searchHistoryGrid.appendChild(searchItem);
+        
+                    if (!isAllHistoryShown && index === maxItems - 1 && searchHistory.length > maxItems) {
+                        const itemWithArrow = document.createElement('div');
+                        itemWithArrow.className = 'search-item-with-arrow';
+                        itemWithArrow.appendChild(searchItem.cloneNode(true));
+        
+                        const arrow = document.createElement('div');
+                        arrow.id = 'show-more-arrow';
+                        arrow.innerHTML = 
+                            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>`;
+        
+                        arrow.addEventListener('click', function (event) {
+                            event.stopPropagation();
+                            isAllHistoryShown = true;
+                            displaySearchHistory();
+                        });
+        
+                        itemWithArrow.appendChild(arrow);
+                        searchHistoryGrid.appendChild(itemWithArrow);
                     }
-                });
-    
-                searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    removeSearchTermFromHistory(entry.term);
-                });
-    
-                searchHistoryGrid.appendChild(searchItem);
+                }
             });
-            
-            if (!isAllHistoryShown && searchHistory.length > maxItems) {
-                const showMoreContainer = document.createElement('div');
-                showMoreContainer.className = 'search-item-with-arrow';
-                
-                const arrow = document.createElement('div');
-                arrow.id = 'show-more-arrow';
-                arrow.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>`;
-                
-                arrow.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    isAllHistoryShown = true;
-                    displaySearchHistory();
-                });
-                
-                showMoreContainer.appendChild(arrow);
-                searchHistoryGrid.appendChild(showMoreContainer);
-            }
         }
         
         function removeSearchTermFromHistory(term) {
-            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const updatedHistory = searchHistory.filter(entry => entry.term !== term);
             localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
             displaySearchHistory();
@@ -972,41 +944,55 @@
             const imageItem = event.target.closest('.image-item');
             if (imageItem) {
                 const searchTerm = imageItem.getAttribute('data-term');
-                performSearchRedirect(searchTerm);
+                if (searchTerm) {
+                    saveSearchTerm(searchTerm);
+                    saveLastSearchTerm(searchTerm);
+                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+                }
             }
         });
         
-        /* --- كود الطبقة الشفافة لإظهار الكيبورد مع أول لمسة --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            const focusOverlay = document.getElementById('focus-overlay');
-            const searchInput = document.getElementById('search-input');
-
-            // هذه الدالة ستعمل مرة واحدة فقط
-            const handleFirstInteraction = () => {
-                // التركيز على صندوق البحث لإظهار الكيبورد
-                searchInput.focus();
-                // إخفاء الطبقة الشفافة للأبد
-                focusOverlay.style.display = 'none';
-                // إزالة المستمعين لأننا لم نعد بحاجة إليهم
-                focusOverlay.removeEventListener('click', handleFirstInteraction);
-                focusOverlay.removeEventListener('touchstart', handleFirstInteraction);
-            };
-
-            // الاستماع لأول نقرة أو لمسة
-            focusOverlay.addEventListener('click', handleFirstInteraction);
-            focusOverlay.addEventListener('touchstart', handleFirstInteraction);
-        });
-
-        window.addEventListener('resize', displaySearchHistory);
-        
-        function redirectToSea(categoryName) {
-            performSearchRedirect(categoryName);
-        }
-        
-        // التشغيل عند تحميل الصفحة
         displaySearchHistory();
         displayLastSearchTerm();
-
-    </script>
-</body>
-</html>
+        
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                searchInput.focus();
+                searchInput.click();
+            }, 500);
+        });
+        
+        window.addEventListener('resize', function () {
+            displaySearchHistory();
+            displayLastSearchTerm();
+        });
+        
+        function redirectToSea(categoryName) {
+            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
+        }
+        
+        function performSearch(searchTerm) {
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productName = product.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchTerm.toLowerCase())) {
+                    product.classList.remove('hidden');
+                } else {
+                    product.classList.add('hidden');
+                }
+            });
+        }
+        
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('search');
+            if (searchTerm) {
+                const searchBox = document.getElementById('search-box');
+                if (searchBox) {
+                    searchBox.value = searchTerm;
+                    performSearch(searchTerm);
+                }
+            }
+            displaySearchHistory();
+        };
+        </script>
