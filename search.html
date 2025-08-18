@@ -71,17 +71,16 @@
             }
         }
 
-        /* --- START: NEW STYLE FOR FOCUS OVERLAY --- */
+        /* --- الطبقة الشفافة التي ستلتقط أول نقرة --- */
         #focus-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: transparent; /* Invisible */
-            z-index: 9998; /* On top of most things, but below the modal */
+            background: transparent; /* غير مرئية */
+            z-index: 9998; /* فوق كل شيء تقريبًا */
         }
-        /* --- END: NEW STYLE FOR FOCUS OVERLAY --- */
 
         .header-background {
             position: fixed;
@@ -651,9 +650,7 @@
     </style>
 </head>
 <body>
-    <!-- START: NEW HTML ELEMENT FOR FOCUS OVERLAY -->
     <div id="focus-overlay"></div>
-    <!-- END: NEW HTML ELEMENT FOR FOCUS OVERLAY -->
 
     <div class="header-background"></div>
 
@@ -674,7 +671,6 @@
     </div>
 
     <div class="search-container">
-        <!-- Kept 'autofocus' for desktop browsers where it works reliably -->
         <input type="text" id="search-input" placeholder="ابحث هنا" autocomplete="off" autofocus inputmode="search">
         <button class="clear-button" id="clear-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -780,6 +776,7 @@
     </div>
 
     <script>
+        // ... كل الكود الخاص بالبحث والحفظ يبقى كما هو ...
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
         const confirmYes = document.getElementById('confirm-yes');
@@ -979,27 +976,26 @@
             }
         });
         
-        // --- START: NEW SCRIPT FOR THE FOCUS OVERLAY TRICK ---
+        /* --- كود الطبقة الشفافة لإظهار الكيبورد مع أول لمسة --- */
         document.addEventListener('DOMContentLoaded', () => {
             const focusOverlay = document.getElementById('focus-overlay');
             const searchInput = document.getElementById('search-input');
 
-            // This function will be called on the first user interaction
+            // هذه الدالة ستعمل مرة واحدة فقط
             const handleFirstInteraction = () => {
-                // Focus the search input to bring up the keyboard
+                // التركيز على صندوق البحث لإظهار الكيبورد
                 searchInput.focus();
-                // Hide the overlay so the rest of the page is usable
+                // إخفاء الطبقة الشفافة للأبد
                 focusOverlay.style.display = 'none';
-                // Remove the event listeners as they are no longer needed
+                // إزالة المستمعين لأننا لم نعد بحاجة إليهم
                 focusOverlay.removeEventListener('click', handleFirstInteraction);
                 focusOverlay.removeEventListener('touchstart', handleFirstInteraction);
             };
 
-            // Listen for the first click or touch on the overlay
+            // الاستماع لأول نقرة أو لمسة
             focusOverlay.addEventListener('click', handleFirstInteraction);
             focusOverlay.addEventListener('touchstart', handleFirstInteraction);
         });
-        // --- END: NEW SCRIPT FOR THE FOCUS OVERLAY TRICK ---
 
         window.addEventListener('resize', displaySearchHistory);
         
@@ -1007,7 +1003,7 @@
             performSearchRedirect(categoryName);
         }
         
-        // Initial setup on page load
+        // التشغيل عند تحميل الصفحة
         displaySearchHistory();
         displayLastSearchTerm();
 
