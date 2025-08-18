@@ -113,20 +113,7 @@
             margin-top: 10px;
             margin-right: 30px; /* Indent replies */
         }
-
-        .reply-indicator {
-            margin-left: 8px;
-            margin-top: 12px;
-            color: #888;
-        }
-
-        .reply-indicator svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
-
+        
         .reply-main-content {
             flex: 1;
         }
@@ -299,40 +286,57 @@
         const database = firebase.database();
         const messagesRef = database.ref('messages');
 
-        // --- START OF MODIFICATION ---
-        // 1. Get the product identifier from the 'message' parameter in the URL.
         const urlParams = new URLSearchParams(window.location.search);
         const productIdentifier = urlParams.get('message');
         
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        // 2. Check if the product identifier exists. If not, show an error and stop.
         if (!productIdentifier) {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد موضوع الرسائل في الرابط.</p>';
-            document.getElementById('field2').style.display = 'none'; // Hide the input field
-            document.getElementById('hiddenMessage').style.display = 'none'; // Hide the top bar
-            return; // Stop the script
+            document.getElementById('field2').style.display = 'none';
+            document.getElementById('hiddenMessage').style.display = 'none';
+            return;
         }
         
-        // 3. Set the text in the top 'hidden message' bar.
         document.getElementById('hiddenMessageText').textContent = productIdentifier;
-
-        // 4. Create a Firebase query to filter messages where 'productId' field matches our text identifier.
         const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productIdentifier);
-        // --- END OF MODIFICATION ---
 
-        // Use the query to load only the relevant messages.
+        // --- START OF MODIFICATION ---
+        // Get current user's name to use for sorting
+        const currentUsername = localStorage.getItem('username');
+
         productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
-            document.getElementById('messages').innerHTML = '';
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = '';
 
             if (snapshot.exists()) {
+                const messagesArray = [];
                 snapshot.forEach(child => {
-                    createMessageElement(child.key, child.val());
+                    messagesArray.push({ key: child.key, val: child.val() });
                 });
+
+                // Separate messages into two groups: mine and others
+                const myMessages = messagesArray.filter(msg => msg.val.author === currentUsername);
+                const otherMessages = messagesArray.filter(msg => msg.val.author !== currentUsername);
+
+                // Sort each group by timestamp, newest first (descending order)
+                myMessages.sort((a, b) => b.val.timestamp - a.val.timestamp);
+                otherMessages.sort((a, b) => b.val.timestamp - a.val.timestamp);
+
+                // Combine the arrays, with my messages appearing first
+                const sortedMessages = [...myMessages, ...otherMessages];
+
+                // Render the sorted messages
+                sortedMessages.forEach(message => {
+                    const messageElement = createMessageElement(message.key, message.val());
+                    messagesContainer.appendChild(messageElement);
+                });
+                
                 document.getElementById('emptyState').style.display = 'none';
+
             } else {
                 document.getElementById('emptyState').style.display = 'block';
             }
@@ -340,13 +344,13 @@
             console.error('خطأ في التحميل:', error);
             loadingSpinner.style.display = 'none';
         });
+        // --- END OF MODIFICATION ---
 
         document.getElementById('submitButton').addEventListener('click', e => {
             e.preventDefault();
             const textInput = document.getElementById('commentText');
             const message = textInput.value.trim();
             const username = localStorage.getItem('username');
-            // This is our product identifier from the top bar
             const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
 
             if (!username) {
@@ -356,54 +360,70 @@
             }
 
             if (message) {
-                // --- START OF MODIFICATION ---
-                // 5. When pushing a new message, add the 'productId' field with our identifier text.
-                // This makes it filterable for other users viewing the same page.
                 messagesRef.push({
                     text: message,
                     author: username,
-                    productId: hiddenMessage, // The filterable identifier
+                    productId: hiddenMessage,
                     replies: [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    hiddenMessage: hiddenMessage || '' // For display inside the message bubble
+                    hiddenMessage: "" // We keep this field but empty as requested
                 }).then(() => {
                     textInput.value = '';
                     textInput.focus();
                 }).catch(error => console.error('خطأ في الإرسال:', error));
-                // --- END OF MODIFICATION ---
             }
         });
 
-        // Listen for new messages that match our query.
+        // --- START OF MODIFICATION for real-time updates ---
         productMessagesQuery.on('child_added', snapshot => {
-            if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
-                createMessageElement(snapshot.key, snapshot.val());
-            }
-            document.getElementById('emptyState').style.display = 'none';
-        });
+            const messageId = snapshot.key;
+            const messageData = snapshot.val();
 
-        // Listen for removed messages that match our query.
+            if (!document.querySelector(`[data-message-id="${messageId}"]`)) {
+                const messagesContainer = document.getElementById('messages');
+                const newElement = createMessageElement(messageId, messageData);
+                
+                // Logic to insert the new message in the correct sorted position
+                if (messageData.author === currentUsername) {
+                    // If it's my message, add it to the very top.
+                    messagesContainer.prepend(newElement);
+                } else {
+                    // If it's someone else's, add it after my messages but before other's messages.
+                    const firstOtherMessage = messagesContainer.querySelector(`.message-container:not([data-author="${currentUsername}"])`);
+                    if (firstOtherMessage) {
+                        messagesContainer.insertBefore(newElement, firstOtherMessage);
+                    } else {
+                        // If there are no "other" messages yet, just append it.
+                        messagesContainer.appendChild(newElement);
+                    }
+                }
+                
+                // Scroll only for new messages that arrive while the page is open.
+                newElement.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('emptyState').style.display = 'none';
+            }
+        });
+        // --- END OF MODIFICATION ---
+
         productMessagesQuery.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
             checkEmptyState();
         });
 
-        function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
+        function createMessageElement(id, {text, author, replies, timestamp}) {
             const container = document.createElement('div');
             container.className = 'message-container';
             container.dataset.messageId = id;
+            container.dataset.author = author; // Add author to the container for easier querying
 
             const formattedTime = formatTimestamp(timestamp);
-            // Show the 'hiddenMessage' inside the bubble if it exists.
-            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px; color: #555; background: #e0e0e0; padding: 5px 8px; border-radius: 8px;">رد على: ${hiddenMessage}</div>` : '';
-
-
+            
+            // The "hiddenMsg" logic has been removed as requested.
             container.innerHTML = `
                 <span class="message-author">${author}</span>
                 <div class="message-wrapper">
                     <div class="message-content" data-author="${author}">
-                        ${hiddenMsg}
                         <div class="message-text">${text}</div>
                         <div class="message-meta">
                             <span class="message-timestamp">${formattedTime}</span>
@@ -421,19 +441,16 @@
             replyButton.addEventListener('click', () => {
                 const username = localStorage.getItem('username');
                 if (!username) {
-                    alert('الرجاء تسجيل الدخول أولاً للرد');
-                    return;
+                    alert('الرجاء تسجيل الدخول أولاً للرد'); return;
                 }
-
                 const replyText = prompt('اكتب ردك:');
                 if (replyText && replyText.trim() !== '') {
-                    const messageId = container.dataset.messageId;
-                    const repliesRef = database.ref(`messages/${messageId}/replies`);
+                    const repliesRef = database.ref(`messages/${id}/replies`);
                     repliesRef.push({
                         author: username,
                         text: replyText.trim(),
                         timestamp: firebase.database.ServerValue.TIMESTAMP
-                    }).catch(error => console.error('خطأ في إرسال الرد:', error));
+                    });
                 }
             });
 
@@ -442,13 +459,12 @@
                     addReply(container, Object.keys(replies)[index], reply);
                 });
             }
-
-            document.getElementById('messages').appendChild(container);
-            container.scrollIntoView({ behavior: 'smooth' });
-
+            
             database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
                 addReply(container, snapshot.key, snapshot.val());
             });
+
+            return container; // Return the element to be placed by the caller function
         }
 
         function addReply(container, replyId, {author, text, timestamp}) {
@@ -456,9 +472,7 @@
                 const replyDiv = document.createElement('div');
                 replyDiv.className = 'reply-text';
                 replyDiv.dataset.replyId = replyId;
-
                 const formattedTime = formatTimestamp(timestamp);
-                
                 replyDiv.innerHTML = `
                     <div class="reply-main-content">
                         <span class="message-author">${author}</span>
@@ -470,9 +484,7 @@
                         </div>
                     </div>
                 `;
-
                 container.appendChild(replyDiv);
-                replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -480,11 +492,7 @@
             if (!timestamp) return '';
             const messageDate = new Date(timestamp);
             const currentDate = new Date();
-            if (
-                messageDate.getDate() === currentDate.getDate() &&
-                messageDate.getMonth() === currentDate.getMonth() &&
-                messageDate.getFullYear() === currentDate.getFullYear()
-            ) {
+            if (messageDate.getDate() === currentDate.getDate() && messageDate.getMonth() === currentDate.getMonth() && messageDate.getFullYear() === currentDate.getFullYear()) {
                 const hours = messageDate.getHours();
                 const minutes = messageDate.getMinutes().toString().padStart(2, '0');
                 const period = hours >= 12 ? 'مساءً' : 'صباحًا';
@@ -497,7 +505,6 @@
         }
 
         function checkEmptyState() {
-            // Check empty state using our specific product query.
             productMessagesQuery.once('value').then(snapshot => {
                 document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
