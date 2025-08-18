@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,34 +21,65 @@
             background: #f5f5f5;
             position: relative;
             overflow-y: auto;
+            padding-bottom: 80px; /* To ensure the input container doesn't overlap messages */
         }
-        
+
         #messages {
             padding: 15px;
-            padding-bottom: 150px; /* Extra space for visibility above input area */
         }
-        
+
         .message-container {
             margin-bottom: 15px;
+            padding: 10px;
+            max-width: 90%; /* Prevent container from being too wide */
         }
-        
+
+        .message-wrapper {
+            display: flex;
+            align-items: flex-end; /* Aligns icon with the bottom of the message bubble */
+            gap: 8px; /* Space between message and icon */
+        }
+
+        .reply-icon-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            margin-bottom: 5px; /* Align with the message bubble bottom padding */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .reply-icon-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .reply-icon-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: #555;
+        }
+
         .message-content {
             position: relative;
             padding: 12px 15px;
             border-radius: 20px;
             background-color: #f1f1f1;
-            max-width: 85%;
+            margin-top: 0;
             word-break: break-word;
             display: inline-block;
             width: fit-content;
         }
 
         .message-text {
-            padding-left: 25px; /* Space for reply icon */
-            padding-right: 70px; /* Space for timestamp */
+            padding-right: 70px;
             line-height: 1.4;
             word-wrap: break-word;
             white-space: pre-wrap;
+            max-width: 300px;
         }
 
         .message-meta {
@@ -56,27 +88,7 @@
             right: 12px;
             display: flex;
             align-items: center;
-            gap: 8px; /* Increased gap */
-        }
-
-        /* New Reply Icon Style */
-        .reply-icon {
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-            position: absolute; /* Position it inside the message bubble */
-            bottom: 7px;
-            left: 15px;
-        }
-        .reply-icon:hover {
-            opacity: 1;
-        }
-        .reply-icon svg {
-             width: 100%;
-             height: 100%;
-             fill: #555;
+            gap: 5px;
         }
 
         .message-author {
@@ -85,7 +97,6 @@
             color: #444;
             display: block;
             margin-bottom: 4px;
-            padding: 0 10px;
         }
 
         .message-timestamp {
@@ -95,21 +106,35 @@
             direction: ltr;
             white-space: nowrap;
         }
-        
-        .replies-section {
-            padding-right: 25px; /* Indent replies */
-            margin-top: 10px;
-            border-right: 2px solid #e0e0e0;
-        }
 
         .reply-text {
-            margin-top: 8px;
+            display: flex;
+            align-items: flex-start;
+            margin-top: 10px;
+            margin-right: 30px; /* Indent replies */
+        }
+
+        .reply-indicator {
+            margin-left: 8px;
+            margin-top: 12px;
+            color: #888;
+        }
+
+        .reply-indicator svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+        }
+
+        .reply-main-content {
+            flex: 1;
         }
 
         .reply-text .message-content {
-            background-color: #e9e9e9; /* Slightly different color for replies */
+            background-color: #e9e9e9;
         }
-        
+
         .hidden-message {
             width: 100%;
             background-color: #f5f5f5;
@@ -117,10 +142,10 @@
             padding: 10px 12px;
             font-size: 15px;
             position: fixed;
-            top: 0;
+            top: -1px;
             left: 0;
-            z-index: 10;
-            display: none; /* Hidden by default, shown by JS */
+            z-index: 1;
+            display: flex;
             flex-direction: row-reverse;
             align-items: center;
             gap: 2px;
@@ -140,55 +165,28 @@
             fill: none;
             stroke: rgb(0, 0, 0);
             stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         #hiddenMessageText {
             margin-right: 10px;
         }
 
-        #inputContainer {
+        #field2 {
             position: fixed;
             bottom: 0;
             width: 100%;
             background: white;
-            border-top: 1px solid #ddd;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        #replyContext {
-            padding: 8px 15px;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 0.8em;
-            color: #555;
-            display: none; /* Hidden by default */
-            justify-content: space-between;
-            align-items: center;
-        }
-        #replyContextText {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 80%;
-        }
-        #cancelReply {
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.2em;
-            padding: 0 5px;
-        }
-
-        #field2 {
             display: flex;
             padding: 15px;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
-        
+
         #field2 textarea {
             flex: 1;
-            padding: 10px 15px;
+            padding: 0 15px;
             border: 1px solid #ccc;
             border-radius: 25px;
             margin-right: 10px;
@@ -197,37 +195,49 @@
             direction: rtl;
             text-align: right;
             resize: none;
-            min-height: 40px;
-            line-height: 1.4;
+            height: 40px;
+            line-height: 40px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        #field2 textarea::placeholder {
+            direction: rtl;
+            text-align: right;
+            line-height: 40px;
         }
 
         #field2 button {
             padding: 0 30px;
             height: 40px;
-            align-self: center;
+            margin-right: -5px;
             border: none;
             background-color: #000;
             color: white;
             border-radius: 25px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        #field2 button:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
+
+        #field2 button:active {
+            opacity: 0.8;
         }
-        
+
         #emptyState, #loadingSpinner {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
+            display: none;
         }
-        
+
         #emptyState span { font-size: 48px; opacity: 0.6; }
         #emptyState p { font-size: 16px; color: #666; margin-top: 8px; }
-        
+
         .spinner {
             width: 35px;
             height: 35px;
@@ -236,39 +246,42 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .message-container .message-content[data-author="admin"] {
             background-color: rgba(0, 89, 255, 0.1);
         }
     </style>
 </head>
 <body>
+    <div style="padding-bottom: 12px; color: #ffffff;">النص الأول</div>
+
+    <div id="messages"></div>
+    <div id="emptyState">
+        <span>📭</span>
+        <p>لا توجد رسائل</p>
+    </div><br><br>
+    <div id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="field2">
+        <textarea id="commentText" placeholder="اكتب رسالتك هنا..." required></textarea>
+        <button id="submitButton">إرسال</button>
+    </div>
+
     <div id="hiddenMessage" class="hidden-message">
         <div class="back-arrow">
             <svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/></svg>
         </div>
-        <span id="hiddenMessageText"></span>
+        <span id="hiddenMessageText">النص المخفي</span>
     </div>
-
-    <div id="messages"></div>
-    <div id="emptyState" style="display: none;">
-        <span>📭</span>
-        <p>لا توجد رسائل</p>
-    </div>
-    <div id="loadingSpinner"><div class="spinner"></div></div>
-
-    <div id="inputContainer">
-        <div id="replyContext">
-            <span id="replyContextText"></span>
-            <span id="cancelReply">&times;</span>
-        </div>
-        <div id="field2">
-            <textarea id="commentText" placeholder="اكتب رسالتك هنا..." required></textarea>
-            <button id="submitButton">إرسال</button>
-        </div>
-    </div>
+</body>
+</html>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -284,55 +297,60 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const messagesRef = database.ref('messages');
 
-        // --- 1. Get Chat ID from URL (New Feature) ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const chatId = urlParams.get('id');
-        
-        if (!chatId) {
-            document.body.innerHTML = '<h1 style="text-align: center; margin-top: 50px; font-family: Cairo, sans-serif;">خطأ: لم يتم تحديد معرف للدردشة. يرجى التأكد من أن الرابط يحتوي على ?id=...</h1>';
-            return;
-        }
-
-        // --- 2. Create a unique reference for this chat ID (New Feature) ---
-        const messagesRef = database.ref('chats/' + chatId);
-
-        // --- DOM Elements ---
         const loadingSpinner = document.getElementById('loadingSpinner');
-        const messagesDiv = document.getElementById('messages');
-        const emptyStateDiv = document.getElementById('emptyState');
-        const submitButton = document.getElementById('submitButton');
-        const commentText = document.getElementById('commentText');
-        const replyContext = document.getElementById('replyContext');
-        const replyContextText = document.getElementById('replyContextText');
-        const cancelReplyButton = document.getElementById('cancelReply');
+        loadingSpinner.style.display = 'block';
 
-        let replyingToMessageId = null; // State for tracking replies
-
-        // --- Initial Load ---
         messagesRef.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
-            checkEmptyState(snapshot);
+            document.getElementById('messages').innerHTML = '';
+
             if (snapshot.exists()) {
                 snapshot.forEach(child => {
                     createMessageElement(child.key, child.val());
                 });
+                document.getElementById('emptyState').style.display = 'none';
+            } else {
+                document.getElementById('emptyState').style.display = 'block';
             }
         }).catch(error => {
             console.error('خطأ في التحميل:', error);
             loadingSpinner.style.display = 'none';
         });
 
-        // --- Event Listeners ---
-        submitButton.addEventListener('click', sendMessage);
-        cancelReplyButton.addEventListener('click', cancelReply);
+        document.getElementById('submitButton').addEventListener('click', e => {
+            e.preventDefault();
+            const textInput = document.getElementById('commentText');
+            const message = textInput.value.trim();
+            const username = localStorage.getItem('username');
+            const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
 
-        // --- Real-time Listeners ---
+            if (!username) {
+                alert('الرجاء تسجيل الدخول أولاً');
+                window.location.href = 'account.html';
+                return;
+            }
+
+            if (message) {
+                messagesRef.push({
+                    text: message,
+                    author: username,
+                    replies: [],
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    hiddenMessage: hiddenMessage || ''
+                }).then(() => {
+                    textInput.value = '';
+                    textInput.focus();
+                }).catch(error => console.error('خطأ في الإرسال:', error));
+            }
+        });
+
         messagesRef.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
             }
-            checkEmptyState();
+            document.getElementById('emptyState').style.display = 'none';
         });
 
         messagesRef.on('child_removed', snapshot => {
@@ -341,146 +359,131 @@
             checkEmptyState();
         });
 
-        // --- Core Functions ---
-        async function sendMessage() {
-            // This check from your working code is essential
-            const username = localStorage.getItem('username');
-            if (!username) {
-                alert('الرجاء تسجيل الدخول أولاً');
-                // Optional: redirect to login/account page
-                // window.location.href = 'account.html';
-                return;
-            }
-
-            const message = commentText.value.trim();
-            if (!message) return;
-
-            submitButton.disabled = true;
-
-            const data = {
-                text: message,
-                author: username,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
-
-            try {
-                // --- 3. Logic to handle both new messages and replies (New Feature) ---
-                if (replyingToMessageId) {
-                    // Send as a reply
-                    const replyRef = messagesRef.child(replyingToMessageId).child('replies');
-                    await replyRef.push(data);
-                    cancelReply();
-                } else {
-                    // Send as a new message
-                    const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
-                    if (hiddenMessage.trim()) data.hiddenMessage = hiddenMessage;
-                    await messagesRef.push(data);
-                }
-                commentText.value = '';
-            } catch (error) {
-                console.error('خطأ في الإرسال:', error);
-                alert('حدث خطأ أثناء إرسال الرسالة.');
-            } finally {
-                submitButton.disabled = false;
-                commentText.focus();
-            }
-        }
-
         function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
             const container = document.createElement('div');
             container.className = 'message-container';
             container.dataset.messageId = id;
 
             const formattedTime = formatTimestamp(timestamp);
-            let hiddenMsgHTML = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px; opacity: 0.7; border-bottom: 1px solid #ddd; padding-bottom: 5px;">${hiddenMessage}</div>` : '';
+            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px;">${hiddenMessage}</div><hr style="margin: 5px 0;">` : '';
 
             container.innerHTML = `
                 <span class="message-author">${author}</span>
-                <div class="message-content" data-author="${author}">
-                    ${hiddenMsgHTML}
-                    <div class="message-text">${text}</div>
-                    <div class="message-meta">
-                        <span class="message-timestamp">${formattedTime}</span>
+                <div class="message-wrapper">
+                    <div class="message-content" data-author="${author}">
+                        ${hiddenMsg}
+                        <div class="message-text">${text}</div>
+                        <div class="message-meta">
+                            <span class="message-timestamp">${formattedTime}</span>
+                        </div>
                     </div>
-                    <!-- 4. Added Reply Icon to UI (New Feature) -->
-                    <div class="reply-icon" title="رد">
-                       <svg viewBox="0 0 24 24"><path d="M10,9V5L3,12L10,19V14.9C15,14.9,18.5,16.5,21,20C20,15,17,10,10,9Z" /></svg>
-                    </div>
+                    <button class="reply-icon-button" title="رد على هذه الرسالة">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                        </svg>
+                    </button>
                 </div>
-                <div class="replies-section"></div>
             `;
-            
-            messagesDiv.appendChild(container);
 
-            // Add event listener to the new reply icon
-            container.querySelector('.reply-icon').addEventListener('click', () => {
-                replyingToMessageId = id;
-                replyContextText.textContent = `الرد على: "${text.substring(0, 30)}..."`;
-                replyContext.style.display = 'flex';
-                commentText.focus();
+            const replyButton = container.querySelector('.reply-icon-button');
+            replyButton.addEventListener('click', () => {
+                const username = localStorage.getItem('username');
+                if (!username) {
+                    alert('الرجاء تسجيل الدخول أولاً للرد');
+                    return;
+                }
+
+                const replyText = prompt('اكتب ردك:');
+                if (replyText && replyText.trim() !== '') {
+                    const messageId = container.dataset.messageId;
+                    const repliesRef = database.ref(`messages/${messageId}/replies`);
+                    repliesRef.push({
+                        author: username,
+                        text: replyText.trim(),
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    }).catch(error => console.error('خطأ في إرسال الرد:', error));
+                }
             });
 
-            const repliesSection = container.querySelector('.replies-section');
             if (replies) {
-                Object.entries(replies).forEach(([replyId, reply]) => {
-                    addReply(repliesSection, replyId, reply);
+                Object.values(replies).forEach((reply, index) => {
+                    addReply(container, Object.keys(replies)[index], reply);
                 });
             }
-            // Listen for new replies on this specific message
-            messagesRef.child(id).child('replies').on('child_added', snapshot => {
-                addReply(repliesSection, snapshot.key, snapshot.val());
+
+            document.getElementById('messages').appendChild(container);
+            container.scrollIntoView({ behavior: 'smooth' });
+
+            database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
+                addReply(container, snapshot.key, snapshot.val());
             });
-
-            container.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
 
-        function addReply(repliesSection, replyId, {author, text, timestamp}) {
-            // Prevent adding duplicate replies on screen
-            if (repliesSection.querySelector(`[data-reply-id="${replyId}"]`)) return;
-            
-            const replyDiv = document.createElement('div');
-            replyDiv.className = 'reply-text';
-            replyDiv.dataset.replyId = replyId;
+        function addReply(container, replyId, {author, text, timestamp}) {
+            if (!container.querySelector(`[data-reply-id="${replyId}"]`)) {
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'reply-text';
+                replyDiv.dataset.replyId = replyId;
 
-            replyDiv.innerHTML = `
-                <span class="message-author">${author}</span>
-                <div class="message-content">
-                    <div class="message-text">${text}</div>
-                    <div class="message-meta">
-                        <span class="message-timestamp">${formatTimestamp(timestamp)}</span>
+                const formattedTime = formatTimestamp(timestamp);
+
+                // --- START OF CHANGE ---
+                // The reply-indicator div has been removed from here.
+                replyDiv.innerHTML = `
+                    <div class="reply-main-content">
+                        <span class="message-author">${author}</span>
+                        <div class="message-content">
+                            <div class="message-text">${text}</div>
+                            <div class="message-meta">
+                                <span class="message-timestamp">${formattedTime}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `;
-            repliesSection.appendChild(replyDiv);
-        }
+                `;
+                // --- END OF CHANGE ---
 
-        function cancelReply() {
-            replyingToMessageId = null;
-            replyContext.style.display = 'none';
+                container.appendChild(replyDiv);
+                replyDiv.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
             const messageDate = new Date(timestamp);
-            return messageDate.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', hour12: true });
-        }
-        
-        function checkEmptyState(snapshot) {
-            const check = snap => emptyStateDiv.style.display = snap.exists() ? 'none' : 'block';
-            if (snapshot) check(snapshot);
-            else messagesRef.once('value').then(check);
+            const currentDate = new Date();
+            if (
+                messageDate.getDate() === currentDate.getDate() &&
+                messageDate.getMonth() === currentDate.getMonth() &&
+                messageDate.getFullYear() === currentDate.getFullYear()
+            ) {
+                const hours = messageDate.getHours();
+                const minutes = messageDate.getMinutes().toString().padStart(2, '0');
+                const period = hours >= 12 ? 'مساءً' : 'صباحًا';
+                const formattedHours = hours % 12 || 12;
+                return `${formattedHours}:${minutes} ${period}`;
+            } else {
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return messageDate.toLocaleDateString('ar-EG', options);
+            }
         }
 
-        // Handle the top info bar based on URL parameters
-        const messageParam = urlParams.get('message');
-        const hiddenMessageDiv = document.getElementById('hiddenMessage');
-        if (messageParam) {
-            document.getElementById('hiddenMessageText').textContent = messageParam;
-            hiddenMessageDiv.style.display = 'flex';
-            document.body.style.paddingTop = `${hiddenMessageDiv.offsetHeight}px`;
+        function checkEmptyState() {
+            messagesRef.once('value').then(snapshot => {
+                document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
+            });
         }
-        document.querySelector('.back-arrow').addEventListener('click', () => window.history.back());
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            document.getElementById('hiddenMessageText').textContent = message;
+        }
+
+        document.querySelector('.back-arrow').addEventListener('click', () => {
+            window.history.back();
+        });
     });
 </script>
+
 </body>
 </html>
