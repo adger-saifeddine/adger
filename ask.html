@@ -299,31 +299,24 @@
         const database = firebase.database();
         const messagesRef = database.ref('messages');
 
-        // --- START OF MODIFICATION ---
-        // 1. Get the product identifier from the 'message' parameter in the URL.
         const urlParams = new URLSearchParams(window.location.search);
         const productIdentifier = urlParams.get('message');
         
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        // 2. Check if the product identifier exists. If not, show an error and stop.
         if (!productIdentifier) {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد موضوع الرسائل في الرابط.</p>';
-            document.getElementById('field2').style.display = 'none'; // Hide the input field
-            document.getElementById('hiddenMessage').style.display = 'none'; // Hide the top bar
-            return; // Stop the script
+            document.getElementById('field2').style.display = 'none';
+            document.getElementById('hiddenMessage').style.display = 'none';
+            return;
         }
         
-        // 3. Set the text in the top 'hidden message' bar.
         document.getElementById('hiddenMessageText').textContent = productIdentifier;
 
-        // 4. Create a Firebase query to filter messages where 'productId' field matches our text identifier.
         const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productIdentifier);
-        // --- END OF MODIFICATION ---
 
-        // Use the query to load only the relevant messages.
         productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '';
@@ -346,7 +339,6 @@
             const textInput = document.getElementById('commentText');
             const message = textInput.value.trim();
             const username = localStorage.getItem('username');
-            // This is our product identifier from the top bar
             const hiddenMessage = document.getElementById('hiddenMessageText').textContent;
 
             if (!username) {
@@ -356,25 +348,20 @@
             }
 
             if (message) {
-                // --- START OF MODIFICATION ---
-                // 5. When pushing a new message, add the 'productId' field with our identifier text.
-                // This makes it filterable for other users viewing the same page.
                 messagesRef.push({
                     text: message,
                     author: username,
-                    productId: hiddenMessage, // The filterable identifier
+                    productId: hiddenMessage,
                     replies: [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP,
-                    hiddenMessage: hiddenMessage || '' // For display inside the message bubble
+                    hiddenMessage: hiddenMessage || ''
                 }).then(() => {
                     textInput.value = '';
                     textInput.focus();
                 }).catch(error => console.error('خطأ في الإرسال:', error));
-                // --- END OF MODIFICATION ---
             }
         });
 
-        // Listen for new messages that match our query.
         productMessagesQuery.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
@@ -382,7 +369,6 @@
             document.getElementById('emptyState').style.display = 'none';
         });
 
-        // Listen for removed messages that match our query.
         productMessagesQuery.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
@@ -395,15 +381,11 @@
             container.dataset.messageId = id;
 
             const formattedTime = formatTimestamp(timestamp);
-            // Show the 'hiddenMessage' inside the bubble if it exists.
-            let hiddenMsg = hiddenMessage ? `<div style="font-size: 12px; margin-bottom: 5px; color: #555; background: #e0e0e0; padding: 5px 8px; border-radius: 8px;">رد على: ${hiddenMessage}</div>` : '';
-
-
+            
             container.innerHTML = `
                 <span class="message-author">${author}</span>
                 <div class="message-wrapper">
                     <div class="message-content" data-author="${author}">
-                        ${hiddenMsg}
                         <div class="message-text">${text}</div>
                         <div class="message-meta">
                             <span class="message-timestamp">${formattedTime}</span>
@@ -424,8 +406,10 @@
                     alert('الرجاء تسجيل الدخول أولاً للرد');
                     return;
                 }
-
-                const replyText = prompt('اكتب ردك:');
+                
+                // --- MODIFICATION: Show original message in prompt ---
+                const replyText = prompt(`الرد على:\n"${text}"`);
+                
                 if (replyText && replyText.trim() !== '') {
                     const messageId = container.dataset.messageId;
                     const repliesRef = database.ref(`messages/${messageId}/replies`);
@@ -444,7 +428,8 @@
             }
 
             document.getElementById('messages').appendChild(container);
-            container.scrollIntoView({ behavior: 'smooth' });
+            // --- MODIFICATION: Removed automatic scroll ---
+            // container.scrollIntoView({ behavior: 'smooth' });
 
             database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
                 addReply(container, snapshot.key, snapshot.val());
@@ -472,7 +457,8 @@
                 `;
 
                 container.appendChild(replyDiv);
-                replyDiv.scrollIntoView({ behavior: 'smooth' });
+                // --- MODIFICATION: Removed automatic scroll ---
+                // replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -497,7 +483,6 @@
         }
 
         function checkEmptyState() {
-            // Check empty state using our specific product query.
             productMessagesQuery.once('value').then(snapshot => {
                 document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
