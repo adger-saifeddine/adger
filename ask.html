@@ -299,27 +299,27 @@
         const database = firebase.database();
         const messagesRef = database.ref('messages');
 
-        // --- START OF CHANGE ---
-        // 1. Get product ID from URL
+        // --- START OF MODIFICATION ---
+        // 1. Get product ID and other parameters from URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('productId');
         const message = urlParams.get('message');
 
-        // If no product ID is provided in the URL, stop execution
+        // 2. If no product ID is found, show an error and stop the script.
         if (!productId) {
-            document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد رقم المنتج.</p>';
-            document.getElementById('field2').style.display = 'none'; // Hide the message input
-            return;
+            document.getElementById('messages').innerHTML = '<p style="text-align: center; color: red; padding: 20px;">خطأ: لم يتم تحديد رقم المنتج في الرابط.</p>';
+            document.getElementById('field2').style.display = 'none'; // Hide input field
+            return; // Stop execution
         }
 
-        // 2. Create a query to filter messages by product ID
+        // 3. Create a Firebase query to filter messages by the current productId
         const productMessagesQuery = messagesRef.orderByChild('productId').equalTo(productId);
-        // --- END OF CHANGE ---
+        // --- END OF MODIFICATION ---
 
         const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        // Use the query instead of the general messagesRef to load initial data
+        // Use the query to load only relevant messages initially
         productMessagesQuery.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '';
@@ -351,8 +351,8 @@
             }
 
             if (messageText) {
-                // --- START OF CHANGE ---
-                // 3. Add productId when pushing a new message
+                // --- START OF MODIFICATION ---
+                // 4. Add the productId to the new message object before sending
                 messagesRef.push({
                     text: messageText,
                     author: username,
@@ -364,11 +364,11 @@
                     textInput.value = '';
                     textInput.focus();
                 }).catch(error => console.error('خطأ في الإرسال:', error));
-                // --- END OF CHANGE ---
+                // --- END OF MODIFICATION ---
             }
         });
 
-        // Use the query to listen for new messages for this product
+        // Use the query to listen for newly added messages for this product ONLY
         productMessagesQuery.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
@@ -376,14 +376,13 @@
             document.getElementById('emptyState').style.display = 'none';
         });
 
-        // Use the query to listen for removed messages for this product
+        // Use the query to listen for removed messages for this product ONLY
         productMessagesQuery.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
             checkEmptyState();
         });
-        
-        // The data passed to this function is already filtered, so no changes needed here.
+
         function createMessageElement(id, {text, author, replies, timestamp, hiddenMessage}) {
             const container = document.createElement('div');
             container.className = 'message-container';
@@ -438,14 +437,12 @@
 
             document.getElementById('messages').appendChild(container);
             container.scrollIntoView({ behavior: 'smooth' });
-            
-            // This part for replies remains the same as it's nested under a specific message
+
             database.ref(`messages/${id}/replies`).on('child_added', snapshot => {
                 addReply(container, snapshot.key, snapshot.val());
             });
         }
-        
-        // No changes needed for the reply function
+
         function addReply(container, replyId, {author, text, timestamp}) {
             if (!container.querySelector(`[data-reply-id="${replyId}"]`)) {
                 const replyDiv = document.createElement('div');
@@ -465,16 +462,15 @@
                         </div>
                     </div>
                 `;
-
+                
                 container.appendChild(replyDiv);
                 replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // No changes needed for the timestamp formatting function
         function formatTimestamp(timestamp) {
             if (!timestamp) return '';
-            const messageDate = new Date(timestamp);
+            const messageDate = new new Date(timestamp);
             const currentDate = new Date();
             if (
                 messageDate.getDate() === currentDate.getDate() &&
@@ -493,13 +489,12 @@
         }
 
         function checkEmptyState() {
-            // Use the query to check if there are messages for this product
+            // Use the query to check if there are messages for this specific product
             productMessagesQuery.once('value').then(snapshot => {
                 document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
         }
-        
-        // This part remains the same
+
         if (message) {
             document.getElementById('hiddenMessageText').textContent = message;
         }
