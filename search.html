@@ -71,6 +71,18 @@
             }
         }
 
+        /* --- START: NEW STYLE FOR FOCUS OVERLAY --- */
+        #focus-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: transparent; /* Invisible */
+            z-index: 9998; /* On top of most things, but below the modal */
+        }
+        /* --- END: NEW STYLE FOR FOCUS OVERLAY --- */
+
         .header-background {
             position: fixed;
             top: 0;
@@ -504,8 +516,6 @@
             }
         }
         
-        /* --- START: IMPROVED IMAGE GRID STYLES --- */
-
         .image-grid {
             display: grid;
             gap: 20px;
@@ -514,8 +524,6 @@
             position: relative;
             overflow: hidden;
             border-top: 2px solid rgba(255, 255, 255, 0.3);
-
-            /* The Improved 3D Animated Background */
             background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #23a6d5);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
@@ -527,12 +535,11 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Floating shapes for 3D effect */
         .image-grid::before,
         .image-grid::after {
             content: '';
             position: absolute;
-            z-index: 0; /* Behind the items */
+            z-index: 0;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             filter: blur(60px);
@@ -570,13 +577,11 @@
             align-items: center;
             padding: 12px;
             position: relative;
-            z-index: 1; /* Keep items above floating shapes */
+            z-index: 1;
             overflow: hidden;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            
-            /* Enhanced Glassmorphism Effect */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -611,10 +616,7 @@
             color: #ffffff;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
         }
-
-        /* --- Responsive Layout for Image Grid --- */
-
-        /* Default (Mobile): 2 columns. This now applies from 0px to 767px */
+        
         .image-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
@@ -624,7 +626,6 @@
         .image-item img { width: 60px; height: 60px; }
         .image-item span { font-size: 14px; margin-right: 10px; max-width: 110px; }
 
-        /* Tablet: 3 columns */
         @media (min-width: 768px) {
             .image-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -635,13 +636,11 @@
             .image-item span { font-size: 16px; }
         }
 
-        /* Large Screens (Desktop): 2 ROWS ONLY */
         @media (min-width: 1024px) {
             .image-grid {
-                /* Unset column-based layout and set row-based layout */
                 grid-template-columns: none;
                 grid-template-rows: repeat(2, 1fr);
-                grid-auto-flow: column; /* This is the key property */
+                grid-auto-flow: column;
                 gap: 20px;
                 padding: 30px;
             }
@@ -649,16 +648,17 @@
             .image-item img { width: 100px; height: 100px; margin-bottom: 0;}
             .image-item span { font-size: 18px; margin-right: 15px; }
         }
-
-        /* --- END: IMPROVED IMAGE GRID STYLES --- */
-
     </style>
 </head>
 <body>
+    <!-- START: NEW HTML ELEMENT FOR FOCUS OVERLAY -->
+    <div id="focus-overlay"></div>
+    <!-- END: NEW HTML ELEMENT FOR FOCUS OVERLAY -->
+
     <div class="header-background"></div>
 
     <button class="back-button" id="back-button">
-        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
         </svg>          
     </button>
@@ -674,7 +674,7 @@
     </div>
 
     <div class="search-container">
-        <!-- The 'autofocus' attribute helps trigger the keyboard on page load -->
+        <!-- Kept 'autofocus' for desktop browsers where it works reliably -->
         <input type="text" id="search-input" placeholder="ابحث هنا" autocomplete="off" autofocus inputmode="search">
         <button class="clear-button" id="clear-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -785,7 +785,7 @@
         const confirmYes = document.getElementById('confirm-yes');
         const confirmNo = document.getElementById('confirm-no');
         
-        let isAllHistoryShown = false; // متغير لتتبع ما إذا تم عرض جميع العناصر
+        let isAllHistoryShown = false;
         
         deleteAllButton.addEventListener('click', () => {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -796,7 +796,7 @@
         
         confirmYes.addEventListener('click', () => {
             localStorage.removeItem('searchHistory');
-            isAllHistoryShown = false; // إعادة تعيين الحالة عند الحذف الكلي
+            isAllHistoryShown = false;
             displaySearchHistory();
             modal.style.display = 'none';
         });
@@ -845,23 +845,23 @@
             return searchTerm === "ابحث هنا";
         }
         
-        searchButton.addEventListener('click', function () {
-            const searchTerm = searchInput.value.trim() || currentSearchText;
+        function performSearchRedirect(searchTerm) {
             if (searchTerm && !isDefaultSearchText(searchTerm)) {
                 saveSearchTerm(searchTerm);
                 saveLastSearchTerm(searchTerm);
                 window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
             }
+        }
+
+        searchButton.addEventListener('click', function () {
+            const searchTerm = searchInput.value.trim() || currentSearchText;
+            performSearchRedirect(searchTerm);
         });
         
         searchInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter') {
                 const searchTerm = searchInput.value.trim();
-                if (searchTerm && !isDefaultSearchText(searchTerm)) {
-                    saveSearchTerm(searchTerm);
-                    saveLastSearchTerm(searchTerm);
-                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
-                }
+                performSearchRedirect(searchTerm);
             }
         });
         
@@ -876,7 +876,7 @@
         });
         
         function saveSearchTerm(term) {
-            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const existingIndex = searchHistory.findIndex(entry => entry.term === term);
         
             if (existingIndex !== -1) {
@@ -908,57 +908,55 @@
             const isMobile = window.matchMedia("(max-width: 1522px)").matches;
             const maxItems = isMobile ? 12 : 22;
         
-            searchHistory.forEach((entry, index) => {
-                if (isAllHistoryShown || index < maxItems || searchHistory.length <= maxItems) {
-                    const searchItem = document.createElement('div');
-                    searchItem.className = 'search-item';
-                    const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
-                    searchItem.innerHTML = 
-                        `<span>${displayTerm}</span>
-                        <small>${entry.date}</small>
-                        <button class="delete-button">✖</button>`;
-        
-                    searchItem.addEventListener('click', function () {
-                        saveSearchTerm(entry.term);
-                        saveLastSearchTerm(entry.term);
-                        window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
-                    });
-        
-                    searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
-                        event.stopPropagation();
-                        searchItem.remove();
-                        removeSearchTermFromHistory(entry.term);
-                    });
-        
-                    searchHistoryGrid.appendChild(searchItem);
-        
-                    if (!isAllHistoryShown && index === maxItems - 1 && searchHistory.length > maxItems) {
-                        const itemWithArrow = document.createElement('div');
-                        itemWithArrow.className = 'search-item-with-arrow';
-                        itemWithArrow.appendChild(searchItem.cloneNode(true));
-        
-                        const arrow = document.createElement('div');
-                        arrow.id = 'show-more-arrow';
-                        arrow.innerHTML = 
-                            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>`;
-        
-                        arrow.addEventListener('click', function (event) {
-                            event.stopPropagation();
-                            isAllHistoryShown = true;
-                            displaySearchHistory();
-                        });
-        
-                        itemWithArrow.appendChild(arrow);
-                        searchHistoryGrid.appendChild(itemWithArrow);
+            let itemsToDisplay = searchHistory;
+            if (!isAllHistoryShown && searchHistory.length > maxItems) {
+                itemsToDisplay = searchHistory.slice(0, maxItems);
+            }
+
+            itemsToDisplay.forEach((entry, index) => {
+                const searchItem = document.createElement('div');
+                searchItem.className = 'search-item';
+                const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
+                searchItem.innerHTML = 
+                    `<span>${displayTerm}</span>
+                    <small>${entry.date}</small>
+                    <button class="delete-button">✖</button>`;
+    
+                searchItem.addEventListener('click', function (e) {
+                    if (e.target.className !== 'delete-button') {
+                        performSearchRedirect(entry.term);
                     }
-                }
+                });
+    
+                searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    removeSearchTermFromHistory(entry.term);
+                });
+    
+                searchHistoryGrid.appendChild(searchItem);
             });
+            
+            if (!isAllHistoryShown && searchHistory.length > maxItems) {
+                const showMoreContainer = document.createElement('div');
+                showMoreContainer.className = 'search-item-with-arrow';
+                
+                const arrow = document.createElement('div');
+                arrow.id = 'show-more-arrow';
+                arrow.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>`;
+                
+                arrow.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    isAllHistoryShown = true;
+                    displaySearchHistory();
+                });
+                
+                showMoreContainer.appendChild(arrow);
+                searchHistoryGrid.appendChild(showMoreContainer);
+            }
         }
         
         function removeSearchTermFromHistory(term) {
-            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const updatedHistory = searchHistory.filter(entry => entry.term !== term);
             localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
             displaySearchHistory();
@@ -977,60 +975,42 @@
             const imageItem = event.target.closest('.image-item');
             if (imageItem) {
                 const searchTerm = imageItem.getAttribute('data-term');
-                if (searchTerm) {
-                    saveSearchTerm(searchTerm);
-                    saveLastSearchTerm(searchTerm);
-                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
-                }
+                performSearchRedirect(searchTerm);
             }
         });
         
-        displaySearchHistory();
-        displayLastSearchTerm();
-        
-        // This Javascript function helps ensure the keyboard appears on load,
-        // supplementing the 'autofocus' HTML attribute.
-        window.addEventListener('load', function () {
-            setTimeout(() => {
+        // --- START: NEW SCRIPT FOR THE FOCUS OVERLAY TRICK ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const focusOverlay = document.getElementById('focus-overlay');
+            const searchInput = document.getElementById('search-input');
+
+            // This function will be called on the first user interaction
+            const handleFirstInteraction = () => {
+                // Focus the search input to bring up the keyboard
                 searchInput.focus();
-                searchInput.click();
-            }, 500);
+                // Hide the overlay so the rest of the page is usable
+                focusOverlay.style.display = 'none';
+                // Remove the event listeners as they are no longer needed
+                focusOverlay.removeEventListener('click', handleFirstInteraction);
+                focusOverlay.removeEventListener('touchstart', handleFirstInteraction);
+            };
+
+            // Listen for the first click or touch on the overlay
+            focusOverlay.addEventListener('click', handleFirstInteraction);
+            focusOverlay.addEventListener('touchstart', handleFirstInteraction);
         });
-        
-        window.addEventListener('resize', function () {
-            displaySearchHistory();
-            displayLastSearchTerm();
-        });
+        // --- END: NEW SCRIPT FOR THE FOCUS OVERLAY TRICK ---
+
+        window.addEventListener('resize', displaySearchHistory);
         
         function redirectToSea(categoryName) {
-            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
+            performSearchRedirect(categoryName);
         }
         
-        function performSearch(searchTerm) {
-            const products = document.querySelectorAll('.product');
-            products.forEach(product => {
-                const productName = product.getAttribute('data-name').toLowerCase();
-                if (productName.includes(searchTerm.toLowerCase())) {
-                    product.classList.remove('hidden');
-                } else {
-                    product.classList.add('hidden');
-                }
-            });
-        }
-        
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchTerm = urlParams.get('search');
-            if (searchTerm) {
-                const searchBox = document.getElementById('search-box');
-                if (searchBox) {
-                    searchBox.value = searchTerm;
-                    performSearch(searchTerm);
-                }
-            }
-            displaySearchHistory();
-        };
-    </script>
+        // Initial setup on page load
+        displaySearchHistory();
+        displayLastSearchTerm();
 
+    </script>
 </body>
 </html>
