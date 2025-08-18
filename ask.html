@@ -255,15 +255,16 @@
         .message-container .message-content[data-author="admin"] {
             background-color: rgba(0, 89, 255, 0.1);
         }
+
     </style>
 </head>
 <body>
     <div style="padding-bottom: 12px; color: #ffffff;">النص الأول</div>
-    
+
     <div id="messages"></div>
     <div id="emptyState">
         <span>📭</span>
-        <p>لا توجد رسائل</p>
+        <p>لا توجد رسائل لهذا المنتج</p>
     </div><br><br>
     <div id="loadingSpinner">
         <div class="spinner"></div>
@@ -280,6 +281,8 @@
         </div>
         <span id="hiddenMessageText">النص المخفي</span>
     </div>
+</body>
+</html>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -295,46 +298,34 @@
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const messagesRef = database.ref('messages'); // Reference for writing new messages
+        const messagesRef = database.ref('messages');
 
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const emptyStateDiv = document.getElementById('emptyState');
-        const commentTextArea = document.getElementById('commentText');
-        const submitBtn = document.getElementById('submitButton');
-        
-        // --- START OF MODIFICATION ---
+        // --- START OF CHANGE ---
+        // Get productId from URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('productId');
-        // --- END OF MODIFICATION ---
-
-        const message = urlParams.get('message');
-        if (message) {
-            document.getElementById('hiddenMessageText').textContent = message;
+        const messageFromUrl = urlParams.get('message');
+        
+        if (messageFromUrl) {
+            document.getElementById('hiddenMessageText').textContent = messageFromUrl;
         }
 
-        document.querySelector('.back-arrow').addEventListener('click', () => {
-            window.history.back();
-        });
-
-        // --- START OF MODIFICATION ---
-        // If no productId is in the URL, stop execution and inform the user.
+        // If no productId is in the URL, stop execution and show a message.
         if (!productId) {
-            emptyStateDiv.style.display = 'block';
-            emptyStateDiv.innerHTML = '<span>🚫</span><p>رقم المنتج غير محدد. لا يمكن عرض الرسائل.</p>';
-            commentTextArea.disabled = true;
-            submitBtn.disabled = true;
-            commentTextArea.placeholder = 'الرجاء الدخول من صفحة المنتج لعرض الأسئلة.';
-            return; // Stop the script here
+            document.getElementById('messages').innerHTML = '<p style="text-align: center; margin-top: 20px;">لم يتم تحديد منتج. يرجى الدخول من خلال رابط المنتج الصحيح.</p>';
+            document.getElementById('field2').style.display = 'none'; // Hide input field
+            return; // Stop the script
         }
 
         // Create a query to filter messages by the current productId
-        const queryRef = messagesRef.orderByChild('productId').equalTo(productId);
-        // --- END OF MODIFICATION ---
+        const queriedMessagesRef = messagesRef.orderByChild('productId').equalTo(productId);
+        // --- END OF CHANGE ---
 
+        const loadingSpinner = document.getElementById('loadingSpinner');
         loadingSpinner.style.display = 'block';
 
-        // Use the filtered query to fetch initial messages
-        queryRef.once('value').then(snapshot => {
+        // --- MODIFIED --- Use the queried reference
+        queriedMessagesRef.once('value').then(snapshot => {
             loadingSpinner.style.display = 'none';
             document.getElementById('messages').innerHTML = '';
 
@@ -342,9 +333,9 @@
                 snapshot.forEach(child => {
                     createMessageElement(child.key, child.val());
                 });
-                emptyStateDiv.style.display = 'none';
+                document.getElementById('emptyState').style.display = 'none';
             } else {
-                emptyStateDiv.style.display = 'block';
+                document.getElementById('emptyState').style.display = 'block';
             }
         }).catch(error => {
             console.error('خطأ في التحميل:', error);
@@ -365,14 +356,14 @@
             }
 
             if (message) {
-                // When pushing a new message, include the productId
+                // --- MODIFIED --- Add productId to the message object
                 messagesRef.push({
                     text: message,
                     author: username,
                     replies: [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP,
                     hiddenMessage: hiddenMessage || '',
-                    productId: productId // <-- Save the product ID with the message
+                    productId: productId // Save the product ID with the message
                 }).then(() => {
                     textInput.value = '';
                     textInput.focus();
@@ -380,16 +371,16 @@
             }
         });
 
-        // Listen for new messages that match the productId query
-        queryRef.on('child_added', snapshot => {
+        // --- MODIFIED --- Use the queried reference for real-time updates
+        queriedMessagesRef.on('child_added', snapshot => {
             if (!document.querySelector(`[data-message-id="${snapshot.key}"]`)) {
                 createMessageElement(snapshot.key, snapshot.val());
             }
-            emptyStateDiv.style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
         });
 
-        // Listen for removed messages that match the productId query
-        queryRef.on('child_removed', snapshot => {
+        // --- MODIFIED --- Use the queried reference for removal updates
+        queriedMessagesRef.on('child_removed', snapshot => {
             const messageElement = document.querySelector(`[data-message-id="${snapshot.key}"]`);
             if (messageElement) messageElement.remove();
             checkEmptyState();
@@ -462,7 +453,7 @@
                 replyDiv.dataset.replyId = replyId;
 
                 const formattedTime = formatTimestamp(timestamp);
-                
+
                 replyDiv.innerHTML = `
                     <div class="reply-main-content">
                         <span class="message-author">${author}</span>
@@ -474,7 +465,7 @@
                         </div>
                     </div>
                 `;
-                
+
                 container.appendChild(replyDiv);
                 replyDiv.scrollIntoView({ behavior: 'smooth' });
             }
@@ -501,11 +492,15 @@
         }
 
         function checkEmptyState() {
-            // Check the state using the filtered query
-            queryRef.once('value').then(snapshot => {
-                emptyStateDiv.style.display = snapshot.exists() ? 'none' : 'block';
+            // --- MODIFIED --- Use the queried reference
+            queriedMessagesRef.once('value').then(snapshot => {
+                document.getElementById('emptyState').style.display = snapshot.exists() ? 'none' : 'block';
             });
         }
+        
+        document.querySelector('.back-arrow').addEventListener('click', () => {
+            window.history.back();
+        });
     });
 </script>
 
