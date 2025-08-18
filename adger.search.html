@@ -836,7 +836,6 @@
           </head>
           <body>
       
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -881,7 +880,7 @@
             }
         }
 
-        /* الشريط الأبيض الثابت أسفل الشريط العلوي */
+        /* --- START: تعديلات على الشريط الأبيض الثابت --- */
         .sub-header {
             position: fixed;
             top: 74px;
@@ -893,9 +892,7 @@
             z-index: 999;
             display: flex;
             align-items: center;
-            /* --- START: التعديل المطلوب --- */
-            padding: 0 20px 0 0; /* تمت إزالة الحشوة اليسرى */
-            /* --- END: التعديل المطلوب --- */
+            padding: 0 20px 0 0; /* تمت إزالة الحشوة اليسرى لإفساح المجال للزر */
             overflow: hidden; /* منع الشريط كله من التمرير */
         }
         @media (max-width: 769px) {
@@ -903,6 +900,7 @@
                 top: 56px;
             }
         }
+        /* --- END: تعديلات على الشريط الأبيض الثابت --- */
 
         /* --- START: تعديلات زر الفلتر ومكان القائمة --- */
         #price-filter-container {
@@ -970,6 +968,7 @@
         }
         /* --- END: تعديلات زر الفلتر ومكان القائمة --- */
 
+
         @media (max-width: 499px) {
             .sub-header nav {
                 gap: 22px;
@@ -996,7 +995,7 @@
             background-color: #000000;
             transition: all 0.3s ease;
         }
-
+        
         /* --- START: Price Filter Modal Styles --- */
         #price-filter-modal {
             position: fixed;
@@ -1184,6 +1183,10 @@
             opacity: 1;
         }
 
+        .image-frame img.white-bg {
+            background-color: #d3d3d3;
+        }
+
         .text-under {
             margin-top: -4px;
             font-size: 14px;
@@ -1229,7 +1232,7 @@
         .add-to-cart:hover {
             background-color: #000000;
         }
-        
+
         @media (max-width: 1268px) {
             .add-to-cart {
                 left: 10px;
@@ -1370,14 +1373,20 @@
         #loading-spinner {
             display: block;
             text-align: center;
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 20px; /* المسافة العلوية مشابهة لرسالة 'لا توجد نتائج' */
+            padding: 20px;    /* المسافة الداخلية للتناسق */
             border-radius: 10px;
+            margin-bottom: 60px;
+        }
+          @media (max-width: 769px) {
+              #loading-spinner{
+                margin-bottom: 1px;
+            }
         }
         .spinner {
             display: inline-block;
             position: relative;
-            width: 60px;
+            width: 60px; /* عرض أصغر لتقليل المسافة بين الدائرتين */
             height: 20px;
         }
         .spinner div {
@@ -1388,18 +1397,24 @@
             animation: dot-flashing 1s infinite linear alternate;
         }
         .spinner div:first-child {
-            background-color: #ff0000;
+            background-color: #ff0000; /* لون الدائرة الأولى: أحمر */
             left: 0;
         }
         .spinner div:last-child {
-            background-color: #0000ff;
+            background-color: #0000ff; /* لون الدائرة الثانية: أزرق */
             right: 0;
-            animation-delay: 0.5s;
+            animation-delay: 0.5s; /* تأخير لتبادل الحركة */
         }
         @keyframes dot-flashing {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5); /* الدائرة تكبر */
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -1412,7 +1427,6 @@
         <!-- START: زر الفلتر الثابت -->
         <div id="price-filter-container">
             <button id="price-filter-btn" title="تصفية حسب السعر">
-                <!-- الأيقونة الجديدة (Sliders) -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="21" x2="4" y2="14"></line>
                     <line x1="4" y1="10" x2="4" y2="3"></line>
@@ -1455,11 +1469,77 @@
                 <div class="underline"></div>
             </nav>
         </div>
-         <!-- END: حاوية القائمة القابلة للتمرير -->
+        <!-- END: حاوية القائمة القابلة للتمرير -->
     </div>
-    
+
+    <!-- نافذة القائمة الجانبية -->
+    <div class="menu-popup" id="menuPopup">
+        <div class="back-arrow" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+        </div>
+        <p onclick="window.location.href='account.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">حسابي</span>
+        </p>
+        <p onclick="window.location.href='about.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">سياسات وأحكام</span>
+        </p>
+        <p onclick="window.location.href='return.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">طلب استرجاع</span>
+        </p>
+        <p onclick="window.location.href='deals.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">صفقة رابحة</span>
+        </p>
+        <p onclick="window.location.href='wholesale.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شراء بالجملة</span>
+        </p>
+        <p onclick="window.location.href='companies.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">شركات عالمية</span>
+        </p>
+        <p onclick="window.location.href='categories.html'" 
+           style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
+           onmouseover="this.style.color='#888'" 
+           onmouseout="this.style.color='black'"
+           ontouchstart="this.style.color='#888'" 
+           ontouchend="setTimeout(() => this.style.color='black', 300)">
+            <span style="pointer-events: none;">الفئات</span>
+        </p>
+    </div>
+
     <div id="gallery" class="gallery"></div>
 
+    <!-- النقطتان الدائريتان للتحميل -->
     <div id="loading-spinner">
         <div class="spinner">
             <div></div>
@@ -1467,6 +1547,7 @@
         </div>
     </div>
 
+    <!-- رسالة "لا توجد نتائج" -->
     <div id="no-results-message" style="text-align: center; margin-top: 20px; padding: 20px; border-radius: 10px;">
         <div style="display: inline-block; background-color: #f0f0f0; border-radius: 7%; padding: 10px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1480,7 +1561,8 @@
             لا توجد نتائج لـ "<span id="search-term-display"></span>"
         </p>
     </div>
-
+    
+    <!-- START: Price Filter Modal HTML -->
     <div id="price-filter-modal" class="modal-hidden">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -1499,6 +1581,7 @@
             <button id="apply-price-filter">عرض النتائج</button>
         </div>
     </div>
+    <!-- END: Price Filter Modal HTML -->
 
 <script>
     // --- متغيرات عالمية لتتبع المنتجات
@@ -1507,7 +1590,7 @@
     let loadedItems = 0;
     let productsBeforePriceFilter = []; // للاحتفاظ بنتائج البحث قبل فلترة السعر
 
-    // --- Price Filter Logic ---
+    // --- START: Price Filter Logic ---
     const priceFilterModal = document.getElementById('price-filter-modal');
     const priceFilterBtn = document.getElementById('price-filter-btn');
     const closeModalBtn = document.querySelector('.modal-close-btn');
@@ -1541,6 +1624,7 @@
                 return;
             }
 
+            // الفلترة بناءً على النتائج المحفوظة قبل فلتر السعر
             filteredProducts = productsBeforePriceFilter.filter(product => {
                 const productPrice = parseFloat(product.price);
                 return productPrice >= minPrice && productPrice <= maxPrice;
@@ -1548,6 +1632,7 @@
 
             gallery.innerHTML = '';
             loadedItems = 0;
+            
             removeLoadingAnimation();
 
             if (filteredProducts.length > 0) {
@@ -1565,6 +1650,7 @@
             window.scrollTo(0, 0);
         });
     }
+    // --- END: Price Filter Logic ---
 
     // --- قاموس البحث المتقدم ---
     let keywordMap = {
@@ -1576,7 +1662,7 @@
         'فن': ['فن', 'فني', 'لوحة', 'لوحات', 'رسم'],
         'أدوات رياضية': ['أدوات رياضية', 'رياضة', 'رياضي', 'رياضية'],
         'حقائب': ['حقائب', 'حقيبة', 'شنطة', 'شنط'],
-        'sاعات': ['ساعات', 'ساعة'],
+        'ساعات': ['ساعات', 'ساعة'],
         'البيت': ['البيت', 'منزل', 'منزلي'],
         'اختراعات': ['اختراعات', 'اختراع'],
         'أحذية': ['أحذية', 'حذاء', 'شوز'],
@@ -1591,15 +1677,239 @@
         'مدرسة': ['مدرسة', 'مدرسه']
     };
 
+    // دالة لإضافة كلمات مفتاحية جديدة إلى القاموس
+    function addKeywords(category, keywords) {
+        if (!keywordMap[category]) {
+            keywordMap[category] = [];
+        }
+        keywordMap[category] = [...new Set([...keywordMap[category], ...keywords])];
+        localStorage.setItem('keywordMap', JSON.stringify(keywordMap));
+    }
+
+    // تحميل القاموس من localStorage إن وجد
+    function loadKeywordMap() {
+        const savedMap = localStorage.getItem('keywordMap');
+        if (savedMap) {
+            keywordMap = JSON.parse(savedMap);
+        }
+    }
+
+    // دالة لتطبيع النصوص العربية
     function normalizeArabic(text) {
         if (!text) return '';
         return text
             .toLowerCase()
-            .replace(/أ|إ|آ/g, 'ا')
-            .replace(/ى/g, 'ي')
-            .replace(/^ال/, '');
+            .replace(/أ|إ|آ/g, 'ا') // تحويل الألف الممدودة، الألف مع همزة أسفل، والألف مع همزة أعلى إلى ألف عادية
+            .replace(/ى/g, 'ي') // تحويل الألف المقصورة إلى ياء
+            .replace(/^ال/, ''); // إزالة "الـ" من بداية الكلمة
     }
-    
+
+    // استرجاع بيانات المستخدم من localStorage
+    const username = localStorage.getItem('username');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+
+    // دالة للتحقق من النصوص العربية
+    function isArabic(text) {
+        return /[\u0600-\u06FF]/.test(text);
+    }
+
+    // دالة لتقصير اسم المستخدم
+    function truncateUsername(name) {
+        if (!name) return '';
+        const maxLength = isArabic(name) ? 12 : 7;
+        if (window.innerWidth < 966 && name.length > maxLength) {
+            return isArabic(name) ? name.substring(0, maxLength) + '..' : '..' + name.substring(0, maxLength);
+        }
+        return name;
+    }
+
+    // دالة لتحديث رسالة الترحيب
+    function updateWelcomeMessage() {
+        const username = localStorage.getItem('username');
+        
+        if (!welcomeMessage) return;
+        
+        if (username) {
+            const displayName = truncateUsername(username);
+            welcomeMessage.innerHTML = `أهلاً، <span id="usernameDisplay" style="cursor: pointer;">${displayName}</span>`;
+            
+            window.addEventListener('resize', () => {
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = truncateUsername(username);
+                }
+            });
+        } else {
+            welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+        }
+    }
+
+    // تهيئة أولية لرسالة الترحيب
+    if (username) {
+        if (usernameDisplay) {
+            usernameDisplay.textContent = truncateUsername(username);
+        }
+        window.addEventListener('resize', () => {
+            if (usernameDisplay) {
+                usernameDisplay.textContent = truncateUsername(username);
+            }
+        });
+    } else if (welcomeMessage) {
+        welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
+    }
+
+    // حل تحديث الاسم عند العودة
+    window.addEventListener('focus', updateWelcomeMessage);
+    window.addEventListener('pageshow', updateWelcomeMessage);
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'username') {
+            updateWelcomeMessage();
+        }
+    });
+
+    // حل احتياطي: التحقق كل ثانية
+    setInterval(() => {
+        const currentUser = localStorage.getItem('username');
+        const displayedUser = document.getElementById('usernameDisplay')?.textContent || '';
+        
+        if (truncateUsername(currentUser) !== displayedUser) {
+            updateWelcomeMessage();
+        }
+    }, 1000);
+
+    // تهيئة العربة
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartCount = cart.length;
+
+    // دالة لتحديث عدد العناصر في العربة
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCountElement = document.querySelector('.cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = cart.length;
+        }
+    }
+
+    // دالة لإضافة المنتج إلى العربة
+    function addToCart(element) {
+        event.stopPropagation();
+        event.preventDefault();
+        const productContainer = element.closest('.image-container');
+        const product = {
+            id: productContainer.querySelector('img').src,
+            image: productContainer.querySelector('img').src,
+            name: productContainer.querySelector('h1').textContent,
+            sold: productContainer.querySelector('h2').textContent,
+            price: productContainer.querySelector('.number').textContent,
+            discount: productContainer.querySelector('h3').textContent,
+            link: productContainer.querySelector('a').href
+        };
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (!existingProduct) {
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        return false;
+    }
+
+    // التنقل إلى صفحة العربة
+    function navigateToCart() {
+        window.location.href = 'cart.html';
+    }
+
+    // الاستماع إلى تغييرات localStorage
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'cart') {
+            updateCartCount();
+        } else if (event.key === 'username') {
+            updateWelcomeMessage();
+        }
+    });
+
+    // الاستماع إلى الرسائل من صفحة الحساب
+    window.addEventListener('message', function(event) {
+        if (event.data.key === 'username') {
+            localStorage.setItem('username', event.data.value);
+            updateWelcomeMessage();
+        }
+    });
+
+    // تحديث العرض عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+        updateWelcomeMessage();
+        loadKeywordMap(); // تحميل القاموس عند بدء التشغيل
+    });
+
+    // ربط حدث النقر على أيقونة العربة
+    if (document.querySelector('.cart-icon')) {
+        document.querySelector('.cart-icon').addEventListener('click', navigateToCart);
+    }
+
+    // دالة لتحريك الخط عند النقر على عناصر القائمة
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => window.scrollTo(0, 0));
+    });
+
+    // دالة لإظهار أو إخفاء القائمة الجانبية
+    function toggleMenu() {
+        const menuPopup = document.getElementById('menuPopup');
+        if (menuPopup.classList.contains('active')) {
+            menuPopup.classList.remove('active');
+            menuPopup.classList.add('closing');
+            setTimeout(() => {
+                menuPopup.classList.remove('closing');
+                menuPopup.style.display = 'none';
+            }, 300);
+        } else {
+            menuPopup.style.display = 'block';
+            setTimeout(() => menuPopup.classList.add('active'), 10);
+        }
+    }
+
+    // متغيرات ودوال لتتبع السحب
+    let startX = 0, currentX = 0, isDragging = false;
+    const menuPopup = document.getElementById('menuPopup');
+
+    function startDrag(event) {
+        if (menuPopup.classList.contains('active') && menuPopup.contains(event.target)) {
+            startX = event.touches[0].clientX;
+            isDragging = true;
+        }
+    }
+
+    function drag(event) {
+        if (!isDragging) return;
+        currentX = event.touches[0].clientX;
+        if (currentX - startX < -50) {
+            toggleMenu();
+            isDragging = false;
+        }
+    }
+
+    function endDrag() {
+        isDragging = false;
+    }
+
+    function handleClickOutside(event) {
+        if (menuPopup.classList.contains('active') && !menuPopup.contains(event.target)) toggleMenu();
+    }
+
+    document.addEventListener('touchstart', startDrag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', endDrag);
+    document.addEventListener('click', handleClickOutside);
+    if(menuPopup){
+        menuPopup.addEventListener('touchmove', (event) => {
+            if (menuPopup.classList.contains('active')) event.preventDefault();
+        }, { passive: false });
+    }
+
     function showLoadingAnimation() {
         const loadingSpinner = document.getElementById('loading-spinner');
         if (loadingSpinner) {
@@ -1613,12 +1923,19 @@
             loadingSpinner.style.display = 'none';
         }
     }
-    
+
+    // دالة لجلب وتصفية المنتجات مع التمييز بين الكلمات
     function fetchAndFilterProducts(searchTerm) {
         const gallery = document.getElementById('gallery');
         const noResultsMessage = document.getElementById('no-results-message');
         const searchTermDisplay = document.getElementById('search-term-display');
+        const searchBox = document.getElementById('search-box');
+
+        if (searchBox) {
+            searchBox.value = searchTerm;
+        }
         
+        // إعادة تعيين حقول فلتر السعر عند كل بحث جديد
         if (minPriceInput) minPriceInput.value = '';
         if (maxPriceInput) maxPriceInput.value = '';
 
@@ -1627,40 +1944,64 @@
         showLoadingAnimation();
 
         fetch('products.json')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) { throw new Error('Network response was not ok: ' + response.statusText); }
+                return response.json();
+            })
             .then(products => {
-                let tempFiltered = [];
-                const searchLower = normalizeArabic(searchTerm).trim();
-
-                if (!searchLower || searchTerm === 'الكل') {
-                    tempFiltered = products;
-                } else {
-                    let searchKeywords = [searchLower];
-                    for (const category in keywordMap) {
-                        if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
-                            searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
-                        }
-                    }
+                let tempFiltered;
+                const priceMatch = searchTerm.match(/أقل من (\d+)/);
+                if (priceMatch) {
+                    const maxPrice = parseInt(priceMatch[1]);
+                    let minPrice = 0;
+                    const priceRanges = [
+                        {max: 99, min: 0}, {max: 200, min: 100}, {max: 350, min: 201},
+                        {max: 500, min: 351}, {max: 750, min: 501}, {max: 1000, min: 751},
+                        {max: 1500, min: 1001}, {max: 2000, min: 1501}, {max: 3000, min: 2001},
+                        {max: 5000, min: 3001}, {max: 7500, min: 5001}, {max: 10000, min: 7501},
+                        {max: 15000, min: 10001}, {max: 20000, min: 15001}, {max: 30000, min: 20001},
+                        {max: 50000, min: 30001}, {max: 75000, min: 50001}, {max: 100000, min: 75001}
+                    ];
+                    const foundRange = priceRanges.find(range => maxPrice <= range.max);
+                    minPrice = foundRange ? foundRange.min : 0;
                     tempFiltered = products.filter(product => {
-                        const fieldsToSearch = [
-                            normalizeArabic(product.name) || '',
-                            normalizeArabic(product.dataName) || '',
-                            normalizeArabic(product.sold) || ''
-                        ];
-                        return searchKeywords.some(keyword => {
-                            return fieldsToSearch.some(field => {
-                                const words = field.split(/\s+/);
-                                return words.includes(keyword) || field.includes(keyword);
+                        const productPrice = parseInt(product.price);
+                        return productPrice >= minPrice && productPrice <= maxPrice;
+                    });
+                } else {
+                    const searchLower = normalizeArabic(searchTerm).trim();
+                    if (!searchLower || searchTerm === 'الكل') {
+                        tempFiltered = products;
+                    } else {
+                        let searchKeywords = [searchLower];
+                        for (const category in keywordMap) {
+                            if (keywordMap[category].some(keyword => normalizeArabic(keyword) === searchLower)) {
+                                searchKeywords = [...new Set([...searchKeywords, ...keywordMap[category].map(normalizeArabic)])];
+                            }
+                        }
+                        tempFiltered = products.filter(product => {
+                            const fieldsToSearch = [
+                                normalizeArabic(product.name) || '',
+                                normalizeArabic(product.dataName) || '',
+                                normalizeArabic(product.sold) || ''
+                            ];
+                            return searchKeywords.some(keyword => {
+                                return fieldsToSearch.some(field => {
+                                    const words = field.split(/\s+/);
+                                    return words.includes(keyword) || field.includes(keyword);
+                                });
                             });
                         });
-                    });
+                    }
                 }
 
                 shuffleArray(tempFiltered);
+                
+                // حفظ النتائج قبل تطبيق فلتر السعر
                 productsBeforePriceFilter = [...tempFiltered];
                 filteredProducts = [...tempFiltered];
-                
                 loadedItems = 0;
+                
                 removeLoadingAnimation();
 
                 if (filteredProducts.length > 0) {
@@ -1680,6 +2021,7 @@
             });
     }
 
+    // دالة لتحميل المنتجات
     function loadProducts(startIndex, count) {
         const gallery = document.getElementById('gallery');
         const endIndex = Math.min(startIndex + count, filteredProducts.length);
@@ -1687,6 +2029,7 @@
         for (let i = startIndex; i < endIndex; i++) {
             const product = filteredProducts[i];
             const priceStr = product.price.toString();
+
             const productDiv = document.createElement('div');
             productDiv.className = 'image-container product';
             productDiv.setAttribute('data-name', product.dataName || product.name);
@@ -1724,20 +2067,24 @@
         startRotatingText(".rotating-text1212:not(.rotating)");
     }
 
+    // مراقب التحميل الكسول
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
                 img.src = img.dataset.src;
-                img.onload = () => { img.classList.add("loaded"); };
+                img.onload = () => {
+                    img.classList.add("loaded");
+                };
                 observer.unobserve(img);
             }
         });
     }, { rootMargin: "0px 0px 200px 0px" });
 
+    // دالة لتدوير النصوص
     function startRotatingText(selector) {
         document.querySelectorAll(selector).forEach(element => {
-            if (element.classList.contains('rotating')) return;
+            if(element.classList.contains('rotating')) return;
             element.classList.add('rotating');
             const texts = JSON.parse(element.getAttribute("data-texts"));
             let currentIndex = 0;
@@ -1755,28 +2102,35 @@
         });
     }
 
+    // دالة لقراءة معلمة البحث من URL
     function getSearchTermFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('search') || '';
     }
 
+    // تحميل المنتجات عند التمرير
     document.addEventListener('scroll', function () {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && loadedItems < filteredProducts.length) {
             loadProducts(loadedItems, itemsPerLoad);
         }
     });
 
+    // دالة لتحريك الخط وتنفيذ البحث
     function selectItem(item, element) {
-        window.scrollTo(0, 0);
-        fetchAndFilterProducts(item === 'الكل' ? '' : item);
+        const searchTerm = item === 'الكل' ? '' : item;
+        fetchAndFilterProducts(searchTerm);
+
         const allItems = document.querySelectorAll('.sub-header nav a');
         allItems.forEach(i => i.classList.remove('active'));
         element.classList.add('active');
+
         const underline = document.querySelector('.underline');
         const itemRect = element.getBoundingClientRect();
         const navRect = element.closest('nav').getBoundingClientRect();
+
         underline.style.width = `${itemRect.width}px`;
         underline.style.left = `${itemRect.left - navRect.left}px`;
+
         element.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
@@ -1784,6 +2138,7 @@
         });
     }
 
+    // دالة لخلط مصفوفة عشوائيًا
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -1791,19 +2146,44 @@
         }
     }
 
+    // دالة لتحديث موضع الخط السفلي عند تغيير حجم الشاشة
+    function updateUnderlinePosition() {
+        const activeItem = document.querySelector('.sub-header nav a.active');
+        const underline = document.querySelector('.underline');
+        if (activeItem && underline) {
+            const itemRect = activeItem.getBoundingClientRect();
+            const navRect = activeItem.closest('nav').getBoundingClientRect();
+
+            // إيقاف الانتقال مؤقتًا لتجنب الحركة الغريبة أثناء تغيير الحجم
+            underline.style.transition = 'none';
+            underline.style.width = `${itemRect.width}px`;
+            underline.style.left = `${itemRect.left - navRect.left}px`;
+
+            // فرض إعادة حساب الأنماط ثم إعادة تفعيل الانتقال للنقرات التالية
+            underline.offsetHeight; 
+            underline.style.transition = 'all 0.3s ease';
+        }
+    }
+
+    // إضافة مستمع لحدث تغيير حجم النافذة
+    window.addEventListener('resize', updateUnderlinePosition);
+
+    // عند تحميل الصفحة
     window.onload = function () {
         const defaultItem = document.querySelector('.sub-header nav a');
-        if (defaultItem) {
-            const underline = document.querySelector('.underline');
+        const underline = document.querySelector('.underline');
+        if (defaultItem && underline) {
             const itemRect = defaultItem.getBoundingClientRect();
             const navRect = defaultItem.closest('nav').getBoundingClientRect();
             defaultItem.classList.add('active');
             underline.style.width = `${itemRect.width}px`;
             underline.style.left = `${itemRect.left - navRect.left}px`;
         }
+
         const searchTerm = getSearchTermFromURL();
         fetchAndFilterProducts(searchTerm || 'الكل');
     };
+
 </script>
 </body>
 </html>
