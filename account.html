@@ -40,6 +40,8 @@
     </script>
 </head>
 <body>
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -227,16 +229,22 @@
             text-decoration: underline;
         }
 
+@media (max-width: 768px) { /* الهواتف والأجهزة الصغيرة */
+  .modal-content, 
+  .custom-alert-content { 
+    border-radius: 15px; 
+    background-color: #fff; 
+    padding: 25px; 
+    text-align: center; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    width: 340px;       /* << التغيير الأول: تحديد عرض ثابت */
+    max-width: 90%;     /* << التغيير الثاني: ضمان عدم تجاوز الشاشة */
+  }
+}
+
+
         #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
-        .modal-content, .custom-alert-content { 
-            border-radius: 15px; 
-            background-color: #fff; 
-            padding: 25px; 
-            text-align: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            width: 340px; 
-            max-width: 90%; 
-        }
+        .modal-content, .custom-alert-content { border-radius: 15px; background-color: #fff; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; }
         
         /* --- Buttons in Profile --- */
         .info-btn { background-color: var(--info-color) !important; color: white !important; margin-top: 10px; }
@@ -782,6 +790,7 @@
 
 </body>
 </html>
+
 
 
 
