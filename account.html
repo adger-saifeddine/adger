@@ -41,7 +41,6 @@
 </head>
 <body>
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -70,6 +69,10 @@
             margin: 0;
             font-family: 'Cairo', Arial, sans-serif;
             background: var(--background-gradient);
+        }
+
+        body.modal-open {
+            overflow: hidden;
         }
 
         .main-content-wrapper {
@@ -197,9 +200,20 @@
             border-bottom: 2px solid var(--primary-color);
         }
 
-        @media (max-width: 768px) {
+   #myInfoModal {
+                align-items: flex-start;
+                padding-top: 180px; /* تم زيادة القيمة لجعل المسافة أكبر */
+            }
+
+        @media (max-width: 550px) {
             #registerContainer { width: 95%; padding: 25px; }
             .form-group { flex-basis: 100%; }
+
+            /* --- التعديل هنا: زيادة المسافة أعلى نافذة المعلومات الشخصية في الهواتف --- */
+            #myInfoModal {
+                align-items: flex-start;
+                padding-top: 135px; /* تم زيادة القيمة لجعل المسافة أكبر */
+            }
         }
 
         .profile-picture-container { 
@@ -229,17 +243,6 @@
             text-decoration: underline;
         }
 
-@media (max-width: 768px) { /* الهواتف والأجهزة الصغيرة */
-  .modal-content, 
-  .custom-alert-content { 
-    background-color: #fff; 
-    padding: 25px; 
-    width: 200px;       /* << التغيير الأول: تحديد عرض ثابت */
-    max-width: 50%;     /* << التغيير الثاني: ضمان عدم تجاوز الشاشة */
-  }
-}
-
-
         #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
         .modal-content, .custom-alert-content { border-radius: 15px; background-color: #fff; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; }
         
@@ -250,8 +253,21 @@
         .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
         
         /* --- Logout Modal --- */
-        #logoutModal .logout-prompt { margin-bottom: 20px; color: var(--text-dark); font-family: 'Cairo', sans-serif; }
-        #logoutModal .modal-buttons { display: flex; justify-content: center; gap: 15px; }
+        #logoutModal .modal-content {
+            max-width: 320px;
+            padding: 20px;
+        }
+        #logoutModal .logout-prompt { 
+            margin-bottom: 20px; 
+            color: var(--text-dark); 
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+        }
+        #logoutModal .modal-buttons { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px;
+        }
         #confirmLogout { background-color: var(--danger-color); }
         #confirmLogout:hover { background-color: var(--danger-hover); }
         #cancelLogout { background-color: #e2e8f0; color: var(--text-dark); }
@@ -276,11 +292,11 @@
         .my-info-header h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
         .close-info-modal { font-size: 28px; color: var(--text-light); cursor: pointer; transition: color 0.2s; }
         .close-info-modal:hover { color: var(--text-dark); }
-        .my-info-body { padding: 25px; max-height: 60vh; overflow-y: auto; text-align: center; /* <<< CHANGE HERE */ }
+        .my-info-body { padding: 25px; max-height: 60vh; overflow-y: auto; text-align: center; }
         .info-picture-container { text-align: center; margin-bottom: 25px; position: relative; display: inline-block; }
         .info-picture-container .profile-picture, .info-picture-container .initial-avatar { width: 100px; height: 100px; font-size: 40px; margin: 0 auto; }
         .info-picture-container .camera-icon { width: 30px; height: 30px; bottom: 0; right: 0; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; text-align: right; /* <<< CHANGE HERE */ }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; text-align: right; }
         .info-item { display: flex; flex-direction: column; }
         .info-item label { font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; display: flex; align-items: center; }
         .info-item label .fas { margin-left: 6px; }
@@ -468,6 +484,7 @@
     let newProfileImageForUpdate = null;
     
     function showCustomAlert(message, isSuccess, callback) {
+        document.body.classList.add('modal-open');
         const alertIcon = document.getElementById('alertIcon');
         document.getElementById('customAlertMessage').textContent = message;
         document.getElementById('customAlert').style.display = 'flex';
@@ -477,7 +494,10 @@
             if (callback) callback();
         };
     }
-    function closeCustomAlert() { document.getElementById('customAlert').style.display = 'none'; }
+    function closeCustomAlert() { 
+        document.getElementById('customAlert').style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
     
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('loaderOverlay').style.display = 'none';
@@ -599,14 +619,21 @@
         });
     }
     
-    function logout() { document.getElementById('logoutModal').style.display = 'flex'; }
+    function logout() { 
+        document.getElementById('logoutModal').style.display = 'flex'; 
+        document.body.classList.add('modal-open');
+    }
     document.getElementById('confirmLogout').addEventListener('click', () => {
         localStorage.clear();
         window.location.reload();
     });
-    document.getElementById('cancelLogout').addEventListener('click', () => { document.getElementById('logoutModal').style.display = 'none'; });
+    document.getElementById('cancelLogout').addEventListener('click', () => { 
+        document.getElementById('logoutModal').style.display = 'none'; 
+        document.body.classList.remove('modal-open');
+    });
     
     function showPurchases() {
+        document.body.classList.add('modal-open');
         const modal = document.getElementById('purchasesModal');
         const purchasesList = document.getElementById('purchasesList');
         purchasesList.innerHTML = '<p class="loading-text">جاري التحميل...</p>';
@@ -636,6 +663,7 @@
     }
     function closePurchasesModal() {
         document.getElementById('purchasesModal').style.display = 'none';
+        document.body.classList.remove('modal-open');
     }
 
     // --- My Info Modal Functions ---
@@ -664,11 +692,13 @@
     function showMyInfo() {
         populateInfoModal();
         document.getElementById('myInfoModal').style.display = 'flex';
+        document.body.classList.add('modal-open');
     }
 
     function closeMyInfoModal() {
         cancelInfoEditing(); // Reset to read-only state
         document.getElementById('myInfoModal').style.display = 'none';
+        document.body.classList.remove('modal-open');
     }
 
     function enableInfoEditing() {
@@ -787,9 +817,6 @@
 
 </body>
 </html>
-
-
-
 
 
 
