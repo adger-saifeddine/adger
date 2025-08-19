@@ -75,7 +75,7 @@
             position: relative;
         }
         
-        /* --- START: MODIFICATIONS FOR SMOOTH SLIDER --- */
+        /* --- START: STYLES FOR SMOOTH SLIDER --- */
         .main-media {
             margin-left: 20px;
             position: relative;
@@ -89,15 +89,17 @@
         .media-slider {
             display: flex;
             height: 100%;
-            /* الانتقال السلس هو مفتاح التأثير المطلوب */
             transition: transform 0.4s ease-in-out; 
         }
 
         .media-item {
             width: 100%;
             height: 100%;
-            flex-shrink: 0; /* يمنع العناصر من التقلص */
+            flex-shrink: 0;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .media-item img, .media-item video {
@@ -117,10 +119,8 @@
         .media-item video:fullscreen {
             border: none;
         }
-        /* --- END: MODIFICATIONS FOR SMOOTH SLIDER --- */
+        /* --- END: STYLES FOR SMOOTH SLIDER --- */
 
-
-        /* الصورة الرمادية البديلة أثناء التحميل */
         .placeholder-image {
             width: 100%;
             height: 100%;
@@ -128,7 +128,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 10; /* لتظهر فوق كل شيء أثناء التحميل */
+            z-index: 10;
         }
 
         .thumbnails {
@@ -159,7 +159,7 @@
         }
 
         .thumbnail.loading {
-            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+            background-color: #fafafa;
         }
         
         .thumbnail img, .thumbnail video {
@@ -224,7 +224,7 @@
             width: 40px;
             height: 40px;
             cursor: pointer;
-            display: flex;
+            display: none; /* Hidden by default, shown by JS */
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -237,7 +237,6 @@
 
         .share-button.top {
             top: 10px;
-            display: none;
         }
 
         .share-button svg {
@@ -257,12 +256,12 @@
             font-size: 13px;
             direction: rtl;
             cursor: pointer;
-            display: none; /* مخفية افتراضيًا */
+            display: none;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             z-index: 5;
-            -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق عند اللمس */
+            -webkit-tap-highlight-color: transparent;
         }
         
         .arrow {
@@ -327,8 +326,7 @@
                 max-height: none !important;
                 overflow-x: auto !important;
                 overflow-y: hidden !important;
-                padding-left: 0 !important;
-                padding-right: 10px;
+                padding: 0 10px; /* Add padding for spacing */
                 box-sizing: border-box;
                 width: 100% !important;
                 white-space: nowrap !important;
@@ -397,31 +395,22 @@
 
         function goToSlide(index, instant = false) {
             const mediaSlider = document.getElementById('mediaSlider');
-            
-            // --- FIX 1: Prevent sliding out of bounds ---
             if (index < 0 || index >= productMedia.length) {
-                return;
+                return; // Prevent sliding out of bounds
             }
-
             if (!mediaSlider) return;
             
             mediaSlider.querySelectorAll('video').forEach(vid => vid.pause());
-
             currentIndex = index;
             const offset = -currentIndex * 100;
 
-            if (instant) {
-                mediaSlider.style.transition = 'none';
-            }
-
+            if (instant) mediaSlider.style.transition = 'none';
             mediaSlider.style.transform = `translateX(${offset}%)`;
-
             if (instant) {
                 setTimeout(() => {
                     mediaSlider.style.transition = 'transform 0.4s ease-in-out';
                 }, 50);
             }
-
             updateUI();
         }
 
@@ -429,14 +418,11 @@
             document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
                 thumb.classList.toggle('active', i === currentIndex);
             });
-
             const total = productMedia.length;
             document.getElementById('currentMedia').textContent = currentIndex + 1;
             document.getElementById('totalMedia').textContent = total;
-
             updateArrowState(currentIndex + 1, total);
             scrollThumbnailIntoView();
-
             const shareButton = document.getElementById('shareButton');
             const mediaCounter = document.querySelector('.media-counter');
             if (productMedia.length > 0) {
@@ -452,28 +438,20 @@
             for (let i = 0; i < count; i++) {
                 const thumbnail = document.createElement('div');
                 thumbnail.classList.add('thumbnail', 'loading');
-                if (i === 0) thumbnail.classList.add('active');
                 thumbnailsContainer.appendChild(thumbnail);
             }
-            document.getElementById('totalMedia').textContent = count;
-            document.getElementById('currentMedia').textContent = '1';
         }
 
         function scrollThumbnailIntoView() {
             const activeThumbnail = document.querySelector('.thumbnail.active');
             if (activeThumbnail) {
-                activeThumbnail.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
+                activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             createPlaceholderThumbnails();
             const placeholderImage = document.querySelector('.placeholder-image');
-            
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
 
@@ -489,7 +467,7 @@
                     })
                     .then(products => {
                         const product = products.find(p => p.id === productId);
-                        if (!product || !product.media) {
+                        if (!product || !product.media || product.media.length === 0) {
                             console.error('المنتج أو الوسائط غير موجودة');
                             placeholderImage.style.display = 'none';
                             return;
@@ -498,45 +476,50 @@
                         productMedia = product.media;
                         const thumbnailsContainer = document.getElementById('thumbnailsContainer');
                         const mediaSlider = document.getElementById('mediaSlider');
-                        thumbnailsContainer.innerHTML = '';
+                        thumbnailsContainer.innerHTML = ''; // Clear placeholder thumbnails
                         
                         productMedia.forEach((mediaItem, index) => {
+                            // --- THIS IS THE CORRECTED LOGIC ---
+                            // 1. Create the main media item for the slider
                             const mediaItemDiv = document.createElement('div');
                             mediaItemDiv.className = 'media-item';
 
+                            // 2. Create the thumbnail
                             const thumbnail = document.createElement('div');
                             thumbnail.classList.add('thumbnail', 'loading');
-                            if (index === 0) thumbnail.classList.add('active');
 
                             if (mediaItem.type === 'video') {
+                                // Create video for the main slider
                                 const video = document.createElement('video');
                                 video.src = mediaItem.src;
                                 video.controls = true;
                                 mediaItemDiv.appendChild(video);
 
+                                // Create video for the thumbnail
                                 const thumbVideo = document.createElement('video');
-                                thumbVideo.src = mediaItem.src + '#t=0.1';
+                                thumbVideo.src = mediaItem.src + '#t=0.1'; // Get a frame for the thumbnail
                                 const playIcon = document.createElement('div');
                                 playIcon.classList.add('play-icon');
                                 playIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
                                 thumbnail.appendChild(thumbVideo);
                                 thumbnail.appendChild(playIcon);
                                 thumbVideo.onloadedmetadata = () => thumbnail.classList.remove('loading');
-                            } else {
+                            } else { // It's an image
+                                // Create image for the main slider
                                 const img = document.createElement('img');
                                 img.src = mediaItem.src;
-                                img.alt = 'صورة';
+                                img.alt = `صورة المنتج ${index + 1}`;
                                 mediaItemDiv.appendChild(img);
                                 
+                                // Hide placeholder ONLY after the very first image has loaded
                                 if (index === 0) {
-                                    img.onload = () => {
-                                        placeholderImage.style.display = 'none';
-                                    };
+                                    img.onload = () => placeholderImage.style.display = 'none';
                                 }
 
+                                // Create image for the thumbnail
                                 const thumbImg = document.createElement('img');
                                 thumbImg.src = mediaItem.src;
-                                thumbImg.alt = 'صورة مصغرة';
+                                thumbImg.alt = `صورة مصغرة ${index + 1}`;
                                 thumbnail.appendChild(thumbImg);
                                 thumbImg.onload = () => thumbnail.classList.remove('loading');
                             }
@@ -549,25 +532,22 @@
                             });
                         });
 
-                        updateUI();
+                        updateUI(); // Set initial state (active thumbnail, counter, etc.)
 
                         const mainMediaContainer = document.querySelector('.main-media');
                         const hammer = new Hammer(mainMediaContainer);
                         
-                        // --- FIX 2: Correct swipe logic for RTL ---
-                        // Swipe from right to left (next item in RTL)
-                        hammer.on('swipeleft', function() {
+                        hammer.on('swipeleft', () => { // Swipe right-to-left -> Next
                             if (!isSwiping) {
                                 isSwiping = true;
-                                nextMedia(); // Corrected from prevMedia
+                                nextMedia();
                                 setTimeout(() => { isSwiping = false; }, 400);
                             }
                         });
-                        // Swipe from left to right (previous item in RTL)
-                        hammer.on('swiperight', function() {
+                        hammer.on('swiperight', () => { // Swipe left-to-right -> Previous
                             if (!isSwiping) {
                                 isSwiping = true;
-                                prevMedia(); // Corrected from nextMedia
+                                prevMedia();
                                 setTimeout(() => { isSwiping = false; }, 400);
                             }
                         });
@@ -592,10 +572,8 @@
 
         function sharePage() {
             if (navigator.share) {
-                navigator.share({
-                    title: document.title,
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing:', err));
+                navigator.share({ title: document.title, url: window.location.href })
+                    .catch(err => console.log('Error sharing:', err));
             } else {
                 console.log('Web Share API not supported');
             }
@@ -604,7 +582,6 @@
         function updateArrowState(currentNum, total) {
             const leftArrow = document.querySelector('.arrow.left');
             const rightArrow = document.querySelector('.arrow.right');
-
             leftArrow.classList.toggle('disabled', currentNum === 1);
             rightArrow.classList.toggle('disabled', currentNum === total);
         }
