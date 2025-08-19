@@ -49,12 +49,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حساب المستخدم</title>
     <style>
+        :root {
+            --primary-color: #667eea; /* A modern purple-blue */
+            --primary-hover: #5a67d8;
+            --secondary-color: #38a169; /* A rich green */
+            --secondary-hover: #2f855a;
+            --text-dark: #2d3748;
+            --text-light: #4A5568;
+            --border-color: #e2e8f0;
+            --background-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            --focus-shadow: rgba(102, 126, 234, 0.25);
+        }
+
         /* --- General Styles --- */
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffffff, #d8eeffd3);
-            position: relative;
+            font-family: 'Cairo', Arial, sans-serif;
+            background: var(--background-gradient);
         }
 
         .main-content-wrapper {
@@ -62,7 +73,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px 0;
+            padding: 40px 20px;
         }
 
         /* --- Account Page Specific Styles --- */
@@ -71,38 +82,157 @@
             src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
             font-display: swap;
         }
+
         .loader-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; z-index: 999; }
-        .loader { width: 50px; height: 50px; border: 5px solid #0051ff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader { width: 50px; height: 50px; border: 5px solid var(--primary-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        body.no-scroll { overflow: hidden; }
-        .login-container { background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 350px; position: relative; }
-        @media (max-width: 499px) { .login-container { width: 300px; } }
-        .login-container h2 { font-family: Cairo, sans-serif; font-size: 17px; margin-bottom: 20px; color: #333; }
-        .login-container input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: Cairo, sans-serif; }
-        .login-container button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px; font-family: Cairo, sans-serif; font-weight: bold;}
-        .login-container button.register-btn { background-color: #28a745; }
-        .profile-picture { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px; object-fit: cover; }
-        .profile-picture-container { position: relative; display: inline-block; margin-bottom: 15px; }
-        .profile-picture-placeholder { width: 100px; height: 100px; border-radius: 50%; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; color: #888; font-size: 40px; cursor: pointer; border: 2px dashed #ccc; }
-        .camera-icon { position: absolute; bottom: 5px; right: 5px; background-color: #007bff; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 2; }
+        .login-container { 
+            background-color: white; 
+            padding: 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); 
+            text-align: center; 
+            width: 400px; 
+            max-width: 95%; 
+            transition: all 0.3s ease-in-out;
+        }
+        #registerContainer { width: 750px; }
+
+        .login-container h2 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 25px; color: var(--text-dark); }
+        
+        .form-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px; 
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1 1 calc(50% - 11px);
+            text-align: right;
+        }
+        .form-group label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .form-group label .fas {
+            margin-left: 8px;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .login-container input { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #loginContainer input {
+            margin-bottom: 20px;
+        }
+        
+        .login-container input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow);
+            outline: none;
+        }
+
+        input[type="tel"] {
+            direction: ltr; 
+            text-align: right;
+        }
+        input[type="tel"]:not(:placeholder-shown) {
+            text-align: left;
+        }
+
+        .login-container button { 
+            width: 100%; 
+            padding: 11px 20px;
+            background-color: var(--primary-color); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-bottom: 10px; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: bold; 
+            font-size: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .login-container button:hover { 
+            background-color: var(--primary-hover); 
+            transform: translateY(-2px);
+        }
+        .login-container button.register-btn { background-color: var(--secondary-color); }
+        .login-container button.register-btn:hover { background-color: var(--secondary-hover); }
+
+        .form-section-title {
+            width: 100%;
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            #registerContainer { width: 95%; padding: 25px; }
+            .form-group { flex-basis: 100%; }
+        }
+
+        .profile-picture-container { 
+            position: relative; 
+            display: inline-block; 
+            margin-bottom: 30px; 
+            margin-top: 10px;
+        }
+        .profile-picture { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .profile-picture-placeholder { width: 120px; height: 120px; border-radius: 50%; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; color: #a0aec0; font-size: 50px; cursor: pointer; border: 2px dashed #cbd5e0; }
+        .camera-icon { position: absolute; bottom: 5px; right: 5px; background-color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 2; border: 2px solid white; }
         .hidden-file-input { display: none; }
-        .logout-button { background-color: #e6e6e63d !important; margin-top: 5px; color: #000 !important; border: 1px solid #000000 !important; }
-        .purchases-btn { background-color: #292929 !important; color: white !important; margin-top: 10px; width: 100%; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-        #usernameDisplay { font-family: Cairo, sans-serif; font-size: 16px; margin-top: -3px; color: #333; }
+
+        .form-switcher-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .form-switcher-text span {
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .form-switcher-text span:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
+        .purchases-btn { background-color: var(--text-dark) !important; color: white !important; margin-top: 10px; }
+        #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
+        .modal-content, .custom-alert-content { border-radius: 15px; }
+        #confirmLogout { background-color: #e53e3e; }
+        #cancelLogout { background-color: #e2e8f0; color: #2d3748; }
+        
         .purchases-modal, .modal, .custom-alert { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
         .purchases-modal-content { background-color: #fff; width: 400px; max-height: 80vh; min-height: 300px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow-y: auto; direction: rtl; }
         .purchases-header { position: sticky; top: 0; background-color: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; z-index: 1; }
         .purchases-header h3 { font-family: Cairo, sans-serif; font-size: 18px; margin: 0; color: #333; }
         .purchases-list { padding: 15px; font-family: Cairo, sans-serif; font-size: 14px; text-align: right; min-height: calc(300px - 60px); }
         .purchase-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-        .purchase-item:last-child, .purchase-item.latest { border-bottom: none; }
-        .modal-content, .custom-alert-content { background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); text-align: center; width: 300px; }
+        .purchase-item:last-child { border-bottom: none; }
         .modal-buttons { margin-top: 20px; }
         .modal-buttons button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-family: Cairo, sans-serif; font-weight: bold;}
-        #confirmLogout { margin-left: 11px; background-color: #ff0000; color: white; }
-        #cancelLogout { background-color: #e4e4e4; color: #333; }
-        .colorful-divider { margin-top: -15px; width: 100%; height: 2.5px; background: repeating-linear-gradient(90deg, rgb(0, 183, 255) 0 15px, white 15px 30px, red 30px 45px, rgb(0, 183, 255) 45px 60px, white 60px 75px, rgb(255, 0, 0) 75px 90px); background-size: 90px 100%; }
         .icon { width: 50px; height: 50px; margin-bottom: 10px; }
         .checkmark-circle, .error-circle { stroke-width: 2; stroke-miterlimit: 10; stroke-dasharray: 166; stroke-dashoffset: 166; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
         .checkmark-check, .error-x { stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
@@ -110,9 +240,8 @@
         .error-circle, .error-x { stroke: #ff0000; }
         @keyframes stroke { 100% { stroke-dashoffset: 0; } }
         #customAlertMessage { font-family: Cairo, sans-serif; font-size: 16px; margin-bottom: 20px; }
-        .custom-alert-content button { padding: 10px 20px; background-color: #00b7ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .initial-avatar { width: 100px; height: 100px; border-radius: 50%; background-color: #007bff; color: white; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; margin: 0 auto 15px auto; }
-        #totalPurchasesPrice { position: fixed; top: 80px; right: 10px; background-color: #fff; padding: 5px 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 10; font-family: Cairo, sans-serif; font-size: 16px; color: #333; display: none; }
+        .custom-alert-content button { padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .initial-avatar { width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 50px; font-weight: bold; margin: 0 auto 15px auto; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -120,8 +249,6 @@
 </head>
 <body>
 
-<!-- Account Page Content -->
-<div id="totalPurchasesPrice">أسعار مشترياتي: <span id="totalPrice">0.00</span> جنيه</div>
 <div class="loader-overlay" id="loaderOverlay"><div class="loader"></div></div>
 
 <div class="main-content-wrapper">
@@ -134,29 +261,60 @@
     </div>
 
     <div class="login-container" id="registerContainer" style="display: none;">
-        <h2>إنشاء حساب</h2>
-        <!-- حقول معلومات الحساب الأساسية -->
-        <input type="text" id="registerUsername" placeholder="اسم المستخدم (للعرض)">
-        <input type="tel" id="registerPhone" placeholder="رقم الهاتف">
-        <input type="password" id="newPassword" placeholder="كلمة المرور">
+        <h2>إنشاء حساب جديد</h2>
         
-        <!-- الحقول الجديدة لمعلومات التوصيل -->
-        <hr style="border: 1px solid #eee; margin: 20px 0;">
-        <h2 style="font-size: 15px; color: #555;">معلومات التوصيل</h2>
-        <input type="email" id="registerEmail" placeholder="الإيميل">
-        <input type="text" id="registerGovernorate" placeholder="المحافظة">
-        <input type="text" id="registerCity" placeholder="المدينة">
-        <input type="text" id="registerStreet" placeholder="اسم الشارع أو الحي">
-        <input type="text" id="registerLandmark" placeholder="أقرب معلم">
-        <hr style="border: 1px solid #eee; margin: 20px 0;">
-
-        <!-- حقل رفع الصورة الشخصية -->
         <div class="profile-picture-container">
-            <div id="profilePicturePlaceholder" class="profile-picture-placeholder"><i class="fas fa-user"></i></div>
+            <div id="profilePicturePlaceholder" class="profile-picture-placeholder"><i class="fas fa-camera-retro"></i></div>
             <div class="camera-icon" onclick="document.getElementById('profileImage').click()"><i class="fas fa-camera"></i></div>
             <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
         </div>
-        <button onclick="register()">إنشاء حساب</button>
+
+        <div class="form-section-title">معلومات الحساب</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="registerUsername"><i class="fas fa-user"></i> اسم المستخدم (9 حروف أو أكثر)</label>
+                <input type="text" id="registerUsername" placeholder="مثال: عبدالله محمد علي">
+            </div>
+            <div class="form-group">
+                <label for="registerPhone"><i class="fas fa-phone"></i> رقم الهاتف</label>
+                <input type="tel" id="registerPhone" placeholder="01xxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label for="newPassword"><i class="fas fa-lock"></i> كلمة المرور</label>
+                <input type="password" id="newPassword" placeholder="اختر كلمة مرور قوية">
+            </div>
+            <div class="form-group">
+                <label for="registerEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                <input type="email" id="registerEmail" placeholder="example@email.com">
+            </div>
+        </div>
+        
+        <div class="form-section-title">معلومات التوصيل</div>
+        <div class="form-grid">
+             <div class="form-group">
+                <label for="registerGovernorate"><i class="fas fa-map-marked-alt"></i> المحافظة</label>
+                <input type="text" id="registerGovernorate" placeholder="مثال: القاهرة">
+            </div>
+             <div class="form-group">
+                <label for="registerCity"><i class="fas fa-city"></i> المدينة</label>
+                <input type="text" id="registerCity" placeholder="مثال: مدينة نصر">
+            </div>
+             <div class="form-group">
+                <label for="registerStreet"><i class="fas fa-road"></i> اسم الشارع أو الحي</label>
+                <input type="text" id="registerStreet" placeholder="مثال: شارع عباس العقاد">
+            </div>
+             <div class="form-group">
+                <label for="registerLandmark"><i class="fas fa-landmark"></i> أقرب معلم مميز</label>
+                <input type="text" id="registerLandmark" placeholder="مثال: بجوار حديقة الطفل">
+            </div>
+        </div>
+        
+        <button onclick="register()">إنشاء الحساب</button>
+
+        <p class="form-switcher-text">
+            لديك حساب بالفعل؟ <span onclick="showLoginForm()">تسجيل الدخول</span>
+        </p>
+
     </div>
 
     <div class="login-container" id="profileContainer" style="display: none;">
@@ -187,9 +345,7 @@
 
     const database = firebase.database();
     let selectedProfileImage = null;
-
-    // --- UI Update Functions ---
-    // ... (The rest of the UI functions remain the same) ...
+    
     function showCustomAlert(message, isSuccess, callback) {
         const alertIcon = document.getElementById('alertIcon');
         document.getElementById('customAlertMessage').textContent = message;
@@ -202,30 +358,24 @@
     }
     function closeCustomAlert() { document.getElementById('customAlert').style.display = 'none'; }
     
-    // --- On Page Load ---
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('loaderOverlay').style.display = 'none';
-        
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn) {
             document.getElementById('profileContainer').style.display = 'block';
             document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('totalPurchasesPrice').style.display = 'block';
             const username = localStorage.getItem('username');
             const profileImage = localStorage.getItem('profileImage');
             document.getElementById('usernameDisplay').textContent = username;
-            
             const profileContainer = document.getElementById('profilePictureDisplayContainer');
             if (profileImage && profileImage !== 'default') {
                 profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
             } else {
                 const initial = username ? username.charAt(0).toUpperCase() : '';
-                profileContainer.innerHTML = `<div class="initial-avatar" style="background-color: ${getRandomColor()}">${initial}</div>`;
+                profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
             }
-
             const phone = localStorage.getItem('phone');
             if(phone) {
-                // Fetch purchases count
                 database.ref('purchases').orderByChild('deliveryInfo/phone').equalTo(phone).once('value', (snapshot) => {
                     const purchasesCount = snapshot.exists() ? snapshot.numChildren() : 0;
                     document.getElementById('purchasesCount').textContent = purchasesCount;
@@ -235,13 +385,11 @@
         } else {
             document.getElementById('loginContainer').style.display = 'block';
             document.getElementById('profileContainer').style.display = 'none';
-            document.getElementById('totalPurchasesPrice').style.display = 'none';
         }
     });
 
-    // --- Account Actions ---
     function getRandomColor() {
-        const colors = ['#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', '#20c997', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c'];
+        const colors = ['#667eea', '#ed64a6', '#38a169', '#d53f8c', '#6f42c1', '#319795', '#dd6b20', '#3182ce'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
     function previewImage(event) {
@@ -250,7 +398,7 @@
             const reader = new FileReader();
             reader.onload = e => {
                 selectedProfileImage = e.target.result;
-                document.getElementById('profilePicturePlaceholder').innerHTML = `<img src="${e.target.result}" alt="صورة المستخدم" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                document.getElementById('profilePicturePlaceholder').innerHTML = `<img src="${e.target.result}" alt="صورة المستخدم" class="profile-picture">`;
             };
             reader.readAsDataURL(file);
         }
@@ -259,14 +407,16 @@
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('registerContainer').style.display = 'block';
     }
+    function showLoginForm() {
+        document.getElementById('registerContainer').style.display = 'none';
+        document.getElementById('loginContainer').style.display = 'block';
+    }
+
     function register() {
-        // Get account info
         const username = document.getElementById('registerUsername').value.trim();
         const phone = document.getElementById('registerPhone').value.trim();
         const password = document.getElementById('newPassword').value;
         const profileImage = selectedProfileImage || 'default';
-
-        // Get delivery info
         const email = document.getElementById('registerEmail').value.trim();
         const governorate = document.getElementById('registerGovernorate').value.trim();
         const city = document.getElementById('registerCity').value.trim();
@@ -276,6 +426,9 @@
         if (!username || !phone || !password || !email || !governorate || !city || !street || !landmark) {
              showCustomAlert('يرجى ملء جميع الحقول!', false); return; 
         }
+        if (username.length < 9) {
+            showCustomAlert('يجب أن يتكون اسم المستخدم من 9 حروف على الأقل.', false); return;
+        }
         if (!phone.startsWith('01') || phone.length !== 11 || !/^\d+$/.test(phone)) { 
             showCustomAlert('يرجى إدخال رقم هاتف مصري صحيح.', false); return; 
         }
@@ -284,34 +437,18 @@
             showCustomAlert('يرجى إدخال بريد إلكتروني صحيح.', false); return;
         }
 
+        // CORRECTED: The path is now correct ('users/' + phone)
         database.ref('users/' + phone).once('value', (snapshot) => {
             if (snapshot.exists()) {
                 showCustomAlert('رقم الهاتف هذا مسجل بالفعل!', false);
             } else {
-                const deliveryInfo = {
-                    name: username,
-                    phone: phone,
-                    email: email,
-                    governorate: governorate,
-                    city: city,
-                    street: street,
-                    landmark: landmark
-                };
-
-                database.ref('users/' + phone).set({
-                    username: username,
-                    password: password,
-                    profileImage: profileImage,
-                    deliveryInfo: deliveryInfo // Save delivery info object
-                });
-                
+                const deliveryInfo = { name: username, phone: phone, email: email, governorate: governorate, city: city, street: street, landmark: landmark };
+                database.ref('users/' + phone).set({ username: username, password: password, profileImage: profileImage, deliveryInfo: deliveryInfo });
                 localStorage.setItem('phone', phone);
                 localStorage.setItem('username', username);
                 localStorage.setItem('profileImage', profileImage);
                 localStorage.setItem('isLoggedIn', true);
-                // Save delivery info to localStorage immediately
                 localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
-
                 showCustomAlert('تم إنشاء الحساب بنجاح!', true, () => {
                     window.location.reload(); 
                 });
@@ -323,7 +460,6 @@
         const phone = document.getElementById('loginPhone').value;
         const password = document.getElementById('password').value;
         if (!phone || !password) { showCustomAlert('يرجى إدخال رقم الهاتف وكلمة المرور!', false); return; }
-
         database.ref('users/' + phone).once('value', (snapshot) => {
             if (snapshot.exists()) {
                 const userData = snapshot.val();
@@ -332,12 +468,9 @@
                     localStorage.setItem('username', userData.username);
                     localStorage.setItem('profileImage', userData.profileImage || 'default');
                     localStorage.setItem('isLoggedIn', true);
-
-                    // IMPORTANT: Save delivery info to localStorage on login
                     if (userData.deliveryInfo) {
                         localStorage.setItem('deliveryInfo', JSON.stringify(userData.deliveryInfo));
                     }
-
                     showCustomAlert('تم تسجيل الدخول بنجاح!', true, () => {
                        window.location.reload();
                     });
@@ -349,6 +482,7 @@
             }
         });
     }
+    
     function logout() { document.getElementById('logoutModal').style.display = 'flex'; }
     document.getElementById('confirmLogout').addEventListener('click', () => {
         localStorage.clear();
@@ -356,7 +490,6 @@
     });
     document.getElementById('cancelLogout').addEventListener('click', () => { document.getElementById('logoutModal').style.display = 'none'; });
     
-    // --- Purchases Modal Logic ---
     function showPurchases() {
         const modal = document.getElementById('purchasesModal');
         const purchasesList = document.getElementById('purchasesList');
@@ -368,26 +501,15 @@
                 purchasesList.innerHTML = '';
                 if (snapshot.exists()) {
                     const purchasesArray = [];
-                    snapshot.forEach(childSnapshot => {
-                        purchasesArray.push(childSnapshot.val());
-                    });
-                    
-                    // Sort by timestamp descending
+                    snapshot.forEach(childSnapshot => { purchasesArray.push(childSnapshot.val()); });
                     purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
-                    
                     purchasesArray.forEach(purchase => {
                         const item = document.createElement('div');
                         item.classList.add('purchase-item');
                         const purchaseDate = new Date(purchase.timestamp).toLocaleString('ar-EG');
-                        item.innerHTML = `
-                            <strong>المنتج:</strong> ${purchase.productName}<br>
-                            <strong>الكمية:</strong> ${purchase.quantity}<br>
-                            <strong>السعر الإجمالي:</strong> ${purchase.totalPrice.toFixed(2)} جنيه<br>
-                            <strong>التاريخ:</strong> ${purchaseDate}
-                        `;
+                        item.innerHTML = `<strong>المنتج:</strong> ${purchase.productName}<br><strong>الكمية:</strong> ${purchase.quantity}<br><strong>السعر الإجمالي:</strong> ${purchase.totalPrice.toFixed(2)} جنيه<br><strong>التاريخ:</strong> ${purchaseDate}`;
                         purchasesList.appendChild(item);
                     });
-
                 } else {
                     purchasesList.innerHTML = '<p>لا توجد مشتريات بعد.</p>';
                 }
