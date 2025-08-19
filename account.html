@@ -40,8 +40,8 @@
     </script>
 </head>
 <body>
-
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -64,263 +64,245 @@
             --focus-shadow: rgba(102, 126, 234, 0.25);
         }
 
-        /* --- General Styles --- */
-        body {
-            margin: 0;
-            font-family: 'Cairo', Arial, sans-serif;
-            background: var(--background-gradient);
-        }
+/* --- General Styles --- */
+    body {
+        margin: 0;
+        font-family: 'Cairo', Arial, sans-serif;
+        background: var(--background-gradient);
+    }
+    
+    body.modal-open {
+        overflow: hidden;
+    }
 
-        body.modal-open {
-            overflow: hidden;
-        }
+    .main-content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
 
-        .main-content-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
+    /* --- Account Page Specific Styles --- */
+    @font-face {
+        font-family: 'Cairo';
+        src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        font-display: swap;
+    }
 
-        /* --- Account Page Specific Styles --- */
-        @font-face {
-            font-family: 'Cairo';
-            src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-            font-display: swap;
-        }
+    .loader-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; z-index: 999; }
+    .loader { width: 50px; height: 50px; border: 5px solid var(--primary-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .login-container { 
+        background-color: white; 
+        padding: 35px; 
+        border-radius: 20px; 
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); 
+        text-align: center; 
+        width: 400px; 
+        max-width: 95%; 
+        transition: all 0.3s ease-in-out;
+        margin-top: -130px;
+    }
 
-        .loader-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; z-index: 999; }
-        .loader { width: 50px; height: 50px; border: 5px solid var(--primary-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .login-container { 
-            background-color: white; 
-            padding: 35px; 
-            border-radius: 20px; 
-            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); 
-            text-align: center; 
-            width: 400px; 
-            max-width: 95%; 
-            transition: all 0.3s ease-in-out;
-            margin-top: -130px;
-        }
-   @media (max-width: 499px) {
-  .login-container { 
-                    margin-top: -195px;
-            }
-        }
+@media (max-width: 499px) {
+.login-container {
+margin-top: -195px;
+}
+}
+#registerContainer { width: 750px; }
 
+    .login-container h2 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 25px; color: var(--text-dark); }
+    
+    .form-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px; 
+        margin-bottom: 20px;
+    }
+    .form-group {
+        flex: 1 1 calc(50% - 11px);
+        text-align: right;
+    }
+    .form-group label {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-light);
+        margin-bottom: 8px;
+    }
+    .form-group label .fas {
+        margin-left: 8px;
+        color: var(--primary-color);
+        font-size: 16px;
+    }
 
-        #registerContainer { width: 750px; }
+    .login-container input { 
+        width: 100%; 
+        padding: 12px 15px; 
+        border: 1px solid var(--border-color); 
+        border-radius: 8px; 
+        box-sizing: border-box; 
+        font-family: 'Cairo', sans-serif;
+        font-size: 15px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #loginContainer input {
+        margin-bottom: 20px;
+    }
+    
+    .login-container input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px var(--focus-shadow);
+        outline: none;
+    }
 
-        .login-container h2 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 25px; color: var(--text-dark); }
-        
-        .form-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 22px; 
-            margin-bottom: 20px;
-        }
-        .form-group {
-            flex: 1 1 calc(50% - 11px);
-            text-align: right;
-        }
-        .form-group label {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-        .form-group label .fas {
-            margin-left: 8px;
-            color: var(--primary-color);
-            font-size: 16px;
-        }
+    input[type="tel"] {
+        direction: ltr; 
+        text-align: right;
+    }
+    input[type="tel"]:not(:placeholder-shown) {
+        text-align: left;
+    }
 
-        .login-container input { 
-            width: 100%; 
-            padding: 12px 15px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            box-sizing: border-box; 
-            font-family: 'Cairo', sans-serif;
-            font-size: 15px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        #loginContainer input {
-            margin-bottom: 20px;
-        }
-        
-        .login-container input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px var(--focus-shadow);
-            outline: none;
-        }
+    .login-container button { 
+        width: 100%; 
+        padding: 11px 20px;
+        background-color: var(--primary-color); 
+        color: white; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        margin-bottom: 10px; 
+        font-family: 'Cairo', sans-serif; 
+        font-weight: bold; 
+        font-size: 15px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .login-container button:hover { 
+        background-color: var(--primary-hover); 
+        transform: translateY(-2px);
+    }
+    .login-container button.register-btn { background-color: var(--secondary-color); }
+    .login-container button.register-btn:hover { background-color: var(--secondary-hover); }
 
-        input[type="tel"] {
-            direction: ltr; 
-            text-align: right;
-        }
-        input[type="tel"]:not(:placeholder-shown) {
-            text-align: left;
-        }
+    .form-section-title {
+        width: 100%;
+        text-align: right;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 25px 0 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary-color);
+    }
 
-        .login-container button { 
-            width: 100%; 
-            padding: 11px 20px;
-            background-color: var(--primary-color); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-bottom: 10px; 
-            font-family: 'Cairo', sans-serif; 
-            font-weight: bold; 
-            font-size: 15px;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .login-container button:hover { 
-            background-color: var(--primary-hover); 
-            transform: translateY(-2px);
-        }
-        .login-container button.register-btn { background-color: var(--secondary-color); }
-        .login-container button.register-btn:hover { background-color: var(--secondary-hover); }
+    @media (max-width: 768px) {
+        #registerContainer { width: 95%; padding: 25px; }
+        .form-group { flex-basis: 100%; }
+    }
 
-        .form-section-title {
-            width: 100%;
-            text-align: right;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin: 25px 0 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-color);
-        }
+    .profile-picture-container { 
+        position: relative; 
+        display: inline-block; 
+        margin-bottom: 30px; 
+        margin-top: 10px;
+    }
+    .profile-picture { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .profile-picture-placeholder { width: 120px; height: 120px; border-radius: 50%; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; color: #a0aec0; font-size: 50px; cursor: pointer; border: 2px dashed #cbd5e0; }
+    .camera-icon { position: absolute; bottom: 5px; right: 5px; background-color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 2; border: 2px solid white; }
+    .hidden-file-input { display: none; }
 
-   #myInfoModal {
-                align-items: flex-start;
-                padding-top: 180px; /* تم زيادة القيمة لجعل المسافة أكبر */
-            }
+    .form-switcher-text {
+        margin-top: 20px;
+        font-size: 14px;
+        color: var(--text-light);
+    }
+    .form-switcher-text span {
+        color: var(--primary-color);
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .form-switcher-text span:hover {
+        color: var(--primary-hover);
+        text-decoration: underline;
+    }
 
-        @media (max-width: 550px) {
-            #registerContainer { width: 95%; padding: 25px; }
-            .form-group { flex-basis: 100%; }
+    #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
+    .modal-content, .custom-alert-content { border-radius: 15px; background-color: #fff; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; }
+    
+    /* --- Buttons in Profile --- */
+    .info-btn { background-color: var(--info-color) !important; color: white !important; margin-top: 10px; }
+    .info-btn:hover { background-color: var(--info-hover) !important; }
+    .purchases-btn { background-color: var(--text-dark) !important; color: white !important; margin-top: 5px; }
+    .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
+    
+    /* --- Logout Modal --- */
+    #logoutModal .logout-prompt { margin-bottom: 20px; color: var(--text-dark); font-family: 'Cairo', sans-serif; }
+    #logoutModal .modal-buttons { display: flex; justify-content: center; gap: 15px; }
+    #confirmLogout { background-color: var(--danger-color); }
+    #confirmLogout:hover { background-color: var(--danger-hover); }
+    #cancelLogout { background-color: #e2e8f0; color: var(--text-dark); }
+    #cancelLogout:hover { background-color: #cbd5e0; }
 
-            /* --- التعديل هنا: زيادة المسافة أعلى نافذة المعلومات الشخصية في الهواتف --- */
-            #myInfoModal {
-                align-items: flex-start;
-                padding-top: 135px; /* تم زيادة القيمة لجعل المسافة أكبر */
-            }
-        }
-
-        .profile-picture-container { 
-            position: relative; 
-            display: inline-block; 
-            margin-bottom: 30px; 
-            margin-top: 10px;
-        }
-        .profile-picture { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .profile-picture-placeholder { width: 120px; height: 120px; border-radius: 50%; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; color: #a0aec0; font-size: 50px; cursor: pointer; border: 2px dashed #cbd5e0; }
-        .camera-icon { position: absolute; bottom: 5px; right: 5px; background-color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 2; border: 2px solid white; }
-        .hidden-file-input { display: none; }
-
-        .form-switcher-text {
-            margin-top: 20px;
-            font-size: 14px;
-            color: var(--text-light);
-        }
-        .form-switcher-text span {
-            color: var(--primary-color);
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .form-switcher-text span:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-
-        #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
-        .modal-content, .custom-alert-content { border-radius: 15px; background-color: #fff; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; }
-        
-        /* --- Buttons in Profile --- */
-        .info-btn { background-color: var(--info-color) !important; color: white !important; margin-top: 10px; }
-        .info-btn:hover { background-color: var(--info-hover) !important; }
-        .purchases-btn { background-color: var(--text-dark) !important; color: white !important; margin-top: 5px; }
-        .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
-        
-        /* --- Logout Modal --- */
+    @media (max-width: 499px) {
         #logoutModal .modal-content {
-            max-width: 320px;
-            padding: 20px;
+            max-width: 300px;
+            width: 90%;
         }
-        #logoutModal .logout-prompt { 
-            margin-bottom: 20px; 
-            color: var(--text-dark); 
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-        }
-        #logoutModal .modal-buttons { 
-            display: flex; 
-            justify-content: center; 
-            gap: 10px;
-        }
-        #confirmLogout { background-color: var(--danger-color); }
-        #confirmLogout:hover { background-color: var(--danger-hover); }
-        #cancelLogout { background-color: #e2e8f0; color: var(--text-dark); }
-        #cancelLogout:hover { background-color: #cbd5e0; }
+    }
 
-        /* --- Modals --- */
-        .modal, .custom-alert, .purchases-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
-        
-        /* --- Purchases Modal --- */
-        .purchases-modal-content { background-color: #fff; width: 400px; max-height: 80vh; min-height: 300px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow-y: auto; direction: rtl; }
-        .purchases-header { position: sticky; top: 0; background-color: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; z-index: 1; }
-        .purchases-header h3 { font-family: Cairo, sans-serif; font-size: 18px; margin: 0; color: #333; }
-        .purchases-header svg { cursor: pointer; }
-        .purchases-list { padding: 15px; font-family: Cairo, sans-serif; font-size: 14px; text-align: right; min-height: calc(300px - 60px); }
-        .purchase-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-        .purchase-item:last-child { border-bottom: none; }
-        .modal-buttons button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-family: Cairo, sans-serif; font-weight: bold; flex-grow: 1;}
+    /* --- Modals --- */
+    .modal, .custom-alert, .purchases-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
+    
+    /* --- Purchases Modal --- */
+    .purchases-modal-content { background-color: #fff; width: 400px; max-height: 80vh; min-height: 300px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow-y: auto; direction: rtl; }
+    .purchases-header { position: sticky; top: 0; background-color: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; z-index: 1; }
+    .purchases-header h3 { font-family: Cairo, sans-serif; font-size: 18px; margin: 0; color: #333; }
+    .purchases-header svg { cursor: pointer; }
+    .purchases-list { padding: 15px; font-family: Cairo, sans-serif; font-size: 14px; text-align: right; min-height: calc(300px - 60px); }
+    .purchase-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
+    .purchase-item:last-child { border-bottom: none; }
+    .modal-buttons button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-family: Cairo, sans-serif; font-weight: bold; flex-grow: 1;}
 
-        /* --- My Info Modal --- */
-        .my-info-modal-content { max-width: 600px; width: 95%; background-color: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 0; text-align: right; overflow: hidden; }
-        .my-info-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #f7fafc; border-bottom: 1px solid var(--border-color); }
-        .my-info-header h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
-        .close-info-modal { font-size: 28px; color: var(--text-light); cursor: pointer; transition: color 0.2s; }
-        .close-info-modal:hover { color: var(--text-dark); }
-        .my-info-body { padding: 25px; max-height: 60vh; overflow-y: auto; text-align: center; }
-        .info-picture-container { text-align: center; margin-bottom: 25px; position: relative; display: inline-block; }
-        .info-picture-container .profile-picture, .info-picture-container .initial-avatar { width: 100px; height: 100px; font-size: 40px; margin: 0 auto; }
-        .info-picture-container .camera-icon { width: 30px; height: 30px; bottom: 0; right: 0; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; text-align: right; }
-        .info-item { display: flex; flex-direction: column; }
-        .info-item label { font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; display: flex; align-items: center; }
-        .info-item label .fas { margin-left: 6px; }
-        .info-item input { background-color: #f8f9fa; border: 1px solid transparent; border-radius: 6px; padding: 10px; font-family: 'Cairo', sans-serif; font-size: 15px; color: var(--text-dark); transition: all 0.2s ease; }
-        .info-item input:read-only { cursor: default; }
-        .info-item input.editable-field { background-color: #fff; border-color: var(--border-color); }
-        .info-item input.editable-field:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--focus-shadow); outline: none; }
-        .my-info-footer { padding: 15px 25px; background-color: #f7fafc; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: flex-end; }
-        .my-info-footer button { width: auto; padding: 8px 25px; margin: 0; }
-        #updateInfoBtn { background-color: var(--secondary-color); }
-        #updateInfoBtn:hover { background-color: var(--secondary-hover); }
-        #cancelEditBtn { background-color: #e2e8f0; color: var(--text-dark); }
-        #cancelEditBtn:hover { background-color: #cbd5e0; }
-        
-        /* --- Alert & Icons --- */
-        .icon { width: 50px; height: 50px; margin-bottom: 10px; }
-        .checkmark-circle, .error-circle { stroke-width: 2; stroke-miterlimit: 10; stroke-dasharray: 166; stroke-dashoffset: 166; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-        .checkmark-check, .error-x { stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
-        .checkmark-circle, .checkmark-check { stroke: #4CAF50; }
-        .error-circle, .error-x { stroke: #ff0000; }
-        @keyframes stroke { 100% { stroke-dashoffset: 0; } }
-        #customAlertMessage { font-family: Cairo, sans-serif; font-size: 16px; margin-bottom: 20px; }
-        .custom-alert-content button { padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .initial-avatar { width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 50px; font-weight: bold; margin: 0 auto 15px auto; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    /* --- My Info Modal --- */
+    .my-info-modal-content { max-width: 600px; width: 95%; background-color: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 0; text-align: right; overflow: hidden; transform: translateY(33px); /* This centers the modal below a 66px header */ }
+    .my-info-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #f7fafc; border-bottom: 1px solid var(--border-color); }
+    .my-info-header h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
+    .close-info-modal { font-size: 28px; color: var(--text-light); cursor: pointer; transition: color 0.2s; }
+    .close-info-modal:hover { color: var(--text-dark); }
+    .my-info-body { padding: 25px; max-height: 60vh; overflow-y: auto; text-align: center; }
+    .info-picture-container { text-align: center; margin-bottom: 25px; position: relative; display: inline-block; }
+    .info-picture-container .profile-picture, .info-picture-container .initial-avatar { width: 100px; height: 100px; font-size: 40px; margin: 0 auto; }
+    .info-picture-container .camera-icon { width: 30px; height: 30px; bottom: 0; right: 0; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; text-align: right; }
+    .info-item { display: flex; flex-direction: column; }
+    .info-item label { font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; display: flex; align-items: center; }
+    .info-item label .fas { margin-left: 6px; }
+    .info-item input { background-color: #f8f9fa; border: 1px solid transparent; border-radius: 6px; padding: 10px; font-family: 'Cairo', sans-serif; font-size: 15px; color: var(--text-dark); transition: all 0.2s ease; }
+    .info-item input:read-only { cursor: default; }
+    .info-item input.editable-field { background-color: #fff; border-color: var(--border-color); }
+    .info-item input.editable-field:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--focus-shadow); outline: none; }
+    .my-info-footer { padding: 15px 25px; background-color: #f7fafc; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: flex-end; }
+    .my-info-footer button { width: auto; padding: 8px 25px; margin: 0; }
+    #updateInfoBtn { background-color: var(--secondary-color); }
+    #updateInfoBtn:hover { background-color: var(--secondary-hover); }
+    #cancelEditBtn { background-color: #e2e8f0; color: var(--text-dark); }
+    #cancelEditBtn:hover { background-color: #cbd5e0; }
+    
+    /* --- Alert & Icons --- */
+    .icon { width: 50px; height: 50px; margin-bottom: 10px; }
+    .checkmark-circle, .error-circle { stroke-width: 2; stroke-miterlimit: 10; stroke-dasharray: 166; stroke-dashoffset: 166; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+    .checkmark-check, .error-x { stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
+    .checkmark-circle, .checkmark-check { stroke: #4CAF50; }
+    .error-circle, .error-x { stroke: #ff0000; }
+    @keyframes stroke { 100% { stroke-dashoffset: 0; } }
+    #customAlertMessage { font-family: Cairo, sans-serif; font-size: 16px; margin-bottom: 20px; }
+    .custom-alert-content button { padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .initial-avatar { width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 50px; font-weight: bold; margin: 0 auto 15px auto; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 </style>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -341,59 +323,57 @@
 
 <div class="login-container" id="registerContainer" style="display: none;">
     <h2>إنشاء حساب جديد</h2>
-    
-    <div class="profile-picture-container">
-        <div id="profilePicturePlaceholder" class="profile-picture-placeholder"><i class="fas fa-camera-retro"></i></div>
-        <div class="camera-icon" onclick="document.getElementById('profileImage').click()"><i class="fas fa-camera"></i></div>
-        <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
-    </div>
+<div class="profile-picture-container">
+    <div id="profilePicturePlaceholder" class="profile-picture-placeholder"><i class="fas fa-camera-retro"></i></div>
+    <div class="camera-icon" onclick="document.getElementById('profileImage').click()"><i class="fas fa-camera"></i></div>
+    <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
+</div>
 
-    <div class="form-section-title">معلومات الحساب</div>
-    <div class="form-grid">
-        <div class="form-group">
-            <label for="registerUsername"><i class="fas fa-user"></i> اسم المستخدم (9 حروف أو أكثر)</label>
-            <input type="text" id="registerUsername" placeholder="مثال: عبدالله محمد علي">
-        </div>
-        <div class="form-group">
-            <label for="registerPhone"><i class="fas fa-phone"></i> رقم الهاتف</label>
-            <input type="tel" id="registerPhone" placeholder="01xxxxxxxxx">
-        </div>
-        <div class="form-group">
-            <label for="newPassword"><i class="fas fa-lock"></i> كلمة المرور</label>
-            <input type="password" id="newPassword" placeholder="اختر كلمة مرور قوية">
-        </div>
-        <div class="form-group">
-            <label for="registerEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-            <input type="email" id="registerEmail" placeholder="example@email.com">
-        </div>
+<div class="form-section-title">معلومات الحساب</div>
+<div class="form-grid">
+    <div class="form-group">
+        <label for="registerUsername"><i class="fas fa-user"></i> اسم المستخدم (9 حروف أو أكثر)</label>
+        <input type="text" id="registerUsername" placeholder="مثال: عبدالله محمد علي">
     </div>
-    
-    <div class="form-section-title">معلومات التوصيل</div>
-    <div class="form-grid">
-         <div class="form-group">
-            <label for="registerGovernorate"><i class="fas fa-map-marked-alt"></i> المحافظة</label>
-            <input type="text" id="registerGovernorate" placeholder="مثال: القاهرة">
-        </div>
-         <div class="form-group">
-            <label for="registerCity"><i class="fas fa-city"></i> المدينة</label>
-            <input type="text" id="registerCity" placeholder="مثال: مدينة نصر">
-        </div>
-         <div class="form-group">
-            <label for="registerStreet"><i class="fas fa-road"></i> اسم الشارع أو الحي</label>
-            <input type="text" id="registerStreet" placeholder="مثال: شارع عباس العقاد">
-        </div>
-         <div class="form-group">
-            <label for="registerLandmark"><i class="fas fa-landmark"></i> أقرب معلم مميز</label>
-            <input type="text" id="registerLandmark" placeholder="مثال: بجوار حديقة الطفل">
-        </div>
+    <div class="form-group">
+        <label for="registerPhone"><i class="fas fa-phone"></i> رقم الهاتف</label>
+        <input type="tel" id="registerPhone" placeholder="01xxxxxxxxx">
     </div>
-    
-    <button onclick="register()">إنشاء الحساب</button>
+    <div class="form-group">
+        <label for="newPassword"><i class="fas fa-lock"></i> كلمة المرور</label>
+        <input type="password" id="newPassword" placeholder="اختر كلمة مرور قوية">
+    </div>
+    <div class="form-group">
+        <label for="registerEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+        <input type="email" id="registerEmail" placeholder="example@email.com">
+    </div>
+</div>
 
-    <p class="form-switcher-text">
-        لديك حساب بالفعل؟ <span onclick="showLoginForm()">تسجيل الدخول</span>
-    </p>
+<div class="form-section-title">معلومات التوصيل</div>
+<div class="form-grid">
+     <div class="form-group">
+        <label for="registerGovernorate"><i class="fas fa-map-marked-alt"></i> المحافظة</label>
+        <input type="text" id="registerGovernorate" placeholder="مثال: القاهرة">
+    </div>
+     <div class="form-group">
+        <label for="registerCity"><i class="fas fa-city"></i> المدينة</label>
+        <input type="text" id="registerCity" placeholder="مثال: مدينة نصر">
+    </div>
+     <div class="form-group">
+        <label for="registerStreet"><i class="fas fa-road"></i> اسم الشارع أو الحي</label>
+        <input type="text" id="registerStreet" placeholder="مثال: شارع عباس العقاد">
+    </div>
+     <div class="form-group">
+        <label for="registerLandmark"><i class="fas fa-landmark"></i> أقرب معلم مميز</label>
+        <input type="text" id="registerLandmark" placeholder="مثال: بجوار حديقة الطفل">
+    </div>
+</div>
 
+<button onclick="register()">إنشاء الحساب</button>
+
+<p class="form-switcher-text">
+    لديك حساب بالفعل؟ <span onclick="showLoginForm()">تسجيل الدخول</span>
+</p>
 </div>
 
 <div class="login-container" id="profileContainer" style="display: none;">
@@ -413,6 +393,7 @@
 <div id="customAlert" class="custom-alert"><div class="custom-alert-content"><div id="alertIcon"></div><p id="customAlertMessage"></p><button>حسنًا</button></div></div>
 
 <!-- My Info Modal -->
+
 <div id="myInfoModal" class="modal">
     <div class="my-info-modal-content">
         <div class="my-info-header">
@@ -466,7 +447,6 @@
     </div>
 </div>
 
-
 <script>
     // --- Firebase Initialization ---
     firebase.initializeApp({
@@ -496,7 +476,10 @@
     }
     function closeCustomAlert() { 
         document.getElementById('customAlert').style.display = 'none';
-        document.body.classList.remove('modal-open');
+        // Only remove modal-open if no other modals are open
+        if (document.querySelectorAll('.modal[style*="display: flex"], .purchases-modal[style*="display: flex"]').length === 0) {
+            document.body.classList.remove('modal-open');
+        }
     }
     
     document.addEventListener('DOMContentLoaded', () => {
@@ -620,8 +603,8 @@
     }
     
     function logout() { 
-        document.getElementById('logoutModal').style.display = 'flex'; 
         document.body.classList.add('modal-open');
+        document.getElementById('logoutModal').style.display = 'flex'; 
     }
     document.getElementById('confirmLogout').addEventListener('click', () => {
         localStorage.clear();
@@ -690,9 +673,9 @@
     }
     
     function showMyInfo() {
+        document.body.classList.add('modal-open');
         populateInfoModal();
         document.getElementById('myInfoModal').style.display = 'flex';
-        document.body.classList.add('modal-open');
     }
 
     function closeMyInfoModal() {
