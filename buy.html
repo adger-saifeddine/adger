@@ -500,6 +500,38 @@
     </script>
 
     <script>
+        // --- [ أضف هذا الجزء ] ---
+// التحقق من وجود مستخدم مسجل وسحب بيانات التوصيل الخاصة به عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const userPhone = localStorage.getItem('phone');
+
+    if (isLoggedIn && userPhone) {
+        // المستخدم مسجل، لنقم بسحب بيانات التوصيل من Firebase
+        database.ref('users/' + userPhone).once('value', (snapshot) => {
+            if (snapshot.exists() && snapshot.val().deliveryInfo) {
+                const deliveryInfo = snapshot.val().deliveryInfo;
+                
+                // حفظ البيانات في localStorage لتستخدمها باقي الدوال في الصفحة
+                localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+                
+                // تحديث العرض على الشاشة فوراً
+                document.getElementById('displayName').textContent = deliveryInfo.name;
+                document.getElementById('displayPhone').textContent = deliveryInfo.phone;
+                document.getElementById('displayEmail').textContent = deliveryInfo.email || '';
+                document.getElementById('displayGovernorate').textContent = deliveryInfo.governorate;
+                document.getElementById('displayCity').textContent = deliveryInfo.city;
+                document.getElementById('displayStreet').textContent = deliveryInfo.street;
+                document.getElementById('displayLandmark').textContent = deliveryInfo.landmark;
+                document.getElementById('deliveryInfoDisplay').style.display = 'block';
+            }
+        });
+    }
+});
+// --- [ نهاية الجزء المضاف ] ---
+
+// باقي الكود الخاص بـ buy.html يبدأ من هنا
+// firebase.initializeApp({ ...
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
