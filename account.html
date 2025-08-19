@@ -107,9 +107,9 @@
     }
 
 @media (max-width: 499px) {
-.login-container {
-margin-top: -195px;
-}
+    .login-container {
+        margin-top: -195px;
+    }
 }
 #registerContainer { width: 750px; }
 
@@ -249,9 +249,22 @@ margin-top: -195px;
     #cancelLogout:hover { background-color: #cbd5e0; }
 
     @media (max-width: 499px) {
+        /* MUCH SMALLER LOGOUT MODAL STYLES */
         #logoutModal .modal-content {
-            max-width: 300px;
-            width: 90%;
+            max-width: 260px; /* Significantly smaller width */
+            width: 85%;
+            padding: 20px 15px; /* Reduced padding */
+        }
+        #logoutModal .logout-prompt {
+            font-size: 15px; /* Smaller text */
+            margin-bottom: 15px; /* Reduced margin */
+        }
+        #logoutModal .modal-buttons {
+            gap: 10px; /* Smaller gap between buttons */
+        }
+        #logoutModal .modal-buttons button {
+            padding: 8px 15px; /* Smaller buttons */
+            font-size: 14px;
         }
     }
 
