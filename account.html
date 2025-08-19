@@ -41,6 +41,7 @@
 </head>
 <body>
 
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -101,6 +102,13 @@
             transition: all 0.3s ease-in-out;
             margin-top: -130px;
         }
+   @media (max-width: 499px) {
+  .login-container { 
+                    margin-top: -180px;
+            }
+        }
+
+
         #registerContainer { width: 750px; }
 
         .login-container h2 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 25px; color: var(--text-dark); }
@@ -231,7 +239,7 @@
         .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
         
         /* --- Logout Modal --- */
-        #logoutModal .logout-prompt { background-color: #f8f9fa; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; color: var(--text-dark); font-family: 'Cairo', sans-serif; }
+        #logoutModal .logout-prompt { margin-bottom: 20px; color: var(--text-dark); font-family: 'Cairo', sans-serif; }
         #logoutModal .modal-buttons { display: flex; justify-content: center; gap: 15px; }
         #confirmLogout { background-color: var(--danger-color); }
         #confirmLogout:hover { background-color: var(--danger-hover); }
@@ -756,7 +764,7 @@
                 profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
             }
 
-            cancelInfoEditing(); // Return to read-only mode
+            closeMyInfoModal(); // Close the modal after successful update
             showCustomAlert('تم تحديث البيانات بنجاح!', true);
 
         }).catch(error => {
@@ -768,7 +776,6 @@
 
 </body>
 </html>
-
 
 
 
