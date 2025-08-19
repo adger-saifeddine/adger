@@ -59,8 +59,9 @@
             align-items: center;
             margin: 0;
             background-color: #f4f4f4;
-            overscroll-behavior-x: none; /* Prevents browser pull-to-refresh on horizontal swipe */
+            overscroll-behavior-x: none;
         }
+
         .gallery {
             display: flex;
             align-items: flex-start;
@@ -69,6 +70,7 @@
             position: relative;
         }
 
+        /* --- STYLES FOR SWIPE INTERACTION --- */
         .main-media {
             margin-left: 20px;
             position: relative;
@@ -76,14 +78,13 @@
             height: 400px;
             border: 2px solid #ccc;
             border-radius: 10px;
-            overflow: hidden;
+            overflow: hidden; /* Crucial for slider */
             cursor: grab;
-            touch-action: pan-y;
+            touch-action: pan-y; /* Allows vertical scroll, captures horizontal swipe */
         }
         .main-media:active {
             cursor: grabbing;
         }
-
         .image-track {
             display: flex;
             height: 100%;
@@ -110,7 +111,8 @@
         }
         .slide img { object-fit: cover; }
         .slide video { object-fit: contain; pointer-events: all; }
-        
+        /* --- END SWIPE INTERACTION STYLES --- */
+
         .placeholder-image {
             width: 100%;
             height: 100%;
@@ -132,7 +134,8 @@
             border-radius: 50%;
             animation: spin 1s infinite linear;
         }
-        
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         .thumbnails {
             display: flex;
             flex-direction: column;
@@ -237,11 +240,6 @@
             opacity: 0.5;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive Overrides */
         @media (max-width: 555px) {
             .gallery {
                 flex-direction: column;
@@ -300,7 +298,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM References ---
             const dom = {
                 mainContainer: document.getElementById('mainMediaContainer'),
                 track: document.getElementById('imageTrack'),
@@ -313,7 +310,6 @@
                 nextArrow: document.getElementById('nextArrow'),
             };
 
-            // --- State Management ---
             const state = {
                 isDragging: false,
                 startPos: 0,
@@ -324,7 +320,10 @@
                 startTime: 0,
             };
 
-            // --- Swipe Event Handlers (Exact "Adger" Logic) ---
+            function getPositionX(e) {
+                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            }
+
             function dragStart(e) {
                 state.isDragging = true;
                 state.startTime = Date.now();
@@ -337,11 +336,9 @@
                 if (!state.isDragging) return;
                 const currentPosition = getPositionX(e);
                 let dragDistance = currentPosition - state.startPos;
-                
                 if ((state.currentIndex === 0 && dragDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && dragDistance < 0)) {
                     dragDistance /= 3;
                 }
-                
                 state.currentTranslate = state.prevTranslate + dragDistance;
                 setSliderPosition();
             }
@@ -349,15 +346,11 @@
             function dragEnd() {
                 if (!state.isDragging) return;
                 state.isDragging = false;
-                dom.track.classList.add('transitioning');
-                
                 const dragOffset = state.currentTranslate - state.prevTranslate;
                 const swipeDuration = Date.now() - state.startTime;
                 const swipeVelocity = Math.abs(dragOffset / swipeDuration);
-
                 const thresholdDistance = dom.mainContainer.offsetWidth / 4;
                 const thresholdVelocity = 0.3;
-
                 const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
                 const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
 
@@ -366,67 +359,53 @@
                 } else if (isPrevSwipe && state.currentIndex > 0) {
                     state.currentIndex--;
                 }
-
-                setActiveSlide(state.currentIndex);
+                setActiveSlide(state.currentIndex, true);
             }
 
-            // --- Core Functions ---
-            function setActiveSlide(index) {
+            function setActiveSlide(index, withTransition = false) {
                 state.currentIndex = index;
                 state.currentTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
+                if (withTransition) {
+                    dom.track.classList.add('transitioning');
+                }
                 setSliderPosition();
                 updateUI();
             }
-            
+
             function setSliderPosition() {
                 dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
             }
 
             function updateUI() {
-                dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-                    thumb.classList.toggle('active', i === state.currentIndex);
-                });
+                dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
                 dom.currentEl.textContent = state.currentIndex + 1;
                 dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
                 dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-                
                 const currentItem = state.mediaItems[state.currentIndex];
                 dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
-
                 dom.track.querySelectorAll('video').forEach((video, i) => {
                     if (i !== state.currentIndex && !video.paused) video.pause();
                 });
-                
                 scrollThumbnailIntoView();
             }
-            
+
             function scrollThumbnailIntoView() {
                 const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active');
-                if (activeThumbnail) {
-                    activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                }
-            }
-
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+                if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
 
             function populateGallery(mediaData) {
                 state.mediaItems = mediaData;
                 dom.thumbnails.innerHTML = '';
                 dom.track.innerHTML = '';
-
                 if (!state.mediaItems || state.mediaItems.length === 0) {
                     dom.placeholder.style.display = 'none'; return;
                 }
-
                 state.mediaItems.forEach((item, index) => {
                     const slide = document.createElement('div');
                     slide.className = 'slide';
                     const thumbnail = document.createElement('div');
                     thumbnail.classList.add('thumbnail');
-                    thumbnail.dataset.index = index;
-
                     if (item.type === 'video') {
                         slide.innerHTML = `<video src="${item.src}" controls></video>`;
                         thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
@@ -436,12 +415,8 @@
                     }
                     dom.track.appendChild(slide);
                     dom.thumbnails.appendChild(thumbnail);
-                    thumbnail.addEventListener('click', () => {
-                        dom.track.classList.add('transitioning');
-                        setActiveSlide(index);
-                    });
+                    thumbnail.addEventListener('click', () => setActiveSlide(index, true));
                 });
-
                 dom.totalEl.textContent = state.mediaItems.length;
                 dom.placeholder.style.display = 'none';
                 setActiveSlide(0);
@@ -452,28 +427,14 @@
             }
 
             function init() {
-                // Attach Events
                 ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
                 ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
                 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
 
-                dom.prevArrow.addEventListener('click', () => {
-                    if (state.currentIndex > 0) {
-                        dom.track.classList.add('transitioning');
-                        setActiveSlide(state.currentIndex - 1);
-                    }
-                });
-                dom.nextArrow.addEventListener('click', () => {
-                    if (state.currentIndex < state.mediaItems.length - 1) {
-                        dom.track.classList.add('transitioning');
-                        setActiveSlide(state.currentIndex + 1);
-                    }
-                });
+                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
+                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
                 dom.shareButton.addEventListener('click', sharePage);
-                window.addEventListener('resize', () => {
-                    dom.track.classList.remove('transitioning');
-                    setActiveSlide(state.currentIndex);
-                });
+                window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
 
                 // --- DATA LOADING ---
                 const urlParams = new URLSearchParams(window.location.search);
@@ -490,10 +451,6 @@
                     ]
                 };
 
-                // Use mock data if product ID exists or not for this demo
-                populateGallery(mockProductData.media);
-
-                /* Uncomment this block to use your JSON fetch logic
                 if (productId) {
                     const productsPerFile = 5000;
                     const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
@@ -509,10 +466,9 @@
                             dom.placeholder.style.display = 'none';
                         });
                 } else {
-                    console.error('No product ID found in URL.');
-                    dom.placeholder.style.display = 'none';
+                    console.log("No Product ID found, showing mock data.");
+                    populateGallery(mockProductData.media);
                 }
-                */
             }
 
             init();
