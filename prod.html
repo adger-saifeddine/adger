@@ -121,7 +121,6 @@
         z-index: 1;
     }
 
-    /* --- تعديل: تمت إضافة طبقة شفافة فوق الفيديو لتسهيل السحب --- */
     .swipe-overlay {
         position: absolute;
         top: 0;
@@ -130,7 +129,6 @@
         height: 100%;
         z-index: 3;
     }
-
 
     .big-play-button {
         position: absolute;
@@ -164,14 +162,15 @@
         transition: opacity 0.3s ease;
         pointer-events: none;
     }
-    /* --- تعديل: إظهار الشريط الأحمر عند التشغيل أو الإيقاف المؤقت (وليس عند عرض عناصر التحكم) --- */
-    .slide.is-playing .simple-progress-container,
-    .slide.video-started.video-paused .simple-progress-container {
+    
+    /* --- التعديل هنا: إظهار الشريط الأحمر بمجرد بدء الفيديو، وإخفاؤه فقط عند ظهور عناصر التحكم --- */
+    .slide.video-started .simple-progress-container {
         opacity: 1;
     }
     .slide.show-controls .simple-progress-container {
         opacity: 0;
     }
+
     .simple-progress-bar {
         width: 0%;
         height: 100%;
@@ -285,7 +284,6 @@
             dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none';
             dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); });
             
-            // --- تعديل: التحقق من حالة الفيديو الحالي لإخفاء أو إظهار عداد الصور والمشاركة ---
             const currentSlideEl = dom.track.children[state.currentIndex];
             const isVideoWithControlsVisible = currentSlideEl && currentSlideEl.classList.contains('show-controls');
             dom.mainContainer.classList.toggle('controls-active', isVideoWithControlsVisible);
@@ -312,7 +310,6 @@
                     const video = document.createElement('video');
                     video.src = item.src; video.playsInline = true; video.preload = "metadata";
 
-                    // --- تعديل: إضافة طبقة شفافة لتسهيل السحب ---
                     const swipeOverlay = document.createElement('div');
                     swipeOverlay.className = 'swipe-overlay';
                     
@@ -371,7 +368,6 @@
                     
                     bigPlayBtn.addEventListener('click', togglePlay);
                     playPauseBtn.addEventListener('click', togglePlay);
-                    // --- تعديل: نقل مستمع النقر إلى الطبقة الشفافة ---
                     swipeOverlay.addEventListener('click', toggleFullControls);
 
                     video.addEventListener('play', () => {
