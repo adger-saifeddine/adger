@@ -43,458 +43,775 @@
 </body>
 </html>
 
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Media Gallery</title>
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        direction: rtl;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0;
-        background-color: #f4f4f4;
-        overscroll-behavior-x: none;
-    }
-    
+
+</body>
+</html>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .line {
+            width: 100%;
+            height: 8px;
+            background-color: #eeeeee;
+        }
+        
+        .gallery {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row-reverse;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .main-media {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .main-media img, .main-media video {
+            width: 400px;
+            height: 400px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .main-media img {
+            object-fit: cover;
+        }
+
+        .main-media video {
+            object-fit: contain;
+        }
+
+        .main-media video:fullscreen {
+            border: none;
+        }
+
+        /* الصورة الرمادية البديلة أثناء التحميل */
+        .placeholder-image {
+            width: 400px;
+            height: 400px;
+            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5; /* لتظهر فوق الصورة الأصلية أثناء التحميل */
+        }
+
+        .thumbnails {
+            display: flex;
+            flex-direction: column;
+            max-height: 400px;
+            overflow-y: scroll;
+            padding-left: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .thumbnails::-webkit-scrollbar {
+            display: none;
+        }
+
+        .thumbnail {
+            margin: 10px 0;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 1px;
+            padding: 0;
+            position: relative;
+            width: 66px;
+            height: 66px;
+            box-sizing: border-box;
+        }
+
+        .thumbnail.loading {
+            background-color: #fafafa; /* لون رمادي فاتح قريب من الأبيض */
+        }
+        
+        .thumbnail img, .thumbnail video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .thumbnail.active {
+            border-color: #ff0000;
+        }
+
+        .thumbnail.loading::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-top-color: #888;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .play-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+
+        .share-button {
+            position: absolute;
+            left: 11px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .share-button.bottom {
+            bottom: 11px;
+        }
+
+        .share-button.top {
+            top: 10px;
+            display: none;
+        }
+
+        .share-button svg {
+            width: 24px;
+            height: 24px;
+            color: #000;
+        }
+
+        @media (max-width: 555px) {
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 22px;
+                margin-right: 1px;
+            }
+
+            .main-media {
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+
+            .main-media img, .main-media video {
+                width: 311px;
+                height: 311px;
+            }
+
+            .placeholder-image {
+                width: 311px;
+                height: 311px;
+            }
+
+            .thumbnails {
+                flex-direction: row;
+                max-height: none;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding-left: 0;
+                width: 311px;
+                white-space: nowrap;
+                gap: 10px;
+            }
+
+            .thumbnail {
+                margin: 0;
+                flex: 0 0 auto;
+                width: 65px;
+                height: 65px;
+            }
+        }
+
+        .media-counter {
+            position: absolute;
+            font-family: 'Cairo', sans-serif;
+            bottom: 12px;
+            right: 90px;
+            background-color: rgba(255, 255, 255, 0.767);
+            padding: 2px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            direction: rtl;
+            cursor: pointer;
+            display: none; /* مخفية افتراضيًا */
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق عند اللمس */
+        }
+
+        @media (max-width: 555px) {
+            .media-counter {
+                bottom: 95px;
+                right: 15px;
+                font-size: 11px;
+                padding: 3px 13px;
+            }
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(24, 24, 24, 0.336);
+            border: none;
+            border-radius: 1px;
+            width: 41px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            z-index: 1;
+        }
+
+        .arrow.left {
+            left: 2px;
+        }
+
+        .arrow.right {
+            right: 2px;
+        }
+
+        .arrow svg {
+            fill: white;
+            width: 30px;
+            height: 34px;
+        }
+
+        .arrow.disabled {
+            background-color: rgba(66, 66, 66, 0.253);
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 556px) {
+            .arrow {
+                display: none;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @media (max-width: 555px) {
     .gallery {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: row-reverse;
-        margin-top: 20px;
-        position: relative;
+        flex-direction: column !important;
+        align-items: center !important;
+        margin-top: 0px !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
     }
 
     .main-media {
-        margin-left: 20px;
-        position: relative;
-        width: 400px;
-        height: 400px;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        overflow: hidden;
-        cursor: grab;
-        touch-action: pan-y;
-        transition: opacity 0.3s ease;
-        background-color: #fafafa; /* لون خلفية يتطابق مع لون التحميل */
-    }
-    .main-media:active {
-        cursor: grabbing;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-bottom: 20px !important;
     }
 
-    .image-track {
-        display: flex;
-        height: 100%;
-        will-change: transform;
-        transform: translateX(0px); 
-    }
-    .image-track.transitioning {
-        transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-    
-    .slide {
-        position: relative;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-    .slide img, .slide video {
-        width: 100%;
-        height: 100%;
-        display: block;
-        user-select: none;
-    }
-    .slide img { 
-        object-fit: cover; 
-        pointer-events: none;
-    }
-    .slide video { 
-        object-fit: contain; 
-        z-index: 1;
-        /* --- هذا هو الحل --- */
-        /* يمنع السلوك الافتراضي للمتصفح عند السحب على الفيديو، مما يضمن سلاسة التمرير */
-        pointer-events: none; 
+    .main-media img, .main-media video {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        border: none !important;
+        border-radius: 1px !important;
     }
 
-    .swipe-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 3;
+    .placeholder-image {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        background-color: #fafafa !important;
+        border: none !important;
+        border-radius: 1px !important;
     }
 
-    .big-play-button {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px; height: 60px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        display: flex;
-        align-items: center; justify-content: center;
-        cursor: pointer; z-index: 5;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .big-play-button:hover {
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-    .big-play-button svg {
-        width: 32px; height: 32px; fill: white; margin-left: 4px;
-    }
-    .slide.video-started .big-play-button {
-        display: none;
+    .thumbnails {
+        flex-direction: row !important;
+        max-height: none !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        padding-left: 0 !important;
+        width: 100% !important;
+        white-space: nowrap !important;
+        gap: 10px !important;
+        margin-bottom: -9px !important;
     }
 
-    .simple-progress-container {
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 3px;
-        z-index: 2;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-    }
-    
-    .slide.video-started .simple-progress-container {
-        opacity: 1;
-    }
-    .slide.show-controls .simple-progress-container {
-        opacity: 0;
+    .thumbnail {
+        margin: 0 !important;
+        flex: 0 0 auto !important;
+        width: 55px !important;
+        height: 55px !important;
     }
 
-    .simple-progress-bar {
-        width: 0%;
-        height: 100%;
-        background-color: #ff0000;
+    .media-counter {
+        bottom: 95px !important;
+        right: 15px !important;
+        font-size: 11px !important;
+        padding: 3px 13px !important;
     }
+}
 
-    .video-controls {
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        background-color: rgba(0, 0, 0, 0.6);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 8px 12px;
-        z-index: 4;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
+@media (max-width: 556px) {
+    .arrow {
+        display: none !important;
     }
-    .slide.show-controls .video-controls {
-        opacity: 1;
-        pointer-events: auto;
-    }
+}
 
-    .play-pause-btn { 
-        background: none; border: none; padding: 0; margin: 0; cursor: pointer; 
-        width: 24px; height: 24px; color: white; flex-shrink: 0; 
-        -webkit-tap-highlight-color: transparent;
-    }
-    .play-pause-btn svg { width: 100%; height: 100%; fill: currentColor; }
-    .play-pause-btn .icon-play { display: none; }
-    .play-pause-btn .icon-pause { display: block; }
-    .video-paused .play-pause-btn .icon-play { display: block; }
-    .video-paused .play-pause-btn .icon-pause { display: none; }
 
-    .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
-    .video-controls .progress-container {
-        width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.3);
-        flex-grow: 1; border-radius: 2px;
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
-    /* --- هنا يكمن السر: عنصر التحميل الخاص بالصورة/الفيديو الكبير --- */
-    .slide-placeholder { 
-        width: 100%; height: 100%;
-        position: absolute; top: 0; left: 0; z-index: 6; 
-        /* --- له نفس تأثير التحميل اللامع (Shimmer) --- */
-        background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite linear;
-    }
-    
-    .thumbnails { 
-        display: flex; 
-        flex-direction: column; 
-        max-height: 404px;
-        overflow-y: auto;
-        padding-left: 10px; 
-        scrollbar-width: none; 
-        -ms-overflow-style: none; 
-    }
-    .thumbnails::-webkit-scrollbar { 
-        display: none; 
-    }
-    
-    .thumbnail { 
-        margin: 10px 0; 
-        cursor: pointer; 
-        border: 2px solid #ccc; 
-        border-radius: 1px; 
-        position: relative; 
-        width: 66px; 
-        height: 66px; 
-        box-sizing: border-box; 
-        overflow: hidden; 
-        background-color: #fafafa;
-        flex-shrink: 0;
-    }
-    .thumbnail img, .thumbnail video { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .thumbnail.active { border-color: #ff0000; }
-
-    .thumbnail-placeholder {
-        margin: 10px 0;
-        cursor: progress;
-        border: 2px solid #e0e0e0;
-        border-radius: 1px;
-        width: 66px;
-        height: 66px;
-        box-sizing: border-box;
-        /* --- تأثير التحميل اللامع للصور المصغرة --- */
-        background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite linear;
-    }
-
-    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-    .play-icon svg { width: 16px; height: 16px; fill: white; }
-
-    .share-button, .media-counter, .arrow { position: absolute; z-index: 10; -webkit-tap-highlight-color: transparent; transition: opacity 0.3s ease; }
-    .main-media.controls-active .media-counter,
-    .main-media.controls-active .share-button {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .share-button { left: 11px; bottom: 11px; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
-    .share-button svg { width: 24px; height: 24px; color: #000; }
-    .media-counter { font-family: 'Cairo', sans-serif; bottom: 12px; right: 12px; background-color: rgba(255, 255, 255, 0.767); padding: 2px 12px; border-radius: 15px; font-size: 13px; display: flex; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
-    .arrow { top: 50%; transform: translateY(-50%); background-color: rgba(24, 24, 24, 0.4); border: none; border-radius: 3px; width: 41px; height: 45px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; transition: background-color 0.2s; }
-    .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
-    .arrow.left { left: 5px; } .arrow.right { right: 5px; }
-    .arrow svg { fill: white; width: 30px; height: 34px; }
-    .arrow.disabled { background-color: rgba(66, 66, 66, 0.25); cursor: not-allowed; opacity: 0.5; }
-
-    @keyframes shimmer {
-        0% { background-position: 100% 0; }
-        100% { background-position: -100% 0; }
-    }
-
-    @media (max-width: 555px) {
-        .gallery { flex-direction: column; align-items: center; margin-top: 0; width: 100%; }
-        .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 15px; border: none; border-radius: 0; }
-        .thumbnails { flex-direction: row; max-height: none; overflow-x: auto; padding: 0 10px; box-sizing: border-box; width: 100%; gap: 10px; }
-        .thumbnail { margin: 0; flex: 0 0 auto; width: 65px; height: 65px; }
-        .media-counter { bottom: 15px; right: 15px; font-size: 11px; padding: 3px 13px; }
-        .arrow { display: none; }
-
-        .thumbnail-placeholder {
-            margin: 0;
-            flex: 0 0 auto;
-            width: 65px;
-            height: 65px;
-        }
-    }
-</style>
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 </head>
 <body>
     <div class="gallery">
-        <div class="main-media" id="mainMediaContainer">
-            <div class="image-track" id="imageTrack"></div>
-            <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
-            <button class="arrow left" id="prevArrow"><!-- SVG --></button>
-            <button class="arrow right" id="nextArrow"><!-- SVG --></button>
-            <div class="media-counter">
-                منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
-            </div>
+        <div class="main-media">
+            <div class="placeholder-image"></div>
+            <img id="mainMedia" alt="الصورة الرئيسية">
+            <video id="mainVideo" controls style="display: none;">
+                <source type="video/mp4">
+            </video>
+            <button class="share-button bottom" id="shareButton" onclick="sharePage()" style="color: #ffffff;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                </svg>
+            </button>
+            <button class="arrow left" onclick="prevMedia()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+            </button>
+            <button class="arrow right" onclick="nextMedia()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                </svg>
+            </button>
+        </div>
+        <div class="media-counter">
+            منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
         </div>
         <div class="thumbnails" id="thumbnailsContainer">
-            <!-- هياكل التحميل الأولية للصور المصغرة -->
-            <div class="thumbnail-placeholder"></div>
-            <div class="thumbnail-placeholder"></div>
-            <div class="thumbnail-placeholder"></div>
-            <div class="thumbnail-placeholder"></div>
-            <div class="thumbnail-placeholder"></div>
+            <!-- سيتم إضافة المصغرات الاحتياطية هنا -->
         </div>
     </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
-        const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
-        const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+    <script>
+
+
+
+//سكريبت اخفاء الصور المصغرة
+
+function updateMainMedia(thumbnail) {
+    const placeholderImage = document.querySelector('.placeholder-image');
+    const mainImage = document.getElementById('mainMedia');
+    const mainVideo = document.getElementById('mainVideo');
+    const shareButton = document.getElementById('shareButton');
+    const mediaCounter = document.querySelector('.media-counter');
+    const src = thumbnail.getAttribute('data-src');
+    const type = thumbnail.getAttribute('data-type');
+
+    // إخفاء جميع عناصر التحميل التي قد تكون مرئية
+    document.querySelectorAll('.thumbnail.loading').forEach(thumb => {
+        thumb.classList.remove('loading');
+    });
+
+    // تحديث حالة أيقونة التشغيل للفيديو السابق
+    if (videoIsPlaying) {
+        updateAllVideoThumbnails();
+    }
+
+    // إظهار الصورة الرمادية وإخفاء عداد الصور أثناء التحميل
+    placeholderImage.style.display = 'block';
+    mediaCounter.style.display = 'none';
+
+    if (type === 'image') {
+        mainImage.src = src;
+        mainImage.style.display = 'block';
+        mainVideo.style.display = 'none';
+        mainVideo.pause();
+        videoIsPlaying = false;
+        shareButton.style.display = 'flex';
         
-        const loadVisibleSlides = () => {
-            const indexesToLoad = [state.currentIndex];
-            if (state.currentIndex > 0) indexesToLoad.push(state.currentIndex - 1);
-            if (state.currentIndex < state.mediaItems.length - 1) indexesToLoad.push(state.currentIndex + 1);
-
-            indexesToLoad.forEach(index => {
-                const slide = dom.track.children[index];
-                if (!slide || slide.dataset.loaded) return;
-
-                const mediaEl = slide.querySelector('img, video');
-                if (mediaEl && mediaEl.dataset.src) {
-                    mediaEl.src = mediaEl.dataset.src;
-                    delete mediaEl.dataset.src;
-                    slide.dataset.loaded = 'true';
-                    if (mediaEl.tagName === 'VIDEO') {
-                        mediaEl.load();
-                    }
-                }
-            });
+        // إزالة الصورة الرمادية وإظهار عداد الصور بعد اكتمال التحميل
+        mainImage.onload = function() {
+            placeholderImage.style.display = 'none';
+            mediaCounter.style.display = 'flex';
         };
+    } else if (type === 'video') {
+        mainVideo.querySelector('source').src = src;
+        mainVideo.load();
+        mainVideo.style.display = 'block';
+        mainImage.style.display = 'none';
+        shareButton.style.display = 'none';
         
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
-        const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
-        const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
-        
-        const updateUI = () => {
-            dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
-            dom.currentEl.textContent = state.currentIndex + 1;
-            dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
-            dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-            dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none';
-            dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); });
-            
-            const currentSlideEl = dom.track.children[state.currentIndex];
-            const isVideoWithControlsVisible = currentSlideEl && currentSlideEl.classList.contains('show-controls');
-            dom.mainContainer.classList.toggle('controls-active', isVideoWithControlsVisible);
-
-            scrollThumbnailIntoView();
+        // إزالة الصورة الرمادية بعد اكتمال تحميل الفيديو
+        mainVideo.onloadedmetadata = function() {
+            placeholderImage.style.display = 'none';
         };
+    }
+}
 
-        const scrollThumbnailIntoView = () => { const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active'); if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); };
+//نهاية سكريبت اخفاء تحميل الصور المصغرة
 
-        function populateGallery(mediaData) {
-            state.mediaItems = mediaData;
-            dom.thumbnails.innerHTML = ''; dom.track.innerHTML = '';
-            if (!state.mediaItems || !state.mediaItems.length) { dom.mediaCounter.style.display = 'none'; return; }
-            dom.mediaCounter.style.display = 'flex';
 
-            state.mediaItems.forEach((item, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                // --- الخطوة 1: إضافة عنصر التحميل لكل شريحة كبيرة ---
-                const placeholder = document.createElement('div');
-                placeholder.className = 'slide-placeholder';
-                slide.appendChild(placeholder);
 
+
+
+
+
+
+
+
+
+        let videoIsPlaying = false;
+        // إنشاء مصغرات احتياطية فارغة فورًا
+        function createPlaceholderThumbnails(count = 5) {
+            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+            for (let i = 0; i < count; i++) {
                 const thumbnail = document.createElement('div');
-                thumbnail.classList.add('thumbnail');
-                thumbnail.dataset.index = index; 
-                if (index === 0) thumbnail.classList.add('active');
-
-                if (item.type === 'video') {
-                    slide.classList.add('video-paused');
-                    const video = document.createElement('video');
-                    video.dataset.src = item.src;
-                    video.playsInline = true; video.preload = "metadata";
-                    
-                    // --- الخطوة 2: إخفاء عنصر التحميل عند جهوزية الفيديو ---
-                    video.onloadeddata = () => { placeholder.style.display = 'none'; };
-                    if (video.readyState > 0) placeholder.style.display = 'none';
-
-                    // ... (بقية كود الفيديو كما هو)
-                    const swipeOverlay = document.createElement('div'); swipeOverlay.className = 'swipe-overlay';
-                    const bigPlayBtn = document.createElement('div'); bigPlayBtn.className = 'big-play-button'; bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
-                    const simpleProgressContainer = document.createElement('div'); simpleProgressContainer.className = 'simple-progress-container'; const simpleProgressBar = document.createElement('div'); simpleProgressBar.className = 'simple-progress-bar'; simpleProgressContainer.append(simpleProgressBar);
-                    const controls = document.createElement('div'); controls.className = 'video-controls';
-                    const playPauseBtn = document.createElement('button'); playPauseBtn.className = 'play-pause-btn'; playPauseBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`;
-                    const timeDisplay = document.createElement('div'); timeDisplay.className = 'time-display';
-                    const progressContainer = document.createElement('div'); progressContainer.className = 'progress-container'; const progressBar = document.createElement('div'); progressBar.className = 'progress-bar'; progressContainer.append(progressBar);
-                    controls.append(playPauseBtn, progressContainer, timeDisplay);
-                    
-                    slide.append(video, swipeOverlay, bigPlayBtn, simpleProgressContainer, controls);
-                    let controlsTimeout = null, isSeeking = false;
-                    const formatTime = (secs) => `${Math.floor(secs / 60).toString().padStart(2, '0')}:${Math.floor(secs % 60).toString().padStart(2, '0')}`;
-                    const togglePlay = () => video.paused ? video.play() : video.pause();
-                    const hideControls = () => { slide.classList.remove('show-controls'); dom.mainContainer.classList.remove('controls-active'); };
-                    const resetControlsTimeout = () => { clearTimeout(controlsTimeout); controlsTimeout = setTimeout(hideControls, 3000); };
-                    const toggleFullControls = () => { const isShowing = slide.classList.toggle('show-controls'); dom.mainContainer.classList.toggle('controls-active', isShowing); if (isShowing && !video.paused) resetControlsTimeout(); else clearTimeout(controlsTimeout); };
-                    
-                    controls.addEventListener('click', (e) => e.stopPropagation());
-                    bigPlayBtn.addEventListener('click', togglePlay);
-                    playPauseBtn.addEventListener('click', togglePlay);
-                    swipeOverlay.addEventListener('click', toggleFullControls);
-
-                    video.addEventListener('play', () => { slide.classList.add('is-playing', 'video-started'); slide.classList.remove('video-paused'); if (slide.classList.contains('show-controls')) resetControlsTimeout(); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`; } });
-                    const handlePauseOrEnd = () => { slide.classList.remove('is-playing'); slide.classList.add('video-paused'); clearTimeout(controlsTimeout); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; } };
-                    video.addEventListener('pause', handlePauseOrEnd);
-                    video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
-                    video.addEventListener('timeupdate', () => { if (isSeeking) return; const percent = (video.currentTime / video.duration) * 100 || 0; progressBar.style.width = `${percent}%`; simpleProgressBar.style.width = `${percent}%`; timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`; });
-                    video.addEventListener('loadedmetadata', () => { timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`; });
-                    const seek = (e) => { const rect = progressContainer.getBoundingClientRect(); const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX; const percent = Math.max(0, Math.min(1, (positionX - rect.left) / rect.width)); progressBar.style.width = `${percent * 100}%`; video.currentTime = percent * video.duration; };
-                    const startSeek = (e) => { isSeeking = true; clearTimeout(controlsTimeout); seek(e); }; const seeking = (e) => { if(isSeeking) seek(e); }; const endSeek = () => { if(isSeeking) { isSeeking = false; if (!video.paused) resetControlsTimeout(); } };
-                    progressContainer.addEventListener('mousedown', startSeek); document.addEventListener('mousemove', seeking); document.addEventListener('mouseup', endSeek);
-                    progressContainer.addEventListener('touchstart', startSeek, { passive: true }); document.addEventListener('touchmove', seeking, { passive: true }); document.addEventListener('touchend', endSeek);
-                    thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
-                } else {
-                    const img = document.createElement('img');
-                    img.dataset.src = item.src;
-                    img.alt = "صورة المنتج";
-                    // --- الخطوة 2: إخفاء عنصر التحميل عند اكتمال تحميل الصورة ---
-                    img.onload = () => { placeholder.style.display = 'none'; };
-                    if (img.complete) placeholder.style.display = 'none';
-                    slide.appendChild(img);
-                    thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
-                }
-                dom.track.appendChild(slide);
-                dom.thumbnails.appendChild(thumbnail);
-                thumbnail.addEventListener('click', () => setActiveSlide(index, true));
-            });
+                thumbnail.classList.add('thumbnail', 'loading');
+                if (i === 0) thumbnail.classList.add('active');
+                thumbnailsContainer.appendChild(thumbnail);
+            }
             
-            dom.totalEl.textContent = state.mediaItems.length;
-            setActiveSlide(0);
+            // تحديث العداد بالقيم الافتراضية
+            document.getElementById('totalMedia').textContent = count;
+            document.getElementById('currentMedia').textContent = '1';
+        }
+        
+        function calculateTotalMedia() {
+            const totalMedia = document.querySelectorAll('.thumbnail').length;
+            document.getElementById('totalMedia').textContent = totalMedia;
         }
 
-        const init = () => {
-            ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
-            ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
-            ['mouseup', 'mouseleave', 'touchend'].forEach(evt => document.addEventListener(evt, dragEnd));
-            dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true); });
-            dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true); });
-            dom.shareButton.addEventListener('click', sharePage);
-            window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
+        function updateCurrentMedia() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            let currentIndex = 0;
+            thumbnails.forEach((thumb, index) => {
+                if (thumb.classList.contains('active')) {
+                    currentIndex = index + 1;
+                }
+            });
+            document.getElementById('currentMedia').textContent = currentIndex;
+            updateArrowState(currentIndex, thumbnails.length);
+            scrollThumbnailIntoView();
+        }
+
+        function scrollThumbnailIntoView() {
+            const activeThumbnail = document.querySelector('.thumbnail.active');
+            if (activeThumbnail) {
+                activeThumbnail.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        }
+
+        function updateMainMedia(thumbnail) {
+            const placeholderImage = document.querySelector('.placeholder-image');
+            const mainImage = document.getElementById('mainMedia');
+            const mainVideo = document.getElementById('mainVideo');
+            const shareButton = document.getElementById('shareButton');
+            const mediaCounter = document.querySelector('.media-counter');
+            const src = thumbnail.getAttribute('data-src');
+            const type = thumbnail.getAttribute('data-type');
+
+            // تحديث حالة أيقونة التشغيل للفيديو السابق
+            if (videoIsPlaying) {
+                updateAllVideoThumbnails();
+            }
+
+            // إظهار الصورة الرمادية وإخفاء عداد الصور أثناء التحميل
+            placeholderImage.style.display = 'block';
+            mediaCounter.style.display = 'none';
+
+            if (type === 'image') {
+                mainImage.src = src;
+                mainImage.style.display = 'block';
+                mainVideo.style.display = 'none';
+                mainVideo.pause();
+                videoIsPlaying = false;
+                shareButton.style.display = 'flex';
+                
+                // إزالة الصورة الرمادية وإظهار عداد الصور بعد اكتمال التحميل
+                mainImage.onload = function() {
+                    placeholderImage.style.display = 'none';
+                    mediaCounter.style.display = 'flex';
+                };
+            } else if (type === 'video') {
+                mainVideo.querySelector('source').src = src;
+                mainVideo.load();
+                mainVideo.style.display = 'block';
+                mainImage.style.display = 'none';
+                shareButton.style.display = 'none';
+                
+                // إزالة الصورة الرمادية بعد اكتمال تحميل الفيديو
+                mainVideo.onloadedmetadata = function() {
+                    placeholderImage.style.display = 'none';
+                };
+            }
+        }
+
+        function updateAllVideoThumbnails() {
+            // تحديث جميع المصغرات الفيديو وفقًا لحالة التشغيل
+            const videoThumbnails = document.querySelectorAll('.thumbnail[data-type="video"]');
+            videoThumbnails.forEach(thumb => {
+                updatePlayIcon(thumb, videoIsPlaying);
+            });
+        }
+
+        function updatePlayIcon(thumbnail, isPlaying) {
+            const playIcon = thumbnail.querySelector('.play-icon svg');
+            if (playIcon) {
+                if (isPlaying) {
+                    playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+                } else {
+                    playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+                }
+            }
+        }
+
+        // إنشاء مصغرات احتياطية فورًا عندما يتم تحميل المستند
+        document.addEventListener('DOMContentLoaded', function() {
+            // عرض المصغرات الاحتياطية فورًا
+            createPlaceholderThumbnails();
+            
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
+
             if (productId) {
                 const productsPerFile = 5000;
                 const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
-                fetch(jsonFile).then(res => res.ok ? res.json() : Promise.reject('File not found')).then(products => { const product = products.find(p => p.id === productId); populateGallery(product?.media || []); }).catch(err => { console.error('خطأ في جلب البيانات:', err); dom.mediaCounter.style.display = 'none'; });
+
+                fetch(jsonFile)
+                    .then(response => {
+                        if (!response.ok) throw new Error('الملف غير موجود');
+                        return response.json();
+                    })
+                    .then(products => {
+                        const product = products.find(p => p.id === productId);
+                        if (!product || !product.media) {
+                            console.error('المنتج أو الوسائط غير موجودة');
+                            return;
+                        }
+
+                        // مسح المصغرات الاحتياطية
+                        const thumbnailsContainer = document.querySelector('.thumbnails');
+                        thumbnailsContainer.innerHTML = '';
+                        
+                        product.media.forEach((mediaItem, index) => {
+                            const thumbnail = document.createElement('div');
+                            thumbnail.classList.add('thumbnail', 'loading');
+                            if (index === 0) thumbnail.classList.add('active');
+                            thumbnail.setAttribute('data-src', mediaItem.src);
+                            thumbnail.setAttribute('data-type', mediaItem.type);
+
+                            if (mediaItem.type === 'video') {
+                                const video = document.createElement('video');
+                                video.src = mediaItem.src;
+                                const playIcon = document.createElement('div');
+                                playIcon.classList.add('play-icon');
+                                playIcon.innerHTML = `
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M8 5v14l11-7z"/>
+                                    </svg>
+                                `;
+                                thumbnail.appendChild(video);
+                                thumbnail.appendChild(playIcon);
+                                
+                                // إزالة فئة التحميل فور تحميل بيانات الفيديو
+                                video.onloadedmetadata = function() {
+                                    thumbnail.classList.remove('loading');
+                                };
+                            } else {
+                                const img = document.createElement('img');
+                                img.src = mediaItem.src;
+                                img.alt = 'صورة';
+                                thumbnail.appendChild(img);
+                                
+                                // إزالة فئة التحميل فور تحميل الصورة
+                                img.onload = function() {
+                                    thumbnail.classList.remove('loading');
+                                };
+                            }
+                            thumbnailsContainer.appendChild(thumbnail);
+
+                            thumbnail.addEventListener('click', () => {
+                                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                                thumbnail.classList.add('active');
+                                updateMainMedia(thumbnail);
+                                setTimeout(updateCurrentMedia, 100);
+                            });
+                        });
+
+                        calculateTotalMedia();
+                        updateCurrentMedia();
+                        const initialThumbnail = document.querySelector('.thumbnail.active');
+                        updateMainMedia(initialThumbnail);
+
+                        const mainVideo = document.getElementById('mainVideo');
+                        mainVideo.addEventListener('play', () => {
+                            videoIsPlaying = true;
+                            updateAllVideoThumbnails();
+                        });
+                        mainVideo.addEventListener('pause', () => {
+                            videoIsPlaying = false;
+                            updateAllVideoThumbnails();
+                        });
+
+                        // إعداد Hammer.js للتمرير من اليسار إلى اليمين - تم تعديل هذا الجزء
+                        const mainMediaContainer = document.querySelector('.main-media');
+                        const hammer = new Hammer(mainMediaContainer);
+                        hammer.on('swipeleft', function() {
+                            if (!isSwiping) {
+                                isSwiping = true;
+                                prevMedia(); // تم تغيير هذا من nextMedia إلى prevMedia
+                                setTimeout(() => { isSwiping = false; }, 300);
+                            }
+                        });
+                        hammer.on('swiperight', function() {
+                            if (!isSwiping) {
+                                isSwiping = true;
+                                nextMedia(); // تم تغيير هذا من prevMedia إلى nextMedia
+                                setTimeout(() => { isSwiping = false; }, 300);
+                            }
+                        });
+                    })
+                    .catch(error => console.error('خطأ في جلب البيانات:', error));
             } else {
                 console.error('يرجى تحديد معرف المنتج في URL');
-                dom.mediaCounter.style.display = 'none';
             }
-        };
+        });
 
-        document.getElementById('shareButton').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>`;
-        document.getElementById('prevArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>`;
-        document.getElementById('nextArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>`;
+        function nextMedia() {
+            if (isSwiping) return;
+            isSwiping = true;
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            let currentIndex = -1;
+            thumbnails.forEach((thumb, index) => {
+                if (thumb.classList.contains('active')) {
+                    currentIndex = index;
+                }
+            });
+            if (currentIndex < thumbnails.length - 1) {
+                thumbnails[currentIndex].classList.remove('active');
+                thumbnails[currentIndex + 1].classList.add('active');
+                updateMainMedia(thumbnails[currentIndex + 1]);
+                setTimeout(updateCurrentMedia, 100);
+            }
+            setTimeout(() => { isSwiping = false; }, 300);
+        }
 
-        init();
-    });
-</script>
+        function prevMedia() {
+            if (isSwiping) return;
+            isSwiping = true;
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            let currentIndex = -1;
+            thumbnails.forEach((thumb, index) => {
+                if (thumb.classList.contains('active')) {
+                    currentIndex = index;
+                }
+            });
+            if (currentIndex > 0) {
+                thumbnails[currentIndex].classList.remove('active');
+                thumbnails[currentIndex - 1].classList.add('active');
+                updateMainMedia(thumbnails[currentIndex - 1]);
+                setTimeout(updateCurrentMedia, 100);
+            }
+            setTimeout(() => { isSwiping = false; }, 300);
+        }
 
+        function sharePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    url: window.location.href
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                console.log('Web Share API not supported');
+            }
+        }
+
+        function updateArrowState(currentIndex, totalMedia) {
+            const leftArrow = document.querySelector('.arrow.left');
+            const rightArrow = document.querySelector('.arrow.right');
+
+            if (currentIndex === 1) {
+                leftArrow.classList.add('disabled');
+            } else {
+                leftArrow.classList.remove('disabled');
+            }
+
+            if (currentIndex === totalMedia) {
+                rightArrow.classList.add('disabled');
+            } else {
+                rightArrow.classList.remove('disabled');
+            }
+        }
+    </script>
 </body>
 </html>
 
