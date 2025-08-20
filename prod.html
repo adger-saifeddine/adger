@@ -120,6 +120,9 @@
     .slide video { 
         object-fit: contain; 
         z-index: 1;
+        /* --- هذا هو الحل --- */
+        /* يمنع السلوك الافتراضي للمتصفح عند السحب على الفيديو، مما يضمن سلاسة التمرير */
+        pointer-events: none; 
     }
 
     .swipe-overlay {
