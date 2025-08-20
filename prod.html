@@ -120,7 +120,6 @@
             object-fit: contain; 
         }
 
-        /* --- التحسينات الجديدة لأيقونات التشغيل والإيقاف --- */
         .big-play-button {
             position: absolute;
             top: 50%;
@@ -147,29 +146,14 @@
             width: 32px;
             height: 32px;
             fill: white;
-            position: absolute; /* لوضع الأيقونتين فوق بعضهما */
+            position: absolute;
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        .icon-play {
-            opacity: 1;
-            transform: scale(1);
-            margin-left: 4px; /* لضبط تمركز المثلث */
-        }
-        .icon-pause {
-            opacity: 0;
-            transform: scale(0.7);
-        }
-
-        .slide.is-playing .icon-play {
-            opacity: 0;
-            transform: scale(0.7);
-        }
-        .slide.is-playing .icon-pause {
-            opacity: 1;
-            transform: scale(1);
-        }
-        /* --- نهاية تحسينات الأيقونات --- */
+        .icon-play { opacity: 1; transform: scale(1); margin-left: 4px; }
+        .icon-pause { opacity: 0; transform: scale(0.7); }
+        .slide.is-playing .icon-play { opacity: 0; transform: scale(0.7); }
+        .slide.is-playing .icon-pause { opacity: 1; transform: scale(1); }
 
         .video-controls {
             position: absolute;
@@ -194,7 +178,7 @@
             cursor: pointer;
             position: absolute;
             bottom: 0;
-            -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق */
+            -webkit-tap-highlight-color: transparent;
         }
         .progress-bar {
             width: 0%;
@@ -380,7 +364,7 @@
                 const slide = document.createElement('div');
                 slide.className = 'slide';
                 const thumbnail = document.createElement('div');
-thumbnail.classList.add('thumbnail');
+                thumbnail.classList.add('thumbnail');
                 if (index === 0) thumbnail.classList.add('active');
 
                 if (item.type === 'video') {
@@ -415,7 +399,7 @@ thumbnail.classList.add('thumbnail');
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing');
                         dom.mainContainer.classList.add('video-is-playing');
-                        requestAnimationFrame(updateProgressLoop); // بدء التحديث السلس
+                        requestAnimationFrame(updateProgressLoop);
                     });
                     video.addEventListener('pause', () => {
                         slide.classList.remove('is-playing');
@@ -426,7 +410,6 @@ thumbnail.classList.add('thumbnail');
                          dom.mainContainer.classList.remove('video-is-playing');
                     });
 
-                    // دالة التحديث السلس للشريط
                     const updateProgressLoop = () => {
                         if (!video.paused && !video.ended) {
                             const progressPercent = (video.currentTime / video.duration) * 100;
@@ -435,10 +418,17 @@ thumbnail.classList.add('thumbnail');
                         }
                     };
 
+                    // --- التحسين المطلوب: تحديث الشريط فورًا عند النقر ---
                     progressContainer.addEventListener('click', (e) => {
                         const rect = progressContainer.getBoundingClientRect();
                         const clickX = e.clientX - rect.left;
-                        video.currentTime = (clickX / rect.width) * video.duration;
+                        const clickPercent = clickX / rect.width;
+                        
+                        // التحديث الفوري للبصريات
+                        progressBar.style.width = `${clickPercent * 100}%`;
+                        
+                        // تغيير وقت الفيديو
+                        video.currentTime = clickPercent * video.duration;
                     });
 
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
