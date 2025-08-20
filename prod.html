@@ -44,6 +44,7 @@
 </html>
 
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -308,6 +309,7 @@
         }
     }
 </style>
+
 </head>
 <body>
     <div class="gallery">
@@ -336,59 +338,10 @@
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        
-        const dragMove = (e) => {
-            if (!state.isDragging) return;
-            const dragDistance = getPositionX(e) - state.startPos;
-            let resistedDistance = dragDistance;
-            
-            // --- START: هذا هو منطق "المقاومة" الذي طلبته ---
-            // إذا كان المستخدم في الشريحة الأولى ويحاول السحب للخلف، أو في الأخيرة ويحاول السحب للأمام
-            // نقوم بتقليل مسافة السحب لجعلها تبدو وكأنها مقاومة
-            if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
-                resistedDistance /= 4; // كلما زاد الرقم، زادت المقاومة
-            }
-            // --- END: نهاية منطق المقاومة ---
-
-            state.currentTranslate = state.prevTranslate + resistedDistance;
-            setSliderPosition();
-        };
-
-        // --- START: هذا هو الجزء الذي تم تعديله ليصبح أكثر ذكاءً ---
-        const dragEnd = () => {
-            if (!state.isDragging) return;
-            state.isDragging = false;
-
-            const dragOffset = state.currentTranslate - state.prevTranslate;
-            const dragDuration = Date.now() - state.startTime;
-
-            // إذا كانت الحركة صغيرة جداً وقصيرة المدة، اعتبرها نقرة (مهم للفيديو)
-            if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
-                setActiveSlide(state.currentIndex, true);
-                return;
-            }
-
-            // حساب سرعة السحب (بكسل في الثانية)
-            const swipeVelocity = Math.abs(dragOffset / dragDuration);
-
-            // تحديد عتبات (حدود) لتغيير الشريحة
-            const thresholdDistance = dom.mainContainer.clientWidth / 7; // مسافة السحب المطلوبة (أكثر حساسية)
-            const thresholdVelocity = 0.3; // سرعة السحب المطلوبة (للفليك السريع)
-            
-            // بما أن العرض باللغة العربية (RTL)، فالسحب لليسار يعني "التالي" ولليمين يعني "السابق"
-            const isSwipeToNext = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
-            const isSwipeToPrev = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
-
-            if (isSwipeToNext && state.currentIndex < state.mediaItems.length - 1) {
-                state.currentIndex++;
-            } else if (isSwipeToPrev && state.currentIndex > 0) {
-                state.currentIndex--;
-            }
-
-            // تحديث الواجهة مع تأثير انتقالي سلس
-            setActiveSlide(state.currentIndex, true);
-        };
-        // --- END: نهاية الجزء المعدل ---
+        // --- التعديل الثاني: زيادة مقاومة السحب عند الحواف ---
+        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 10; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
+        // --- التعديل الأول: زيادة حساسية التمرير للانتقال الفوري ---
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = 40; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 15 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -15 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
         
         const loadVisibleSlides = () => {
             const indexesToLoad = [state.currentIndex];
@@ -411,7 +364,7 @@
             });
         };
         
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth * -1; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
+        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         
@@ -441,6 +394,7 @@
             state.mediaItems.forEach((item, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'slide';
+                // --- الخطوة 1: إضافة عنصر التحميل لكل شريحة كبيرة ---
                 const placeholder = document.createElement('div');
                 placeholder.className = 'slide-placeholder';
                 slide.appendChild(placeholder);
@@ -455,8 +409,12 @@
                     const video = document.createElement('video');
                     video.dataset.src = item.src;
                     video.playsInline = true; video.preload = "metadata";
+                    
+                    // --- الخطوة 2: إخفاء عنصر التحميل عند جهوزية الفيديو ---
                     video.onloadeddata = () => { placeholder.style.display = 'none'; };
                     if (video.readyState > 0) placeholder.style.display = 'none';
+
+                    // ... (بقية كود الفيديو كما هو)
                     const swipeOverlay = document.createElement('div'); swipeOverlay.className = 'swipe-overlay';
                     const bigPlayBtn = document.createElement('div'); bigPlayBtn.className = 'big-play-button'; bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     const simpleProgressContainer = document.createElement('div'); simpleProgressContainer.className = 'simple-progress-container'; const simpleProgressBar = document.createElement('div'); simpleProgressBar.className = 'simple-progress-bar'; simpleProgressContainer.append(simpleProgressBar);
@@ -494,6 +452,7 @@
                     const img = document.createElement('img');
                     img.dataset.src = item.src;
                     img.alt = "صورة المنتج";
+                    // --- الخطوة 2: إخفاء عنصر التحميل عند اكتمال تحميل الصورة ---
                     img.onload = () => { placeholder.style.display = 'none'; };
                     if (img.complete) placeholder.style.display = 'none';
                     slide.appendChild(img);
@@ -505,20 +464,6 @@
             });
             
             dom.totalEl.textContent = state.mediaItems.length;
-            // تصحيح بسيط لمنطق RTL
-            // الآن نستخدم transform سالب للتحريك لليسار عند زيادة المؤشر
-            const setActiveSlide_RTL = (index, withTransition = false) => { 
-                state.currentIndex = index; 
-                state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth * -1; // لاحظ الإشارة السالبة
-                if (withTransition) dom.track.classList.add('transitioning'); 
-                setSliderPosition(); 
-                updateUI(); 
-                loadVisibleSlides(); 
-            };
-            
-            // استبدال الدالة القديمة بالجديدة
-            setActiveSlide = setActiveSlide_RTL;
-
             setActiveSlide(0);
         }
 
