@@ -93,7 +93,8 @@
         transform: translateX(0px); 
     }
     .image-track.transitioning {
-        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* --- تعديل: تحسين حركة الانتقال لتكون أكثر سلاسة --- */
+        transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
     
     .slide {
@@ -215,8 +216,12 @@
     .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
     .slide-placeholder { 
-        width: 100%; height: 100%; background-color: #fafafa; 
+        width: 100%; height: 100%;
         position: absolute; top: 0; left: 0; z-index: 6; 
+        /* --- تعديل جديد: إضافة تأثير التحميل اللامع (Shimmer) --- */
+        background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite linear;
     }
     
     .thumbnails { 
@@ -256,7 +261,10 @@
         width: 66px;
         height: 66px;
         box-sizing: border-box;
-        background-color: #fafafa;
+        /* --- تعديل جديد: إضافة تأثير التحميل اللامع (Shimmer) --- */
+        background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite linear;
     }
 
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
@@ -278,6 +286,12 @@
     .arrow svg { fill: white; width: 30px; height: 34px; }
     .arrow.disabled { background-color: rgba(66, 66, 66, 0.25); cursor: not-allowed; opacity: 0.5; }
 
+    /* --- تعديل جديد: إضافة إطار الحركة لتأثير التحميل --- */
+    @keyframes shimmer {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+    }
+
     @media (max-width: 555px) {
         .gallery { flex-direction: column; align-items: center; margin-top: 0; width: 100%; }
         .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 15px; border: none; border-radius: 0; }
@@ -298,13 +312,7 @@
 <body>
     <div class="gallery">
         <div class="main-media" id="mainMediaContainer">
-            <div class="image-track" id="imageTrack">
-                <!-- *** التعديل هنا *** -->
-                <!-- هيكل تحميل مؤقت للشريحة الرئيسية، سيتم مسحه بواسطة JavaScript -->
-                <div class="slide">
-                    <div class="slide-placeholder"></div>
-                </div>
-            </div>
+            <div class="image-track" id="imageTrack"></div>
             <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
             <button class="arrow left" id="prevArrow"><!-- SVG --></button>
             <button class="arrow right" id="nextArrow"><!-- SVG --></button>
@@ -322,13 +330,13 @@
     </div>
 
 <script>
-    // لا يوجد أي تغيير في كود JavaScript
     document.addEventListener('DOMContentLoaded', () => {
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
+        // --- تعديل: تقليل السحب الزائد عند الأطراف ---
+        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
         const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
         
         const loadVisibleSlides = () => {
