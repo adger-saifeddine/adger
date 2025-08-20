@@ -133,15 +133,14 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 3;
-            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 4; /* فوق شريط التقدم */
+            transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 1;
-            -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق */
+            -webkit-tap-highlight-color: transparent;
         }
         .big-play-button:hover {
             transform: translate(-50%, -50%) scale(1.1);
         }
-        
         .big-play-button svg {
             width: 32px;
             height: 32px;
@@ -149,7 +148,6 @@
             position: absolute;
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
-
         .icon-play { opacity: 1; transform: scale(1); margin-left: 4px; }
         .icon-pause { opacity: 0; transform: scale(0.7); }
         .slide.is-playing .icon-play { opacity: 0; transform: scale(0.7); }
@@ -170,6 +168,13 @@
         .slide.is-playing .video-controls {
             opacity: 1;
         }
+        
+        /* --- التحسين الجديد: إخفاء الأزرار بعد فترة --- */
+        .slide.controls-hidden .big-play-button,
+        .slide.controls-hidden .video-controls {
+            opacity: 0 !important; /* استخدام important لضمان الإخفاء */
+            pointer-events: none;
+        }
 
         .progress-container {
             width: 100%;
@@ -186,18 +191,7 @@
             background-color: #ff0000;
         }
 
-        .placeholder-image {
-            width: 100%;
-            height: 100%;
-            background-color: #fafafa;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .placeholder-image { width: 100%; height: 100%; background-color: #fafafa; position: absolute; top: 0; left: 0; z-index: 5; display: flex; align-items: center; justify-content: center; }
         .placeholder-image::before { content: ""; width: 30px; height: 30px; border: 3px solid #ccc; border-top-color: #888; border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -237,11 +231,9 @@
         <div class="main-media" id="mainMediaContainer">
             <div class="image-track" id="imageTrack"></div>
             <div class="placeholder-image" id="placeholderImage"></div>
-            <button class="share-button bottom" id="shareButton">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-            </button>
-            <button class="arrow left" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
-            <button class="arrow right" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
+            <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
+            <button class="arrow left" id="prevArrow"><!-- SVG --></button>
+            <button class="arrow right" id="nextArrow"><!-- SVG --></button>
             <div class="media-counter">
                 منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
             </div>
@@ -251,112 +243,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const dom = {
-            mainContainer: document.getElementById('mainMediaContainer'),
-            track: document.getElementById('imageTrack'),
-            thumbnails: document.getElementById('thumbnailsContainer'),
-            placeholder: document.getElementById('placeholderImage'),
-            shareButton: document.getElementById('shareButton'),
-            mediaCounter: document.querySelector('.media-counter'),
-            currentEl: document.getElementById('currentMedia'),
-            totalEl: document.getElementById('totalMedia'),
-            prevArrow: document.getElementById('prevArrow'),
-            nextArrow: document.getElementById('nextArrow'),
-        };
-
-        const state = {
-            isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0,
-            currentIndex: 0, mediaItems: [], startTime: 0,
-        };
-
+        // --- الكود الكامل والنهائي للسكريبت ---
+        const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), placeholder: document.getElementById('placeholderImage'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
+        const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-
-        const dragStart = (e) => {
-            state.isDragging = true;
-            state.startTime = Date.now();
-            state.startPos = getPositionX(e);
-            state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
-            dom.track.classList.remove('transitioning');
-        };
-
-        const dragMove = (e) => {
-            if (!state.isDragging) return;
-            const dragDistance = getPositionX(e) - state.startPos;
-            let resistedDistance = dragDistance;
-            if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
-                resistedDistance /= 3;
-            }
-            state.currentTranslate = state.prevTranslate + resistedDistance;
-            setSliderPosition();
-        };
-
-        const dragEnd = () => {
-            if (!state.isDragging) return;
-            state.isDragging = false;
-            const dragOffset = state.currentTranslate - state.prevTranslate;
-            const dragDuration = Date.now() - state.startTime;
-
-            if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
-                setActiveSlide(state.currentIndex, true);
-                return;
-            }
-            const swipeVelocity = Math.abs(dragOffset / dragDuration);
-            const thresholdDistance = dom.mainContainer.offsetWidth / 4;
-            const thresholdVelocity = 0.3;
-            const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
-            const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
-
-            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++;
-            else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--;
-            
-            setActiveSlide(state.currentIndex, true);
-        };
-
-        const setActiveSlide = (index, withTransition = false) => {
-            dom.mainContainer.classList.remove('video-is-playing');
-            state.currentIndex = index;
-            state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
-            if (withTransition) dom.track.classList.add('transitioning');
-            setSliderPosition();
-            updateUI();
-        };
-
-        const setSliderPosition = () => {
-            dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
-        };
-
-        const sharePage = () => {
-            if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
-        };
-
-        const updateUI = () => {
-            dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
-            dom.currentEl.textContent = state.currentIndex + 1;
-            dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
-            dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-            dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none';
-            dom.track.querySelectorAll('video').forEach((video, i) => {
-                if (i !== state.currentIndex && !video.paused) video.pause();
-            });
-            scrollThumbnailIntoView();
-        };
-
-        const scrollThumbnailIntoView = () => {
-            const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active');
-            if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        };
+        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth; dom.track.classList.remove('transitioning'); };
+        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.offsetWidth / 4; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+        const setActiveSlide = (index, withTransition = false) => { dom.mainContainer.classList.remove('video-is-playing'); state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
+        const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
+        const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
+        const updateUI = () => { dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex)); dom.currentEl.textContent = state.currentIndex + 1; dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0); dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1); dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none'; dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); }); scrollThumbnailIntoView(); };
+        const scrollThumbnailIntoView = () => { const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active'); if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); };
 
         function populateGallery(mediaData) {
             state.mediaItems = mediaData;
             dom.thumbnails.innerHTML = '';
             dom.track.innerHTML = '';
-
-            if (!state.mediaItems || !state.mediaItems.length) {
-                dom.placeholder.style.display = 'none';
-                dom.mediaCounter.style.display = 'none';
-                return;
-            }
-
+            if (!state.mediaItems || !state.mediaItems.length) { dom.placeholder.style.display = 'none'; dom.mediaCounter.style.display = 'none'; return; }
             dom.mediaCounter.style.display = 'flex';
             dom.placeholder.style.display = 'flex';
 
@@ -375,10 +279,7 @@
 
                     const bigPlayBtn = document.createElement('div');
                     bigPlayBtn.className = 'big-play-button';
-                    bigPlayBtn.innerHTML = `
-                        <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                    `;
+                    bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
                     
                     const controls = document.createElement('div');
                     controls.className = 'video-controls';
@@ -390,47 +291,53 @@
                     controls.append(progressContainer);
                     
                     slide.append(video, bigPlayBtn, controls);
+                    let controlsTimeout = null;
+
+                    const showThenHideControls = () => {
+                        slide.classList.remove('controls-hidden');
+                        clearTimeout(controlsTimeout);
+                        controlsTimeout = setTimeout(() => {
+                            slide.classList.add('controls-hidden');
+                        }, 1500); // إخفاء الأزرار بعد 1.5 ثانية
+                    };
 
                     const togglePlay = () => video.paused ? video.play() : video.pause();
-
                     bigPlayBtn.addEventListener('click', togglePlay);
                     video.addEventListener('click', togglePlay);
 
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing');
                         dom.mainContainer.classList.add('video-is-playing');
+                        showThenHideControls();
                         requestAnimationFrame(updateProgressLoop);
                     });
                     video.addEventListener('pause', () => {
                         slide.classList.remove('is-playing');
                         dom.mainContainer.classList.remove('video-is-playing');
+                        clearTimeout(controlsTimeout);
+                        slide.classList.remove('controls-hidden');
                     });
                     video.addEventListener('ended', () => {
                          slide.classList.remove('is-playing');
                          dom.mainContainer.classList.remove('video-is-playing');
+                         clearTimeout(controlsTimeout);
+                         slide.classList.remove('controls-hidden');
                     });
 
                     const updateProgressLoop = () => {
                         if (!video.paused && !video.ended) {
-                            const progressPercent = (video.currentTime / video.duration) * 100;
-                            progressBar.style.width = `${progressPercent}%`;
+                            progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
                             requestAnimationFrame(updateProgressLoop);
                         }
                     };
 
-                    // --- التحسين المطلوب: تحديث الشريط فورًا عند النقر ---
                     progressContainer.addEventListener('click', (e) => {
                         const rect = progressContainer.getBoundingClientRect();
                         const clickX = e.clientX - rect.left;
                         const clickPercent = clickX / rect.width;
-                        
-                        // التحديث الفوري للبصريات
                         progressBar.style.width = `${clickPercent * 100}%`;
-                        
-                        // تغيير وقت الفيديو
                         video.currentTime = clickPercent * video.duration;
                     });
-
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
                     slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
@@ -440,15 +347,8 @@
                 dom.thumbnails.appendChild(thumbnail);
                 thumbnail.addEventListener('click', () => setActiveSlide(index, true));
             });
-
             const firstElement = dom.track.querySelector('img, video');
-            if (firstElement) {
-                const eventName = firstElement.tagName === 'IMG' ? 'onload' : 'onloadeddata';
-                firstElement[eventName] = () => dom.placeholder.style.display = 'none';
-                if (firstElement.complete || (firstElement.tagName === 'VIDEO' && firstElement.readyState > 0)) {
-                   dom.placeholder.style.display = 'none';
-                }
-            }
+            if (firstElement) { const eventName = firstElement.tagName === 'IMG' ? 'onload' : 'onloadeddata'; firstElement[eventName] = () => dom.placeholder.style.display = 'none'; if (firstElement.complete || (firstElement.tagName === 'VIDEO' && firstElement.readyState > 0)) { dom.placeholder.style.display = 'none'; } }
             dom.totalEl.textContent = state.mediaItems.length;
             setActiveSlide(0);
         }
@@ -457,35 +357,28 @@
             ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
             ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
             ['mouseup', 'mouseleave', 'touchend'].forEach(evt => document.addEventListener(evt, dragEnd));
-
             dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true); });
             dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true); });
             dom.shareButton.addEventListener('click', sharePage);
             window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
-
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             if (productId) {
                 const productsPerFile = 5000;
                 const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
-                fetch(jsonFile)
-                    .then(res => res.ok ? res.json() : Promise.reject('File not found'))
-                    .then(products => {
-                        const product = products.find(p => p.id === productId);
-                        populateGallery(product?.media || []);
-                    })
-                    .catch(err => {
-                        console.error('خطأ في جلب البيانات:', err);
-                        dom.placeholder.style.display = 'none';
-                        dom.mediaCounter.style.display = 'none';
-                    });
+                fetch(jsonFile).then(res => res.ok ? res.json() : Promise.reject('File not found')).then(products => { const product = products.find(p => p.id === productId); populateGallery(product?.media || []); }).catch(err => { console.error('خطأ في جلب البيانات:', err); dom.placeholder.style.display = 'none'; dom.mediaCounter.style.display = 'none'; });
             } else {
                 console.error('يرجى تحديد معرف المنتج في URL');
                 dom.placeholder.style.display = 'none';
                 dom.mediaCounter.style.display = 'none';
             }
         };
+
+        // قمت بملء الأزرار الفارغة بالـ SVG الخاص بها ليعمل الكود بشكل كامل
+        document.getElementById('shareButton').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>`;
+        document.getElementById('prevArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>`;
+        document.getElementById('nextArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>`;
 
         init();
     });
