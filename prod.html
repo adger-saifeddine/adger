@@ -80,7 +80,7 @@
             overflow: hidden;
             cursor: grab;
             touch-action: pan-y;
-            transition: transform 0.3s ease;
+            transition: opacity 0.3s ease; /* تعديل للتحكم في إخفاء وإظهار العناصر */
         }
         .main-media:active {
             cursor: grabbing;
@@ -120,106 +120,83 @@
             object-fit: contain; 
         }
 
-        /* زر التشغيل الكبير الأولي */
         .big-play-button {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 4;
+            align-items: center; justify-content: center;
+            cursor: pointer; z-index: 5;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 1;
             -webkit-tap-highlight-color: transparent;
         }
         .big-play-button:hover {
             transform: translate(-50%, -50%) scale(1.1);
         }
         .big-play-button svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
-            margin-left: 4px;
+            width: 32px; height: 32px; fill: white; margin-left: 4px;
         }
-        /* -- تعديل: إخفاء الزر الكبير بالكامل عند التشغيل -- */
-        .slide.is-playing .big-play-button {
+        /* -- تعديل: إخفاء الزر تماماً بمجرد بدء الفيديو وعدم إظهاره عند الإيقاف المؤقت -- */
+        .slide.video-started .big-play-button {
+            display: none;
+        }
+
+        /* -- جديد: شريط التقدم البسيط الأولي -- */
+        .simple-progress-container {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            z-index: 2;
             opacity: 0;
+            transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        
-        /* -- تعديل: شريط التحكم السفلي الجديد -- */
+        .slide.is-playing .simple-progress-container {
+            opacity: 1; /* يظهر عند التشغيل */
+        }
+        .slide.show-controls .simple-progress-container {
+            opacity: 0; /* يختفي عند ظهور شريط التحكم الكامل */
+        }
+        .simple-progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #ff0000;
+        }
+
+        /* -- تعديل: شريط التحكم الكامل -- */
         .video-controls {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 12px;
-            z-index: 3;
+            z-index: 4; /* أعلى من الشريط البسيط */
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        .slide.is-playing.show-controls .video-controls {
+        .slide.show-controls .video-controls {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .play-pause-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-            color: white;
-            flex-shrink: 0;
-        }
-        .play-pause-btn svg {
-            width: 100%;
-            height: 100%;
-            fill: currentColor;
-        }
+        .play-pause-btn { background: none; border: none; padding: 0; margin: 0; cursor: pointer; width: 24px; height: 24px; color: white; flex-shrink: 0; }
+        .play-pause-btn svg { width: 100%; height: 100%; fill: currentColor; }
         .play-pause-btn .icon-play { display: none; }
         .play-pause-btn .icon-pause { display: block; }
         .video-paused .play-pause-btn .icon-play { display: block; }
         .video-paused .play-pause-btn .icon-pause { display: none; }
 
-        .time-display {
-            color: white;
-            font-size: 13px;
-            font-family: monospace;
-            flex-shrink: 0;
-        }
+        .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
+        .progress-container { width: 100%; height: 4px; background-color: rgba(255, 255, 255, 0.3); flex-grow: 1; border-radius: 2px; cursor: default; }
+        .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.3);
-            flex-grow: 1; /* يأخذ المساحة المتبقية */
-            border-radius: 2px;
-            /* -- تعديل: إزالة مؤشر الفأرة التفاعلي -- */
-            cursor: default; 
-        }
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #ff0000;
-            border-radius: 2px;
-        }
-
-        .placeholder-image { width: 100%; height: 100%; background-color: #fafafa; position: absolute; top: 0; left: 0; z-index: 5; display: flex; align-items: center; justify-content: center; }
+        .placeholder-image { width: 100%; height: 100%; background-color: #fafafa; position: absolute; top: 0; left: 0; z-index: 6; display: flex; align-items: center; justify-content: center; }
         .placeholder-image::before { content: ""; width: 30px; height: 30px; border: 3px solid #ccc; border-top-color: #888; border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -231,19 +208,21 @@
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
         .play-icon svg { width: 16px; height: 16px; fill: white; }
 
-        .share-button, .media-counter, .arrow { position: absolute; z-index: 10; -webkit-tap-highlight-color: transparent; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .share-button, .media-counter, .arrow { position: absolute; z-index: 10; -webkit-tap-highlight-color: transparent; transition: opacity 0.3s ease; }
         
-        /* -- تعديل: إزالة إخفاء زر المشاركة والعداد عند تشغيل الفيديو -- */
-        /* .main-media.video-is-playing .media-counter,
-        .main-media.video-is-playing .share-button { opacity: 0; pointer-events: none; transform: translateY(20px); } */
+        /* -- جديد: إخفاء العناصر عند ظهور شريط التحكم الكامل -- */
+        .main-media.controls-active .media-counter,
+        .main-media.controls-active .share-button {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         .share-button { left: 11px; bottom: 11px; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
         .share-button svg { width: 24px; height: 24px; color: #000; }
         .media-counter { font-family: 'Cairo', sans-serif; bottom: 12px; right: 12px; background-color: rgba(255, 255, 255, 0.767); padding: 2px 12px; border-radius: 15px; font-size: 13px; display: flex; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
         .arrow { top: 50%; transform: translateY(-50%); background-color: rgba(24, 24, 24, 0.4); border: none; border-radius: 3px; width: 41px; height: 45px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; transition: background-color 0.2s; }
         .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
-        .arrow.left { left: 5px; }
-        .arrow.right { right: 5px; }
+        .arrow.left { left: 5px; } .arrow.right { right: 5px; }
         .arrow svg { fill: white; width: 30px; height: 34px; }
         .arrow.disabled { background-color: rgba(66, 66, 66, 0.25); cursor: not-allowed; opacity: 0.5; }
 
@@ -279,10 +258,7 @@
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth; dom.track.classList.remove('transitioning'); };
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); 
-            // --- التحسين: تم تقليل المسافة المطلوبة لجعل التمرير خفيفاً جداً ---
-            const thresholdDistance = dom.mainContainer.offsetWidth / 6; // كانت / 5
-            const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.offsetWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
         const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
@@ -308,23 +284,25 @@
                     const video = document.createElement('video');
                     video.src = item.src; video.playsInline = true; video.preload = "metadata";
 
-                    // -- تعديل: زر التشغيل الكبير لا يحتوي على أيقونة إيقاف بعد الآن --
                     const bigPlayBtn = document.createElement('div');
                     bigPlayBtn.className = 'big-play-button';
                     bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     
-                    // -- تعديل: بناء شريط التحكم الجديد بالكامل --
+                    // -- جديد: بناء شريط التقدم البسيط --
+                    const simpleProgressContainer = document.createElement('div');
+                    simpleProgressContainer.className = 'simple-progress-container';
+                    const simpleProgressBar = document.createElement('div');
+                    simpleProgressBar.className = 'simple-progress-bar';
+                    simpleProgressContainer.append(simpleProgressBar);
+
+                    // -- شريط التحكم الكامل --
                     const controls = document.createElement('div');
                     controls.className = 'video-controls';
-                    
                     const playPauseBtn = document.createElement('button');
                     playPauseBtn.className = 'play-pause-btn';
                     playPauseBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`;
-
                     const timeDisplay = document.createElement('div');
                     timeDisplay.className = 'time-display';
-                    timeDisplay.textContent = '00:00 / 00:00';
-
                     const progressContainer = document.createElement('div');
                     progressContainer.className = 'progress-container';
                     const progressBar = document.createElement('div');
@@ -332,48 +310,54 @@
                     progressContainer.append(progressBar);
                     controls.append(playPauseBtn, progressContainer, timeDisplay);
                     
-                    slide.append(video, bigPlayBtn, controls);
+                    slide.append(video, bigPlayBtn, simpleProgressContainer, controls);
                     let controlsTimeout = null;
 
-                    const formatTime = (timeInSeconds) => {
-                        const minutes = Math.floor(timeInSeconds / 60).toString().padStart(2, '0');
-                        const seconds = Math.floor(timeInSeconds % 60).toString().padStart(2, '0');
-                        return `${minutes}:${seconds}`;
-                    };
-
-                    const toggleControls = () => {
-                        if (video.paused) return; // لا تظهر الشريط إذا كان الفيديو متوقفاً
-                        slide.classList.add('show-controls');
-                        clearTimeout(controlsTimeout);
-                        controlsTimeout = setTimeout(() => slide.classList.remove('show-controls'), 2000);
-                    };
-
+                    const formatTime = (secs) => `${Math.floor(secs / 60).toString().padStart(2, '0')}:${Math.floor(secs % 60).toString().padStart(2, '0')}`;
                     const togglePlay = () => video.paused ? video.play() : video.pause();
+
+                    // -- جديد: دالة تبديل شريط التحكم الكامل --
+                    const toggleFullControls = () => {
+                        if (video.paused || video.ended) return;
+                        const isShowing = slide.classList.toggle('show-controls');
+                        dom.mainContainer.classList.toggle('controls-active', isShowing);
+                        clearTimeout(controlsTimeout);
+                        if (isShowing) {
+                            controlsTimeout = setTimeout(() => {
+                                slide.classList.remove('show-controls');
+                                dom.mainContainer.classList.remove('controls-active');
+                            }, 3000);
+                        }
+                    };
+                    
                     bigPlayBtn.addEventListener('click', togglePlay);
                     playPauseBtn.addEventListener('click', togglePlay);
-                    video.addEventListener('click', toggleControls); // النقر على الفيديو يظهر/يخفي الشريط
+                    video.addEventListener('click', toggleFullControls);
 
                     video.addEventListener('play', () => {
-                        slide.classList.add('is-playing');
+                        slide.classList.add('is-playing', 'video-started');
                         slide.classList.remove('video-paused');
-                        toggleControls();
                     });
-                    video.addEventListener('pause', () => {
+                    const handlePauseOrEnd = () => {
                         slide.classList.remove('is-playing', 'show-controls');
+                        dom.mainContainer.classList.remove('controls-active');
                         slide.classList.add('video-paused');
                         clearTimeout(controlsTimeout);
+                    };
+                    video.addEventListener('pause', handlePauseOrEnd);
+                    video.addEventListener('ended', () => {
+                        handlePauseOrEnd();
+                        slide.classList.remove('video-started'); // السماح لزر التشغيل الكبير بالظهور مجدداً
                     });
-                     video.addEventListener('ended', () => {
-                        slide.classList.remove('is-playing', 'show-controls');
-                        slide.classList.add('video-paused');
-                        clearTimeout(controlsTimeout);
-                    });
+                    
                     video.addEventListener('timeupdate', () => {
-                        progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
-                        timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+                        const percent = (video.currentTime / video.duration) * 100 || 0;
+                        progressBar.style.width = `${percent}%`;
+                        simpleProgressBar.style.width = `${percent}%`; // تحديث الشريطين معاً
+                        timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`;
                     });
                     video.addEventListener('loadedmetadata', () => {
-                        timeDisplay.textContent = `00:00 / ${formatTime(video.duration)}`;
+                        timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`;
                     });
 
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
