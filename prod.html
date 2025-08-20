@@ -152,7 +152,9 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        .slide.is-playing .simple-progress-container {
+        /* -- تعديل 1: إظهار الشريط الأحمر البسيط عند تشغيل الفيديو أو إيقافه -- */
+        .slide.is-playing .simple-progress-container,
+        .slide.video-paused .simple-progress-container {
             opacity: 1;
         }
         .slide.show-controls .simple-progress-container {
@@ -258,8 +260,56 @@
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth; dom.track.classList.remove('transitioning'); };
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.offsetWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
+        
+        // -- تعديل 3: دمج منطق النقر والسحب في دالة واحدة لتجربة سلسة --
+        const dragEnd = () => {
+            if (!state.isDragging) return;
+            state.isDragging = false;
+            const dragOffset = state.currentTranslate - state.prevTranslate;
+            const dragDuration = Date.now() - state.startTime;
+
+            // التحقق إذا كانت الحركة نقرة قصيرة (tap)
+            const wasTap = Math.abs(dragOffset) < 15 && dragDuration < 250;
+            if (wasTap) {
+                const currentSlide = dom.track.children[state.currentIndex];
+                const video = currentSlide.querySelector('video');
+                if (video) {
+                    // إرسال حدث مخصص للفيديو لفتح/إغلاق شريط التحكم
+                    video.dispatchEvent(new CustomEvent('requestToggleControls'));
+                }
+                // إعادة الشريحة لمكانها الصحيح إذا تحركت قليلاً
+                setActiveSlide(state.currentIndex, true);
+                return;
+            }
+
+            // إذا لم تكن نقرة، فهي سحبة (swipe)
+            const swipeVelocity = Math.abs(dragOffset / dragDuration);
+            const thresholdDistance = dom.mainContainer.offsetWidth / 6;
+            const thresholdVelocity = 0.3;
+            const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+            const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+
+            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
+                state.currentIndex++;
+            } else if (isPrevSwipe && state.currentIndex > 0) {
+                state.currentIndex--;
+            }
+            setActiveSlide(state.currentIndex, true);
+        };
+
+        const setActiveSlide = (index, withTransition = false) => {
+            state.currentIndex = index;
+            state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
+            if (withTransition) dom.track.classList.add('transitioning');
+            
+            // -- تعديل 2: التحقق من حالة الشريحة الجديدة لإظهار/إخفاء عناصر الواجهة --
+            const newSlide = dom.track.children[index];
+            const isVideoWithControls = newSlide && newSlide.querySelector('video') && newSlide.classList.contains('show-controls');
+            dom.mainContainer.classList.toggle('controls-active', isVideoWithControls);
+
+            setSliderPosition();
+            updateUI();
+        };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         const updateUI = () => { dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex)); dom.currentEl.textContent = state.currentIndex + 1; dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0); dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1); dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none'; dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); }); scrollThumbnailIntoView(); };
@@ -325,10 +375,9 @@
                     const toggleFullControls = () => {
                         const isShowing = slide.classList.toggle('show-controls');
                         dom.mainContainer.classList.toggle('controls-active', isShowing);
-                        if (isShowing && !video.paused) { // فقط شغل المؤقت إذا كان الفيديو يعمل
+                        if (isShowing && !video.paused) {
                              resetControlsTimeout();
-                        }
-                        else {
+                        } else {
                             clearTimeout(controlsTimeout);
                         }
                     };
@@ -337,13 +386,12 @@
                     
                     bigPlayBtn.addEventListener('click', togglePlay);
                     playPauseBtn.addEventListener('click', togglePlay);
-                    video.addEventListener('click', toggleFullControls);
+                    // -- تعديل 3: استخدام الحدث المخصص بدلاً من 'click' --
+                    video.addEventListener('requestToggleControls', toggleFullControls);
 
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing', 'video-started');
                         slide.classList.remove('video-paused');
-                        // --- التعديل الثاني: إعادة تفعيل مؤقت الإخفاء عند التشغيل ---
-                        // إذا كان شريط التحكم ظاهراً عند بدء التشغيل، قم بتشغيل المؤقت لإخفائه تلقائياً
                         if (slide.classList.contains('show-controls')) {
                             resetControlsTimeout();
                         }
@@ -351,10 +399,8 @@
                     
                     const handlePauseOrEnd = () => {
                         slide.classList.remove('is-playing');
-                        // --- التعديل الأول: منع إخفاء الشريط عند الإيقاف ---
-                        // hideControls(); // تم حذف هذا السطر
                         slide.classList.add('video-paused');
-                        clearTimeout(controlsTimeout); // نوقف مؤقت الإخفاء لأن الفيديو متوقف
+                        clearTimeout(controlsTimeout);
                     };
 
                     video.addEventListener('pause', handlePauseOrEnd);
