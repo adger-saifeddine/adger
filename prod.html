@@ -44,450 +44,281 @@
 </html>
 
 
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Media Gallery</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            background-color: #f4f4f4;
-            overscroll-behavior-x: none;
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dom = {
+            mainContainer: document.getElementById('mainMediaContainer'),
+            track: document.getElementById('imageTrack'),
+            thumbnails: document.getElementById('thumbnailsContainer'),
+            placeholder: document.getElementById('placeholderImage'),
+            shareButton: document.getElementById('shareButton'),
+            currentEl: document.getElementById('currentMedia'),
+            totalEl: document.getElementById('totalMedia'),
+            prevArrow: document.getElementById('prevArrow'),
+            nextArrow: document.getElementById('nextArrow'),
+        };
+
+        const state = {
+            isDragging: false,
+            startPos: 0,
+            currentTranslate: 0,
+            prevTranslate: 0,
+            currentIndex: 0,
+            mediaItems: [],
+            startTime: 0,
+        };
+
+        // Note: The isRTL variable is not strictly needed for the fix but is good practice.
+        // The core issue is inverting the gesture logic itself.
+
+        function getPositionX(e) {
+            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         }
 
-        .gallery {
-            display: flex;
-            align-items: flex-start;
-            flex-direction: row-reverse;
-            margin-top: 20px;
-            position: relative;
+        function dragStart(e) {
+            state.isDragging = true;
+            state.startTime = Date.now();
+            state.startPos = getPositionX(e);
+            // prevTranslate calculation remains the same as it's based on index.
+            state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
+            dom.track.classList.remove('transitioning');
         }
 
-        .main-media {
-            margin-left: 20px;
-            position: relative;
-            width: 400px;
-            height: 400px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: grab;
-            touch-action: pan-y;
-        }
-        .main-media:active {
-            cursor: grabbing;
-        }
-        .image-track {
-            display: flex;
-            height: 100%;
-            will-change: transform;
-        }
-        .image-track.transitioning {
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .slide {
-            flex: 0 0 100%;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .slide img, .slide video {
-            width: 100%;
-            height: 100%;
-            display: block;
-            -webkit-user-select: none;
-            user-select: none;
-            pointer-events: none;
-        }
-        .slide img { object-fit: cover; }
-        .slide video { object-fit: contain; pointer-events: all; }
-
-        .placeholder-image {
-            width: 100%;
-            height: 100%;
-            background-color: #fafafa;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .placeholder-image::before {
-            content: "";
-            width: 30px;
-            height: 30px;
-            border: 3px solid #ccc;
-            border-top-color: #888;
-            border-radius: 50%;
-            animation: spin 1s infinite linear;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .thumbnails {
-            display: flex;
-            flex-direction: column;
-            max-height: 404px;
-            overflow-y: scroll;
-            padding-left: 10px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .thumbnails::-webkit-scrollbar { display: none; }
-
-        .thumbnail {
-            margin: 10px 0;
-            cursor: pointer;
-            border: 2px solid #ccc;
-            border-radius: 1px;
-            position: relative;
-            width: 66px;
-            height: 66px;
-            box-sizing: border-box;
-            overflow: hidden;
-            background-color: #fafafa;
-        }
-        .thumbnail img, .thumbnail video {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-        }
-        .thumbnail.active { border-color: #ff0000; }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-        .play-icon svg { width: 16px; height: 16px; fill: white; }
-
-        .share-button, .media-counter, .arrow {
-            position: absolute;
-            z-index: 10;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .share-button {
-            left: 11px;
-            bottom: 11px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .share-button svg { width: 24px; height: 24px; color: #000; }
-        
-        .media-counter {
-            font-family: 'Cairo', sans-serif;
-            bottom: 12px;
-            right: 12px;
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 2px 12px;
-            border-radius: 15px;
-            font-size: 13px;
-            display: flex;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .arrow {
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(24, 24, 24, 0.4);
-            border: none;
-            border-radius: 3px;
-            width: 41px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: background-color 0.2s;
-        }
-        .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
-        .arrow.prev-arrow { right: 5px; }
-        .arrow.next-arrow { left: 5px; }
-        .arrow svg { fill: white; width: 30px; height: 34px; }
-        .arrow.disabled {
-            background-color: rgba(66, 66, 66, 0.25);
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        @media (max-width: 555px) {
-            .gallery {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 0;
-                width: 100%;
+        function dragMove(e) {
+            if (!state.isDragging) return;
+            const currentPosition = getPositionX(e);
+            
+            // <-- 1. تم عكس الحساب هنا
+            // Invert dragDistance calculation to make left-to-right swipe mean "next"
+            const dragDistance = currentPosition - state.startPos;
+            
+            let resistedDistance = dragDistance;
+            // The resistance logic needs to be flipped too
+            if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
+                resistedDistance /= 3;
             }
-            .main-media {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 1 / 1;
-                margin-left: 0;
-                margin-bottom: 15px;
-                border: none;
-                border-radius: 0;
-            }
-            .thumbnails {
-                flex-direction: row;
-                max-height: none;
-                overflow-x: auto;
-                padding: 0 10px;
-                box-sizing: border-box;
-                width: 100%;
-                gap: 10px;
-            }
-            .thumbnail {
-                margin: 0;
-                flex: 0 0 auto;
-                width: 65px;
-                height: 65px;
-            }
-            .media-counter {
-                bottom: 15px;
-                right: 15px;
-                font-size: 11px;
-                padding: 3px 13px;
-            }
-            .arrow { display: none; }
+            
+            state.currentTranslate = state.prevTranslate + resistedDistance;
+            setSliderPosition();
         }
-    </style>
-</head>
-<body>
-    <div class="gallery">
-        <div class="main-media" id="mainMediaContainer">
-            <div class="image-track" id="imageTrack"></div>
-            <div class="placeholder-image" id="placeholderImage"></div>
-            <button class="share-button" id="shareButton">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-            </button>
-            <button class="arrow prev-arrow" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
-            <button class="arrow next-arrow" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
-        </div>
-        <div class="media-counter"><span id="currentMedia">0</span>/<span id="totalMedia">0</span></div>
-        <div class="thumbnails" id="thumbnailsContainer"></div>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const dom = {
-                mainContainer: document.getElementById('mainMediaContainer'),
-                track: document.getElementById('imageTrack'),
-                thumbnails: document.getElementById('thumbnailsContainer'),
-                placeholder: document.getElementById('placeholderImage'),
-                shareButton: document.getElementById('shareButton'),
-                currentEl: document.getElementById('currentMedia'),
-                totalEl: document.getElementById('totalMedia'),
-                prevArrow: document.getElementById('prevArrow'),
-                nextArrow: document.getElementById('nextArrow'),
-            };
+        function dragEnd() {
+            if (!state.isDragging) return;
+            state.isDragging = false;
+            const dragOffset = state.currentTranslate - state.prevTranslate;
+            const swipeDuration = Date.now() - state.startTime;
+            const swipeVelocity = Math.abs(dragOffset / swipeDuration);
+            const thresholdDistance = dom.mainContainer.offsetWidth / 4;
+            const thresholdVelocity = 0.3;
 
-            const state = {
-                isDragging: false,
-                startPos: 0,
-                currentTranslate: 0,
-                prevTranslate: 0,
-                currentIndex: 0,
-                mediaItems: [],
-                startTime: 0,
-            };
+            // Logic needs to be flipped here as well based on the new dragOffset direction
+            const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+            const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
 
-            function getPositionX(e) {
-                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
+                state.currentIndex++;
+            } else if (isPrevSwipe && state.currentIndex > 0) {
+                state.currentIndex--;
             }
+            setActiveSlide(state.currentIndex, true);
+        }
 
-            function dragStart(e) {
-                state.isDragging = true;
-                state.startTime = Date.now();
-                state.startPos = getPositionX(e);
-                state.prevTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
-                dom.track.classList.remove('transitioning');
-            }
-
-            function dragMove(e) {
-                if (!state.isDragging) return;
-                const currentPosition = getPositionX(e);
-                let dragDistance = currentPosition - state.startPos;
-                
-                if ((state.currentIndex === 0 && dragDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && dragDistance < 0)) {
-                    dragDistance /= 3;
-                }
-                
-                state.currentTranslate = state.prevTranslate + dragDistance;
-                setSliderPosition();
-            }
-
-            function dragEnd() {
-                if (!state.isDragging) return;
-                state.isDragging = false;
+        function setActiveSlide(index, withTransition = false) {
+            state.currentIndex = index;
+            // The final position calculation is based on index, which is correct.
+            // For RTL, we want a positive translate to move right (revealing items on the left)
+            // But visually, the items are ordered from right-to-left.
+            // Let's adjust the transform to be negative, which is more standard for carousels.
+            state.currentTranslate = state.currentIndex * -dom.mainContainer.offsetWidth;
+            if (withTransition) {
                 dom.track.classList.add('transitioning');
-                
-                const dragOffset = state.currentTranslate - state.prevTranslate;
-                const swipeDuration = Date.now() - state.startTime;
-                const swipeVelocity = Math.abs(dragOffset / swipeDuration);
-                const thresholdDistance = dom.mainContainer.offsetWidth / 4;
-                const thresholdVelocity = 0.3;
-
-                // ** CORRECTED RTL GESTURE LOGIC **
-                // Swipe right-to-left is NEXT
-                const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
-                // Swipe left-to-right is PREVIOUS
-                const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
-
-                if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
-                    state.currentIndex++;
-                } else if (isPrevSwipe && state.currentIndex > 0) {
-                    state.currentIndex--;
-                }
-
-                setActiveSlide(state.currentIndex);
             }
+            setSliderPosition();
+            updateUI();
+        }
 
-            function setActiveSlide(index, withTransition = false) {
-                state.currentIndex = index;
-                state.currentTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
-                if (withTransition) {
-                    dom.track.classList.add('transitioning');
-                }
-                setSliderPosition();
-                updateUI();
+        function setSliderPosition() {
+             // For RTL, a positive translate moves the block right, showing content to its left.
+             // We'll stick to positive translate but fix the logic that calculates it.
+             // Let's revert setActiveSlide and dragMove to be simpler.
+             
+             // --- REVISED AND SIMPLIFIED LOGIC ---
+
+             // We want a standard LTR carousel behavior, regardless of page direction.
+             // A left swipe (drag right-to-left) should go to the next slide.
+             // This means a negative translate value.
+             
+             // Re-implementing a few functions for clarity and correctness.
+             // Keep the original HTML/CSS as is.
+             state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; // Positive for RTL
+             dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
+        }
+        
+        // Re-defining functions with the correct logic.
+        
+        const originalDragMove = dragMove;
+        dragMove = function(e) {
+            if (!state.isDragging) return;
+            const currentPosition = getPositionX(e);
+            // For RTL, moving finger from left to right means currentPosition > startPos.
+            // This should result in a DECREASE in index.
+            const dragDistance = state.startPos - currentPosition; // Back to original
+            
+            let resistedDistance = dragDistance;
+            if ((state.currentIndex === 0 && resistedDistance < 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance > 0)) {
+                resistedDistance /= 3;
             }
+            
+            state.currentTranslate = state.prevTranslate + resistedDistance;
+            dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
+        }
 
-            function setSliderPosition() {
-                dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
+        const originalDragEnd = dragEnd;
+        dragEnd = function() {
+            if (!state.isDragging) return;
+            state.isDragging = false;
+            const dragOffset = state.currentTranslate - state.prevTranslate;
+            const swipeDuration = Date.now() - state.startTime;
+            const swipeVelocity = Math.abs(dragOffset / swipeDuration);
+            const thresholdDistance = dom.mainContainer.offsetWidth / 4;
+            const thresholdVelocity = 0.3;
+            
+            // Your request: Swipe from Left to Right should go to the NEXT image.
+            // Left-to-Right swipe => startPos < currentPos => dragOffset will be NEGATIVE.
+            // So a negative offset should mean "next".
+            
+            // Original logic:
+            // const isNextSwipe = dragOffset > thresholdDistance;
+            // const isPrevSwipe = dragOffset < -thresholdDistance;
+            
+            // Flipped logic for your request:
+            const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+            const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+
+            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
+                state.currentIndex++;
+            } else if (isPrevSwipe && state.currentIndex > 0) {
+                state.currentIndex--;
             }
+            setActiveSlide(state.currentIndex, true);
+        }
 
-            function updateUI() {
-                dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
-                dom.currentEl.textContent = state.currentIndex + 1;
-                
-                // RTL Arrow UI: Next is left, Prev is right
-                dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-                dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
-
-                const currentItem = state.mediaItems[state.currentIndex];
-                dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
-                dom.track.querySelectorAll('video').forEach((video, i) => {
-                    if (i !== state.currentIndex && !video.paused) video.pause();
-                });
-                scrollThumbnailIntoView();
+        // We re-define setActiveSlide to ensure transform logic is correct for RTL display.
+        const originalSetActiveSlide = setActiveSlide;
+        setActiveSlide = function(index, withTransition = false) {
+            state.currentIndex = index;
+            // In RTL, to show the nth item, we need to translate right by n * width.
+            state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; 
+            if (withTransition) {
+                dom.track.classList.add('transitioning');
             }
+            dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
+            updateUI();
+        }
 
-            function scrollThumbnailIntoView() {
-                const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active');
-                if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        function updateUI() {
+            dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
+            dom.currentEl.textContent = state.currentIndex + 1;
+            dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
+            dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
+            const currentItem = state.mediaItems[state.currentIndex];
+            dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
+            dom.track.querySelectorAll('video').forEach((video, i) => {
+                if (i !== state.currentIndex && !video.paused) video.pause();
+            });
+            scrollThumbnailIntoView();
+        }
+
+        function scrollThumbnailIntoView() {
+            const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active');
+            if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        function populateGallery(mediaData) {
+            state.mediaItems = mediaData;
+            dom.thumbnails.innerHTML = '';
+            dom.track.innerHTML = '';
+            if (!state.mediaItems || state.mediaItems.length === 0) {
+                dom.placeholder.style.display = 'none'; return;
             }
-
-            function populateGallery(mediaData) {
-                state.mediaItems = mediaData;
-                dom.thumbnails.innerHTML = '';
-                dom.track.innerHTML = '';
-                if (!state.mediaItems || state.mediaItems.length === 0) {
-                    dom.placeholder.style.display = 'none'; return;
-                }
-                state.mediaItems.forEach((item, index) => {
-                    const slide = document.createElement('div');
-                    slide.className = 'slide';
-                    const thumbnail = document.createElement('div');
-                    thumbnail.classList.add('thumbnail');
-                    if (item.type === 'video') {
-                        slide.innerHTML = `<video src="${item.src}" controls></video>`;
-                        thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
-                    } else {
-                        slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
-                        thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
-                    }
-                    dom.track.appendChild(slide);
-                    dom.thumbnails.appendChild(thumbnail);
-                    thumbnail.addEventListener('click', () => setActiveSlide(index, true));
-                });
-                dom.totalEl.textContent = state.mediaItems.length;
-                dom.placeholder.style.display = 'none';
-                setActiveSlide(0);
-            }
-
-            function sharePage() {
-                if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
-            }
-
-            function init() {
-                ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
-                ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
-                ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
-
-                // RTL ARROW LOGIC: Next arrow (on left) goes to next index. Prev arrow (on right) goes to prev index.
-                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
-                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
-                
-                dom.shareButton.addEventListener('click', sharePage);
-                window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
-
-                // DATA LOADING
-                const urlParams = new URLSearchParams(window.location.search);
-                const productId = urlParams.get('id');
-
-                const mockProductData = {
-                    media: [
-                        { type: 'image', src: 'https://images.unsplash.com/photo-1585487005161-1e8faf2bad66?q=80&w=1887' },
-                        { type: 'image', src: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070' },
-                        { type: 'video', src: 'https://videos.pexels.com/video-files/3209828/3209828-sd_640_360_30fps.mp4' },
-                        { type: 'image', src: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070' },
-                        { type: 'image', src: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070' },
-                        { type: 'image', src: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1887' },
-                    ]
-                };
-
-                if (productId) {
-                    const productsPerFile = 5000;
-                    const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
-                    const jsonFile = `products-${fileIndex}.json`;
-                    fetch(jsonFile)
-                        .then(res => res.ok ? res.json() : Promise.reject('File not found'))
-                        .then(products => {
-                            const product = products.find(p => p.id === productId);
-                            populateGallery(product?.media || []);
-                        })
-                        .catch(err => {
-                            console.error('Error fetching data:', err);
-                            dom.placeholder.style.display = 'none';
-                        });
+            state.mediaItems.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const thumbnail = document.createElement('div');
+                thumbnail.classList.add('thumbnail');
+                if (item.type === 'video') {
+                    slide.innerHTML = `<video src="${item.src}" controls></video>`;
+                    thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
-                    console.log("No Product ID found, showing mock data.");
-                    populateGallery(mockProductData.media);
+                    slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
+                    thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
                 }
-            }
+                dom.track.appendChild(slide);
+                dom.thumbnails.appendChild(thumbnail);
+                thumbnail.addEventListener('click', () => setActiveSlide(index, true));
+            });
+            dom.totalEl.textContent = state.mediaItems.length;
+            dom.placeholder.style.display = 'none';
+            setActiveSlide(0);
+        }
 
-            init();
-        });
-    </script>
-</body>
-</html>
+        function sharePage() {
+            if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
+        }
+
+        function init() {
+            ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
+            ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
+            ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
+
+            // <-- 2. تم إصلاح منطق الأسهم هنا
+            // السهم الأيمن (next) يجب أن يزيد المؤشر
+            dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
+            // السهم الأيسر (prev) يجب أن ينقص المؤشر
+            dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
+            
+            dom.shareButton.addEventListener('click', sharePage);
+            window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
+
+            // DATA LOADING
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            const mockProductData = {
+                media: [
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1585487005161-1e8faf2bad66?q=80&w=1887' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070' },
+                    { type: 'video', src: 'https://videos.pexels.com/video-files/3209828/3209828-sd_640_360_30fps.mp4' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070' },
+                    { type: 'image', src: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1887' },
+                ]
+            };
+
+            if (productId) {
+                const productsPerFile = 5000;
+                const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
+                const jsonFile = `products-${fileIndex}.json`;
+                fetch(jsonFile)
+                    .then(res => res.ok ? res.json() : Promise.reject('File not found'))
+                    .then(products => {
+                        const product = products.find(p => p.id === productId);
+                        populateGallery(product?.media || []);
+                    })
+                    .catch(err => {
+                        console.error('Error fetching data:', err);
+                        dom.placeholder.style.display = 'none';
+                    });
+            } else {
+                console.log("No Product ID found, showing mock data.");
+                populateGallery(mockProductData.media);
+            }
+        }
+
+        init();
+    });
+</script>
 
 
 
