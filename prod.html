@@ -163,7 +163,6 @@
         pointer-events: none;
     }
     
-    /* --- التعديل هنا: إظهار الشريط الأحمر بمجرد بدء الفيديو، وإخفاؤه فقط عند ظهور عناصر التحكم --- */
     .slide.video-started .simple-progress-container {
         opacity: 1;
     }
@@ -195,12 +194,19 @@
         pointer-events: auto;
     }
 
-    .play-pause-btn { background: none; border: none; padding: 0; margin: 0; cursor: pointer; width: 24px; height: 24px; color: white; flex-shrink: 0; }
+    .play-pause-btn { 
+        background: none; border: none; padding: 0; margin: 0; cursor: pointer; 
+        width: 24px; height: 24px; color: white; flex-shrink: 0; 
+        -webkit-tap-highlight-color: transparent;
+    }
     .play-pause-btn svg { width: 100%; height: 100%; fill: currentColor; }
-    .play-pause-btn .icon-play { display: none; }
-    .play-pause-btn .icon-pause { display: block; }
-    .video-paused .play-pause-btn .icon-play { display: block; }
-    .video-paused .play-pause-btn .icon-pause { display: none; }
+    
+    /* --- التعديل هنا: إصلاح منطق عرض أيقونة التشغيل/الإيقاف --- */
+    .play-pause-btn .icon-play { display: block; }
+    .play-pause-btn .icon-pause { display: none; }
+    .slide.is-playing .play-pause-btn .icon-play { display: none; }
+    .slide.is-playing .play-pause-btn .icon-pause { display: block; }
+    /* --- نهاية التعديل --- */
 
     .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
     .video-controls .progress-container {
@@ -211,10 +217,11 @@
     }
     .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
-    .placeholder-image { width: 100%; height: 100%; background-color: #fafafa; position: absolute; top: 0; left: 0; z-index: 6; display: flex; align-items: center; justify-content: center; }
-    .placeholder-image::before { content: ""; width: 30px; height: 30px; border: 3px solid #ccc; border-top-color: #888; border-radius: 50%; animation: spin 1s infinite linear; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
+    .placeholder-image { 
+        width: 100%; height: 100%; background-color: #fafafa; 
+        position: absolute; top: 0; left: 0; z-index: 6; 
+    }
+    
     .thumbnails { display: flex; flex-direction: column; max-height: 404px; overflow-y: scroll; padding-left: 10px; scrollbar-width: none; -ms-overflow-style: none; }
     .thumbnails::-webkit-scrollbar { display: none; }
     .thumbnail { margin: 10px 0; cursor: pointer; border: 2px solid #ccc; border-radius: 1px; position: relative; width: 66px; height: 66px; box-sizing: border-box; overflow: hidden; background-color: #fafafa; }
@@ -372,7 +379,6 @@
 
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing', 'video-started');
-                        slide.classList.remove('video-paused');
                         if (slide.classList.contains('show-controls')) {
                             resetControlsTimeout();
                         }
@@ -380,7 +386,6 @@
                     
                     const handlePauseOrEnd = () => {
                         slide.classList.remove('is-playing');
-                        slide.classList.add('video-paused');
                         clearTimeout(controlsTimeout);
                     };
 
