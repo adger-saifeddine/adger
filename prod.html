@@ -44,7 +44,6 @@
 </html>
 
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -80,9 +79,10 @@
         border-radius: 10px;
         overflow: hidden;
         cursor: grab;
-        touch-action: pan-y;
+        /* --- تعديل CSS رقم 1: خاصية touch-action أساسية للتحكم في اللمس --- */
+        touch-action: pan-y; /* اسمح بالتمرير الرأسي، امنع الأفقي للمتصفح */
         transition: opacity 0.3s ease;
-        background-color: #fafafa; /* لون خلفية يتطابق مع لون التحميل */
+        background-color: #fafafa;
     }
     .main-media:active {
         cursor: grabbing;
@@ -130,6 +130,8 @@
         width: 100%;
         height: 100%;
         z-index: 3;
+        /* --- تعديل CSS رقم 2: إضافة الخاصية هنا أيضًا لضمان التحكم الكامل --- */
+        touch-action: pan-y; 
     }
 
     .big-play-button {
@@ -216,11 +218,9 @@
     }
     .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
-    /* --- هنا يكمن السر: عنصر التحميل الخاص بالصورة/الفيديو الكبير --- */
     .slide-placeholder { 
         width: 100%; height: 100%;
         position: absolute; top: 0; left: 0; z-index: 6; 
-        /* --- له نفس تأثير التحميل اللامع (Shimmer) --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -263,7 +263,6 @@
         width: 66px;
         height: 66px;
         box-sizing: border-box;
-        /* --- تأثير التحميل اللامع للصور المصغرة --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -336,25 +335,53 @@
     document.addEventListener('DOMContentLoaded', () => {
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
-        const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         
-        // --- بداية التعديل ---
-        const dragStart = (e) => {
-            // تجاهل بدء السحب إذا كان المستخدم يتفاعل مع شريط التقدم
-            if (e.target.closest('.progress-container')) return;
-            // منع السلوك الافتراضي للمتصفح (هذا هو الحل الرئيسي)
-            e.preventDefault(); // <-- الحل (الخطوة 2)
-            
-            state.isDragging = true; 
-            state.startTime = Date.now(); 
-            state.startPos = getPositionX(e); 
-            state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; 
-            dom.track.classList.remove('transitioning'); 
-        };
-        // --- نهاية التعديل ---
+        // --- تعديل JS رقم 1: لم نعد بحاجة للدالة المعقدة، e.clientX يعمل للكل ---
+        const getPositionX = (e) => e.clientX; 
 
-        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+        const dragStart = (e) => {
+            // تجاهل السحب إذا بدأ على شريط التقدم
+            if (e.target.closest('.progress-container')) return;
+            state.isDragging = true;
+            state.startTime = Date.now();
+            state.startPos = getPositionX(e);
+            state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth;
+            dom.track.classList.remove('transitioning');
+            // --- تعديل JS رقم 2: نلتقط المؤشر لضمان استمرار التتبع حتى لو خرج خارج العنصر ---
+            dom.mainContainer.setPointerCapture(e.pointerId);
+        };
+
+        const dragMove = (e) => {
+            if (!state.isDragging) return;
+            const dragDistance = getPositionX(e) - state.startPos;
+            let resistedDistance = dragDistance;
+            if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
+                resistedDistance /= 4;
+            }
+            state.currentTranslate = state.prevTranslate + resistedDistance;
+            setSliderPosition();
+        };
+
+        const dragEnd = (e) => {
+            // --- تعديل JS رقم 3: تحرير المؤشر ---
+            dom.mainContainer.releasePointerCapture(e.pointerId);
+            if (!state.isDragging) return;
+            state.isDragging = false;
+            const dragOffset = state.currentTranslate - state.prevTranslate;
+            const dragDuration = Date.now() - state.startTime;
+            if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
+                setActiveSlide(state.currentIndex, true);
+                return;
+            }
+            const swipeVelocity = Math.abs(dragOffset / dragDuration);
+            const thresholdDistance = dom.mainContainer.clientWidth / 6;
+            const thresholdVelocity = 0.3;
+            const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+            const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++;
+            else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--;
+            setActiveSlide(state.currentIndex, true);
+        };
         
         const loadVisibleSlides = () => {
             const indexesToLoad = [state.currentIndex];
@@ -453,10 +480,17 @@
                     video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
                     video.addEventListener('timeupdate', () => { if (isSeeking) return; const percent = (video.currentTime / video.duration) * 100 || 0; progressBar.style.width = `${percent}%`; simpleProgressBar.style.width = `${percent}%`; timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`; });
                     video.addEventListener('loadedmetadata', () => { timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`; });
-                    const seek = (e) => { const rect = progressContainer.getBoundingClientRect(); const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX; const percent = Math.max(0, Math.min(1, (positionX - rect.left) / rect.width)); progressBar.style.width = `${percent * 100}%`; video.currentTime = percent * video.duration; };
-                    const startSeek = (e) => { isSeeking = true; clearTimeout(controlsTimeout); seek(e); }; const seeking = (e) => { if(isSeeking) seek(e); }; const endSeek = () => { if(isSeeking) { isSeeking = false; if (!video.paused) resetControlsTimeout(); } };
-                    progressContainer.addEventListener('mousedown', startSeek); document.addEventListener('mousemove', seeking); document.addEventListener('mouseup', endSeek);
-                    progressContainer.addEventListener('touchstart', startSeek, { passive: true }); document.addEventListener('touchmove', seeking, { passive: true }); document.addEventListener('touchend', endSeek);
+                    
+                    // --- تعديل JS رقم 4: تحديث Seek Logic لـ Pointer Events ---
+                    const seek = (e) => { const rect = progressContainer.getBoundingClientRect(); const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)); progressBar.style.width = `${percent * 100}%`; video.currentTime = percent * video.duration; };
+                    const startSeek = (e) => { e.stopPropagation(); isSeeking = true; progressContainer.setPointerCapture(e.pointerId); clearTimeout(controlsTimeout); seek(e); }; 
+                    const seeking = (e) => { if(isSeeking) seek(e); }; 
+                    const endSeek = (e) => { if(isSeeking) { isSeeking = false; progressContainer.releasePointerCapture(e.pointerId); if (!video.paused) resetControlsTimeout(); } };
+                    progressContainer.addEventListener('pointerdown', startSeek); 
+                    progressContainer.addEventListener('pointermove', seeking); 
+                    progressContainer.addEventListener('pointerup', endSeek);
+                    progressContainer.addEventListener('pointercancel', endSeek);
+                    
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
                     const img = document.createElement('img');
@@ -477,13 +511,12 @@
         }
 
         const init = () => {
-            // --- بداية التعديل ---
-            // أزلنا `{ passive: true }` للسماح باستخدام preventDefault
-            ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart)); // <-- الحل (الخطوة 1)
-            // --- نهاية التعديل ---
+            // --- تعديل JS رقم 5: استبدال جميع الأحداث القديمة بـ Pointer Events ---
+            dom.mainContainer.addEventListener('pointerdown', dragStart);
+            dom.mainContainer.addEventListener('pointermove', dragMove);
+            dom.mainContainer.addEventListener('pointerup', dragEnd);
+            dom.mainContainer.addEventListener('pointercancel', dragEnd); // مهم في حالة مقاطعة اللمس
             
-            ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
-            ['mouseup', 'mouseleave', 'touchend'].forEach(evt => document.addEventListener(evt, dragEnd));
             dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true); });
             dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true); });
             dom.shareButton.addEventListener('click', sharePage);
