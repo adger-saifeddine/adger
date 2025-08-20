@@ -105,6 +105,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        background-color: #f0f0f0; /* --- تعديل: خلفية للشريحة أثناء تحميل الصورة --- */
     }
     .slide img, .slide video {
         width: 100%;
@@ -119,8 +120,37 @@
     .slide video { 
         object-fit: contain; 
         z-index: 1;
+        background-color: #000; /* خلفية سوداء خلف الفيديو */
+    }
+    
+    /* --- تعديل: إضافة مؤشر التحميل (Spinner) --- */
+    .loading-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        z-index: 6;
+        display: none; /* يتم إظهاره عبر JS */
     }
 
+    .slide.is-loading .loading-spinner {
+        display: block;
+    }
+    
+    /* عند بدء الفيديو، نخفي المؤشر */
+    .slide.video-started .loading-spinner {
+        display: none;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
     .swipe-overlay {
         position: absolute;
         top: 0;
@@ -142,9 +172,14 @@
         cursor: pointer; z-index: 5;
         transition: opacity 0.3s ease, transform 0.3s ease;
         -webkit-tap-highlight-color: transparent;
+        opacity: 1;
     }
     .big-play-button:hover {
         transform: translate(-50%, -50%) scale(1.1);
+    }
+    .slide.is-loading .big-play-button {
+        opacity: 0.5; /* جعل الزر باهتًا أثناء التحميل */
+        pointer-events: none;
     }
     .big-play-button svg {
         width: 32px; height: 32px; fill: white; margin-left: 4px;
@@ -273,10 +308,10 @@
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), placeholder: document.getElementById('placeholderImage'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
+        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         
@@ -301,7 +336,10 @@
             state.mediaItems = mediaData;
             dom.thumbnails.innerHTML = ''; dom.track.innerHTML = '';
             if (!state.mediaItems || !state.mediaItems.length) { dom.placeholder.style.display = 'none'; dom.mediaCounter.style.display = 'none'; return; }
-            dom.mediaCounter.style.display = 'flex'; dom.placeholder.style.display = 'flex';
+            
+            // --- تعديل: إخفاء شاشة التحميل الرئيسية فورًا ---
+            dom.placeholder.style.display = 'none'; 
+            dom.mediaCounter.style.display = 'flex';
 
             state.mediaItems.forEach((item, index) => {
                 const slide = document.createElement('div');
@@ -313,7 +351,14 @@
 
                 if (item.type === 'video') {
                     const video = document.createElement('video');
-                    video.src = item.src; video.playsInline = true; video.preload = "metadata";
+                    video.src = item.src;
+                    video.playsInline = true;
+                    // --- تعديل: تغيير التحميل المسبق وتشجيع المتصفح على تحميل الفيديو ---
+                    video.preload = "auto"; 
+                    // --- تعديل: إضافة صورة مصغرة (poster) للفيديو ---
+                    if (item.thumbnail) {
+                        video.poster = item.thumbnail;
+                    }
 
                     const swipeOverlay = document.createElement('div');
                     swipeOverlay.className = 'swipe-overlay';
@@ -322,6 +367,10 @@
                     bigPlayBtn.className = 'big-play-button';
                     bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     
+                    // --- تعديل: إنشاء وإضافة مؤشر التحميل ---
+                    const spinner = document.createElement('div');
+                    spinner.className = 'loading-spinner';
+
                     const simpleProgressContainer = document.createElement('div');
                     simpleProgressContainer.className = 'simple-progress-container';
                     const simpleProgressBar = document.createElement('div');
@@ -342,9 +391,16 @@
                     progressContainer.append(progressBar);
                     controls.append(playPauseBtn, progressContainer, timeDisplay);
                     
-                    slide.append(video, swipeOverlay, bigPlayBtn, simpleProgressContainer, controls);
+                    slide.append(video, swipeOverlay, bigPlayBtn, spinner, simpleProgressContainer, controls);
                     let controlsTimeout = null;
                     let isSeeking = false;
+
+                    // --- تعديل: إضافة أحداث للتحكم في مؤشر التحميل ---
+                    slide.classList.add('is-loading');
+                    video.addEventListener('canplay', () => slide.classList.remove('is-loading'));
+                    video.addEventListener('waiting', () => slide.classList.add('is-loading'));
+                    video.addEventListener('playing', () => slide.classList.remove('is-loading'));
+
 
                     const formatTime = (secs) => `${Math.floor(secs / 60).toString().padStart(2, '0')}:${Math.floor(secs % 60).toString().padStart(2, '0')}`;
                     const togglePlay = () => video.paused ? video.play() : video.pause();
@@ -377,7 +433,7 @@
 
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing', 'video-started');
-                        slide.classList.remove('video-paused');
+                        slide.classList.remove('video-paused', 'is-loading');
                         if (slide.classList.contains('show-controls')) {
                             resetControlsTimeout();
                         }
@@ -436,7 +492,7 @@
                     document.addEventListener('touchmove', seeking, { passive: true });
                     document.addEventListener('touchend', endSeek);
 
-                    thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
+                    thumbnail.innerHTML = `<video src="${item.src}#t=0.1" preload="metadata"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
                     slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
                     thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
@@ -445,8 +501,7 @@
                 dom.thumbnails.appendChild(thumbnail);
                 thumbnail.addEventListener('click', () => setActiveSlide(index, true));
             });
-            const firstElement = dom.track.querySelector('img, video');
-            if (firstElement) { const eventName = firstElement.tagName === 'IMG' ? 'onload' : 'onloadeddata'; firstElement[eventName] = () => dom.placeholder.style.display = 'none'; if (firstElement.complete || (firstElement.tagName === 'VIDEO' && firstElement.readyState > 0)) { dom.placeholder.style.display = 'none'; } }
+            
             dom.totalEl.textContent = state.mediaItems.length;
             setActiveSlide(0);
         }
