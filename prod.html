@@ -190,6 +190,7 @@
         .video-paused .play-pause-btn .icon-pause { display: none; }
 
         .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
+        /* -- تعديل: جعل شريط التقدم الكامل قابلاً للتحكم -- */
         .video-controls .progress-container {
             width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.3);
             flex-grow: 1; border-radius: 2px;
@@ -313,50 +314,45 @@
                     const formatTime = (secs) => `${Math.floor(secs / 60).toString().padStart(2, '0')}:${Math.floor(secs % 60).toString().padStart(2, '0')}`;
                     const togglePlay = () => video.paused ? video.play() : video.pause();
                     
-                    const hideControls = () => { slide.classList.remove('show-controls'); dom.mainContainer.classList.remove('controls-active'); };
-                    const resetControlsTimeout = () => { clearTimeout(controlsTimeout); controlsTimeout = setTimeout(hideControls, 3000); };
+                    const hideControls = () => {
+                        slide.classList.remove('show-controls');
+                        dom.mainContainer.classList.remove('controls-active');
+                    };
+                    const resetControlsTimeout = () => {
+                        clearTimeout(controlsTimeout);
+                        controlsTimeout = setTimeout(hideControls, 3000);
+                    };
+
                     const toggleFullControls = () => {
-                        if (video.paused || video.ended) return;
+                        // -- التعديل: تم إزالة الشرط الذي يمنع إظهار/إخفاء الشريط عند توقف الفيديو --
                         const isShowing = slide.classList.toggle('show-controls');
                         dom.mainContainer.classList.toggle('controls-active', isShowing);
                         if (isShowing) resetControlsTimeout();
                         else clearTimeout(controlsTimeout);
                     };
                     
+                    // -- تعديل: منع إغلاق الشريط عند النقر بداخله --
                     controls.addEventListener('click', (e) => e.stopPropagation());
-                    bigPlayBtn.addEventListener('click', togglePlay);
-                    video.addEventListener('click', toggleFullControls);
                     
-                    // -- تعديل: النقر على زر التشغيل/الإيقاف يعيد ضبط المؤقت فقط ولا يخفي الشريط --
-                    playPauseBtn.addEventListener('click', () => {
-                        togglePlay();
-                        resetControlsTimeout();
-                    });
+                    bigPlayBtn.addEventListener('click', togglePlay);
+                    playPauseBtn.addEventListener('click', togglePlay);
+                    video.addEventListener('click', toggleFullControls);
 
                     video.addEventListener('play', () => { slide.classList.add('is-playing', 'video-started'); slide.classList.remove('video-paused'); });
-                    
-                    // -- تعديل: فصل منطق الإيقاف عن منطق نهاية الفيديو --
-                    const handlePause = () => {
-                        slide.classList.remove('is-playing');
-                        slide.classList.add('video-paused');
-                    };
-                    const handleEnd = () => {
-                        handlePause(); // تطبيق نفس تغييرات الواجهة عند الإيقاف
-                        hideControls(); // إخفاء الشريط بشكل صريح عند انتهاء الفيديو
-                        slide.classList.remove('video-started'); // السماح لزر التشغيل الكبير بالظهور مجدداً
-                    };
-
-                    video.addEventListener('pause', handlePause);
-                    video.addEventListener('ended', handleEnd);
+                    const handlePauseOrEnd = () => { slide.classList.remove('is-playing'); hideControls(); slide.classList.add('video-paused'); clearTimeout(controlsTimeout); };
+                    video.addEventListener('pause', handlePauseOrEnd);
+                    video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
                     
                     video.addEventListener('timeupdate', () => {
-                        if (isSeeking) return;
+                        if (isSeeking) return; // لا تحدث الشريط أثناء سحب المستخدم
                         const percent = (video.currentTime / video.duration) * 100 || 0;
-                        progressBar.style.width = `${percent}%`; simpleProgressBar.style.width = `${percent}%`;
+                        progressBar.style.width = `${percent}%`;
+                        simpleProgressBar.style.width = `${percent}%`;
                         timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`;
                     });
                     video.addEventListener('loadedmetadata', () => { timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`; });
 
+                    // -- تعديل: إعادة تفعيل وإضافة منطق التحكم بشريط التقدم الكامل --
                     const seek = (e) => {
                         const rect = progressContainer.getBoundingClientRect();
                         const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
@@ -368,8 +364,12 @@
                     const seeking = (e) => { if(isSeeking) seek(e); };
                     const endSeek = () => { if(isSeeking) { isSeeking = false; resetControlsTimeout(); } };
 
-                    progressContainer.addEventListener('mousedown', startSeek); document.addEventListener('mousemove', seeking); document.addEventListener('mouseup', endSeek);
-                    progressContainer.addEventListener('touchstart', startSeek, { passive: true }); document.addEventListener('touchmove', seeking, { passive: true }); document.addEventListener('touchend', endSeek);
+                    progressContainer.addEventListener('mousedown', startSeek);
+                    document.addEventListener('mousemove', seeking);
+                    document.addEventListener('mouseup', endSeek);
+                    progressContainer.addEventListener('touchstart', startSeek, { passive: true });
+                    document.addEventListener('touchmove', seeking, { passive: true });
+                    document.addEventListener('touchend', endSeek);
 
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
