@@ -79,9 +79,9 @@
         border-radius: 10px;
         overflow: hidden;
         cursor: grab;
+        /* --- هذا هو السطر الأهم لمنع التعارض بين السحب الأفقي والتمرير الرأسي --- */
         touch-action: pan-y;
-        transition: opacity 0.3s ease;
-        background-color: #fafafa; /* لون خلفية يتطابق مع لون التحميل */
+        background-color: #fafafa;
     }
     .main-media:active {
         cursor: grabbing;
@@ -215,11 +215,9 @@
     }
     .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
-    /* --- هنا يكمن السر: عنصر التحميل الخاص بالصورة/الفيديو الكبير --- */
     .slide-placeholder { 
         width: 100%; height: 100%;
         position: absolute; top: 0; left: 0; z-index: 6; 
-        /* --- له نفس تأثير التحميل اللامع (Shimmer) --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -262,7 +260,6 @@
         width: 66px;
         height: 66px;
         box-sizing: border-box;
-        /* --- تأثير التحميل اللامع للصور المصغرة --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -321,7 +318,6 @@
             </div>
         </div>
         <div class="thumbnails" id="thumbnailsContainer">
-            <!-- هياكل التحميل الأولية للصور المصغرة -->
             <div class="thumbnail-placeholder"></div>
             <div class="thumbnail-placeholder"></div>
             <div class="thumbnail-placeholder"></div>
@@ -333,61 +329,92 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
-        const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
-        const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
         
-        // --- START: هذا هو الجزء الذي تم تعديله ---
+        // --- START: تعديلات على متغيرات الحالة ---
+        const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, dragDirection: null, };
+        // --- END: تعديلات على متغيرات الحالة ---
+
+        const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        const getPositionY = (e) => e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
+
+        // --- START: تعديل دالة dragStart ---
+        const dragStart = (e) => {
+            state.dragDirection = null; // إعادة تعيين اتجاه السحب
+            state.isDragging = true;
+            state.startTime = Date.now();
+            state.startPos = getPositionX(e);
+            state.startY = getPositionY(e); // تسجيل موضع البداية الرأسي
+            state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth;
+            dom.track.classList.remove('transitioning');
+        };
+        // --- END: تعديل دالة dragStart ---
+
+        // --- START: تعديل دالة dragMove ---
+        const dragMove = (e) => {
+            if (!state.isDragging) return;
+
+            const currentX = getPositionX(e);
+            const currentY = getPositionY(e);
+            const diffX = currentX - state.startPos;
+            const diffY = currentY - state.startY;
+
+            // تحديد اتجاه الحركة عند أول حركة فقط
+            if (state.dragDirection === null) {
+                // إذا كانت الحركة الرأسية أكبر من الأفقية، اعتبرها تمريرًا رأسيًا
+                if (Math.abs(diffY) > Math.abs(diffX)) {
+                    state.dragDirection = 'vertical';
+                } else {
+                    state.dragDirection = 'horizontal';
+                }
+            }
+
+            // فقط قم بتحريك السلايدر إذا كان الاتجاه أفقيًا
+            if (state.dragDirection === 'horizontal') {
+                let resistedDistance = diffX;
+                if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
+                    resistedDistance /= 4;
+                }
+                state.currentTranslate = state.prevTranslate + resistedDistance;
+                setSliderPosition();
+            }
+        };
+        // --- END: تعديل دالة dragMove ---
+        
+        // --- START: تعديل دالة dragEnd ---
         const dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
+            
+            // تجاهل نهاية السحب إذا كان التمرير رأسيًا
+            if (state.dragDirection === 'vertical') {
+                state.dragDirection = null;
+                return;
+            }
+
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const dragDuration = Date.now() - state.startTime;
 
-            // الحفاظ على اكتشاف "النقر": السحب لمسافة قصيرة جداً لا يزال يعتبر نقرة.
-            // هذا مهم للسماح للمستخدم بفتح عناصر تحكم الفيديو.
-            if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
+            if (Math.abs(dragOffset) < 5 && dragDuration < 200) {
                 setActiveSlide(state.currentIndex, true);
                 return;
             }
 
-            // التعديل الرئيسي: استخدام عتبة حساسة للغاية للانتقال الفوري.
-            // أي سحب يتجاوز بكسلات قليلة سيؤدي إلى تغيير الشريحة فوراً.
-            const sensitiveThreshold = 5; // قيمة منخفضة جداً لاستجابة فورية
-
-            // التحقق مما إذا كانت مسافة السحب كافية وفي أي اتجاه.
-            // (بسبب اتجاه RTL، السحب لليمين > 0 هو للتالي، والسحب لليسار < 0 هو للسابق)
-            if (dragOffset > sensitiveThreshold && state.currentIndex < state.mediaItems.length - 1) {
+            if (dragOffset > 1 && state.currentIndex < state.mediaItems.length - 1) {
                 state.currentIndex++;
-            } else if (dragOffset < -sensitiveThreshold && state.currentIndex > 0) {
+            } else if (dragOffset < -1 && state.currentIndex > 0) {
                 state.currentIndex--;
             }
             
-            // الانتقال السلس إلى الشريحة الجديدة أو العودة إلى الحالية.
             setActiveSlide(state.currentIndex, true);
+            state.dragDirection = null; // إعادة التعيين
         };
-        // --- END: نهاية الجزء المعدل ---
+        // --- END: تعديل دالة dragEnd ---
 
         const loadVisibleSlides = () => {
             const indexesToLoad = [state.currentIndex];
             if (state.currentIndex > 0) indexesToLoad.push(state.currentIndex - 1);
             if (state.currentIndex < state.mediaItems.length - 1) indexesToLoad.push(state.currentIndex + 1);
-
-            indexesToLoad.forEach(index => {
-                const slide = dom.track.children[index];
-                if (!slide || slide.dataset.loaded) return;
-
-                const mediaEl = slide.querySelector('img, video');
-                if (mediaEl && mediaEl.dataset.src) {
-                    mediaEl.src = mediaEl.dataset.src;
-                    delete mediaEl.dataset.src;
-                    slide.dataset.loaded = 'true';
-                    if (mediaEl.tagName === 'VIDEO') {
-                        mediaEl.load();
-                    }
-                }
-            });
+            indexesToLoad.forEach(index => { const slide = dom.track.children[index]; if (!slide || slide.dataset.loaded) return; const mediaEl = slide.querySelector('img, video'); if (mediaEl && mediaEl.dataset.src) { mediaEl.src = mediaEl.dataset.src; delete mediaEl.dataset.src; slide.dataset.loaded = 'true'; if (mediaEl.tagName === 'VIDEO') { mediaEl.load(); } } });
         };
         
         const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
@@ -401,11 +428,9 @@
             dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
             dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none';
             dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); });
-            
             const currentSlideEl = dom.track.children[state.currentIndex];
             const isVideoWithControlsVisible = currentSlideEl && currentSlideEl.classList.contains('show-controls');
             dom.mainContainer.classList.toggle('controls-active', isVideoWithControlsVisible);
-
             scrollThumbnailIntoView();
         };
 
@@ -416,26 +441,14 @@
             dom.thumbnails.innerHTML = ''; dom.track.innerHTML = '';
             if (!state.mediaItems || !state.mediaItems.length) { dom.mediaCounter.style.display = 'none'; return; }
             dom.mediaCounter.style.display = 'flex';
-
             state.mediaItems.forEach((item, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                const placeholder = document.createElement('div');
-                placeholder.className = 'slide-placeholder';
-                slide.appendChild(placeholder);
-
-                const thumbnail = document.createElement('div');
-                thumbnail.classList.add('thumbnail');
-                thumbnail.dataset.index = index; 
-                if (index === 0) thumbnail.classList.add('active');
-
+                const slide = document.createElement('div'); slide.className = 'slide';
+                const placeholder = document.createElement('div'); placeholder.className = 'slide-placeholder'; slide.appendChild(placeholder);
+                const thumbnail = document.createElement('div'); thumbnail.classList.add('thumbnail'); thumbnail.dataset.index = index; if (index === 0) thumbnail.classList.add('active');
                 if (item.type === 'video') {
                     slide.classList.add('video-paused');
-                    const video = document.createElement('video');
-                    video.dataset.src = item.src;
-                    video.playsInline = true; video.preload = "metadata";
-                    video.onloadeddata = () => { placeholder.style.display = 'none'; };
-                    if (video.readyState > 0) placeholder.style.display = 'none';
+                    const video = document.createElement('video'); video.dataset.src = item.src; video.playsInline = true; video.preload = "metadata";
+                    video.onloadeddata = () => { placeholder.style.display = 'none'; }; if (video.readyState > 0) placeholder.style.display = 'none';
                     const swipeOverlay = document.createElement('div'); swipeOverlay.className = 'swipe-overlay';
                     const bigPlayBtn = document.createElement('div'); bigPlayBtn.className = 'big-play-button'; bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     const simpleProgressContainer = document.createElement('div'); simpleProgressContainer.className = 'simple-progress-container'; const simpleProgressBar = document.createElement('div'); simpleProgressBar.className = 'simple-progress-bar'; simpleProgressContainer.append(simpleProgressBar);
@@ -444,7 +457,6 @@
                     const timeDisplay = document.createElement('div'); timeDisplay.className = 'time-display';
                     const progressContainer = document.createElement('div'); progressContainer.className = 'progress-container'; const progressBar = document.createElement('div'); progressBar.className = 'progress-bar'; progressContainer.append(progressBar);
                     controls.append(playPauseBtn, progressContainer, timeDisplay);
-                    
                     slide.append(video, swipeOverlay, bigPlayBtn, simpleProgressContainer, controls);
                     let controlsTimeout = null, isSeeking = false;
                     const formatTime = (secs) => `${Math.floor(secs / 60).toString().padStart(2, '0')}:${Math.floor(secs % 60).toString().padStart(2, '0')}`;
@@ -452,16 +464,10 @@
                     const hideControls = () => { slide.classList.remove('show-controls'); dom.mainContainer.classList.remove('controls-active'); };
                     const resetControlsTimeout = () => { clearTimeout(controlsTimeout); controlsTimeout = setTimeout(hideControls, 3000); };
                     const toggleFullControls = () => { const isShowing = slide.classList.toggle('show-controls'); dom.mainContainer.classList.toggle('controls-active', isShowing); if (isShowing && !video.paused) resetControlsTimeout(); else clearTimeout(controlsTimeout); };
-                    
-                    controls.addEventListener('click', (e) => e.stopPropagation());
-                    bigPlayBtn.addEventListener('click', togglePlay);
-                    playPauseBtn.addEventListener('click', togglePlay);
-                    swipeOverlay.addEventListener('click', toggleFullControls);
-
+                    controls.addEventListener('click', (e) => e.stopPropagation()); bigPlayBtn.addEventListener('click', togglePlay); playPauseBtn.addEventListener('click', togglePlay); swipeOverlay.addEventListener('click', toggleFullControls);
                     video.addEventListener('play', () => { slide.classList.add('is-playing', 'video-started'); slide.classList.remove('video-paused'); if (slide.classList.contains('show-controls')) resetControlsTimeout(); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`; } });
                     const handlePauseOrEnd = () => { slide.classList.remove('is-playing'); slide.classList.add('video-paused'); clearTimeout(controlsTimeout); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; } };
-                    video.addEventListener('pause', handlePauseOrEnd);
-                    video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
+                    video.addEventListener('pause', handlePauseOrEnd); video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
                     video.addEventListener('timeupdate', () => { if (isSeeking) return; const percent = (video.currentTime / video.duration) * 100 || 0; progressBar.style.width = `${percent}%`; simpleProgressBar.style.width = `${percent}%`; timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`; });
                     video.addEventListener('loadedmetadata', () => { timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`; });
                     const seek = (e) => { const rect = progressContainer.getBoundingClientRect(); const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX; const percent = Math.max(0, Math.min(1, (positionX - rect.left) / rect.width)); progressBar.style.width = `${percent * 100}%`; video.currentTime = percent * video.duration; };
@@ -470,21 +476,12 @@
                     progressContainer.addEventListener('touchstart', startSeek, { passive: true }); document.addEventListener('touchmove', seeking, { passive: true }); document.addEventListener('touchend', endSeek);
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
-                    const img = document.createElement('img');
-                    img.dataset.src = item.src;
-                    img.alt = "صورة المنتج";
-                    img.onload = () => { placeholder.style.display = 'none'; };
-                    if (img.complete) placeholder.style.display = 'none';
-                    slide.appendChild(img);
-                    thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
+                    const img = document.createElement('img'); img.dataset.src = item.src; img.alt = "صورة المنتج"; img.onload = () => { placeholder.style.display = 'none'; }; if (img.complete) placeholder.style.display = 'none';
+                    slide.appendChild(img); thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
                 }
-                dom.track.appendChild(slide);
-                dom.thumbnails.appendChild(thumbnail);
-                thumbnail.addEventListener('click', () => setActiveSlide(index, true));
+                dom.track.appendChild(slide); dom.thumbnails.appendChild(thumbnail); thumbnail.addEventListener('click', () => setActiveSlide(index, true));
             });
-            
-            dom.totalEl.textContent = state.mediaItems.length;
-            setActiveSlide(0);
+            dom.totalEl.textContent = state.mediaItems.length; setActiveSlide(0);
         }
 
         const init = () => {
@@ -503,8 +500,7 @@
                 const jsonFile = `products-${fileIndex}.json`;
                 fetch(jsonFile).then(res => res.ok ? res.json() : Promise.reject('File not found')).then(products => { const product = products.find(p => p.id === productId); populateGallery(product?.media || []); }).catch(err => { console.error('خطأ في جلب البيانات:', err); dom.mediaCounter.style.display = 'none'; });
             } else {
-                console.error('يرجى تحديد معرف المنتج في URL');
-                dom.mediaCounter.style.display = 'none';
+                console.error('يرجى تحديد معرف المنتج في URL'); dom.mediaCounter.style.display = 'none';
             }
         };
 
