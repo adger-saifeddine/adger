@@ -87,11 +87,11 @@
             display: flex;
             height: 100%;
             will-change: transform;
-            /* For RTL, the track starts from the right */
             transform: translateX(0px); 
         }
         .image-track.transitioning {
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* <-- [التعديل الأول CSS] تم تغيير منحنى التسارع لحركة أكثر سلاسة تشبه التطبيقات الحديثة */
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .slide {
             flex: 0 0 100%;
@@ -240,42 +240,11 @@
         }
 
         @media (max-width: 555px) {
-            .gallery {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 0;
-                width: 100%;
-            }
-            .main-media {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 1 / 1;
-                margin-left: 0;
-                margin-bottom: 15px;
-                border: none;
-                border-radius: 0;
-            }
-            .thumbnails {
-                flex-direction: row;
-                max-height: none;
-                overflow-x: auto;
-                padding: 0 10px;
-                box-sizing: border-box;
-                width: 100%;
-                gap: 10px;
-            }
-            .thumbnail {
-                margin: 0;
-                flex: 0 0 auto;
-                width: 65px;
-                height: 65px;
-            }
-            .media-counter {
-                bottom: 15px;
-                right: 15px;
-                font-size: 11px;
-                padding: 3px 13px;
-            }
+            .gallery { flex-direction: column; align-items: center; margin-top: 0; width: 100%; }
+            .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 15px; border: none; border-radius: 0; }
+            .thumbnails { flex-direction: row; max-height: none; overflow-x: auto; padding: 0 10px; box-sizing: border-box; width: 100%; gap: 10px; }
+            .thumbnail { margin: 0; flex: 0 0 auto; width: 65px; height: 65px; }
+            .media-counter { bottom: 15px; right: 15px; font-size: 11px; padding: 3px 13px; }
             .arrow { display: none; }
         }
     </style>
@@ -329,17 +298,19 @@
                 state.startPos = getPositionX(e);
                 state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
                 dom.track.classList.remove('transitioning');
+                // <-- [التعديل الثاني JavaScript] نزيل أي تعديلات مؤقتة على الحركة عند بدء سحب جديد
+                dom.track.style.transition = '';
             }
 
             function dragMove(e) {
                 if (!state.isDragging) return;
                 const currentPosition = getPositionX(e);
-                // In RTL, a positive distance means dragging from left to right.
                 const dragDistance = state.startPos - currentPosition;
                 
                 let resistedDistance = dragDistance;
+                // هذا الجزء يعطي الإحساس بالمقاومة عند الأطراف
                 if ((state.currentIndex === 0 && resistedDistance < 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance > 0)) {
-                    resistedDistance /= 3;
+                    resistedDistance /= (1 + Math.abs(dragDistance) / dom.mainContainer.offsetWidth); // مقاومة متزايدة
                 }
                 
                 state.currentTranslate = state.prevTranslate + resistedDistance;
@@ -349,31 +320,45 @@
             function dragEnd() {
                 if (!state.isDragging) return;
                 state.isDragging = false;
+                
                 const dragOffset = state.currentTranslate - state.prevTranslate;
                 const swipeDuration = Date.now() - state.startTime;
                 const swipeVelocity = Math.abs(dragOffset / swipeDuration);
                 const thresholdDistance = dom.mainContainer.offsetWidth / 4;
                 const thresholdVelocity = 0.3;
 
-                // <-- [التعديل الأول] تم عكس منطق السحب هنا
-                // السحب من اليسار لليمين (offset سالب) سينقلك إلى "التالي"
                 const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
                 const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+                
+                const previousIndex = state.currentIndex; // نحفظ المؤشر الحالي
 
                 if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
                     state.currentIndex++;
                 } else if (isPrevSwipe && state.currentIndex > 0) {
                     state.currentIndex--;
                 }
+                
+                // <-- [التعديل الثالث JavaScript] منطق الحركة السلسة والارتداد
+                if (previousIndex === state.currentIndex) {
+                    // لم يتم تغيير الصورة، قم بتطبيق تأثير الارتداد المرن
+                    dom.track.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                } else {
+                    // تم تغيير الصورة، استخدم الانتقال العادي المحدد في CSS
+                    dom.track.classList.add('transitioning');
+                }
+
                 setActiveSlide(state.currentIndex, true);
             }
 
             function setActiveSlide(index, withTransition = false) {
                 state.currentIndex = index;
-                // في RTL، الانتقال لليمين يكشف العناصر على اليسار
                 state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
+                
                 if (withTransition) {
-                    dom.track.classList.add('transitioning');
+                    // تمت إضافة هذا الشرط في dragEnd بالفعل، لكنه لا يضر هنا
+                    if(!dom.track.classList.contains('transitioning')) {
+                         dom.track.classList.add('transitioning');
+                    }
                 }
                 setSliderPosition();
                 updateUI();
@@ -438,19 +423,13 @@
                 ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
                 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
 
-                // <-- [التعديل الثاني] تم تصحيح منطق الأسهم هنا
-                // السهم الأيمن (next) يزيد المؤشر (للتالي)
                 dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
-                // السهم الأيسر (prev) ينقص المؤشر (للسابق)
                 dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
 
                 dom.shareButton.addEventListener('click', sharePage);
                 window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
 
                 // DATA LOADING
-                const urlParams = new URLSearchParams(window.location.search);
-                const productId = urlParams.get('id');
-
                 const mockProductData = {
                     media: [
                         { type: 'image', src: 'https://images.unsplash.com/photo-1585487005161-1e8faf2bad66?q=80&w=1887' },
@@ -461,25 +440,8 @@
                         { type: 'image', src: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1887' },
                     ]
                 };
-
-                if (productId) {
-                    const productsPerFile = 5000;
-                    const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
-                    const jsonFile = `products-${fileIndex}.json`;
-                    fetch(jsonFile)
-                        .then(res => res.ok ? res.json() : Promise.reject('File not found'))
-                        .then(products => {
-                            const product = products.find(p => p.id === productId);
-                            populateGallery(product?.media || []);
-                        })
-                        .catch(err => {
-                            console.error('Error fetching data:', err);
-                            dom.placeholder.style.display = 'none';
-                        });
-                } else {
-                    console.log("No Product ID found, showing mock data.");
-                    populateGallery(mockProductData.media);
-                }
+                
+                populateGallery(mockProductData.media);
             }
 
             init();
