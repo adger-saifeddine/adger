@@ -152,7 +152,6 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        /* يظهر الشريط الأحمر البسيط فقط عند التشغيل وعندما تكون عناصر التحكم الكاملة مخفية */
         .slide.is-playing .simple-progress-container {
             opacity: 1;
         }
@@ -191,6 +190,7 @@
         .video-paused .play-pause-btn .icon-pause { display: none; }
 
         .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
+        /* -- تعديل: جعل شريط التقدم الكامل قابلاً للتحكم -- */
         .video-controls .progress-container {
             width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.3);
             flex-grow: 1; border-radius: 2px;
@@ -212,7 +212,6 @@
         .play-icon svg { width: 16px; height: 16px; fill: white; }
 
         .share-button, .media-counter, .arrow { position: absolute; z-index: 10; -webkit-tap-highlight-color: transparent; transition: opacity 0.3s ease; }
-        /* إخفاء العناصر الخلفية عندما تكون عناصر التحكم نشطة */
         .main-media.controls-active .media-counter,
         .main-media.controls-active .share-button {
             opacity: 0;
@@ -325,26 +324,18 @@
                     };
 
                     const toggleFullControls = () => {
+                        // -- التعديل: تم إزالة الشرط الذي يمنع إظهار/إخفاء الشريط عند توقف الفيديو --
                         const isShowing = slide.classList.toggle('show-controls');
                         dom.mainContainer.classList.toggle('controls-active', isShowing);
-                        if (isShowing) {
-                            resetControlsTimeout();
-                        } else {
-                            clearTimeout(controlsTimeout);
-                        }
+                        if (isShowing) resetControlsTimeout();
+                        else clearTimeout(controlsTimeout);
                     };
                     
-                    // منع إغلاق الشريط عند النقر بداخله
+                    // -- تعديل: منع إغلاق الشريط عند النقر بداخله --
                     controls.addEventListener('click', (e) => e.stopPropagation());
                     
                     bigPlayBtn.addEventListener('click', togglePlay);
-                    
-                    // -- تعديل: عند النقر على زر التشغيل/الإيقاف، يتم إعادة ضبط مؤقت الإخفاء
-                    playPauseBtn.addEventListener('click', () => {
-                        togglePlay();
-                        resetControlsTimeout();
-                    });
-
+                    playPauseBtn.addEventListener('click', togglePlay);
                     video.addEventListener('click', toggleFullControls);
 
                     video.addEventListener('play', () => { slide.classList.add('is-playing', 'video-started'); slide.classList.remove('video-paused'); });
@@ -353,7 +344,7 @@
                     video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
                     
                     video.addEventListener('timeupdate', () => {
-                        if (isSeeking) return;
+                        if (isSeeking) return; // لا تحدث الشريط أثناء سحب المستخدم
                         const percent = (video.currentTime / video.duration) * 100 || 0;
                         progressBar.style.width = `${percent}%`;
                         simpleProgressBar.style.width = `${percent}%`;
@@ -361,6 +352,7 @@
                     });
                     video.addEventListener('loadedmetadata', () => { timeDisplay.textContent = `00:00 / ${formatTime(video.duration || 0)}`; });
 
+                    // -- تعديل: إعادة تفعيل وإضافة منطق التحكم بشريط التقدم الكامل --
                     const seek = (e) => {
                         const rect = progressContainer.getBoundingClientRect();
                         const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
