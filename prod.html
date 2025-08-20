@@ -81,6 +81,7 @@
         cursor: grab;
         touch-action: pan-y;
         transition: opacity 0.3s ease;
+        background-color: #fafafa; /* لون خلفية يتطابق مع لون التحميل */
     }
     .main-media:active {
         cursor: grabbing;
@@ -93,7 +94,6 @@
         transform: translateX(0px); 
     }
     .image-track.transitioning {
-        /* --- تعديل: تحسين حركة الانتقال لتكون أكثر سلاسة --- */
         transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
     
@@ -215,10 +215,11 @@
     }
     .progress-bar { width: 0%; height: 100%; background-color: #ff0000; border-radius: 2px; }
 
+    /* --- هنا يكمن السر: عنصر التحميل الخاص بالصورة/الفيديو الكبير --- */
     .slide-placeholder { 
         width: 100%; height: 100%;
         position: absolute; top: 0; left: 0; z-index: 6; 
-        /* --- تعديل جديد: إضافة تأثير التحميل اللامع (Shimmer) --- */
+        /* --- له نفس تأثير التحميل اللامع (Shimmer) --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -261,7 +262,7 @@
         width: 66px;
         height: 66px;
         box-sizing: border-box;
-        /* --- تعديل جديد: إضافة تأثير التحميل اللامع (Shimmer) --- */
+        /* --- تأثير التحميل اللامع للصور المصغرة --- */
         background: linear-gradient(90deg, #fafafa 25%, #f0f0f0 50%, #fafafa 75%);
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite linear;
@@ -286,7 +287,6 @@
     .arrow svg { fill: white; width: 30px; height: 34px; }
     .arrow.disabled { background-color: rgba(66, 66, 66, 0.25); cursor: not-allowed; opacity: 0.5; }
 
-    /* --- تعديل جديد: إضافة إطار الحركة لتأثير التحميل --- */
     @keyframes shimmer {
         0% { background-position: 100% 0; }
         100% { background-position: -100% 0; }
@@ -321,6 +321,7 @@
             </div>
         </div>
         <div class="thumbnails" id="thumbnailsContainer">
+            <!-- هياكل التحميل الأولية للصور المصغرة -->
             <div class="thumbnail-placeholder"></div>
             <div class="thumbnail-placeholder"></div>
             <div class="thumbnail-placeholder"></div>
@@ -335,7 +336,6 @@
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        // --- تعديل: تقليل السحب الزائد عند الأطراف ---
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
         const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
         
@@ -390,6 +390,7 @@
             state.mediaItems.forEach((item, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'slide';
+                // --- الخطوة 1: إضافة عنصر التحميل لكل شريحة كبيرة ---
                 const placeholder = document.createElement('div');
                 placeholder.className = 'slide-placeholder';
                 slide.appendChild(placeholder);
@@ -405,9 +406,11 @@
                     video.dataset.src = item.src;
                     video.playsInline = true; video.preload = "metadata";
                     
+                    // --- الخطوة 2: إخفاء عنصر التحميل عند جهوزية الفيديو ---
                     video.onloadeddata = () => { placeholder.style.display = 'none'; };
                     if (video.readyState > 0) placeholder.style.display = 'none';
 
+                    // ... (بقية كود الفيديو كما هو)
                     const swipeOverlay = document.createElement('div'); swipeOverlay.className = 'swipe-overlay';
                     const bigPlayBtn = document.createElement('div'); bigPlayBtn.className = 'big-play-button'; bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     const simpleProgressContainer = document.createElement('div'); simpleProgressContainer.className = 'simple-progress-container'; const simpleProgressBar = document.createElement('div'); simpleProgressBar.className = 'simple-progress-bar'; simpleProgressContainer.append(simpleProgressBar);
@@ -430,20 +433,8 @@
                     playPauseBtn.addEventListener('click', togglePlay);
                     swipeOverlay.addEventListener('click', toggleFullControls);
 
-                    video.addEventListener('play', () => {
-                        slide.classList.add('is-playing', 'video-started');
-                        slide.classList.remove('video-paused');
-                        if (slide.classList.contains('show-controls')) resetControlsTimeout();
-                        const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`);
-                        if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`; }
-                    });
-                    const handlePauseOrEnd = () => {
-                        slide.classList.remove('is-playing');
-                        slide.classList.add('video-paused');
-                        clearTimeout(controlsTimeout);
-                        const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`);
-                        if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; }
-                    };
+                    video.addEventListener('play', () => { slide.classList.add('is-playing', 'video-started'); slide.classList.remove('video-paused'); if (slide.classList.contains('show-controls')) resetControlsTimeout(); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>`; } });
+                    const handlePauseOrEnd = () => { slide.classList.remove('is-playing'); slide.classList.add('video-paused'); clearTimeout(controlsTimeout); const thumb = dom.thumbnails.querySelector(`.thumbnail[data-index="${index}"]`); if (thumb) { const iconContainer = thumb.querySelector('.play-icon'); if (iconContainer) iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`; } };
                     video.addEventListener('pause', handlePauseOrEnd);
                     video.addEventListener('ended', () => { handlePauseOrEnd(); slide.classList.remove('video-started'); });
                     video.addEventListener('timeupdate', () => { if (isSeeking) return; const percent = (video.currentTime / video.duration) * 100 || 0; progressBar.style.width = `${percent}%`; simpleProgressBar.style.width = `${percent}%`; timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`; });
@@ -457,6 +448,7 @@
                     const img = document.createElement('img');
                     img.dataset.src = item.src;
                     img.alt = "صورة المنتج";
+                    // --- الخطوة 2: إخفاء عنصر التحميل عند اكتمال تحميل الصورة ---
                     img.onload = () => { placeholder.style.display = 'none'; };
                     if (img.complete) placeholder.style.display = 'none';
                     slide.appendChild(img);
