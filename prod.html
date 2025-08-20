@@ -59,13 +59,7 @@
             align-items: center;
             margin: 0;
             background-color: #f4f4f4;
-            overscroll-behavior-x: none; /* لمنع السحب الزائد للمتصفح */
-        }
-
-        .line {
-            width: 100%;
-            height: 8px;
-            background-color: #eeeeee;
+            overscroll-behavior-x: none;
         }
         
         .gallery {
@@ -76,7 +70,6 @@
             position: relative;
         }
 
-        /* --- تعديلات لدعم الحركة السلسة --- */
         .main-media {
             margin-left: 20px;
             position: relative;
@@ -84,9 +77,10 @@
             height: 400px;
             border: 2px solid #ccc;
             border-radius: 10px;
-            overflow: hidden; /* ضروري لإخفاء الشرائح الأخرى */
+            overflow: hidden;
             cursor: grab;
-            touch-action: pan-y; /* يسمح بالتمرير العمودي للصفحة أثناء السحب الأفقي */
+            touch-action: pan-y;
+            transition: transform 0.3s ease; /* لإضافة سلاسة عند إخفاء العناصر */
         }
         .main-media:active {
             cursor: grabbing;
@@ -103,48 +97,92 @@
         }
         
         .slide {
-            position: relative; /* ضروري لوضع الطبقة الشفافة فوق الفيديو */
+            position: relative;
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden; /* لضمان عدم خروج أي عناصر من السلايد */
         }
         .slide img, .slide video {
             width: 100%;
             height: 100%;
             display: block;
-            user-select: none; /* لمنع تحديد العنصر أثناء السحب */
+            user-select: none;
         }
         .slide img { 
             object-fit: cover; 
-            pointer-events: none; /* لمنع السحب الافتراضي للصور من المتصفح */
+            pointer-events: none;
         }
         .slide video { 
             object-fit: contain; 
-            z-index: 1; /* للتأكد أن الفيديو تحت الطبقة الشفافة */
         }
 
-        /* الطبقة الشفافة التي تسمح بالسحب من فوق الفيديو */
-        .video-overlay {
+        /* --- التحسينات الجديدة لتجربة الفيديو --- */
+        .big-play-button {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2; /* لتكون فوق الفيديو */
-            cursor: grab;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 1;
         }
-        .video-overlay.playing {
-            /* عندما يعمل الفيديو، نجعل الطبقة غير قابلة للتفاعل لتمرير النقرات إلى عناصر التحكم */
+        .big-play-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .big-play-button svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            margin-left: 4px; /* لضبط تمركز المثلث */
+        }
+        .slide.is-playing .big-play-button {
+            opacity: 0;
             pointer-events: none;
         }
-        /* --- نهاية تعديلات الحركة --- */
 
-        .main-media video:fullscreen {
-            border: none;
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px; /* ارتفاع منطقة التحكم */
+            display: flex;
+            align-items: center;
+            z-index: 3;
+            opacity: 0; /* مخفي افتراضيا */
+            transition: opacity 0.3s ease;
         }
+        .slide.is-playing .video-controls {
+            opacity: 1; /* يظهر عند التشغيل */
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 5px; /* سمك الشريط */
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #ff0000; /* لون الشريط المميز */
+            transition: width 0.1s linear;
+        }
+        /* --- نهاية تحسينات الفيديو --- */
 
         .placeholder-image {
             width: 100%;
@@ -172,7 +210,7 @@
         .thumbnails {
             display: flex;
             flex-direction: column;
-            max-height: 404px; /* تم التعديل ليتناسب مع ارتفاع الحاوية الرئيسية */
+            max-height: 404px;
             overflow-y: scroll;
             padding-left: 10px;
             scrollbar-width: none;
@@ -185,112 +223,51 @@
             cursor: pointer;
             border: 2px solid #ccc;
             border-radius: 1px;
-            padding: 0;
             position: relative;
             width: 66px;
             height: 66px;
             box-sizing: border-box;
-            background-color: #fafafa; /* لون احتياطي */
-            overflow: hidden; /* لإخفاء أجزاء الفيديو/الصورة الزائدة */
+            overflow: hidden;
+            background-color: #fafafa;
         }
-        
-        .thumbnail img, .thumbnail video {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            margin: 0;
-            padding: 0;
-        }
+        .thumbnail img, .thumbnail video { width: 100%; height: 100%; display: block; object-fit: cover; }
         .thumbnail.active { border-color: #ff0000; }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
         .play-icon svg { width: 16px; height: 16px; fill: white; }
 
         .share-button, .media-counter, .arrow {
             position: absolute;
-            z-index: 10; /* لضمان ظهورها فوق كل شيء */
+            z-index: 10;
             -webkit-tap-highlight-color: transparent;
+            transition: opacity 0.3s ease, transform 0.3s ease; /* إضافة سلاسة للإخفاء والإظهار */
         }
 
-        .share-button {
-            left: 11px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        /* إخفاء العداد وزر المشاركة عند تشغيل الفيديو */
+        .main-media.video-is-playing .media-counter,
+        .main-media.video-is-playing .share-button {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
         }
-        .share-button.bottom { bottom: 11px; }
+
+        .share-button { left: 11px; bottom: 11px; background-color: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
         .share-button svg { width: 24px; height: 24px; color: #000; }
-
-        .media-counter {
-            font-family: 'Cairo', sans-serif;
-            bottom: 12px;
-            right: 12px;
-            background-color: rgba(255, 255, 255, 0.767);
-            padding: 2px 12px;
-            border-radius: 15px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .arrow {
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(24, 24, 24, 0.336);
-            border: none;
-            border-radius: 1px;
-            width: 41px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: background-color 0.2s;
-        }
+        
+        .media-counter { font-family: 'Cairo', sans-serif; bottom: 12px; right: 12px; background-color: rgba(255, 255, 255, 0.767); padding: 2px 12px; border-radius: 15px; font-size: 13px; display: flex; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+        .arrow { top: 50%; transform: translateY(-50%); background-color: rgba(24, 24, 24, 0.4); border: none; border-radius: 3px; width: 41px; height: 45px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; transition: background-color 0.2s; }
         .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
         .arrow.left { left: 5px; }
         .arrow.right { right: 5px; }
         .arrow svg { fill: white; width: 30px; height: 34px; }
-        .arrow.disabled {
-            background-color: rgba(66, 66, 66, 0.253);
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
+        .arrow.disabled { background-color: rgba(66, 66, 66, 0.25); cursor: not-allowed; opacity: 0.5; }
 
-        /* --- الأكواد الخاصة بالجوال كما هي تمامًا --- */
         @media (max-width: 555px) {
-            .gallery { flex-direction: column !important; align-items: center !important; margin-top: 0px !important; margin-right: 0 !important; padding: 0 !important; width: 100% !important; }
-            .main-media { width: 100% !important; height: auto !important; aspect-ratio: 1 / 1 !important; margin-left: 0 !important; margin-bottom: 15px !important; border: none !important; border-radius: 0 !important; }
-            .thumbnails { flex-direction: row !important; max-height: none !important; overflow-x: auto !important; overflow-y: hidden !important; padding: 0 10px !important; width: 100% !important; box-sizing: border-box !important; white-space: nowrap !important; gap: 10px !important; margin-bottom: 0 !important; }
-            .thumbnail { margin: 0 !important; flex: 0 0 auto !important; width: 65px !important; height: 65px !important; }
-            .media-counter { bottom: 15px !important; right: 15px !important; font-size: 11px !important; padding: 3px 13px !important; }
-        }
-        @media (max-width: 556px) {
-            .arrow { display: none !important; }
+            .gallery { flex-direction: column; align-items: center; margin-top: 0; width: 100%; }
+            .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 15px; border: none; border-radius: 0; }
+            .thumbnails { flex-direction: row; max-height: none; overflow-x: auto; padding: 0 10px; box-sizing: border-box; width: 100%; gap: 10px; }
+            .thumbnail { margin: 0; flex: 0 0 auto; width: 65px; height: 65px; }
+            .media-counter { bottom: 15px; right: 15px; font-size: 11px; padding: 3px 13px; }
+            .arrow { display: none; }
         }
     </style>
 </head>
@@ -299,13 +276,11 @@
         <div class="main-media" id="mainMediaContainer">
             <div class="image-track" id="imageTrack"></div>
             <div class="placeholder-image" id="placeholderImage"></div>
-            
             <button class="share-button bottom" id="shareButton">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
             </button>
             <button class="arrow left" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
             <button class="arrow right" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
-            
             <div class="media-counter">
                 منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
             </div>
@@ -315,7 +290,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // تعريف عناصر DOM
         const dom = {
             mainContainer: document.getElementById('mainMediaContainer'),
             track: document.getElementById('imageTrack'),
@@ -329,25 +303,34 @@
             nextArrow: document.getElementById('nextArrow'),
         };
 
-        // حالة السلايدر
         const state = {
             isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0,
             currentIndex: 0, mediaItems: [], startTime: 0,
         };
 
-        function getPositionX(e) {
-            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        }
+        function getPositionX(e) { /* ... نفس الكود ... */ }
+        function dragStart(e) { /* ... نفس الكود ... */ }
+        function dragMove(e) { /* ... نفس الكود ... */ }
+        function dragEnd() { /* ... نفس الكود ... */ }
+        function setActiveSlide(index, withTransition = false) { /* ... نفس الكود ... */ }
+        function setSliderPosition() { /* ... نفس الكود ... */ }
+        function sharePage() { /* ... نفس الكود ... */ }
+        function scrollThumbnailIntoView() { /* ... نفس الكود ... */ }
+        function init() { /* ... نفس الكود ... */ }
 
-        function dragStart(e) {
+        // --- نسخ ولصق الكود الكامل للسكريبت هنا ---
+
+        getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+
+        dragStart = (e) => {
             state.isDragging = true;
             state.startTime = Date.now();
             state.startPos = getPositionX(e);
             state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
             dom.track.classList.remove('transitioning');
-        }
+        };
 
-        function dragMove(e) {
+        dragMove = (e) => {
             if (!state.isDragging) return;
             const currentPosition = getPositionX(e);
             const dragDistance = currentPosition - state.startPos;
@@ -357,65 +340,66 @@
             }
             state.currentTranslate = state.prevTranslate + resistedDistance;
             setSliderPosition();
-        }
+        };
 
-        function dragEnd() {
+        dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const dragDuration = Date.now() - state.startTime;
 
-            // تجاهل النقرات والسحبات القصيرة جدًا
             if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
                 setActiveSlide(state.currentIndex, true);
                 return;
             }
-
             const swipeVelocity = Math.abs(dragOffset / dragDuration);
             const thresholdDistance = dom.mainContainer.offsetWidth / 4;
             const thresholdVelocity = 0.3;
             const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
             const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
 
-            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
-                state.currentIndex++;
-            } else if (isPrevSwipe && state.currentIndex > 0) {
-                state.currentIndex--;
-            }
+            if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++;
+            else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--;
+            
             setActiveSlide(state.currentIndex, true);
-        }
+        };
 
-        function setActiveSlide(index, withTransition = false) {
+        setActiveSlide = (index, withTransition = false) => {
+            dom.mainContainer.classList.remove('video-is-playing'); // إعادة تعيين الحالة عند تغيير السلايد
             state.currentIndex = index;
             state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
             if (withTransition) dom.track.classList.add('transitioning');
             setSliderPosition();
             updateUI();
-        }
+        };
 
-        function setSliderPosition() {
+        setSliderPosition = () => {
             dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
-        }
+        };
 
-        function sharePage() {
+        sharePage = () => {
             if (navigator.share) navigator.share({ title: document.title, url: window.location.href });
-        }
+        };
 
-        function updateUI() {
+        updateUI = () => {
             dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
             dom.currentEl.textContent = state.currentIndex + 1;
             dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
             dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-            const currentItem = state.mediaItems[state.currentIndex];
-            dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
-            dom.track.querySelectorAll('video').forEach((video, i) => { if (i !== state.currentIndex && !video.paused) video.pause(); });
-            scrollThumbnailIntoView();
-        }
+            
+            // زر المشاركة يظهر دائماً الآن (إلا إذا كان الفيديو يعمل، وهذا يتم التحكم به عبر CSS)
+            dom.shareButton.style.display = state.mediaItems.length > 0 ? 'flex' : 'none';
 
-        function scrollThumbnailIntoView() {
+            dom.track.querySelectorAll('video').forEach((video, i) => {
+                if (i !== state.currentIndex && !video.paused) video.pause();
+            });
+            scrollThumbnailIntoView();
+        };
+
+        scrollThumbnailIntoView = () => {
             const activeThumbnail = dom.thumbnails.querySelector('.thumbnail.active');
             if (activeThumbnail) activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
+        };
 
         function populateGallery(mediaData) {
             state.mediaItems = mediaData;
@@ -441,17 +425,55 @@
                 if (item.type === 'video') {
                     const video = document.createElement('video');
                     video.src = item.src;
-                    video.controls = true;
                     video.playsInline = true;
+                    video.preload = "metadata";
 
-                    const overlay = document.createElement('div');
-                    overlay.className = 'video-overlay';
+                    const bigPlayBtn = document.createElement('div');
+                    bigPlayBtn.className = 'big-play-button';
+                    bigPlayBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
                     
-                    slide.append(video, overlay);
+                    const controls = document.createElement('div');
+                    controls.className = 'video-controls';
+                    const progressContainer = document.createElement('div');
+                    progressContainer.className = 'progress-container';
+                    const progressBar = document.createElement('div');
+                    progressBar.className = 'progress-bar';
+                    progressContainer.append(progressBar);
+                    controls.append(progressContainer);
+                    
+                    slide.append(video, bigPlayBtn, controls);
 
-                    video.addEventListener('play', () => overlay.classList.add('playing'));
-                    video.addEventListener('pause', () => overlay.classList.remove('playing'));
-                    overlay.addEventListener('click', () => { if(video.paused) video.play() });
+                    const togglePlay = () => {
+                        if (video.paused) video.play();
+                        else video.pause();
+                    };
+
+                    bigPlayBtn.addEventListener('click', togglePlay);
+                    video.addEventListener('click', togglePlay);
+
+                    video.addEventListener('play', () => {
+                        slide.classList.add('is-playing');
+                        dom.mainContainer.classList.add('video-is-playing');
+                    });
+                    video.addEventListener('pause', () => {
+                        slide.classList.remove('is-playing');
+                        dom.mainContainer.classList.remove('video-is-playing');
+                    });
+                    video.addEventListener('ended', () => {
+                         slide.classList.remove('is-playing');
+                         dom.mainContainer.classList.remove('video-is-playing');
+                    });
+                    video.addEventListener('timeupdate', () => {
+                        const progressPercent = (video.currentTime / video.duration) * 100;
+                        progressBar.style.width = `${progressPercent}%`;
+                    });
+
+                    progressContainer.addEventListener('click', (e) => {
+                        const rect = progressContainer.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        const width = rect.width;
+                        video.currentTime = (clickX / width) * video.duration;
+                    });
 
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
@@ -467,7 +489,7 @@
             if (firstElement) {
                 const eventToListen = firstElement.tagName === 'IMG' ? 'onload' : 'onloadeddata';
                 firstElement[eventToListen] = () => dom.placeholder.style.display = 'none';
-                if (firstElement.complete || (firstElement.readyState && firstElement.readyState > 3)) {
+                if (firstElement.complete || (firstElement.tagName === 'VIDEO' && firstElement.readyState > 0)) {
                    dom.placeholder.style.display = 'none';
                 }
             }
@@ -476,7 +498,7 @@
             setActiveSlide(0);
         }
 
-        function init() {
+        init = () => {
             ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
             ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
             ['mouseup', 'mouseleave', 'touchend'].forEach(evt => document.addEventListener(evt, dragEnd));
@@ -508,7 +530,7 @@
                 dom.placeholder.style.display = 'none';
                 dom.mediaCounter.style.display = 'none';
             }
-        }
+        };
 
         init();
     });
