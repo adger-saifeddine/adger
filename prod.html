@@ -229,8 +229,8 @@
             transition: background-color 0.2s;
         }
         .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
-        .arrow.left { left: 5px; }
-        .arrow.right { right: 5px; }
+        .arrow.prev-arrow { right: 5px; }
+        .arrow.next-arrow { left: 5px; }
         .arrow svg { fill: white; width: 30px; height: 34px; }
         .arrow.disabled {
             background-color: rgba(66, 66, 66, 0.25);
@@ -287,8 +287,8 @@
             <button class="share-button" id="shareButton">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
             </button>
-            <button class="arrow left" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
-            <button class="arrow right" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
+            <button class="arrow prev-arrow" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg></button>
+            <button class="arrow next-arrow" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg></button>
         </div>
         <div class="media-counter"><span id="currentMedia">0</span>/<span id="totalMedia">0</span></div>
         <div class="thumbnails" id="thumbnailsContainer"></div>
@@ -326,49 +326,52 @@
                 state.isDragging = true;
                 state.startTime = Date.now();
                 state.startPos = getPositionX(e);
-                state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
+                state.prevTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
                 dom.track.classList.remove('transitioning');
             }
 
             function dragMove(e) {
                 if (!state.isDragging) return;
                 const currentPosition = getPositionX(e);
-                const dragDistance = state.startPos - currentPosition;
+                let dragDistance = currentPosition - state.startPos;
                 
-                let resistedDistance = dragDistance;
-                if ((state.currentIndex === 0 && resistedDistance < 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance > 0)) {
-                    resistedDistance /= 3;
+                if ((state.currentIndex === 0 && dragDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && dragDistance < 0)) {
+                    dragDistance /= 3;
                 }
                 
-                state.currentTranslate = state.prevTranslate + resistedDistance;
+                state.currentTranslate = state.prevTranslate + dragDistance;
                 setSliderPosition();
             }
 
             function dragEnd() {
                 if (!state.isDragging) return;
                 state.isDragging = false;
+                dom.track.classList.add('transitioning');
+                
                 const dragOffset = state.currentTranslate - state.prevTranslate;
                 const swipeDuration = Date.now() - state.startTime;
                 const swipeVelocity = Math.abs(dragOffset / swipeDuration);
                 const thresholdDistance = dom.mainContainer.offsetWidth / 4;
                 const thresholdVelocity = 0.3;
 
-                // GESTURE LOGIC: Swipe right-to-left is NEXT
-                const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
-                // GESTURE LOGIC: Swipe left-to-right is PREVIOUS
-                const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+                // ** CORRECTED RTL GESTURE LOGIC **
+                // Swipe right-to-left is NEXT
+                const isNextSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+                // Swipe left-to-right is PREVIOUS
+                const isPrevSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
 
                 if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) {
                     state.currentIndex++;
                 } else if (isPrevSwipe && state.currentIndex > 0) {
                     state.currentIndex--;
                 }
-                setActiveSlide(state.currentIndex, true);
+
+                setActiveSlide(state.currentIndex);
             }
 
             function setActiveSlide(index, withTransition = false) {
                 state.currentIndex = index;
-                state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth;
+                state.currentTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
                 if (withTransition) {
                     dom.track.classList.add('transitioning');
                 }
@@ -377,15 +380,17 @@
             }
 
             function setSliderPosition() {
-                // Invert the translation value to move left for positive index
-                dom.track.style.transform = `translateX(${-state.currentTranslate}px)`;
+                dom.track.style.transform = `translateX(${state.currentTranslate}px)`;
             }
 
             function updateUI() {
                 dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
                 dom.currentEl.textContent = state.currentIndex + 1;
-                dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
+                
+                // RTL Arrow UI: Next is left, Prev is right
                 dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
+                dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
+
                 const currentItem = state.mediaItems[state.currentIndex];
                 dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
                 dom.track.querySelectorAll('video').forEach((video, i) => {
@@ -436,8 +441,10 @@
                 ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
                 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
 
-                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
-                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
+                // RTL ARROW LOGIC: Next arrow (on left) goes to next index. Prev arrow (on right) goes to prev index.
+                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
+                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
+                
                 dom.shareButton.addEventListener('click', sharePage);
                 window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
 
