@@ -201,12 +201,10 @@
     }
     .play-pause-btn svg { width: 100%; height: 100%; fill: currentColor; }
     
-    /* --- التعديل هنا: إصلاح منطق عرض أيقونة التشغيل/الإيقاف --- */
     .play-pause-btn .icon-play { display: block; }
     .play-pause-btn .icon-pause { display: none; }
     .slide.is-playing .play-pause-btn .icon-play { display: none; }
     .slide.is-playing .play-pause-btn .icon-pause { display: block; }
-    /* --- نهاية التعديل --- */
 
     .time-display { color: white; font-size: 13px; font-family: monospace; flex-shrink: 0; }
     .video-controls .progress-container {
@@ -227,7 +225,7 @@
     .thumbnail { margin: 10px 0; cursor: pointer; border: 2px solid #ccc; border-radius: 1px; position: relative; width: 66px; height: 66px; box-sizing: border-box; overflow: hidden; background-color: #fafafa; }
     .thumbnail img, .thumbnail video { width: 100%; height: 100%; display: block; object-fit: cover; }
     .thumbnail.active { border-color: #ff0000; }
-    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity 0.2s; }
     .play-icon svg { width: 16px; height: 16px; fill: white; }
 
     .share-button, .media-counter, .arrow { position: absolute; z-index: 10; -webkit-tap-highlight-color: transparent; transition: opacity 0.3s ease; }
@@ -377,17 +375,27 @@
                     playPauseBtn.addEventListener('click', togglePlay);
                     swipeOverlay.addEventListener('click', toggleFullControls);
 
+                    // --- التعديل يبدأ هنا: ربط أيقونة المربع الصغير بحالة الفيديو ---
                     video.addEventListener('play', () => {
                         slide.classList.add('is-playing', 'video-started');
                         if (slide.classList.contains('show-controls')) {
                             resetControlsTimeout();
                         }
+                        // إخفاء الأيقونة من المربع الصغير المطابق
+                        const activeThumb = dom.thumbnails.children[state.currentIndex];
+                        const playIcon = activeThumb.querySelector('.play-icon');
+                        if (playIcon) playIcon.style.opacity = '0';
                     });
                     
                     const handlePauseOrEnd = () => {
                         slide.classList.remove('is-playing');
                         clearTimeout(controlsTimeout);
+                        // إظهار الأيقونة في المربع الصغير المطابق
+                        const activeThumb = dom.thumbnails.children[state.currentIndex];
+                        const playIcon = activeThumb.querySelector('.play-icon');
+                        if (playIcon) playIcon.style.opacity = '1';
                     };
+                    // --- نهاية التعديل ---
 
                     video.addEventListener('pause', handlePauseOrEnd);
                     video.addEventListener('ended', () => {
@@ -422,7 +430,7 @@
                     document.addEventListener('touchmove', seeking, { passive: true });
                     document.addEventListener('touchend', endSeek);
 
-                    thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
+                    thumbnail.innerHTML = `<video src="${item.src}#t=0.1" preload="metadata"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
                     slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
                     thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
