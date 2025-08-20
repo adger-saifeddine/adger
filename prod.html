@@ -133,7 +133,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 4;
+            z-index: 4; /* فوق شريط التقدم */
             transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 1;
             -webkit-tap-highlight-color: transparent;
@@ -178,21 +178,11 @@
         .progress-container {
             width: 100%;
             height: 5px;
-            /* زيادة ارتفاع منطقة اللمس لتسهيل التحكم */
-            padding: 7px 0;
-            margin-top: -7px;
-            background-color: transparent;
+            background-color: rgba(255, 255, 255, 0.3);
             cursor: pointer;
             position: absolute;
             bottom: 0;
             -webkit-tap-highlight-color: transparent;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.3);
-            position: absolute;
-            bottom: 7px;
         }
         .progress-bar {
             width: 0%;
@@ -236,17 +226,31 @@
     </style>
 </head>
 <body>
-    <div class="gallery"><!-- ... المحتوى ... --></div>
+    <div class="gallery">
+        <div class="main-media" id="mainMediaContainer">
+            <div class="image-track" id="imageTrack"></div>
+            <div class="placeholder-image" id="placeholderImage"></div>
+            <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
+            <button class="arrow left" id="prevArrow"><!-- SVG --></button>
+            <button class="arrow right" id="nextArrow"><!-- SVG --></button>
+            <div class="media-counter">
+                منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
+            </div>
+        </div>
+        <div class="thumbnails" id="thumbnailsContainer"></div>
+    </div>
 
 <script>
-    // --- الكود الكامل والنهائي للسكريبت ---
     document.addEventListener('DOMContentLoaded', () => {
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), placeholder: document.getElementById('placeholderImage'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth; dom.track.classList.remove('transitioning'); };
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.offsetWidth / 4; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); 
+            // --- التحسين: تم تقليل المسافة المطلوبة لتسهيل التمرير ---
+            const thresholdDistance = dom.mainContainer.offsetWidth / 5; // كانت / 4
+            const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
         const setActiveSlide = (index, withTransition = false) => { dom.mainContainer.classList.remove('video-is-playing'); state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
@@ -262,76 +266,92 @@
             dom.placeholder.style.display = 'flex';
 
             state.mediaItems.forEach((item, index) => {
-                const slide = document.createElement('div'); slide.className = 'slide';
-                const thumbnail = document.createElement('div'); thumbnail.classList.add('thumbnail');
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const thumbnail = document.createElement('div');
+                thumbnail.classList.add('thumbnail');
                 if (index === 0) thumbnail.classList.add('active');
 
                 if (item.type === 'video') {
-                    const video = document.createElement('video'); video.src = item.src; video.playsInline = true; video.preload = "metadata";
-                    const bigPlayBtn = document.createElement('div'); bigPlayBtn.className = 'big-play-button';
+                    const video = document.createElement('video');
+                    video.src = item.src;
+                    video.playsInline = true;
+                    video.preload = "metadata";
+
+                    const bigPlayBtn = document.createElement('div');
+                    bigPlayBtn.className = 'big-play-button';
                     bigPlayBtn.innerHTML = `<svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
-                    const controls = document.createElement('div'); controls.className = 'video-controls';
-                    const progressContainer = document.createElement('div'); progressContainer.className = 'progress-container';
-                    const progressBarBg = document.createElement('div'); progressBarBg.className = 'progress-bar-bg';
-                    const progressBar = document.createElement('div'); progressBar.className = 'progress-bar';
-                    progressBarBg.append(progressBar);
-                    progressContainer.append(progressBarBg);
-                    controls.append(progressContainer);
-                    slide.append(video, bigPlayBtn, controls);
                     
+                    const controls = document.createElement('div');
+                    controls.className = 'video-controls';
+                    const progressContainer = document.createElement('div');
+                    progressContainer.className = 'progress-container';
+                    const progressBar = document.createElement('div');
+                    progressBar.className = 'progress-bar';
+                    progressContainer.append(progressBar);
+                    controls.append(progressContainer);
+                    
+                    slide.append(video, bigPlayBtn, controls);
                     let controlsTimeout = null;
                     let isSeeking = false;
-                    let wasPlayingBeforeSeek = false;
 
                     const showThenHideControls = () => {
+                        if (video.paused) return;
                         slide.classList.remove('controls-hidden');
                         clearTimeout(controlsTimeout);
                         controlsTimeout = setTimeout(() => {
                             slide.classList.add('controls-hidden');
-                        }, 1000); // إخفاء الأزرار بعد ثانية واحدة فقط
+                        }, 1500);
                     };
-                    const togglePlay = () => {
-                        if (video.paused) video.play();
-                        else video.pause();
-                    };
+
+                    // --- التحسين: إظهار الأزرار عند تحريك الفأرة فوق الفيديو ---
+                    slide.addEventListener('mousemove', showThenHideControls);
+                    
+                    const togglePlay = () => video.paused ? video.play() : video.pause();
                     bigPlayBtn.addEventListener('click', togglePlay);
-                    video.addEventListener('click', () => {
-                        if(video.paused) video.play();
-                        else showThenHideControls(); // إظهار الأزرار مؤقتا عند النقر
-                    });
+                    video.addEventListener('click', togglePlay);
 
                     video.addEventListener('play', () => { slide.classList.add('is-playing'); dom.mainContainer.classList.add('video-is-playing'); showThenHideControls(); requestAnimationFrame(updateProgressLoop); });
-                    video.addEventListener('pause', () => { slide.classList.remove('is-playing'); dom.mainContainer.classList.remove('video-is-playing'); clearTimeout(controlsTimeout); slide.classList.remove('controls-hidden'); });
-                    video.addEventListener('ended', () => { slide.classList.remove('is-playing'); dom.mainContainer.classList.remove('video-is-playing'); clearTimeout(controlsTimeout); slide.classList.remove('controls-hidden'); });
-                    
-                    const updateProgressLoop = () => { if (!video.paused && !video.ended) { progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`; requestAnimationFrame(updateProgressLoop); } };
-                    
+                    const onVideoPauseOrEnd = () => { slide.classList.remove('is-playing', 'controls-hidden'); dom.mainContainer.classList.remove('video-is-playing'); clearTimeout(controlsTimeout); };
+                    video.addEventListener('pause', onVideoPauseOrEnd);
+                    video.addEventListener('ended', onVideoPauseOrEnd);
+
+                    const updateProgressLoop = () => {
+                        if (!isSeeking && !video.paused && !video.ended) {
+                            progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
+                        }
+                        if (!video.paused) {
+                            requestAnimationFrame(updateProgressLoop);
+                        }
+                    };
+
+                    // --- التحسين: إضافة خاصية السحب لشريط التقدم ---
                     const seek = (e) => {
                         const rect = progressContainer.getBoundingClientRect();
-                        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-                        const clickX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-                        const clickPercent = clickX / rect.width;
+                        const positionX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+                        const clickPercent = Math.max(0, Math.min(1, (positionX - rect.left) / rect.width));
                         progressBar.style.width = `${clickPercent * 100}%`;
                         video.currentTime = clickPercent * video.duration;
                     };
-
-                    const handleSeekStart = (e) => { isSeeking = true; wasPlayingBeforeSeek = !video.paused; video.pause(); seek(e); };
-                    const handleSeekMove = (e) => { if (isSeeking) seek(e); };
-                    const handleSeekEnd = () => { if (isSeeking) { isSeeking = false; if (wasPlayingBeforeSeek) video.play(); } };
-
-                    progressContainer.addEventListener('mousedown', handleSeekStart);
-                    progressContainer.addEventListener('touchstart', handleSeekStart, { passive: true });
-                    document.addEventListener('mousemove', handleSeekMove);
-                    document.addEventListener('touchmove', handleSeekMove, { passive: true });
-                    document.addEventListener('mouseup', handleSeekEnd);
-                    document.addEventListener('touchend', handleSeekEnd);
+                    
+                    const startSeek = (e) => { isSeeking = true; seek(e); };
+                    const seeking = (e) => { if (isSeeking) seek(e); };
+                    const endSeek = () => { isSeeking = false; };
+                    
+                    progressContainer.addEventListener('mousedown', startSeek);
+                    progressContainer.addEventListener('touchstart', startSeek, { passive: true });
+                    document.addEventListener('mousemove', seeking);
+                    document.addEventListener('touchmove', seeking, { passive: true });
+                    document.addEventListener('mouseup', endSeek);
+                    document.addEventListener('touchend', endSeek);
 
                     thumbnail.innerHTML = `<video src="${item.src}"></video><div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>`;
                 } else {
                     slide.innerHTML = `<img src="${item.src}" alt="صورة المنتج">`;
                     thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
                 }
-                dom.track.appendChild(slide); dom.thumbnails.appendChild(thumbnail);
+                dom.track.appendChild(slide);
+                dom.thumbnails.appendChild(thumbnail);
                 thumbnail.addEventListener('click', () => setActiveSlide(index, true));
             });
             const firstElement = dom.track.querySelector('img, video');
@@ -348,14 +368,24 @@
             dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true); });
             dom.shareButton.addEventListener('click', sharePage);
             window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
-            const urlParams = new URLSearchParams(window.location.search); const productId = urlParams.get('id');
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
             if (productId) {
-                const productsPerFile = 5000; const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
+                const productsPerFile = 5000;
+                const fileIndex = Math.ceil(parseInt(productId) / productsPerFile);
                 const jsonFile = `products-${fileIndex}.json`;
                 fetch(jsonFile).then(res => res.ok ? res.json() : Promise.reject('File not found')).then(products => { const product = products.find(p => p.id === productId); populateGallery(product?.media || []); }).catch(err => { console.error('خطأ في جلب البيانات:', err); dom.placeholder.style.display = 'none'; dom.mediaCounter.style.display = 'none'; });
-            } else { console.error('يرجى تحديد معرف المنتج في URL'); dom.placeholder.style.display = 'none'; dom.mediaCounter.style.display = 'none'; }
+            } else {
+                console.error('يرجى تحديد معرف المنتج في URL');
+                dom.placeholder.style.display = 'none';
+                dom.mediaCounter.style.display = 'none';
+            }
         };
-        document.querySelector('.gallery').innerHTML = `<div class="main-media" id="mainMediaContainer"><div class="image-track" id="imageTrack"></div><div class="placeholder-image" id="placeholderImage"></div><button class="share-button bottom" id="shareButton"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button><button class="arrow left" id="prevArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button><button class="arrow right" id="nextArrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg></button><div class="media-counter">منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span></div></div><div class="thumbnails" id="thumbnailsContainer"></div>`;
+
+        document.getElementById('shareButton').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>`;
+        document.getElementById('prevArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>`;
+        document.getElementById('nextArrow').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>`;
+
         init();
     });
 </script>
