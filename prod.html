@@ -229,10 +229,8 @@
             transition: background-color 0.2s;
         }
         .arrow:hover { background-color: rgba(24, 24, 24, 0.6); }
-        /* RTL Arrow Positions */
         .arrow.prev-arrow { right: 5px; }
         .arrow.next-arrow { left: 5px; }
-
         .arrow svg { fill: white; width: 30px; height: 34px; }
         .arrow.disabled {
             background-color: rgba(66, 66, 66, 0.25);
@@ -356,9 +354,10 @@
                 const thresholdDistance = dom.mainContainer.offsetWidth / 4;
                 const thresholdVelocity = 0.3;
 
-                // RTL SWIPE LOGIC: Swipe right is NEXT, swipe left is PREVIOUS
-                const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+                // RTL GESTURE LOGIC: Swipe right-to-left is PREVIOUS (prevents confusion)
                 const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+                // RTL GESTURE LOGIC: Swipe left-to-right is NEXT
+                const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
 
                 if (isNextSwipe && state.currentIndex > 0) {
                     state.currentIndex--;
@@ -371,6 +370,7 @@
 
             function setActiveSlide(index, withTransition = false) {
                 state.currentIndex = index;
+                // CORRECTED TRANSLATION FOR RTL
                 state.currentTranslate = -state.currentIndex * dom.mainContainer.offsetWidth;
                 if (withTransition) {
                     dom.track.classList.add('transitioning');
@@ -386,9 +386,10 @@
             function updateUI() {
                 dom.thumbnails.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === state.currentIndex));
                 dom.currentEl.textContent = state.currentIndex + 1;
-                // RTL Arrow UI
-                dom.prevArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
-                dom.nextArrow.classList.toggle('disabled', state.currentIndex === 0);
+                
+                // RTL Arrow UI: Next is left, Prev is right
+                dom.nextArrow.classList.toggle('disabled', state.currentIndex === state.mediaItems.length - 1);
+                dom.prevArrow.classList.toggle('disabled', state.currentIndex === 0);
 
                 const currentItem = state.mediaItems[state.currentIndex];
                 dom.shareButton.style.display = (currentItem && currentItem.type === 'image') ? 'flex' : 'none';
@@ -440,14 +441,13 @@
                 ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
                 ['mouseup', 'mouseleave', 'touchend'].forEach(evt => dom.mainContainer.addEventListener(evt, dragEnd));
 
-                // RTL ARROW LOGIC: Next arrow (on the left) increments index, Prev arrow (on the right) decrements index
-                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
-                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
+                // RTL Arrow Logic: Next arrow (on left) goes to next index. Prev arrow (on right) goes to prev index.
+                dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true) });
+                dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true) });
                 
                 dom.shareButton.addEventListener('click', sharePage);
                 window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
 
-                // --- DATA LOADING ---
                 const urlParams = new URLSearchParams(window.location.search);
                 const productId = urlParams.get('id');
 
