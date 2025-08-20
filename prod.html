@@ -336,39 +336,60 @@
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); };
-        const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 4; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
         
-        // --- START: هذا هو الجزء الذي تم تعديله ---
+        const dragMove = (e) => {
+            if (!state.isDragging) return;
+            const dragDistance = getPositionX(e) - state.startPos;
+            let resistedDistance = dragDistance;
+            
+            // --- START: هذا هو منطق "المقاومة" الذي طلبته ---
+            // إذا كان المستخدم في الشريحة الأولى ويحاول السحب للخلف، أو في الأخيرة ويحاول السحب للأمام
+            // نقوم بتقليل مسافة السحب لجعلها تبدو وكأنها مقاومة
+            if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) {
+                resistedDistance /= 4; // كلما زاد الرقم، زادت المقاومة
+            }
+            // --- END: نهاية منطق المقاومة ---
+
+            state.currentTranslate = state.prevTranslate + resistedDistance;
+            setSliderPosition();
+        };
+
+        // --- START: هذا هو الجزء الذي تم تعديله ليصبح أكثر ذكاءً ---
         const dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
+
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const dragDuration = Date.now() - state.startTime;
 
-            // الحفاظ على اكتشاف "النقر": السحب لمسافة قصيرة جداً يعتبر نقرة وليس سحباً.
-            // هذا مهم للسماح للمستخدم بفتح عناصر تحكم الفيديو.
+            // إذا كانت الحركة صغيرة جداً وقصيرة المدة، اعتبرها نقرة (مهم للفيديو)
             if (Math.abs(dragOffset) < 10 && dragDuration < 200) {
                 setActiveSlide(state.currentIndex, true);
                 return;
             }
 
-            // التعديل الرئيسي: استخدام عتبة حساسة جدًا للانتقال.
-            // أي سحب يتجاوز 15 بكسل سيؤدي إلى تغيير الشريحة.
-            const sensitiveThreshold = 15;
+            // حساب سرعة السحب (بكسل في الثانية)
+            const swipeVelocity = Math.abs(dragOffset / dragDuration);
 
-            // التحقق مما إذا كانت مسافة السحب كافية وفي أي اتجاه.
-            // تم الحفاظ على منطق الاتجاه الأصلي (السحب لليمين للتالي، ولليسار للسابق).
-            if (dragOffset > sensitiveThreshold && state.currentIndex < state.mediaItems.length - 1) {
+            // تحديد عتبات (حدود) لتغيير الشريحة
+            const thresholdDistance = dom.mainContainer.clientWidth / 7; // مسافة السحب المطلوبة (أكثر حساسية)
+            const thresholdVelocity = 0.3; // سرعة السحب المطلوبة (للفليك السريع)
+            
+            // بما أن العرض باللغة العربية (RTL)، فالسحب لليسار يعني "التالي" ولليمين يعني "السابق"
+            const isSwipeToNext = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity);
+            const isSwipeToPrev = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity);
+
+            if (isSwipeToNext && state.currentIndex < state.mediaItems.length - 1) {
                 state.currentIndex++;
-            } else if (dragOffset < -sensitiveThreshold && state.currentIndex > 0) {
+            } else if (isSwipeToPrev && state.currentIndex > 0) {
                 state.currentIndex--;
             }
-            
-            // الانتقال السلس إلى الشريحة الجديدة أو العودة إلى الحالية.
+
+            // تحديث الواجهة مع تأثير انتقالي سلس
             setActiveSlide(state.currentIndex, true);
         };
         // --- END: نهاية الجزء المعدل ---
-
+        
         const loadVisibleSlides = () => {
             const indexesToLoad = [state.currentIndex];
             if (state.currentIndex > 0) indexesToLoad.push(state.currentIndex - 1);
@@ -390,7 +411,7 @@
             });
         };
         
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
+        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth * -1; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         
@@ -484,6 +505,20 @@
             });
             
             dom.totalEl.textContent = state.mediaItems.length;
+            // تصحيح بسيط لمنطق RTL
+            // الآن نستخدم transform سالب للتحريك لليسار عند زيادة المؤشر
+            const setActiveSlide_RTL = (index, withTransition = false) => { 
+                state.currentIndex = index; 
+                state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth * -1; // لاحظ الإشارة السالبة
+                if (withTransition) dom.track.classList.add('transitioning'); 
+                setSliderPosition(); 
+                updateUI(); 
+                loadVisibleSlides(); 
+            };
+            
+            // استبدال الدالة القديمة بالجديدة
+            setActiveSlide = setActiveSlide_RTL;
+
             setActiveSlide(0);
         }
 
