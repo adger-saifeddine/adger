@@ -70,21 +70,13 @@
         position: relative;
     }
 
-    .main-media-wrapper {
+    .main-media {
         margin-left: 20px;
+        position: relative;
         width: 400px;
         height: 400px;
         border: 2px solid #ccc;
         border-radius: 10px;
-        position: relative; 
-    }
-
-    .main-media {
-        width: 100%;
-        height: 100%;
-        border: none; 
-        border-radius: 8px;
-        position: relative;
         overflow: hidden;
         cursor: grab;
         touch-action: pan-y;
@@ -253,21 +245,7 @@
 
     @media (max-width: 555px) {
         .gallery { flex-direction: column; align-items: center; margin-top: 0; width: 100%; }
-        
-        .main-media-wrapper {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1 / 1;
-            margin-left: 0;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 0;
-        }
-        
-        .main-media { 
-            border-radius: 0; 
-        }
-        
+        .main-media { width: 100%; height: auto; aspect-ratio: 1 / 1; margin-left: 0; margin-bottom: 15px; border: none; border-radius: 0; }
         .thumbnails { flex-direction: row; max-height: none; overflow-x: auto; padding: 0 10px; box-sizing: border-box; width: 100%; gap: 10px; }
         .thumbnail { margin: 0; flex: 0 0 auto; width: 65px; height: 65px; }
         .media-counter { bottom: 15px; right: 15px; font-size: 11px; padding: 3px 13px; }
@@ -277,16 +255,14 @@
 </head>
 <body>
     <div class="gallery">
-        <div class="main-media-wrapper">
-            <div class="main-media" id="mainMediaContainer">
-                <div class="image-track" id="imageTrack"></div>
-                <div class="placeholder-image" id="placeholderImage"></div>
-                <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
-                <button class="arrow left" id="prevArrow"><!-- SVG --></button>
-                <button class="arrow right" id="nextArrow"><!-- SVG --></button>
-                <div class="media-counter">
-                    منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
-                </div>
+        <div class="main-media" id="mainMediaContainer">
+            <div class="image-track" id="imageTrack"></div>
+            <div class="placeholder-image" id="placeholderImage"></div>
+            <button class="share-button bottom" id="shareButton"><!-- SVG --></button>
+            <button class="arrow left" id="prevArrow"><!-- SVG --></button>
+            <button class="arrow right" id="nextArrow"><!-- SVG --></button>
+            <div class="media-counter">
+                منتج <span id="currentMedia">1</span>/<span id="totalMedia">0</span>
             </div>
         </div>
         <div class="thumbnails" id="thumbnailsContainer"></div>
@@ -297,10 +273,10 @@
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), placeholder: document.getElementById('placeholderImage'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         const state = { isDragging: false, startPos: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, };
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.offsetWidth; dom.track.classList.remove('transitioning'); };
+        const dragStart = (e) => { state.isDragging = true; state.startTime = Date.now(); state.startPos = getPositionX(e); state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth; dom.track.classList.remove('transitioning'); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
         const dragMove = (e) => { if (!state.isDragging) return; const dragDistance = getPositionX(e) - state.startPos; let resistedDistance = dragDistance; if ((state.currentIndex === 0 && resistedDistance > 0) || (state.currentIndex === state.mediaItems.length - 1 && resistedDistance < 0)) { resistedDistance /= 3; } state.currentTranslate = state.prevTranslate + resistedDistance; setSliderPosition(); };
-        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.offsetWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); };
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.offsetWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); };
+        const dragEnd = () => { if (!state.isDragging) return; state.isDragging = false; const dragOffset = state.currentTranslate - state.prevTranslate; const dragDuration = Date.now() - state.startTime; if (Math.abs(dragOffset) < 10 && dragDuration < 200) { setActiveSlide(state.currentIndex, true); return; } const swipeVelocity = Math.abs(dragOffset / dragDuration); const thresholdDistance = dom.mainContainer.clientWidth / 6; const thresholdVelocity = 0.3; const isNextSwipe = dragOffset > thresholdDistance || (dragOffset > 25 && swipeVelocity > thresholdVelocity); const isPrevSwipe = dragOffset < -thresholdDistance || (dragOffset < -25 && swipeVelocity > thresholdVelocity); if (isNextSwipe && state.currentIndex < state.mediaItems.length - 1) state.currentIndex++; else if (isPrevSwipe && state.currentIndex > 0) state.currentIndex--; setActiveSlide(state.currentIndex, true); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
+        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); }; // --- تعديل: استخدام clientWidth بدلاً من offsetWidth
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         
