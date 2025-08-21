@@ -965,7 +965,7 @@
             position: relative;
             white-space: nowrap;
             padding-right: 60px; /* المسافة الضرورية لإظهار "الكل" بجانب الزر */
-            padding-left: 20px; /* --- START: التعديل المطلوب --- لإضافة مسافة في نهاية القائمة لسهولة التمرير */
+            padding-left: 20px; /* لإضافة مسافة في نهاية التمرير يساراً */
         }
         /* --- END: تعديلات زر الفلتر ومكان القائمة --- */
 
@@ -1583,6 +1583,8 @@
         </div>
     </div>
     <!-- END: Price Filter Modal HTML -->
+</body>
+</html>
 
 <script>
     // --- متغيرات عالمية لتتبع المنتجات
@@ -1952,14 +1954,17 @@
                 if (!normalizedSearch || searchTerm === 'الكل') {
                     tempFiltered = products;
                 } else if (isIdSearch) {
-                    // منطق البحث عن رقم المنتج المحدد
+                    // --- NEW: Logic for specific ID search ---
+                    // This block handles searches like "#12345"
                     tempFiltered = products.filter(product => {
                         const dataName = normalizeText(product.dataName) || '';
-                        const dataNameParts = dataName.split(/\s+/); // تقسيم dataName إلى أجزاء
-                        return dataNameParts.includes(normalizedSearch); // البحث عن تطابق كامل
+                        // Split data-name into individual words/IDs
+                        const dataNameParts = dataName.split(/\s+/);
+                        // Check if any of the parts is an EXACT match for the searched ID
+                        return dataNameParts.includes(normalizedSearch);
                     });
                 } else {
-                    // منطق البحث العادي بالكلمات المفتاحية والسعر
+                    // --- OLD: Logic for general keyword and price search ---
                     const priceMatch = searchTerm.match(/أقل من (\d+)/);
                     if (priceMatch) {
                          const maxPrice = parseInt(priceMatch[1]);
@@ -1979,7 +1984,7 @@
                             return productPrice >= minPrice && productPrice <= maxPrice;
                         });
                     } else {
-                        // البحث العام بالكلمات المفتاحية
+                        // General keyword search
                         let searchKeywords = [normalizedSearch];
                         const arabicNormalized = normalizeText(searchTerm.replace(/أ|إ|آ/g, 'ا').replace(/ى/g, 'ي'));
                         for (const category in keywordMap) {
@@ -2024,6 +2029,7 @@
                 searchTermDisplay.textContent = searchTerm;
             });
     }
+
 
     // دالة لتحميل المنتجات
     function loadProducts(startIndex, count) {
