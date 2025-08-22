@@ -5,10 +5,12 @@
     <title>مكتبة أدجر - Adger Library</title>
     <link rel="icon" href="https://i.postimg.cc/9FkVJ56T/library-logo.webp" type="image/x-icon">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -16,490 +18,875 @@
     <title>مكتبة أدجر</title>
     <!-- Google Fonts for a nice Arabic font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Internal CSS -->
-    <style>
-        /* ================================================= */
-        /* ============= دليل تعديل الألوان ================ */
-        /* ================================================= */
-        :root {
-            --primary-color: #006eff;
-            --accent-color: rgb(0, 204, 255);
-            --background-color: #f4f6f7;
-            --header-footer-bg: #e2e2e2;
-            --card-bg: #ffffff;
-            --sidebar-bg: #ffffff;
-            --header-footer-text: #3d3d3d;
-            --main-text-color: #34495e;
-            --card-title-color: #2c3e50;
-            --card-author-color: #7f8c8d;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-            --transition-speed: 0.3s ease;
-        }
+<style>
+    /* ================================================= */
+    /* ============= دليل تعديل الألوان ================ */
+    /* ================================================= */
+    :root {
+        --primary-color: #006eff;
+        --accent-color: rgb(0, 204, 255);
+        --background-color: #f4f6f7;
+        --header-footer-bg: #e2e2e2;
+        --card-bg: #ffffff;
+        --sidebar-bg: #ffffff;
+        --header-footer-text: #3d3d3d;
+        --main-text-color: #34495e;
+        --card-title-color: #2c3e50;
+        --card-author-color: #7f8c8d;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --border-radius: 8px;
+        --transition-speed: 0.3s ease;
+        --favorite-color: #ff4757;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: 'Cairo', 'Tahoma', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--main-text-color);
-            line-height: 1.7;
-            position: relative;
+    body {
+        font-family: 'Cairo', 'Tahoma', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        background-color: var(--background-color);
+        color: var(--main-text-color);
+        line-height: 1.7;
+        position: relative;
+    }
+    
+    body.sidebar-open,
+    body.modal-open,
+    body.favorites-open {
+        overflow: hidden;
+    }
+
+    #app-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    header {
+        background-color: var(--header-footer-bg);
+        padding: 1rem 1.5rem;
+        box-shadow: 0 2px 5px var(--shadow-color);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .header-top-row {
+        display: contents; 
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    
+    #favorites-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--header-footer-text);
+        transition: color var(--transition-speed);
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+    }
+
+    #favorites-toggle:hover {
+        color: var(--favorite-color);
+    }
+
+    #favorites-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--favorite-color);
+        color: white;
+        font-size: 0.7rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    header h1 {
+        font-family: 'Cairo', sans-serif;
+        font-size: 1.8rem;
+        margin: 0;
+        flex-shrink: 0;
+    }
+    
+    header h1 a {
+        text-decoration: none;
+        transition: opacity var(--transition-speed);
+        background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 700;
+    }
+    header h1 a:hover {
+        opacity: 0.9;
+    }
+    
+    .search-container {
+        position: relative; flex-grow: 1; margin: 0 auto; max-width: 600px; width: 100%; display: flex; align-items: center; background-color: #fff; border-radius: 50px; padding: 0.25rem 0.5rem 0.25rem 1rem; border: 2px solid transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    .search-container:focus-within {
+        border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 110, 255, 0.3);
+    }
+    #search-bar {
+        width: 100%; padding: 0.5rem; border: none; background: none; outline: none; font-size: 1rem; color: var(--main-text-color); flex-grow: 1;
+    }
+    input[type="search"]::-webkit-search-cancel-button { -webkit-appearance:none; display: none; }
+    #clear-search-button {
+        background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%;
+    }
+    #clear-search-button svg { width: 20px; height: 20px; fill: #95a5a6; transition: fill var(--transition-speed); }
+    #clear-search-button:hover svg { fill: var(--card-title-color); }
+    #search-button {
+        background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%;
+    }
+    #search-button svg { width: 24px; height: 24px; fill: var(--card-author-color); transition: fill var(--transition-speed); }
+    .search-container:focus-within #search-button svg, #search-button:hover svg { fill: var(--primary-color); }
+
+    #autocomplete-results {
+        display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background-color: #fff; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); max-height: 250px; overflow-y: auto; z-index: 1050; border: 1px solid #ddd;
+    }
+    .autocomplete-item {
+        padding: 0.75rem 1.5rem; cursor: pointer; transition: background-color var(--transition-speed); color: var(--card-title-color);
+    }
+    .autocomplete-item:hover {
+        background-color: var(--background-color);
+    }
+    .autocomplete-item strong {
+        color: var(--primary-color); font-weight: bold;
+    }
+    
+    #sidebar-toggle { display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; flex-shrink: 0; z-index: 1030; transition: transform 0.3s ease-in-out; }
+    #sidebar-toggle .bar { display: block; width: 25px; height: 3px; margin: 5px auto; border-radius: 3px; transition: all 0.3s ease-in-out; background: linear-gradient(-45deg, #7DF9FF, #838383, #FF00FF, #00BFFF); background-size: 400% 400%; animation: animate-gradient 4s ease infinite; }
+    body.sidebar-open #sidebar-toggle { transform: rotate(180deg); }
+    body.sidebar-open #sidebar-toggle .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    body.sidebar-open #sidebar-toggle .bar:nth-child(2) { opacity: 0; }
+    body.sidebar-open #sidebar-toggle .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    main { display: flex; flex: 1; padding: 2rem; gap: 2rem; }
+    #sidebar { width: 25%; max-width: 300px; background-color: var(--sidebar-bg); padding: 1.5rem; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); height: fit-content; }
+    @media (min-width: 993px) { #sidebar { position: sticky; top: 2rem; } }
+    #sidebar h2 { margin-bottom: 1rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; }
+    #sidebar-book-list { list-style: none; max-height: 70vh; overflow-y: auto; }
+    #sidebar-book-list li a { display: block; padding: 0.75rem 0.5rem; color: var(--main-text-color); text-decoration: none; border-radius: 4px; transition: background-color var(--transition-speed), color var(--transition-speed); }
+    #sidebar-book-list li a:hover { background-color: var(--primary-color); color: #fff; }
+    
+    #book-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; align-content: start; }
+    .book-card { display: flex; flex-direction: column; background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); overflow: hidden; transition: transform var(--transition-speed), box-shadow var(--transition-speed); cursor: pointer; position: relative; }
+    .book-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 110, 255, 0.2); }
+    .book-card.highlight { box-shadow: 0 0 0 4px var(--primary-color); transform: scale(1.01); }
+    .book-card.hidden { display: none; }
+    .book-favorite-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all var(--transition-speed);
+    }
+    .book-favorite-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: scale(1.1);
+    }
+    .book-favorite-btn i {
+        color: #ccc;
+        font-size: 1.2rem;
+        transition: color var(--transition-speed);
+    }
+    .book-favorite-btn.active i {
+        color: var(--favorite-color);
+    }
+    .book-cover-container { width: 100%; padding-top: 150%; position: relative; background-color: #e0e0e0; }
+    .book-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+    .book-details { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .book-details h3 { color: var(--card-title-color); margin-bottom: 0.25rem; }
+    .book-author { font-style: italic; color: var(--card-author-color); margin-bottom: 1rem; }
+    
+    .book-description {
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    footer { text-align: center; padding: 1.5rem; margin-top: 2rem; background-color: var(--header-footer-bg); color: var(--header-footer-text); font-size: 0.9rem; }
+    #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1010; }
+    body.sidebar-open #overlay,
+    body.favorites-open #overlay { display: block; }
+    
+    #modal-overlay {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.6); z-index: 2000;
+        opacity: 0; visibility: hidden; transition: opacity 0.35s ease-out, visibility 0.35s ease-out;
+    }
+    body.modal-open #modal-overlay { opacity: 1; visibility: visible; }
+    
+    #book-modal {
+        position: fixed; top: 50%; left: 50%; z-index: 2010;
+        width: 90%; max-width: 850px; max-height: 85vh;
+        background: var(--background-color); border-radius: var(--border-radius);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        display: flex; flex-direction: column;
+        opacity: 0; visibility: hidden;
+        transform: translate(-50%, -50%) scale(0.95);
+        transition: opacity 0.35s ease-out, transform 0.35s ease-out, visibility 0.35s ease-out;
+    }
+    body.modal-open #book-modal {
+        opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-header {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 1rem 1.5rem; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
+    }
+    .modal-header h2 { color: var(--card-title-color); margin: 0; font-size: 1.5rem; }
+    #modal-close-btn { background: none; border: none; font-size: 2.2rem; color: #aaa; cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s, transform 0.2s; }
+    #modal-close-btn:hover { color: #333; transform: rotate(90deg); }
+    .modal-body { display: flex; gap: 2rem; padding: 2rem; overflow-y: auto; flex-grow: 1; }
+    .modal-image { flex-basis: 35%; flex-shrink: 0; }
+    .modal-image img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); }
+    .modal-details { flex-basis: 65%; }
+    .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+    .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
+    .modal-footer {
+        padding: 1rem 1.5rem; border-top: 1px solid #e0e0e0; flex-shrink: 0;
+        display: flex; gap: 1rem; justify-content: flex-end; background-color: #fff;
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+    }
+    .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; }
+    .modal-footer .btn-primary { background-color: var(--primary-color); color: white; }
+    .modal-footer .btn-primary:hover { background-color: #0056b3; box-shadow: 0 4px 10px rgba(0, 110, 255, 0.3); }
+    .modal-footer .btn-secondary { background-color: transparent; color: var(--primary-color); border-color: var(--primary-color); }
+    .modal-footer .btn-secondary:hover { background-color: var(--primary-color); color: white; }
+
+    /* Favorites Sidebar */
+    #favorites-sidebar {
+        position: fixed;
+        top: 0;
+        left: -350px;
+        width: 350px;
+        max-width: 85vw;
+        height: 100vh;
+        background-color: var(--sidebar-bg);
+        z-index: 1040;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+        transition: left var(--transition-speed);
+        padding: 1.5rem;
+        overflow-y: auto;
+    }
+
+    body.favorites-open #favorites-sidebar {
+        left: 0;
+    }
+
+    #favorites-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--favorite-color);
+    }
+
+    #favorites-header h2 {
+        color: var(--favorite-color);
+        margin: 0;
+    }
+
+    #close-favorites {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #aaa;
+        transition: color var(--transition-speed);
+    }
+
+    #close-favorites:hover {
+        color: #333;
+    }
+
+    #favorites-list {
+        list-style: none;
+    }
+
+    .favorite-item {
+        display: flex;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background-color: var(--background-color);
+        border-radius: var(--border-radius);
+        transition: transform var(--transition-speed);
+    }
+
+    .favorite-item:hover {
+        transform: translateX(5px);
+    }
+
+    .favorite-item img {
+        width: 60px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-left: 0.75rem;
+        flex-shrink: 0;
+    }
+
+    .favorite-details {
+        flex-grow: 1;
+    }
+
+    .favorite-details h3 {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+        color: var(--card-title-color);
+    }
+
+    .favorite-details p {
+        font-size: 0.85rem;
+        color: var(--card-author-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .remove-favorite {
+        background: none;
+        border: none;
+        color: #ff4757;
+        cursor: pointer;
+        font-size: 1rem;
+        align-self: flex-start;
+        padding: 0.25rem;
+        transition: transform var(--transition-speed);
+    }
+
+    .remove-favorite:hover {
+        transform: scale(1.2);
+    }
+
+    #empty-favorites {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--card-author-color);
+    }
+
+    /* === START MOBILE VIEW MODIFICATION === */
+    @media (max-width: 992px) {
+        header { 
+            flex-wrap: wrap; 
         }
         
-        body.sidebar-open,
-        body.modal-open {
-            overflow: hidden;
-        }
-
-        #app-container {
+        .header-top-row {
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: var(--header-footer-bg);
-            padding: 1rem 1.5rem;
-            box-shadow: 0 2px 5px var(--shadow-color);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
+            width: 100%;
             align-items: center;
+            gap: 0.5rem;
+            order: 1;
+        }
+        
+        #favorites-toggle {
             position: relative;
+            left: auto; /* ===== MODIFICATION: Ensure flexbox controls positioning ===== */
+            top: auto;  /* ===== MODIFICATION: Ensure flexbox controls positioning ===== */
+            transform: none;
+            order: 3; 
+            margin-right: auto;
+        }
+        
+        .header-left {
+            order: 2;
+        }
+        
+        #sidebar-toggle {
+            display: block;
+            order: 1;
         }
 
+        .search-container { 
+            order: 2;
+            width: 100%; 
+            margin: 0.75rem 0 0 0; 
+        }
         header h1 {
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.8rem;
-            margin: 0;
-            flex-shrink: 0;
+            font-size: 1.6rem;
         }
-        
-        header h1 a {
-            text-decoration: none;
-            transition: opacity var(--transition-speed);
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-        }
-        header h1 a:hover {
-            opacity: 0.9;
-        }
-        
-        .search-container {
-            position: relative; flex-grow: 1; margin: 0 auto; max-width: 600px; width: 100%; display: flex; align-items: center; background-color: #fff; border-radius: 50px; padding: 0.25rem 0.5rem 0.25rem 1rem; border: 2px solid transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-        }
-        .search-container:focus-within {
-            border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 110, 255, 0.3);
-        }
-        #search-bar {
-            width: 100%; padding: 0.5rem; border: none; background: none; outline: none; font-size: 1rem; color: var(--main-text-color); flex-grow: 1;
-        }
-        input[type="search"]::-webkit-search-cancel-button { -webkit-appearance:none; display: none; }
-        #clear-search-button {
-            background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%;
-        }
-        #clear-search-button svg { width: 20px; height: 20px; fill: #95a5a6; transition: fill var(--transition-speed); }
-        #clear-search-button:hover svg { fill: var(--card-title-color); }
-        #search-button {
-            background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%;
-        }
-        #search-button svg { width: 24px; height: 24px; fill: var(--card-author-color); transition: fill var(--transition-speed); }
-        .search-container:focus-within #search-button svg, #search-button:hover svg { fill: var(--primary-color); }
 
-        /* ======== ✨ CSS الخاص بنافذة الإكمال التلقائي ✨ ======== */
-        #autocomplete-results {
-            display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background-color: #fff; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); max-height: 250px; overflow-y: auto; z-index: 1050; border: 1px solid #ddd;
-        }
-        .autocomplete-item {
-            padding: 0.75rem 1.5rem; cursor: pointer; transition: background-color var(--transition-speed); color: var(--card-title-color);
-        }
-        .autocomplete-item:hover {
-            background-color: var(--background-color);
-        }
-        /* هذا هو الجزء المسؤول عن تظليل النص */
-        .autocomplete-item strong {
-            color: var(--primary-color); font-weight: bold;
-        }
-        
-        #sidebar-toggle { display: none; cursor: pointer; background: none; border: none; padding: 0.5rem; flex-shrink: 0; z-index: 1030; transition: transform 0.3s ease-in-out; }
-        #sidebar-toggle .bar { display: block; width: 25px; height: 3px; margin: 5px auto; border-radius: 3px; transition: all 0.3s ease-in-out; background: linear-gradient(-45deg, #7DF9FF, #838383, #FF00FF, #00BFFF); background-size: 400% 400%; animation: animate-gradient 4s ease infinite; }
-        body.sidebar-open #sidebar-toggle { transform: rotate(180deg); }
-        body.sidebar-open #sidebar-toggle .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        body.sidebar-open #sidebar-toggle .bar:nth-child(2) { opacity: 0; }
-        body.sidebar-open #sidebar-toggle .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        main { display: flex; flex: 1; padding: 2rem; gap: 2rem; }
-        #sidebar { width: 25%; max-width: 300px; background-color: var(--sidebar-bg); padding: 1.5rem; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); height: fit-content; }
-        @media (min-width: 993px) { #sidebar { position: sticky; top: 2rem; } }
-        #sidebar h2 { margin-bottom: 1rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; }
-        #sidebar-book-list { list-style: none; max-height: 70vh; overflow-y: auto; }
-        #sidebar-book-list li a { display: block; padding: 0.75rem 0.5rem; color: var(--main-text-color); text-decoration: none; border-radius: 4px; transition: background-color var(--transition-speed), color var(--transition-speed); }
-        #sidebar-book-list li a:hover { background-color: var(--primary-color); color: #fff; }
-        
-        #book-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; align-content: start; }
-        .book-card { display: flex; flex-direction: column; background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); overflow: hidden; transition: transform var(--transition-speed), box-shadow var(--transition-speed); cursor: pointer; }
-        .book-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 110, 255, 0.2); }
-        .book-card.highlight { box-shadow: 0 0 0 4px var(--primary-color); transform: scale(1.01); }
-        .book-card.hidden { display: none; }
-        .book-cover-container { width: 100%; padding-top: 150%; position: relative; background-color: #e0e0e0; }
-        .book-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .book-details { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .book-details h3 { color: var(--card-title-color); margin-bottom: 0.25rem; }
-        .book-author { font-style: italic; color: var(--card-author-color); margin-bottom: 1rem; }
-        .book-description { margin-bottom: 1rem; flex-grow: 1; }
-        
-        footer { text-align: center; padding: 1.5rem; margin-top: 2rem; background-color: var(--header-footer-bg); color: var(--header-footer-text); font-size: 0.9rem; }
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1010; }
-        body.sidebar-open #overlay { display: block; }
-        
-        #modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.6); z-index: 2000;
-            opacity: 0; visibility: hidden; transition: opacity 0.35s ease-out, visibility 0.35s ease-out;
-        }
-        body.modal-open #modal-overlay { opacity: 1; visibility: visible; }
-        
+        main { flex-direction: column; padding: 1.5rem; }
+        #sidebar { position: fixed; top: 0; right: -300px; width: 300px; max-width: 80vw; height: 100vh; z-index: 1020; transition: right var(--transition-speed); padding-top: 6rem; overflow-y: auto; box-shadow: -5px 0 15px rgba(0,0,0,0.2); border-radius: 0; }
+        body.sidebar-open #sidebar { right: 0; }
+    }
+    /* === END MOBILE VIEW MODIFICATION === */
+    
+    @media (max-width: 768px) {
+        main { padding: 1rem; }
+        #book-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .book-details { padding: 1rem; }
+        .book-details h3 { font-size: 1rem; }
+        .book-author { font-size: 0.8rem; }
+        .book-description { font-size: 0.8rem; }
         #book-modal {
-            position: fixed; top: 50%; left: 50%; z-index: 2010;
-            width: 90%; max-width: 850px; max-height: 85vh;
-            background: var(--background-color); border-radius: var(--border-radius);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-            display: flex; flex-direction: column;
-            opacity: 0; visibility: hidden;
-            transform: translate(-50%, -50%) scale(0.95);
-            transition: opacity 0.35s ease-out, transform 0.35s ease-out, visibility 0.35s ease-out;
+            width: 100%; height: 100%; top: 0; left: 0; max-height: 100vh;
+            border-radius: 0;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        body.modal-open #book-modal {
-            opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1);
+        body.modal-open #book-modal { transform: translateY(0); }
+        .modal-body { flex-direction: column; padding: 1.5rem; }
+        .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
+        .modal-header h2 { font-size: 1.2rem; }
+        .modal-footer { justify-content: center; }
+        .modal-footer .btn { flex-grow: 1; }
+    }
+    
+    @media (max-width: 480px) {
+        #book-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+        .book-favorite-btn {
+            top: 5px;
+            left: 5px;
+            width: 32px;
+            height: 32px;
         }
+        .book-favorite-btn i {
+            font-size: 1rem;
+        }
+    }
 
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 1.5rem; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
-        }
-        .modal-header h2 { color: var(--card-title-color); margin: 0; font-size: 1.5rem; }
-        #modal-close-btn { background: none; border: none; font-size: 2.2rem; color: #aaa; cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s, transform 0.2s; }
-        #modal-close-btn:hover { color: #333; transform: rotate(90deg); }
-        .modal-body { display: flex; gap: 2rem; padding: 2rem; overflow-y: auto; flex-grow: 1; }
-        .modal-image { flex-basis: 35%; flex-shrink: 0; }
-        .modal-image img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); }
-        .modal-details { flex-basis: 65%; }
-        .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
-        .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
-        .modal-footer {
-            padding: 1rem 1.5rem; border-top: 1px solid #e0e0e0; flex-shrink: 0;
-            display: flex; gap: 1rem; justify-content: flex-end; background-color: #fff;
-            border-bottom-left-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-        }
-        .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; }
-        .modal-footer .btn-primary { background-color: var(--primary-color); color: white; }
-        .modal-footer .btn-primary:hover { background-color: #0056b3; box-shadow: 0 4px 10px rgba(0, 110, 255, 0.3); }
-        .modal-footer .btn-secondary { background-color: transparent; color: var(--primary-color); border-color: var(--primary-color); }
-        .modal-footer .btn-secondary:hover { background-color: var(--primary-color); color: white; }
+    @keyframes animate-gradient {
+        0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+    }
+</style>
 
-        @media (max-width: 992px) {
-            header { flex-wrap: wrap; justify-content: flex-start; align-items: center; }
-            .search-container { order: 3; width: 100%; margin: 0.75rem 0 0 0; }
-            #sidebar-toggle { display: block; order: 1; }
-            header h1 { order: 2; flex-grow: 1; text-align: right; padding: 0; margin: 0; margin-right: 0.5rem; font-size: 1.6rem; }
-            main { flex-direction: column; padding: 1.5rem; }
-            #sidebar { position: fixed; top: 0; right: -300px; width: 300px; max-width: 80vw; height: 100vh; z-index: 1020; transition: right var(--transition-speed); padding-top: 6rem; overflow-y: auto; box-shadow: -5px 0 15px rgba(0,0,0,0.2); border-radius: 0; }
-            body.sidebar-open #sidebar { right: 0; }
-        }
-        
-        @media (max-width: 768px) {
-            main { padding: 1rem; }
-            #book-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-            .book-details { padding: 1rem; }
-            .book-details h3 { font-size: 1rem; }
-            .book-author { font-size: 0.8rem; }
-            #book-modal {
-                width: 100%; height: 100%; top: 0; left: 0; max-height: 100vh;
-                border-radius: 0;
-                transform: translateY(100%);
-                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-            body.modal-open #book-modal { transform: translateY(0); }
-            .modal-body { flex-direction: column; padding: 1.5rem; }
-            .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
-            .modal-header h2 { font-size: 1.2rem; }
-            .modal-footer { justify-content: center; }
-            .modal-footer .btn { flex-grow: 1; }
-        }
-        
-        @media (max-width: 480px) {
-            #book-grid { gap: 0.75rem; }
-        }
-
-        @keyframes animate-gradient {
-            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
-        }
-    </style>
 </head>
 <body>
 
-    <div id="app-container">
-        <header>
-            <h1><a href="index.html">مكتبة أدجر</a></h1>
-            <div class="search-container">
-                <input type="search" id="search-bar" placeholder="ابحث عن كتاب..." autocomplete="off">
-                <button id="clear-search-button" aria-label="مسح البحث" style="display: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-                </button>
-                <button id="search-button" aria-label="بحث">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                </button>
-                <div id="autocomplete-results"></div>
-            </div>
+<div id="app-container">
+    <header>
+        <div class="header-top-row">
             <button id="sidebar-toggle" aria-label="فتح/إغلاق القائمة">
                 <span class="bar"></span> <span class="bar"></span> <span class="bar"></span>
             </button>
-        </header>
 
-        <main>
-            <aside id="sidebar">
-                <h2>فهرس الكتب</h2>
-                <ul id="sidebar-book-list"></ul>
-            </aside>
-            <section id="book-grid-container" style="flex: 1;">
-                 <div id="book-grid"></div>
-                 <p id="no-results-message" style="display:none; text-align:center; width:100%;">لم يتم العثور على كتب تطابق بحثك.</p>
-            </section>
-        </main>
-        
-        <div id="overlay"></div>
-        
-        <footer>
-            <p>© 2024 Adger Library. جميع الحقوق محفوظة.</p>
-        </footer>
-    </div>
-    
-    <div id="modal-overlay"></div>
-    <div id="book-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-heading">
-        <header class="modal-header">
-            <h2 id="modal-title-heading"></h2>
-            <button id="modal-close-btn" aria-label="إغلاق">&times;</button>
-        </header>
-        <div class="modal-body">
-            <div class="modal-image">
-                <img id="modal-book-cover" src="" alt="غلاف الكتاب">
-            </div>
-            <div class="modal-details">
-                <p class="modal-author" id="modal-author"></p>
-                <div class="modal-full-description" id="modal-description"></div>
-            </div>
+
+
+<div class="header-left">
+            <h1><a href="index.html">مكتبة أدجر</a></h1>
         </div>
-        <footer class="modal-footer">
-            <a id="modal-read-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">قراءة (PDF)</a>
-            <a id="modal-buy-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">صفحة الكتاب والشراء</a>
-        </footer>
+
+<button id="favorites-toggle" aria-label="عرض المفضلة">
+        <i class="fas fa-heart"></i>
+        <span id="favorites-count">0</span>
+    </button>
+</div>
+
+<div class="search-container">
+    <input type="search" id="search-bar" placeholder="ابحث عن كتاب..." autocomplete="off">
+    <button id="clear-search-button" aria-label="مسح البحث" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+    </button>
+    <button id="search-button" aria-label="بحث">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </button>
+    <div id="autocomplete-results"></div>
+</div>
+</header>
+<main>
+    <aside id="sidebar">
+        <h2>فهرس الكتب</h2>
+        <ul id="sidebar-book-list"></ul>
+    </aside>
+    <section id="book-grid-container" style="flex: 1;">
+         <div id="book-grid"></div>
+         <p id="no-results-message" style="display:none; text-align:center; width:100%;">لم يتم العثور على كتب تطابق بحثك.</p>
+    </section>
+</main>
+
+<div id="overlay"></div>
+
+<footer>
+    <p>© 2024 Adger Library. جميع الحقوق محفوظة.</p>
+</footer>
+</div>
+
+<div id="modal-overlay"></div>
+<div id="book-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-heading">
+    <header class="modal-header">
+        <h2 id="modal-title-heading"></h2>
+        <button id="modal-close-btn" aria-label="إغلاق">&times;</button>
+    </header>
+    <div class="modal-body">
+        <div class="modal-image">
+            <img id="modal-book-cover" src="" alt="غلاف الكتاب">
+        </div>
+        <div class="modal-details">
+            <p class="modal-author" id="modal-author"></p>
+            <div class="modal-full-description" id="modal-description"></div>
+        </div>
     </div>
+    <footer class="modal-footer">
+        <a id="modal-read-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">قراءة (PDF)</a>
+        <a id="modal-buy-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">صفحة الكتاب والشراء</a>
+    </footer>
+</div>
 
+<!-- Favorites Sidebar -->
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const bookData = [
-            { id: 'dune', title: 'كثيب (Dune)', author: 'فرانك هربرت', description: 'تدور أحداث الرواية في المستقبل البعيد وسط مجتمع إقطاعي بين النجوم، وتحكي قصة الشاب بول أتريديز.', fullDescription: 'تعتبر "كثيب" من روائع الخيال العلمي، حيث تمزج بين المغامرة والتصوف والسياسة والبيئة. تقع أحداثها على كوكب أرَّاكس الصحراوي، المصدر الوحيد للمادة الأكثر قيمة في الكون، "المِزَاج". من يسيطر على أرَّاكس يسيطر على الكون. تتبع القصة الشاب بول أتريديز الذي تنتقل عائلته النبيلة لحكم هذا الكوكب الخطير، ليجد نفسه في خضم مؤامرة كونية ستغير مصير البشرية.', imageUrl: 'https://placehold.co/400x600/6B4F35/FFFFFF?text=Dune&font=cairo', keywords: ['خيال علمي', 'فضاء', 'صحراء', 'سياسة'], bookUrl: '#', pdfUrl: '#' },
-            { id: 'foundation', title: 'المؤسسة (Foundation)', author: 'إسحاق أسيموف', description: 'قصة الإمبراطورية المجرية التي حكمت لمدة 12,000 عام، وعالم التاريخ النفسي هاري سيلدون.', fullDescription: 'في هذه السلسلة الملحمية، يتنبأ العالم هاري سيلدون، باستخدام علم "التاريخ النفسي" الذي يجمع بين الرياضيات وعلم الاجتماع، بانهيار الإمبراطورية المجرية الحالية، متبوعًا بعصر مظلم سيدوم 30 ألف عام. لتخفيف هذا الأثر، يقوم سيلدون بإنشاء "المؤسسة"، وهي مستعمرة من العلماء والفنانين تهدف إلى الحفاظ على المعرفة البشرية وتقصير العصر المظلم إلى ألف عام فقط.', imageUrl: 'https://placehold.co/400x600/1E2A3A/FFFFFF?text=Foundation&font=cairo', keywords: ['مجرة', 'إمبراطورية', 'رياضيات', 'مستقبل'], bookUrl: '#', pdfUrl: '#' },
-            { id: 'atomic-habits', title: 'العادات الذرية', author: 'جيمس كلير', description: 'طريقة سهلة ومُثبتة لبناء عادات جيدة وكسر العادات السيئة. يقدم إطار عمل للتحسين كل يوم.', fullDescription: 'يقدم جيمس كلير في كتابه "العادات الذرية" استراتيجيات عملية لتكوين عادات جيدة، التخلص من العادات السيئة، وإتقان السلوكيات الصغيرة التي تؤدي إلى نتائج مذهلة. يعتمد على أفكار من علم الأحياء وعلم النفس وعلم الأعصاب لإنشاء دليل سهل الفهم لجعل العادات الجيدة لا مفر منها والعادات السيئة مستحيلة.', imageUrl: 'https://placehold.co/400x600/F39C12/FFFFFF?text=Atomic+Habits&font=cairo', keywords: ['تطوير ذاتي', 'إنتاجية', 'علم نفس', 'تحسين', 'عادات'], bookUrl: '#', pdfUrl: '#' },
-            { id: 'the-hobbit', title: 'الهوبيت', author: 'ج. ر. ر. تولكين', description: 'ينطلق هوبيت متردد، بيلبو باجنز، إلى الجبل الوحيد مع مجموعة من الأقزام لاستعادة موطنهم من تنين.', fullDescription: 'مقدمة ساحرة لعالم "سيد الخواتم"، تحكي قصة الهوبيت بيلبو باجنز الذي يعيش حياة هادئة ومريحة حتى يظهر الساحر غاندالف ومعه ثلاثة عشر قزمًا ليأخذوه في مغامرة غير متوقعة. هدفهم هو استعادة كنز مسروق يحرسه التنين سموغ. في رحلته، يواجه بيلبو الغيلان، والعناكب العملاقة، والجان، ويكتشف شجاعة وموارد لم يكن يعلم أنه يمتلكها، ويجد خاتمًا سحريًا سيغير مصير الأرض الوسطى.', imageUrl: 'https://placehold.co/400x600/27AE60/FFFFFF?text=The+Hobbit&font=cairo', keywords: ['خيال', 'مغامرة', 'تنين', 'أقزام', 'سحر'], bookUrl: '#', pdfUrl: '#' }
-        ];
+<aside id="favorites-sidebar">
+    <div id="favorites-header">
+        <h2>كتبي المفضلة</h2>
+        <button id="close-favorites" aria-label="إغلاق">&times;</button>
+    </div>
+    <div id="favorites-list"></div>
+    <div id="empty-favorites">
+        <i class="fas fa-heart" style="font-size: 3rem; color: #eee; margin-bottom: 1rem;"></i>
+        <p>لا توجد كتب في المفضلة بعد</p>
+    </div>
+</aside>
 
-        // Elements
-        const bookGrid = document.getElementById('book-grid');
-        const sidebarList = document.getElementById('sidebar-book-list');
-        const searchBar = document.getElementById('search-bar');
-        const searchButton = document.getElementById('search-button');
-        const clearSearchButton = document.getElementById('clear-search-button');
-        const noResultsMessage = document.getElementById('no-results-message');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const overlay = document.getElementById('overlay');
-        const body = document.body;
-        const searchContainer = document.querySelector('.search-container');
-        const autocompleteResults = document.getElementById('autocomplete-results'); // ✨ تم إضافة هذا العنصر
-        
-        // Modal Elements
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const modalCover = document.getElementById('modal-book-cover');
-        const modalTitle = document.getElementById('modal-title-heading');
-        const modalAuthor = document.getElementById('modal-author');
-        const modalDescription = document.getElementById('modal-description');
-        const modalReadBtn = document.getElementById('modal-read-btn');
-        const modalBuyBtn = document.getElementById('modal-buy-btn');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const bookData = [
+        { id: 'dune', title: 'كثيب (Dune)', author: 'فرانك هربرت', description: 'تدور أحداث الرواية في المستقبل البعيد وسط مجتمع إقطاعي بين النجوم، وتحكي قصة الشاب بول أتريديز.', fullDescription: 'تعتبر "كثيب" من روائع الخيال العلمي، حيث تمزج بين المغامرة والتصوف والسياسة والبيئة. تقع أحداثها على كوكب أرَّاكس الصحراوي، المصدر الوحيد للمادة الأكثر قيمة في الكون، "المِزَاج". من يسيطر على أرَّاكس يسيطر على الكون. تتبع القصة الشاب بول أتريديز الذي تنتقل عائلته النبيلة لحكم هذا الكوكب الخطير، ليجد نفسه في خضم مؤامرة كونية ستغير مصير البشرية.', imageUrl: 'https://placehold.co/400x600/6B4F35/FFFFFF?text=Dune&font=cairo', keywords: ['خيال علمي', 'فضاء', 'صحراء', 'سياسة'], bookUrl: '#', pdfUrl: '#' },
+        { id: 'foundation', title: 'المؤسسة (Foundation)', author: 'إسحاق أسيموف', description: 'قصة الإمبراطورية المجرية التي حكمت لمدة 12,000 عام، وعالم التاريخ النفسي هاري سيلدون.', fullDescription: 'في هذه السلسلة الملحمية، يتنبأ العالم هاري سيلدون، باستخدام علم "التاريخ النفسي" الذي يجمع بين الرياضيات وعلم الاجتماع، بانهيار الإمبراطورية المجرية الحالية، متبوعًا بعصر مظلم سيدوم 30 ألف عام. لتخفيف هذا الأثر، يقوم سيلدون بإنشاء "المؤسسة"، وهي مستعمرة من العلماء والفنانين تهدف إلى الحفاظ على المعرفة البشرية وتقصير العصر المظلم إلى ألف عام فقط.', imageUrl: 'https://placehold.co/400x600/1E2A3A/FFFFFF?text=Foundation&font=cairo', keywords: ['مجرة', 'إمبراطورية', 'رياضيات', 'مستقبل'], bookUrl: '#', pdfUrl: '#' },
+        { id: 'atomic-habits', title: 'العادات الذرية', author: 'جيمس كلير', description: 'طريقة سهلة ومُثبتة لبناء عادات جيدة وكسر العادات السيئة. يقدم إطار عمل للتحسين كل يوم.', fullDescription: 'يقدم جيمس كلير في كتابه "العادات الذرية" استراتيجيات عملية لتكوين عادات جيدة، التخلص من العادات السيئة، وإتقان السلوكيات الصغيرة التي تؤدي إلى نتائج مذهلة. يعتمد على أفكار من علم الأحياء وعلم النفس وعلم الأعصاب لإنشاء دليل سهل الفهم لجعل العادات الجيدة لا مفر منها والعادات السيئة مستحيلة.', imageUrl: 'https://placehold.co/400x600/F39C12/FFFFFF?text=Atomic+Habits&font=cairo', keywords: ['تطوير ذاتي', 'إنتاجية', 'علم نفس', 'تحسين', 'عادات'], bookUrl: '#', pdfUrl: '#' },
+        { id: 'the-hobbit', title: 'الهوبيت', author: 'ج. ر. ر. تولكين', description: 'ينطلق هوبيت متردد، بيلبو باجنز، إلى الجبل الوحيد مع مجموعة من الأقزام لاستعادة موطنهم من تنين.', fullDescription: 'مقدمة ساحرة لعالم "سيد الخواتم"، تحكي قصة الهوبيت بيلبو باجنز الذي يعيش حياة هادئة ومريحة حتى يظهر الساحر غاندالف ومعه ثلاثة عشر قزمًا ليأخذوه في مغامرة غير متوقعة. هدفهم هو استعادة كنز مسروق يحرسه التنين سموغ. في رحلته، يواجه بيلبو الغيلان، والعناكب العملاقة، والجان، ويكتشف شجاعة وموارد لم يكن يعلم أنه يمتلكها، ويجد خاتمًا سحريًا سيغير مصير الأرض الوسطى.', imageUrl: 'https://placehold.co/400x600/27AE60/FFFFFF?text=The+Hobbit&font=cairo', keywords: ['خيال', 'مغامرة', 'تنين', 'أقزام', 'سحر'], bookUrl: '#', pdfUrl: '#' }
+    ];
 
-        function renderAllBooks() {
-            bookGrid.innerHTML = ''; 
-            sidebarList.innerHTML = '';
-            noResultsMessage.style.display = 'none';
-            bookData.forEach(book => {
-                bookGrid.appendChild(createBookCard(book));
-                const sidebarItem = document.createElement('li');
-                sidebarItem.innerHTML = `<a href="#book-${book.id}">${book.title}</a>`;
-                sidebarList.appendChild(sidebarItem);
-            });
+    // Elements
+    const bookGrid = document.getElementById('book-grid');
+    const sidebarList = document.getElementById('sidebar-book-list');
+    const searchBar = document.getElementById('search-bar');
+    const searchButton = document.getElementById('search-button');
+    const clearSearchButton = document.getElementById('clear-search-button');
+    const noResultsMessage = document.getElementById('no-results-message');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
+    const searchContainer = document.querySelector('.search-container');
+    const autocompleteResults = document.getElementById('autocomplete-results');
+    
+    // Modal Elements
+    const modal = document.getElementById('book-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalCover = document.getElementById('modal-book-cover');
+    const modalTitle = document.getElementById('modal-title-heading');
+    const modalAuthor = document.getElementById('modal-author');
+    const modalDescription = document.getElementById('modal-description');
+    const modalReadBtn = document.getElementById('modal-read-btn');
+    const modalBuyBtn = document.getElementById('modal-buy-btn');
+
+    // Favorites Elements
+    const favoritesToggle = document.getElementById('favorites-toggle');
+    const favoritesCount = document.getElementById('favorites-count');
+    const favoritesSidebar = document.getElementById('favorites-sidebar');
+    const closeFavorites = document.getElementById('close-favorites');
+    const favoritesList = document.getElementById('favorites-list');
+    const emptyFavorites = document.getElementById('empty-favorites');
+
+    // Favorites functionality
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    function updateFavoritesCount() {
+        favoritesCount.textContent = favorites.length;
+        // ===== MODIFICATION: Always show the favorites count, even if it's 0 =====
+        favoritesCount.style.display = 'flex';
+    }
+
+    function toggleFavorite(bookId) {
+        const index = favorites.indexOf(bookId);
+        if (index === -1) {
+            favorites.push(bookId);
+        } else {
+            favorites.splice(index, 1);
         }
-        
-        function createBookCard(book) {
-            const bookCard = document.createElement('div'); 
-            bookCard.className = 'book-card';
-            bookCard.id = `book-${book.id}`;
-            bookCard.dataset.bookId = book.id;
-            bookCard.dataset.searchableText = `${book.title} ${book.author} ${book.keywords.join(' ')} ${book.description}`.toLowerCase();
-            bookCard.innerHTML = `
-                <div class="book-cover-container"><img src="${book.imageUrl}" alt="غلاف كتاب ${book.title}" class="book-cover"></div>
-                <div class="book-details"><h3>${book.title}</h3><p class="book-author">بقلم ${book.author}</p><p class="book-description">${book.description}</p></div>
-            `;
-            return bookCard;
-        }
-        
-        function openModal(book) {
-            modalCover.src = book.imageUrl;
-            modalTitle.textContent = book.title;
-            modalAuthor.textContent = `بقلم ${book.author}`;
-            modalDescription.innerHTML = book.fullDescription.replace(/\n/g, '<br>');
-            modalReadBtn.href = book.pdfUrl;
-            modalBuyBtn.href = book.bookUrl;
-            body.classList.add('modal-open');
-        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesCount();
+        updateFavoriteButtons();
+        renderFavoritesList();
+    }
 
-        function closeModal() {
-            body.classList.remove('modal-open');
-        }
+    function isFavorite(bookId) {
+        return favorites.includes(bookId);
+    }
 
-        function handleSearch() {
-            const query = searchBar.value.toLowerCase().trim();
-            let visibleBookCount = 0;
-            document.querySelectorAll('.book-card').forEach(card => {
-                const isVisible = card.dataset.searchableText.includes(query);
-                card.classList.toggle('hidden', !isVisible);
-                if (isVisible) visibleBookCount++;
-            });
-            noResultsMessage.style.display = visibleBookCount === 0 ? 'block' : 'none';
-        }
-
-        // ======== ✨ دالة الإكمال التلقائي مع تظليل النص ✨ ======== //
-        function showAutocomplete() {
-            const query = searchBar.value.toLowerCase().trim();
-            autocompleteResults.innerHTML = '';
-
-            if (query.length === 0) {
-                autocompleteResults.style.display = 'none';
-                return;
-            }
-
-            const suggestions = bookData.filter(book => 
-                book.title.toLowerCase().includes(query) ||
-                book.author.toLowerCase().includes(query)
-            ).slice(0, 5); // عرض 5 اقتراحات كحد أقصى
-
-            if (suggestions.length > 0) {
-                suggestions.forEach(suggestion => {
-                    const item = document.createElement('div');
-                    item.className = 'autocomplete-item';
-                    
-                    // استخدام Regular Expression لتظليل النص المطابق
-                    const regex = new RegExp(`(${query})`, 'gi');
-                    item.innerHTML = suggestion.title.replace(regex, '<strong>$1</strong>');
-                    
-                    // عند النقر على الاقتراح
-                    item.addEventListener('mousedown', () => {
-                        searchBar.value = suggestion.title;
-                        autocompleteResults.style.display = 'none';
-                        handleSearch(); // تحديث الشبكة
-                    });
-                    autocompleteResults.appendChild(item);
-                });
-                autocompleteResults.style.display = 'block';
+    function updateFavoriteButtons() {
+        document.querySelectorAll('.book-favorite-btn').forEach(btn => {
+            const bookId = btn.dataset.bookId;
+            if (isFavorite(bookId)) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-heart"></i>';
             } else {
-                autocompleteResults.style.display = 'none';
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="far fa-heart"></i>';
             }
+        });
+    }
+
+    function renderFavoritesList() {
+        favoritesList.innerHTML = '';
+        
+        if (favorites.length === 0) {
+            emptyFavorites.style.display = 'block';
+            return;
         }
         
-        function toggleSidebar() { body.classList.toggle('sidebar-open'); }
-        function handleSidebarClick(event) {
-            if (event.target.tagName === 'A' && event.target.closest('#sidebar-book-list')) {
-                event.preventDefault(); 
-                if (window.innerWidth <= 992) toggleSidebar();
-                const targetBookCard = document.querySelector(event.target.getAttribute('href'));
-                if (targetBookCard) {
-                    if (searchBar.value.trim() !== '') {
-                        document.querySelectorAll('.book-card').forEach(card => card.classList.add('hidden'));
-                        targetBookCard.classList.remove('hidden');
-                    }
-                    document.querySelectorAll('.book-card.highlight').forEach(card => card.classList.remove('highlight'));
-                    setTimeout(() => {
-                        targetBookCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        targetBookCard.classList.add('highlight');
-                        setTimeout(() => targetBookCard.classList.remove('highlight'), 2000);
-                    }, 300);
+        emptyFavorites.style.display = 'none';
+        
+        favorites.forEach(bookId => {
+            const book = bookData.find(b => b.id === bookId);
+            if (book) {
+                const favoriteItem = document.createElement('div');
+                favoriteItem.className = 'favorite-item';
+                favoriteItem.innerHTML = `
+                    <img src="${book.imageUrl}" alt="${book.title}">
+                    <div class="favorite-details">
+                        <h3>${book.title}</h3>
+                        <p>${book.author}</p>
+                    </div>
+                    <button class="remove-favorite" data-book-id="${book.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                favoritesList.appendChild(favoriteItem);
+            }
+        });
+
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-favorite').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(btn.dataset.bookId);
+            });
+        });
+
+        // Add click event to open modal when clicking on favorite item
+        document.querySelectorAll('.favorite-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const bookId = item.querySelector('.remove-favorite').dataset.bookId;
+                const book = bookData.find(b => b.id === bookId);
+                if (book) {
+                    openModal(book);
+                    closeFavoritesSidebar();
                 }
+            });
+        });
+    }
+
+    function toggleFavoritesSidebar() {
+        body.classList.toggle('favorites-open');
+    }
+
+    function closeFavoritesSidebar() {
+        body.classList.remove('favorites-open');
+    }
+
+    function renderAllBooks() {
+        bookGrid.innerHTML = ''; 
+        sidebarList.innerHTML = '';
+        noResultsMessage.style.display = 'none';
+        bookData.forEach(book => {
+            bookGrid.appendChild(createBookCard(book));
+            const sidebarItem = document.createElement('li');
+            sidebarItem.innerHTML = `<a href="#book-${book.id}">${book.title}</a>`;
+            sidebarList.appendChild(sidebarItem);
+        });
+        updateFavoriteButtons();
+    }
+    
+    function createBookCard(book) {
+        const bookCard = document.createElement('div'); 
+        bookCard.className = 'book-card';
+        bookCard.id = `book-${book.id}`;
+        bookCard.dataset.bookId = book.id;
+        bookCard.dataset.searchableText = `${book.title} ${book.author} ${book.keywords.join(' ')} ${book.description}`.toLowerCase();
+        bookCard.innerHTML = `
+            <button class="book-favorite-btn" data-book-id="${book.id}">
+                <i class="${isFavorite(book.id) ? 'fas' : 'far'} fa-heart"></i>
+            </button>
+            <div class="book-cover-container"><img src="${book.imageUrl}" alt="غلاف كتاب ${book.title}" class="book-cover"></div>
+            <div class="book-details"><h3>${book.title}</h3><p class="book-author">بقلم ${book.author}</p><p class="book-description">${book.description}</p></div>
+        `;
+        return bookCard;
+    }
+    
+    function openModal(book) {
+        modalCover.src = book.imageUrl;
+        modalTitle.textContent = book.title;
+        modalAuthor.textContent = `بقلم ${book.author}`;
+        modalDescription.innerHTML = book.fullDescription.replace(/\n/g, '<br>');
+        modalReadBtn.href = book.pdfUrl;
+        modalBuyBtn.href = book.bookUrl;
+        body.classList.add('modal-open');
+        modal.style.display = 'flex';
+        modalOverlay.style.display = 'block';
+    }
+
+    function closeModal() {
+        body.classList.remove('modal-open');
+        modal.style.display = 'none';
+        modalOverlay.style.display = 'none';
+    }
+
+    function handleSearch() {
+        const query = searchBar.value.toLowerCase().trim();
+        let visibleBookCount = 0;
+        document.querySelectorAll('.book-card').forEach(card => {
+            const isVisible = card.dataset.searchableText.includes(query);
+            card.classList.toggle('hidden', !isVisible);
+            if (isVisible) visibleBookCount++;
+        });
+        noResultsMessage.style.display = visibleBookCount === 0 ? 'block' : 'none';
+    }
+
+    function showAutocomplete() {
+        const query = searchBar.value.toLowerCase().trim();
+        autocompleteResults.innerHTML = '';
+        if (query.length === 0) {
+            autocompleteResults.style.display = 'none';
+            return;
+        }
+        const suggestions = bookData.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query)).slice(0, 5);
+        if (suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.className = 'autocomplete-item';
+                const regex = new RegExp(`(${query})`, 'gi');
+                item.innerHTML = suggestion.title.replace(regex, '<strong>$1</strong>');
+                item.addEventListener('mousedown', () => {
+                    searchBar.value = suggestion.title;
+                    autocompleteResults.style.display = 'none';
+                    handleSearch();
+                });
+                autocompleteResults.appendChild(item);
+            });
+            autocompleteResults.style.display = 'block';
+        } else {
+            autocompleteResults.style.display = 'none';
+        }
+    }
+    
+    function toggleSidebar() { body.classList.toggle('sidebar-open'); }
+    function handleSidebarClick(event) {
+        if (event.target.tagName === 'A' && event.target.closest('#sidebar-book-list')) {
+            event.preventDefault(); 
+            if (window.innerWidth <= 992) toggleSidebar();
+            const targetBookCard = document.querySelector(event.target.getAttribute('href'));
+            if (targetBookCard) {
+                if (searchBar.value.trim() !== '') {
+                    document.querySelectorAll('.book-card').forEach(card => card.classList.add('hidden'));
+                    targetBookCard.classList.remove('hidden');
+                }
+                document.querySelectorAll('.book-card.highlight').forEach(card => card.classList.remove('highlight'));
+                setTimeout(() => {
+                    targetBookCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetBookCard.classList.add('highlight');
+                    setTimeout(() => targetBookCard.classList.remove('highlight'), 2000);
+                }, 300);
             }
         }
+    }
 
-        // --- Event Listeners ---
-        bookGrid.addEventListener('click', (event) => {
-            const card = event.target.closest('.book-card');
-            if (card) {
-                const book = bookData.find(b => b.id === card.dataset.bookId);
-                if (book) openModal(book);
-            }
-        });
-        modalCloseBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
-        document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); });
-        sidebarToggle.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-        sidebarList.addEventListener('click', handleSidebarClick);
-
-        // --- Search Event Listeners ---
-        searchBar.addEventListener('input', () => {
-             showAutocomplete(); // ✨ استدعاء دالة الإكمال التلقائي
-             handleSearch();     // استدعاء فلترة الشبكة
-             clearSearchButton.style.display = searchBar.value.length > 0 ? 'flex' : 'none';
-        });
-        searchBar.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                autocompleteResults.style.display = 'none'; // إخفاء الاقتراحات عند الضغط على Enter
-                handleSearch();
-            }
-        });
-        searchButton.addEventListener('click', () => {
-            autocompleteResults.style.display = 'none';
-            handleSearch();
-        });
-        clearSearchButton.addEventListener('click', () => {
-            searchBar.value = '';
-            autocompleteResults.style.display = 'none';
-            handleSearch();
-            clearSearchButton.style.display = 'none';
-            searchBar.focus();
-        });
-        // إخفاء الاقتراحات عند النقر خارج مربع البحث
-        document.addEventListener('click', (event) => {
-            if (!searchContainer.contains(event.target)) {
-                autocompleteResults.style.display = 'none';
-            }
-        });
-
-        renderAllBooks();
+    // --- Event Listeners ---
+    bookGrid.addEventListener('click', (event) => {
+        const card = event.target.closest('.book-card');
+        const favoriteBtn = event.target.closest('.book-favorite-btn');
+        
+        if (favoriteBtn) {
+            event.stopPropagation();
+            toggleFavorite(favoriteBtn.dataset.bookId);
+            return;
+        }
+        
+        if (card) {
+            const book = bookData.find(b => b.id === card.dataset.bookId);
+            if (book) openModal(book);
+        }
     });
-    </script>
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeModal(); });
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', () => {
+        if (body.classList.contains('sidebar-open')) toggleSidebar();
+        if (body.classList.contains('favorites-open')) closeFavoritesSidebar();
+    });
+    sidebarList.addEventListener('click', handleSidebarClick);
+
+    // Favorites event listeners
+    favoritesToggle.addEventListener('click', toggleFavoritesSidebar);
+    closeFavorites.addEventListener('click', closeFavoritesSidebar);
+
+    // --- Search Event Listeners ---
+    searchBar.addEventListener('input', () => {
+         showAutocomplete();
+         handleSearch();
+         clearSearchButton.style.display = searchBar.value.length > 0 ? 'flex' : 'none';
+    });
+    searchBar.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            autocompleteResults.style.display = 'none';
+            handleSearch();
+        }
+    });
+    searchButton.addEventListener('click', () => {
+        autocompleteResults.style.display = 'none';
+        handleSearch();
+    });
+    clearSearchButton.addEventListener('click', () => {
+        searchBar.value = '';
+        autocompleteResults.style.display = 'none';
+        handleSearch();
+        clearSearchButton.style.display = 'none';
+        searchBar.focus();
+    });
+    document.addEventListener('click', (event) => {
+        if (!searchContainer.contains(event.target)) {
+            autocompleteResults.style.display = 'none';
+        }
+    });
+
+    // Initialize
+    renderAllBooks();
+    updateFavoritesCount();
+    renderFavoritesList();
+});
+</script>
+
 </body>
 </html>
