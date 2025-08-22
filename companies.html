@@ -18,190 +18,371 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>شركات عالمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* تنسيق عام للصفحة */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
+        /* ------------------------- */
+        /*          إعدادات عامة       */
+        /* ------------------------- */
+        :root {
+            --primary-color: #007bff;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --light-gray: #e9ecef;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
         }
 
-        /* تنسيق الحاوية الرئيسية */
-        .container {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* ------------------------- */
+        /*      الشريط العلوي (الجديد والمحسن)   */
+        /* ------------------------- */
+        header {
+            background-color: var(--card-background);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+            padding: 12px 0;
+            
+            /* الأهم: يجعله يلتصق بأعلى الشاشة بدون فراغ */
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px; /* للحفاظ على الهوامش الجانبية */
+        }
+        
+        /* سهم الرجوع الجديد */
+        .back-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--text-color);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .back-button:hover svg {
+            transform: translateX(-5px); /* تحريك السهم لليسار قليلاً (لأنه يشير لليمين) */
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1; /* لجعل البحث يأخذ المساحة المتبقية */
+        }
+
+        #search-box {
+            width: 100%;
+            height: 45px;
+            padding: 10px 20px 10px 45px;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            border-radius: 25px; /* شكل بيضاوي */
+            border: 1px solid transparent;
+            background-color: var(--background-color);
+            transition: all 0.3s ease;
+        }
+        #search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            background-color: var(--card-background);
+        }
+
+        .search-container svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: #999;
+            pointer-events: none;
+        }
+        
+        /* حاوية المحتوى الرئيسية */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* ------------------------- */
+        /*        أزرار الفلترة        */
+        /* ------------------------- */
+        .filters {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
+            margin-bottom: 30px;
         }
 
-        /* تنسيق كل عنصر (دائرة) */
-        .item {
-            width: 150px;
-            text-align: center;
+        .filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 20px;
+            background-color: var(--card-background);
             cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        /* تنسيق الدائرة */
-        .circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 2px solid #ccc;
+        .filter-btn:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-2px);
         }
 
-        .circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
-        /* Hover effect for the circle */
-        .item:hover .circle {
-            border: 2px solid red;
+        /* ------------------------- */
+        /*        حاوية الشركات      */
+        /* ------------------------- */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
         }
 
-        /* Media query for small screens (like mobile phones) */
+        .item {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 20px 10px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .item-name {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        #no-results {
+            grid-column: 1 / -1;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        /* ------------------------- */
+        /*        تصميم متجاوب        */
+        /* ------------------------- */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            .search-container {
+                width: 100%;
+                order: 3;
+                margin-top: 10px;
+            }
+        }
+        
         @media (max-width: 480px) {
             .container {
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
-
-            .item {
-                width: calc(50% - 10px); /* عرض العنصر 50% مع مراعاة الفجوة */
-            }
-
-            .circle {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-        /* Media query for larger screens */
-        @media (min-width: 768px) {
-            .container {
-                gap: 10px;
-                padding: 0 20px;
-            }
-
-            .item {
-                width: 200px;
-            }
-
-            .circle {
-                width: 150px;
-                height: 150px;
+            header h1 {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-
-    <h1>شركات عالمية</h1>
-
-    <div class="container">
-        <!-- العنصر 1 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('ابل')">
-            <div class="circle">
-                <img src="co1.jpg" alt="شركة">
+    
+    <header>
+        <div class="header-content">
+            <button class="back-button" onclick="history.back()" aria-label="الرجوع">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/><path d="M6.49 3.87L8.27 2.1 18.16 12l-9.9 9.9-1.77-1.77L14.62 12l-8.13-8.13z"/></svg>
+            </button>
+            <h1>شركات عالمية</h1>
+            <div class="search-container">
+                <input type="search" id="search-box" placeholder="ابحث عن شركة..." autocomplete="off">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             </div>
         </div>
+    </header>
 
-        <!-- العنصر 2 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('مكتبة جرير')">
-            <div class="circle">
-                <img src="co2.jpg" alt="شركة">
-            </div>
+    <div class="page-container">
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">الكل</button>
+            <button class="filter-btn" data-category="إلكترونيات">إلكترونيات</button>
+            <button class="filter-btn" data-category="سيارات">سيارات</button>
+            <button class="filter-btn" data-category="أزياء">أزياء</button>
+            <button class="filter-btn" data-category="تجزئة">تجزئة</button>
+            <button class="filter-btn" data-category="طعام">طعام وشراب</button>
+            <button class="filter-btn" data-category="تقنية">تقنية</button>
         </div>
 
-        <!-- العنصر 3 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('hp')">
-            <div class="circle">
-                <img src="co3.jpg" alt="شركة">
-            </div>
-        </div>
-
-        <!-- العنصر 4 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('شاومي')">
-            <div class="circle">
-                <img src="co4.jpg" alt="شركة">
-            </div>
-        </div>
-
-        <!-- العنصر 5 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('لويس فويتون')">
-            <div class="circle">
-                <img src="co5.jpg" alt="شركة">
-            </div>
-        </div>
-
-        <!-- العنصر 6 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('هواوي')">
-            <div class="circle">
-                <img src="co6.jpg" alt="شركة">
-            </div>
-        </div>
-
-        <!-- العنصر 7 -->
-        <div class="item" data-name="إلكترونيات" onclick="redirectToSea('أدجر')">
-            <div class="circle">
-                <img src="logo.jpg" alt="شركة">
-            </div>
+        <div class="container" id="company-container">
+            <!-- سيتم إضافة العناصر هنا بواسطة JavaScript -->
         </div>
     </div>
 
     <script>
-        function redirectToSea(category) {
-            // يمكنك تغيير الرابط حسب الحاجة
-            window.location.href = `https://example.com/search?q=${encodeURIComponent(category)}`;
-        }
-    </script>
-</body>
-</html>
+        document.addEventListener('DOMContentLoaded', function () {
+            const companies = [
+                { name: 'ابل', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/448212/apple.svg' },
+                { name: 'مكتبة جرير', category: 'تجزئة', logo: 'https://www.svgrepo.com/show/353957/jarir-bookstore.svg' },
+                { name: 'HP', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/303482/hp-2-logo.svg' },
+                { name: 'شاومي', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/303254/xiaomi-logo.svg' },
+                { name: 'لويس فويتون', category: 'أزياء', logo: 'https://www.svgrepo.com/show/354020/louis-vuitton.svg' },
+                { name: 'هواوي', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/353880/huawei.svg' },
+                { name: 'سامسونج', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/354284/samsung.svg' },
+                { name: 'تويوتا', category: 'سيارات', logo: 'https://www.svgrepo.com/show/444458/toyota-logo.svg' },
+                { name: 'مرسيدس بنز', category: 'سيارات', logo: 'https://www.svgrepo.com/show/354054/mercedes-benz.svg' },
+                { name: 'نايكي', category: 'أزياء', logo: 'https://www.svgrepo.com/show/448259/nike.svg' },
+                { name: 'أديداس', category: 'أزياء', logo: 'https://www.svgrepo.com/show/353342/adidas.svg' },
+                { name: 'أمازون', category: 'تجزئة', logo: 'https://www.svgrepo.com/show/448224/amazon.svg' },
+                { name: 'علي بابا', category: 'تجزئة', logo: 'https://www.svgrepo.com/show/353351/alibaba-com.svg' },
+                { name: 'ماكدونالدز', category: 'طعام', logo: 'https://www.svgrepo.com/show/354045/mcdonald-s.svg' },
+                { name: 'ستاربكس', category: 'طعام', logo: 'https://www.svgrepo.com/show/354366/starbucks.svg' },
+                { name: 'جوجل', category: 'تقنية', logo: 'https://www.svgrepo.com/show/448227/google.svg' },
+                { name: 'مايكروسوفت', category: 'تقنية', logo: 'https://www.svgrepo.com/show/354059/microsoft.svg' },
+                { name: 'تسلا', category: 'سيارات', logo: 'https://www.svgrepo.com/show/354428/tesla.svg' },
+                { name: 'فيسبوك (ميتا)', category: 'تقنية', logo: 'https://www.svgrepo.com/show/448229/meta.svg' },
+                { name: 'كوكا كولا', category: 'طعام', logo: 'https://www.svgrepo.com/show/448226/coca-cola.svg' },
+                { name: 'سوني', category: 'إلكترونيات', logo: 'https://www.svgrepo.com/show/354359/sony.svg' },
+                { name: 'فيراري', category: 'سيارات', logo: 'https://www.svgrepo.com/show/353729/ferrari.svg' },
+                { name: 'جوتشي', category: 'أزياء', logo: 'https://www.svgrepo.com/show/353835/gucci.svg' },
+                { name: 'إنتل', category: 'تقنية', logo: 'https://www.svgrepo.com/show/353916/intel.svg' },
+                { name: 'أدجر', category: 'تقنية', logo: 'https://via.placeholder.com/80?text=ADGER' }
+            ];
 
+            const container = document.getElementById('company-container');
+            const searchBox = document.getElementById('search-box');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            let currentCategory = 'all';
 
+            function renderCompanies() {
+                container.innerHTML = '';
+                const searchTerm = searchBox.value.toLowerCase().trim();
 
+                const filteredCompanies = companies.filter(company => {
+                    const matchesCategory = currentCategory === 'all' || company.category === currentCategory;
+                    const matchesSearch = company.name.toLowerCase().includes(searchTerm);
+                    return matchesCategory && matchesSearch;
+                });
 
-    <script>
-        // دالة لتوجيه المستخدم إلى صفحة sea.html وإضافة الاسم إلى صندوق البحث
-        function redirectToSea(categoryName) {
-            // توجيه المستخدم إلى صفحة sea.html
-            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
-        }
+                if (filteredCompanies.length > 0) {
+                    filteredCompanies.forEach(company => {
+                        const item = document.createElement('div');
+                        item.className = 'item';
+                        item.onclick = () => {
+                            window.location.href = `adger.search.html?search=${encodeURIComponent(company.name)}`;
+                        };
 
-        // دالة لتنفيذ البحث (يمكن استخدامها في صفحة sea.html)
-        function performSearch(searchTerm) {
-            const products = document.querySelectorAll('.product'); // جميع المنتجات
-
-            products.forEach(product => {
-                const productName = product.getAttribute('data-name').toLowerCase(); // اسم المنتج
-                if (productName.includes(searchTerm.toLowerCase())) {
-                    product.classList.remove('hidden'); // إظهار المنتج إذا تطابق
+                        item.innerHTML = `
+                            <div class="logo-container">
+                                <img src="${company.logo}" alt="شعار ${company.name}" loading="lazy">
+                            </div>
+                            <p class="item-name">${company.name}</p>
+                        `;
+                        container.appendChild(item);
+                    });
                 } else {
-                    product.classList.add('hidden'); // إخفاء المنتج إذا لم يتطابق
+                     container.innerHTML = '<p id="no-results">عذراً، لم يتم العثور على نتائج.</p>';
+                }
+            }
+
+            // البحث الفوري أثناء الكتابة
+            searchBox.addEventListener('input', renderCompanies);
+
+            // *** الإضافة الجديدة هنا ***
+            // إغلاق التركيز عند الضغط على Enter
+            searchBox.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // منع أي سلوك افتراضي (مثل إرسال نموذج لو كان موجودًا)
+                    searchBox.blur();       // إزالة التركيز من صندوق البحث
                 }
             });
-        }
 
-        // عند تحميل الصفحة، تحقق من وجود معلمة بحث في الرابط
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchTerm = urlParams.get('search');
+            // الفلترة حسب الفئة
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.category;
+                    renderCompanies();
+                });
+            });
 
-            if (searchTerm) {
-                const searchBox = document.getElementById('search-box');
-                searchBox.value = searchTerm; // تعبئة صندوق البحث بالقيمة
-                performSearch(searchTerm); // تنفيذ البحث
-            }
-        };
+            // العرض الأولي للشركات
+            renderCompanies();
+        });
     </script>
+
+</body>
+</html>
