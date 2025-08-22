@@ -367,7 +367,7 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 15px;
-            padding: 15px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
+            padding: 15px;
             margin-top: 20px;
             border-radius: 0;
             position: relative;
@@ -432,7 +432,7 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-                padding: 10px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
+                padding: 10px;
             }
             .image-item {
                 padding: 8px;
@@ -454,8 +454,8 @@
 
         @media (max-width: 499px) {
             .image-grid {
-                gap: 5px;
-                padding: 5px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
+                gap: 10px;      /* تم التعديل */
+                padding: 10px;  /* تم التعديل */
             }
             .image-item {
                 padding: 6px;
@@ -773,16 +773,14 @@
             <span>فن</span>
         </div>
     </div>
-</body>
-</html>
-
+    
     <script>
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
         const confirmYes = document.getElementById('confirm-yes');
         const confirmNo = document.getElementById('confirm-no');
         
-        let isAllHistoryShown = false; // متغير لتتبع ما إذا تم عرض جميع العناصر
+        let isAllHistoryShown = false;
         
         deleteAllButton.addEventListener('click', () => {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -793,7 +791,7 @@
         
         confirmYes.addEventListener('click', () => {
             localStorage.removeItem('searchHistory');
-            isAllHistoryShown = false; // إعادة تعيين الحالة عند الحذف الكلي
+            isAllHistoryShown = false;
             displaySearchHistory();
             modal.style.display = 'none';
         });
@@ -899,7 +897,6 @@
             lastSearchTerm.textContent = displayTerm;
         }
         
-        // --- START: MODIFIED FUNCTION ---
         function displaySearchHistory() {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistoryGrid.innerHTML = '';
@@ -932,12 +929,10 @@
                     removeSearchTermFromHistory(entry.term);
                 });
 
-                // التحقق إذا كان هذا هو العنصر الأخير وهناك المزيد لعرضه
                 if (!isAllHistoryShown && searchHistory.length > maxItems && index === maxItems - 1) {
                     const itemWithArrow = document.createElement('div');
                     itemWithArrow.className = 'search-item-with-arrow';
                     
-                    // إضافة العنصر الحقيقي (وليس نسخة) إلى الحاوية
                     itemWithArrow.appendChild(searchItem);
 
                     const arrow = document.createElement('div');
@@ -956,12 +951,10 @@
                     itemWithArrow.appendChild(arrow);
                     searchHistoryGrid.appendChild(itemWithArrow);
                 } else {
-                    // إذا لم يكن كذلك، أضف العنصر مباشرة
                     searchHistoryGrid.appendChild(searchItem);
                 }
             });
         }
-        // --- END: MODIFIED FUNCTION ---
         
         function removeSearchTermFromHistory(term) {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -1035,3 +1028,5 @@
             displaySearchHistory();
         };
     </script>
+</body>
+</html>
