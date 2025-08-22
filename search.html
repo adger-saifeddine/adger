@@ -40,10 +40,6 @@
     </script>
 </head>
 <body>
-
-</body>
-</html>
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -71,6 +67,21 @@
                 margin-top: -50px;
             }
         }
+
+        /* --- START: Keyframes for the new 3D Background --- */
+        @keyframes aurora {
+            0% {
+                background-position: 50% 0%, 0% 50%, 100% 50%;
+            }
+            50% {
+                background-position: 50% 100%, 100% 0%, 0% 100%;
+            }
+            100% {
+                background-position: 50% 0%, 0% 50%, 100% 50%;
+            }
+        }
+        /* --- END: Keyframes --- */
+
 
         .header-background {
             position: fixed;
@@ -139,7 +150,7 @@
         }
         @media (max-width: 768px) {
             .search-container .search-button {
-                width: 60px;
+                width: 50px;
             }
         }
 
@@ -168,7 +179,7 @@
 
         @media (max-width: 768px) {
             .search-container .clear-button {
-                left: 65px;
+                left: 55px;
             }
         }
 
@@ -351,12 +362,149 @@
             text-overflow: ellipsis;
         }
         
+        /* --- START: UPDATED 3D Animated Background --- */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0; /* تمت إزالة الحواف الدائرية */
+            position: relative;
+            overflow: hidden; /* مهم لإخفاء أجزاء التدرج التي تخرج من الصندوق */
+            
+            /* التأثير الجديد */
+            background-color: #0d1a42; /* لون أساسي داكن وعميق */
+            background-image: 
+                /* Layer 1 - Light blue */
+                radial-gradient(ellipse at 50% 0%, rgba(28, 119, 219, 0.5) 0%, transparent 80%),
+                /* Layer 2 - Purple */
+                radial-gradient(ellipse at 0% 50%, rgba(138, 43, 226, 0.4) 0%, transparent 70%),
+                /* Layer 3 - Cyan */
+                radial-gradient(ellipse at 100% 50%, rgba(0, 255, 255, 0.4) 0%, transparent 70%);
+            background-repeat: no-repeat;
+            background-size: 200% 200%;
+            animation: aurora 20s linear infinite;
+        }
+        /* --- END: UPDATED 3D Animated Background --- */
+
+        .image-item {
+            display: flex;
+            align-items: center;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #ffffff;
+            padding: 12px;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
+        }
+
+        .image-item img {
+            width: 120px;
+            max-height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            -webkit-focus-ring-color: transparent;
+        }
+
+        .image-item span {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+            margin-right: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+              font-family: 'Cairo', sans-serif;
+        }
+
+        .image-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
         @media (max-width: 767px) {
-             .search-history-grid {
+            .search-history-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-             .search-item small {
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .image-item {
+                padding: 8px; /* Reduced padding for smaller white box */
+            }
+            .image-item img {
+                width: 80px;
+                max-height: 80px;
+            }
+            .image-item span {
+                font-size: 14px; /* Smaller font size */
+                margin-right: 6px; /* Closer to image */
+                max-width: 110px; /* Adjusted to fit text */
+                  font-family: 'Cairo', sans-serif;
+            }
+            .search-item small {
                 display: none;
+            }
+        }
+
+        @media (max-width: 499px) {
+            .image-grid {
+                gap: 5px; /* Smaller gap between items and blue background */
+                padding: 10px; /* Reduced padding for the grid container */
+            }
+            .image-item {
+                padding: 6px; /* Further reduced padding for smaller white box */
+            }
+            .image-item img {
+                width: 80px;
+                max-height: 80px;
+            }
+            .image-item span {
+                font-size: 10px; /* Even smaller font size for very small screens */
+                margin-right: 4px; /* Even closer to image */
+                max-width: 120px; /* Increased to ensure full text visibility */
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1500px) {
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .image-item img {
+                width: 100px;
+                max-height: 100px;
+            }
+            .image-item span {
+                font-size: 16px;
+                max-width: 120px;
+            }
+        }
+
+        @media (min-width: 1201px) and (max-width: 1800px) {
+            .image-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .image-item img {
+                width: 100px;
+                max-height: 100px;
+            }
+            .image-item span {
+                font-size: 16px;
+                max-width: 120px;
+            }
+        }
+
+        @media (min-width: 2001px) {
+            .image-grid {
+                grid-template-columns: repeat(6, 1fr);
             }
         }
 
@@ -504,123 +652,10 @@
                 height: 21px;
             }
         }
-
-        /* --- START: MODIFIED IMAGE GRID STYLES --- */
-
-        .image-grid {
-            display: grid;
-            gap: 20px;
-            padding: 30px;
-            margin-top: 20px;
-            
-            /* The 3D Animated Background */
-            background: linear-gradient(135deg, #00a2ff, #00a2ff, #00ccff, #00d9ff);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .image-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            
-            /* Glassmorphism Effect */
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2);
-            
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-
-        .image-item:hover {
-            transform: translateY(-8px) scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .image-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .image-item span {
-            font-size: 18px;
-            font-weight: 600;
-            margin-right: 15px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-            font-family: 'Cairo', sans-serif;
-            color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* --- Responsive Layout for Image Grid --- */
-
-        /* Default (Mobile): 2 columns. This now applies from 0px to 767px */
-        .image-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 15px;
-        }
-        .image-item { padding: 8px; }
-        .image-item img { width: 60px; height: 60px; }
-        .image-item span { font-size: 14px; margin-right: 10px; max-width: 110px; }
-
-        /* Tablet: 3 columns */
-        @media (min-width: 768px) {
-            .image-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                padding: 20px;
-            }
-            .image-item img { width: 90px; height: 90px; }
-            .image-item span { font-size: 16px; }
-        }
-
-        /* Large Screens (Desktop): 2 ROWS ONLY */
-        @media (min-width: 1024px) {
-            .image-grid {
-                /* Unset column-based layout and set row-based layout */
-                grid-template-columns: none;
-                grid-template-rows: repeat(2, 1fr);
-                grid-auto-flow: column; /* This is the key property */
-                gap: 20px;
-                padding: 30px;
-            }
-            .image-item { padding: 12px; flex-direction: row; }
-            .image-item img { width: 100px; height: 100px; margin-bottom: 0;}
-            .image-item span { font-size: 18px; margin-right: 15px; }
-        }
-
-        /* --- END: MODIFIED IMAGE GRID STYLES --- */
-
     </style>
 </head>
 <body>
     <div class="header-background"></div>
-
     <button class="back-button" id="back-button">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
@@ -741,11 +776,9 @@
             <span>فن</span>
         </div>
     </div>
+</body>
+</html>
 
-</body>
-</html>
-</body>
-</html>
     <script>
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');

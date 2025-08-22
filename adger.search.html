@@ -835,8 +835,9 @@
               </style>
           </head>
           <body>
-      
-<!DOCTYPE html>
+
+
+        <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -880,104 +881,65 @@
             }
         }
 
-        /* --- START: تعديلات على الشريط الأبيض الثابت --- */
+        /* --- START: CSS محدث لشريط الفئات والفلترة (بالعرض الكامل) --- */
+
+        /* الشريط الأبيض الثابت أسفل الشريط العلوي */
         .sub-header {
             position: fixed;
             top: 74px;
             left: 0;
             right: 0;
             height: 51px;
-            background-color: white;
             text-shadow: none;
-            z-index: 999;
+            z-index: 1000;
             display: flex;
             align-items: center;
-            padding: 0 20px 0 0; /* تمت إزالة الحشوة اليسرى لإفساح المجال للزر */
-            overflow: hidden; /* منع الشريط كله من التمرير */
-        }
-        @media (max-width: 769px) {
-            .sub-header {
-                top: 56px;
-            }
-        }
-        /* --- END: تعديلات على الشريط الأبيض الثابت --- */
-
-        /* --- START: تعديلات زر الفلتر ومكان القائمة --- */
-        #price-filter-container {
-            position: absolute;
-            right: 20px; /* تحديد الموقع على اليمين */
-            top: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            background-color: white; /* خلفية بيضاء لإخفاء النص المار خلفه */
-            z-index: 1001; /* فوق القائمة */
-            padding-left: 10px; /* مسافة بسيطة بين الزر والقائمة */
-        }
-           @media (max-width: 769px) {
-          #price-filter-container {
-                  padding-left: 5px; /* مسافة بسيطة بين الزر والقائمة */
-            }
-        }
-
-
-        #price-filter-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-        }
-
-        #price-filter-btn:hover {
-            background-color: #f0f0f0;
-        }
-          @media (max-width: 769px) {
-             #price-filter-btn {
-                margin-right: -11px;
-            }
-        }
-
-        #price-filter-btn svg {
-            width: 22px;
-            height: 22px;
-            color: #333;
-        }
-
-        .sub-header .nav-wrapper {
-            overflow-x: auto; /* التمرير الأفقي فقط لحاوية القائمة */
+            /* (تعديل 1) تم تغيير الحشوة لحجز مساحة لرمز الفلترة */
+            padding-left: 20px; 
+            padding-right: 80px; /* مساحة محجوزة لرمز الفلترة */
+            overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            width: 100%;
+            box-sizing: border-box;
         }
-
-        .sub-header .nav-wrapper::-webkit-scrollbar {
+        .sub-header::-webkit-scrollbar {
             display: none;
         }
         
+        /* خلفية منفصلة لضمان الامتداد الكامل */
+        .sub-header-background {
+            position: fixed;
+            top: 74px;
+            left: 0;
+            right: 0;
+            height: 51px;
+            background-color: white;
+            z-index: 998; /* خلف كل شيء في هذا الشريط */
+        }
+
+        @media (max-width: 769px) {
+            .sub-header, .sub-header-background {
+                top: 56px;
+            }
+            /* (تعديل 4) ضبط المساحة المحجوزة للشاشات الصغيرة */
+            .sub-header {
+                padding-left: 10px;
+                padding-right: 60px;
+            }
+        }
+
         .sub-header nav {
             display: flex;
             gap: 30px;
             position: relative;
             white-space: nowrap;
-            padding-right: 60px; /* المسافة الضرورية لإظهار "الكل" بجانب الزر */
-            padding-left: 20px; /* تمت إضافة هذه المسافة في نهاية الشريط */
+            /* (تعديل 2) إزالة الهامش ليعتمد على حشوة الأب */
+            margin-right: 0; 
+            z-index: 1002;
         }
-        /* --- END: تعديلات زر الفلتر ومكان القائمة --- */
-
-
         @media (max-width: 499px) {
             .sub-header nav {
                 gap: 22px;
-            }
-        }
-        @media (max-width: 769px) {
-            .sub-header nav {
-                margin-right: -22px;
             }
         }
 
@@ -996,7 +958,54 @@
             background-color: #000000;
             transition: all 0.3s ease;
         }
+
+        /* زر الفلتر ومكانه */
+        #price-filter-container {
+            position: fixed;
+            top: 74px;
+            right: 0;
+            height: 51px;
+            background-color: white;
+            z-index: 1001;
+            /* (تعديل 3) استخدام Flexbox لتوسيط الرمز بشكل مثالي */
+            width: 80px; /* يجب أن يطابق الحشوة اليمنى في .sub-header */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0; /* تتم المعالجة بواسطة justify-content */
+        }
+        @media (max-width: 769px) {
+            #price-filter-container {
+                top: 56px;
+                width: 60px; /* يجب أن يطابق الحشوة اليمنى في .sub-header للشاشات الصغيرة */
+            }
+        }
+
+        #price-filter-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        #price-filter-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        #price-filter-btn svg {
+            width: 22px;
+            height: 22px;
+            color: #333;
+        }
+
+        /* --- END: CSS محدث لشريط الفئات والفلترة --- */
         
+
         /* --- START: Price Filter Modal Styles --- */
         #price-filter-modal {
             position: fixed;
@@ -1115,6 +1124,7 @@
         
         /* --- END: Price Filter Modal Styles --- */
 
+    
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -1418,60 +1428,57 @@
             }
         }
     </style>
+
 </head>
 <body>
     <!-- الخلفية العلوية -->
     <div class="top-background"></div>
-
-    <!-- Sub Header -->
+    
+    <!-- START: HTML محدث لشريط الفئات والفلترة -->
+    <div class="sub-header-background"></div>
     <div class="sub-header">
-        <!-- START: زر الفلتر الثابت -->
-        <div id="price-filter-container">
-            <button id="price-filter-btn" title="تصفية حسب السعر">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="4" y1="21" x2="4" y2="14"></line>
-                    <line x1="4" y1="10" x2="4" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12" y2="3"></line>
-                    <line x1="20" y1="21" x2="20" y2="16"></line>
-                    <line x1="20" y1="12" x2="20" y2="3"></line>
-                    <line x1="1" y1="14" x2="7" y2="14"></line>
-                    <line x1="9" y1="8" x2="15" y2="8"></line>
-                    <line x1="17" y1="16" x2="23" y2="16"></line>
-                </svg>
-            </button>
-        </div>
-        <!-- END: زر الفلتر الثابت -->
-
-        <!-- START: حاوية القائمة القابلة للتمرير -->
-        <div class="nav-wrapper">
-            <nav>
-                <a href="#" onclick="selectItem('الكل', this)" style="font-family: Cairo, sans-serif;">الكل</a>
-                <a onclick="selectItem('خصومات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">خصومات</a>
-                <a onclick="selectItem('إلكترونيات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إلكترونيات</a>
-                <a onclick="selectItem('إكسسوارات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إكسسوارات</a>
-                <a onclick="selectItem('موضة', this)" class="menu-item" style="font-family: Cairo, sans-serif;">موضة</a>
-                <a onclick="selectItem('كتب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كتب</a>
-                <a onclick="selectItem('فن', this)" class="menu-item" style="font-family: Cairo, sans-serif;">فن</a>
-                <a onclick="selectItem('أدوات رياضية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أدوات رياضية</a>
-                <a onclick="selectItem('حقائب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">حقائب</a>
-                <a onclick="selectItem('ساعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ساعات</a>
-                <a onclick="selectItem('البيت', this)" class="menu-item" style="font-family: Cairo, sans-serif;">البيت</a>
-                <a onclick="selectItem('اختراعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">اختراعات</a>
-                <a onclick="selectItem('أحذية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أحذية</a>
-                <a onclick="selectItem('ديكور', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ديكور</a>
-                <a onclick="selectItem('ألعاب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ألعاب</a>
-                <a onclick="selectItem('أجهزة منزلية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أجهزة منزلية</a>
-                <a onclick="selectItem('مستلزمات السفر', this)" class="menu-item" style="font-family: Cairo, sans-serif;">مستلزمات السفر</a>
-                <a onclick="selectItem('منتجات العناية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">منتجات العناية</a>
-                <a onclick="selectItem('معدات الطبخ', this)" class="menu-item" style="font-family: Cairo, sans-serif;">معدات الطبخ</a>
-                <a onclick="selectItem('كمبيوترات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كمبيوترات</a>
-                <a onclick="selectItem('كاميرات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كاميرات</a>
-                <div class="underline"></div>
-            </nav>
-        </div>
-        <!-- END: حاوية القائمة القابلة للتمرير -->
+        <nav>
+            <a href="#" onclick="selectItem('الكل', this)" style="font-family: Cairo, sans-serif;">الكل</a>
+            <a onclick="selectItem('خصومات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">خصومات</a>
+            <a onclick="selectItem('إلكترونيات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إلكترونيات</a>
+            <a onclick="selectItem('إكسسوارات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">إكسسوارات</a>
+            <a onclick="selectItem('موضة', this)" class="menu-item" style="font-family: Cairo, sans-serif;">موضة</a>
+            <a onclick="selectItem('كتب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كتب</a>
+            <a onclick="selectItem('فن', this)" class="menu-item" style="font-family: Cairo, sans-serif;">فن</a>
+            <a onclick="selectItem('أدوات رياضية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أدوات رياضية</a>
+            <a onclick="selectItem('حقائب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">حقائب</a>
+            <a onclick="selectItem('ساعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ساعات</a>
+            <a onclick="selectItem('البيت', this)" class="menu-item" style="font-family: Cairo, sans-serif;">البيت</a>
+            <a onclick="selectItem('اختراعات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">اختراعات</a>
+            <a onclick="selectItem('أحذية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أحذية</a>
+            <a onclick="selectItem('ديكور', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ديكور</a>
+            <a onclick="selectItem('ألعاب', this)" class="menu-item" style="font-family: Cairo, sans-serif;">ألعاب</a>
+            <a onclick="selectItem('أجهزة منزلية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">أجهزة منزلية</a>
+            <a onclick="selectItem('مستلزمات السفر', this)" class="menu-item" style="font-family: Cairo, sans-serif;">مستلزمات السفر</a>
+            <a onclick="selectItem('منتجات العناية', this)" class="menu-item" style="font-family: Cairo, sans-serif;">منتجات العناية</a>
+            <a onclick="selectItem('معدات الطبخ', this)" class="menu-item" style="font-family: Cairo, sans-serif;">معدات الطبخ</a>
+            <a onclick="selectItem('كمبيوترات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كمبيوترات</a>
+            <a onclick="selectItem('كاميرات', this)" class="menu-item" style="font-family: Cairo, sans-serif;">كاميرات</a>
+            <div class="underline"></div>
+        </nav>
     </div>
+    <div id="price-filter-container">
+        <button id="price-filter-btn" title="تصفية حسب السعر">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+        </button>
+    </div>
+    <!-- END: HTML محدث لشريط الفئات والفلترة -->
+
 
     <!-- نافذة القائمة الجانبية -->
     <div class="menu-popup" id="menuPopup">

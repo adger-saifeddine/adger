@@ -525,6 +525,9 @@
 
 
 
+
+
+
 <style>
      .line {
             width: 100%;
@@ -532,6 +535,7 @@
             background-color: #eeeeee;
         }
 </style>
+
 
 
 
@@ -545,36 +549,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <title>عرض المنتج</title>
     <style>
-        /* ======== START: Skeleton Loading Styles ======== */
-        @keyframes shimmer {
-            0% { background-position: -468px 0; }
-            100% { background-position: 468px 0; }
-        }
-
-        .skeleton {
-            animation: shimmer 1.5s linear infinite;
-            background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-            background-size: 800px 104px;
-            color: transparent !important; /* إخفاء النص الأصلي */
-            -webkit-background-clip: text;
-            background-clip: text;
-            border-radius: 4px; /* تنعيم الحواف */
-            display: inline-block; /* لضمان تطبيق الخلفية بشكل صحيح */
-        }
-
-        #hop.skeleton {
-            display: block;
-            color: transparent;
-            background: repeating-linear-gradient(
-                90deg,
-                #e0e0e0 0px, #e0e0e0 20px,
-                #f0f0f0 20px, #f0f0f0 40px
-            );
-            min-height: 50px; /* ارتفاع افتراضي للتشويش */
-            border-radius: 5px;
-        }
-        /* ======== END: Skeleton Loading Styles ======== */
-
         /* تصميم النص مع الخلفية */
         .text-style {
             display: inline-block;
@@ -587,10 +561,7 @@
             margin-top: 7px;
             margin-right: 25px;
             font-family: Cairo, sans-serif;
-            min-width: 80px; /* عرض افتراضي للتشويش */
-            text-align: center; /* توسيط النص */
         }
-        
         /* تصميم النص الطويل */
         #hop {
             color: #000000;
@@ -603,9 +574,22 @@
             direction: rtl;
             text-align: right;
             line-height: 1.3;
-            display: none; /* إخفاءه افتراضيًا حتى يتم تحميل المحتوى */
+            display: none;
         }
-
+        #hop.placeholder {
+            display: block;
+            color: #ffffff;
+            background: repeating-linear-gradient(
+                45deg,
+                #b4b4b4,
+                #999999 10px,
+                #999999 10px,
+                #999999 20px
+            );
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.7;
+        }
         #hop .short-text, #hop .full-text {
             display: inline;
         }
@@ -630,15 +614,14 @@
             display: inline-block;
             white-space: nowrap;
         }
-
         /* تنسيق خاص بالهواتف */
         @media only screen and (max-width: 768px) {
             #hop {
                 position: relative;
             }
             .zero{
-                margin-right: 10px !important;
-            }
+                    margin-right: 10px !important;
+                }
         }
         /* للشاشات المتوسطة */
         @media only screen and (min-width: 769px) and (max-width: 1199px) {
@@ -669,37 +652,28 @@
 <body>
     <div class="container" style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; margin-top: 26px;">
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
-            <!-- إضافة كلاس skeleton لكل العناصر التي سيتم تحميلها -->
-            <div class="zero skeleton" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
-            <div class="number skeleton" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
-            <div class="letter skeleton" style="margin-right: -3px; font-size: 20px;">EGP</div>
-            <s id="oldPrice" class="skeleton" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
-            <s id="productDis" class="skeleton" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم كبير</s>
+            <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
+            <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
+            <div class="letter" style="  margin-right: -3px; font-size: 20px;">EGP</div>
+            <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
+            <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
-        <div id="text-container" class="text-style skeleton">
-            &nbsp;
+        <div id="text-container" class="text-style">
+            النص الأول
         </div>
-        <h2 id="hop" class="skeleton">
-            <!-- المحتوى المؤقت سيتم استبداله، والـ CSS سيعرض التشويش -->
+        <h2 id="hop" class="placeholder">
+            أفضل اختيار لجميع احتياجاتك اليومية بجودة لا مثيل لها...
         </h2>
-        <div class="second-text skeleton" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
+        <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
             5 مباع
         </div>
     <script>
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
-
-        // دالة لإزالة تأثير التشويش من عنصر
-        function removeSkeleton(element) {
-            if(element) {
-                element.classList.remove('skeleton');
-            }
-        }
-
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            const fileIndex = Math.ceil(id / 5000); 
+            const fileIndex = Math.ceil(id / 5000); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
             fetch(jsonFile)
                 .then(response => {
@@ -712,148 +686,120 @@
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
                     }
-
-                    // الحصول على جميع العناصر مرة واحدة
+                    // تحديث السعر
                     const priElement = document.getElementById('productPri');
-                    const zeroElement = document.querySelector('.zero');
-                    const letterElement = document.querySelector('.letter');
-                    const oldPriceElement = document.getElementById('oldPrice');
-                    const disElement = document.getElementById('productDis');
-                    const textContainer = document.getElementById('text-container');
-                    const hopContainer = document.getElementById('hop');
-                    const salesElement = document.getElementById('sales');
-
-                    // تحديث السعر وإزالة التشويش
                     priElement.textContent = product.pri || '0';
-                    removeSkeleton(priElement);
-                    removeSkeleton(zeroElement); // إزالة التشويش من العناصر الثابتة بنفس الوقت
-                    removeSkeleton(letterElement);
-
-                    // تحديث السعر القديم
+                    // تحديث السعر القديم (إخفاء إذا لم يكن موجودًا)
+                    const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
                         oldPriceElement.textContent = product.oldPrice;
                         oldPriceElement.style.display = 'inline';
                     } else {
                         oldPriceElement.style.display = 'none';
                     }
-                    removeSkeleton(oldPriceElement);
-
-                    // تحديث نص الخصم
+                    // تحديث نص الخصم (إخفاء إذا لم يكن موجودًا)
+                    const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
                         disElement.style.display = 'inline';
                     } else {
                         disElement.style.display = 'none';
                     }
-                    removeSkeleton(disElement);
-
                     // تحديث النص المتغير
+                    const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
+                    let index = 0;
+                    function changeText() {
+                        textContainer.textContent = changingTexts[index];
+                        index = (index + 1) % changingTexts.length;
+                    }
                     if (changingTexts.length > 0) {
-                        let index = 0;
-                        function changeText() {
-                            textContainer.textContent = changingTexts[index];
-                            index = (index + 1) % changingTexts.length;
-                        }
                         changeText();
                         setInterval(changeText, 5000);
-                        removeSkeleton(textContainer);
                     } else {
                         textContainer.style.display = 'none';
                     }
-
                     // تحديث النص الطويل
+                    const hopContainer = document.getElementById('hop');
                     if (product.longText) {
+                        hopContainer.classList.remove('placeholder');
                         hopContainer.textContent = product.longText;
-                        removeSkeleton(hopContainer); // إزالة التشويش قبل التهيئة
                         hopContainer.style.display = 'block';
                         initializeLongText();
                     } else {
                         hopContainer.style.display = 'none';
                     }
-
                     // تحديث عدد المبيعات
+                    const salesElement = document.getElementById('sales');
                     if (product.sales) {
                         salesElement.textContent = product.sales;
                         salesElement.style.display = 'block';
                     } else {
                         salesElement.style.display = 'none';
                     }
-                    removeSkeleton(salesElement);
-                    
+                    // تحديث نص الوصف
+                    const descElement = document.getElementById('productDesc');
+                    if (product.desc) {
+                        descElement.textContent = product.desc;
+                        descElement.style.display = 'block';
+                    } else {
+                        descElement.style.display = 'none';
+                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
                     document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
                 });
         }
-        
-        // دالة تهيئة النص الطويل (تبقى كما هي)
+        // دالة تهيئة النص الطويل
         function initializeLongText() {
             const container = document.getElementById('hop');
-            if (!container || container.classList.contains('initialized')) return;
-            container.classList.add('initialized');
-
             const originalText = container.textContent.trim();
             const charLimitMobile = 50;
             const charLimitTablet = 122;
             const charLimitLarge = 132;
-
             const truncateText = (text, charLimit) => {
-                if (text.length <= charLimit) {
-                     container.textContent = originalText;
-                     return;
+                if (text.length > charLimit) {
+                    const truncatedText = text.substring(0, charLimit);
+                    const lastSpaceIndex = truncatedText.lastIndexOf(' ');
+                    let shortTextContent = truncatedText;
+                    let lastWord = '';
+                    if (lastSpaceIndex !== -1) {
+                        shortTextContent = truncatedText.substring(0, lastSpaceIndex);
+                        lastWord = truncatedText.substring(lastSpaceIndex + 1);
+                    }
+                    const shortText = document.createElement('span');
+                    shortText.className = 'short-text';
+                    const initialText = document.createElement('span');
+                    initialText.textContent = shortTextContent;
+                    const lastWordWrapper = document.createElement('span');
+                    lastWordWrapper.className = 'last-word-wrapper';
+                    lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '...';
+                    const fullText = document.createElement('span');
+                    fullText.className = 'full-text';
+                    fullText.textContent = text;
+                    const moreBtn = document.createElement('span');
+                    moreBtn.className = 'more-btn';
+                    moreBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    `;
+                    container.textContent = '';
+                    shortText.appendChild(initialText);
+                    lastWordWrapper.appendChild(moreBtn);
+                    shortText.appendChild(lastWordWrapper);
+                    container.appendChild(shortText);
+                    container.appendChild(fullText);
+                    moreBtn.addEventListener('click', () => {
+                        container.classList.toggle('expanded');
+                    });
+                } else {
+                    container.style.display = 'block';
                 }
-                
-                const truncatedText = text.substring(0, charLimit);
-                const lastSpaceIndex = truncatedText.lastIndexOf(' ');
-                let shortTextContent = truncatedText;
-                let lastWord = '';
-
-                if (lastSpaceIndex !== -1) {
-                    shortTextContent = truncatedText.substring(0, lastSpaceIndex);
-                    lastWord = truncatedText.substring(lastSpaceIndex + 1);
-                }
-
-                const shortText = document.createElement('span');
-                shortText.className = 'short-text';
-
-                const initialText = document.createElement('span');
-                initialText.textContent = shortTextContent;
-
-                const lastWordWrapper = document.createElement('span');
-                lastWordWrapper.className = 'last-word-wrapper';
-                lastWordWrapper.textContent = (lastWord ? ' ' + lastWord : '') + '...';
-
-                const fullText = document.createElement('span');
-                fullText.className = 'full-text';
-                fullText.textContent = text;
-
-                const moreBtn = document.createElement('span');
-                moreBtn.className = 'more-btn';
-                moreBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                `;
-
-                container.textContent = '';
-                shortText.appendChild(initialText);
-                lastWordWrapper.appendChild(moreBtn);
-                shortText.appendChild(lastWordWrapper);
-                container.appendChild(shortText);
-                container.appendChild(fullText);
-
-                moreBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    container.classList.toggle('expanded');
-                });
             };
-
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
-                container.classList.remove('expanded'); // Reset state on resize
-                
                 if (screenWidth <= 768) {
                     truncateText(originalText, charLimitMobile);
                 } else if (screenWidth >= 769 && screenWidth <= 1199) {
@@ -862,20 +808,16 @@
                     truncateText(originalText, charLimitLarge);
                 } else {
                     container.textContent = originalText;
+                    container.style.display = 'block';
                 }
             };
-
             updateTextBasedOnScreenSize();
             window.addEventListener('resize', updateTextBasedOnScreenSize);
         }
-
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
-                // تأخير بسيط لمحاكاة التحميل ورؤية التأثير بوضوح (يمكن إزالته في الإنتاج)
-                setTimeout(() => {
-                    loadProductData(productId);
-                }, 500);
+                loadProductData(productId);
             } else {
                 document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL</p>';
             }
