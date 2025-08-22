@@ -367,20 +367,16 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 15px;
-            padding: 20px;
+            padding: 15px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
             margin-top: 20px;
-            border-radius: 0; /* تمت إزالة الحواف الدائرية */
+            border-radius: 0;
             position: relative;
-            overflow: hidden; /* مهم لإخفاء أجزاء التدرج التي تخرج من الصندوق */
+            overflow: hidden;
             
-            /* التأثير الجديد */
-            background-color: #0d1a42; /* لون أساسي داكن وعميق */
+            background-color: #0d1a42;
             background-image: 
-                /* Layer 1 - Light blue */
                 radial-gradient(ellipse at 50% 0%, rgba(28, 119, 219, 0.5) 0%, transparent 80%),
-                /* Layer 2 - Purple */
                 radial-gradient(ellipse at 0% 50%, rgba(138, 43, 226, 0.4) 0%, transparent 70%),
-                /* Layer 3 - Cyan */
                 radial-gradient(ellipse at 100% 50%, rgba(0, 255, 255, 0.4) 0%, transparent 70%);
             background-repeat: no-repeat;
             background-size: 200% 200%;
@@ -436,18 +432,19 @@
             .image-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
+                padding: 10px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
             }
             .image-item {
-                padding: 8px; /* Reduced padding for smaller white box */
+                padding: 8px;
             }
             .image-item img {
                 width: 80px;
                 max-height: 80px;
             }
             .image-item span {
-                font-size: 14px; /* Smaller font size */
-                margin-right: 6px; /* Closer to image */
-                max-width: 110px; /* Adjusted to fit text */
+                font-size: 14px;
+                margin-right: 6px;
+                max-width: 110px;
                   font-family: 'Cairo', sans-serif;
             }
             .search-item small {
@@ -457,20 +454,20 @@
 
         @media (max-width: 499px) {
             .image-grid {
-                gap: 5px; /* Smaller gap between items and blue background */
-                padding: 10px; /* Reduced padding for the grid container */
+                gap: 5px;
+                padding: 5px; /* تم التعديل: الحشوة مساوية للمسافة بين العناصر */
             }
             .image-item {
-                padding: 6px; /* Further reduced padding for smaller white box */
+                padding: 6px;
             }
             .image-item img {
                 width: 80px;
                 max-height: 80px;
             }
             .image-item span {
-                font-size: 10px; /* Even smaller font size for very small screens */
-                margin-right: 4px; /* Even closer to image */
-                max-width: 120px; /* Increased to ensure full text visibility */
+                font-size: 10px;
+                margin-right: 4px;
+                max-width: 120px;
             }
         }
 
@@ -902,60 +899,69 @@
             lastSearchTerm.textContent = displayTerm;
         }
         
+        // --- START: MODIFIED FUNCTION ---
         function displaySearchHistory() {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistoryGrid.innerHTML = '';
             const isMobile = window.matchMedia("(max-width: 1522px)").matches;
             const maxItems = isMobile ? 12 : 22;
-        
-            searchHistory.forEach((entry, index) => {
-                if (isAllHistoryShown || index < maxItems || searchHistory.length <= maxItems) {
-                    const searchItem = document.createElement('div');
-                    searchItem.className = 'search-item';
-                    const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
-                    searchItem.innerHTML = 
-                        `<span>${displayTerm}</span>
-                        <small>${entry.date}</small>
-                        <button class="delete-button">✖</button>`;
-        
-                    searchItem.addEventListener('click', function () {
+
+            const itemsToShow = (isAllHistoryShown || searchHistory.length <= maxItems) 
+                                ? searchHistory 
+                                : searchHistory.slice(0, maxItems);
+
+            itemsToShow.forEach((entry, index) => {
+                const searchItem = document.createElement('div');
+                searchItem.className = 'search-item';
+                const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
+                searchItem.innerHTML = 
+                    `<span>${displayTerm}</span>
+                    <small>${entry.date}</small>
+                    <button class="delete-button">✖</button>`;
+
+                searchItem.addEventListener('click', function (event) {
+                    if (event.target.className !== 'delete-button') {
                         saveSearchTerm(entry.term);
                         saveLastSearchTerm(entry.term);
                         window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
-                    });
-        
-                    searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
-                        event.stopPropagation();
-                        searchItem.remove();
-                        removeSearchTermFromHistory(entry.term);
-                    });
-        
-                    searchHistoryGrid.appendChild(searchItem);
-        
-                    if (!isAllHistoryShown && index === maxItems - 1 && searchHistory.length > maxItems) {
-                        const itemWithArrow = document.createElement('div');
-                        itemWithArrow.className = 'search-item-with-arrow';
-                        itemWithArrow.appendChild(searchItem.cloneNode(true));
-        
-                        const arrow = document.createElement('div');
-                        arrow.id = 'show-more-arrow';
-                        arrow.innerHTML = 
-                            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>`;
-        
-                        arrow.addEventListener('click', function (event) {
-                            event.stopPropagation();
-                            isAllHistoryShown = true;
-                            displaySearchHistory();
-                        });
-        
-                        itemWithArrow.appendChild(arrow);
-                        searchHistoryGrid.appendChild(itemWithArrow);
                     }
+                });
+
+                searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    removeSearchTermFromHistory(entry.term);
+                });
+
+                // التحقق إذا كان هذا هو العنصر الأخير وهناك المزيد لعرضه
+                if (!isAllHistoryShown && searchHistory.length > maxItems && index === maxItems - 1) {
+                    const itemWithArrow = document.createElement('div');
+                    itemWithArrow.className = 'search-item-with-arrow';
+                    
+                    // إضافة العنصر الحقيقي (وليس نسخة) إلى الحاوية
+                    itemWithArrow.appendChild(searchItem);
+
+                    const arrow = document.createElement('div');
+                    arrow.id = 'show-more-arrow';
+                    arrow.innerHTML = 
+                        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>`;
+                    
+                    arrow.addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        isAllHistoryShown = true;
+                        displaySearchHistory();
+                    });
+
+                    itemWithArrow.appendChild(arrow);
+                    searchHistoryGrid.appendChild(itemWithArrow);
+                } else {
+                    // إذا لم يكن كذلك، أضف العنصر مباشرة
+                    searchHistoryGrid.appendChild(searchItem);
                 }
             });
         }
+        // --- END: MODIFIED FUNCTION ---
         
         function removeSearchTermFromHistory(term) {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -1028,4 +1034,4 @@
             }
             displaySearchHistory();
         };
-        </script>
+    </script>
