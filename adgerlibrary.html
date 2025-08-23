@@ -1,3 +1,4 @@
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -46,6 +47,10 @@
         --border-radius: 8px;
         --transition-speed: 0.3s ease;
         --favorite-color: #ff4757;
+
+        /* --- إضافة ألوان جديدة لأزرار نافذة المنتج --- */
+        --modal-btn-color: #ff960c; /* لون برتقالي مميز */
+        --modal-btn-hover-color: #ffbb00; /* نسخة أفتح عند التمرير */
     }
 
     * {
@@ -247,13 +252,39 @@
     .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
     .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
     .modal-footer {
-        padding: 1rem 1.5rem; border-top: 1px solid rgba(0, 110, 255, 0.1); background-color: rgba(0, 110, 255, 0.05); flex-shrink: 0; display: flex; gap: 1rem; justify-content: flex-end; border-bottom-left-radius: var(--border-radius); border-bottom-right-radius: var(--border-radius);
+        padding: 1rem 1.5rem; border-top: 1px solid rgba(0, 110, 255, 0.1); background-color: rgba(0, 110, 255, 0.05); flex-shrink: 0; display: flex; gap: 1rem; justify-content: flex-end; align-items: center; border-bottom-left-radius: var(--border-radius); border-bottom-right-radius: var(--border-radius);
     }
-    .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; }
-    .modal-footer .btn-primary { background-color: var(--primary-color); color: white; }
-    .modal-footer .btn-primary:hover { background-color: #0056b3; box-shadow: 0 4px 10px rgba(0, 110, 255, 0.3); }
-    .modal-footer .btn-secondary { background-color: transparent; color: var(--primary-color); border-color: var(--primary-color); }
-    .modal-footer .btn-secondary:hover { background-color: var(--primary-color); color: white; }
+    .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    
+    .modal-footer .btn-primary { background-color: var(--modal-btn-color); color: white; }
+    .modal-footer .btn-primary:hover { background-color: var(--modal-btn-hover-color); box-shadow: 0 4px 10px rgba(255, 150, 12, 0.3); }
+    .modal-footer .btn-secondary { background-color: transparent; color: var(--modal-btn-color); border-color: var(--modal-btn-color); }
+    .modal-footer .btn-secondary:hover { background-color: transparent; color: var(--modal-btn-hover-color); border-color: var(--modal-btn-hover-color); }
+
+    /* --- إضافة: تنسيق زر المفضلة في النافذة المنبثقة --- */
+    .modal-footer .btn-favorite {
+        background-color: transparent;
+        color: var(--favorite-color);
+        border-color: var(--favorite-color);
+    }
+    .modal-footer .btn-favorite:hover {
+        background-color: var(--favorite-color);
+        color: white;
+        box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+    }
+    .modal-footer .btn-favorite.active {
+        background-color: var(--favorite-color);
+        color: white;
+    }
+    .modal-footer .btn-favorite.active:hover {
+        background-color: #c23642; /* نسخة أغمق من لون المفضلة */
+        border-color: #c23642;
+    }
+    .modal-footer .btn-favorite i {
+        margin-left: 8px; /* مسافة بين الأيقونة والنص */
+    }
+    /* --- نهاية الإضافة --- */
+
 
     #favorites-sidebar { position: fixed; top: 0; left: -350px; width: 350px; max-width: 85vw; height: 100vh; background-color: var(--sidebar-bg); z-index: 1040; box-shadow: 5px 0 15px rgba(0,0,0,0.2); transition: left var(--transition-speed); padding: 1.5rem; overflow-y: auto; }
     body.favorites-open #favorites-sidebar { left: 0; }
@@ -299,10 +330,9 @@
         .modal-body { flex-direction: column; padding: 1.5rem; }
         .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
         .modal-header h2 { font-size: 1.2rem; }
-        .modal-footer { justify-content: center; }
-        .modal-footer .btn { flex-grow: 1; padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+        .modal-footer { justify-content: center; flex-wrap: wrap; }
+        .modal-footer .btn { flex-basis: 45%; flex-grow: 1; padding: 0.6rem 1rem; font-size: 0.8rem; }
         
-        /* --- تعديل: تصغير الإشعار جدًا على الهواتف --- */
         #toast-notification {
             bottom: 1rem;
             left: 1rem;
@@ -314,7 +344,6 @@
         #toast-notification #toast-icon i {
             font-size: 0.9rem;
         }
-        /* --- نهاية التعديل --- */
     }
     
     @media (max-width: 480px) {
@@ -356,12 +385,49 @@
     @keyframes animate-gradient {
         0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
     }
+
+    @media (max-width: 768px) {
+        main { padding: 1rem; }
+        #book-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .book-details { padding: 1rem; }
+        .book-details h3 { font-size: 1rem; }
+        .book-author { font-size: 0.8rem; }
+        .book-description { font-size: 0.8rem; }
+        #book-modal {
+            width: 100%; height: 100%; top: 0; left: 0; max-height: 100vh; border-radius: 0; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        body.modal-open #book-modal { transform: translateY(0); }
+        .modal-body { flex-direction: column; padding: 1.5rem; }
+        .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
+        .modal-header h2 { font-size: 1.2rem; }
+        .modal-footer { justify-content: center; }
+        .modal-footer .btn { flex-grow: 1; padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+        
+        #toast-notification {
+            bottom: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        #toast-notification.show {
+            font-size: 0.7rem;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #book-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .book-favorite-btn { top: 5px; left: 5px; width: 32px; height: 32px; }
+        .book-favorite-btn i { font-size: 1rem; }
+        #toast-notification.show {
+            font-size: 0.6rem;
+            padding: 0.3rem 0.5rem;
+        }
+    }
 </style>
 
 </head>
 <body>
-
-<!-- ... (بقية HTML و JavaScript تبقى كما هي تمامًا) ... -->
 
 <div id="app-container">
     <header>
@@ -402,7 +468,7 @@
     <div id="overlay"></div>
 
     <footer>
-        <p>© 2024 Adger Library. جميع الحقوق محفوظة.</p>
+        <p>© 2024 Adger. جميع الحقوق محفوظة.</p>
     </footer>
 </div>
 
@@ -422,6 +488,11 @@
         </div>
     </div>
     <footer class="modal-footer">
+        <!-- --- إضافة: زر المفضلة الجديد --- -->
+        <button id="modal-favorite-btn" class="btn btn-favorite">
+            <i class="far fa-heart"></i> إضافة للمفضلة
+        </button>
+        <!-- --- نهاية الإضافة --- -->
         <a id="modal-read-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">قراءة (PDF)</a>
         <a id="modal-buy-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">صفحة الكتاب والشراء</a>
     </footer>
@@ -480,6 +551,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeFavorites = document.getElementById('close-favorites');
     const favoritesList = document.getElementById('favorites-list');
     const emptyFavorites = document.getElementById('empty-favorites');
+    
+    // --- إضافة: تحديد زر المفضلة في النافذة المنبثقة ---
+    const modalFavoriteBtn = document.getElementById('modal-favorite-btn');
 
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
@@ -597,6 +671,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return bookCard;
     }
     
+    // --- إضافة: دالة لتحديث حالة زر المفضلة في النافذة المنبثقة ---
+    function updateModalFavoriteButton(bookId) {
+        if (isFavorite(bookId)) {
+            modalFavoriteBtn.classList.add('active');
+            modalFavoriteBtn.innerHTML = `<i class="fas fa-heart"></i> في المفضلة`;
+        } else {
+            modalFavoriteBtn.classList.remove('active');
+            modalFavoriteBtn.innerHTML = `<i class="far fa-heart"></i> إضافة للمفضلة`;
+        }
+    }
+
     function openModal(book) {
         modalCover.src = book.imageUrl;
         modalTitle.textContent = book.title;
@@ -604,6 +689,11 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDescription.innerHTML = book.fullDescription.replace(/\n/g, '<br>');
         modalReadBtn.href = book.pdfUrl;
         modalBuyBtn.href = book.bookUrl;
+        
+        // --- إضافة: تحديث زر المفضلة عند فتح النافذة ---
+        modalFavoriteBtn.dataset.bookId = book.id;
+        updateModalFavoriteButton(book.id);
+        
         body.classList.add('modal-open');
     }
 
@@ -697,6 +787,16 @@ document.addEventListener('DOMContentLoaded', () => {
         searchBar.value = ''; autocompleteResults.style.display = 'none'; handleSearch(); clearSearchButton.style.display = 'none'; searchBar.focus();
     });
     document.addEventListener('click', (event) => { if (!searchContainer.contains(event.target)) { autocompleteResults.style.display = 'none'; } });
+
+    // --- إضافة: ربط حدث النقر بزر المفضلة في النافذة المنبثقة ---
+    modalFavoriteBtn.addEventListener('click', () => {
+        const bookId = modalFavoriteBtn.dataset.bookId;
+        if (bookId) {
+            toggleFavorite(bookId);
+            // تحديث حالة الزر فوراً بعد النقر
+            updateModalFavoriteButton(bookId);
+        }
+    });
 
     renderAllBooks();
     updateFavoritesCount();
