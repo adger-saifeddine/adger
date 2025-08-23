@@ -1,28 +1,3 @@
-
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة أدجر - Adger Library</title>
-    <link rel="icon" href="https://i.postimg.cc/9FkVJ56T/library-logo.webp" type="image/x-icon">
-
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
-<!DOCTYPE html>
-
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة أدجر</title>
-    <!-- Google Fonts for a nice Arabic font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -519,12 +494,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
     
-    // --- START: INTELLIGENT HIDE/SHOW ---
+    // --- START: CORRECTED HIDE/SHOW LOGIC ---
     const header = document.querySelector('header');
     let lastScrollY = window.scrollY;
-    let currentHeaderY = 0; // لتخزين موضع الهيدر الحالي
+    let currentHeaderY = 0; 
     let ticking = false;
-    // --- END: INTELLIGENT HIDE/SHOW ---
+    // --- END: CORRECTED HIDE/SHOW LOGIC ---
 
 
     function showToastNotification(message, type) {
@@ -725,26 +700,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- START: INTELLIGENT HIDE/SHOW ---
+    // --- START: CORRECTED HIDE/SHOW LOGIC ---
     function handleHeaderScroll() {
         const currentScrollY = window.scrollY;
         const headerHeight = header.offsetHeight;
         const deltaY = currentScrollY - lastScrollY;
 
+        // حساب موضع الهيدر الجديد
         let newHeaderY = currentHeaderY - deltaY;
 
         // وضع الحدود: لا تدع الهيدر يرتفع أكثر من ارتفاعه أو ينزل عن موضعه الأصلي
         newHeaderY = Math.max(-headerHeight, Math.min(0, newHeaderY));
-        
-        // حالة خاصة: إذا كان المستخدم قريبًا جدًا من أعلى الصفحة، أظهر الهيدر بالكامل
-        if (currentScrollY <= headerHeight) {
-            newHeaderY = 0;
-        }
 
         currentHeaderY = newHeaderY;
         header.style.transform = `translateY(${currentHeaderY}px)`;
 
-        lastScrollY = currentScrollY;
+        lastScrollY = Math.max(0, currentScrollY);
         ticking = false;
     }
 
@@ -754,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
-    // --- END: INTELLIGENT HIDE/SHOW ---
+    // --- END: CORRECTED HIDE/SHOW LOGIC ---
 
     bookGrid.addEventListener('click', (event) => {
         const card = event.target.closest('.book-card');
