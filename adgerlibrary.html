@@ -47,10 +47,8 @@
         --border-radius: 8px;
         --transition-speed: 0.3s ease;
         --favorite-color: #ff4757;
-
-        /* --- إضافة ألوان جديدة لأزرار نافذة المنتج --- */
-        --modal-btn-color: #ff960c; /* لون برتقالي مميز */
-        --modal-btn-hover-color: #ffbb00; /* نسخة أفتح عند التمرير */
+        --modal-btn-color: #ff960c;
+        --modal-btn-hover-color: #ffbb00;
     }
 
     * {
@@ -94,20 +92,11 @@
         justify-content: center;
         align-items: center;
         
-        /* --- START: THE FIX FOR SCROLLING HEADER --- */
         position: sticky;
         top: 0;
         width: 100%;
-        transition: transform 0.3s ease-in-out;
-        /* --- END: THE FIX FOR SCROLLING HEADER --- */
+        will-change: transform; /* تحسين أداء التحريك */
     }
-
-    /* --- START: THE FIX FOR SCROLLING HEADER --- */
-    /* This class is added by JavaScript to hide the header */
-    header.header-hidden {
-        transform: translateY(-100%);
-    }
-    /* --- END: THE FIX FOR SCROLLING HEADER --- */
 
     .header-top-row {
         display: contents; 
@@ -274,7 +263,6 @@
     .modal-footer .btn-secondary { background-color: transparent; color: var(--modal-btn-color); border-color: var(--modal-btn-color); }
     .modal-footer .btn-secondary:hover { background-color: transparent; color: var(--modal-btn-hover-color); border-color: var(--modal-btn-hover-color); }
 
-    /* --- إضافة: تنسيق زر المفضلة في النافذة المنبثقة --- */
     .modal-footer .btn-favorite {
         background-color: transparent;
         color: var(--favorite-color);
@@ -290,13 +278,12 @@
         color: white;
     }
     .modal-footer .btn-favorite.active:hover {
-        background-color: #c23642; /* نسخة أغمق من لون المفضلة */
+        background-color: #c23642; 
         border-color: #c23642;
     }
     .modal-footer .btn-favorite i {
-        margin-left: 8px; /* مسافة بين الأيقونة والنص */
+        margin-left: 8px;
     }
-    /* --- نهاية الإضافة --- */
 
 
     #favorites-sidebar { position: fixed; top: 0; left: -350px; width: 350px; max-width: 85vw; height: 100vh; background-color: var(--sidebar-bg); z-index: 1040; box-shadow: 5px 0 15px rgba(0,0,0,0.2); transition: left var(--transition-speed); padding: 1.5rem; overflow-y: auto; }
@@ -529,13 +516,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyFavorites = document.getElementById('empty-favorites');
     const modalFavoriteBtn = document.getElementById('modal-favorite-btn');
     
-    // --- START: THE FIX FOR SCROLLING HEADER ---
-    const header = document.querySelector('header');
-    let lastScrollY = window.scrollY;
-    // --- END: THE FIX FOR SCROLLING HEADER ---
-
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
+    
+    // --- START: INTELLIGENT HIDE/SHOW ---
+    const header = document.querySelector('header');
+    let lastScrollY = window.scrollY;
+    let currentHeaderY = 0; // لتخزين موضع الهيدر الحالي
+    let ticking = false;
+    // --- END: INTELLIGENT HIDE/SHOW ---
+
 
     function showToastNotification(message, type) {
         const toast = document.getElementById('toast-notification');
@@ -735,24 +725,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- START: THE FIX FOR SCROLLING HEADER ---
-    window.addEventListener('scroll', () => {
+    // --- START: INTELLIGENT HIDE/SHOW ---
+    function handleHeaderScroll() {
         const currentScrollY = window.scrollY;
-        // لا تخفي الهيدر إذا كان المستخدم قريباً من أعلى الصفحة
-        if (currentScrollY <= header.offsetHeight) {
-            header.classList.remove('header-hidden');
-        } else if (currentScrollY > lastScrollY) {
-            // التمرير لأسفل
-            header.classList.add('header-hidden');
-        } else {
-            // التمرير لأعلى
-            header.classList.remove('header-hidden');
-        }
-        // تحديث آخر موقع للتمرير
-        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
-    });
-    // --- END: THE FIX FOR SCROLLING HEADER ---
+        const headerHeight = header.offsetHeight;
+        const deltaY = currentScrollY - lastScrollY;
 
+        let newHeaderY = currentHeaderY - deltaY;
+
+        // وضع الحدود: لا تدع الهيدر يرتفع أكثر من ارتفاعه أو ينزل عن موضعه الأصلي
+        newHeaderY = Math.max(-headerHeight, Math.min(0, newHeaderY));
+        
+        // حالة خاصة: إذا كان المستخدم قريبًا جدًا من أعلى الصفحة، أظهر الهيدر بالكامل
+        if (currentScrollY <= headerHeight) {
+            newHeaderY = 0;
+        }
+
+        currentHeaderY = newHeaderY;
+        header.style.transform = `translateY(${currentHeaderY}px)`;
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(handleHeaderScroll);
+            ticking = true;
+        }
+    });
+    // --- END: INTELLIGENT HIDE/SHOW ---
 
     bookGrid.addEventListener('click', (event) => {
         const card = event.target.closest('.book-card');
