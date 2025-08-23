@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -8,14 +6,8 @@
     <title>Adger</title>
     <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-
-
-
-
-
-
-
-
+</head>
+</html>
 
 
 <!DOCTYPE html>
@@ -37,6 +29,7 @@
             --card-background: #ffffff;
             --text-color: #333;
             --light-gray: #e9ecef;
+            --border-color: #ddd; 
             --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             --border-radius: 12px;
         }
@@ -61,8 +54,6 @@
             background-color: var(--card-background);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
             padding: 12px 0;
-            
-            /* الأهم: يجعله يلتصق بأعلى الشاشة بدون فراغ */
             position: sticky;
             top: 0;
             width: 100%;
@@ -75,10 +66,9 @@
             gap: 15px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px; /* للحفاظ على الهوامش الجانبية */
+            padding: 0 20px; 
         }
         
-        /* سهم الرجوع الجديد */
         .back-button {
             background: none;
             border: none;
@@ -97,7 +87,7 @@
         }
 
         .back-button:hover svg {
-            transform: translateX(-5px); /* تحريك السهم لليسار قليلاً (لأنه يشير لليمين) */
+            transform: translateX(-5px);
         }
 
         header h1 {
@@ -109,7 +99,7 @@
 
         .search-container {
             position: relative;
-            flex-grow: 1; /* لجعل البحث يأخذ المساحة المتبقية */
+            flex-grow: 1;
         }
 
         #search-box {
@@ -118,8 +108,8 @@
             padding: 10px 20px 10px 45px;
             font-size: 1rem;
             font-family: 'Tajawal', sans-serif;
-            border-radius: 25px; /* شكل بيضاوي */
-            border: 1px solid transparent;
+            border-radius: 25px; 
+            border: 1px solid var(--border-color);
             background-color: var(--background-color);
             transition: all 0.3s ease;
         }
@@ -141,7 +131,6 @@
             pointer-events: none;
         }
         
-        /* حاوية المحتوى الرئيسية */
         .page-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -153,10 +142,24 @@
         /* ------------------------- */
         .filters {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
             gap: 10px;
             margin-bottom: 30px;
+            
+            margin-right: -20px; 
+            margin-left: -20px;
+            padding-right: 20px;
+            padding-left: 20px;
+            padding-bottom: 10px;
+            
+            /* إخفاء شريط التمرير لمظهر أنظف */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .filters::-webkit-scrollbar {
+            display: none;
         }
 
         .filter-btn {
@@ -167,6 +170,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .filter-btn:hover {
@@ -253,9 +257,6 @@
             .container {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
-            }
-            header h1 {
-                display: none;
             }
         }
     </style>
@@ -357,23 +358,31 @@
                 }
             }
 
-            // البحث الفوري أثناء الكتابة
             searchBox.addEventListener('input', renderCompanies);
 
-            // *** الإضافة الجديدة هنا ***
-            // إغلاق التركيز عند الضغط على Enter
             searchBox.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
-                    event.preventDefault(); // منع أي سلوك افتراضي (مثل إرسال نموذج لو كان موجودًا)
-                    searchBox.blur();       // إزالة التركيز من صندوق البحث
+                    event.preventDefault(); 
+                    searchBox.blur();       
                 }
             });
 
             // الفلترة حسب الفئة
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    // 1. تحديث الحالة البصرية للأزرار
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
+
+                    // 2. *** الإضافة الجديدة هنا ***
+                    // تمرير الشريط أفقياً لجعل الزر المختار في المنتصف
+                    btn.scrollIntoView({
+                        behavior: 'smooth', // تمرير ناعم
+                        inline: 'center',   // محاذاة أفقية للمنتصف
+                        block: 'nearest'    // أقرب محاذاة عمودية (لمنع الصفحة من القفز)
+                    });
+
+                    // 3. تحديث الفئة وإعادة عرض الشركات
                     currentCategory = btn.dataset.category;
                     renderCompanies();
                 });
