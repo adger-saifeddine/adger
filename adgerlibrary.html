@@ -93,8 +93,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
+        
+        /* --- START: THE FIX FOR SCROLLING HEADER --- */
+        position: sticky;
+        top: 0;
+        width: 100%;
+        transition: transform 0.3s ease-in-out;
+        /* --- END: THE FIX FOR SCROLLING HEADER --- */
     }
+
+    /* --- START: THE FIX FOR SCROLLING HEADER --- */
+    /* This class is added by JavaScript to hide the header */
+    header.header-hidden {
+        transform: translateY(-100%);
+    }
+    /* --- END: THE FIX FOR SCROLLING HEADER --- */
 
     .header-top-row {
         display: contents; 
@@ -316,42 +329,6 @@
         body.sidebar-open #sidebar { right: 0; }
     }
     
-    @media (max-width: 768px) {
-        main { padding: 1rem; }
-        #book-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .book-details { padding: 1rem; }
-        .book-details h3 { font-size: 1rem; }
-        .book-author { font-size: 0.8rem; }
-        .book-description { font-size: 0.8rem; }
-        #book-modal {
-            width: 100%; height: 100%; top: 0; left: 0; max-height: 100vh; border-radius: 0; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        body.modal-open #book-modal { transform: translateY(0); }
-        .modal-body { flex-direction: column; padding: 1.5rem; }
-        .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
-        .modal-header h2 { font-size: 1.2rem; }
-        .modal-footer { justify-content: center; flex-wrap: wrap; }
-        .modal-footer .btn { flex-basis: 45%; flex-grow: 1; padding: 0.6rem 1rem; font-size: 0.8rem; }
-        
-        #toast-notification {
-            bottom: 1rem;
-            left: 1rem;
-            padding: 0.35rem 0.8rem;
-            font-size: 0.75rem;
-            gap: 0.5rem;
-        }
-
-        #toast-notification #toast-icon i {
-            font-size: 0.9rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        #book-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-        .book-favorite-btn { top: 5px; left: 5px; width: 32px; height: 32px; }
-        .book-favorite-btn i { font-size: 1rem; }
-    }
-
     #toast-notification {
         position: fixed;
         bottom: 2rem;
@@ -400,28 +377,29 @@
         .modal-body { flex-direction: column; padding: 1.5rem; }
         .modal-image { margin: 0 auto 1.5rem auto; max-width: 250px; }
         .modal-header h2 { font-size: 1.2rem; }
-        .modal-footer { justify-content: center; }
-        .modal-footer .btn { flex-grow: 1; padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+        .modal-footer { justify-content: center; flex-wrap: wrap; }
+        .modal-footer .btn { flex-basis: 45%; flex-grow: 1; padding: 0.6rem 1rem; font-size: 0.8rem; }
         
         #toast-notification {
             bottom: 1rem;
             left: 1rem;
             padding: 0.5rem 1rem;
             font-size: 0.8rem;
+            gap: 0.5rem;
         }
-        #toast-notification.show {
-            font-size: 0.7rem;
-            padding: 0.4rem 0.8rem;
+        #toast-notification #toast-icon i {
+            font-size: 0.9rem;
         }
     }
-
+    
     @media (max-width: 480px) {
         #book-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
         .book-favorite-btn { top: 5px; left: 5px; width: 32px; height: 32px; }
         .book-favorite-btn i { font-size: 1rem; }
-        #toast-notification.show {
-            font-size: 0.6rem;
-            padding: 0.3rem 0.5rem;
+        
+        #toast-notification {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
         }
     }
 </style>
@@ -488,11 +466,9 @@
         </div>
     </div>
     <footer class="modal-footer">
-        <!-- --- إضافة: زر المفضلة الجديد --- -->
         <button id="modal-favorite-btn" class="btn btn-favorite">
             <i class="far fa-heart"></i> إضافة للمفضلة
         </button>
-        <!-- --- نهاية الإضافة --- -->
         <a id="modal-read-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">قراءة (PDF)</a>
         <a id="modal-buy-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">صفحة الكتاب والشراء</a>
     </footer>
@@ -551,9 +527,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeFavorites = document.getElementById('close-favorites');
     const favoritesList = document.getElementById('favorites-list');
     const emptyFavorites = document.getElementById('empty-favorites');
-    
-    // --- إضافة: تحديد زر المفضلة في النافذة المنبثقة ---
     const modalFavoriteBtn = document.getElementById('modal-favorite-btn');
+    
+    // --- START: THE FIX FOR SCROLLING HEADER ---
+    const header = document.querySelector('header');
+    let lastScrollY = window.scrollY;
+    // --- END: THE FIX FOR SCROLLING HEADER ---
 
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
@@ -671,7 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return bookCard;
     }
     
-    // --- إضافة: دالة لتحديث حالة زر المفضلة في النافذة المنبثقة ---
     function updateModalFavoriteButton(bookId) {
         if (isFavorite(bookId)) {
             modalFavoriteBtn.classList.add('active');
@@ -690,7 +668,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modalReadBtn.href = book.pdfUrl;
         modalBuyBtn.href = book.bookUrl;
         
-        // --- إضافة: تحديث زر المفضلة عند فتح النافذة ---
         modalFavoriteBtn.dataset.bookId = book.id;
         updateModalFavoriteButton(book.id);
         
@@ -758,6 +735,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- START: THE FIX FOR SCROLLING HEADER ---
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        // لا تخفي الهيدر إذا كان المستخدم قريباً من أعلى الصفحة
+        if (currentScrollY <= header.offsetHeight) {
+            header.classList.remove('header-hidden');
+        } else if (currentScrollY > lastScrollY) {
+            // التمرير لأسفل
+            header.classList.add('header-hidden');
+        } else {
+            // التمرير لأعلى
+            header.classList.remove('header-hidden');
+        }
+        // تحديث آخر موقع للتمرير
+        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+    });
+    // --- END: THE FIX FOR SCROLLING HEADER ---
+
+
     bookGrid.addEventListener('click', (event) => {
         const card = event.target.closest('.book-card');
         const favoriteBtn = event.target.closest('.book-favorite-btn');
@@ -788,12 +784,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('click', (event) => { if (!searchContainer.contains(event.target)) { autocompleteResults.style.display = 'none'; } });
 
-    // --- إضافة: ربط حدث النقر بزر المفضلة في النافذة المنبثقة ---
     modalFavoriteBtn.addEventListener('click', () => {
         const bookId = modalFavoriteBtn.dataset.bookId;
         if (bookId) {
             toggleFavorite(bookId);
-            // تحديث حالة الزر فوراً بعد النقر
             updateModalFavoriteButton(bookId);
         }
     });
