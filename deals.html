@@ -7,7 +7,6 @@
     <title>Adger</title>
     <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -155,6 +154,18 @@
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
             #header-controls { margin-bottom: 2px; }
+
+            /* --- [تعديل] تحسينات لنافذة الفوز على الهواتف --- */
+            #win-overlay .overlay-content { padding: 25px 20px; }
+            #win-overlay h2 { font-size: 1.6rem; line-height: 1.3; }
+            #win-overlay p { font-size: 0.9rem; margin-bottom: 15px; }
+            #product-carousel { height: 280px; margin-bottom: 10px; }
+            .product-name { font-size: 1.5rem; }
+            .product-price { font-size: 1.1rem; }
+            .product-price .free { font-size: 1.3rem; }
+            .win-actions { margin-top: 20px; gap: 10px; }
+            .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
+            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; }
         }
     </style>
 </head>
@@ -320,25 +331,16 @@
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
             function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 400); }
             
-            // --- [تم التصحيح] ---
-            // هذه الدالة الآن لا تعرض شيئاً إلا إذا كانت هناك مكافأة سرعة
             function createPointPopup(card, popupInfo) {
-                // التحقق أولاً: هل هناك مكافأة سرعة؟ إذا كانت 0 أو أقل، لا تفعل شيئاً.
                 if (popupInfo.time > 0) {
                     const popup = document.createElement('div');
-                    // المحتوى الآن هو فقط مكافأة السرعة
                     popup.textContent = `+${popupInfo.time} سرعة`; 
                     popup.className = 'point-popup';
-                    document.body.appendChild(popup); // أضف العنصر إلى الصفحة أولاً لحساب أبعاده
-
+                    document.body.appendChild(popup);
                     const cardRect = card.getBoundingClientRect();
                     const popupRect = popup.getBoundingClientRect();
-
-                    // الآن قم بتعيين الموضع بدقة في المنتصف فوق البطاقة
                     popup.style.left = `${cardRect.left + (cardRect.width / 2) - (popupRect.width / 2)}px`;
                     popup.style.top = `${cardRect.top}px`;
-
-                    // إزالة العنصر بعد انتهاء الأنيميشن
                     setTimeout(() => popup.remove(), 1800);
                 }
             };
@@ -356,9 +358,7 @@
                 const streakBonus = (matchStreak > 1) ? (matchStreak * 25) : 0;
                 const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
 
-                // استدعاء الدالة الجديدة. ستعمل فقط إذا كان timeBonus > 0
                 createPointPopup(cardOne, { time: timeBonus });
-                
                 triggerCoinAnimation([cardOne, cardTwo], pointsEarned);
                 
                 cardOne.classList.add('matched');
@@ -369,16 +369,15 @@
 
                 if (matchesFound === levels[currentLevelIndex].images.length) {
                     lockBoard = true;
-                    currentLevelIndex++;
                     setTimeout(() => {
+                        // --- [تعديل] تم إزالة شرط الفوز من هنا ليعتمد فقط على الوصول لـ 1000 نقطة ---
+                        // يتم الآن الانتقال للمستوى التالي فقط إذا لم يكن اللاعب قد فاز بعد.
                         if (currentLevelIndex < levels.length && totalScore < WIN_SCORE) {
                             nextLevelOverlay.style.display = 'flex';
                             setTimeout(() => {
                                 nextLevelOverlay.style.display = 'none';
                                 startLevel(currentLevelIndex);
                             }, 2000);
-                        } else if (totalScore < WIN_SCORE) {
-                            winGame();
                         }
                     }, 800);
                 }
@@ -426,9 +425,11 @@
 
                 setTimeout(() => {
                     totalScore += points;
+                    if(totalScore > WIN_SCORE) totalScore = WIN_SCORE; // لتثبيت النقاط عند 1000
                     scoreDisplay.textContent = totalScore;
                     scoreDisplay.classList.add('updated');
                     setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
+                    // --- [تعديل] هذا هو المكان الوحيد الذي يتم فيه تفعيل الفوز ---
                     if (totalScore >= WIN_SCORE && winOverlay.style.display !== 'flex') {
                         winGame();
                     }
@@ -444,7 +445,8 @@
                 sounds.win.play();
                 localStorage.setItem(WIN_STATE_KEY, 'true');
                 buildWinCarousel();
-                winPrizeIndex = 0;
+                // --- [تعديل] يبدأ عرض الجائزة بنفس الجائزة التي اختارها المستخدم في نافذة المعلومات ---
+                winPrizeIndex = infoPrizeIndex; 
                 updateWinCarousel();
                 [startOverlay, gameOverOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
                 winOverlay.style.display = 'flex';
@@ -462,7 +464,7 @@
             function buildWinCarousel() {
                 productCarousel.innerHTML = '';
                 prizes.forEach((p, index) => {
-                    productCarousel.innerHTML += `<div class="product-slide ${index === 0 ? 'active' : ''}" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
+                    productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
                 });
             }
             function updateWinCarousel() {
