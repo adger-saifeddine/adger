@@ -163,35 +163,68 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        /* --- [حل المشكلة] تعديل تخطيط عرض المنتج لمنع التداخل وتوفير مسافة --- */
-        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; width: 100%; margin-top: 10px; }
+        /* --- [تم الإصلاح] تعديل تخطيط عرض المنتج لضمان ظهور كل المحتوى --- */
+        #product-carousel {
+            position: relative;
+            /* استخدام min-height بدلاً من height للسماح للحاوية بالتمدد إذا لزم الأمر */
+            min-height: 340px; 
+            margin-bottom: 5px;
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .product-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center;
-            /* تم تغيير التوسيط الرأسي ليبدأ من الأعلى لمنع تداخل العناصر عند ضيق المساحة */
-            justify-content: flex-start;
-            padding-top: 15px; /* إضافة مساحة علوية لتعويض التوسيط */
-            box-sizing: border-box; /* لضمان حساب الأبعاد بشكل صحيح مع الحشو */
-            opacity: 0; pointer-events: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* استخدام gap لتوفير مسافات متناسقة بدلاً من الهوامش الفردية */
+            gap: 12px;
+            padding: 10px 0; /* إضافة حشو رأسي للمرونة */
+            box-sizing: border-box;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out;
             transform: scale(0.95);
         }
-        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5)); }
-        .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 5px 20px var(--shadow-color); }
+        .product-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5));
+        }
+        .product-slide img {
+            width: 100%;
+            max-width: 250px;
+            /* تقليل ارتفاع الصورة قليلاً لتوفير مساحة أكبر للنص */
+            max-height: 180px; 
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            margin-bottom: 0; /* إزالة الهامش لأننا نستخدم gap */
+            flex-shrink: 0; /* منع الصورة من التقلص */
+        }
         .product-name {
-            font-size: 1.9rem;
+            font-size: 1.8rem; /* تصغير طفيف للخط لضمان الملاءمة */
             font-weight: 900;
-            /* تمت زيادة الهامش السفلي لإضافة مسافة واضحة بين اسم المنتج والسعر */
-            margin-bottom: 12px;
             color: var(--primary-color);
             letter-spacing: -0.5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 95%;
-            text-align: center; /* التأكيد على توسيط النص أفقيًا */
+            text-align: center;
+            margin-bottom: 0; /* إزالة الهامش لأننا نستخدم gap */
+            flex-shrink: 0; /* منع النص من التقلص */
         }
-        .product-price { font-size: 1.2rem; }
+        .product-price {
+            font-size: 1.2rem;
+            flex-shrink: 0; /* منع السعر من التقلص */
+        }
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
         
@@ -222,8 +255,8 @@
             #win-overlay .overlay-content { padding: 25px 20px; gap: 10px; }
             #win-overlay h2 { font-size: 1.8rem; line-height: 1.3; }
             #win-overlay p { font-size: 1rem; margin-bottom: 10px; }
-            #product-carousel { height: 280px; margin-bottom: 10px; }
-            /* --- [تعديل] تصغير اسم المنتج في الهواتف --- */
+            #product-carousel { min-height: 300px; margin-bottom: 10px; }
+            .product-slide img { max-height: 160px; }
             .product-name { font-size: 1.6rem; }
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
