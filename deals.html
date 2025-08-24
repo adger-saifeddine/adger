@@ -163,10 +163,8 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        /* --- [تم الإصلاح] تعديل تخطيط عرض المنتج لضمان ظهور كل المحتوى --- */
         #product-carousel {
             position: relative;
-            /* استخدام min-height بدلاً من height للسماح للحاوية بالتمدد إذا لزم الأمر */
             min-height: 340px; 
             margin-bottom: 5px;
             width: 100%;
@@ -182,9 +180,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* استخدام gap لتوفير مسافات متناسقة بدلاً من الهوامش الفردية */
             gap: 12px;
-            padding: 10px 0; /* إضافة حشو رأسي للمرونة */
+            padding: 10px 0;
             box-sizing: border-box;
             opacity: 0;
             pointer-events: none;
@@ -200,16 +197,15 @@
         .product-slide img {
             width: 100%;
             max-width: 250px;
-            /* تقليل ارتفاع الصورة قليلاً لتوفير مساحة أكبر للنص */
             max-height: 180px; 
             object-fit: contain;
             border-radius: 15px;
             box-shadow: 0 5px 20px var(--shadow-color);
-            margin-bottom: 0; /* إزالة الهامش لأننا نستخدم gap */
-            flex-shrink: 0; /* منع الصورة من التقلص */
+            margin-bottom: 0;
+            flex-shrink: 0;
         }
         .product-name {
-            font-size: 1.8rem; /* تصغير طفيف للخط لضمان الملاءمة */
+            font-size: 1.8rem;
             font-weight: 900;
             color: var(--primary-color);
             letter-spacing: -0.5px;
@@ -218,12 +214,12 @@
             text-overflow: ellipsis;
             max-width: 95%;
             text-align: center;
-            margin-bottom: 0; /* إزالة الهامش لأننا نستخدم gap */
-            flex-shrink: 0; /* منع النص من التقلص */
+            margin-bottom: 0;
+            flex-shrink: 0;
         }
         .product-price {
             font-size: 1.2rem;
-            flex-shrink: 0; /* منع السعر من التقلص */
+            flex-shrink: 0;
         }
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
@@ -249,20 +245,49 @@
         }
 
 
+        /* --- [تم الإصلاح والتعديل] نافذة فوز بحجم الشاشة الكاملة للهواتف --- */
         @media (max-width: 520px) {
-            body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
+            body { align-items: flex-start; padding: 0; }
+            #game-container { padding: 10px; }
             #header-controls { margin-bottom: 2px; }
-            #win-overlay .overlay-content { padding: 25px 20px; gap: 10px; }
-            #win-overlay h2 { font-size: 1.8rem; line-height: 1.3; }
-            #win-overlay p { font-size: 1rem; margin-bottom: 10px; }
-            #product-carousel { min-height: 300px; margin-bottom: 10px; }
-            .product-slide img { max-height: 160px; }
-            .product-name { font-size: 1.6rem; }
+
+            /* جعل النافذة تملأ الشاشة */
+            #win-overlay {
+                padding: 0;
+            }
+            #win-overlay .overlay-content {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh; /* ضمان تغطية الشاشات الطويلة */
+                max-width: none;
+                max-height: none;
+                border-radius: 0;
+                box-shadow: none;
+                /* ضبط الحشو ليتناسب مع الشاشة الكاملة ويدعم المناطق الآمنة */
+                padding: 30px 15px 20px;
+                padding-top: calc(env(safe-area-inset-top) + 30px);
+                justify-content: space-around; /* توزيع المحتوى بشكل أفضل عمودياً */
+                gap: 5px; /* تقليل المسافة بين العناصر قليلاً */
+            }
+
+            #win-overlay h2 { font-size: 1.7rem; line-height: 1.3; margin-bottom: 0; }
+            #win-overlay p { font-size: 1rem; margin-bottom: 0; }
+            
+            #product-carousel { 
+                min-height: auto; /* السماح للحاوية بأخذ حجم محتواها الطبيعي */
+                height: 35vh; /* تحديد ارتفاع نسبي للشاشة */
+                margin: 5px 0;
+            }
+            .product-slide img { max-height: 20vh; }
+
+            /* تصغير حجم خط اسم المنتج */
+            .product-name { font-size: 1.4rem; }
+
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
-            .win-actions { margin-top: 20px; gap: 10px; }
+            .win-actions { margin-top: 10px; gap: 10px; }
             .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
-            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; }
+            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; margin-top: 0;}
         }
     </style>
 </head>
