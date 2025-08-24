@@ -8,7 +8,7 @@
     <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -86,9 +86,6 @@
         .card-front { background: var(--card-front); border: 2px solid #fff; color: var(--secondary-color); font-size: 3.5rem; font-weight: 900; }
         .card-back { background: #fff; transform: rotateY(180deg); padding: 5px; }
         .card-back img { width: 100%; height: 100%; object-fit: contain; }
-        .coin { position: fixed; z-index: 9999; width: 25px; height: 25px; background: radial-gradient(circle, #fff8e1, #ffd700, #f9a825); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.5); transition: transform 0.8s cubic-bezier(0.5, -0.5, 0.8, 0.8), opacity 0.8s ease-out; pointer-events: none; }
-        .point-popup { position: absolute; z-index: 200; background: rgba(0,0,0,0.7); color: white; padding: 5px 15px; border-radius: 20px; font-size: 1rem; font-weight: bold; animation: floatUp 1.5s ease-out forwards; pointer-events: none; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
         .overlay-content { position: relative; background: var(--card-bg); border: none; padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -96,7 +93,6 @@
         .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
         .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
 
-        /* --- Prize Modal Styles (for info only) --- */
         .close-btn { position: absolute; top: 10px; left: 15px; background: #eee; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 24px; color: #888; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s; }
         .close-btn:hover { background: #ddd; color: #333; transform: rotate(90deg); }
         #prize-display { background-color: var(--bg-start); padding: 20px; border-radius: 15px; margin-top: 15px; transition: opacity 0.3s ease-in-out; }
@@ -107,15 +103,8 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        /* -- Product Carousel & Form Styles -- */
         #product-carousel { position: relative; height: 320px; margin-bottom: 15px; }
-        .product-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-            transform: scale(0.95);
-        }
+        .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.95); }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
         .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
         .product-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; color: var(--primary-color); }
@@ -123,42 +112,25 @@
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.5rem; }
         
-        #switch-product-btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: #fff; border: 1px solid #ddd; border-radius: 50px;
-            padding: 8px 20px; margin-top: 15px; cursor: pointer;
-            transition: all 0.3s; font-size: 1rem; color: var(--text-color);
-        }
+        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 15px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
         #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
         #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
         
-        .win-actions {
-            display: flex; justify-content: center; align-items: center;
-            gap: 15px; margin-top: 25px; flex-wrap: wrap;
-        }
-        .secondary-btn {
-            background: #eee; color: #555; box-shadow: none;
-        }
+        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
+        .secondary-btn { background: #eee; color: #555; box-shadow: none; }
         .secondary-btn:hover { background: #e0e0e0; transform: scale(1.05); }
         .form-control input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: var(--text-color); font-size: 1rem; margin-top: 10px; font-family: 'Cairo', sans-serif; }
         .form-control input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
 
-        /* === التغيير هنا: تنسيقات SVG الموحدة === */
-        .primary-btn.has-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 25px;
-        }
-        .switch-icon {
-            width: 1.2em;
-            height: 1.2em;
-            stroke: currentColor;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-        .primary-btn.has-icon:hover .switch-icon {
-            transform: rotate(180deg);
+        .primary-btn.has-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 25px; }
+        .switch-icon { width: 1.2em; height: 1.2em; stroke: currentColor; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .primary-btn.has-icon:hover .switch-icon { transform: rotate(180deg); }
+
+        /* === [تعديل] تعديلات للشاشات الصغيرة (الهواتف) === */
+        @media (max-width: 520px) {
+            body { align-items: flex-start; padding-top: 5px; padding-bottom: 5px; }
+            /* تقليص المسافة فوق زر الجوائز */
+            #header-controls { margin-bottom: 2px; }
         }
     </style>
 </head>
@@ -175,7 +147,6 @@
         <div id="game-board"></div>
     </div>
     
-    <!-- Overlays -->
     <div id="start-overlay" class="overlay"><div class="overlay-content"><h2>تحدي الذاكرة الخاطفة</h2><p>طابق الصور بأسرع ما يمكن لتصل إلى 1000 نقطة. احذر! 3 أخطاء متتالية وستخسر كل شيء!</p><button id="start-button" class="primary-btn">إبدأ التحدي</button></div></div>
     <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p>لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
     <div id="next-level-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--secondary-color)">مستوى مكتمل!</h2><p>استعد للمستوى التالي...</p></div></div>
@@ -211,7 +182,6 @@
                 </div>
             </div>
             <div class="prize-nav">
-                <!-- === التغيير هنا: استخدام أيقونة SVG مميزة === -->
                 <button id="info-switch-prize-btn" class="primary-btn has-icon">
                     <span>تبديل</span>
                     <svg class="switch-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
@@ -242,7 +212,6 @@
             const restartButton = document.getElementById('restart-button');
             const sounds = { flip: document.getElementById('flip-sound'), win: document.getElementById('win-sound'), coin: document.getElementById('coin-sound'), error: document.getElementById('error-sound'), gameOver: document.getElementById('game-over-sound') };
 
-            // Elements for the informational prize modal
             const prizesButton = document.getElementById('prizes-button');
             const prizesOverlay = document.getElementById('prizes-overlay');
             const closePrizesBtn = document.getElementById('close-prizes-btn');
@@ -251,7 +220,6 @@
             const prizeName = document.getElementById('prize-name');
             const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
 
-            // Elements for the professional win screen
             const claimGiftButton = document.getElementById('claim-gift-btn');
             const resetGameButton = document.getElementById('reset-game-button');
             const switchProductBtn = document.getElementById('switch-product-btn');
@@ -262,8 +230,9 @@
                 { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
                 { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
             ];
-            let winPrizeIndex = 0; // Index for the win carousel
-            let infoPrizeIndex = 0; // Separate index for the info modal
+            let winPrizeIndex = 0;
+            let infoPrizeIndex = 0;
+            const WIN_STATE_KEY = 'memoryGameWinState'; // مفتاح لحفظ حالة الفوز
             
             const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
             const levels = [];
@@ -273,33 +242,46 @@
             const WIN_SCORE = 1000;
             let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime;
 
-            function startGame() {
+            function initGame() {
                 gameContainer.style.visibility = 'visible';
                 gameContainer.style.opacity = '1';
+                if (localStorage.getItem(WIN_STATE_KEY) === 'true') {
+                    winGame();
+                } else {
+                    startOverlay.style.display = 'flex';
+                    displayInfoPrize(infoPrizeIndex);
+                }
+            }
+
+            function startGame() {
+                localStorage.removeItem(WIN_STATE_KEY);
                 totalScore = 0;
                 currentLevelIndex = 0;
                 [startOverlay, gameOverOverlay, winOverlay, formOverlay].forEach(o => o.style.display = 'none');
                 startLevel(currentLevelIndex);
             }
             
-            function startLevel(levelIndex) { /* ... (same as before) ... */ matchesFound = 0; consecutiveMistakes = 0; flippedCards = []; lockBoard = true; updateMistakeDisplay(); levelDisplay.textContent = levelIndex + 1; scoreDisplay.textContent = totalScore; const levelData = levels[levelIndex]; const cardSet = [...levelData.images, ...levelData.images]; gameBoard.innerHTML = ''; gameBoard.className = 'game-board ' + (levelData.images.length === 6 ? 'board-size-6' : 'board-size-8'); const shuffledCards = cardSet.sort(() => Math.random() - 0.5); shuffledCards.forEach((imageSrc, i) => { const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc; card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`; card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card); setTimeout(() => card.classList.add('flipped'), 50); }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => { card.classList.remove('flipped'); card.style.transitionDelay = '0ms'; }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard)); lockBoard = false; }, 600); }, 2500); }
-            function flipCard() { /* ... (same as before) ... */ if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
-            function checkForMatch() { /* ... (same as before) ... */ const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 400); }
-            function handleMatch(cardOne, cardTwo) { /* ... (same as before) ... */ matchesFound++; consecutiveMistakes = 0; updateMistakeDisplay(); const timeTaken = (Date.now() - matchStartTime) / 1000; const basePoints = 10; const timeBonus = Math.max(0, Math.floor(20 - timeTaken * 2)); const pointsEarned = basePoints + timeBonus; triggerCoinAnimation([cardOne, cardTwo], pointsEarned); createPointPopup(cardOne, `+${pointsEarned}`, timeBonus > 0); cardOne.classList.add('matched'); cardTwo.classList.add('matched'); cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard); resetBoardState(); if (matchesFound === levels[currentLevelIndex].images.length) { lockBoard = true; currentLevelIndex++; setTimeout(() => { if (currentLevelIndex < levels.length) { nextLevelOverlay.style.display = 'flex'; setTimeout(() => { nextLevelOverlay.style.display = 'none'; startLevel(currentLevelIndex); }, 2000); } else { winGame(); } }, 800); } }
-            function handleMismatch(cardOne, cardTwo) { /* ... (same as before) ... */ consecutiveMistakes++; updateMistakeDisplay(); sounds.error.play(); if (consecutiveMistakes >= 3) { gameOver(); return; } cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped'); resetBoardState(); }
-            function resetBoardState() { /* ... (same as before) ... */ flippedCards = []; lockBoard = false; }
-            function triggerCoinAnimation(matchedCards, points) { /* ... (same as before) ... */ sounds.coin.currentTime = 0; sounds.coin.play(); const scoreRect = scoreDisplay.getBoundingClientRect(); matchedCards.forEach(card => { const cardRect = card.getBoundingClientRect(); for (let i = 0; i < 3; i++) { const coin = document.createElement('div'); coin.classList.add('coin'); const startX = cardRect.left + (cardRect.width / 2) + (Math.random() * 20 - 10); const startY = cardRect.top + (cardRect.height / 2) + (Math.random() * 20 - 10); coin.style.left = `${startX}px`; coin.style.top = `${startY}px`; document.body.appendChild(coin); setTimeout(() => { const endX = scoreRect.left + (scoreRect.width / 2); const endY = scoreRect.top + (scoreRect.height / 2); coin.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(0)`; coin.style.opacity = '0'; }, 50 + i * 50); setTimeout(() => coin.remove(), 1000); } }); setTimeout(() => { totalScore += points; scoreDisplay.textContent = totalScore; scoreDisplay.classList.add('updated'); setTimeout(() => scoreDisplay.classList.remove('updated'), 300); if (totalScore >= WIN_SCORE) { winGame(); } }, 500); };
-            function updateMistakeDisplay() { /* ... (same as before) ... */ mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            function createPointPopup(card, text, isBonus) { /* ... (same as before) ... */ const popup = document.createElement('div'); popup.textContent = text + (isBonus ? ' (سرعة!)' : ''); popup.className = 'point-popup'; const cardRect = card.getBoundingClientRect(); popup.style.left = `${cardRect.left}px`; popup.style.top = `${cardRect.top}px`; document.body.appendChild(popup); setTimeout(() => popup.remove(), 1500); };
-            function gameOver() { /* ... (same as before) ... */ lockBoard = true; sounds.gameOver.play(); totalScore = 0; currentLevelIndex = 0; setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
+            // ... (All other game functions like startLevel, flipCard, etc. remain unchanged) ...
+            function startLevel(levelIndex) { matchesFound = 0; consecutiveMistakes = 0; flippedCards = []; lockBoard = true; updateMistakeDisplay(); levelDisplay.textContent = levelIndex + 1; scoreDisplay.textContent = totalScore; const levelData = levels[levelIndex]; const cardSet = [...levelData.images, ...levelData.images]; gameBoard.innerHTML = ''; gameBoard.className = 'game-board ' + (levelData.images.length === 6 ? 'board-size-6' : 'board-size-8'); const shuffledCards = cardSet.sort(() => Math.random() - 0.5); shuffledCards.forEach((imageSrc, i) => { const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc; card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`; card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card); setTimeout(() => card.classList.add('flipped'), 50); }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => { card.classList.remove('flipped'); card.style.transitionDelay = '0ms'; }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard)); lockBoard = false; }, 600); }, 2500); }
+            function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
+            function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 400); }
+            function handleMatch(cardOne, cardTwo) { matchesFound++; consecutiveMistakes = 0; updateMistakeDisplay(); const timeTaken = (Date.now() - matchStartTime) / 1000; const basePoints = 10; const timeBonus = Math.max(0, Math.floor(20 - timeTaken * 2)); const pointsEarned = basePoints + timeBonus; triggerCoinAnimation([cardOne, cardTwo], pointsEarned); createPointPopup(cardOne, `+${pointsEarned}`, timeBonus > 0); cardOne.classList.add('matched'); cardTwo.classList.add('matched'); cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard); resetBoardState(); if (matchesFound === levels[currentLevelIndex].images.length) { lockBoard = true; currentLevelIndex++; setTimeout(() => { if (currentLevelIndex < levels.length) { nextLevelOverlay.style.display = 'flex'; setTimeout(() => { nextLevelOverlay.style.display = 'none'; startLevel(currentLevelIndex); }, 2000); } else { winGame(); } }, 800); } }
+            function handleMismatch(cardOne, cardTwo) { consecutiveMistakes++; updateMistakeDisplay(); sounds.error.play(); if (consecutiveMistakes >= 3) { gameOver(); return; } cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped'); resetBoardState(); }
+            function resetBoardState() { flippedCards = []; lockBoard = false; }
+            function triggerCoinAnimation(matchedCards, points) { sounds.coin.currentTime = 0; sounds.coin.play(); const scoreRect = scoreDisplay.getBoundingClientRect(); matchedCards.forEach(card => { const cardRect = card.getBoundingClientRect(); for (let i = 0; i < 3; i++) { const coin = document.createElement('div'); coin.classList.add('coin'); const startX = cardRect.left + (cardRect.width / 2) + (Math.random() * 20 - 10); const startY = cardRect.top + (cardRect.height / 2) + (Math.random() * 20 - 10); coin.style.left = `${startX}px`; coin.style.top = `${startY}px`; document.body.appendChild(coin); setTimeout(() => { const endX = scoreRect.left + (scoreRect.width / 2); const endY = scoreRect.top + (scoreRect.height / 2); coin.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(0)`; coin.style.opacity = '0'; }, 50 + i * 50); setTimeout(() => coin.remove(), 1000); } }); setTimeout(() => { totalScore += points; scoreDisplay.textContent = totalScore; scoreDisplay.classList.add('updated'); setTimeout(() => scoreDisplay.classList.remove('updated'), 300); if (totalScore >= WIN_SCORE) { winGame(); } }, 500); };
+            function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
+            function createPointPopup(card, text, isBonus) { const popup = document.createElement('div'); popup.textContent = text + (isBonus ? ' (سرعة!)' : ''); popup.className = 'point-popup'; const cardRect = card.getBoundingClientRect(); popup.style.left = `${cardRect.left}px`; popup.style.top = `${cardRect.top}px`; document.body.appendChild(popup); setTimeout(() => popup.remove(), 1500); };
+            function gameOver() { lockBoard = true; sounds.gameOver.play(); totalScore = 0; currentLevelIndex = 0; setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
             function winGame() {
                 lockBoard = true;
                 if(winOverlay.style.display === 'flex') return;
                 sounds.win.play();
+                localStorage.setItem(WIN_STATE_KEY, 'true'); // حفظ حالة الفوز
                 buildWinCarousel();
                 winPrizeIndex = 0;
                 updateWinCarousel();
+                [startOverlay, gameOverOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
                 winOverlay.style.display = 'flex';
             }
             
@@ -308,7 +290,6 @@
                 setTimeout(() => {
                     const prize = prizes[index];
                     prizeImage.src = prize.image;
-                    prizeImage.alt = prize.name;
                     prizeName.textContent = prize.name;
                     prizeDisplay.classList.remove('fade-out');
                 }, 300);
@@ -320,21 +301,45 @@
                     productCarousel.innerHTML += `<div class="product-slide ${index === 0 ? 'active' : ''}" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
                 });
             }
+
             function updateWinCarousel() {
                 const slides = document.querySelectorAll('.product-slide');
                 slides.forEach(slide => slide.classList.remove('active'));
-                if (slides[winPrizeIndex]) {
-                    slides[winPrizeIndex].classList.add('active');
-                }
+                if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
             }
+
+            // --- [تعديل] دمج نموذج البيانات الاحترافي مع الملء التلقائي ---
             function showDeliveryForm(product) {
+                const savedInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
                 winOverlay.style.display = 'none';
-                formOverlay.innerHTML = `<div class="overlay-content"><h2>تأكيد بياناتك</h2><p>للحصول على هديتك المجانية "${product.name}"</p><form id="delivery-form"><div class="form-control"><input type="text" name="fullName" placeholder="الاسم الكامل" required></div><div class="form-control"><input type="text" name="address" placeholder="العنوان الكامل" required></div><div class="form-control"><input type="tel" name="phone" placeholder="رقم الهاتف" required></div><div style="text-align: center; margin-top: 25px;"><button type="submit" class="primary-btn">تأكيد وإرسال الطلب</button></div></form></div>`;
+                formOverlay.innerHTML = `<div class="overlay-content">
+                    <h2>تأكيد بياناتك</h2>
+                    <p>للحصول على هديتك المجانية "${product.name}"</p>
+                    <form id="delivery-form" style="display: flex; flex-direction: column; gap: 5px;">
+                        <div class="form-control"><input type="text" name="name" placeholder="الاسم الكامل" value="${savedInfo.name || ''}" required></div>
+                        <div class="form-control"><input type="tel" name="phone" placeholder="رقم الهاتف" value="${savedInfo.phone || ''}" required></div>
+                        <div class="form-control"><input type="email" name="email" placeholder="البريد الإلكتروني" value="${savedInfo.email || ''}" required></div>
+                        <div class="form-control"><input type="text" name="governorate" placeholder="المحافظة" value="${savedInfo.governorate || ''}" required></div>
+                        <div class="form-control"><input type="text" name="city" placeholder="المدينة" value="${savedInfo.city || ''}" required></div>
+                        <div class="form-control"><input type="text" name="street" placeholder="اسم الشارع أو الحي" value="${savedInfo.street || ''}" required></div>
+                        <div class="form-control"><input type="text" name="landmark" placeholder="أقرب معلم" value="${savedInfo.landmark || ''}" required></div>
+                        <div style="text-align: center; margin-top: 25px;"><button type="submit" class="primary-btn">تأكيد وإرسال الطلب</button></div>
+                    </form>
+                </div>`;
                 formOverlay.style.display = 'flex';
                 document.getElementById('delivery-form').addEventListener('submit', (e) => handleFormSubmit(e, product));
             }
+
             function handleFormSubmit(event, product) {
                 event.preventDefault();
+                // --- [تعديل] إزالة حالة الفوز بعد إرسال الطلب ---
+                localStorage.removeItem(WIN_STATE_KEY); 
+                
+                // حفظ بيانات التوصيل الجديدة للاستخدام المستقبلي
+                const formData = new FormData(event.target);
+                const deliveryInfo = Object.fromEntries(formData.entries());
+                localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+
                 formOverlay.querySelector('.overlay-content').innerHTML = `<h2>✅ تم إرسال طلبك!</h2><p>شكراً للعب! سنتواصل معك قريباً لتأكيد عملية شحن الهدية.</p><button id="final-restart-btn" class="primary-btn secondary-btn">العب مجدداً</button>`;
                 document.getElementById('final-restart-btn').addEventListener('click', startGame);
             }
@@ -345,7 +350,7 @@
             resetGameButton.addEventListener('click', startGame); 
             prizesButton.addEventListener('click', () => prizesOverlay.style.display = 'flex');
             closePrizesBtn.addEventListener('click', () => prizesOverlay.style.display = 'none');
-            prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay) { prizesOverlay.style.display = 'none'; } });
+            prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay) prizesOverlay.style.display = 'none'; });
             
             infoSwitchPrizeBtn.addEventListener('click', () => {
                 infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length;
@@ -358,9 +363,8 @@
             });
             claimGiftButton.addEventListener('click', () => showDeliveryForm(prizes[winPrizeIndex]));
 
-            // Initial setup
-            startOverlay.style.display = 'flex';
-            displayInfoPrize(infoPrizeIndex);
+            // --- [تعديل] بدء التطبيق من دالة التهيئة ---
+            initGame();
         });
     </script>
 </body>
