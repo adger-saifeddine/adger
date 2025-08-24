@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحدي الذاكرة الخاطفة: الإصدار الاحترافي</title>
     <style>
-        /* --- CSS Styling (نفس التصميم الرائع والمصقول) --- */
+        /* --- CSS Styling (نفس التصميم الرائع والمصقول مع تحسينات) --- */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
         :root {
@@ -115,6 +115,34 @@
         .overlay-content { position: relative; background: var(--card-bg); border: none; padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        /* --- [تحسين] تعديلات على نافذة الفوز --- */
+        #win-overlay .overlay-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: linear-gradient(160deg, #ffffff, #f7f9fc);
+            border: 2px solid rgba(255,255,255,0.8);
+        }
+        #win-overlay h2 {
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+        }
+        #win-overlay p {
+            margin: 0 0 5px;
+            font-size: 1rem;
+            color: #555;
+        }
+        @keyframes pulse-animation {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(106, 90, 205, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
+        }
+        #claim-gift-btn {
+            animation: pulse-animation 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* --- نهاية التحسينات --- */
+        
         .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
         .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
 
@@ -128,20 +156,20 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        #product-carousel { position: relative; height: 320px; margin-bottom: 15px; }
+        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; }
         .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.95); }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
         .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
-        .product-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; color: var(--primary-color); }
+        .product-name { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: var(--primary-color); letter-spacing: -0.5px; }
         .product-price { font-size: 1.2rem; }
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
-        .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.5rem; }
+        .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
         
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 15px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
+        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
         #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
         #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
         
-        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
+        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
         .secondary-btn { background: #eee; color: #555; box-shadow: none; }
         .secondary-btn:hover { background: #e0e0e0; transform: scale(1.05); }
         .form-control input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: var(--text-color); font-size: 1rem; margin-top: 10px; font-family: 'Cairo', sans-serif; }
@@ -154,11 +182,11 @@
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
             #header-controls { margin-bottom: 2px; }
-            #win-overlay .overlay-content { padding: 25px 20px; }
+            #win-overlay .overlay-content { padding: 25px 20px; gap: 5px; }
             #win-overlay h2 { font-size: 1.6rem; line-height: 1.3; }
             #win-overlay p { font-size: 0.9rem; margin-bottom: 15px; }
             #product-carousel { height: 280px; margin-bottom: 10px; }
-            .product-name { font-size: 1.5rem; }
+            .product-name { font-size: 1.8rem; }
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
             .win-actions { margin-top: 20px; gap: 10px; }
@@ -267,11 +295,16 @@
             let infoPrizeIndex = 0;
             const WIN_STATE_KEY = 'memoryGameWinState';
             
-            const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
+            let allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
+            
+            // --- [تعديل] قص مصفوفة الصور لتناسب 9 مستويات فقط ---
+            allImages = allImages.slice(0, 54);
+
             const levels = [];
             let imageCursor = 0;
-            for (let i = 0; i < 10; i++) { 
-                const pairCount = (i < 5) ? 6 : 8; 
+            // --- [تعديل] جعل جميع المستويات بنفس الحجم (6 أزواج) وتقليل عدد المستويات إلى 9 ---
+            for (let i = 0; i < 9; i++) {
+                const pairCount = 6; // دائمًا 6 أزواج (12 بطاقة)
                 levels.push({ 
                     level: i + 1, 
                     images: allImages.slice(imageCursor, imageCursor + pairCount) 
@@ -311,7 +344,8 @@
                 const levelData = levels[levelIndex];
                 const cardSet = [...levelData.images, ...levelData.images];
                 gameBoard.innerHTML = '';
-                gameBoard.className = 'game-board ' + (levelData.images.length === 6 ? 'board-size-6' : 'board-size-8');
+                // --- [تعديل] تثبيت حجم لوحة اللعب بما أن جميع المستويات أصبحت بنفس الحجم ---
+                gameBoard.className = 'game-board board-size-6';
                 const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
                 shuffledCards.forEach((imageSrc, i) => {
                     const card = document.createElement('div');
