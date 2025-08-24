@@ -163,25 +163,37 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        /* --- [تعديل] إضافة مسافة أعلى عرض المنتج --- */
         #product-carousel { position: relative; height: 320px; margin-bottom: 5px; width: 100%; margin-top: 10px; }
-        .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out; transform: scale(0.95); }
+        /* --- [تعديل] حل مشكلة تداخل اسم المنتج مع السعر --- */
+        .product-slide { 
+            position: absolute; top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: flex-start; /* يبدأ المحتوى من الأعلى لمنع التداخل */
+            padding-top: 15px; /* مسافة علوية داخلية */
+            padding-bottom: 15px; /* مسافة سفلية داخلية */
+            overflow-y: auto; /* يسمح بالتمرير العمودي إذا زاد المحتوى عن الحجم */
+            opacity: 0; pointer-events: none; 
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out; 
+            transform: scale(0.95); 
+        }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5)); }
-        .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
-        /* --- [تعديل] تصغير الخط وتطبيق خاصية السطر الواحد --- */
+        .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); flex-shrink: 0; /* يمنع الصورة من الانكماش */ }
         .product-name { 
-            font-size: 1.9rem; /* تصغير طفيف للشاشات الكبيرة */
+            font-size: 1.9rem;
             font-weight: 900; 
             margin-bottom: 5px; 
             color: var(--primary-color); 
             letter-spacing: -0.5px;
-            /* الإضافات الجديدة */
-            white-space: nowrap;      /* يمنع النص من النزول لسطر جديد */
-            overflow: hidden;         /* يخفي النص الزائد */
-            text-overflow: ellipsis;  /* يضيف "..." للنص المقصوص */
-            max-width: 95%;           /* يضمن وجود حدود للنص ليتم قصه */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 95%;
         }
-        .product-price { font-size: 1.2rem; }
+        .product-price { 
+            font-size: 1.2rem;
+            margin-top: 10px; /* يضيف مسافة بينه وبين اسم المنتج */
+        }
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
         
@@ -213,7 +225,6 @@
             #win-overlay h2 { font-size: 1.8rem; line-height: 1.3; }
             #win-overlay p { font-size: 1rem; margin-bottom: 10px; }
             #product-carousel { height: 280px; margin-bottom: 10px; }
-            /* --- [تعديل] تصغير اسم المنتج في الهواتف --- */
             .product-name { font-size: 1.6rem; }
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
@@ -242,7 +253,6 @@
 
     <div id="win-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
-            <!-- [تعديل] تمت إزالة الرموز من العنوان -->
             <h2>تهانينا! لقد فزت بالتحدي!</h2>
             <p>لقد وصلت إلى 1000 نقطة ببراعة! الآن، اختر هديتك المجانية كمكافأة لك.</p>
             <div id="product-carousel"></div>
