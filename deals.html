@@ -116,31 +116,30 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        /* --- [تحسين] تعديلات جذرية على نافذة الفوز --- */
         #win-overlay .overlay-content {
             display: flex;
             flex-direction: column;
-            align-items: center; /* <<< هذا هو الإصلاح الرئيسي لتوسيط كل شيء */
-            gap: 15px; /* زيادة المسافات */
-            background: radial-gradient(circle, #ffffff 0%, #f7f9fc 100%); /* خلفية أجمل */
+            align-items: center;
+            gap: 15px;
+            background: radial-gradient(circle, #ffffff 0%, #f7f9fc 100%);
             border: 2px solid rgba(255,255,255,0.8);
-            padding: 40px 30px; /* زيادة الحشوة الداخلية */
+            padding: 40px 30px;
         }
         #win-overlay h2 {
             margin: 0 0 5px;
-            font-size: 2.1rem; /* تكبير الخط */
+            font-size: 2.1rem;
             font-weight: 900;
-            text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5); /* ظل نص أقوى */
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* لون متدرج للنص */
+            text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         #win-overlay p {
-            margin: 0 0 10px; /* زيادة الهامش السفلي */
+            margin: 0 0 10px;
             font-size: 1.1rem;
             color: #555;
-            max-width: 350px; /* تحديد عرض الفقرة لتحسين القراءة */
+            max-width: 350px;
         }
         @keyframes pulse-animation {
             0% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
@@ -150,7 +149,6 @@
         #claim-gift-btn {
             animation: pulse-animation 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* --- نهاية التحسينات --- */
         
         .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
         .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
@@ -165,11 +163,24 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; width: 100%; }
+        /* --- [تعديل] إضافة مسافة أعلى عرض المنتج --- */
+        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; width: 100%; margin-top: 10px; }
         .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out; transform: scale(0.95); }
-        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5)); /* [تحسين] إضافة توهج للهدية المختارة */ }
+        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5)); }
         .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
-        .product-name { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: var(--primary-color); letter-spacing: -0.5px; }
+        /* --- [تعديل] تصغير الخط وتطبيق خاصية السطر الواحد --- */
+        .product-name { 
+            font-size: 1.9rem; /* تصغير طفيف للشاشات الكبيرة */
+            font-weight: 900; 
+            margin-bottom: 5px; 
+            color: var(--primary-color); 
+            letter-spacing: -0.5px;
+            /* الإضافات الجديدة */
+            white-space: nowrap;      /* يمنع النص من النزول لسطر جديد */
+            overflow: hidden;         /* يخفي النص الزائد */
+            text-overflow: ellipsis;  /* يضيف "..." للنص المقصوص */
+            max-width: 95%;           /* يضمن وجود حدود للنص ليتم قصه */
+        }
         .product-price { font-size: 1.2rem; }
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
@@ -187,8 +198,6 @@
         .primary-btn.has-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 25px; }
         .primary-btn.has-icon .switch-icon { width: 1.2em; height: 1.2em; stroke: currentColor; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .primary-btn.has-icon:hover .switch-icon { transform: rotate(180deg); }
-        
-        /* [تحسين] أيقونة زر الحصول على الهدية */
         .primary-btn.has-icon .gift-icon {
             width: 1.4em; height: 1.4em;
             stroke-width: 2; fill: none;
@@ -200,11 +209,12 @@
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
             #header-controls { margin-bottom: 2px; }
-            #win-overlay .overlay-content { padding: 25px 20px; gap: 10px; /* تقليل المسافات للشاشات الصغيرة */ }
+            #win-overlay .overlay-content { padding: 25px 20px; gap: 10px; }
             #win-overlay h2 { font-size: 1.8rem; line-height: 1.3; }
             #win-overlay p { font-size: 1rem; margin-bottom: 10px; }
             #product-carousel { height: 280px; margin-bottom: 10px; }
-            .product-name { font-size: 1.8rem; }
+            /* --- [تعديل] تصغير اسم المنتج في الهواتف --- */
+            .product-name { font-size: 1.6rem; }
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
             .win-actions { margin-top: 20px; gap: 10px; }
@@ -232,7 +242,8 @@
 
     <div id="win-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
-            <h2>✨ تهانينا! لقد فزت بالتحدي! ✨</h2>
+            <!-- [تعديل] تمت إزالة الرموز من العنوان -->
+            <h2>تهانينا! لقد فزت بالتحدي!</h2>
             <p>لقد وصلت إلى 1000 نقطة ببراعة! الآن، اختر هديتك المجانية كمكافأة لك.</p>
             <div id="product-carousel"></div>
             <button id="switch-product-btn">
@@ -240,7 +251,6 @@
                 <span>تبديل الهدية</span>
             </button>
             <div class="win-actions">
-                <!-- [تحسين] تم تعديل الزر ليحتوي على أيقونة -->
                 <button id="claim-gift-btn" class="primary-btn has-icon">
                     <svg class="gift-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M20 7H4V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
                     <span>احصل على هديتك</span>
@@ -309,7 +319,7 @@
             const productCarousel = document.getElementById('product-carousel');
 
             const prizes = [
-                { name: "سماعة رأس لاسلكية", image: "https://i.postimg.cc/pLjh000W/71-L-Dw-R3-V-L-AC-UF1000-1000-QL80.jpg", price: "199$" },
+                { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/pLjh000W/71-L-Dw-R3-V-L-AC-UF1000-1000-QL80.jpg", price: "199$" },
                 { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
                 { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
             ];
@@ -519,7 +529,6 @@
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
             function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
-            // [تحسين] دالة لإطلاق قصاصات الورق الاحتفالية
             function launchConfetti() {
                 const confettiContainer = document.body;
                 const confettiCount = 100;
@@ -549,7 +558,7 @@
                 lockBoard = true;
                 if(winOverlay.style.display === 'flex') return;
                 sounds.win.play();
-                launchConfetti(); // [تحسين] تشغيل الاحتفال
+                launchConfetti();
                 localStorage.setItem(WIN_STATE_KEY, 'true');
                 buildWinCarousel();
                 winPrizeIndex = infoPrizeIndex; 
