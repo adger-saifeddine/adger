@@ -116,22 +116,31 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        /* --- [تحسين] تعديلات على نافذة الفوز --- */
+        /* --- [تحسين] تعديلات جذرية على نافذة الفوز --- */
         #win-overlay .overlay-content {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            background: linear-gradient(160deg, #ffffff, #f7f9fc);
+            align-items: center; /* <<< هذا هو الإصلاح الرئيسي لتوسيط كل شيء */
+            gap: 15px; /* زيادة المسافات */
+            background: radial-gradient(circle, #ffffff 0%, #f7f9fc 100%); /* خلفية أجمل */
             border: 2px solid rgba(255,255,255,0.8);
+            padding: 40px 30px; /* زيادة الحشوة الداخلية */
         }
         #win-overlay h2 {
-            margin: 0;
-            text-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+            margin: 0 0 5px;
+            font-size: 2.1rem; /* تكبير الخط */
+            font-weight: 900;
+            text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5); /* ظل نص أقوى */
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* لون متدرج للنص */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         #win-overlay p {
-            margin: 0 0 5px;
-            font-size: 1rem;
+            margin: 0 0 10px; /* زيادة الهامش السفلي */
+            font-size: 1.1rem;
             color: #555;
+            max-width: 350px; /* تحديد عرض الفقرة لتحسين القراءة */
         }
         @keyframes pulse-animation {
             0% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
@@ -156,9 +165,9 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; }
-        .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.95); }
-        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
+        #product-carousel { position: relative; height: 320px; margin-bottom: 5px; width: 100%; }
+        .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out; transform: scale(0.95); }
+        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5)); /* [تحسين] إضافة توهج للهدية المختارة */ }
         .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
         .product-name { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: var(--primary-color); letter-spacing: -0.5px; }
         .product-price { font-size: 1.2rem; }
@@ -176,15 +185,24 @@
         .form-control input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
 
         .primary-btn.has-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 25px; }
-        .switch-icon { width: 1.2em; height: 1.2em; stroke: currentColor; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .primary-btn.has-icon .switch-icon { width: 1.2em; height: 1.2em; stroke: currentColor; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .primary-btn.has-icon:hover .switch-icon { transform: rotate(180deg); }
+        
+        /* [تحسين] أيقونة زر الحصول على الهدية */
+        .primary-btn.has-icon .gift-icon {
+            width: 1.4em; height: 1.4em;
+            stroke-width: 2; fill: none;
+            stroke: currentColor;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
 
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
             #header-controls { margin-bottom: 2px; }
-            #win-overlay .overlay-content { padding: 25px 20px; gap: 5px; }
-            #win-overlay h2 { font-size: 1.6rem; line-height: 1.3; }
-            #win-overlay p { font-size: 0.9rem; margin-bottom: 15px; }
+            #win-overlay .overlay-content { padding: 25px 20px; gap: 10px; /* تقليل المسافات للشاشات الصغيرة */ }
+            #win-overlay h2 { font-size: 1.8rem; line-height: 1.3; }
+            #win-overlay p { font-size: 1rem; margin-bottom: 10px; }
             #product-carousel { height: 280px; margin-bottom: 10px; }
             .product-name { font-size: 1.8rem; }
             .product-price { font-size: 1.1rem; }
@@ -215,14 +233,18 @@
     <div id="win-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <h2>✨ تهانينا! لقد فزت بالتحدي! ✨</h2>
-            <p>لقد وصلت إلى 1000 نقطة! اختر هديتك المجانية:</p>
+            <p>لقد وصلت إلى 1000 نقطة ببراعة! الآن، اختر هديتك المجانية كمكافأة لك.</p>
             <div id="product-carousel"></div>
             <button id="switch-product-btn">
                 <svg viewBox="0 0 24 24"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" /></svg>
                 <span>تبديل الهدية</span>
             </button>
             <div class="win-actions">
-                <button id="claim-gift-btn" class="primary-btn">احصل على هديتك</button>
+                <!-- [تحسين] تم تعديل الزر ليحتوي على أيقونة -->
+                <button id="claim-gift-btn" class="primary-btn has-icon">
+                    <svg class="gift-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M20 7H4V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    <span>احصل على هديتك</span>
+                </button>
                 <button id="reset-game-button" class="primary-btn secondary-btn">العب مرة أخرى</button>
             </div>
         </div>
@@ -297,14 +319,12 @@
             
             let allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
             
-            // --- [تعديل] قص مصفوفة الصور لتناسب 9 مستويات فقط ---
             allImages = allImages.slice(0, 54);
 
             const levels = [];
             let imageCursor = 0;
-            // --- [تعديل] جعل جميع المستويات بنفس الحجم (6 أزواج) وتقليل عدد المستويات إلى 9 ---
             for (let i = 0; i < 9; i++) {
-                const pairCount = 6; // دائمًا 6 أزواج (12 بطاقة)
+                const pairCount = 6;
                 levels.push({ 
                     level: i + 1, 
                     images: allImages.slice(imageCursor, imageCursor + pairCount) 
@@ -344,7 +364,6 @@
                 const levelData = levels[levelIndex];
                 const cardSet = [...levelData.images, ...levelData.images];
                 gameBoard.innerHTML = '';
-                // --- [تعديل] تثبيت حجم لوحة اللعب بما أن جميع المستويات أصبحت بنفس الحجم ---
                 gameBoard.className = 'game-board board-size-6';
                 const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
                 shuffledCards.forEach((imageSrc, i) => {
@@ -356,7 +375,6 @@
                     gameBoard.appendChild(card);
                     setTimeout(() => card.classList.add('flipped'), 50);
                 });
-                // --- [تعديل] تقليص وقت الحفظ لزيادة الصعوبة ---
                 setTimeout(() => {
                     document.querySelectorAll('.card').forEach(card => {
                         card.classList.remove('flipped');
@@ -366,7 +384,7 @@
                         document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
                         lockBoard = false;
                     }, 600);
-                }, 1800); // 1.8 ثانية فقط!
+                }, 1800); 
             }
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
             
@@ -399,11 +417,10 @@
                 updateMistakeDisplay();
 
                 const timeTaken = (Date.now() - matchStartTime) / 1000;
-                // --- [تعديل] تقليل النقاط لجعل اللعبة أصعب ---
-                const basePoints = 25; // تم الخفض من 50
-                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5)); // أصعب وأقل قيمة
-                const levelBonus = currentLevelIndex * 5; // تم الخفض من 15
-                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0; // تم الخفض من 25
+                const basePoints = 25;
+                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5));
+                const levelBonus = currentLevelIndex * 5;
+                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0;
                 const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
 
                 createPointPopup(cardOne, { time: timeBonus });
@@ -435,12 +452,10 @@
                 consecutiveMistakes++;
                 matchStreak = 0;
 
-                // --- [تعديل] إضافة عقوبة خصم النقاط ---
-                totalScore = Math.max(0, totalScore - 10); // نضمن ألا تنزل النقاط تحت الصفر
+                totalScore = Math.max(0, totalScore - 10);
                 scoreDisplay.textContent = totalScore;
-                scoreDisplay.style.color = 'var(--danger-color)'; // إظهار الخصم بلون أحمر
+                scoreDisplay.style.color = 'var(--danger-color)';
                 setTimeout(() => {
-                    // إعادة اللون الأساسي فقط إذا لم يكن هناك تحديث آخر للنقاط
                     if (!scoreDisplay.classList.contains('updated')) {
                         scoreDisplay.style.color = 'var(--primary-color)';
                     }
@@ -489,7 +504,7 @@
                     const scoreBeforeUpdate = totalScore;
                     totalScore += points;
                     
-                    scoreDisplay.style.color = 'var(--primary-color)'; // استعادة اللون الأساسي عند كسب النقاط
+                    scoreDisplay.style.color = 'var(--primary-color)';
                     scoreDisplay.textContent = totalScore;
                     scoreDisplay.classList.add('updated');
                     setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
@@ -504,10 +519,37 @@
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
             function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
+            // [تحسين] دالة لإطلاق قصاصات الورق الاحتفالية
+            function launchConfetti() {
+                const confettiContainer = document.body;
+                const confettiCount = 100;
+                const colors = ['#6a5acd', '#448aff', '#ffc107', '#ff5252', '#4CAF50'];
+                for (let i = 0; i < confettiCount; i++) {
+                    const confetti = document.createElement('div');
+                    const size = Math.random() * 10 + 5;
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.position = 'fixed';
+                    confetti.style.top = `${Math.random() * -20}vh`;
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.opacity = '1';
+                    confetti.style.zIndex = '2000';
+                    confetti.style.pointerEvents = 'none';
+                    const anim = confetti.animate([
+                        { transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 },
+                        { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 });
+                    anim.onfinish = () => confetti.remove();
+                    confettiContainer.appendChild(confetti);
+                }
+            }
+
             function winGame() {
                 lockBoard = true;
                 if(winOverlay.style.display === 'flex') return;
                 sounds.win.play();
+                launchConfetti(); // [تحسين] تشغيل الاحتفال
                 localStorage.setItem(WIN_STATE_KEY, 'true');
                 buildWinCarousel();
                 winPrizeIndex = infoPrizeIndex; 
