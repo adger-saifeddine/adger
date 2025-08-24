@@ -126,7 +126,7 @@
             padding: 40px 30px;
         }
         #win-overlay h2 {
-            margin: 0;
+            margin: 0; /* تم إزالة الهامش السفلي للتحكم عبر gap */
             font-size: 2.1rem;
             font-weight: 900;
             text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5);
@@ -136,7 +136,7 @@
             -webkit-text-fill-color: transparent;
         }
         #win-overlay p {
-            margin: 0;
+            margin: 0; /* تم إزالة الهامش للتحكم عبر gap */
             font-size: 1.1rem;
             color: #555;
             max-width: 350px;
@@ -225,7 +225,7 @@
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
         
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
+        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: -5px; /* --- [تم التعديل] تقليل المسافة العلوية --- */ cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
         #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
         #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
         
@@ -254,6 +254,7 @@
             #win-overlay {
                 padding: 0;
             }
+            /* --- [تم التعديل] إصلاح المسافات الكبيرة في نافذة الفوز للهواتف --- */
             #win-overlay .overlay-content {
                 width: 100%;
                 height: 100%;
@@ -262,23 +263,25 @@
                 max-height: none;
                 border-radius: 0;
                 box-shadow: none;
-                padding: 0 15px; /* تم إزالة الحشو العلوي والسفلي من هنا للتحكم الدقيق */
+                /* ضبط الحشو لترك مسافة علوية مناسبة ودعم المناطق الآمنة */
+                padding: 50px 15px 20px;
+                padding-top: calc(env(safe-area-inset-top) + 50px);
+                /* تجميع المحتوى في الأعلى بدلاً من توزيعه بشكل متباعد */
                 justify-content: flex-start; 
-                gap: 15px;
+                /* ضبط المسافات بين العناصر لتكون متناسقة */
+                gap: 12px;
             }
-            
-            /* --- [تم التعديل] التحكم الدقيق في المسافات --- */
-            #win-overlay h2 {
-                font-size: 1.7rem; line-height: 1.3;
-                /* إضافة مسافة علوية لدعم المناطق الآمنة + مسافة إضافية */
-                padding-top: calc(env(safe-area-inset-top) + 40px);
-            }
+
+            #win-overlay h2 { font-size: 1.7rem; line-height: 1.3; }
             #win-overlay p { font-size: 1rem; }
             
             #product-carousel { 
                 min-height: auto;
-                height: auto;
-                margin: 5px 0;
+                height: auto; /* جعل الارتفاع تلقائياً ليتناسب مع المحتوى */
+                flex-grow: 1; /* السماح للحاوية بأخذ المساحة المتبقية */
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
             }
             .product-slide img { max-height: 25vh; }
 
@@ -286,12 +289,7 @@
 
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
-            
-            /* --- [تم التعديل] دفع الأزرار للأسفل بمرونة --- */
-            .win-actions {
-                margin-top: auto; /* يدفع هذا العنصر إلى أسفل الحاوية */
-                padding-bottom: calc(env(safe-area-inset-bottom) + 20px); /* يضيف مسافة سفلية آمنة */
-            }
+            .win-actions { margin-top: auto; /* دفع الأزرار لأسفل النافذة */ padding-bottom: 15px; }
             .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
             #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; margin-top: 0;}
         }
