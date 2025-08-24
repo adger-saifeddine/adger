@@ -126,7 +126,7 @@
             padding: 40px 30px;
         }
         #win-overlay h2 {
-            margin: 0; /* تم إزالة الهامش السفلي للتحكم عبر gap */
+            margin: 0;
             font-size: 2.1rem;
             font-weight: 900;
             text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5);
@@ -136,7 +136,7 @@
             -webkit-text-fill-color: transparent;
         }
         #win-overlay p {
-            margin: 0; /* تم إزالة الهامش للتحكم عبر gap */
+            margin: 0;
             font-size: 1.1rem;
             color: #555;
             max-width: 350px;
@@ -225,7 +225,23 @@
         .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
         .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
         
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: -15px; /* --- [تم التعديل] تقريب زر التبديل من السعر بشكل كبير --- */ cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
+        /* --- [تم التعديل] زيادة القيمة السالبة بشكل كبير لتقريب الزر من السعر --- */
+        #switch-product-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            background: #fff; 
+            border: 1px solid #ddd; 
+            border-radius: 50px; 
+            padding: 8px 20px; 
+            margin-top: -25px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            font-size: 1rem; 
+            color: var(--text-color); 
+            position: relative; /* ضروري ليعمل z-index */
+            z-index: 5; /* للتأكد من أن الزر فوق ظل المنتج إذا تداخل */
+        }
         #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
         #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
         
@@ -254,7 +270,6 @@
             #win-overlay {
                 padding: 0;
             }
-            /* --- [تم التعديل] إصلاح المسافات الكبيرة في نافذة الفوز للهواتف --- */
             #win-overlay .overlay-content {
                 width: 100%;
                 height: 100%;
@@ -263,12 +278,9 @@
                 max-height: none;
                 border-radius: 0;
                 box-shadow: none;
-                /* ضبط الحشو لترك مسافة علوية مناسبة ودعم المناطق الآمنة */
                 padding: 50px 15px 20px;
                 padding-top: calc(env(safe-area-inset-top) + 50px);
-                /* تجميع المحتوى في الأعلى بدلاً من توزيعه بشكل متباعد */
                 justify-content: flex-start; 
-                /* ضبط المسافات بين العناصر لتكون متناسقة */
                 gap: 12px;
             }
 
@@ -277,8 +289,8 @@
             
             #product-carousel { 
                 min-height: auto;
-                height: auto; /* جعل الارتفاع تلقائياً ليتناسب مع المحتوى */
-                flex-grow: 1; /* السماح للحاوية بأخذ المساحة المتبقية */
+                height: auto; 
+                flex-grow: 1; 
                 display: flex;
                 align-items: center;
                 margin: 10px 0;
@@ -289,9 +301,10 @@
 
             .product-price { font-size: 1.1rem; }
             .product-price .free { font-size: 1.3rem; }
-            .win-actions { margin-top: auto; /* دفع الأزرار لأسفل النافذة */ padding-bottom: 15px; }
+            .win-actions { margin-top: auto; padding-bottom: 15px; }
             .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
-            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; margin-top: -10px;} /* تقريب الزر أكثر في نسخة الهاتف */
+            /* --- [تم التعديل] تقريب الزر أكثر في نسخة الهاتف --- */
+            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; margin-top: -20px;}
         }
     </style>
 </head>
