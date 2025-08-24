@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحدي الذاكرة الخاطفة: الإصدار الاحترافي</title>
     <style>
-        /* --- CSS Styling (نفس التصميم الرائع والمصقول) --- */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
         :root {
@@ -76,39 +75,19 @@
         .mistake-dot { width: 20px; height: 20px; border-radius: 50%; border: 3px solid #ddd; background-color: #f0f0f0; transition: all 0.3s ease-in-out; }
         .mistake-dot.filled { background-color: var(--danger-color); border-color: var(--danger-color); transform: scale(1.1); }
         #game-board { width: 100%; display: grid; gap: 10px; perspective: 1200px; margin-top: 5px; }
-        .board-size-6 { grid-template-columns: repeat(3, 1fr); aspect-ratio: 3 / 4; }
-        .board-size-8 { grid-template-columns: repeat(4, 1fr); aspect-ratio: 1 / 1; }
+        .board-size-9 { grid-template-columns: repeat(3, 1fr); aspect-ratio: 3 / 6; }
         .card { position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
         .card.flipped { transform: rotateY(180deg); }
         .card.matched { cursor: default; opacity: 0.5; transform: rotateY(180deg) scale(0.9); }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow-color); overflow: hidden; }
-        .card-front { background: var(--card-front); border: 2px solid #fff; color: var(--secondary-color); font-size: 3.5rem; font-weight: 900; }
+        .card-front { background: var(--card-front); border: 2px solid #fff; color: var(--secondary-color); font-size: 3rem; font-weight: 900; }
         .card-back { background: #fff; transform: rotateY(180deg); padding: 5px; }
         .card-back img { width: 100%; height: 100%; object-fit: contain; }
         
-        .coin {
-            position: fixed; z-index: 100;
-            width: 22px; height: 22px; border-radius: 50%;
-            background: radial-gradient(circle, #ffd700, #f9a825);
-            box-shadow: 0 0 5px #ffd700, inset 0 0 3px rgba(0,0,0,0.3);
-            pointer-events: none; opacity: 0;
-            animation: fly-to-score 0.8s cubic-bezier(0.5, 0, 1, 1) forwards;
-        }
-        @keyframes fly-to-score {
-            0% { transform: translate(0, 0) scale(1.2); opacity: 1; }
-            100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0.5; }
-        }
+        .coin { position: fixed; z-index: 100; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, #ffd700, #f9a825); box-shadow: 0 0 5px #ffd700, inset 0 0 3px rgba(0,0,0,0.3); pointer-events: none; opacity: 0; animation: fly-to-score 0.8s cubic-bezier(0.5, 0, 1, 1) forwards; }
+        @keyframes fly-to-score { 0% { transform: translate(0, 0) scale(1.2); opacity: 1; } 100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0.5; } }
 
-        .point-popup {
-            position: absolute; z-index: 200;
-            background: rgba(40, 40, 60, 0.85); color: white;
-            padding: 8px 18px; border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: bold; line-height: 1.4;
-            animation: floatUp 1.8s ease-out forwards;
-            pointer-events: none; white-space: nowrap;
-            text-align: center;
-        }
+        .point-popup { position: absolute; z-index: 200; background: rgba(40, 40, 60, 0.85); color: white; padding: 8px 18px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; line-height: 1.4; animation: floatUp 1.8s ease-out forwards; pointer-events: none; white-space: nowrap; text-align: center; }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
         
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
@@ -116,7 +95,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
-        .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
+        .primary-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
 
         .close-btn { position: absolute; top: 10px; left: 15px; background: #eee; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 24px; color: #888; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s; }
         .close-btn:hover { background: #ddd; color: #333; transform: rotate(90deg); }
@@ -128,21 +107,74 @@
         .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
         .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
         
-        #product-carousel { position: relative; height: 320px; margin-bottom: 15px; }
+        /* --- [تعديل] تصميم مذهل لنافذة الفوز --- */
+        #win-overlay .overlay-content {
+            background: radial-gradient(circle at 50% 0%, #fdfbfb 0%, #ebedee 100%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* مسافات جيدة بين العناصر */
+        }
+        #win-overlay h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--primary-color), var(--gold-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 15px rgba(106, 90, 205, 0.1);
+        }
+        #win-overlay p {
+            font-size: 1rem;
+            margin-top: -10px; /* تقريب النص من العنوان */
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        #product-carousel { position: relative; height: 350px; margin-bottom: 0; }
         .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.95); }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
-        .product-slide img { width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 5px 20px var(--shadow-color); }
-        .product-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; color: var(--primary-color); }
-        .product-price { font-size: 1.2rem; }
-        .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
-        .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.5rem; }
         
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 15px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
-        #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
+        .product-slide img {
+            width: 100%; max-width: 250px; height: auto; max-height: 200px; object-fit: contain;
+            border-radius: 15px; margin-bottom: 15px;
+            box-shadow: 0 10px 30px -10px var(--shadow-color), 0 0 20px rgba(106, 90, 205, 0.1);
+            transition: transform 0.4s ease;
+        }
+        .product-slide img:hover { transform: scale(1.03); }
+
+        .product-details { display: flex; flex-direction: column; gap: 8px; }
+        .product-name { font-size: 1.9rem; font-weight: 700; color: var(--primary-color); }
+        .product-price { font-size: 1.1rem; }
+        .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
+        .product-price .free {
+            color: white; font-weight: 700; font-size: 1.4rem;
+            background: linear-gradient(45deg, var(--success-color), #81C784);
+            padding: 4px 15px;
+            border-radius: 50px;
+            animation: glow 2.5s infinite;
+        }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 5px var(--success-color); } 50% { box-shadow: 0 0 15px var(--success-color); } }
+
+        #switch-product-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #e0e0e0;
+            backdrop-filter: blur(5px);
+            padding: 10px 22px;
+            font-size: 1rem; color: #333;
+            font-weight: 700;
+        }
+        #switch-product-btn:hover { background: #fff; transform: scale(1.05); }
         #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
         
-        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
-        .secondary-btn { background: #eee; color: #555; box-shadow: none; }
+        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        #claim-gift-btn { animation: pulse-glow 2s infinite; }
+        @keyframes pulse-glow { 0% { box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); } 50% { box-shadow: 0 6px 25px rgba(106, 90, 205, 0.7); } 100% { box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); } }
+
+        .secondary-btn { background: #eee; color: #555; box-shadow: none; animation: none; }
         .secondary-btn:hover { background: #e0e0e0; transform: scale(1.05); }
         .form-control input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: var(--text-color); font-size: 1rem; margin-top: 10px; font-family: 'Cairo', sans-serif; }
         .form-control input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
@@ -153,18 +185,19 @@
 
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
-            #header-controls { margin-bottom: 2px; }
-            #win-overlay .overlay-content { padding: 25px 20px; }
-            #win-overlay h2 { font-size: 1.6rem; line-height: 1.3; }
-            #win-overlay p { font-size: 0.9rem; margin-bottom: 15px; }
-            #product-carousel { height: 280px; margin-bottom: 10px; }
+            #win-overlay .overlay-content { padding: 30px 20px; gap: 12px; }
+            #win-overlay h2 { font-size: 1.8rem; }
+            #win-overlay p { font-size: 0.9rem; margin-bottom: 5px;}
+            #product-carousel { height: 290px; }
             .product-name { font-size: 1.5rem; }
-            .product-price { font-size: 1.1rem; }
-            .product-price .free { font-size: 1.3rem; }
-            .win-actions { margin-top: 20px; gap: 10px; }
+            .product-price .free { font-size: 1.2rem; }
+            .win-actions { margin-top: 15px; }
             .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
-            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; }
+            .card-front { font-size: 2.5rem; }
         }
+         @media (max-width: 380px) {
+            .board-size-9 { gap: 8px; }
+         }
     </style>
 </head>
 <body>
@@ -181,7 +214,7 @@
     </div>
 
     <div id="start-overlay" class="overlay"><div class="overlay-content"><h2>تحدي الذاكرة الخاطفة</h2><p>طابق الصور بأسرع ما يمكن لتصل إلى 1000 نقطة. احذر! 3 أخطاء متتالية وستخسر كل شيء!</p><button id="start-button" class="primary-btn">إبدأ التحدي</button></div></div>
-    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p id="game-over-message">لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
+    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p>لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
     <div id="next-level-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--secondary-color)">مستوى مكتمل!</h2><p>استعد للمستوى التالي...</p></div></div>
 
     <div id="win-overlay" class="overlay" style="display: none;">
@@ -239,7 +272,6 @@
             const startOverlay = document.getElementById('start-overlay');
             const winOverlay = document.getElementById('win-overlay');
             const gameOverOverlay = document.getElementById('game-over-overlay');
-            const gameOverMessage = document.getElementById('game-over-message');
             const nextLevelOverlay = document.getElementById('next-level-overlay');
             const formOverlay = document.getElementById('form-overlay');
             const startButton = document.getElementById('start-button');
@@ -268,16 +300,18 @@
             let infoPrizeIndex = 0;
             const WIN_STATE_KEY = 'memoryGameWinState';
             
-            const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
+            const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
             const levels = [];
             let imageCursor = 0;
-            for (let i = 0; i < 10; i++) { 
-                const pairCount = (i < 5) ? 6 : 8; 
+            const PAIR_COUNT_PER_LEVEL = 9;
+            const MAX_LEVELS = Math.floor(allImages.length / PAIR_COUNT_PER_LEVEL);
+
+            for (let i = 0; i < MAX_LEVELS; i++) { 
                 levels.push({ 
                     level: i + 1, 
-                    images: allImages.slice(imageCursor, imageCursor + pairCount) 
+                    images: allImages.slice(imageCursor, imageCursor + PAIR_COUNT_PER_LEVEL) 
                 }); 
-                imageCursor += pairCount;
+                imageCursor += PAIR_COUNT_PER_LEVEL;
             }
 
             const WIN_SCORE = 1000;
@@ -312,14 +346,14 @@
                 const levelData = levels[levelIndex];
                 const cardSet = [...levelData.images, ...levelData.images];
                 gameBoard.innerHTML = '';
-                gameBoard.className = 'game-board ' + (levelData.images.length === 6 ? 'board-size-6' : 'board-size-8');
+                gameBoard.className = 'game-board board-size-9';
                 const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
                 shuffledCards.forEach((imageSrc, i) => {
                     const card = document.createElement('div');
                     card.classList.add('card');
                     card.dataset.image = imageSrc;
                     card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`;
-                    card.style.transitionDelay = `${i * 40}ms`;
+                    card.style.transitionDelay = `${i * 35}ms`;
                     gameBoard.appendChild(card);
                     setTimeout(() => card.classList.add('flipped'), 50);
                 });
@@ -332,7 +366,7 @@
                         document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
                         lockBoard = false;
                     }, 600);
-                }, 1800);
+                }, 2000); // 2 ثانية للحفظ لأن عدد البطاقات أكبر
             }
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
             
@@ -365,11 +399,10 @@
                 updateMistakeDisplay();
 
                 const timeTaken = (Date.now() - matchStartTime) / 1000;
-                // --- [تعديل جذري للصعوبة] تقليل النقاط بشكل هائل ---
-                const basePoints = 10;
-                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 3));
-                const levelBonus = currentLevelIndex * 2;
-                const streakBonus = (matchStreak > 1) ? (matchStreak * 5) : 0;
+                const basePoints = 25;
+                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5));
+                const levelBonus = currentLevelIndex * 5;
+                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0;
                 const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
 
                 createPointPopup(cardOne, { time: timeBonus });
@@ -400,9 +433,8 @@
             function handleMismatch(cardOne, cardTwo) {
                 consecutiveMistakes++;
                 matchStreak = 0;
-
-                // --- [تعديل جذري للصعوبة] زيادة العقوبة وشرط خسارة جديد ---
-                totalScore -= 15; // خصم 15 نقطة
+                
+                totalScore = Math.max(0, totalScore - 10);
                 scoreDisplay.textContent = totalScore;
                 scoreDisplay.style.color = 'var(--danger-color)';
                 setTimeout(() => {
@@ -413,13 +445,8 @@
 
                 updateMistakeDisplay();
                 sounds.error.play();
-
-                if (totalScore < -50) {
-                    gameOver("لقد أفست! وصل رصيدك إلى أقل من -50 نقطة.");
-                    return;
-                }
                 if (consecutiveMistakes >= 3) {
-                    gameOver(); // سيستخدم الرسالة الافتراضية
+                    gameOver();
                     return;
                 }
                 cardOne.classList.remove('flipped');
@@ -443,9 +470,7 @@
                 const translateX = endX - startX;
                 const translateY = endY - startY;
 
-                // تقليل عدد العملات لتناسب النقاط القليلة
-                const coinCount = Math.max(1, Math.ceil(points / 5)); 
-                for (let i = 0; i < coinCount; i++) {
+                for (let i = 0; i < 5; i++) {
                     const coin = document.createElement('div');
                     coin.classList.add('coin');
                     coin.style.left = `${startX}px`;
@@ -474,18 +499,7 @@
             };
 
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            
-            function gameOver(message) { 
-                lockBoard = true; 
-                sounds.gameOver.play();
-                // تحديث رسالة الخسارة
-                if (message) {
-                    gameOverMessage.textContent = message + " هل تريد المحاولة مجددًا؟";
-                } else {
-                    gameOverMessage.textContent = "لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟";
-                }
-                setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); 
-            }
+            function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
             function winGame() {
                 lockBoard = true;
@@ -508,10 +522,21 @@
                     prizeDisplay.classList.remove('fade-out');
                 }, 300);
             }
+            // --- [تعديل] تحديث بناء الكاروسيل ليتناسب مع التصميم الجديد ---
             function buildWinCarousel() {
                 productCarousel.innerHTML = '';
                 prizes.forEach((p, index) => {
-                    productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
+                    productCarousel.innerHTML += `
+                        <div class="product-slide" data-index="${index}">
+                            <img src="${p.image}" alt="${p.name}">
+                            <div class="product-details">
+                                <div class="product-name">${p.name}</div>
+                                <div class="product-price">
+                                    <span class="original">${p.price}</span>
+                                    <span class="free">مجاني!</span>
+                                </div>
+                            </div>
+                        </div>`;
                 });
             }
             function updateWinCarousel() {
