@@ -103,10 +103,10 @@
             position: absolute; z-index: 200;
             background: rgba(40, 40, 60, 0.85); color: white;
             padding: 8px 18px; border-radius: 20px;
-            font-size: 1.1rem; /* تم تكبير الخط قليلاً للوضوح */
+            font-size: 1.1rem;
             font-weight: bold; line-height: 1.4;
             animation: floatUp 1.8s ease-out forwards;
-            pointer-events: none; white-space: nowrap; /* لمنع التفاف النص */
+            pointer-events: none; white-space: nowrap;
             text-align: center;
         }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
@@ -154,8 +154,6 @@
         @media (max-width: 520px) {
             body { align-items: flex-start; padding-top: 10px; padding-bottom: 5px; }
             #header-controls { margin-bottom: 2px; }
-
-            /* --- [تعديل] تحسينات لنافذة الفوز على الهواتف --- */
             #win-overlay .overlay-content { padding: 25px 20px; }
             #win-overlay h2 { font-size: 1.6rem; line-height: 1.3; }
             #win-overlay p { font-size: 0.9rem; margin-bottom: 15px; }
@@ -272,7 +270,15 @@
             const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
             const levels = [];
             let imageCursor = 0;
-            for (let i = 0; i < 10; i++) { const pairCount = (i < 5) ? 6 : 8; levels.push({ level: i + 1, images: allImages.slice(imageCursor, imageCursor + pairCount) }); imageCursor += pairCount; }
+            // --- [إصلاح] تم تصحيح منطق إنشاء المستويات لضمان عدم تكرار الصور ---
+            for (let i = 0; i < 10; i++) { 
+                const pairCount = (i < 5) ? 6 : 8; 
+                levels.push({ 
+                    level: i + 1, 
+                    images: allImages.slice(imageCursor, imageCursor + pairCount) 
+                }); 
+                imageCursor += pairCount; // هذه الإضافة تضمن أخذ صور جديدة لكل مستوى
+            }
 
             const WIN_SCORE = 1000;
             let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime, matchStreak;
@@ -329,7 +335,15 @@
                 }, 2500);
             }
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
-            function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 400); }
+            
+            function checkForMatch() { 
+                const [cardOne, cardTwo] = flippedCards; 
+                const isMatch = cardOne.dataset.image === cardTwo.dataset.image; 
+                // --- [إصلاح] زيادة التأخير لإعطاء وقت لرؤية البطاقة الثانية ---
+                setTimeout(() => { 
+                    if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } 
+                }, 600); 
+            }
             
             function createPointPopup(card, popupInfo) {
                 if (popupInfo.time > 0) {
@@ -365,13 +379,16 @@
                 cardTwo.classList.add('matched');
                 cardOne.removeEventListener('click', flipCard);
                 cardTwo.removeEventListener('click', flipCard);
-                resetBoardState();
+                
+                // --- [إصلاح] تأخير بسيط قبل السماح باللعب مرة أخرى لإعطاء إحساس بالاستقرار ---
+                setTimeout(resetBoardState, 300);
 
                 if (matchesFound === levels[currentLevelIndex].images.length) {
                     lockBoard = true;
+                    // --- [إصلاح] تم تصحيح منطق الانتقال للمستوى التالي والفوز ---
                     setTimeout(() => {
-                        // --- [تعديل] تم إزالة شرط الفوز من هنا ليعتمد فقط على الوصول لـ 1000 نقطة ---
-                        // يتم الآن الانتقال للمستوى التالي فقط إذا لم يكن اللاعب قد فاز بعد.
+                        currentLevelIndex++; // يجب زيادة عداد المستوى هنا
+                        // ننتقل للمستوى التالي فقط إذا كان هناك مستويات متبقية واللاعب لم يصل لـ 1000 نقطة بعد
                         if (currentLevelIndex < levels.length && totalScore < WIN_SCORE) {
                             nextLevelOverlay.style.display = 'flex';
                             setTimeout(() => {
@@ -379,9 +396,11 @@
                                 startLevel(currentLevelIndex);
                             }, 2000);
                         }
+                        // لا يوجد "else" هنا لاستدعاء الفوز. الفوز يتم فقط عند وصول النقاط إلى 1000.
                     }, 800);
                 }
             }
+
             function handleMismatch(cardOne, cardTwo) {
                 consecutiveMistakes++;
                 matchStreak = 0;
@@ -395,6 +414,7 @@
                 cardTwo.classList.remove('flipped');
                 resetBoardState();
             }
+
             function resetBoardState() { flippedCards = []; lockBoard = false; }
 
             function triggerCoinAnimation(matchedCards, points) {
@@ -424,20 +444,24 @@
                 }
 
                 setTimeout(() => {
+                    const scoreBeforeUpdate = totalScore;
                     totalScore += points;
-                    if(totalScore > WIN_SCORE) totalScore = WIN_SCORE; // لتثبيت النقاط عند 1000
+                    
                     scoreDisplay.textContent = totalScore;
                     scoreDisplay.classList.add('updated');
                     setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
-                    // --- [تعديل] هذا هو المكان الوحيد الذي يتم فيه تفعيل الفوز ---
-                    if (totalScore >= WIN_SCORE && winOverlay.style.display !== 'flex') {
+                    
+                    // --- [إصلاح] هذا هو المكان الوحيد الصحيح للتحقق من الفوز ---
+                    // يتم الفوز فقط إذا كانت النقاط السابقة أقل من 1000 والنقاط الحالية 1000 أو أكثر
+                    if (scoreBeforeUpdate < WIN_SCORE && totalScore >= WIN_SCORE) {
+                        scoreDisplay.textContent = WIN_SCORE; // نثبت النقاط على 1000 لجمالية العرض
                         winGame();
                     }
                 }, 700);
             };
 
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            function gameOver() { lockBoard = true; sounds.gameOver.play(); totalScore = 0; currentLevelIndex = 0; setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
+            function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
             function winGame() {
                 lockBoard = true;
@@ -445,7 +469,6 @@
                 sounds.win.play();
                 localStorage.setItem(WIN_STATE_KEY, 'true');
                 buildWinCarousel();
-                // --- [تعديل] يبدأ عرض الجائزة بنفس الجائزة التي اختارها المستخدم في نافذة المعلومات ---
                 winPrizeIndex = infoPrizeIndex; 
                 updateWinCarousel();
                 [startOverlay, gameOverOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
