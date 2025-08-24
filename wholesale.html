@@ -1,229 +1,238 @@
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adger</title>
+    <link rel="icon" href="logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحدي الذاكرة الخاطفة: الإصدار المستقر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>عرض المنتجات</title>
     <style>
-        /* --- CSS Styling (نفس التصميم الرائع والمصقول) --- */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-
-        :root {
-            --bg-start: #f5f7fa; --bg-end: #c3cfe2;
-            --card-bg: #ffffff; --card-front: #eef2f7;
-            --primary-color: #6a5acd; --secondary-color: #448aff;
-            --danger-color: #ff5252; --text-color: #333;
-            --shadow-color: rgba(100, 100, 150, 0.15); --gold-color: #ffc107;
-            --success-color: #4CAF50;
-        }
-        *, *::before, *::after { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        *:focus {
-            outline: none;
-        }
         body {
-            font-family: 'Cairo', sans-serif; display: flex; justify-content: center;
-            align-items: center; min-height: 100vh; margin: 0;
-            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            color: var(--text-color); padding: 10px; overflow: hidden;
-            user-select: none;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 50px;
         }
-        #game-container {
-            position: relative; z-index: 2; display: flex; flex-direction: column;
-            align-items: center; gap: 10px;
-            width: 100%; max-width: 500px;
-            /* Fix: إخفاء حاوية اللعبة في البداية */
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+        @media (max-width: 900px) {
+            body {
+                padding: 1px;
+            }
         }
-        #header-controls {
-            width: 100%; display: flex;
-            justify-content: flex-end;
-            padding: 0 5px; margin-bottom: 5px;
-        }
-        #prizes-button {
-            background: linear-gradient(45deg, var(--gold-color), #ffeb3b);
-            color: var(--text-color); border: none; padding: 8px 20px;
-            border-radius: 20px; font-family: 'Cairo', sans-serif;
-            font-weight: 700; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 2px 10px rgba(255, 193, 7, 0.4);
-            transition: all 0.3s ease;
-        }
-        #prizes-button:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(255, 193, 7, 0.6); }
-        #info-panel {
-            background: var(--card-bg); padding: 10px 15px; border-radius: 20px;
-            text-align: center; width: 100%; box-shadow: 0 8px 25px var(--shadow-color);
-            display: flex; justify-content: space-around; align-items: center;
-        }
-        .info-box { text-align: center; }
-        .info-box h2 { margin: 0; font-size: 1rem; color: #777; font-weight: 700; }
-        .info-box .value { font-size: 2.2rem; font-weight: 900; }
-        #score { color: var(--primary-color); transition: transform 0.2s ease-out, color 0.2s; }
-        #score.updated { transform: scale(1.3); color: var(--gold-color); text-shadow: 0 0 10px var(--gold-color); }
-        #level { color: var(--secondary-color); }
-        #mistakes { display: flex; flex-direction: row-reverse; gap: 8px; height: 30px; align-items: center; }
-        .mistake-dot { width: 20px; height: 20px; border-radius: 50%; border: 3px solid #ddd; background-color: #f0f0f0; transition: all 0.3s ease-in-out; }
-        .mistake-dot.filled { background-color: var(--danger-color); border-color: var(--danger-color); transform: scale(1.1); }
-        #game-board { width: 100%; display: grid; gap: 10px; perspective: 1200px; margin-top: 5px; }
-        .board-size-6 { grid-template-columns: repeat(3, 1fr); aspect-ratio: 3 / 4; }
-        .board-size-8 { grid-template-columns: repeat(4, 1fr); aspect-ratio: 1 / 1; }
-        .card { position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-        .card.flipped { transform: rotateY(180deg); }
-        .card.matched { cursor: default; opacity: 0.5; transform: rotateY(180deg) scale(0.9); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow-color); overflow: hidden; }
-        .card-front { background: var(--card-front); border: 2px solid #fff; color: var(--secondary-color); font-size: 3.5rem; font-weight: 900; }
-        .card-back { background: #fff; transform: rotateY(180deg); padding: 5px; }
-        .card-back img { width: 100%; height: 100%; object-fit: contain; }
-        .coin { position: fixed; z-index: 9999; width: 25px; height: 25px; background: radial-gradient(circle, #fff8e1, #ffd700, #f9a825); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.5); transition: transform 0.8s cubic-bezier(0.5, -0.5, 0.8, 0.8), opacity 0.8s ease-out; pointer-events: none; }
-        .point-popup { position: absolute; z-index: 200; background: rgba(0,0,0,0.7); color: white; padding: 5px 15px; border-radius: 20px; font-size: 1rem; font-weight: bold; animation: floatUp 1.5s ease-out forwards; pointer-events: none; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
-        .overlay-content { position: relative; background: var(--card-bg); border: none; padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
-        .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
 
-        /* --- Prize Modal Styles --- */
-        .close-btn { position: absolute; top: 10px; left: 15px; background: #eee; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 24px; color: #888; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s; }
-        .close-btn:hover { background: #ddd; color: #333; transform: rotate(90deg); }
-        #prize-display { background-color: var(--bg-start); padding: 20px; border-radius: 15px; margin-top: 15px; transition: opacity 0.3s ease-in-out; }
-        #prize-display.fade-out { opacity: 0; }
-        #prize-image { max-width: 80%; max-height: 200px; object-fit: contain; margin-bottom: 15px; }
-        #prize-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        #prize-name { margin: 0; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
-        .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
-        .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
+        .header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .header-background {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 55px;
+            background-color: #ff5f5f;
+            z-index: -1;
+        }
+        .back-button {
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            margin-right: 15px;
+            margin-left: -6px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-left: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #d9d9d9;
+        }
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            stroke: #000000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .header-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: -19px;
+            font-family: Cairo, sans-serif;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 75px;
+        }
+        .product {
+            width: calc(50% - 20px);
+            text-align: right;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product-name {
+            font-size: 16px;
+            margin: 2px 0; /* تقليل الهوامش */
+            color: #333;
+            font-family: Cairo, sans-serif;
+        }
+        .product-price {
+            font-size: 16px;
+            margin: 2px 0; /* تقليل الهوامش */
+            color: #e67e22;
+        }
+        .product-description, .product-description2 {
+            font-size: 13px;
+            margin: 1px 0; /* تقليل الهوامش */
+            color: #777;
+            line-height: 1.2; /* تقليل ارتفاع السطر */
+            font-family: Cairo, sans-serif;
+        }
+
+        .product-description2 {
+            font-size: 12px;
+            margin: 1px 0; /* تقليل الهوامش */
+            color: #ff0000;
+            line-height: 1.2; /* تقليل ارتفاع السطر */
+            font-family: Cairo, sans-serif;
+        }
+
+        /* Adjust for tablet screens */
+        @media (min-width: 600px) {
+            .product {
+                width: calc(33.33% - 20px);
+            }
+        }
+
+        /* Adjust for desktop screens */
+        @media (min-width: 1024px) {
+            .product {
+                width: calc(25% - 20px);
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="game-container">
-        <div id="header-controls">
-            <button id="prizes-button">🎁 الجوائز</button>
+    <!-- الهيدر مع الزر والنص -->
+    <div class="header">
+        <div class="header-background"></div>
+        <div class="back-button" onclick="window.history.back()">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
+            </svg>
         </div>
-        
-        <div id="info-panel">
-            <div class="info-box"><h2>المستوى</h2><div id="level" class="value">1</div></div>
-            <div class="info-box"><h2>النقاط</h2><div id="score" class="value">0</div></div>
-            <div class="info-box"><h2>الأخطاء</h2><div id="mistakes" class="value"></div></div>
-        </div>
-        
-        <div id="game-board"></div>
+        <div class="header-text">منتجات بسعر الجملة</div>
     </div>
-    
-    <!-- Overlays -->
-    <div id="start-overlay" class="overlay"><div class="overlay-content"><h2>تحدي الذاكرة الخاطفة</h2><p>طابق الصور بأسرع ما يمكن لتصل إلى 1000 نقطة. احذر! 3 أخطاء متتالية وستخسر كل شيء!</p><button id="start-button" class="primary-btn">إبدأ التحدي</button></div></div>
-    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p>لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
-    <div id="next-level-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--secondary-color)">مستوى مكتمل!</h2><p>استعد للمستوى التالي...</p></div></div>
-    <div id="win-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2>✨ تهانينا! لقد فزت بالتحدي! ✨</h2><p>لقد وصلت إلى 1000 نقطة! اختر هديتك المجانية:</p><button onclick="window.location.reload()" class="primary-btn">العب مجدداً</button></div></div>
 
-    <!-- Prizes Modal -->
-    <div id="prizes-overlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <button id="close-prizes-btn" class="close-btn">&times;</button>
-            <h2>الجوائز المتاحة</h2>
-            <p>الهدف: الوصول إلى <b style="color: var(--gold-color); font-weight: 900;">1000 نقطة</b> للفوز!</p>
-            <div id="prize-display">
-                <img id="prize-image" src="" alt="Prize Image">
-                <div id="prize-info">
-                    <h3 id="prize-name"></h3>
-                    <span class="free-badge">هديتك المجانية</span>
-                </div>
-            </div>
-            <div class="prize-nav">
-                <!-- Fix: Added switch icon -->
-                <button id="switch-prize-btn" class="primary-btn">التبديل 🔄</button>
-            </div>
+    <!-- قائمة المنتجات -->
+    <div class="product-container">
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <!-- Repeat this structure for all products -->
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
+        </div>
+        <div class="product">
+            <a href="1.html"><img src="1.jpg" alt="صورة المنتج"></a>
+            <div class="product-name">اسم المنتج</div>
+            <div class="product-description">هذا نص إضافي يصف المنتج بشكل مختصر.</div>
+            <div class="product-price">20.00 جنيه</div>
+            <div class="product-description2">هذا نص إضافي آخر يصف المنتج بشكل مختصر.</div>
         </div>
     </div>
-    
-    <audio id="flip-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b2c15a782.mp3" preload="auto"></audio>
-    <audio id="win-sound" src="https://cdn.pixabay.com/audio/2022/11/17/audio_88c72a8c38.mp3" preload="auto"></audio>
-    <audio id="coin-sound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_c295326162.mp3" preload="auto"></audio>
-    <audio id="error-sound" src="https://cdn.pixabay.com/audio/2021/08/04/audio_a5fa879a74.mp3" preload="auto"></audio>
-    <audio id="game-over-sound" src="https://cdn.pixabay.com/audio/2022/03/23/audio_b80267451a.mp3" preload="auto"></audio>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const gameContainer = document.getElementById('game-container'); // Get game container
-            const gameBoard = document.getElementById('game-board');
-            const scoreDisplay = document.getElementById('score');
-            const levelDisplay = document.getElementById('level');
-            const mistakesDisplay = document.getElementById('mistakes');
-            const startOverlay = document.getElementById('start-overlay');
-            const winOverlay = document.getElementById('win-overlay');
-            const gameOverOverlay = document.getElementById('game-over-overlay');
-            const nextLevelOverlay = document.getElementById('next-level-overlay');
-            const startButton = document.getElementById('start-button');
-            const restartButton = document.getElementById('restart-button');
-            const sounds = { flip: document.getElementById('flip-sound'), win: document.getElementById('win-sound'), coin: document.getElementById('coin-sound'), error: document.getElementById('error-sound'), gameOver: document.getElementById('game-over-sound') };
-
-            const prizesButton = document.getElementById('prizes-button');
-            const prizesOverlay = document.getElementById('prizes-overlay');
-            const closePrizesBtn = document.getElementById('close-prizes-btn');
-            const prizeDisplay = document.getElementById('prize-display');
-            const prizeImage = document.getElementById('prize-image');
-            const prizeName = document.getElementById('prize-name');
-            const switchPrizeBtn = document.getElementById('switch-prize-btn');
-
-            const prizes = [
-                { name: "سماعة رأس لاسلكية", image: "https://i.postimg.cc/pLjh000W/71-L-Dw-R3-V-L-AC-UF1000-1000-QL80.jpg" },
-                { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg" },
-                { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg" }
-            ];
-            let currentPrizeIndex = 0;
-            
-            const allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
-            const levels = [];
-            let imageCursor = 0;
-            for (let i = 0; i < 10; i++) { const pairCount = (i < 5) ? 6 : 8; levels.push({ level: i + 1, images: allImages.slice(imageCursor, imageCursor + pairCount) }); imageCursor += pairCount; }
-
-            const WIN_SCORE = 1000;
-            let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime;
-
-            function startGame() {
-                // Fix: إظهار حاوية اللعبة عند بدء اللعب
-                gameContainer.style.visibility = 'visible';
-                gameContainer.style.opacity = '1';
-                
-                totalScore = 0;
-                currentLevelIndex = 0;
-                startOverlay.style.display = 'none';
-                gameOverOverlay.style.display = 'none';
-                winOverlay.style.display = 'none';
-                startLevel(currentLevelIndex);
-            }
-            
-            function startLevel(levelIndex) { matchesFound = 0; consecutiveMistakes = 0; flippedCards = []; lockBoard = true; updateMistakeDisplay(); levelDisplay.textContent = levelIndex + 1; scoreDisplay.textContent = totalScore; const levelData = levels[levelIndex]; const cardSet = [...levelData.images, ...levelData.images]; gameBoard.innerHTML = ''; gameBoard.className = 'game-board ' + (levelData.images.length === 6 ? 'board-size-6' : 'board-size-8'); const shuffledCards = cardSet.sort(() => Math.random() - 0.5); shuffledCards.forEach((imageSrc, i) => { const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc; card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`; card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card); setTimeout(() => card.classList.add('flipped'), 50); }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => { card.classList.remove('flipped'); card.style.transitionDelay = '0ms'; }); setTimeout(() => { document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard)); lockBoard = false; }, 600); }, 2500); }
-            function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
-            function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 400); }
-            function handleMatch(cardOne, cardTwo) { matchesFound++; consecutiveMistakes = 0; updateMistakeDisplay(); const timeTaken = (Date.now() - matchStartTime) / 1000; const basePoints = 10; const timeBonus = Math.max(0, Math.floor(20 - timeTaken * 2)); const pointsEarned = basePoints + timeBonus; triggerCoinAnimation([cardOne, cardTwo], pointsEarned); createPointPopup(cardOne, `+${pointsEarned}`, timeBonus > 0); cardOne.classList.add('matched'); cardTwo.classList.add('matched'); cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard); resetBoardState(); if (matchesFound === levels[currentLevelIndex].images.length) { lockBoard = true; currentLevelIndex++; setTimeout(() => { if (currentLevelIndex < levels.length) { nextLevelOverlay.style.display = 'flex'; setTimeout(() => { nextLevelOverlay.style.display = 'none'; startLevel(currentLevelIndex); }, 2000); } else { winGame(); } }, 800); } }
-            function handleMismatch(cardOne, cardTwo) { consecutiveMistakes++; updateMistakeDisplay(); sounds.error.play(); if (consecutiveMistakes >= 3) { gameOver(); return; } cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped'); resetBoardState(); }
-            function resetBoardState() { flippedCards = []; lockBoard = false; }
-            function triggerCoinAnimation(matchedCards, points) { sounds.coin.currentTime = 0; sounds.coin.play(); const scoreRect = scoreDisplay.getBoundingClientRect(); matchedCards.forEach(card => { const cardRect = card.getBoundingClientRect(); for (let i = 0; i < 3; i++) { const coin = document.createElement('div'); coin.classList.add('coin'); const startX = cardRect.left + (cardRect.width / 2) + (Math.random() * 20 - 10); const startY = cardRect.top + (cardRect.height / 2) + (Math.random() * 20 - 10); coin.style.left = `${startX}px`; coin.style.top = `${startY}px`; document.body.appendChild(coin); setTimeout(() => { const endX = scoreRect.left + (scoreRect.width / 2); const endY = scoreRect.top + (scoreRect.height / 2); coin.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(0)`; coin.style.opacity = '0'; }, 50 + i * 50); setTimeout(() => coin.remove(), 1000); } }); setTimeout(() => { totalScore += points; scoreDisplay.textContent = totalScore; scoreDisplay.classList.add('updated'); setTimeout(() => scoreDisplay.classList.remove('updated'), 300); if (totalScore >= WIN_SCORE) { winGame(); } }, 500); };
-            function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            function createPointPopup(card, text, isBonus) { const popup = document.createElement('div'); popup.textContent = text + (isBonus ? ' (سرعة!)' : ''); popup.className = 'point-popup'; const cardRect = card.getBoundingClientRect(); popup.style.left = `${cardRect.left}px`; popup.style.top = `${cardRect.top}px`; document.body.appendChild(popup); setTimeout(() => popup.remove(), 1500); };
-            function gameOver() { lockBoard = true; sounds.gameOver.play(); totalScore = 0; currentLevelIndex = 0; setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
-            function winGame() { lockBoard = true; if(winOverlay.style.display === 'flex') return; sounds.win.play(); winOverlay.style.display = 'flex'; }
-            
-            function displayPrize(index) { prizeDisplay.classList.add('fade-out'); setTimeout(() => { const prize = prizes[index]; prizeImage.src = prize.image; prizeImage.alt = prize.name; prizeName.textContent = prize.name; prizeDisplay.classList.remove('fade-out'); }, 300); }
-            function cyclePrize() { currentPrizeIndex = (currentPrizeIndex + 1) % prizes.length; displayPrize(currentPrizeIndex); }
-
-            // --- Event Listeners & Init ---
-            startButton.addEventListener('click', startGame);
-            restartButton.addEventListener('click', startGame);
-            prizesButton.addEventListener('click', () => prizesOverlay.style.display = 'flex');
-            closePrizesBtn.addEventListener('click', () => prizesOverlay.style.display = 'none');
-            prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay) { prizesOverlay.style.display = 'none'; } });
-            switchPrizeBtn.addEventListener('click', cyclePrize);
-            
-            // Initial setup
-            startOverlay.style.display = 'flex';
-            displayPrize(currentPrizeIndex);
-        });
-    </script>
 </body>
 </html>
