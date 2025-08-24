@@ -181,7 +181,7 @@
     </div>
 
     <div id="start-overlay" class="overlay"><div class="overlay-content"><h2>تحدي الذاكرة الخاطفة</h2><p>طابق الصور بأسرع ما يمكن لتصل إلى 1000 نقطة. احذر! 3 أخطاء متتالية وستخسر كل شيء!</p><button id="start-button" class="primary-btn">إبدأ التحدي</button></div></div>
-    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p>لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
+    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p id="game-over-message">لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
     <div id="next-level-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--secondary-color)">مستوى مكتمل!</h2><p>استعد للمستوى التالي...</p></div></div>
 
     <div id="win-overlay" class="overlay" style="display: none;">
@@ -239,6 +239,7 @@
             const startOverlay = document.getElementById('start-overlay');
             const winOverlay = document.getElementById('win-overlay');
             const gameOverOverlay = document.getElementById('game-over-overlay');
+            const gameOverMessage = document.getElementById('game-over-message');
             const nextLevelOverlay = document.getElementById('next-level-overlay');
             const formOverlay = document.getElementById('form-overlay');
             const startButton = document.getElementById('start-button');
@@ -322,7 +323,6 @@
                     gameBoard.appendChild(card);
                     setTimeout(() => card.classList.add('flipped'), 50);
                 });
-                // --- [تعديل] تقليص وقت الحفظ لزيادة الصعوبة ---
                 setTimeout(() => {
                     document.querySelectorAll('.card').forEach(card => {
                         card.classList.remove('flipped');
@@ -332,7 +332,7 @@
                         document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
                         lockBoard = false;
                     }, 600);
-                }, 1800); // 1.8 ثانية فقط!
+                }, 1800);
             }
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
             
@@ -365,11 +365,11 @@
                 updateMistakeDisplay();
 
                 const timeTaken = (Date.now() - matchStartTime) / 1000;
-                // --- [تعديل] تقليل النقاط لجعل اللعبة أصعب ---
-                const basePoints = 25; // تم الخفض من 50
-                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5)); // أصعب وأقل قيمة
-                const levelBonus = currentLevelIndex * 5; // تم الخفض من 15
-                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0; // تم الخفض من 25
+                // --- [تعديل جذري للصعوبة] تقليل النقاط بشكل هائل ---
+                const basePoints = 10;
+                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 3));
+                const levelBonus = currentLevelIndex * 2;
+                const streakBonus = (matchStreak > 1) ? (matchStreak * 5) : 0;
                 const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
 
                 createPointPopup(cardOne, { time: timeBonus });
@@ -401,12 +401,11 @@
                 consecutiveMistakes++;
                 matchStreak = 0;
 
-                // --- [تعديل] إضافة عقوبة خصم النقاط ---
-                totalScore = Math.max(0, totalScore - 10); // نضمن ألا تنزل النقاط تحت الصفر
+                // --- [تعديل جذري للصعوبة] زيادة العقوبة وشرط خسارة جديد ---
+                totalScore -= 15; // خصم 15 نقطة
                 scoreDisplay.textContent = totalScore;
-                scoreDisplay.style.color = 'var(--danger-color)'; // إظهار الخصم بلون أحمر
+                scoreDisplay.style.color = 'var(--danger-color)';
                 setTimeout(() => {
-                    // إعادة اللون الأساسي فقط إذا لم يكن هناك تحديث آخر للنقاط
                     if (!scoreDisplay.classList.contains('updated')) {
                         scoreDisplay.style.color = 'var(--primary-color)';
                     }
@@ -414,8 +413,13 @@
 
                 updateMistakeDisplay();
                 sounds.error.play();
+
+                if (totalScore < -50) {
+                    gameOver("لقد أفست! وصل رصيدك إلى أقل من -50 نقطة.");
+                    return;
+                }
                 if (consecutiveMistakes >= 3) {
-                    gameOver();
+                    gameOver(); // سيستخدم الرسالة الافتراضية
                     return;
                 }
                 cardOne.classList.remove('flipped');
@@ -439,7 +443,9 @@
                 const translateX = endX - startX;
                 const translateY = endY - startY;
 
-                for (let i = 0; i < 5; i++) {
+                // تقليل عدد العملات لتناسب النقاط القليلة
+                const coinCount = Math.max(1, Math.ceil(points / 5)); 
+                for (let i = 0; i < coinCount; i++) {
                     const coin = document.createElement('div');
                     coin.classList.add('coin');
                     coin.style.left = `${startX}px`;
@@ -455,7 +461,7 @@
                     const scoreBeforeUpdate = totalScore;
                     totalScore += points;
                     
-                    scoreDisplay.style.color = 'var(--primary-color)'; // استعادة اللون الأساسي عند كسب النقاط
+                    scoreDisplay.style.color = 'var(--primary-color)';
                     scoreDisplay.textContent = totalScore;
                     scoreDisplay.classList.add('updated');
                     setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
@@ -468,7 +474,18 @@
             };
 
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
+            
+            function gameOver(message) { 
+                lockBoard = true; 
+                sounds.gameOver.play();
+                // تحديث رسالة الخسارة
+                if (message) {
+                    gameOverMessage.textContent = message + " هل تريد المحاولة مجددًا؟";
+                } else {
+                    gameOverMessage.textContent = "لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟";
+                }
+                setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); 
+            }
             
             function winGame() {
                 lockBoard = true;
