@@ -32,11 +32,15 @@
         *:focus {
             outline: none;
         }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
         body {
             font-family: 'Cairo', sans-serif; display: flex; justify-content: center;
             align-items: center; min-height: 100vh; margin: 0;
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            color: var(--text-color); padding: 10px; overflow: hidden;
+            color: var(--text-color); padding: 10px;
             user-select: none;
         }
         #game-container {
@@ -86,55 +90,173 @@
         .card-back { background: #fff; transform: rotateY(180deg); padding: 5px; }
         .card-back img { width: 100%; height: 100%; object-fit: contain; }
         
+        .coin {
+            position: fixed; z-index: 100;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: radial-gradient(circle, #ffd700, #f9a825);
+            box-shadow: 0 0 5px #ffd700, inset 0 0 3px rgba(0,0,0,0.3);
+            pointer-events: none; opacity: 0;
+            animation: fly-to-score 0.8s cubic-bezier(0.5, 0, 1, 1) forwards;
+        }
+        @keyframes fly-to-score {
+            0% { transform: translate(0, 0) scale(1.2); opacity: 1; }
+            100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0.5; }
+        }
+
+        .point-popup {
+            position: absolute; z-index: 200;
+            background: rgba(40, 40, 60, 0.85); color: white;
+            padding: 8px 18px; border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold; line-height: 1.4;
+            animation: floatUp 1.8s ease-out forwards;
+            pointer-events: none; white-space: nowrap;
+            text-align: center;
+        }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
+        
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
         .overlay-content { position: relative; background: var(--card-bg); border: none; padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        #win-overlay .overlay-content { display: flex; flex-direction: column; align-items: center; background: radial-gradient(circle, #ffffff 0%, #f7f9fc 100%); border: 2px solid rgba(255,255,255,0.8); padding: 40px 30px; }
-        #win-overlay h2 { margin: 0 0 5px; font-size: 2.1rem; font-weight: 900; text-shadow: 0 3px 15px rgba(255, 193, 7, 0.5); background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        #win-overlay p { margin: 0 0 10px; font-size: 1.1rem; color: #555; max-width: 350px; }
-
-        /* --- [معدل] تصميم نافذة الفوز --- */
-        #product-display { transition: all 0.4s ease-in-out; }
-        #product-carousel { position: relative; min-height: 340px; margin-bottom: 5px; width: 100%; margin-top: 10px; display: flex; align-items: center; justify-content: center; }
-        .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 10px 0; box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.95); }
-        .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
-        .product-slide img { width: 100%; max-width: 250px; max-height: 180px; object-fit: contain; border-radius: 15px; margin-bottom: 0; flex-shrink: 0; }
-        .product-name { font-size: 1.8rem; font-weight: 900; color: var(--primary-color); letter-spacing: -0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 95%; text-align: center; margin-bottom: 0; flex-shrink: 0; }
-        .product-price { font-size: 1.2rem; flex-shrink: 0; }
-        .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
-        .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
-        #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
-        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; transition: all 0.4s ease-in-out; }
-        
-        /* --- [جديد] تصميم نموذج إدخال البيانات --- */
-        #delivery-form-container { width: 100%; max-width: 400px; text-align: right; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; font-size: 0.9rem; color: #555; margin-bottom: 6px; }
-        .form-group input { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #ccc; background-color: #f9f9f9; color: var(--text-color); font-size: 1rem; font-family: 'Cairo', sans-serif; transition: border-color 0.2s, box-shadow 0.2s; }
-        .form-group input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
+        #win-overlay .overlay-content {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 15px;
+            background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f7f9fc 100%);
+            border: 2px solid rgba(255,255,255,0.8);
+            padding: 40px 30px;
+        }
+        @keyframes glowing-text {
+            0% { text-shadow: 0 0 10px rgba(106, 90, 205, 0.5), 0 0 20px rgba(106, 90, 205, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(106, 90, 205, 0.8), 0 0 40px rgba(106, 90, 205, 0.6); }
+            100% { text-shadow: 0 0 10px rgba(106, 90, 205, 0.5), 0 0 20px rgba(106, 90, 205, 0.3); }
+        }
+        #win-overlay h2 {
+            margin: 0; font-size: 2.1rem; font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glowing-text 3s infinite ease-in-out;
+        }
+        #win-overlay p {
+            margin: 0; font-size: 1.1rem; color: #555; max-width: 350px;
+        }
+        @keyframes pulse-animation {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(106, 90, 205, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
+        }
+        #claim-gift-btn {
+            animation: pulse-animation 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
         .primary-btn { padding: 14px 35px; font-size: 1.2rem; font-family: 'Cairo', sans-serif; color: #fff; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4); }
         .primary-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(106, 90, 205, 0.6); }
+
+        .close-btn { position: absolute; top: 10px; left: 15px; background: #eee; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 24px; color: #888; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s; z-index: 10; }
+        .close-btn:hover { background: #ddd; color: #333; transform: rotate(90deg); }
+        #prize-display { background-color: var(--bg-start); padding: 20px; border-radius: 15px; margin-top: 15px; transition: opacity 0.3s ease-in-out; }
+        #prize-display.fade-out { opacity: 0; }
+        #prize-image { max-width: 80%; max-height: 200px; object-fit: contain; margin-bottom: 15px; }
+        #prize-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        #prize-name { margin: 0; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+        .free-badge { background-color: var(--success-color); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
+        .prize-nav { display: flex; justify-content: center; margin-top: 25px; }
+        
+        #product-carousel {
+            position: relative; min-height: 300px; margin-bottom: 5px;
+            width: 100%; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .product-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 12px; padding: 10px 0; box-sizing: border-box;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+            transform: scale(0.95);
+        }
+        .product-slide.active {
+            opacity: 1; pointer-events: auto; transform: scale(1);
+            filter: drop-shadow(0 0 15px rgba(106, 90, 205, 0.5));
+        }
+        .product-slide img {
+            width: 100%;
+            max-width: 280px; /* تم تكبير الصورة */
+            max-height: 220px; /* تم تكبير الصورة */
+            object-fit: contain; margin-bottom: 0; flex-shrink: 0;
+        }
+        .product-name {
+            font-size: 1.1rem; font-weight: 900; color: var(--primary-color);
+            letter-spacing: -0.5px; white-space: nowrap; overflow: hidden;
+            text-overflow: ellipsis; max-width: 95%; text-align: center;
+            margin-bottom: 0; flex-shrink: 0;
+        }
+        .product-price {
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .product-price .original { text-decoration: line-through; color: #999; margin-inline-end: 10px; }
+        .product-price .free { color: var(--success-color); font-weight: 700; font-size: 1.6rem; text-shadow: 0 0 12px var(--success-color); }
+        
+        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ddd; border-radius: 50px; padding: 8px 20px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 1rem; color: var(--text-color); }
+        #switch-product-btn:hover { background: #f0f0f0; transform: scale(1.05); }
+        #switch-product-btn svg { width: 20px; height: 20px; fill: var(--text-color); }
+        
+        .win-actions { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
         .secondary-btn { background: #eee; color: #555; box-shadow: none; }
         .secondary-btn:hover { background: #e0e0e0; transform: scale(1.05); }
+        
+        /* -- تعديلات نافذة إدخال البيانات -- */
+        #form-overlay {
+             z-index: 2000; /* جعلها فوق نافذة الربح */
+             background: rgba(0, 0, 0, 0.4); /* خلفية معتمة */
+             backdrop-filter: blur(5px);
+        }
+        #form-overlay .overlay-content { max-width: 450px; }
+        #form-overlay .form-control {
+            display: flex; flex-direction: column;
+            align-items: flex-start; text-align: right;
+            width: 100%; margin-bottom: 8px;
+        }
+        #form-overlay .form-control label {
+            font-weight: 700; font-size: 0.95rem;
+            color: #444; margin-bottom: 4px;
+        }
+        #form-overlay .form-control input {
+             width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: var(--text-color); font-size: 1rem; font-family: 'Cairo', sans-serif;
+        }
+        #form-overlay .form-control input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2); }
 
-        /* --- [معدل] تعديلات للهواتف --- */
-        @media (max-width: 520px) {
-            body { align-items: flex-start; padding: 0; }
-            #game-container { padding: 10px; }
-            #win-overlay { padding: 0; }
-            #win-overlay .overlay-content { width: 100%; height: 100%; min-height: 100vh; max-width: none; max-height: none; border-radius: 0; box-shadow: none; padding: 30px 15px 20px; padding-top: calc(env(safe-area-inset-top) + 30px); justify-content: flex-start; gap: 10px; }
-            #win-overlay h2 { font-size: 1.7rem; }
-            #win-overlay p { font-size: 1rem; margin-bottom: 15px; }
-            #product-carousel { height: auto; min-height: 250px; margin: 0; }
-            .product-slide img { max-height: 150px; }
-            .product-name { font-size: 1.4rem; }
-            .win-actions { margin-top: 10px; }
-            .primary-btn { padding: 12px 28px; font-size: 1.1rem; }
-            #switch-product-btn { font-size: 0.9rem; padding: 8px 16px; margin-top: 10px; }
+        .primary-btn.has-icon { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 25px; }
+        .primary-btn.has-icon .switch-icon { width: 1.2em; height: 1.2em; stroke: currentColor; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .primary-btn.has-icon:hover .switch-icon { transform: rotate(180deg); }
+        .primary-btn.has-icon .gift-icon {
+            width: 1.4em; height: 1.4em;
+            stroke-width: 2; fill: none;
+            stroke: currentColor;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        /* -- تعديلات للهواتف المحمولة -- */
+        @media (max-width: 600px) {
+            .overlay { padding: 0; }
+            #win-overlay .overlay-content {
+                width: 100%; height: 100%;
+                max-width: 100%; max-height: 100%;
+                border-radius: 0; padding: 20px 15px;
+                justify-content: center;
+                display: flex; flex-direction: column;
+                gap: 8px;
+            }
+            #win-overlay h2, #win-overlay p { margin: 0; }
+            #win-overlay h2 { font-size: 1.8rem; }
+
+            /* --- تعديل مهم: نافذة البيانات لم تعد بحجم الشاشة الكاملة --- */
+            #form-overlay { padding: 15px; }
+            #form-overlay .overlay-content {
+                 max-height: 90vh; /* التأكد من عدم تجاوز ارتفاع الشاشة */
+            }
         }
     </style>
 </head>
@@ -157,12 +279,44 @@
 
     <div id="win-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
-            <!-- سيتم التحكم في محتوى هذه النافذة بالكامل عبر الجافاسكريبت -->
+            <h2>تهانينا! لقد فزت بالتحدي!</h2>
+            <p>لقد وصلت إلى 1000 نقطة ببراعة! الآن، اختر هديتك المجانية كمكافأة لك.</p>
+            <div id="product-carousel"></div>
+            <button id="switch-product-btn">
+                <svg viewBox="0 0 24 24"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" /></svg>
+                <span>تبديل الهدية</span>
+            </button>
+            <div class="win-actions">
+                <button id="claim-gift-btn" class="primary-btn has-icon">
+                    <svg class="gift-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M20 7H4V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    <span>احصل على هديتك</span>
+                </button>
+                <button id="reset-game-button" class="primary-btn secondary-btn">العب مرة أخرى</button>
+            </div>
         </div>
     </div>
 
+    <div id="form-overlay" class="overlay" style="display: none;"><div class="overlay-content"></div></div>
+
     <div id="prizes-overlay" class="overlay" style="display: none;">
-        <!-- ... (محتوى نافذة الجوائز لم يتغير) ... -->
+        <div class="overlay-content">
+            <button id="close-prizes-btn" class="close-btn">&times;</button>
+            <h2>الجوائز المتاحة</h2>
+            <p>الهدف: الوصول إلى <b style="color: var(--gold-color); font-weight: 900;">1000 نقطة</b> للفوز!</p>
+            <div id="prize-display">
+                <img id="prize-image" src="" alt="Prize Image">
+                <div id="prize-info">
+                    <h3 id="prize-name"></h3>
+                    <span class="free-badge">هديتك عند الفوز</span>
+                </div>
+            </div>
+            <div class="prize-nav">
+                <button id="info-switch-prize-btn" class="primary-btn has-icon">
+                    <span>تبديل</span>
+                    <svg class="switch-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                </button>
+            </div>
+        </div>
     </div>
 
     <audio id="flip-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b2c15a782.mp3" preload="auto"></audio>
@@ -173,31 +327,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ... (معظم متغيرات العناصر لم تتغير)
-            const winOverlay = document.getElementById('win-overlay');
-            const winOverlayContent = winOverlay.querySelector('.overlay-content');
-            // ... (باقي المتغيرات)
-
             const gameContainer = document.getElementById('game-container');
             const gameBoard = document.getElementById('game-board');
             const scoreDisplay = document.getElementById('score');
             const levelDisplay = document.getElementById('level');
             const mistakesDisplay = document.getElementById('mistakes');
             const startOverlay = document.getElementById('start-overlay');
+            const winOverlay = document.getElementById('win-overlay');
             const gameOverOverlay = document.getElementById('game-over-overlay');
             const nextLevelOverlay = document.getElementById('next-level-overlay');
+            const formOverlay = document.getElementById('form-overlay');
             const startButton = document.getElementById('start-button');
             const restartButton = document.getElementById('restart-button');
             const sounds = { flip: document.getElementById('flip-sound'), win: document.getElementById('win-sound'), coin: document.getElementById('coin-sound'), error: document.getElementById('error-sound'), gameOver: document.getElementById('game-over-sound') };
+
             const prizesButton = document.getElementById('prizes-button');
             const prizesOverlay = document.getElementById('prizes-overlay');
-            
+            const closePrizesBtn = document.getElementById('close-prizes-btn');
+            const prizeDisplay = document.getElementById('prize-display');
+            const prizeImage = document.getElementById('prize-image');
+            const prizeName = document.getElementById('prize-name');
+            const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
+
+            const claimGiftButton = document.getElementById('claim-gift-btn');
+            const resetGameButton = document.getElementById('reset-game-button');
+            const switchProductBtn = document.getElementById('switch-product-btn');
+            const productCarousel = document.getElementById('product-carousel');
+
             const prizes = [
                 { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/3Np9JSRw/9u3606.jpg", price: "199$" },
                 { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
                 { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
             ];
             let winPrizeIndex = 0;
+            let infoPrizeIndex = 0;
             const WIN_STATE_KEY = 'memoryGameWinState';
             
             let allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
@@ -217,150 +380,48 @@
 
             const WIN_SCORE = 1000;
             let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime, matchStreak;
-            
-            // --- [معدل] دوال بناء المحتوى الديناميكي لنافذة الفوز ---
 
-            function buildInitialWinView() {
-                const product = prizes[winPrizeIndex];
-                winOverlayContent.innerHTML = `
-                    <h2>تهانينا! لقد فزت بالتحدي!</h2>
-                    <p>لقد وصلت إلى 1000 نقطة ببراعة! الآن، اختر هديتك المجانية كمكافأة لك.</p>
-                    <div id="product-display">
-                        <div id="product-carousel">
-                            <!-- Slides will be built by JS -->
-                        </div>
-                        <button id="switch-product-btn">
-                            <svg viewBox="0 0 24 24"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" /></svg>
-                            <span>تبديل الهدية</span>
-                        </button>
-                    </div>
-                    <div class="win-actions">
-                        <button id="claim-gift-btn" class="primary-btn">احصل على هديتك</button>
-                        <button id="reset-game-button" class="primary-btn secondary-btn">العب مرة أخرى</button>
-                    </div>
-                `;
-                buildWinCarousel();
-                updateWinCarousel();
-
-                // Re-attach event listeners
-                winOverlayContent.querySelector('#switch-product-btn').addEventListener('click', () => {
-                    winPrizeIndex = (winPrizeIndex + 1) % prizes.length;
-                    updateWinCarousel();
-                });
-                winOverlayContent.querySelector('#claim-gift-btn').addEventListener('click', showDeliveryForm);
-                winOverlayContent.querySelector('#reset-game-button').addEventListener('click', startGame);
-            }
-
-            function showDeliveryForm() {
-                const product = prizes[winPrizeIndex];
-                const savedInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
-                
-                // Hide product view smoothly
-                const productDisplay = winOverlayContent.querySelector('#product-display');
-                const winActions = winOverlayContent.querySelector('.win-actions');
-                const headerText = winOverlayContent.querySelectorAll('h2, p');
-
-                productDisplay.style.transition = 'opacity 0.3s, max-height 0.3s';
-                winActions.style.transition = 'opacity 0.3s, max-height 0.3s';
-                
-                productDisplay.style.opacity = '0';
-                productDisplay.style.maxHeight = '0';
-                productDisplay.style.overflow = 'hidden';
-                
-                winActions.style.opacity = '0';
-                winActions.style.maxHeight = '0';
-                winActions.style.overflow = 'hidden';
-
-                setTimeout(() => {
-                    productDisplay.style.display = 'none';
-                    winActions.style.display = 'none';
-                    headerText[0].textContent = "تأكيد بياناتك";
-                    headerText[1].textContent = `للحصول على هديتك المجانية "${product.name}"`;
-
-                    const formContainer = document.createElement('div');
-                    formContainer.id = 'delivery-form-container';
-                    formContainer.innerHTML = `
-                        <form id="delivery-form">
-                            <div class="form-group">
-                                <label for="fullName">الاسم الكامل</label>
-                                <input type="text" id="fullName" name="name" value="${savedInfo.name || ''}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">رقم الهاتف</label>
-                                <input type="tel" id="phone" name="phone" value="${savedInfo.phone || ''}" required>
-                            </div>
-                             <div class="form-group">
-                                <label for="email">البريد الإلكتروني</label>
-                                <input type="email" id="email" name="email" value="${savedInfo.email || ''}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="city">المدينة</label>
-                                <input type="text" id="city" name="city" value="${savedInfo.city || ''}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="street">اسم الشارع أو الحي</label>
-                                <input type="text" id="street" name="street" value="${savedInfo.street || ''}" required>
-                            </div>
-                            <div style="text-align: center; margin-top: 25px;">
-                                <button type="submit" class="primary-btn">تأكيد وإرسال الطلب</button>
-                            </div>
-                        </form>
-                    `;
-                    winOverlayContent.appendChild(formContainer);
-                    formContainer.querySelector('#delivery-form').addEventListener('submit', handleFormSubmit);
-                }, 300);
-            }
-
-            function handleFormSubmit(event) {
-                event.preventDefault();
-                const formData = new FormData(event.target);
-                const deliveryInfo = Object.fromEntries(formData.entries());
-                localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
-                
-                winOverlayContent.innerHTML = `
-                    <h2 style="color: var(--success-color);">✅ تم إرسال طلبك!</h2>
-                    <p>شكراً للعب! سنتواصل معك قريباً لتأكيد عملية شحن الهدية.</p>
-                    <button id="final-restart-btn" class="primary-btn secondary-btn">العب مجدداً</button>
-                `;
-                winOverlayContent.querySelector('#final-restart-btn').addEventListener('click', startGame);
-            }
-            
-            // --- Game Logic (unchanged from your provided code) ---
-            
             function initGame() {
                 gameContainer.style.visibility = 'visible';
                 gameContainer.style.opacity = '1';
-                // prize display logic can be simplified or removed if not needed elsewhere
+                displayInfoPrize(infoPrizeIndex);
                 if (localStorage.getItem(WIN_STATE_KEY) === 'true') {
                     winGame();
                 } else {
                     startOverlay.style.display = 'flex';
                 }
             }
-
             function startGame() {
                 localStorage.removeItem(WIN_STATE_KEY);
                 totalScore = 0;
                 currentLevelIndex = 0;
-                [startOverlay, gameOverOverlay, winOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
+                [startOverlay, gameOverOverlay, winOverlay, formOverlay].forEach(o => o.style.display = 'none');
                 startLevel(currentLevelIndex);
             }
-
             function startLevel(levelIndex) {
                 matchesFound = 0; consecutiveMistakes = 0; matchStreak = 0;
-                flippedCards = []; lockBoard = true; updateMistakeDisplay();
-                levelDisplay.textContent = levelIndex + 1; scoreDisplay.textContent = totalScore;
-                const cardSet = [...levels[levelIndex].images, ...levels[levelIndex].images];
-                gameBoard.innerHTML = ''; gameBoard.className = 'game-board board-size-6';
-                cardSet.sort(() => Math.random() - 0.5).forEach((imageSrc, i) => {
-                    const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc;
+                flippedCards = []; lockBoard = true;
+                updateMistakeDisplay();
+                levelDisplay.textContent = levelIndex + 1;
+                scoreDisplay.textContent = totalScore;
+                const levelData = levels[levelIndex];
+                const cardSet = [...levelData.images, ...levelData.images];
+                gameBoard.innerHTML = '';
+                gameBoard.className = 'game-board board-size-6';
+                const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
+                shuffledCards.forEach((imageSrc, i) => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.dataset.image = imageSrc;
                     card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`;
-                    card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card);
+                    card.style.transitionDelay = `${i * 40}ms`;
+                    gameBoard.appendChild(card);
                     setTimeout(() => card.classList.add('flipped'), 50);
                 });
                 setTimeout(() => {
                     document.querySelectorAll('.card').forEach(card => {
-                        card.classList.remove('flipped'); card.style.transitionDelay = '0ms';
+                        card.classList.remove('flipped');
+                        card.style.transitionDelay = '0ms';
                     });
                     setTimeout(() => {
                         document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
@@ -368,85 +429,239 @@
                     }, 600);
                 }, 1800); 
             }
-
             function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
             
-            function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 600); }
+            function checkForMatch() { 
+                const [cardOne, cardTwo] = flippedCards; 
+                const isMatch = cardOne.dataset.image === cardTwo.dataset.image; 
+                setTimeout(() => { 
+                    if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } 
+                }, 600); 
+            }
             
             function handleMatch(cardOne, cardTwo) {
                 matchesFound++; consecutiveMistakes = 0; matchStreak++; updateMistakeDisplay();
                 const timeTaken = (Date.now() - matchStartTime) / 1000;
-                const pointsEarned = 25 + Math.max(0, Math.floor((3 - timeTaken) * 5)) + (currentLevelIndex * 5) + ((matchStreak > 1) ? (matchStreak * 10) : 0);
+                const basePoints = 25;
+                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5));
+                const levelBonus = currentLevelIndex * 5;
+                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0;
+                const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
+
                 triggerCoinAnimation([cardOne, cardTwo], pointsEarned);
+                
                 cardOne.classList.add('matched'); cardTwo.classList.add('matched');
                 cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard);
+                
                 setTimeout(resetBoardState, 300);
+
                 if (matchesFound === levels[currentLevelIndex].images.length) {
                     lockBoard = true;
                     setTimeout(() => {
                         currentLevelIndex++;
                         if (currentLevelIndex < levels.length && totalScore < WIN_SCORE) {
                             nextLevelOverlay.style.display = 'flex';
-                            setTimeout(() => { nextLevelOverlay.style.display = 'none'; startLevel(currentLevelIndex); }, 2000);
+                            setTimeout(() => {
+                                nextLevelOverlay.style.display = 'none';
+                                startLevel(currentLevelIndex);
+                            }, 2000);
                         }
                     }, 800);
                 }
             }
 
             function handleMismatch(cardOne, cardTwo) {
-                consecutiveMistakes++; matchStreak = 0; totalScore = Math.max(0, totalScore - 10);
+                consecutiveMistakes++; matchStreak = 0;
+                totalScore = Math.max(0, totalScore - 10);
                 scoreDisplay.textContent = totalScore; scoreDisplay.style.color = 'var(--danger-color)';
                 setTimeout(() => { if (!scoreDisplay.classList.contains('updated')) { scoreDisplay.style.color = 'var(--primary-color)'; } }, 400);
-                updateMistakeDisplay(); sounds.error.play();
+
+                updateMistakeDisplay();
+                sounds.error.play();
                 if (consecutiveMistakes >= 3) { gameOver(); return; }
-                cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped'); resetBoardState();
+                cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped');
+                resetBoardState();
             }
 
             function resetBoardState() { flippedCards = []; lockBoard = false; }
 
             function triggerCoinAnimation(matchedCards, points) {
-                sounds.coin.currentTime = 0; sounds.coin.play(); const scoreRect = scoreDisplay.getBoundingClientRect(); const card1Rect = matchedCards[0].getBoundingClientRect(); const startX = card1Rect.left + card1Rect.width / 2; const startY = card1Rect.top + card1Rect.height / 2; const endX = scoreRect.left + scoreRect.width / 2; const endY = scoreRect.top + scoreRect.height / 2; const translateX = endX - startX; const translateY = endY - startY; for (let i = 0; i < 5; i++) { const coin = document.createElement('div'); coin.classList.add('coin'); coin.style.left = `${startX}px`; coin.style.top = `${startY}px`; coin.style.setProperty('--end-x', `${translateX + (Math.random() - 0.5) * 30}px`); coin.style.setProperty('--end-y', `${translateY + (Math.random() - 0.5) * 30}px`); coin.style.animationDelay = `${i * 60 + Math.random() * 40}ms`; document.body.appendChild(coin); setTimeout(() => coin.remove(), 1000); } setTimeout(() => { const scoreBeforeUpdate = totalScore; totalScore += points; scoreDisplay.style.color = 'var(--primary-color)'; scoreDisplay.textContent = totalScore; scoreDisplay.classList.add('updated'); setTimeout(() => scoreDisplay.classList.remove('updated'), 300); if (scoreBeforeUpdate < WIN_SCORE && totalScore >= WIN_SCORE) { scoreDisplay.textContent = WIN_SCORE; winGame(); } }, 700);
-            }
-            
+                sounds.coin.currentTime = 0; sounds.coin.play();
+                const scoreRect = scoreDisplay.getBoundingClientRect();
+                const card1Rect = matchedCards[0].getBoundingClientRect();
+                const startX = card1Rect.left + card1Rect.width / 2;
+                const startY = card1Rect.top + card1Rect.height / 2;
+                const endX = scoreRect.left + scoreRect.width / 2;
+                const endY = scoreRect.top + scoreRect.height / 2;
+                const translateX = endX - startX; const translateY = endY - startY;
+
+                for (let i = 0; i < 5; i++) {
+                    const coin = document.createElement('div');
+                    coin.classList.add('coin');
+                    coin.style.left = `${startX}px`; coin.style.top = `${startY}px`;
+                    coin.style.setProperty('--end-x', `${translateX + (Math.random() - 0.5) * 30}px`);
+                    coin.style.setProperty('--end-y', `${translateY + (Math.random() - 0.5) * 30}px`);
+                    coin.style.animationDelay = `${i * 60 + Math.random() * 40}ms`;
+                    document.body.appendChild(coin);
+                    setTimeout(() => coin.remove(), 1000);
+                }
+
+                setTimeout(() => {
+                    const scoreBeforeUpdate = totalScore; totalScore += points;
+                    scoreDisplay.style.color = 'var(--primary-color)';
+                    scoreDisplay.textContent = totalScore;
+                    scoreDisplay.classList.add('updated');
+                    setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
+                    if (scoreBeforeUpdate < WIN_SCORE && totalScore >= WIN_SCORE) {
+                        scoreDisplay.textContent = WIN_SCORE; winGame();
+                    }
+                }, 700);
+            };
+
             function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            
             function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
             
             function launchConfetti() {
-                const confettiContainer = document.body; const confettiCount = 100; const colors = ['#6a5acd', '#448aff', '#ffc107', '#ff5252', '#4CAF50']; for (let i = 0; i < confettiCount; i++) { const confetti = document.createElement('div'); const size = Math.random() * 10 + 5; confetti.style.width = `${size}px`; confetti.style.height = `${size}px`; confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`; confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1'; confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none'; const anim = confetti.animate([ { transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 }, { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 } ], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 }); anim.onfinish = () => confetti.remove(); confettiContainer.appendChild(confetti); }
+                const confettiContainer = document.body; const confettiCount = 100;
+                const colors = ['#6a5acd', '#448aff', '#ffc107', '#ff5252', '#4CAF50'];
+                for (let i = 0; i < confettiCount; i++) {
+                    const confetti = document.createElement('div');
+                    const size = Math.random() * 10 + 5;
+                    confetti.style.width = `${size}px`; confetti.style.height = `${size}px`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`;
+                    confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1';
+                    confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none';
+                    const anim = confetti.animate([
+                        { transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 },
+                        { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 });
+                    anim.onfinish = () => confetti.remove();
+                    confettiContainer.appendChild(confetti);
+                }
             }
 
             function winGame() {
                 lockBoard = true;
                 if(winOverlay.style.display === 'flex') return;
-                sounds.win.play();
-                launchConfetti();
+                sounds.win.play(); launchConfetti();
                 localStorage.setItem(WIN_STATE_KEY, 'true');
-                
-                buildInitialWinView(); // Call the new function to build the win screen
-
+                buildWinCarousel();
+                winPrizeIndex = infoPrizeIndex; 
+                updateWinCarousel();
                 [startOverlay, gameOverOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
                 winOverlay.style.display = 'flex';
             }
             
+            function displayInfoPrize(index) {
+                prizeDisplay.classList.add('fade-out');
+                setTimeout(() => {
+                    const prize = prizes[index];
+                    prizeImage.src = prize.image; prizeName.textContent = prize.name;
+                    prizeDisplay.classList.remove('fade-out');
+                }, 300);
+            }
             function buildWinCarousel() {
-                const carousel = winOverlayContent.querySelector('#product-carousel');
-                carousel.innerHTML = '';
+                productCarousel.innerHTML = '';
                 prizes.forEach((p, index) => {
-                    carousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
+                    productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`;
                 });
             }
-
             function updateWinCarousel() {
-                const slides = winOverlayContent.querySelectorAll('.product-slide');
+                const slides = document.querySelectorAll('.product-slide');
                 slides.forEach(slide => slide.classList.remove('active'));
                 if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
             }
+            function showDeliveryForm(product) {
+                const savedInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
+                formOverlay.innerHTML = `<div class="overlay-content">
+                    <button id="close-form-btn" class="close-btn">&times;</button>
+                    <h2>تأكيد بياناتك</h2>
+                    <p>للحصول على هديتك المجانية "${product.name}"</p>
+                    <form id="delivery-form" style="display: flex; flex-direction: column; gap: 5px;">
+                        <div class="form-control"><label for="form-name">الاسم الكامل</label><input id="form-name" type="text" name="name" placeholder="أدخل اسمك بالكامل" value="${savedInfo.name || ''}" required></div>
+                        <div class="form-control"><label for="form-phone">رقم الهاتف</label><input id="form-phone" type="tel" name="phone" placeholder="أدخل رقم هاتفك" value="${savedInfo.phone || ''}" required></div>
+                        <div class="form-control"><label for="form-email">البريد الإلكتروني</label><input id="form-email" type="email" name="email" placeholder="أدخل بريدك الإلكتروني" value="${savedInfo.email || ''}" required></div>
+                        <div class="form-control"><label for="form-governorate">المحافظة</label><input id="form-governorate" type="text" name="governorate" placeholder="مثال: القاهرة" value="${savedInfo.governorate || ''}" required></div>
+                        <div class="form-control"><label for="form-city">المدينة</label><input id="form-city" type="text" name="city" placeholder="مثال: مدينة نصر" value="${savedInfo.city || ''}" required></div>
+                        <div class="form-control"><label for="form-street">اسم الشارع أو الحي</label><input id="form-street" type="text" name="street" placeholder="مثال: شارع عباس العقاد" value="${savedInfo.street || ''}" required></div>
+                        <div class="form-control"><label for="form-landmark">أقرب معلم</label><input id="form-landmark" type="text" name="landmark" placeholder="مثال: بجوار الحديقة الدولية" value="${savedInfo.landmark || ''}" required></div>
+                        <div style="text-align: center; margin-top: 25px;"><button type="submit" class="primary-btn">تأكيد وحفظ الطلب</button></div>
+                    </form>
+                </div>`;
+                formOverlay.style.display = 'flex';
+                document.getElementById('delivery-form').addEventListener('submit', (e) => handleFormSubmit(e, product));
+                document.getElementById('close-form-btn').addEventListener('click', () => formOverlay.style.display = 'none');
+                formOverlay.addEventListener('click', (e) => { if(e.target === formOverlay) formOverlay.style.display = 'none'; });
+            }
+            function handleFormSubmit(event, product) {
+                event.preventDefault();
+                localStorage.removeItem(WIN_STATE_KEY); 
+                const formData = new FormData(event.target);
+                const deliveryInfo = Object.fromEntries(formData.entries());
+                localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+                formOverlay.querySelector('.overlay-content').innerHTML = `<h2>✅ تم حفظ بياناتك!</h2><p>تم حفظ بياناتك بنجاح. في المرة القادمة، سيتم إرسال طلبك مباشرة. يمكنك الآن اللعب مجدداً.</p><button id="final-restart-btn" class="primary-btn secondary-btn">العب مجدداً</button>`;
+                document.getElementById('final-restart-btn').addEventListener('click', () => {
+                     formOverlay.style.display = 'none';
+                     startGame();
+                });
+            }
 
-            // Simplified Event Listeners setup
             startButton.addEventListener('click', startGame);
             restartButton.addEventListener('click', startGame);
-            
+            resetGameButton.addEventListener('click', startGame); 
+            prizesButton.addEventListener('click', () => prizesOverlay.style.display = 'flex');
+            closePrizesBtn.addEventListener('click', () => prizesOverlay.style.display = 'none');
+            prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay) prizesOverlay.style.display = 'none'; });
+            infoSwitchPrizeBtn.addEventListener('click', () => {
+                infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length;
+                displayInfoPrize(infoPrizeIndex);
+            });
+            switchProductBtn.addEventListener('click', () => {
+                winPrizeIndex = (winPrizeIndex + 1) % prizes.length;
+                updateWinCarousel();
+            });
+            // --- *** المنطق الجديد لزر الحصول على الهدية *** ---
+            claimGiftButton.addEventListener('click', () => {
+                const savedInfo = JSON.parse(localStorage.getItem('deliveryInfo')) || {};
+                
+                // التحقق من وجود بيانات أساسية (الاسم والهاتف)
+                if (savedInfo.name && savedInfo.phone) {
+                    const product = prizes[winPrizeIndex];
+                    const recipientEmail = "orders@example.com"; // <-- ضع هنا ايميلك لاستلام الطلبات
+                    const subject = `طلب هدية جديد: ${product.name}`;
+                    const body = `
+مرحباً،
+أود المطالبة بهديتي من لعبة تحدي الذاكرة.
+
+الهدية المختارة: ${product.name}
+
+--- بيانات الشحن المحفوظة ---
+الاسم: ${savedInfo.name}
+الهاتف: ${savedInfo.phone}
+البريد الإلكتروني: ${savedInfo.email}
+المحافظة: ${savedInfo.governorate}
+المدينة: ${savedInfo.city}
+الشارع: ${savedInfo.street}
+أقرب معلم: ${savedInfo.landmark}
+-----------------------------
+                    `;
+                    
+                    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    
+                    // فتح تطبيق الايميل
+                    window.location.href = mailtoLink;
+                    
+                    // إعادة تعيين حالة الفوز للسماح باللعب مرة أخرى
+                    localStorage.removeItem(WIN_STATE_KEY);
+                    alert('تم فتح تطبيق البريد الإلكتروني لإرسال طلبك. بعد الإرسال، يمكنك بدء جولة جديدة.');
+
+                } else {
+                    // إذا لم تكن هناك بيانات، أظهر نافذة الإدخال
+                    showDeliveryForm(prizes[winPrizeIndex]);
+                }
+            });
+
             initGame();
         });
     </script>
