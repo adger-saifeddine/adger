@@ -44,7 +44,7 @@
             width: 100%; max-width: 500px;
             visibility: hidden;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.5s ease-in-out, margin-top 0.3s ease;
         }
         #header-controls {
             width: 100%; display: flex;
@@ -110,15 +110,14 @@
         .win-stats { animation-delay: 0.3s; padding: 0; background: none; }
         .win-reward-section { animation-delay: 0.5s; padding: 15px; background: rgba(255, 255, 255, 0.15); }
         
-        /* --- [تم التعديل] إضافة flexbox و gap للتحكم في المسافات بين الأزرار --- */
         .win-actions { 
             animation-delay: 0.7s; 
             background: none; 
             padding: 0; 
             display: flex;
             justify-content: center;
-            gap: 15px; /* يضيف مسافة أفقية (سطح المكتب) أو رأسية (الموبايل) */
-            flex-wrap: wrap; /* للسماح بالتفاف الأزرار إذا لزم الأمر */
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .win-header .win-icon { font-size: 3rem; margin-bottom: -5px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.7); }
@@ -146,8 +145,14 @@
         .secondary-btn { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .secondary-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        @media (max-width: 520px) {
-            body { align-items: flex-start; padding-top: 20px; }
+        @media (max-width: 499px) {
+            /* --- [تم التعديل] حل مشكلة المحاذاة العلوية --- */
+            /* لقد تم نقل محاذاة اللعبة إلى حاوية اللعبة نفسها بدلاً من الجسم بأكمله */
+            /* هذا يسمح للأوفرلي بالتوسيط بشكل صحيح. */
+            #game-container {
+                margin-top: 20px;
+            }
+
             .win-header .win-icon { font-size: 2.5rem; }
             .win-header h2 { font-size: 1.5rem; }
             .win-header p { font-size: 0.9rem; }
@@ -158,9 +163,8 @@
             .product-price .free { font-size: 1.1rem; }
             .primary-btn { padding: 12px 25px; font-size: 1rem; }
             
-            /* --- [تم التعديل] جعل الأزرار مكدسة فوق بعضها مع مسافة بينها --- */
             .win-actions {
-                flex-direction: column; /* يجعل الأزرار مكدسة عموديًا */
+                flex-direction: column;
             }
         }
         
