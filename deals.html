@@ -44,7 +44,7 @@
             width: 100%; max-width: 500px;
             visibility: hidden;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out, margin-top 0.3s ease;
+            transition: opacity 0.5s ease-in-out;
         }
         #header-controls {
             width: 100%; display: flex;
@@ -146,11 +146,13 @@
         .secondary-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
         @media (max-width: 499px) {
-            /* --- [تم التعديل] حل مشكلة المحاذاة العلوية --- */
-            /* لقد تم نقل محاذاة اللعبة إلى حاوية اللعبة نفسها بدلاً من الجسم بأكمله */
-            /* هذا يسمح للأوفرلي بالتوسيط بشكل صحيح. */
+            /* --- [تم التعديل والإصلاح] --- */
+            /* تم إزالة الأنماط من body التي كانت تسبب المشكلة. */
+            /* بدلاً من ذلك، نطبق الهوامش مباشرة على حاوية اللعبة لدفعها للأعلى، */
+            /* مع ترك النوافذ المنبثقة تتوسط الشاشة بشكل صحيح. */
             #game-container {
                 margin-top: 20px;
+                margin-bottom: auto;
             }
 
             .win-header .win-icon { font-size: 2.5rem; }
