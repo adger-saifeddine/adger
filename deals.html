@@ -99,7 +99,17 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        #win-overlay .overlay-content { width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px); background: linear-gradient(120deg, var(--primary-color), var(--secondary-color), var(--gold-color)); background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite; border: none; backdrop-filter: none; }
+        #win-overlay .overlay-content {
+            width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none;
+            overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column;
+            /* --- [هذا هو الإصلاح النهائي] --- */
+            /* تغيير flex-start إلى space-around يسمح بالتوسيط العمودي في الشاشات القصيرة */
+            justify-content: space-around; 
+            gap: 15px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px);
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color), var(--gold-color));
+            background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite;
+            border: none; backdrop-filter: none;
+        }
         #win-overlay .overlay-content::before { display: none; }
         
         @keyframes aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
@@ -127,7 +137,7 @@
         .stat-item { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 15px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; flex-direction: column; align-items: center; gap: 2px; flex-grow: 1; max-width: 130px; }
         .stat-item .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 700; }
         .stat-item .stat-value { font-size: 1.8rem; font-weight: 900; color: #fff; }
-        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); }
+        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); margin-block: -5px; }
         .win-reward-section h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; color: #fff; }
         .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: var(--primary-color); background: #fff; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
         .primary-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
@@ -146,15 +156,6 @@
         .secondary-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
         @media (max-width: 499px) {
-            /* --- [تم التعديل والإصلاح] --- */
-            /* تم إزالة الأنماط من body التي كانت تسبب المشكلة. */
-            /* بدلاً من ذلك، نطبق الهوامش مباشرة على حاوية اللعبة لدفعها للأعلى، */
-            /* مع ترك النوافذ المنبثقة تتوسط الشاشة بشكل صحيح. */
-            #game-container {
-                margin-top: 20px;
-                margin-bottom: auto;
-            }
-
             .win-header .win-icon { font-size: 2.5rem; }
             .win-header h2 { font-size: 1.5rem; }
             .win-header p { font-size: 0.9rem; }
