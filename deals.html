@@ -61,11 +61,12 @@
         }
         #prizes-button:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(255, 193, 7, 0.6); }
         
+        /* --- [تم التعديل] إضافة إطار للوحة المعلومات --- */
         #info-panel {
             background: var(--card-bg); padding: 10px 15px; border-radius: 20px;
             text-align: center; width: 100%; box-shadow: 0 8px 25px var(--shadow-color);
             display: flex; justify-content: space-around; align-items: center;
-            border: 1px solid #e0e6f1;
+            border: 1px solid #e0e6f1; /* الإطار المضاف */
         }
         .info-box { text-align: center; }
         .info-box h2 { margin: 0; font-size: 1rem; color: #777; font-weight: 700; }
@@ -91,25 +92,17 @@
         .point-popup { position: absolute; z-index: 200; background: rgba(40, 40, 60, 0.85); color: white; padding: 8px 18px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; line-height: 1.4; animation: floatUp 1.8s ease-out forwards; pointer-events: none; white-space: nowrap; text-align: center; }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
         
+        /* --- [تم التعديل] جعل الخلفية شفافة وإضافة تأثير ضبابي --- */
         .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(245, 247, 250, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
         
+        /* --- [تم التعديل] إضافة إطار للنوافذ المنبثقة --- */
         .overlay-content { position: relative; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; border: 1px solid rgba(0, 0, 0, 0.1); }
         
         #win-overlay { padding: 0; background: transparent; backdrop-filter: none; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        #win-overlay .overlay-content {
-            width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none;
-            overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column;
-            /* --- [هذا هو الإصلاح النهائي] --- */
-            /* تغيير flex-start إلى space-around يسمح بالتوسيط العمودي في الشاشات القصيرة */
-            justify-content: space-around; 
-            gap: 15px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px);
-            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color), var(--gold-color));
-            background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite;
-            border: none; backdrop-filter: none;
-        }
+        #win-overlay .overlay-content { width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px); background: linear-gradient(120deg, var(--primary-color), var(--secondary-color), var(--gold-color)); background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite; border: none; backdrop-filter: none; }
         #win-overlay .overlay-content::before { display: none; }
         
         @keyframes aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
@@ -119,17 +112,16 @@
         .win-header { animation-delay: 0.1s; padding: 10px; background: none; }
         .win-stats { animation-delay: 0.3s; padding: 0; background: none; }
         .win-reward-section { animation-delay: 0.5s; padding: 15px; background: rgba(255, 255, 255, 0.15); }
-        
+        /* --- [تم التعديل] إضافة مسافة بين الأزرار في نافذة الفوز --- */
         .win-actions { 
             animation-delay: 0.7s; 
             background: none; 
             padding: 0; 
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; /* هذه الخاصية تضيف المسافة بين الأزرار */
+            flex-wrap: wrap; /* للسماح للأزرار بالالتفاف على الشاشات الصغيرة */
         }
-
         .win-header .win-icon { font-size: 3rem; margin-bottom: -5px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.7); }
         .win-header h2 { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: #fff; background: none; -webkit-text-fill-color: initial; }
         .win-header p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 380px; margin: 0 auto; line-height: 1.5; }
@@ -137,7 +129,7 @@
         .stat-item { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 15px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; flex-direction: column; align-items: center; gap: 2px; flex-grow: 1; max-width: 130px; }
         .stat-item .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 700; }
         .stat-item .stat-value { font-size: 1.8rem; font-weight: 900; color: #fff; }
-        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); margin-block: -5px; }
+        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); }
         .win-reward-section h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; color: #fff; }
         .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: var(--primary-color); background: #fff; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
         .primary-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
@@ -155,7 +147,9 @@
         .secondary-btn { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .secondary-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        @media (max-width: 499px) {
+        /* --- [تم التعديل] تقليل المسافة العلوية في الهواتف --- */
+        @media (max-width: 520px) {
+            body { align-items: flex-start; padding-top: 20px; }
             .win-header .win-icon { font-size: 2.5rem; }
             .win-header h2 { font-size: 1.5rem; }
             .win-header p { font-size: 0.9rem; }
@@ -165,10 +159,6 @@
             .product-name { font-size: 1.05rem; }
             .product-price .free { font-size: 1.1rem; }
             .primary-btn { padding: 12px 25px; font-size: 1rem; }
-            
-            .win-actions {
-                flex-direction: column;
-            }
         }
         
         #claim-success-overlay { display: none; }
@@ -182,6 +172,7 @@
         @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .success-text { font-size: 1.8rem; color: var(--success-color); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); font-weight: bold; font-family: 'Cairo', sans-serif; text-decoration: none; display: none; animation: fadeIn 0.5s ease-out; margin: 0; }
         
+        /* --- [تم التعديل] تصميم جديد ومحسّن لنافذة الجوائز --- */
         #prizes-overlay .overlay-content {
             display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 400px;
         }
@@ -288,6 +279,7 @@
         </div>
     </div>
 
+    <!-- [تم التعديل] هيكل نافذة الجوائز المحسّن -->
     <div id="prizes-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <button class="close-btn" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
