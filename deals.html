@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحدي الذاكرة الخاطفة: الإصدار الاحترافي</title>
     <style>
-        /* --- CSS Styling (نفس التصميم الرائع والمصقول مع تحسينات) --- */
+        /* --- CSS Styling --- */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
 
         :root {
@@ -171,20 +171,17 @@
         .switch-icon { transition: transform 0.4s ease; }
         #info-switch-prize-btn:hover .switch-icon { transform: rotate(180deg); }
 
-        /* --- [تم التعديل] إضافة شاشة التحميل الأولية --- */
         #initial-loader-overlay {
-            z-index: 9999; /* للتأكد من أنها فوق كل شيء */
+            z-index: 9999;
             transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
         #initial-loader-overlay.hidden {
             opacity: 0;
             visibility: hidden;
         }
-
     </style>
 </head>
 <body>
-    <!-- [تم التعديل] إضافة عنصر شاشة التحميل، يكون ظاهرًا بشكل افتراضي -->
     <div id="initial-loader-overlay" class="overlay">
         <div class="loading-dots">
             <div class="dot"></div>
@@ -308,7 +305,7 @@
             });
             const database = firebase.database();
             
-            const initialLoader = document.getElementById('initial-loader-overlay'); // [تم التعديل]
+            const initialLoader = document.getElementById('initial-loader-overlay');
             const gameContainer = document.getElementById('game-container');
             const gameBoard = document.getElementById('game-board');
             const scoreDisplay = document.getElementById('score');
@@ -366,18 +363,15 @@
                 } catch (e) { console.error("Could not parse delivery info:", e); return null; }
             }
 
-            // [تم التعديل] تعديل كامل لدالة initGame للتعامل مع شاشة التحميل
             function initGame() {
                 displayInfoPrize(infoPrizeIndex);
-
                 const sanitizedUserId = getSanitizedUserId();
                 if (!sanitizedUserId) {
                     loginRequiredOverlay.style.display = 'flex';
                     startOverlay.style.display = 'none';
-                    initialLoader.classList.add('hidden'); // إخفاء شاشة التحميل
+                    initialLoader.classList.add('hidden');
                     return;
                 }
-
                 const userGameStateRef = database.ref(`user_game_states/${sanitizedUserId}`);
                 userGameStateRef.once('value').then(snapshot => {
                     const gameState = snapshot.val();
@@ -391,9 +385,8 @@
                     }
                 }).catch(error => {
                     console.error("Firebase check failed, defaulting to start screen:", error);
-                    startOverlay.style.display = 'flex'; // في حالة الفشل، اظهر شاشة البداية
+                    startOverlay.style.display = 'flex';
                 }).finally(() => {
-                    // هذا الجزء سيعمل دائمًا بعد انتهاء التحقق (سواء نجح أو فشل)
                     gameContainer.style.visibility = 'visible';
                     gameContainer.style.opacity = '1';
                     initialLoader.classList.add('hidden');
@@ -406,7 +399,6 @@
                 if (sanitizedUserId) {
                     database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: false });
                 }
-
                 totalScore = 0; currentLevelIndex = 0;
                 [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
                 startLevel(currentLevelIndex);
@@ -547,9 +539,13 @@
                     });
             }
 
+            // --- Event Listeners ---
             startButton.addEventListener('click', startGame);
             restartButton.addEventListener('click', startGame);
+            
+            // هذا الزر يستدعي دالة startGame التي تمحو حالة الفوز من Firebase
             resetGameButton.addEventListener('click', startGame); 
+            
             finalRestartBtn.addEventListener('click', startGame);
             prizesButton.addEventListener('click', () => {
                 displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex';
