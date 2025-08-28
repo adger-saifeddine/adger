@@ -70,7 +70,7 @@
         position: sticky;
         top: 0;
         width: 100%;
-        will-change: transform;
+        will-change: transform; /* تحسين أداء التحريك */
     }
 
     .header-top-row {
@@ -223,7 +223,7 @@
     #modal-close-btn { background: none; border: none; font-size: 2.2rem; color: #aaa; cursor: pointer; line-height: 1; padding: 5px; transition: color 0.2s, transform 0.2s; }
     #modal-close-btn:hover { color: #333; transform: rotate(90deg); }
     
-    /* ---=== التعديل المطلوب هنا ===--- */
+    /* ---=== التعديل الأول: إزالة المساحة البيضاء الزائدة ===--- */
     .modal-body { 
         display: flex; 
         gap: 2rem; 
@@ -231,23 +231,27 @@
         overflow-y: auto; 
         /* flex-grow: 1;  <-- تم حذف هذا السطر لمنع تمدد الجزء الأوسط */
     }
-    /* ---=== نهاية التعديل ===--- */
 
     .modal-image { flex-basis: 35%; flex-shrink: 0; }
     .modal-image img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: 0 4px 15px var(--shadow-color); }
     .modal-details { flex-basis: 65%; }
     .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
     .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
+    
+    /* ---=== التعديل الثاني: إزالة خلفية وخط منطقة الأزرار ===--- */
     .modal-footer {
-        padding: 1rem 1.5rem;
-        flex-shrink: 0;
-        display: flex;
-        gap: 1rem;
-        justify-content: flex-end;
-        align-items: center;
-        border-bottom-left-radius: var(--border-radius);
+        padding: 1rem 1.5rem; 
+        /* border-top: 1px solid rgba(0, 110, 255, 0.1); <-- تم الحذف */
+        /* background-color: rgba(0, 110, 255, 0.05); <-- تم الحذف */
+        flex-shrink: 0; 
+        display: flex; 
+        gap: 1rem; 
+        justify-content: flex-end; 
+        align-items: center; 
+        border-bottom-left-radius: var(--border-radius); 
         border-bottom-right-radius: var(--border-radius);
     }
+    
     .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     
     .modal-footer .btn-primary { background-color: var(--modal-btn-color); color: white; }
@@ -470,8 +474,7 @@
     <span id="toast-icon"></span>
     <span id="toast-message"></span>
 </div>
-</body>
-</html>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const bookData = [
@@ -512,13 +515,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
     
-    // --- START: CORRECTED HIDE/SHOW LOGIC ---
     const header = document.querySelector('header');
     let lastScrollY = window.scrollY;
     let currentHeaderY = 0; 
     let ticking = false;
-    // --- END: CORRECTED HIDE/SHOW LOGIC ---
-
 
     function showToastNotification(message, type) {
         const toast = document.getElementById('toast-notification');
@@ -718,21 +718,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- START: CORRECTED HIDE/SHOW LOGIC ---
     function handleHeaderScroll() {
         const currentScrollY = window.scrollY;
         const headerHeight = header.offsetHeight;
         const deltaY = currentScrollY - lastScrollY;
-
-        // حساب موضع الهيدر الجديد
         let newHeaderY = currentHeaderY - deltaY;
-
-        // وضع الحدود: لا تدع الهيدر يرتفع أكثر من ارتفاعه أو ينزل عن موضعه الأصلي
         newHeaderY = Math.max(-headerHeight, Math.min(0, newHeaderY));
-
         currentHeaderY = newHeaderY;
         header.style.transform = `translateY(${currentHeaderY}px)`;
-
         lastScrollY = Math.max(0, currentScrollY);
         ticking = false;
     }
@@ -743,7 +736,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
-    // --- END: CORRECTED HIDE/SHOW LOGIC ---
 
     bookGrid.addEventListener('click', (event) => {
         const card = event.target.closest('.book-card');
