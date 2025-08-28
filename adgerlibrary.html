@@ -228,6 +228,8 @@
     .modal-details { flex-basis: 65%; }
     .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
     .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
+
+    /* ---=== التعديل المطلوب هنا ===--- */
     .modal-footer {
         padding: 1rem 1.5rem;
         flex-shrink: 0;
@@ -237,7 +239,10 @@
         align-items: center;
         border-bottom-left-radius: var(--border-radius);
         border-bottom-right-radius: var(--border-radius);
+        /* تم حذف الخط العلوي والخلفية من هنا */
     }
+    /* ---=== نهاية التعديل ===--- */
+
     .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     
     .modal-footer .btn-primary { background-color: var(--modal-btn-color); color: white; }
@@ -462,7 +467,6 @@
 </div>
 </body>
 </html>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const bookData = [
