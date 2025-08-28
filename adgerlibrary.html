@@ -229,7 +229,14 @@
     .modal-details .modal-author { color: var(--card-author-color); font-style: italic; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
     .modal-details .modal-full-description { color: var(--main-text-color); line-height: 1.8; }
     .modal-footer {
-        padding: 1rem 1.5rem; border-top: 1px solid rgba(0, 110, 255, 0.1); background-color: rgba(0, 110, 255, 0.05); flex-shrink: 0; display: flex; gap: 1rem; justify-content: flex-end; align-items: center; border-bottom-left-radius: var(--border-radius); border-bottom-right-radius: var(--border-radius);
+        padding: 1rem 1.5rem;
+        flex-shrink: 0;
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        align-items: center;
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
     }
     .modal-footer .btn { text-decoration: none; text-align: center; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: bold; transition: all var(--transition-speed); border: 2px solid transparent; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     
@@ -453,6 +460,8 @@
     <span id="toast-icon"></span>
     <span id="toast-message"></span>
 </div>
+</body>
+</html>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
