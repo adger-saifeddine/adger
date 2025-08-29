@@ -1333,7 +1333,8 @@
 
         // Event Listeners
         window.addEventListener("scroll",()=>{let e="";const t=document.querySelectorAll(".section"),o=window.scrollY,n=dom.header.clientHeight;t.forEach(t=>{const o=t.offsetTop-n-1;scrollY>=o&&(e=t.getAttribute("id"))}),window.innerHeight+o>=document.documentElement.scrollHeight-2&&(e=t[t.length-1].getAttribute("id")),document.querySelectorAll("#desktopNav .nav-link").forEach(t=>{t.classList.remove("active"),t.getAttribute("href").substring(1)===e&&t.classList.add("active")}),dom.floatingWidget.classList.toggle("show",o>300)});
-        dom.allNavLinks.forEach(e=>e.addEventListener("click",function(e){e.preventDefault();const t=document.querySelector(this.getAttribute("href"));if(t){const e="#home"===this.getAttribute("href")?0:dom.header.clientHeight,o=t.offsetTop-e;window.scrollTo({top:o,behavior:"smooth"}),dom.mobileNav.classList.contains("active")&&dom.mobileMenuToggle.click()}}));
+        
+        // --- [هذا الجزء تم نقله] --- تم نقل مستمع النقر الخاص بالروابط إلى الأسفل
 
         dom.mobileMenuToggle.addEventListener("click",()=>{
             const isActive = dom.mobileMenuToggle.classList.toggle("active");
@@ -1444,6 +1445,21 @@
         // --- Final Touches ---
         calculateScrollbarWidth();
         renderProducts();
+
+        // [الحل] - إرفاق مستمع النقر للروابط هنا، بعد عرض المنتجات لأول مرة
+        // هذا يضمن أن ارتفاع الصفحة صحيح عند حساب موقع التمرير.
+        dom.allNavLinks.forEach(e=>e.addEventListener("click",function(e){
+            e.preventDefault();
+            const t=document.querySelector(this.getAttribute("href"));
+            if(t){
+                const e="#home"===this.getAttribute("href")?0:dom.header.clientHeight,o=t.offsetTop-e;
+                window.scrollTo({top:o,behavior:"smooth"});
+                if(dom.mobileNav.classList.contains("active")) {
+                    dom.mobileMenuToggle.click();
+                }
+            }
+        }));
+
         dom.imageContainer.addEventListener('touchstart', touchStart, { passive: true });
         dom.imageContainer.addEventListener('touchmove', touchMove, { passive: true });
         dom.imageContainer.addEventListener('touchend', touchEnd);
