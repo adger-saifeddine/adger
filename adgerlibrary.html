@@ -22,7 +22,7 @@
         --border-radius: 8px;
         --transition-speed: 0.3s ease;
         --favorite-color: #ff4757;
-        --buy-color: #27ae60; /* Added green color for buy button */
+        --buy-color: #27ae60;
     }
 
     * {
@@ -69,7 +69,8 @@
         position: sticky;
         top: 0;
         width: 100%;
-        will-change: transform; /* تحسين أداء التحريك */
+        /* تعديل: تم حذف الانتقال التدريجي للسماح بالتحكم الكامل عبر JS */
+        will-change: transform; 
     }
 
     .header-top-row {
@@ -225,7 +226,7 @@
     .remove-favorite:hover { transform: scale(1.2); }
     #empty-favorites { text-align: center; padding: 2rem 0; color: var(--card-author-color); }
 
-    /* START: Modal Styles (Updated) */
+    /* START: Modal Styles */
     #book-modal {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--card-bg); z-index: 2000;
         display: flex; flex-direction: column;
@@ -298,7 +299,6 @@
     }
     .modal-footer-btn i { font-size: 1.2rem; }
     
-    /* Outlined Favorite Button */
     #modal-favorite-btn {
         background-color: transparent;
         color: var(--favorite-color);
@@ -308,7 +308,6 @@
         background-color: var(--favorite-color); color: white;
     }
 
-    /* Outlined PDF Button */
     #modal-pdf-btn {
         background-color: transparent;
         color: #34495e;
@@ -318,14 +317,13 @@
         background-color: #34495e; color: white;
     }
 
-    /* Primary Action Button (Green) */
     #modal-buy-btn {
         background-color: var(--buy-color); 
         color: white; 
         border-color: var(--buy-color);
     }
     #modal-buy-btn:hover { 
-        background-color: #229954; /* Darker green */
+        background-color: #229954;
         border-color: #229954;
     }
     
@@ -333,8 +331,8 @@
         .modal-body { padding: 1.5rem; }
         .modal-content-layout {
             flex-direction: column;
-            align-items: center; /* Center the image block */
-            text-align: right;   /* Align the text to the right for RTL */
+            align-items: center; 
+            text-align: right;  
         }
         .modal-cover { max-width: 250px; margin-bottom: 1.5rem; }
         
@@ -422,7 +420,7 @@
     }
     
     @media (max-width: 480px) {
-        #book-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+        #book-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; } 
         .book-favorite-btn { top: 5px; left: 5px; width: 32px; height: 32px; }
         .book-favorite-btn i { font-size: 1rem; }
         
@@ -533,7 +531,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // تم توسيع بيانات الكتب لتشمل الوصف الكامل والروابط
     const bookData = [
         { 
             id: 'dune', 
@@ -603,7 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const favoritesList = document.getElementById('favorites-list');
     const emptyFavorites = document.getElementById('empty-favorites');
     
-    // عناصر النافذة المنبثقة
     const bookModal = document.getElementById('book-modal');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalBookTitle = document.getElementById('modal-book-title');
@@ -618,8 +614,44 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
     
+    // تعديل: الكود الجديد للتحكم في الهيدر
     const header = document.querySelector('header');
+    const headerHeight = header.offsetHeight;
     let lastScrollY = window.scrollY;
+    let headerOffset = 0;
+    let ticking = false;
+
+    function updateHeaderPosition() {
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - lastScrollY;
+
+        // تجاهل التمرير للأعلى عندما نكون في قمة الصفحة
+        if (currentScrollY <= 0) {
+            headerOffset = 0;
+        } else {
+             // حساب الإزاحة الجديدة للهيدر
+            headerOffset -= delta;
+        }
+
+        // التأكد من أن الإزاحة لا تتجاوز حدود الهيدر
+        // لا نسمح للهيدر بالتحرك لأسفل أبعد من موضعه الأصلي (0)
+        // ولا نسمح له بالتحرك لأعلى أبعد من ارتفاعه الكامل (-headerHeight)
+        headerOffset = Math.max(-headerHeight, Math.min(0, headerOffset));
+
+        header.style.transform = `translateY(${headerOffset}px)`;
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateHeaderPosition);
+            ticking = true;
+        }
+    });
+    // --- نهاية الكود الجديد للتحكم في الهيدر ---
+
 
     function showToastNotification(message, type) {
         const toast = document.getElementById('toast-notification');
@@ -653,7 +685,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFavoriteButtons();
         renderFavoritesList();
         
-        // تحديث زر المفضلة في النافذة المنبثقة إذا كانت مفتوحة
         if (bookModal.classList.contains('show') && bookModal.dataset.currentBookId === bookId) {
             updateModalFavoriteButton(bookId);
         }
@@ -690,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (book) {
                 const favoriteItem = document.createElement('div');
                 favoriteItem.className = 'favorite-item';
-                favoriteItem.dataset.bookId = book.id; // إضافة ID لفتح التفاصيل
+                favoriteItem.dataset.bookId = book.id;
                 favoriteItem.innerHTML = `<img src="${book.imageUrl}" alt="${book.title}"><div class="favorite-details"><h3>${book.title}</h3><p>${book.author}</p></div><button class="remove-favorite" data-book-id="${book.id}"><i class="fas fa-times"></i></button>`;
                 favoritesList.appendChild(favoriteItem);
             }
@@ -782,7 +813,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Modal Functions ---
     function openModal(bookId) {
         const book = bookData.find(b => b.id === bookId);
         if (!book) return;
@@ -806,7 +836,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bookModal.dataset.currentBookId = bookId;
         updateModalFavoriteButton(bookId);
 
-        // Reset scroll position to top every time modal is opened
         bookModal.querySelector('.modal-body').scrollTop = 0;
 
         body.classList.add('modal-open');
@@ -825,17 +854,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ? '<i class="fas fa-heart"></i> تمت الإضافة للمفضلة' 
             : '<i class="far fa-heart"></i> إضافة للمفضلة';
     }
-    // --- End Modal Functions ---
-
-    window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight){
-            header.style.transform = `translateY(-${header.offsetHeight}px)`;
-        } else {
-            header.style.transform = `translateY(0)`;
-        }
-        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
-    });
 
     bookGrid.addEventListener('click', (event) => {
         const favoriteBtn = event.target.closest('.book-favorite-btn');
@@ -859,7 +877,6 @@ document.addEventListener('DOMContentLoaded', () => {
     favoritesToggle.addEventListener('click', toggleFavoritesSidebar);
     closeFavorites.addEventListener('click', closeFavoritesSidebar);
 
-    // Event listener for favorite items to open modal
     favoritesList.addEventListener('click', (event) => {
         const removeBtn = event.target.closest('.remove-favorite');
         if (removeBtn) {
@@ -873,7 +890,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Modal event listeners
     modalCloseBtn.addEventListener('click', closeModal);
     modalFavoriteBtn.addEventListener('click', () => {
         const bookId = bookModal.dataset.currentBookId;
