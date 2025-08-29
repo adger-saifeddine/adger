@@ -69,7 +69,6 @@
         position: sticky;
         top: 0;
         width: 100%;
-        /* تعديل: تم حذف الانتقال التدريجي للسماح بالتحكم الكامل عبر JS */
         will-change: transform; 
     }
 
@@ -340,7 +339,7 @@
             align-items: center; 
             text-align: right;  
         }
-        .modal-cover { max-width: 250px; margin-bottom: 0.75rem; /* --- التعديل المطلوب: تم تقليل المسافة --- */ }
+        .modal-cover { max-width: 250px; margin-bottom: 0.25rem; /* <<<<<<<<< هذا هو التعديل الجديد لجعل المسافة صغيرة جداً >>>>>>>>> */ }
         
         .modal-footer {
             display: grid;
@@ -620,7 +619,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let toastTimeout;
     
-    // تعديل: الكود الجديد للتحكم في الهيدر
     const header = document.querySelector('header');
     const headerHeight = header.offsetHeight;
     let lastScrollY = window.scrollY;
@@ -631,21 +629,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentScrollY = window.scrollY;
         const delta = currentScrollY - lastScrollY;
 
-        // تجاهل التمرير للأعلى عندما نكون في قمة الصفحة
         if (currentScrollY <= 0) {
             headerOffset = 0;
         } else {
-             // حساب الإزاحة الجديدة للهيدر
             headerOffset -= delta;
         }
 
-        // التأكد من أن الإزاحة لا تتجاوز حدود الهيدر
-        // لا نسمح للهيدر بالتحرك لأسفل أبعد من موضعه الأصلي (0)
-        // ولا نسمح له بالتحرك لأعلى أبعد من ارتفاعه الكامل (-headerHeight)
         headerOffset = Math.max(-headerHeight, Math.min(0, headerOffset));
-
         header.style.transform = `translateY(${headerOffset}px)`;
-        
         lastScrollY = currentScrollY;
         ticking = false;
     }
@@ -656,8 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
-    // --- نهاية الكود الجديد للتحكم في الهيدر ---
-
 
     function showToastNotification(message, type) {
         const toast = document.getElementById('toast-notification');
