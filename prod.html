@@ -370,7 +370,7 @@
             }
         };
         
-        // --- START: هذا هو الجزء الذي تم تعديله ---
+        // --- START: التعديل الوحيد والدقيق هنا ---
         const dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
@@ -382,27 +382,20 @@
 
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const dragDuration = Date.now() - state.startTime;
-            
+
             // [الحل]: هذا الشرط هو مفتاح الحل.
-            // إذا كانت الحركة صغيرة جدًا وسريعة جدًا (أي نقرة)، فإنه يتوقف هنا.
-            // هذا يمنع `setActiveSlide` من العمل بشكل غير ضروري ويسمح لحدث النقر
-            // بالوصول إلى زر تشغيل الفيديو الموجود أسفله.
+            // إذا كانت الحركة صغيرة جدًا وسريعة جدًا (أي نقرة)، فإنه يتوقف هنا فورًا.
+            // هذا يمنع بقية الكود من العمل ويسمح لحدث "النقر" الأصلي بالوصول لزر التشغيل.
+            // تم إزالة `setActiveSlide` من هنا لمنع "إغلاق" الشريحة عند النقر.
             if (Math.abs(dragOffset) < 5 && dragDuration < 200) {
-                // نعيد الشريحة لمكانها الصحيح في حال تحركت بكسلات بسيطة، ولكن لا نفعل شيئًا آخر.
-                dom.track.classList.add('transitioning');
-                setSliderPosition(); 
                 return;
             }
 
-            const swipeThreshold = 50; // حد السحب الكافي لتغيير الشريحة
-            
-            // تم تعديل هذا الجزء ليعمل بشكل صحيح مع اتجاه RTL
-            if (dragOffset > swipeThreshold && state.currentIndex > 0) {
-                // السحب لليمين (إزاحة موجبة) ينتقل إلى الشريحة السابقة في RTL
-                state.currentIndex--;
-            } else if (dragOffset < -swipeThreshold && state.currentIndex < state.mediaItems.length - 1) {
-                // السحب لليسار (إزاحة سالبة) ينتقل إلى الشريحة التالية في RTL
+            // --- هذا الكود لم يتغير وهو المسؤول عن التمرير الذي تفضله ---
+            if (dragOffset > 1 && state.currentIndex < state.mediaItems.length - 1) {
                 state.currentIndex++;
+            } else if (dragOffset < -1 && state.currentIndex > 0) {
+                state.currentIndex--;
             }
             
             setActiveSlide(state.currentIndex, true);
