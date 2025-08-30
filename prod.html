@@ -42,8 +42,6 @@
 
 </body>
 </html>
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -332,7 +330,8 @@
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         
         // --- START: تعديلات على متغيرات الحالة ---
-        const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, dragDirection: null, };
+        // تم إزالة `startTime` لأنه لم يعد مطلوبًا بعد تعديل منطق السحب
+        const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], dragDirection: null, };
         // --- END: تعديلات على متغيرات الحالة ---
 
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
@@ -342,7 +341,7 @@
         const dragStart = (e) => {
             state.dragDirection = null; // إعادة تعيين اتجاه السحب
             state.isDragging = true;
-            state.startTime = Date.now();
+            // state.startTime = Date.now(); // لم يعد مطلوبًا
             state.startPos = getPositionX(e);
             state.startY = getPositionY(e); // تسجيل موضع البداية الرأسي
             state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth;
@@ -393,19 +392,21 @@
             }
 
             const dragOffset = state.currentTranslate - state.prevTranslate;
-            const dragDuration = Date.now() - state.startTime;
+            const swipeThreshold = 30; // حد السحب الكافي لتغيير الشريحة
 
-            if (Math.abs(dragOffset) < 5 && dragDuration < 200) {
-                setActiveSlide(state.currentIndex, true);
-                return;
-            }
+            // [الحل] تم إزالة منطق معالجة "النقر" الذي كان يتعارض مع أحداث النقر على أزرار الفيديو.
+            // الآن، النقرات العادية يتم التعامل معها مباشرة بواسطة مستمعي الأحداث الخاصة بالعناصر (مثل زر التشغيل).
 
-            if (dragOffset > 1 && state.currentIndex < state.mediaItems.length - 1) {
-                state.currentIndex++;
-            } else if (dragOffset < -1 && state.currentIndex > 0) {
+            // [الحل] تصحيح منطق اتجاه السحب ليتوافق مع RTL
+            // السحب لليمين (إزاحة موجبة) يعني الانتقال إلى الشريحة "السابقة"
+            if (dragOffset > swipeThreshold && state.currentIndex > 0) {
                 state.currentIndex--;
+            // السحب لليسار (إزاحة سالبة) يعني الانتقال إلى الشريحة "التالية"
+            } else if (dragOffset < -swipeThreshold && state.currentIndex < state.mediaItems.length - 1) {
+                state.currentIndex++;
             }
             
+            // هذه الدالة ستقوم بالانتقال للشريحة الجديدة أو إعادة الشريحة الحالية لمكانها إذا كان السحب غير كافٍ
             setActiveSlide(state.currentIndex, true);
             state.dragDirection = null; // إعادة التعيين
         };
