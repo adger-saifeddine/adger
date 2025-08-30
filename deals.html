@@ -100,7 +100,6 @@
         .win-header { animation-delay: 0.1s; padding: 10px; background: none; }
         .win-stats { animation-delay: 0.3s; padding: 0; background: none; }
         .win-reward-section { animation-delay: 0.5s; padding: 15px; background: rgba(13, 17, 23, 0.25); }
-        /* MODIFIED: Ensure button is always centered */
         .win-actions { animation-delay: 0.7s; background: none; padding: 0; display: flex; justify-content: center; width: 100%; }
         .win-header .win-icon { font-size: 3rem; margin-bottom: -5px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.7); }
         .win-header h2 { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: #fff; background: none; -webkit-text-fill-color: initial; }
@@ -159,6 +158,8 @@
             body {
                 align-items: flex-start;
                 padding-top: 5px;
+                /* MODIFICATION: Added bottom padding to give space below the canvas */
+                padding-bottom: 15px;
             }
             #header-controls {
                 margin-top: 5px;
@@ -211,7 +212,6 @@
         </div>
     </div>
     
-    <!-- MODIFICATION: Added a button to the game over overlay -->
     <div id="game-over-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <h2 style="color: var(--secondary-color)">نفدت الكرات!</h2>
@@ -315,7 +315,6 @@
         
         const startButton = document.getElementById('start-button');
         const claimGiftButton = document.getElementById('claim-gift-btn');
-        // MODIFICATION: Added a selector for the new OK button
         const gameOverOkButton = document.getElementById('game-over-ok-btn');
         
         const prizesButton = document.getElementById('prizes-button');
@@ -418,7 +417,9 @@
         
         function update(deltaTime) {
             const scaledDelta = deltaTime * timeScale;
-            state.cannon.angle = lerp(state.cannon.angle, state.cannon.targetAngle, 0.15); state.cannon.recoil = lerp(state.cannon.recoil, 0, 0.15);
+            // MODIFICATION: Increased lerp factor for smoother, more responsive movement
+            state.cannon.angle = lerp(state.cannon.angle, state.cannon.targetAngle, 0.2); 
+            state.cannon.recoil = lerp(state.cannon.recoil, 0, 0.15);
             if (state.ball) { const b = state.ball; b.dx += state.wind * scaledDelta * 60; b.x += b.dx * scaledDelta * 60; b.y += b.dy * scaledDelta * 60; b.trail.unshift({x: b.x, y: b.y}); if (b.trail.length > 20) b.trail.pop(); if (b.x > canvas.width - b.radius) { b.x = canvas.width - b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.x < b.radius) { b.x = b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.y < b.radius) { b.y = b.radius; b.dy *= -0.9; playCannonSound('bounce'); } if (b.y > canvas.height + b.radius * 2) { state.ball = null; if(state.targets.length > 0) state.gameState = 'aiming'; } state.obstacles.forEach(obs => { if (b.x + b.radius > obs.x && b.x - b.radius < obs.x + obs.width && b.y + b.radius > obs.y && b.y - b.radius < obs.y + obs.height) { const overlapX = (b.radius + obs.width / 2) - Math.abs(b.x - (obs.x + obs.width / 2)); const overlapY = (b.radius + obs.height / 2) - Math.abs(b.y - (obs.y + obs.height / 2)); if (overlapX < overlapY) { b.dx *= -0.9; b.x += b.dx > 0 ? overlapX : -overlapX; } else { b.dy *= -0.9; b.y += b.dy > 0 ? overlapY : -overlapY; } playCannonSound('bounce'); } }); state.targets.forEach(target => { if (target.isDying) return; const dist = Math.hypot(b.x - target.x, b.y - target.y); if (dist < b.radius + target.radius) { playCannonSound('hit'); state.screenShake = { duration: 15, magnitude: 5 }; state.score += 250; 
                 state.scorePopups.push({ x: target.x, y: target.y, text: '+250', life: 70, initialLife: 70 });
                 target.isDying = true; if (state.targets.filter(t => !t.isDying).length === 1) { timeScale = 0.1; } } }); }
@@ -453,13 +454,66 @@
         }
 
         function getBarrelTip() { const c = state.cannon; return { x: c.x + Math.cos(c.angle) * 80, y: c.y + Math.sin(c.angle) * 80 }; }
-        function getLaunchParams() { const dragStart = { x: state.cannon.x, y: state.cannon.y }; const dragEnd = state.input.dragEnd; const dx = dragEnd.x - dragStart.x; const dy = dragEnd.y - dragStart.y; let angle = Math.atan2(dy, dx); if (angle > 0) { angle = (dragEnd.x < dragStart.x) ? -Math.PI : 0; } const dist = Math.hypot(dx, dy); const power = Math.min(20, dist / 15); return { power, angle }; }
+        
+        function getLaunchParams() { 
+            const dragStart = { x: state.cannon.x, y: state.cannon.y }; 
+            const dragEnd = state.input.dragEnd; 
+            const dx = dragEnd.x - dragStart.x; 
+            const dy = dragEnd.y - dragStart.y; 
+            let angle = Math.atan2(dy, dx); 
+            // MODIFICATION: Removed the code that prevented aiming downwards.
+            const dist = Math.hypot(dx, dy); 
+            const power = Math.min(20, dist / 15); 
+            return { power, angle }; 
+        }
+
         function updateUI() { scoreDisplayValue.textContent = Math.floor(state.displayScore); ammoDisplayValue.textContent = state.ammo; }
         
         function gameLoop(currentTime) { const deltaTime = (currentTime - lastTime) / 1000; lastTime = currentTime; update(deltaTime); render(); updateUI(); animationFrameId = requestAnimationFrame(gameLoop); }
+        
+        // MODIFICATION: Rewrote handleInput for robust touch and mouse support
         function handleInput(e, type) { 
             if (!state.canPlayToday || state.prizeClaimedMessage) return;
-            e.preventDefault(); const pos = {x:0, y:0}; const rect = canvas.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; pos.x = (clientX - rect.left) * (canvas.width / rect.width); pos.y = (clientY - rect.top) * (canvas.height / rect.height); if (type === 'start' && state.gameState === 'aiming') { state.input.isDragging = true; state.input.dragEnd = pos; } else if (type === 'move' && state.input.isDragging) { state.input.dragEnd = pos; const { angle } = getLaunchParams(); state.cannon.targetAngle = angle; } else if (type === 'end' && state.input.isDragging) { state.input.isDragging = false; fire(); } }
+            e.preventDefault(); 
+            
+            const pos = {x:0, y:0}; 
+            const rect = canvas.getBoundingClientRect();
+            
+            let touchPoint;
+            if (e.touches && e.touches.length > 0) {
+                touchPoint = e.touches[0]; // For touchstart and touchmove
+            } else if (e.changedTouches && e.changedTouches.length > 0) {
+                touchPoint = e.changedTouches[0]; // For touchend
+            }
+
+            // Fallback to mouse event coordinates if not a touch event
+            const clientX = touchPoint ? touchPoint.clientX : e.clientX;
+            const clientY = touchPoint ? touchPoint.clientY : e.clientY;
+
+            // If we couldn't determine a point, just handle the event type for 'end'
+            if (typeof clientX === 'undefined') {
+                if (type === 'end' && state.input.isDragging) {
+                    state.input.isDragging = false;
+                    fire();
+                }
+                return;
+            }
+
+            pos.x = (clientX - rect.left) * (canvas.width / rect.width); 
+            pos.y = (clientY - rect.top) * (canvas.height / rect.height); 
+            
+            if (type === 'start' && state.gameState === 'aiming') { 
+                state.input.isDragging = true; 
+                state.input.dragEnd = pos; 
+            } else if (type === 'move' && state.input.isDragging) { 
+                state.input.dragEnd = pos; 
+                const { angle } = getLaunchParams(); 
+                state.cannon.targetAngle = angle; 
+            } else if (type === 'end' && state.input.isDragging) { 
+                state.input.isDragging = false; 
+                fire(); 
+            } 
+        }
 
         function resetCannonGame() {
             state = { score: 0, displayScore: 0, ammo: 15, gameState: 'aiming', cannon: { x: canvas.width / 2, y: canvas.height - 40, angle: -Math.PI / 2, targetAngle: -Math.PI / 2, recoil: 0 }, ball: null, targets: [], particles: [], stars: [], obstacles: [], wind: (Math.random() - 0.5) * 0.04, input: { isDragging: false, dragEnd: {} }, screenShake: { duration: 0, magnitude: 0 },
@@ -477,8 +531,21 @@
         //  3. MAIN GAME CONTROLLER
         // ==========================================================
         function getSanitizedUserId() { const deliveryInfoString = localStorage.getItem('deliveryInfo'); if (!deliveryInfoString) return null; try { const deliveryInfo = JSON.parse(deliveryInfoString); const userId = deliveryInfo.phone; if (!userId) return null; return userId.replace(/\D/g, ''); } catch (e) { console.error("Could not parse delivery info:", e); return null; } }
+        
+        // MODIFICATION: New function to make canvas taller on mobile devices
+        function setupCanvasDimensions() {
+            if (window.innerWidth < 520) {
+                // Change the internal resolution to be taller for a better mobile experience
+                canvas.width = 800;
+                canvas.height = 1200; 
+            } else {
+                canvas.width = 800;
+                canvas.height = 600;
+            }
+        }
 
         function init() {
+            setupCanvasDimensions(); // Set canvas size before anything else
             displayInfoPrize(infoPrizeIndex);
             const sanitizedUserId = getSanitizedUserId();
             const finalizeInit = () => {
@@ -632,7 +699,6 @@
         // --- Event Listeners ---
         startButton.addEventListener('click', () => startGame(true, 15)); 
         
-        // MODIFICATION: Added event listener for the new OK button
         gameOverOkButton.addEventListener('click', () => {
             gameOverOverlay.style.display = 'none';
         });
