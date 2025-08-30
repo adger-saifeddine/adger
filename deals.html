@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adger</title>
-    <link rel="icon" href="https://files.catbox.moe/x6m74r.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحدي الذاكرة الخاطفة: الإصدار الاحترافي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>لعبة المدفع - تحدي الجوائز</title>
+    <link rel="icon" href="logo.jpg" type="image/x-icon">
     <style>
-        /* --- CSS Styling --- */
+        /* --- CSS Styling (From Memory Game Base) --- */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
 
         :root {
-            --bg-start: #f5f7fa; --bg-end: #c3cfe2;
-            --card-bg: #ffffff; --card-front: #eef2f7;
-            --primary-color: #6a5acd; --secondary-color: #448aff;
-            --danger-color: #ff5252; --text-color: #333;
-            --shadow-color: rgba(100, 100, 150, 0.1); --gold-color: #ffc107;
-            --success-color: #4CAF50;
+            --bg-start: #0d1117; --bg-end: #161b22;
+            --card-bg: #1c2128; --card-front: #21262d;
+            --primary-color: #58a6ff; --secondary-color: #f78166;
+            --danger-color: #f85149; --text-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.5); --gold-color: #ffc107;
+            --success-color: #238636;
         }
         *, *::before, *::after { 
             box-sizing: border-box; 
@@ -32,16 +27,17 @@
             outline: none;
         }
         body {
-            font-family: 'Cairo', sans-serif; display: flex; justify-content: center;
+            font-family: 'Cairo', 'Tajawal', sans-serif; display: flex; justify-content: center;
             align-items: center; min-height: 100vh; margin: 0;
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
             color: var(--text-color); padding: 10px; overflow: hidden;
             user-select: none;
+            touch-action: none;
         }
         #game-container {
             position: relative; z-index: 2; display: flex; flex-direction: column;
             align-items: center; gap: 10px;
-            width: 100%; max-width: 500px;
+            width: 100%; max-width: 800px;
             visibility: hidden;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
@@ -53,7 +49,7 @@
         }
         #prizes-button {
             background: linear-gradient(45deg, var(--gold-color), #ffeb3b);
-            color: var(--text-color); border: none; padding: 8px 20px;
+            color: #111; border: none; padding: 8px 20px;
             border-radius: 20px; font-family: 'Cairo', sans-serif;
             font-weight: 700; font-size: 1rem; cursor: pointer;
             box-shadow: 0 2px 10px rgba(255, 193, 7, 0.4);
@@ -65,121 +61,118 @@
             background: var(--card-bg); padding: 10px 15px; border-radius: 20px;
             text-align: center; width: 100%; box-shadow: 0 8px 25px var(--shadow-color);
             display: flex; justify-content: space-around; align-items: center;
-            border: 1px solid #e0e6f1;
+            border: 1px solid #30363d;
         }
         .info-box { text-align: center; }
-        .info-box h2 { margin: 0; font-size: 1rem; color: #777; font-weight: 700; }
+        .info-box h2 { margin: 0; font-size: 1rem; color: #8b949e; font-weight: 700; }
         .info-box .value { font-size: 2.2rem; font-weight: 900; }
-        #score { position: relative; color: var(--primary-color); transition: transform 0.2s ease-out, color 0.2s; }
-        #score.updated { transform: scale(1.3); color: var(--gold-color); text-shadow: 0 0 10px var(--gold-color); }
-        #level { color: var(--secondary-color); }
-        #mistakes { display: flex; flex-direction: row-reverse; gap: 8px; height: 30px; align-items: center; }
-        .mistake-dot { width: 20px; height: 20px; border-radius: 50%; border: 3px solid #ddd; background-color: #f0f0f0; transition: all 0.3s ease-in-out; }
-        .mistake-dot.filled { background-color: var(--danger-color); border-color: var(--danger-color); transform: scale(1.1); }
-        #game-board { width: 100%; display: grid; gap: 10px; perspective: 1200px; margin-top: 5px; }
-        .board-size-6 { grid-template-columns: repeat(3, 1fr); aspect-ratio: 3 / 4; }
-        .card { position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-        .card.flipped { transform: rotateY(180deg); }
-        .card.matched { cursor: default; opacity: 0.5; transform: rotateY(180deg) scale(0.9); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; border-radius: 12px; box-shadow: 0 5px 15px var(--shadow-color); overflow: hidden; }
-        .card-front { background: var(--card-front); border: 2px solid #fff; color: var(--secondary-color); font-size: 3.5rem; font-weight: 900; }
-        .card-back { background: #fff; transform: rotateY(180deg); padding: 5px; }
-        .card-back img { width: 100%; height: 100%; object-fit: contain; }
+        #score .value { color: var(--primary-color); }
+        #ammo .value { color: var(--secondary-color); }
+       
+        /* --- Styles for Cannon Game Canvas --- */
+        #gameCanvas {
+            border: 3px solid #30363d; border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 100%; height: auto;
+            cursor: crosshair; background-color: #161b22;
+            margin-top: 10px;
+        }
+        #gameCanvas:active { cursor: crosshair; }
+
+        /* --- Generic Overlay Styles (From Memory Game) --- */
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13, 17, 23, 0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
+        .overlay-content { position: relative; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; border: 1px solid #30363d; }
         
-        .coin { position: fixed; z-index: 100; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, #ffd700, #f9a825); box-shadow: 0 0 5px #ffd700, inset 0 0 3px rgba(0,0,0,0.3); pointer-events: none; opacity: 0; animation: fly-to-score 0.8s cubic-bezier(0.5, 0, 1, 1) forwards; }
-        @keyframes fly-to-score { 0% { transform: translate(0, 0) scale(1.2); opacity: 1; } 100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0.5; } }
-        .point-popup { position: absolute; z-index: 200; background: rgba(40, 40, 60, 0.85); color: white; padding: 8px 18px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; line-height: 1.4; animation: floatUp 1.8s ease-out forwards; pointer-events: none; white-space: nowrap; text-align: center; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
-        
-        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(245, 247, 250, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: fadeIn 0.5s; padding: 15px; }
-        
-        .overlay-content { position: relative; background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; width: 100%; max-width: 500px; box-shadow: 0 10px 40px var(--shadow-color); animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); max-height: 90vh; overflow-y: auto; border: 1px solid rgba(0, 0, 0, 0.1); }
-        
-        #win-overlay { padding: 0; background: transparent; backdrop-filter: none; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        #win-overlay .overlay-content { width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px); background: linear-gradient(120deg, var(--primary-color), var(--secondary-color), var(--gold-color)); background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite; border: none; backdrop-filter: none; }
-        #win-overlay .overlay-content::before { display: none; }
-        
+        .overlay h2 { font-size: 2rem; margin-bottom: 10px; }
+        .overlay p { font-size: 1.1rem; color: #bdc6d0; line-height: 1.6; }
+        .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: #fff; background: var(--success-color); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+        .primary-btn:hover { background-color: #2ea043; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
+
+        /* --- Win Overlay Specific Styles --- */
+        #win-overlay { padding: 0; background: transparent; backdrop-filter: none; animation: fadeIn 0.5s; }
+        #win-overlay .overlay-content { width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px); background: linear-gradient(120deg, #1f6feb, #f78166, var(--gold-color)); background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite; border: none; backdrop-filter: none; }
         @keyframes aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         @keyframes slideUpFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        #win-overlay .animated-item { animation: slideUpFadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 15px; }
-
+        #win-overlay .animated-item { animation: slideUpFadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; background: rgba(13, 17, 23, 0.2); border-radius: 15px; padding: 15px; }
         .win-header { animation-delay: 0.1s; padding: 10px; background: none; }
         .win-stats { animation-delay: 0.3s; padding: 0; background: none; }
-        .win-reward-section { animation-delay: 0.5s; padding: 15px; background: rgba(255, 255, 255, 0.15); }
-        .win-actions { 
-            animation-delay: 0.7s; background: none; padding: 0; 
-            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
-        }
+        .win-reward-section { animation-delay: 0.5s; padding: 15px; background: rgba(13, 17, 23, 0.25); }
+        /* MODIFIED: Ensure button is always centered */
+        .win-actions { animation-delay: 0.7s; background: none; padding: 0; display: flex; justify-content: center; width: 100%; }
         .win-header .win-icon { font-size: 3rem; margin-bottom: -5px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.7); }
         .win-header h2 { font-size: 2rem; font-weight: 900; margin-bottom: 5px; color: #fff; background: none; -webkit-text-fill-color: initial; }
         .win-header p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 380px; margin: 0 auto; line-height: 1.5; }
         .win-stats { display: flex; justify-content: center; gap: 15px; width: 100%; }
-        .stat-item { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 15px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.3); display: flex; flex-direction: column; align-items: center; gap: 2px; flex-grow: 1; max-width: 130px; }
+        .stat-item { background: rgba(13, 17, 23, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 15px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-direction: column; align-items: center; gap: 2px; flex-grow: 1; max-width: 130px; }
         .stat-item .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 700; }
         .stat-item .stat-value { font-size: 1.8rem; font-weight: 900; color: #fff; }
-        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); }
+        .win-divider { width: 90%; height: 1px; border: none; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); }
         .win-reward-section h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; color: #fff; }
-        .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: var(--primary-color); background: #fff; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
-        .primary-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
-        .primary-btn:disabled { cursor: not-allowed; background-color: #e0e0e0; }
+        #win-overlay .primary-btn { background: #fff; color: var(--primary-color); }
         #product-carousel { position: relative; min-height: 270px; margin: 0; width: 100%; }
         .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 5px 0; opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; transform: scale(0.95); }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
-        .product-slide img { width: 100%; max-width: 200px; max-height: 140px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
-        .product-name { font-size: 1.4rem; font-weight: 900; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); letter-spacing: -0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 95%; text-align: center; margin: 0; flex-shrink: 0; }
+        .product-slide img { width: 100%; max-width: 200px; max-height: 140px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); }
+        .product-name { font-size: 1.4rem; font-weight: 900; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); letter-spacing: -0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 95%; text-align: center; margin: 0; flex-shrink: 0; }
         .product-price { font-size: 1rem; flex-shrink: 0; color: #fff; }
         .product-price .original { text-decoration: line-through; color: rgba(255,255,255,0.7); margin-inline-end: 10px; }
         .product-price .free { color: var(--gold-color); font-weight: 700; font-size: 1.4rem; }
-        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.9); border-radius: 50px; padding: 7px 18px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; color: var(--text-color); box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-weight: 700; }
+        #switch-product-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.9); border-radius: 50px; padding: 7px 18px; margin-top: 5px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; color: #111; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-weight: 700; }
         #switch-product-btn:hover { background: #fff; transform: scale(1.05); }
-        #switch-product-btn svg { width: 18px; height: 18px; fill: var(--text-color); }
+        #switch-product-btn svg { width: 18px; height: 18px; fill: #111; }
         .secondary-btn { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .secondary-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px) scale(1.03); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        @media (max-width: 520px) {
-            body { align-items: flex-start; padding-top: 20px; }
-            .win-header .win-icon { font-size: 2.5rem; } .win-header h2 { font-size: 1.5rem; } .win-header p { font-size: 0.9rem; }
-            .stat-item .stat-value { font-size: 1.4rem; } #product-carousel { min-height: auto; height: 28vh; }
-            .product-slide img { max-height: 16vh; } .product-name { font-size: 1.05rem; } .product-price .free { font-size: 1.1rem; }
-            .primary-btn { padding: 12px 25px; font-size: 1rem; }
-        }
-        
-        #claim-success-overlay { z-index: 1001; } /* Ensure it's on top */
+        /* --- Claim Success Overlay --- */
+        #claim-success-overlay { z-index: 1001; }
         #claim-success-overlay .overlay-content { width: 320px; height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; padding-bottom: 20px; }
         .loading-dots { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 0; }
         .dot { width: 15px; height: 15px; border-radius: 50%; animation: switch 1.2s infinite ease-in-out; }
         .dot:nth-child(1) { background-color: var(--danger-color); }
-        .dot:nth-child(2) { background-color: var(--secondary-color); animation-delay: 0.6s; }
+        .dot:nth-child(2) { background-color: var(--primary-color); animation-delay: 0.6s; }
         @keyframes switch { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 1; } 100% { transform: scale(0.5); opacity: 0.5; } }
-        .checkmark-circle { width: 100px; height: 100px; border-radius: 50%; background-color: var(--success-color); display: none; justify-content: center; align-items: center; font-size: 60px; color: white; margin: 0; animation: scaleIn 0.5s ease-out; }
-        @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .success-text { font-size: 1.8rem; color: var(--success-color); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); font-weight: bold; font-family: 'Cairo', sans-serif; text-decoration: none; display: none; animation: fadeIn 0.5s ease-out; margin: 0; }
         
+        /* --- Prizes Info Overlay --- */
         #prizes-overlay .overlay-content { display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 400px; }
         .close-btn { position: absolute; top: 10px; left: 15px; background: none; border: none; font-size: 2rem; font-weight: bold; color: #aaa; cursor: pointer; transition: color 0.2s; }
-        .close-btn:hover { color: #333; }
-        #prizes-overlay h2 { font-size: 1.8rem; margin: 0; color: var(--primary-color); } #prizes-overlay p { margin: 0 0 10px 0; font-size: 1rem; color: #666; }
+        .close-btn:hover { color: #eee; }
+        #prizes-overlay h2 { font-size: 1.8rem; margin: 0; color: var(--primary-color); } #prizes-overlay p { margin: 0 0 10px 0; font-size: 1rem; color: #999; }
         #prize-display { width: 100%; text-align: center; opacity: 1; transform: scale(1); transition: opacity 0.3s ease, transform 0.3s ease; }
         #prize-display.fade-out { opacity: 0; transform: scale(0.95); }
-        #prize-image { width: 100%; max-width: 250px; height: auto; border-radius: 15px; object-fit: cover; box-shadow: 0 8px 25px var(--shadow-color); margin-bottom: 15px; border: 4px solid #fff; }
+        #prize-image { width: 100%; max-width: 250px; height: auto; border-radius: 15px; object-fit: cover; box-shadow: 0 8px 25px var(--shadow-color); margin-bottom: 15px; border: 4px solid #30363d; }
         #prize-info { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         #prize-name { font-size: 1.3rem; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
-        .free-badge { background: linear-gradient(45deg, var(--gold-color), #ffeb3b); color: var(--text-color); font-weight: 700; font-size: 0.9rem; padding: 5px 15px; border-radius: 20px; }
+        .free-badge { background: linear-gradient(45deg, var(--gold-color), #ffeb3b); color: #111; font-weight: 700; font-size: 0.9rem; padding: 5px 15px; border-radius: 20px; }
         .prize-nav { margin-top: 15px; } .primary-btn.has-icon { display: inline-flex; align-items: center; gap: 8px; }
+        #info-switch-prize-btn { background-color: var(--primary-color); color: white;}
         .switch-icon { transition: transform 0.4s ease; }
         #info-switch-prize-btn:hover .switch-icon { transform: rotate(180deg); }
 
-        #initial-loader-overlay {
-            z-index: 9999;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        #initial-loader-overlay { z-index: 9999; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
+        #initial-loader-overlay.hidden { opacity: 0; visibility: hidden; }
+
+        /* --- Media Query for Mobile Layout --- */
+        @media (max-width: 520px) {
+            body {
+                align-items: flex-start;
+                padding-top: 5px;
+            }
+            #header-controls {
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+            .win-header h2 { font-size: 1.5rem; } 
+            .win-header p { font-size: 0.9rem; } 
+            .stat-item .stat-value { font-size: 1.4rem; } 
+            #product-carousel { min-height: auto; height: 28vh; } 
+            .product-slide img { max-height: 16vh; } 
+            .product-name { font-size: 1.05rem; } 
+            .primary-btn { padding: 12px 25px; font-size: 1rem; } 
         }
-        #initial-loader-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
+
     </style>
 </head>
 <body>
@@ -195,13 +188,13 @@
             <button id="prizes-button">🎁 الجوائز</button>
         </div>
         <div id="info-panel">
-            <div class="info-box"><h2>المستوى</h2><div id="level" class="value">1</div></div>
-            <div class="info-box"><h2>النقاط</h2><div id="score" class="value">0</div></div>
-            <div class="info-box"><h2>الأخطاء</h2><div id="mistakes" class="value"></div></div>
+            <div id="score" class="info-box"><h2>النقاط</h2><div class="value">0</div></div>
+            <div id="ammo" class="info-box"><h2>الكرات</h2><div class="value">15</div></div>
         </div>
-        <div id="game-board"></div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
     </div>
 
+    <!-- === OVERLAYS (From Memory Game) === -->
     <div id="login-required-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <h2>أوه.. يجب تسجيل الدخول أولاً!</h2>
@@ -210,9 +203,22 @@
         </div>
     </div>
 
-    <div id="start-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2>تحدي الذاكرة الخاطفة</h2><p>طابق الصور بأسرع ما يمكن لتصل إلى 1000 نقطة. احذر! 3 أخطاء متتالية وستخسر كل شيء!</p><button id="start-button" class="primary-btn">إبدأ التحدي</button></div></div>
-    <div id="game-over-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--danger-color)">لقد خسرت!</h2><p>لقد ارتكبت 3 أخطاء متتالية. تم تصفير نقاطك. هل تريد المحاولة مجددًا؟</p><button id="restart-button" class="primary-btn">أعد التحدي</button></div></div>
-    <div id="next-level-overlay" class="overlay" style="display: none;"><div class="overlay-content"><h2 style="color: var(--secondary-color)">مستوى مكتمل!</h2><p>استعد للمستوى التالي...</p></div></div>
+    <div id="start-overlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h2>تحدي المدفع الذهبي</h2>
+            <p>أصب جميع الأهداف لتصل إلى 1000 نقطة وتفوز بالهدية. لديك 15 كرة لهذا اليوم!</p>
+            <button id="start-button" class="primary-btn">إبدأ التحدي</button>
+        </div>
+    </div>
+    
+    <!-- MODIFICATION: Added a button to the game over overlay -->
+    <div id="game-over-overlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <h2 style="color: var(--secondary-color)">نفدت الكرات!</h2>
+            <p>لقد استنفذت كل كراتك لهذا اليوم. حظًا أفضل غدًا!</p>
+            <button id="game-over-ok-btn" class="primary-btn" style="margin-top: 20px; background-color: var(--primary-color);">موافق</button>
+        </div>
+    </div>
 
     <div id="win-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
@@ -228,8 +234,8 @@
                     <div class="stat-value" id="win-score-val">1000</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">المستوى</div>
-                    <div class="stat-value" id="win-level-val">9</div>
+                    <div class="stat-label">الكرات المتبقية</div>
+                    <div class="stat-value" id="win-ammo-val">0</div>
                 </div>
             </div>
 
@@ -246,25 +252,19 @@
 
             <div class="win-actions animated-item">
                 <button id="claim-gift-btn" class="primary-btn">احصل على هديتك</button>
-                <button id="reset-game-button" class="primary-btn secondary-btn">العب مرة أخرى</button>
             </div>
         </div>
     </div>
     
     <div id="claim-success-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
-            <div class="loading-dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-            <div class="checkmark-circle">✓</div>
-            <div class="success-text">تم استلام طلبك</div>
+            <div class="loading-dots"><div class="dot"></div><div class="dot"></div></div>
         </div>
     </div>
 
     <div id="prizes-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
-            <button class="close-btn" onclick="this.parentElement.parentElement.style.display='none'">&times;</button>
+            <button class="close-btn">&times;</button>
             <h2>الجوائز المتاحة</h2>
             <p>الهدف: الوصول إلى <b style="color: var(--gold-color); font-weight: 900;">1000 نقطة</b> للفوز!</p>
             <div id="prize-display">
@@ -282,428 +282,376 @@
             </div>
         </div>
     </div>
-
-    <audio id="flip-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b2c15a782.mp3" preload="auto"></audio>
+    
     <audio id="win-sound" src="https://cdn.pixabay.com/audio/2022/11/17/audio_88c72a8c38.mp3" preload="auto"></audio>
-    <audio id="coin-sound" src="https://cdn.pixabay.com/audio/2022/03/10/audio_c295326162.mp3" preload="auto"></audio>
-    <audio id="error-sound" src="https://cdn.pixabay.com/audio/2021/08/04/audio_a5fa879a74.mp3" preload="auto"></audio>
     <audio id="game-over-sound" src="https://cdn.pixabay.com/audio/2022/03/23/audio_b80267451a.mp3" preload="auto"></audio>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            firebase.initializeApp({
-                apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
-                authDomain: "buy-from-adger.firebaseapp.com",
-                databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
-                projectId: "buy-from-adger",
-                storageBucket: "buy-from-adger.appspot.com",
-                messagingSenderId: "3960207785601",
-                appId: "1:396020785601:web:yourWebAppID"
+    document.addEventListener('DOMContentLoaded', () => {
+        // ==========================================================
+        //  1. SETUP & SELECTORS
+        // ==========================================================
+        firebase.initializeApp({
+            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+            authDomain: "buy-from-adger.firebaseapp.com",
+            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+            projectId: "buy-from-adger",
+            storageBucket: "buy-from-adger.appspot.com",
+            messagingSenderId: "3960207785601",
+            appId: "1:396020785601:web:yourWebAppID"
+        });
+        const database = firebase.database();
+
+        const initialLoader = document.getElementById('initial-loader-overlay');
+        const gameContainer = document.getElementById('game-container');
+        const startOverlay = document.getElementById('start-overlay');
+        const winOverlay = document.getElementById('win-overlay');
+        const gameOverOverlay = document.getElementById('game-over-overlay');
+        const claimSuccessOverlay = document.getElementById('claim-success-overlay');
+        const loginRequiredOverlay = document.getElementById('login-required-overlay');
+        
+        const startButton = document.getElementById('start-button');
+        const claimGiftButton = document.getElementById('claim-gift-btn');
+        // MODIFICATION: Added a selector for the new OK button
+        const gameOverOkButton = document.getElementById('game-over-ok-btn');
+        
+        const prizesButton = document.getElementById('prizes-button');
+        const prizesOverlay = document.getElementById('prizes-overlay');
+        const prizeDisplay = document.getElementById('prize-display');
+        const prizeImage = document.getElementById('prize-image');
+        const prizeName = document.getElementById('prize-name');
+        const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
+        const switchProductBtn = document.getElementById('switch-product-btn');
+        const productCarousel = document.getElementById('product-carousel');
+        
+        const scoreDisplayValue = document.querySelector('#score .value');
+        const ammoDisplayValue = document.querySelector('#ammo .value');
+
+        const sounds = {
+            win: document.getElementById('win-sound'),
+            gameOver: document.getElementById('game-over-sound')
+        };
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const prizes = [
+            { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/3Np9JSRw/9u3606.jpg", price: "199$" },
+            { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
+            { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
+        ];
+        let winPrizeIndex = 0;
+        let infoPrizeIndex = 0;
+        const WIN_STATE_KEY = 'cannonGameWinState';
+        const DAILY_PLAY_KEY = 'cannonGameLastPlayDate';
+        const CLAIMED_PRIZE_KEY = 'cannonGameClaimedPrize'; 
+        const DAILY_AMMO_KEY = 'cannonGameDailyAmmo';
+        const WIN_SCORE = 1000;
+
+        // ==========================================================
+        //  2. CANNON GAME LOGIC
+        // ==========================================================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let state = {};
+        let lastTime = 0;
+        let timeScale = 1;
+        let animationFrameId = null;
+
+        function playCannonSound(type) { if (!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'fire') { g.gain.setValueAtTime(0.4, audioCtx.currentTime); o.frequency.setValueAtTime(150, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); o.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.4); o.type = 'sawtooth'; o.start(); o.stop(audioCtx.currentTime + 0.5); } else if (type === 'hit') { g.gain.setValueAtTime(0.3, audioCtx.currentTime); o.frequency.setValueAtTime(600, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); o.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.3); o.type = 'sine'; o.start(); o.stop(audioCtx.currentTime + 0.3); } else if (type === 'bounce') { g.gain.setValueAtTime(0.15, audioCtx.currentTime); o.frequency.setValueAtTime(300, audioCtx.currentTime); g.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); o.type = 'triangle'; o.start(); o.stop(audioCtx.currentTime + 0.1); } }
+        function lerp(start, end, amt) { return (1 - amt) * start + amt * end; }
+        
+        function createParticle(x, y, options = {}) { const angle = options.angle ?? Math.random() * Math.PI * 2; const speed = options.speed ?? Math.random() * 5 + 2; return { x, y, dx: Math.cos(angle) * speed, dy: Math.sin(angle) * speed, radius: options.radius ?? Math.random() * 3 + 2, life: options.life ?? Math.random() * 60 + 40, initialLife: this.life, color: options.color ?? '#ffffff' }; }
+        function createStar() { return { x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.5, z: Math.random() * 0.5 + 0.5 }; }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.save();
+            if (state.screenShake.duration > 0) { state.screenShake.duration -= 1; ctx.translate((Math.random()-0.5) * state.screenShake.magnitude, (Math.random()-0.5) * state.screenShake.magnitude); }
+            state.stars.forEach(star => { const parallaxX = state.cannon.x * (1 - star.z) * 0.05; ctx.fillStyle = `rgba(255, 255, 255, ${star.z * 0.8})`; ctx.beginPath(); ctx.arc(star.x - parallaxX, star.y, star.radius, 0, Math.PI * 2); ctx.fill(); });
+            state.obstacles.forEach(obs => { ctx.fillStyle = '#484f58'; ctx.strokeStyle = '#8b949e'; ctx.lineWidth = 2; ctx.fillRect(obs.x, obs.y, obs.width, obs.height); ctx.strokeRect(obs.x, obs.y, obs.width, obs.height); });
+            state.targets.forEach(t => { const scale = t.isDying ? t.scale : 1 + Math.sin(Date.now() * 0.002 + t.pulseOffset) * 0.05; ctx.save(); ctx.translate(t.x, t.y); ctx.scale(scale, scale); ctx.globalAlpha = t.isDying ? t.scale : 1; const grad = ctx.createRadialGradient(0, 0, 1, 0, 0, t.radius); grad.addColorStop(0, '#fff'); grad.addColorStop(0.7, t.color); ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(0, 0, t.radius, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+            if (state.ball) { const trail = state.ball.trail; for (let i = 0; i < trail.length - 1; i++) { const p1 = trail[i]; const p2 = trail[i+1]; const alpha = (i / trail.length) * 0.5; ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(247, 183, 51, ${alpha})`; ctx.lineWidth = i / trail.length * state.ball.radius * 1.5; ctx.stroke(); } }
+            const c = state.cannon; ctx.save(); const recoilX = Math.cos(c.angle) * c.recoil; const recoilY = Math.sin(c.angle) * c.recoil; ctx.translate(c.x - recoilX, c.y - recoilY); ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 15; ctx.shadowOffsetY = 5; ctx.fillStyle = '#21262d'; ctx.beginPath(); ctx.arc(-35, 10, 20, 0, Math.PI*2); ctx.arc(35, 10, 20, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#30363d'; ctx.beginPath(); ctx.arc(-35, 10, 10, 0, Math.PI*2); ctx.arc(35, 10, 10, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#484f58'; ctx.fillRect(-50, -10, 100, 20); ctx.rotate(c.angle); const gradCannon = ctx.createLinearGradient(0, -12, 0, 12); gradCannon.addColorStop(0, '#c9d1d9'); gradCannon.addColorStop(0.5, '#8b949e'); gradCannon.addColorStop(1, '#c9d1d9'); ctx.fillStyle = gradCannon; ctx.fillRect(0, -12, 80, 24); ctx.restore();
+            if (state.ball) { const b = state.ball; const gradBall = ctx.createRadialGradient(b.x, b.y, 1, b.x, b.y, b.radius); gradBall.addColorStop(0, '#fee255'); gradBall.addColorStop(1, '#f7b733'); ctx.fillStyle = gradBall; ctx.beginPath(); ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2); ctx.fill(); }
+            state.particles.forEach(p => { ctx.globalAlpha = p.life / p.initialLife; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); }); ctx.globalAlpha = 1;
+            
+            state.scorePopups.forEach(popup => {
+                ctx.save();
+                ctx.globalAlpha = popup.life / popup.initialLife;
+                ctx.font = 'bold 28px Cairo';
+                ctx.fillStyle = 'var(--gold-color)';
+                ctx.textAlign = 'center';
+                ctx.shadowColor = 'rgba(0,0,0,0.7)';
+                ctx.shadowBlur = 6;
+                ctx.fillText(popup.text, popup.x, popup.y);
+                ctx.restore();
             });
-            const database = firebase.database();
-            
-            const initialLoader = document.getElementById('initial-loader-overlay');
-            const gameContainer = document.getElementById('game-container');
-            const gameBoard = document.getElementById('game-board');
-            const scoreDisplay = document.getElementById('score');
-            const levelDisplay = document.getElementById('level');
-            const mistakesDisplay = document.getElementById('mistakes');
-            const startOverlay = document.getElementById('start-overlay');
-            const winOverlay = document.getElementById('win-overlay');
-            const gameOverOverlay = document.getElementById('game-over-overlay');
-            const nextLevelOverlay = document.getElementById('next-level-overlay');
-            const claimSuccessOverlay = document.getElementById('claim-success-overlay');
-            const startButton = document.getElementById('start-button');
-            const restartButton = document.getElementById('restart-button');
-            const sounds = { flip: document.getElementById('flip-sound'), win: document.getElementById('win-sound'), coin: document.getElementById('coin-sound'), error: document.getElementById('error-sound'), gameOver: document.getElementById('game-over-sound') };
-            const loginRequiredOverlay = document.getElementById('login-required-overlay');
 
-            const prizesButton = document.getElementById('prizes-button');
-            const prizesOverlay = document.getElementById('prizes-overlay');
-            const prizeDisplay = document.getElementById('prize-display');
-            const prizeImage = document.getElementById('prize-image');
-            const prizeName = document.getElementById('prize-name');
-            const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
-
-            const claimGiftButton = document.getElementById('claim-gift-btn');
-            const resetGameButton = document.getElementById('reset-game-button');
-            const switchProductBtn = document.getElementById('switch-product-btn');
-            const productCarousel = document.getElementById('product-carousel');
-
-            const prizes = [
-                { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/3Np9JSRw/9u3606.jpg", price: "199$" },
-                { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
-                { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
-            ];
-            let winPrizeIndex = 0;
-            let infoPrizeIndex = 0;
-            const WIN_STATE_KEY = 'memoryGameWinState';
+            const wind = state.wind; if (Math.abs(wind) > 0.001) { const dir = wind > 0 ? ">>" : "<<"; const strength = Math.abs(Math.round(wind * 1000)); const text = `${dir} رياح ${strength}`; ctx.font = '16px Tajawal'; ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.textAlign = 'center'; ctx.fillText(text, canvas.width / 2, 25); }
+            if (state.gameState === 'aiming' && state.input.isDragging) { const { power, angle } = getLaunchParams(); const barrelTip = getBarrelTip(); let sim = { x: barrelTip.x, y: barrelTip.y, dx: Math.cos(angle) * power, dy: Math.sin(angle) * power }; const powerRatio = Math.min(1, power / 18); const trajectoryColor = `rgba(255, ${255 - 100 * powerRatio}, ${100 - 100 * powerRatio}, 0.6)`; ctx.beginPath(); ctx.setLineDash([2, 5]); ctx.strokeStyle = trajectoryColor; ctx.lineWidth = 2; ctx.moveTo(sim.x, sim.y); for (let i = 0; i < 35; i++) { sim.x += sim.dx; sim.y += sim.dy; ctx.lineTo(sim.x, sim.y); } ctx.stroke(); ctx.setLineDash([]); }
             
-            let allImages = [
-                // Original Images
-                'https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg',
-                'https://files.catbox.moe/x6m74r.png', 'https://files.catbox.moe/9avb54.png', 'https://files.catbox.moe/917ny3.png', 'https://files.catbox.moe/721coc.png', 'https://files.catbox.moe/91hoz0.png', 'https://files.catbox.moe/3igp0k.png', 'https://files.catbox.moe/5iawy5.jpg', 'https://files.catbox.moe/yunpy9.jpg', 'https://files.catbox.moe/onxh77.jpg', 'https://files.catbox.moe/cdo8le.jpg', 'https://files.catbox.moe/oya8p2.avif', 'https://files.catbox.moe/sxy26b.jpg', 'https://files.catbox.moe/u0qjfy.jpg', 'https://files.catbox.moe/8hrbun.jpg', 'https://files.catbox.moe/qipwvk.jpg', 'https://files.catbox.moe/0b58dn.jpg', 'https://files.catbox.moe/g7hjt3.jpg', 'https://files.catbox.moe/dyh06p.jpg', 'https://files.catbox.moe/oo7pws.jpg', 'https://files.catbox.moe/ztdv5q.jpg', 'https://files.catbox.moe/68wnik.jpg', 'https://files.catbox.moe/htyx4n.jpg', 'https://files.catbox.moe/9zvrjg.jpg', 'https://files.catbox.moe/eus3eb.jpg', 'https://files.catbox.moe/59edm1.jpg', 'https://files.catbox.moe/00tarf.jpg', 'https://files.catbox.moe/2hyfi5.jpg', 'https://files.catbox.moe/yusfwx.jpg', 'https://files.catbox.moe/z7db33.jpg', 'https://files.catbox.moe/sjdmcx.jpg', 'https://files.catbox.moe/7cdvpa.jpg', 'https://files.catbox.moe/5kkrss.jpg', 'https://files.catbox.moe/atktus.jpg', 'https://files.catbox.moe/ipvd5i.jpg', 'https://files.catbox.moe/ahhdlz.jpg', 'https://files.catbox.moe/2lof1i.jpg', 'https://files.catbox.moe/00ohpw.jpg', 'https://files.catbox.moe/gwjj91.jpg', 'https://files.catbox.moe/4at8av.jpg', 'https://files.catbox.moe/4mt4xw.jpg', 'https://files.catbox.moe/r45nb5.jpg', 'https://files.catbox.moe/d3052a.jpg', 'https://files.catbox.moe/agywso.jpg', 'https://files.catbox.moe/8p25or.jpg', 'https://files.catbox.moe/7chfj7.jpg', 'https://files.catbox.moe/a19d44.jpg', 'https://files.catbox.moe/erb09e.jpg', 'https://files.catbox.moe/mn0t9b.jpg', 'https://files.catbox.moe/hg7c0l.jpg', 'https://files.catbox.moe/qug31j.jpg', 'https://files.catbox.moe/ovmkfb.jpg', 'https://files.catbox.moe/cz4y68.jpg', 'https://files.catbox.moe/pysqk7.jpg', 'https://files.catbox.moe/m2v7hw.jpg', 'https://files.catbox.moe/na4fzq.jpg', 'https://files.catbox.moe/vtqgfr.jpg', 'https://files.catbox.moe/yfzgsv.jpg', 'https://files.catbox.moe/lwm4ga.jpg', 'https://files.catbox.moe/pativf.jpg', 'https://files.catbox.moe/6gp9x2.jpg', 'https://files.catbox.moe/tvmu2g.jpg', 'https://files.catbox.moe/aqpm90.jpg', 'https://files.catbox.moe/3keawd.jpg', 'https://files.catbox.moe/ldffps.jpg', 'https://files.catbox.moe/uiun4f.jpg', 'https://files.catbox.moe/r22pk3.jpg', 'https://files.catbox.moe/8j71y9.jpg', 'https://files.catbox.moe/3dg0t1.jpg', 'https://files.catbox.moe/pouiru.jpg', 'https://files.catbox.moe/0w9q60.jpg', 'https://files.catbox.moe/6gccqn.jpg', 'https://files.catbox.moe/bdt8s9.jpg', 'https://files.catbox.moe/hmu66a.jpg', 'https://files.catbox.moe/qtkwsc.jpg', 'https://files.catbox.moe/hc2qmh.jpg', 'https://files.catbox.moe/5uaqno.jpg', 'https://files.catbox.moe/dcdphq.jpg', 'https://files.catbox.moe/nl66vq.jpg', 'https://files.catbox.moe/66o7yo.jpg', 'https://files.catbox.moe/khx7cr.jpg', 'https://files.catbox.moe/7vyert.jpg', 'https://files.catbox.moe/ecahuj.jpg', 'https://files.catbox.moe/hygdz8.jpg', 'https://files.catbox.moe/t87cgw.jpg', 'https://files.catbox.moe/vklnlf.jpg', 'https://files.catbox.moe/cv3dk9.jpg', 'https://files.catbox.moe/tgq8iv.jpg', 'https://files.catbox.moe/7rt5e8.jpg', 'https://files.catbox.moe/ls1lva.jpg', 'https://files.catbox.moe/1y8qnr.jpg', 'https://files.catbox.moe/bdacvu.jpg', 'https://files.catbox.moe/4mwqfi.jpg', 'https://files.catbox.moe/v59fvi.jpg', 'https://files.catbox.moe/nkpqjq.jpg', 'https://files.catbox.moe/e7fl1v.jpg', 'https://files.catbox.moe/67pvb5.jpg', 'https://files.catbox.moe/co7gyk.png', 'https://files.catbox.moe/n33xcw.png', 'https://files.catbox.moe/dgzlkw.png', 'https://files.catbox.moe/25ix21.jpg', 'https://files.catbox.moe/ya1sko.png', 'https://files.catbox.moe/telqkz.png', 'https://files.catbox.moe/sxzrlu.jpg', 'https://files.catbox.moe/rw4zal.jpg', 'https://files.catbox.moe/pnrhxe.jpg', 'https://files.catbox.moe/m81m47.jpg', 'https://files.catbox.moe/whvwru.jpg', 'https://files.catbox.moe/8v2f1o.jpg', 'https://files.catbox.moe/zetyu6.jpg', 'https://files.catbox.moe/95n8t3.jpg', 'https://files.catbox.moe/1xgs82.jpg', 'https://files.catbox.moe/acad7h.jpg', 'https://files.catbox.moe/7bk4ww.jpg', 'https://files.catbox.moe/oxjok6.jpg', 'https://files.catbox.moe/btohr7.jpg', 'https://files.catbox.moe/lje5t9.jpg', 'https://files.catbox.moe/0pazya.jpg', 'https://files.catbox.moe/cgii0e.jpg', 'https://files.catbox.moe/f5d8yg.jpg', 'https://files.catbox.moe/164i30.jpg', 'https://files.catbox.moe/wikp9u.jpg', 'https://files.catbox.moe/0zpj9k.jpg', 'https://files.catbox.moe/javogd.jpg', 'https://files.catbox.moe/u91tus.jpg', 'https://files.catbox.moe/gdefbq.jpg', 'https://files.catbox.moe/yabdk8.jpg', 'https://files.catbox.moe/9viddr.jpg', 'https://files.catbox.moe/8czy3p.jpg', 'https://files.catbox.moe/mwfdkk.jpg', 'https://files.catbox.moe/tkmwiw.jpg', 'https://files.catbox.moe/ooe5wv.jpg', 'https://files.catbox.moe/hmq3hm.jpg', 'https://files.catbox.moe/zxw7wf.jpg', 'https://files.catbox.moe/1ojo14.jpg', 'https://files.catbox.moe/811uk9.jpg', 'https://files.catbox.moe/jdx4xo.jpg', 'https://files.catbox.moe/c5uhe9.jpg', 'https://files.catbox.moe/a6vhbg.jpg', 'https://files.catbox.moe/ooeqig.webp', 'https://files.catbox.moe/7ztuav.jpg', 'https://files.catbox.moe/9c87nf.jpg', 'https://files.catbox.moe/0384d3.jpg', 'https://files.catbox.moe/sxec0w.jpg', 'https://files.catbox.moe/yyukl2.avif', 'https://files.catbox.moe/njbiw3.jpg', 'https://files.catbox.moe/dvcu37.jpg', 'https://files.catbox.moe/6ef0n2.jpg', 'https://files.catbox.moe/ikk03y.jpg', 'https://files.catbox.moe/agpvga.jpg', 'https://files.catbox.moe/1vgjgx.jpg', 'https://files.catbox.moe/0ir8nc.jpg', 'https://files.catbox.moe/ljjdyu.jpg', 'https://files.catbox.moe/3xsbjc.jpg', 'https://files.catbox.moe/8o8jj3.jpg', 'https://files.catbox.moe/v2j0w2.jpg', 'https://files.catbox.moe/do03ig.jpg', 'https://files.catbox.moe/6bi3z0.jpg', 'https://files.catbox.moe/di7lh9.jpg', 'https://files.catbox.moe/lz4cim.jpg', 'https://files.catbox.moe/ix06bp.jpg', 'https://files.catbox.moe/hoh7wd.jpg', 'https://files.catbox.moe/wxhli5.jpg', 'https://files.catbox.moe/ujv642.jpg', 'https://files.catbox.moe/arkglw.jpg', 'https://files.catbox.moe/y8v1a5.jpg', 'https://files.catbox.moe/ke5zq5.jpg', 'https://files.catbox.moe/in4sj5.jpg', 'https://files.catbox.moe/50szbz.jpg', 'https://files.catbox.moe/021pm2.jpg', 'https://files.catbox.moe/s82agx.jpg', 'https://files.catbox.moe/ebuhg0.jpg', 'https://files.catbox.moe/bzbkby.jpg', 'https://files.catbox.moe/f88rge.jpg', 'https://files.catbox.moe/2b949x.jpg', 'https://files.catbox.moe/i59ul6.jpg', 'https://files.catbox.moe/9rwsmx.png', 'https://files.catbox.moe/y5zdw9.jpg', 'https://files.catbox.moe/crgfrt.jpg', 'https://files.catbox.moe/z1g2d2.jpg', 'https://files.catbox.moe/0y0z6x.jpg', 'https://files.catbox.moe/dy40fm.jpg', 'https://files.catbox.moe/ko49pu.jpg', 'https://files.catbox.moe/olvzs1.jpg', 'https://files.catbox.moe/yesdkw.jpg', 'https://files.catbox.moe/upheyg.jpg', 'https://files.catbox.moe/jv4utb.jpg'
-            ];
-            
-            allImages = [...new Set(allImages)];
-            
-            const levels = []; let imageCursor = 0;
-            const TOTAL_LEVELS = 30;
-            for (let i = 0; i < TOTAL_LEVELS; i++) { 
-                if (imageCursor + 6 > allImages.length) imageCursor = 0;
-                levels.push({ level: i + 1, images: allImages.slice(imageCursor, imageCursor + 6) }); 
-                imageCursor += 6; 
+            if (state.prizeClaimedMessage) {
+                ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = 'bold 32px Cairo';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('اوووه لقد ربحت منتج لمرة واحدة', canvas.width / 2, canvas.height / 2 - 20);
+                ctx.font = '22px Cairo';
+                ctx.fillStyle = '#ccc';
+                ctx.fillText('و سيتم ارساله لك', canvas.width / 2, canvas.height / 2 + 25);
+            } else if (!state.canPlayToday) {
+                ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = 'bold 32px Cairo';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('لقد استنفذت محاولاتك اليوم', canvas.width / 2, canvas.height / 2 - 20);
+                ctx.font = '22px Cairo';
+                ctx.fillStyle = '#ccc';
+                ctx.fillText('حاول مجددًا غدًا', canvas.width / 2, canvas.height / 2 + 25);
             }
 
-            const WIN_SCORE = 1000;
-            let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime, matchStreak;
-            let shuffledLevelOrder = [];
+            ctx.restore();
+        }
+        
+        function update(deltaTime) {
+            const scaledDelta = deltaTime * timeScale;
+            state.cannon.angle = lerp(state.cannon.angle, state.cannon.targetAngle, 0.15); state.cannon.recoil = lerp(state.cannon.recoil, 0, 0.15);
+            if (state.ball) { const b = state.ball; b.dx += state.wind * scaledDelta * 60; b.x += b.dx * scaledDelta * 60; b.y += b.dy * scaledDelta * 60; b.trail.unshift({x: b.x, y: b.y}); if (b.trail.length > 20) b.trail.pop(); if (b.x > canvas.width - b.radius) { b.x = canvas.width - b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.x < b.radius) { b.x = b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.y < b.radius) { b.y = b.radius; b.dy *= -0.9; playCannonSound('bounce'); } if (b.y > canvas.height + b.radius * 2) { state.ball = null; if(state.targets.length > 0) state.gameState = 'aiming'; } state.obstacles.forEach(obs => { if (b.x + b.radius > obs.x && b.x - b.radius < obs.x + obs.width && b.y + b.radius > obs.y && b.y - b.radius < obs.y + obs.height) { const overlapX = (b.radius + obs.width / 2) - Math.abs(b.x - (obs.x + obs.width / 2)); const overlapY = (b.radius + obs.height / 2) - Math.abs(b.y - (obs.y + obs.height / 2)); if (overlapX < overlapY) { b.dx *= -0.9; b.x += b.dx > 0 ? overlapX : -overlapX; } else { b.dy *= -0.9; b.y += b.dy > 0 ? overlapY : -overlapY; } playCannonSound('bounce'); } }); state.targets.forEach(target => { if (target.isDying) return; const dist = Math.hypot(b.x - target.x, b.y - target.y); if (dist < b.radius + target.radius) { playCannonSound('hit'); state.screenShake = { duration: 15, magnitude: 5 }; state.score += 250; 
+                state.scorePopups.push({ x: target.x, y: target.y, text: '+250', life: 70, initialLife: 70 });
+                target.isDying = true; if (state.targets.filter(t => !t.isDying).length === 1) { timeScale = 0.1; } } }); }
+            state.particles.forEach(p => { p.life -= scaledDelta * 60; p.x += p.dx * scaledDelta * 60; p.y += p.dy * scaledDelta * 60; }); state.particles = state.particles.filter(p => p.life > 0);
+            
+            state.scorePopups.forEach(p => { p.life--; p.y -= 0.8; });
+            state.scorePopups = state.scorePopups.filter(p => p.life > 0);
+            
+            state.targets.forEach(t => { if (t.isDying) { t.scale -= scaledDelta * 2; if (t.scale <= 0) { for (let i = 0; i < 50; i++) state.particles.push(createParticle(t.x, t.y, { color: t.color })); } } else { t.x = t.initialX + Math.sin(Date.now() * t.moveSpeed) * t.moveRange; } }); state.targets = state.targets.filter(t => !t.isDying || t.scale > 0);
+            state.displayScore = lerp(state.displayScore, state.score, 0.1);
+            if (timeScale < 1) { timeScale = Math.min(1, timeScale + deltaTime * 0.5); }
+            checkWinLose();
+        }
 
-            function preloadLevelImages(levelIndex) {
-                return new Promise((resolve) => {
-                    const levelImages = levels[levelIndex]?.images;
-                    if (!levelImages || levelImages.length === 0) {
-                        resolve();
-                        return;
-                    }
-                    let loadedCount = 0;
-                    levelImages.forEach(src => {
-                        const img = new Image();
-                        img.src = src;
-                        img.onload = img.onerror = () => {
-                            loadedCount++;
-                            if (loadedCount === levelImages.length) {
-                                resolve();
-                            }
-                        };
-                    });
-                });
+        function fire() {
+            if (state.gameState !== 'aiming' || state.ammo <= 0) return;
+            const { power, angle } = getLaunchParams();
+            if (power < 1) return;
+            state.ammo--;
+
+            const sanitizedUserId = getSanitizedUserId();
+            if (sanitizedUserId) {
+                localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, state.ammo);
             }
 
-            function getSanitizedUserId() {
-                const deliveryInfoString = localStorage.getItem('deliveryInfo');
-                if (!deliveryInfoString) return null;
-                try {
-                    const deliveryInfo = JSON.parse(deliveryInfoString);
-                    const userId = deliveryInfo.phone; 
-                    if (!userId) return null;
-                    return userId.replace(/\D/g, ''); 
-                } catch (e) { console.error("Could not parse delivery info:", e); return null; }
+            state.gameState = 'flying';
+            const barrelTip = getBarrelTip();
+            state.ball = { x: barrelTip.x, y: barrelTip.y, radius: 12, trail: [], dx: Math.cos(angle) * power, dy: Math.sin(angle) * power };
+            playCannonSound('fire');
+            state.screenShake = { duration: 20, magnitude: 7 };
+            state.cannon.recoil = -20;
+        }
+
+        function getBarrelTip() { const c = state.cannon; return { x: c.x + Math.cos(c.angle) * 80, y: c.y + Math.sin(c.angle) * 80 }; }
+        function getLaunchParams() { const dragStart = { x: state.cannon.x, y: state.cannon.y }; const dragEnd = state.input.dragEnd; const dx = dragEnd.x - dragStart.x; const dy = dragEnd.y - dragStart.y; let angle = Math.atan2(dy, dx); if (angle > 0) { angle = (dragEnd.x < dragStart.x) ? -Math.PI : 0; } const dist = Math.hypot(dx, dy); const power = Math.min(20, dist / 15); return { power, angle }; }
+        function updateUI() { scoreDisplayValue.textContent = Math.floor(state.displayScore); ammoDisplayValue.textContent = state.ammo; }
+        
+        function gameLoop(currentTime) { const deltaTime = (currentTime - lastTime) / 1000; lastTime = currentTime; update(deltaTime); render(); updateUI(); animationFrameId = requestAnimationFrame(gameLoop); }
+        function handleInput(e, type) { 
+            if (!state.canPlayToday || state.prizeClaimedMessage) return;
+            e.preventDefault(); const pos = {x:0, y:0}; const rect = canvas.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; pos.x = (clientX - rect.left) * (canvas.width / rect.width); pos.y = (clientY - rect.top) * (canvas.height / rect.height); if (type === 'start' && state.gameState === 'aiming') { state.input.isDragging = true; state.input.dragEnd = pos; } else if (type === 'move' && state.input.isDragging) { state.input.dragEnd = pos; const { angle } = getLaunchParams(); state.cannon.targetAngle = angle; } else if (type === 'end' && state.input.isDragging) { state.input.isDragging = false; fire(); } }
+
+        function resetCannonGame() {
+            state = { score: 0, displayScore: 0, ammo: 15, gameState: 'aiming', cannon: { x: canvas.width / 2, y: canvas.height - 40, angle: -Math.PI / 2, targetAngle: -Math.PI / 2, recoil: 0 }, ball: null, targets: [], particles: [], stars: [], obstacles: [], wind: (Math.random() - 0.5) * 0.04, input: { isDragging: false, dragEnd: {} }, screenShake: { duration: 0, magnitude: 0 },
+            canPlayToday: true,
+            scorePopups: [],
+            prizeClaimedMessage: false
+            };
+            for (let i = 0; i < 100; i++) state.stars.push(createStar());
+            state.obstacles.push({ x: canvas.width / 2 - 75, y: 350, width: 150, height: 30 });
+            state.targets = [ { x: 200, y: 150, radius: 25, color: '#58a6ff', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 200, moveSpeed: 0.001, moveRange: 100 }, { x: 600, y: 250, radius: 25, color: '#f78166', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 600, moveSpeed: -0.0015, moveRange: 120 }, { x: 400, y: 100, radius: 30, color: '#3fb950', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 400, moveSpeed: 0.0008, moveRange: 200 }, { x: 100, y: 250, radius: 20, color: '#a371f7', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 100, moveSpeed: 0.0012, moveRange: 80 }, ];
+            timeScale = 1; updateUI();
+        }
+
+        // ==========================================================
+        //  3. MAIN GAME CONTROLLER
+        // ==========================================================
+        function getSanitizedUserId() { const deliveryInfoString = localStorage.getItem('deliveryInfo'); if (!deliveryInfoString) return null; try { const deliveryInfo = JSON.parse(deliveryInfoString); const userId = deliveryInfo.phone; if (!userId) return null; return userId.replace(/\D/g, ''); } catch (e) { console.error("Could not parse delivery info:", e); return null; } }
+
+        function init() {
+            displayInfoPrize(infoPrizeIndex);
+            const sanitizedUserId = getSanitizedUserId();
+            const finalizeInit = () => {
+                gameContainer.style.visibility = 'visible';
+                gameContainer.style.opacity = '1';
+                initialLoader.classList.add('hidden');
+            };
+            
+            const hasClaimed = localStorage.getItem(CLAIMED_PRIZE_KEY + sanitizedUserId);
+            if (hasClaimed === 'true') {
+                localStorage.removeItem(CLAIMED_PRIZE_KEY + sanitizedUserId);
+                startGame(false, 0); 
+                state.prizeClaimedMessage = true;
+                finalizeInit();
+                return;
+            }
+            
+            if (!sanitizedUserId) {
+                loginRequiredOverlay.style.display = 'flex';
+                finalizeInit();
+                return;
             }
 
-            function initGame() {
-                displayInfoPrize(infoPrizeIndex);
-                const sanitizedUserId = getSanitizedUserId();
-                if (!sanitizedUserId) {
-                    loginRequiredOverlay.style.display = 'flex';
-                    startOverlay.style.display = 'none';
-                    initialLoader.classList.add('hidden');
-                    return;
-                }
+            const today = new Date().toISOString().split('T')[0];
+            const lastPlayDate = localStorage.getItem(DAILY_PLAY_KEY + sanitizedUserId);
+            
+            if (lastPlayDate === today) {
+                const savedAmmo = localStorage.getItem(DAILY_AMMO_KEY + sanitizedUserId);
+                const currentAmmo = savedAmmo !== null ? parseInt(savedAmmo, 10) : 0;
+                startGame(false, currentAmmo); 
+                finalizeInit();
+            } else {
                 const userGameStateRef = database.ref(`user_game_states/${sanitizedUserId}`);
                 userGameStateRef.once('value').then(snapshot => {
                     const gameState = snapshot.val();
                     if (gameState && gameState.hasWon) {
                         localStorage.setItem(WIN_STATE_KEY, 'true');
-                        totalScore = WIN_SCORE;
-                        currentLevelIndex = levels.length - 1;
-                        winGame();
+                        winGame(WIN_SCORE, 0);
                     } else {
                         startOverlay.style.display = 'flex';
                     }
                 }).catch(error => {
                     console.error("Firebase check failed, defaulting to start screen:", error);
                     startOverlay.style.display = 'flex';
-                }).finally(() => {
-                    gameContainer.style.visibility = 'visible';
-                    gameContainer.style.opacity = '1';
-                    initialLoader.classList.add('hidden');
-                });
+                }).finally(finalizeInit);
             }
-            
-            function startNewShuffledGame() {
-                shuffledLevelOrder = Array.from({ length: levels.length }, (_, i) => i)
-                                          .sort(() => Math.random() - 0.5);
-                beginGameSequence();
+        }
+
+        function startGame(canPlay = true, initialAmmo) {
+            const sanitizedUserId = getSanitizedUserId();
+            if (canPlay && sanitizedUserId) { 
+                const today = new Date().toISOString().split('T')[0];
+                localStorage.setItem(DAILY_PLAY_KEY + sanitizedUserId, today);
+                localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, initialAmmo);
             }
 
-            async function beginGameSequence() {
-                const allStartButtons = [startButton, restartButton, resetGameButton];
-                
-                allStartButtons.forEach(btn => {
-                    if (btn) {
-                        btn.disabled = true;
-                        btn.textContent = '...جاري التحضير';
-                    }
-                });
-
-                await preloadLevelImages(shuffledLevelOrder[0]);
-
+            if (canPlay) {
                 localStorage.removeItem(WIN_STATE_KEY);
-                const sanitizedUserId = getSanitizedUserId();
                 if (sanitizedUserId) {
                     database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: false });
                 }
-                totalScore = 0; currentLevelIndex = 0;
-                [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
-                
-                startButton.disabled = false;
-                startButton.textContent = 'إبدأ التحدي';
-                restartButton.disabled = false;
-                restartButton.textContent = 'أعد التحدي';
-                resetGameButton.disabled = false;
-                resetGameButton.textContent = 'العب مرة أخرى';
-
-                startLevel(currentLevelIndex);
             }
+            
+            [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
+            
+            resetCannonGame();
+            state.ammo = initialAmmo;
+            
+            state.canPlayToday = initialAmmo > 0;
+            
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            lastTime = performance.now();
+            animationFrameId = requestAnimationFrame(gameLoop);
+        }
 
-            function startLevel(levelProgressIndex) {
-                matchesFound = 0; consecutiveMistakes = 0; matchStreak = 0; flippedCards = []; lockBoard = true;
-                updateMistakeDisplay(); 
-                levelDisplay.textContent = levelProgressIndex + 1;
-                scoreDisplay.textContent = totalScore;
-                
-                const actualLevelIndex = shuffledLevelOrder[levelProgressIndex];
-                const levelData = levels[actualLevelIndex];
-                const cardSet = [...levelData.images, ...levelData.images]; 
-                
-                gameBoard.innerHTML = '';
-                gameBoard.className = 'game-board board-size-6'; 
-                const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
-                shuffledCards.forEach((imageSrc, i) => {
-                    const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc;
-                    card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`;
-                    card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card); setTimeout(() => card.classList.add('flipped'), 50);
-                });
-                
+        function checkWinLose() {
+            if (state.gameState === 'gameover') return;
+            if (state.targets.length === 0 && state.ball === null) {
+                state.gameState = 'gameover';
+                winGame(state.score, state.ammo);
+            } else if (state.ammo <= 0 && state.ball === null) {
+                state.gameState = 'gameover';
+                gameOver();
+            }
+        }
+
+        function gameOver() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            sounds.gameOver.play();
+            setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500);
+        }
+
+        function launchConfetti() { const confettiContainer = document.body; const confettiCount = 100; const colors = ['#58a6ff', '#f78166', '#ffc107', '#f85149', '#3fb950']; for (let i = 0; i < confettiCount; i++) { const confetti = document.createElement('div'); const size = Math.random() * 10 + 5; confetti.style.width = `${size}px`; confetti.style.height = `${size}px`; confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`; confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1'; confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none'; const anim = confetti.animate([{ transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 }, { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 }); anim.onfinish = () => confetti.remove(); confettiContainer.appendChild(confetti); } }
+        
+        function winGame(finalScore, remainingAmmo) {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (winOverlay.style.display === 'flex') return;
+            
+            sounds.win.play(); launchConfetti();
+            localStorage.setItem(WIN_STATE_KEY, 'true');
+            const sanitizedUserId = getSanitizedUserId();
+            if (sanitizedUserId) { database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: true }); }
+            
+            document.getElementById('win-score-val').textContent = finalScore >= WIN_SCORE ? WIN_SCORE : finalScore;
+            document.getElementById('win-ammo-val').textContent = remainingAmmo;
+
+            buildWinCarousel(); updateWinCarousel();
+            [startOverlay, gameOverOverlay].forEach(o => o.style.display = 'none');
+            winOverlay.style.display = 'flex';
+        }
+
+        function displayInfoPrize(index) {
+            prizeDisplay.classList.add('fade-out');
+            setTimeout(() => { const prize = prizes[index]; prizeImage.src = prize.image; prizeName.textContent = prize.name; prizeDisplay.classList.remove('fade-out'); }, 300);
+        }
+        function buildWinCarousel() {
+            productCarousel.innerHTML = '';
+            prizes.forEach((p, index) => { productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`; });
+        }
+        function updateWinCarousel() {
+            const slides = document.querySelectorAll('.product-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
+        }
+
+        function handleClaimGiftFirebase() {
+            const deliveryInfoString = localStorage.getItem('deliveryInfo');
+            const sanitizedUserId = getSanitizedUserId();
+            if (!deliveryInfoString || !sanitizedUserId) { alert('حدث خطأ. لا يمكن العثور على بياناتك. يرجى إعادة تسجيل الدخول.'); window.location.href = 'account.html'; return; }
+            const product = prizes[winPrizeIndex];
+            const giftClaimData = { productName: product.name, productImage: product.image, deliveryInfo: JSON.parse(deliveryInfoString), timestamp: Date.now() };
+            
+            claimSuccessOverlay.style.display = 'flex';
+            
+            database.ref('gift_claims').push(giftClaimData).then(() => {
+                localStorage.removeItem(WIN_STATE_KEY);
+                database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: false });
+
+                localStorage.setItem(CLAIMED_PRIZE_KEY + sanitizedUserId, 'true');
                 setTimeout(() => {
-                    const allCards = document.querySelectorAll('.card');
-                    
-                    allCards.forEach(card => {
-                        card.addEventListener('click', flipCard);
-                        card.style.transitionDelay = '0ms';
-                    });
+                    window.location.reload();
+                }, 1500);
 
-                    if (allCards.length > 0) {
-                        allCards[0].addEventListener('transitionend', () => {
-                            lockBoard = false;
-                        }, { once: true });
-                    } else {
-                        lockBoard = false; 
-                    }
-                    allCards.forEach(card => {
-                        card.classList.remove('flipped');
-                    });
-                }, 1800); 
-            }
-            
-            function flipCard() { 
-                if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; 
-                sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); 
-                if (flippedCards.length === 0) { 
-                    matchStartTime = Date.now(); 
-                } 
-                flippedCards.push(this); 
-                if (flippedCards.length === 2) { 
-                    lockBoard = true; 
-                    setTimeout(checkForMatch, 600); 
-                } 
-            }
-            
-            async function checkForMatch() { 
-                const [cardOne, cardTwo] = flippedCards; 
-                const isMatch = cardOne.dataset.image === cardTwo.dataset.image; 
-                if (isMatch) {
-                    await handleMatch(cardOne, cardTwo); 
-                } else { 
-                    handleMismatch(cardOne, cardTwo);
-                }
-            }
-
-            function createPointPopup(card, popupInfo) { if (popupInfo.time > 0) { const popup = document.createElement('div'); popup.textContent = `+${popupInfo.time} سرعة`; popup.className = 'point-popup'; document.body.appendChild(popup); const cardRect = card.getBoundingClientRect(); const popupRect = popup.getBoundingClientRect(); popup.style.left = `${cardRect.left + (cardRect.width / 2) - (popupRect.width / 2)}px`; popup.style.top = `${cardRect.top}px`; setTimeout(() => popup.remove(), 1800); } };
-            
-            async function handleMatch(cardOne, cardTwo) {
-                matchesFound++; consecutiveMistakes = 0; matchStreak++; updateMistakeDisplay();
-                const timeTaken = (Date.now() - matchStartTime) / 1000; 
-                
-                const basePoints = 10;
-                const timeBonus = Math.max(0, Math.floor((2.5 - timeTaken) * 2));
-                const levelBonus = currentLevelIndex * 2;
-                const streakBonus = (matchStreak > 1) ? (matchStreak * 3) : 0;
-                const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
-
-                cardOne.classList.add('matched'); cardTwo.classList.add('matched');
-                cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard);
-                createPointPopup(cardOne, { time: timeBonus }); 
-                triggerCoinAnimation([cardOne, cardTwo], pointsEarned);
-                
-                setTimeout(resetBoardState, 300);
-
-                const actualLevelIndex = shuffledLevelOrder[currentLevelIndex];
-                if (matchesFound === levels[actualLevelIndex].images.length) {
-                    lockBoard = true;
-                    
-                    const nextLevelProgressIndex = currentLevelIndex + 1;
-                    if (nextLevelProgressIndex < levels.length && totalScore < WIN_SCORE) {
-                        const nextActualLevelIndex = shuffledLevelOrder[nextLevelProgressIndex];
-                        await preloadLevelImages(nextActualLevelIndex);
-                        
-                        nextLevelOverlay.style.display = 'flex';
-                        setTimeout(() => {
-                            nextLevelOverlay.style.display = 'none';
-                            currentLevelIndex++;
-                            startLevel(currentLevelIndex);
-                        }, 2000);
-                    }
-                }
-            }
-            function handleMismatch(cardOne, cardTwo) {
-                consecutiveMistakes++; matchStreak = 0;
-                totalScore = Math.max(0, totalScore - 15);
-                scoreDisplay.textContent = totalScore;
-                scoreDisplay.style.color = 'var(--danger-color)';
-                setTimeout(() => { if (!scoreDisplay.classList.contains('updated')) { scoreDisplay.style.color = 'var(--primary-color)'; } }, 400);
-                updateMistakeDisplay(); sounds.error.play();
-                if (consecutiveMistakes >= 3) { gameOver(); return; }
-
-                cardOne.addEventListener('transitionend', () => {
-                    resetBoardState();
-                }, { once: true });
-
-                cardOne.classList.remove('flipped'); 
-                cardTwo.classList.remove('flipped');
-            }
-            function resetBoardState() { flippedCards = []; lockBoard = false; }
-            function triggerCoinAnimation(matchedCards, points) {
-                sounds.coin.currentTime = 0; sounds.coin.play(); const scoreRect = scoreDisplay.getBoundingClientRect();
-                const card1Rect = matchedCards[0].getBoundingClientRect();
-                const startX = card1Rect.left + card1Rect.width / 2; const startY = card1Rect.top + card1Rect.height / 2;
-                const endX = scoreRect.left + scoreRect.width / 2; const endY = scoreRect.top + scoreRect.height / 2;
-                const translateX = endX - startX; const translateY = endY - startY;
-                for (let i = 0; i < 5; i++) {
-                    const coin = document.createElement('div'); coin.classList.add('coin'); coin.style.left = `${startX}px`; coin.style.top = `${startY}px`;
-                    coin.style.setProperty('--end-x', `${translateX + (Math.random() - 0.5) * 30}px`); coin.style.setProperty('--end-y', `${translateY + (Math.random() - 0.5) * 30}px`);
-                    coin.style.animationDelay = `${i * 60 + Math.random() * 40}ms`; document.body.appendChild(coin); setTimeout(() => coin.remove(), 1000);
-                }
-                setTimeout(() => {
-                    const scoreBeforeUpdate = totalScore; totalScore += points;
-                    scoreDisplay.style.color = 'var(--primary-color)'; scoreDisplay.textContent = totalScore;
-                    scoreDisplay.classList.add('updated'); setTimeout(() => scoreDisplay.classList.remove('updated'), 300);
-                    if (scoreBeforeUpdate < WIN_SCORE && totalScore >= WIN_SCORE) {
-                        winGame();
-                    }
-                }, 700);
-            };
-            function updateMistakeDisplay() { mistakesDisplay.innerHTML = ''; for (let i = 0; i < 3; i++) { const dot = document.createElement('div'); dot.className = 'mistake-dot'; if (i < consecutiveMistakes) { dot.classList.add('filled'); } mistakesDisplay.appendChild(dot); } };
-            function gameOver() { lockBoard = true; sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
-            function launchConfetti() { const confettiContainer = document.body; const confettiCount = 100; const colors = ['#6a5acd', '#448aff', '#ffc107', '#ff5252', '#4CAF50']; for (let i = 0; i < confettiCount; i++) { const confetti = document.createElement('div'); const size = Math.random() * 10 + 5; confetti.style.width = `${size}px`; confetti.style.height = `${size}px`; confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`; confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1'; confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none'; const anim = confetti.animate([{ transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 }, { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 }); anim.onfinish = () => confetti.remove(); confettiContainer.appendChild(confetti); } }
-            
-            function winGame() {
-                lockBoard = true; 
-                if(winOverlay.style.display === 'flex') return;
-                
-                sounds.win.play(); launchConfetti(); 
-                localStorage.setItem(WIN_STATE_KEY, 'true');
-                const sanitizedUserId = getSanitizedUserId();
-                if (sanitizedUserId) {
-                    database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: true });
-                }
-                
-                document.getElementById('win-score-val').textContent = totalScore >= WIN_SCORE ? WIN_SCORE : totalScore;
-                document.getElementById('win-level-val').textContent = currentLevelIndex < levels.length ? currentLevelIndex + 1 : levels.length;
-
-                buildWinCarousel(); updateWinCarousel();
-                [startOverlay, gameOverOverlay, nextLevelOverlay].forEach(o => o.style.display = 'none');
-                winOverlay.style.display = 'flex';
-            }
-
-            function displayInfoPrize(index) {
-                prizeDisplay.classList.add('fade-out');
-                setTimeout(() => { const prize = prizes[index]; prizeImage.src = prize.image; prizeName.textContent = prize.name; prizeDisplay.classList.remove('fade-out'); }, 300);
-            }
-            function buildWinCarousel() {
-                productCarousel.innerHTML = '';
-                prizes.forEach((p, index) => { productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`; });
-            }
-            function updateWinCarousel() {
-                const slides = document.querySelectorAll('.product-slide');
-                slides.forEach(slide => slide.classList.remove('active'));
-                if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
-            }
-
-            // <<< START OF MODIFIED FUNCTION >>>
-            function handleClaimGiftFirebase() {
-                const deliveryInfoString = localStorage.getItem('deliveryInfo');
-                const sanitizedUserId = getSanitizedUserId();
-                if (!deliveryInfoString || !sanitizedUserId) { alert('حدث خطأ. لا يمكن العثور على بياناتك. يرجى إعادة تسجيل الدخول.'); window.location.href = 'account.html'; return; }
-
-                const product = prizes[winPrizeIndex];
-                const giftClaimData = {
-                    productName: product.name, productImage: product.image,
-                    deliveryInfo: JSON.parse(deliveryInfoString), timestamp: Date.now()
-                };
-
-                // Show the success overlay ON TOP of the win overlay
-                claimSuccessOverlay.style.display = 'flex';
-                
-                const loadingDots = claimSuccessOverlay.querySelector('.loading-dots');
-                const checkmark = claimSuccessOverlay.querySelector('.checkmark-circle');
-                const successText = claimSuccessOverlay.querySelector('.success-text');
-
-                // Reset success overlay state
-                loadingDots.style.display = 'flex';
-                checkmark.style.display = 'none';
-                successText.style.display = 'none';
-
-                database.ref('gift_claims').push(giftClaimData)
-                    .then(() => {
-                        localStorage.removeItem(WIN_STATE_KEY);
-                        database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: false });
-                        
-                        // After 1.5 seconds, show the success animation
-                        setTimeout(() => {
-                            loadingDots.style.display = 'none';
-                            checkmark.style.display = 'flex';
-                            successText.style.display = 'block';
-
-                            // After another 2.5 seconds, automatically restart the game
-                            setTimeout(() => {
-                                startNewShuffledGame();
-                            }, 2500);
-
-                        }, 1500);
-                    })
-                    .catch((error) => {
-                        console.error("Error writing to Firebase:", error);
-                        alert('حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.');
-                        // Just hide the claim overlay, the win overlay is still visible
-                        claimSuccessOverlay.style.display = 'none';
-                    });
-            }
-            // <<< END OF MODIFIED FUNCTION >>>
-
-            // --- Event Listeners ---
-            startButton.addEventListener('click', startNewShuffledGame);
-            resetGameButton.addEventListener('click', startNewShuffledGame); 
-            restartButton.addEventListener('click', beginGameSequence);
-            
-            prizesButton.addEventListener('click', () => {
-                displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex';
+            }).catch((error) => {
+                console.error("Error writing to Firebase:", error);
+                alert('حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.');
+                claimSuccessOverlay.style.display = 'none';
             });
-            prizesOverlay.addEventListener('click', (e) => { 
-                if(e.target === prizesOverlay || e.target.classList.contains('close-btn')) {
-                    prizesOverlay.style.display = 'none';
-                }
-            });
-            infoSwitchPrizeBtn.addEventListener('click', () => { infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length; displayInfoPrize(infoPrizeIndex); });
-            switchProductBtn.addEventListener('click', () => { winPrizeIndex = (winPrizeIndex + 1) % prizes.length; updateWinCarousel(); });
-            claimGiftButton.addEventListener('click', handleClaimGiftFirebase);
-
-            initGame();
+        }
+        
+        // --- Event Listeners ---
+        startButton.addEventListener('click', () => startGame(true, 15)); 
+        
+        // MODIFICATION: Added event listener for the new OK button
+        gameOverOkButton.addEventListener('click', () => {
+            gameOverOverlay.style.display = 'none';
         });
+
+        prizesButton.addEventListener('click', () => { displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex'; });
+        prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay || e.target.classList.contains('close-btn')) { prizesOverlay.style.display = 'none'; } });
+        infoSwitchPrizeBtn.addEventListener('click', () => { infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length; displayInfoPrize(infoPrizeIndex); });
+        switchProductBtn.addEventListener('click', () => { winPrizeIndex = (winPrizeIndex + 1) % prizes.length; updateWinCarousel(); });
+        claimGiftButton.addEventListener('click', handleClaimGiftFirebase);
+
+        canvas.addEventListener('mousedown', e => handleInput(e, 'start'));
+        window.addEventListener('mousemove', e => handleInput(e, 'move'));
+        window.addEventListener('mouseup', e => handleInput(e, 'end'));
+        canvas.addEventListener('touchstart', e => handleInput(e, 'start'), { passive: false });
+        window.addEventListener('touchmove', e => handleInput(e, 'move'), { passive: false });
+        window.addEventListener('touchend', e => handleInput(e, 'end'));
+
+        init(); // Start the whole process
+    });
     </script>
 </body>
 </html>
