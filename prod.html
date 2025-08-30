@@ -532,6 +532,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -540,25 +541,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <title>عرض المنتج</title>
     <style>
-        /* ======================== */
-        /*  تأثير التحميل (جديد)   */
-        /* ======================== */
-        @keyframes shimmer {
-            0% { background-position: -468px 0; }
-            100% { background-position: 468px 0; }
-        }
-
-        .skeleton-loader {
-            animation: shimmer 1.5s linear infinite;
-            background: linear-gradient(to right, #e0e0e0 8%, #f0f0f0 18%, #e0e0e0 33%);
-            background-size: 800px 104px;
-            color: transparent !important; /* إخفاء أي نص مؤقت */
-            border-radius: 4px;
-            display: inline-block;
-            min-height: 1em; /* ضمان وجود ارتفاع للعنصر */
-            user-select: none; /* منع تحديد النص أثناء التحميل */
-        }
-        
         /* تصميم النص مع الخلفية */
         .text-style {
             display: inline-block;
@@ -571,9 +553,7 @@
             margin-top: 7px;
             margin-right: 25px;
             font-family: Cairo, sans-serif;
-            min-width: 80px; /* لضمان عرض تأثير التحميل */
         }
-
         /* تصميم النص الطويل */
         #hop {
             color: #000000;
@@ -586,27 +566,22 @@
             direction: rtl;
             text-align: right;
             line-height: 1.3;
-            display: block; /* يتم التحكم به عبر JS */
+            display: none;
         }
-
-        /* هذا النمط يعمل فقط أثناء التحميل */
         #hop.placeholder {
-            min-height: 44px; /* ارتفاع لثلاثة أسطر تقريبًا */
-            width: 90%;
-            border-radius: 6px;
-            color: transparent;
+            display: block;
+            color: #ffffff;
             background: repeating-linear-gradient(
                 45deg,
-                #cccccc,
-                #cccccc 10px,
-                #dddddd 10px,
-                #dddddd 20px
+                #b4b4b4,
+                #999999 10px,
+                #999999 10px,
+                #999999 20px
             );
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            opacity: 0.5;
+            opacity: 0.7;
         }
-
         #hop .short-text, #hop .full-text {
             display: inline;
         }
@@ -642,7 +617,7 @@
         }
         /* للشاشات المتوسطة */
         @media only screen and (min-width: 769px) and (max-width: 1199px) {
-            #hop {
+            #hop, #productDesc {
                 font-size: 17px;
             }
         }
@@ -669,58 +644,29 @@
 <body>
     <div class="container" style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; width: 100%; margin-top: 26px;">
         <div class="productPrice" style="display: flex; align-items: center; gap: 5px;">
-            <!-- عناصر التحميل هنا -->
-            <div class="zero skeleton-loader" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
-            <div class="number skeleton-loader" id="productPri" style="font-size: 25px; color: #ff004c; min-width: 40px;">&nbsp;</div>
-            <div class="letter" style="margin-right: -3px; font-size: 20px;">EGP</div>
-            <s id="oldPrice" class="skeleton-loader" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555; min-width: 50px;">&nbsp;</s>
-            <div id="productDis" class="skeleton-loader" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none; min-width: 100px;">&nbsp;</div>
+            <div class="zero" style="margin-left: -5px; font-size: 25px; margin-right: 22px;">00.</div>
+            <div class="number" id="productPri" style="font-size: 25px; color: #ff004c;">44</div>
+            <div class="letter" style="  margin-right: -3px; font-size: 20px;">EGP</div>
+            <s id="oldPrice" style="font-size: 20px; margin-right: 9px; margin-bottom: -11px; color: #555555;">444</s>
+            <s id="productDis" style="margin-top: 12px; font-size: 13px; color: #fc0000; margin-right: 9px; font-family: Cairo, sans-serif; text-decoration: none;">خصم اكثر من 80%</s>
         </div>
-        <div id="text-container" class="text-style skeleton-loader">
-            &nbsp;
+        <div id="text-container" class="text-style">
+            النص الأول
         </div>
         <h2 id="hop" class="placeholder">
-            أفضل اختيار لجميع احتياجاتك اليومية بجودة لا مثيل لها... أفضل اختيار لجميع احتياجاتك اليومية بجودة لا مثيل لها... أفضل اختيار لجميع احتياجاتك اليومية
+            أفضل اختيار لجميع احتياجاتك اليومية بجودة لا مثيل لها...
         </h2>
-        <div class="second-text" id="sales" class="skeleton-loader" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px; min-width: 60px;">
-            &nbsp;
+        <div class="second-text" id="sales" style="margin-top: -11px; font-size: 14px; font-family: Cairo, sans-serif; color: #000; margin-right: 29px; margin-bottom: 11px;">
+            5 مباع
         </div>
-    </div>
-
     <script>
         // جلب معرف المنتج من URL
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
-
-        // دالة لإزالة جميع حالات التحميل من الصفحة
-        function removeLoadingStates() {
-            // إزالة فئة skeleton-loader من جميع العناصر
-            document.querySelectorAll('.skeleton-loader').forEach(el => {
-                el.classList.remove('skeleton-loader');
-                // إزالة المحتوى المؤقت لضمان عدم ظهوره للحظة
-                if (el.innerHTML.includes('&nbsp;')) {
-                    el.innerHTML = '';
-                }
-            });
-            // إزالة فئة placeholder من الوصف الطويل
-            const hopContainer = document.getElementById('hop');
-            if (hopContainer) {
-                hopContainer.classList.remove('placeholder');
-            }
-        }
-
         // دالة لجلب بيانات المنتج من JSON
         function loadProductData(id) {
-            // تحويل المعرف إلى رقم للتأكد من صحته
-            const numericId = parseInt(id, 10);
-            if (isNaN(numericId)) {
-                 document.body.innerHTML = '<p>معرف المنتج غير صالح</p>';
-                 return;
-            }
-
-            const fileIndex = Math.ceil(numericId / 5000); 
+            const fileIndex = Math.ceil(id / 5000); // كل 100 منتج في ملف
             const jsonFile = `products-${fileIndex}.json`;
-
             fetch(jsonFile)
                 .then(response => {
                     if (!response.ok) throw new Error('الملف غير موجود');
@@ -732,10 +678,6 @@
                         document.body.innerHTML = '<p>المنتج غير موجود</p>';
                         return;
                     }
-
-                    // *** إزالة حالات التحميل قبل عرض البيانات ***
-                    removeLoadingStates();
-                    
                     // تحديث السعر
                     const priElement = document.getElementById('productPri');
                     priElement.textContent = product.pri || '0';
@@ -743,7 +685,7 @@
                     const oldPriceElement = document.getElementById('oldPrice');
                     if (product.oldPrice) {
                         oldPriceElement.textContent = product.oldPrice;
-                        oldPriceElement.style.display = 'inline-block';
+                        oldPriceElement.style.display = 'inline';
                     } else {
                         oldPriceElement.style.display = 'none';
                     }
@@ -751,28 +693,28 @@
                     const disElement = document.getElementById('productDis');
                     if (product.dis) {
                         disElement.textContent = product.dis;
-                        disElement.style.display = 'inline-block';
+                        disElement.style.display = 'inline';
                     } else {
                         disElement.style.display = 'none';
                     }
                     // تحديث النص المتغير
                     const textContainer = document.getElementById('text-container');
                     const changingTexts = product.changingText || [];
+                    let index = 0;
+                    function changeText() {
+                        textContainer.textContent = changingTexts[index];
+                        index = (index + 1) % changingTexts.length;
+                    }
                     if (changingTexts.length > 0) {
-                        let index = 0;
-                        function changeText() {
-                            textContainer.textContent = changingTexts[index];
-                            index = (index + 1) % changingTexts.length;
-                        }
                         changeText();
                         setInterval(changeText, 5000);
-                        textContainer.style.display = 'inline-block';
                     } else {
                         textContainer.style.display = 'none';
                     }
                     // تحديث النص الطويل
                     const hopContainer = document.getElementById('hop');
                     if (product.longText) {
+                        hopContainer.classList.remove('placeholder');
                         hopContainer.textContent = product.longText;
                         hopContainer.style.display = 'block';
                         initializeLongText();
@@ -787,24 +729,28 @@
                     } else {
                         salesElement.style.display = 'none';
                     }
+                    // تحديث نص الوصف
+                    const descElement = document.getElementById('productDesc');
+                    if (product.desc) {
+                        descElement.textContent = product.desc;
+                        descElement.style.display = 'block';
+                    } else {
+                        descElement.style.display = 'none';
+                    }
                 })
                 .catch(error => {
                     console.error('خطأ في جلب البيانات:', error);
                     document.body.innerHTML = '<p>حدث خطأ أثناء تحميل البيانات أو المنتج غير موجود</p>';
                 });
         }
-        
-        // دالة تهيئة النص الطويل (تبقى كما هي)
+        // دالة تهيئة النص الطويل
         function initializeLongText() {
             const container = document.getElementById('hop');
-            if (!container || !container.textContent) return; // حماية إضافية
             const originalText = container.textContent.trim();
             const charLimitMobile = 50;
             const charLimitTablet = 122;
             const charLimitLarge = 132;
-            
             const truncateText = (text, charLimit) => {
-                // ... الكود الخاص بك هنا بدون أي تغيير
                 if (text.length > charLimit) {
                     const truncatedText = text.substring(0, charLimit);
                     const lastSpaceIndex = truncatedText.lastIndexOf(' ');
@@ -826,7 +772,11 @@
                     fullText.textContent = text;
                     const moreBtn = document.createElement('span');
                     moreBtn.className = 'more-btn';
-                    moreBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+                    moreBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    `;
                     container.textContent = '';
                     shortText.appendChild(initialText);
                     lastWordWrapper.appendChild(moreBtn);
@@ -840,11 +790,8 @@
                     container.style.display = 'block';
                 }
             };
-
             const updateTextBasedOnScreenSize = () => {
                 const screenWidth = window.innerWidth;
-                container.textContent = originalText; // إعادة النص الأصلي قبل كل عملية قص
-                container.classList.remove('expanded'); // إعادة الحالة الافتراضية
                 if (screenWidth <= 768) {
                     truncateText(originalText, charLimitMobile);
                 } else if (screenWidth >= 769 && screenWidth <= 1199) {
@@ -852,26 +799,25 @@
                 } else if (screenWidth >= 1200 && screenWidth <= 1999) {
                     truncateText(originalText, charLimitLarge);
                 } else {
-                    // للشاشات الكبيرة جداً، نعرض النص كاملاً بدون زر "المزيد"
-                    container.innerHTML = `<span class="full-text" style="display:inline;">${originalText}</span>`;
+                    container.textContent = originalText;
+                    container.style.display = 'block';
                 }
             };
-            
             updateTextBasedOnScreenSize();
             window.addEventListener('resize', updateTextBasedOnScreenSize);
         }
-
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             if (productId) {
                 loadProductData(productId);
             } else {
-                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL (مثال: ?id=1)</p>';
+                document.body.innerHTML = '<p>يرجى تحديد معرف المنتج في URL</p>';
             }
         });
     </script>
 </body>
 </html>
+           
 
 
             <!DOCTYPE html>
