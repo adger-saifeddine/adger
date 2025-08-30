@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adger</title>
-    <link rel="icon" href="logo.jpg" type="image/x-icon">
+    <link rel="icon" href="https://files.catbox.moe/x6m74r.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -124,6 +124,7 @@
         .win-reward-section h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; color: #fff; }
         .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: var(--primary-color); background: #fff; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
         .primary-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
+        .primary-btn:disabled { cursor: not-allowed; background-color: #e0e0e0; }
         #product-carousel { position: relative; min-height: 270px; margin: 0; width: 100%; }
         .product-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 5px 0; opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; transform: scale(0.95); }
         .product-slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
@@ -146,7 +147,7 @@
             .primary-btn { padding: 12px 25px; font-size: 1rem; }
         }
         
-        #claim-success-overlay { display: none; }
+        #claim-success-overlay { z-index: 1001; } /* Ensure it's on top */
         #claim-success-overlay .overlay-content { width: 320px; height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; padding-bottom: 20px; }
         .loading-dots { display: flex; justify-content: center; align-items: center; gap: 5px; margin: 0; }
         .dot { width: 15px; height: 15px; border-radius: 50%; animation: switch 1.2s infinite ease-in-out; }
@@ -258,7 +259,6 @@
             </div>
             <div class="checkmark-circle">✓</div>
             <div class="success-text">تم استلام طلبك</div>
-            <button id="final-restart-btn" class="primary-btn secondary-btn" style="display:none;">العب مرة أخرى</button>
         </div>
     </div>
 
@@ -330,7 +330,6 @@
 
             const claimGiftButton = document.getElementById('claim-gift-btn');
             const resetGameButton = document.getElementById('reset-game-button');
-            const finalRestartBtn = document.getElementById('final-restart-btn');
             const switchProductBtn = document.getElementById('switch-product-btn');
             const productCarousel = document.getElementById('product-carousel');
 
@@ -343,14 +342,46 @@
             let infoPrizeIndex = 0;
             const WIN_STATE_KEY = 'memoryGameWinState';
             
-            let allImages = ['https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg'];
-            allImages = allImages.slice(0, 54);
-
+            let allImages = [
+                // Original Images
+                'https://i.postimg.cc/vmKNdBtb/image.jpg', 'https://i.postimg.cc/YCs3vPGx/1536345536798511500-jpg.webp', 'https://i.postimg.cc/90QRtWsw/fruit-fresh_guava-yellow_guava-organic_guava-Fruit-Guava-514363-wh860.png', 'https://i.postimg.cc/Cxk18Bd6/image.jpg', 'https://i.postimg.cc/xdP1swvv/2022-6-26-13-37-46-808.jpg', 'https://i.postimg.cc/1t55bvBL/are-avocados-healthy.jpg', 'https://i.postimg.cc/qgfrBwcB/images.png', 'https://i.postimg.cc/zXWbCPcj/Flag-of-the_United_Arab_ Emirates_svg.webp', 'https://i.postimg.cc/KYc1ycvq/Flag_of_Italy_svg.png', 'https://i.postimg.cc/1zWfRx89/Flag_of_South_Africa_svg.png', 'https://i.postimg.cc/zvhBkV0B/6768f29b6d5da42209176e3b-63bfed10ccb1e1699c36df23-POL-Andrycho-w_flag.png', 'https://i.postimg.cc/G3THR5dC/Flag-Lebanon.webp', 'https://i.postimg.cc/vmSZFWKT/Projekty-dom-w_Today_UK-park-park-377-E_today-park377-E-2-cover.webp', 'https://i.postimg.cc/fLGWkMDh/images.jpg', 'https://i.postimg.cc/wxNTZRQx/how-to_design-a_house.jpg', 'https://i.postimg.cc/dtKtYQ52/prefab-home-in-burlingame-ca-2-480x480.webp', 'https://i.postimg.cc/vHL8HRKp/imagereader-3-1550604185.avif', 'https://i.postimg.cc/P5XXC3sN/Kloof_Rd-by-Nico_van_der_Meulen_Architects-07-resize.webp', 'https://i.postimg.cc/3xtKmXY1/bugatti-centodieci.jpg', 'https://i.postimg.cc/43MsFXKh/CR-Cars-Inline_Hero-10-Most_Satisfying-Cars-and-SUVs-1124.webp', 'https://i.postimg.cc/yxCBsny1/images.jpg', 'https://i.postimg.cc/yYBBGQNn/images.jpg', 'https://i.postimg.cc/SNrqb624/images.jpg', 'https://i.postimg.cc/cLkSrdB5/top-5-fastest_cars-in-the-world2.avif', 'https://i.postimg.cc/MGc8BgsZ/images.jpg', 'https://i.postimg.cc/tgLGNDf3/Giant-Panda-2004-03-2.jpg', 'https://i.postimg.cc/MTV2PV2h/images.jpg', 'https://i.postimg.cc/HnmGfnTj/2439zohzq4-76768945-200ee080-6772-11ea-99f1-23346ee95a58.jpg', 'https://i.postimg.cc/MKW25nsF/jeremy-hynes-l-e-SPV-e_W8o-unsplash_SUP.jpg', 'https://i.postimg.cc/gJ91ZjX4/Getty-Images-1044891694-scaled-1.webp', 'https://i.postimg.cc/YSxQ1yjV/OldBooks.jpg', 'https://i.postimg.cc/T3Vb6Hjw/fit-55491.jpg', 'https://i.postimg.cc/HL37Jch1/images.jpg', 'https://i.postimg.cc/tTMZk0br/Old-Books-2.jpg', 'https://i.postimg.cc/c6qKqQrw/335ea344-3fa4-49c3-9aba-6c8eec6439a2-1000x1000_zb-U5d9xz-JOEw_Etxn-AWay43-ELcww87-VM4_Mdx330-R2.webp', 'https://i.postimg.cc/ZYXjY2NF/65f1b49b-2d78-4444-bdd4-956caa4112da-thumbnail-1000x1000.png', 'https://i.postimg.cc/MKR5n5bk/download.jpg', 'https://i.postimg.cc/6Q6f1Xsw/download.jpg', 'https://i.postimg.cc/VN7BxV1t/download.jpg', 'https://i.postimg.cc/htcLfBtx/images.jpg', 'https://i.postimg.cc/bvv199bw/pexels-pixabay-159866.jpg', 'https://i.postimg.cc/cJ5w9tMM/images.jpg', 'https://i.postimg.cc/Wz0Z1WRX/download.jpg', 'https://i.postimg.cc/c4NYbSYj/71d-X9-Jn_Tkw_L-_UF894,1000_QL80.jpg', 'https://i.postimg.cc/7ZHzqnKn/draw_tweety-bird-step-6-768x1024.jpg', 'https://i.postimg.cc/0NrJw2R6/prints-downscaled-p_fsvij496afr-2000x2000-70028.jpg', 'https://i.postimg.cc/3NQyVXyp/download.jpg', 'https://i.postimg.cc/HkvrdDcT/images.jpg', 'https://i.postimg.cc/kgG5j1jz/download.jpg', 'https://i.postimg.cc/JnV4z11C/download.jpg', 'https://i.postimg.cc/wxkT98Zn/16_Most_Beautiful-Horse-in-the-World.webp', 'https://i.postimg.cc/jdgxJ6sX/Horse-outdoors_close-up.png', 'https://i.postimg.cc/7L7wcpSs/images.jpg', 'https://i.postimg.cc/pTHRtqZ2/images.jpg',
+                'https://files.catbox.moe/x6m74r.png', 'https://files.catbox.moe/9avb54.png', 'https://files.catbox.moe/917ny3.png', 'https://files.catbox.moe/721coc.png', 'https://files.catbox.moe/91hoz0.png', 'https://files.catbox.moe/3igp0k.png', 'https://files.catbox.moe/5iawy5.jpg', 'https://files.catbox.moe/yunpy9.jpg', 'https://files.catbox.moe/onxh77.jpg', 'https://files.catbox.moe/cdo8le.jpg', 'https://files.catbox.moe/oya8p2.avif', 'https://files.catbox.moe/sxy26b.jpg', 'https://files.catbox.moe/u0qjfy.jpg', 'https://files.catbox.moe/8hrbun.jpg', 'https://files.catbox.moe/qipwvk.jpg', 'https://files.catbox.moe/0b58dn.jpg', 'https://files.catbox.moe/g7hjt3.jpg', 'https://files.catbox.moe/dyh06p.jpg', 'https://files.catbox.moe/oo7pws.jpg', 'https://files.catbox.moe/ztdv5q.jpg', 'https://files.catbox.moe/68wnik.jpg', 'https://files.catbox.moe/htyx4n.jpg', 'https://files.catbox.moe/9zvrjg.jpg', 'https://files.catbox.moe/eus3eb.jpg', 'https://files.catbox.moe/59edm1.jpg', 'https://files.catbox.moe/00tarf.jpg', 'https://files.catbox.moe/2hyfi5.jpg', 'https://files.catbox.moe/yusfwx.jpg', 'https://files.catbox.moe/z7db33.jpg', 'https://files.catbox.moe/sjdmcx.jpg', 'https://files.catbox.moe/7cdvpa.jpg', 'https://files.catbox.moe/5kkrss.jpg', 'https://files.catbox.moe/atktus.jpg', 'https://files.catbox.moe/ipvd5i.jpg', 'https://files.catbox.moe/ahhdlz.jpg', 'https://files.catbox.moe/2lof1i.jpg', 'https://files.catbox.moe/00ohpw.jpg', 'https://files.catbox.moe/gwjj91.jpg', 'https://files.catbox.moe/4at8av.jpg', 'https://files.catbox.moe/4mt4xw.jpg', 'https://files.catbox.moe/r45nb5.jpg', 'https://files.catbox.moe/d3052a.jpg', 'https://files.catbox.moe/agywso.jpg', 'https://files.catbox.moe/8p25or.jpg', 'https://files.catbox.moe/7chfj7.jpg', 'https://files.catbox.moe/a19d44.jpg', 'https://files.catbox.moe/erb09e.jpg', 'https://files.catbox.moe/mn0t9b.jpg', 'https://files.catbox.moe/hg7c0l.jpg', 'https://files.catbox.moe/qug31j.jpg', 'https://files.catbox.moe/ovmkfb.jpg', 'https://files.catbox.moe/cz4y68.jpg', 'https://files.catbox.moe/pysqk7.jpg', 'https://files.catbox.moe/m2v7hw.jpg', 'https://files.catbox.moe/na4fzq.jpg', 'https://files.catbox.moe/vtqgfr.jpg', 'https://files.catbox.moe/yfzgsv.jpg', 'https://files.catbox.moe/lwm4ga.jpg', 'https://files.catbox.moe/pativf.jpg', 'https://files.catbox.moe/6gp9x2.jpg', 'https://files.catbox.moe/tvmu2g.jpg', 'https://files.catbox.moe/aqpm90.jpg', 'https://files.catbox.moe/3keawd.jpg', 'https://files.catbox.moe/ldffps.jpg', 'https://files.catbox.moe/uiun4f.jpg', 'https://files.catbox.moe/r22pk3.jpg', 'https://files.catbox.moe/8j71y9.jpg', 'https://files.catbox.moe/3dg0t1.jpg', 'https://files.catbox.moe/pouiru.jpg', 'https://files.catbox.moe/0w9q60.jpg', 'https://files.catbox.moe/6gccqn.jpg', 'https://files.catbox.moe/bdt8s9.jpg', 'https://files.catbox.moe/hmu66a.jpg', 'https://files.catbox.moe/qtkwsc.jpg', 'https://files.catbox.moe/hc2qmh.jpg', 'https://files.catbox.moe/5uaqno.jpg', 'https://files.catbox.moe/dcdphq.jpg', 'https://files.catbox.moe/nl66vq.jpg', 'https://files.catbox.moe/66o7yo.jpg', 'https://files.catbox.moe/khx7cr.jpg', 'https://files.catbox.moe/7vyert.jpg', 'https://files.catbox.moe/ecahuj.jpg', 'https://files.catbox.moe/hygdz8.jpg', 'https://files.catbox.moe/t87cgw.jpg', 'https://files.catbox.moe/vklnlf.jpg', 'https://files.catbox.moe/cv3dk9.jpg', 'https://files.catbox.moe/tgq8iv.jpg', 'https://files.catbox.moe/7rt5e8.jpg', 'https://files.catbox.moe/ls1lva.jpg', 'https://files.catbox.moe/1y8qnr.jpg', 'https://files.catbox.moe/bdacvu.jpg', 'https://files.catbox.moe/4mwqfi.jpg', 'https://files.catbox.moe/v59fvi.jpg', 'https://files.catbox.moe/nkpqjq.jpg', 'https://files.catbox.moe/e7fl1v.jpg', 'https://files.catbox.moe/67pvb5.jpg', 'https://files.catbox.moe/co7gyk.png', 'https://files.catbox.moe/n33xcw.png', 'https://files.catbox.moe/dgzlkw.png', 'https://files.catbox.moe/25ix21.jpg', 'https://files.catbox.moe/ya1sko.png', 'https://files.catbox.moe/telqkz.png', 'https://files.catbox.moe/sxzrlu.jpg', 'https://files.catbox.moe/rw4zal.jpg', 'https://files.catbox.moe/pnrhxe.jpg', 'https://files.catbox.moe/m81m47.jpg', 'https://files.catbox.moe/whvwru.jpg', 'https://files.catbox.moe/8v2f1o.jpg', 'https://files.catbox.moe/zetyu6.jpg', 'https://files.catbox.moe/95n8t3.jpg', 'https://files.catbox.moe/1xgs82.jpg', 'https://files.catbox.moe/acad7h.jpg', 'https://files.catbox.moe/7bk4ww.jpg', 'https://files.catbox.moe/oxjok6.jpg', 'https://files.catbox.moe/btohr7.jpg', 'https://files.catbox.moe/lje5t9.jpg', 'https://files.catbox.moe/0pazya.jpg', 'https://files.catbox.moe/cgii0e.jpg', 'https://files.catbox.moe/f5d8yg.jpg', 'https://files.catbox.moe/164i30.jpg', 'https://files.catbox.moe/wikp9u.jpg', 'https://files.catbox.moe/0zpj9k.jpg', 'https://files.catbox.moe/javogd.jpg', 'https://files.catbox.moe/u91tus.jpg', 'https://files.catbox.moe/gdefbq.jpg', 'https://files.catbox.moe/yabdk8.jpg', 'https://files.catbox.moe/9viddr.jpg', 'https://files.catbox.moe/8czy3p.jpg', 'https://files.catbox.moe/mwfdkk.jpg', 'https://files.catbox.moe/tkmwiw.jpg', 'https://files.catbox.moe/ooe5wv.jpg', 'https://files.catbox.moe/hmq3hm.jpg', 'https://files.catbox.moe/zxw7wf.jpg', 'https://files.catbox.moe/1ojo14.jpg', 'https://files.catbox.moe/811uk9.jpg', 'https://files.catbox.moe/jdx4xo.jpg', 'https://files.catbox.moe/c5uhe9.jpg', 'https://files.catbox.moe/a6vhbg.jpg', 'https://files.catbox.moe/ooeqig.webp', 'https://files.catbox.moe/7ztuav.jpg', 'https://files.catbox.moe/9c87nf.jpg', 'https://files.catbox.moe/0384d3.jpg', 'https://files.catbox.moe/sxec0w.jpg', 'https://files.catbox.moe/yyukl2.avif', 'https://files.catbox.moe/njbiw3.jpg', 'https://files.catbox.moe/dvcu37.jpg', 'https://files.catbox.moe/6ef0n2.jpg', 'https://files.catbox.moe/ikk03y.jpg', 'https://files.catbox.moe/agpvga.jpg', 'https://files.catbox.moe/1vgjgx.jpg', 'https://files.catbox.moe/0ir8nc.jpg', 'https://files.catbox.moe/ljjdyu.jpg', 'https://files.catbox.moe/3xsbjc.jpg', 'https://files.catbox.moe/8o8jj3.jpg', 'https://files.catbox.moe/v2j0w2.jpg', 'https://files.catbox.moe/do03ig.jpg', 'https://files.catbox.moe/6bi3z0.jpg', 'https://files.catbox.moe/di7lh9.jpg', 'https://files.catbox.moe/lz4cim.jpg', 'https://files.catbox.moe/ix06bp.jpg', 'https://files.catbox.moe/hoh7wd.jpg', 'https://files.catbox.moe/wxhli5.jpg', 'https://files.catbox.moe/ujv642.jpg', 'https://files.catbox.moe/arkglw.jpg', 'https://files.catbox.moe/y8v1a5.jpg', 'https://files.catbox.moe/ke5zq5.jpg', 'https://files.catbox.moe/in4sj5.jpg', 'https://files.catbox.moe/50szbz.jpg', 'https://files.catbox.moe/021pm2.jpg', 'https://files.catbox.moe/s82agx.jpg', 'https://files.catbox.moe/ebuhg0.jpg', 'https://files.catbox.moe/bzbkby.jpg', 'https://files.catbox.moe/f88rge.jpg', 'https://files.catbox.moe/2b949x.jpg', 'https://files.catbox.moe/i59ul6.jpg', 'https://files.catbox.moe/9rwsmx.png', 'https://files.catbox.moe/y5zdw9.jpg', 'https://files.catbox.moe/crgfrt.jpg', 'https://files.catbox.moe/z1g2d2.jpg', 'https://files.catbox.moe/0y0z6x.jpg', 'https://files.catbox.moe/dy40fm.jpg', 'https://files.catbox.moe/ko49pu.jpg', 'https://files.catbox.moe/olvzs1.jpg', 'https://files.catbox.moe/yesdkw.jpg', 'https://files.catbox.moe/upheyg.jpg', 'https://files.catbox.moe/jv4utb.jpg'
+            ];
+            
+            allImages = [...new Set(allImages)];
+            
             const levels = []; let imageCursor = 0;
-            for (let i = 0; i < 9; i++) { levels.push({ level: i + 1, images: allImages.slice(imageCursor, imageCursor + 6) }); imageCursor += 6; }
+            const TOTAL_LEVELS = 30;
+            for (let i = 0; i < TOTAL_LEVELS; i++) { 
+                if (imageCursor + 6 > allImages.length) imageCursor = 0;
+                levels.push({ level: i + 1, images: allImages.slice(imageCursor, imageCursor + 6) }); 
+                imageCursor += 6; 
+            }
 
             const WIN_SCORE = 1000;
             let totalScore, currentLevelIndex, flippedCards, lockBoard, matchesFound, consecutiveMistakes, matchStartTime, matchStreak;
+            let shuffledLevelOrder = [];
+
+            function preloadLevelImages(levelIndex) {
+                return new Promise((resolve) => {
+                    const levelImages = levels[levelIndex]?.images;
+                    if (!levelImages || levelImages.length === 0) {
+                        resolve();
+                        return;
+                    }
+                    let loadedCount = 0;
+                    levelImages.forEach(src => {
+                        const img = new Image();
+                        img.src = src;
+                        img.onload = img.onerror = () => {
+                            loadedCount++;
+                            if (loadedCount === levelImages.length) {
+                                resolve();
+                            }
+                        };
+                    });
+                });
+            }
 
             function getSanitizedUserId() {
                 const deliveryInfoString = localStorage.getItem('deliveryInfo');
@@ -392,8 +423,25 @@
                     initialLoader.classList.add('hidden');
                 });
             }
+            
+            function startNewShuffledGame() {
+                shuffledLevelOrder = Array.from({ length: levels.length }, (_, i) => i)
+                                          .sort(() => Math.random() - 0.5);
+                beginGameSequence();
+            }
 
-            function startGame() {
+            async function beginGameSequence() {
+                const allStartButtons = [startButton, restartButton, resetGameButton];
+                
+                allStartButtons.forEach(btn => {
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.textContent = '...جاري التحضير';
+                    }
+                });
+
+                await preloadLevelImages(shuffledLevelOrder[0]);
+
                 localStorage.removeItem(WIN_STATE_KEY);
                 const sanitizedUserId = getSanitizedUserId();
                 if (sanitizedUserId) {
@@ -401,48 +449,132 @@
                 }
                 totalScore = 0; currentLevelIndex = 0;
                 [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
+                
+                startButton.disabled = false;
+                startButton.textContent = 'إبدأ التحدي';
+                restartButton.disabled = false;
+                restartButton.textContent = 'أعد التحدي';
+                resetGameButton.disabled = false;
+                resetGameButton.textContent = 'العب مرة أخرى';
+
                 startLevel(currentLevelIndex);
             }
 
-            function startLevel(levelIndex) {
+            function startLevel(levelProgressIndex) {
                 matchesFound = 0; consecutiveMistakes = 0; matchStreak = 0; flippedCards = []; lockBoard = true;
-                updateMistakeDisplay(); levelDisplay.textContent = levelIndex + 1; scoreDisplay.textContent = totalScore;
-                const levelData = levels[levelIndex]; const cardSet = [...levelData.images, ...levelData.images]; gameBoard.innerHTML = '';
-                gameBoard.className = 'game-board board-size-6'; const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
+                updateMistakeDisplay(); 
+                levelDisplay.textContent = levelProgressIndex + 1;
+                scoreDisplay.textContent = totalScore;
+                
+                const actualLevelIndex = shuffledLevelOrder[levelProgressIndex];
+                const levelData = levels[actualLevelIndex];
+                const cardSet = [...levelData.images, ...levelData.images]; 
+                
+                gameBoard.innerHTML = '';
+                gameBoard.className = 'game-board board-size-6'; 
+                const shuffledCards = cardSet.sort(() => Math.random() - 0.5);
                 shuffledCards.forEach((imageSrc, i) => {
                     const card = document.createElement('div'); card.classList.add('card'); card.dataset.image = imageSrc;
                     card.innerHTML = `<div class="card-face card-front">?</div><div class="card-face card-back"><img src="${imageSrc}" alt="Card"></div>`;
                     card.style.transitionDelay = `${i * 40}ms`; gameBoard.appendChild(card); setTimeout(() => card.classList.add('flipped'), 50);
                 });
+                
                 setTimeout(() => {
-                    document.querySelectorAll('.card').forEach(card => { card.classList.remove('flipped'); card.style.transitionDelay = '0ms'; });
-                    setTimeout(() => { document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard)); lockBoard = false; }, 600);
+                    const allCards = document.querySelectorAll('.card');
+                    
+                    allCards.forEach(card => {
+                        card.addEventListener('click', flipCard);
+                        card.style.transitionDelay = '0ms';
+                    });
+
+                    if (allCards.length > 0) {
+                        allCards[0].addEventListener('transitionend', () => {
+                            lockBoard = false;
+                        }, { once: true });
+                    } else {
+                        lockBoard = false; 
+                    }
+                    allCards.forEach(card => {
+                        card.classList.remove('flipped');
+                    });
                 }, 1800); 
             }
-            function flipCard() { if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); if (flippedCards.length === 0) { matchStartTime = Date.now(); } flippedCards.push(this); if (flippedCards.length === 2) { lockBoard = true; checkForMatch(); } }
-            function checkForMatch() { const [cardOne, cardTwo] = flippedCards; const isMatch = cardOne.dataset.image === cardTwo.dataset.image; setTimeout(() => { if (isMatch) { handleMatch(cardOne, cardTwo); } else { handleMismatch(cardOne, cardTwo); } }, 600); }
+            
+            function flipCard() { 
+                if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return; 
+                sounds.flip.currentTime = 0; sounds.flip.play(); this.classList.add('flipped'); 
+                if (flippedCards.length === 0) { 
+                    matchStartTime = Date.now(); 
+                } 
+                flippedCards.push(this); 
+                if (flippedCards.length === 2) { 
+                    lockBoard = true; 
+                    setTimeout(checkForMatch, 600); 
+                } 
+            }
+            
+            async function checkForMatch() { 
+                const [cardOne, cardTwo] = flippedCards; 
+                const isMatch = cardOne.dataset.image === cardTwo.dataset.image; 
+                if (isMatch) {
+                    await handleMatch(cardOne, cardTwo); 
+                } else { 
+                    handleMismatch(cardOne, cardTwo);
+                }
+            }
+
             function createPointPopup(card, popupInfo) { if (popupInfo.time > 0) { const popup = document.createElement('div'); popup.textContent = `+${popupInfo.time} سرعة`; popup.className = 'point-popup'; document.body.appendChild(popup); const cardRect = card.getBoundingClientRect(); const popupRect = popup.getBoundingClientRect(); popup.style.left = `${cardRect.left + (cardRect.width / 2) - (popupRect.width / 2)}px`; popup.style.top = `${cardRect.top}px`; setTimeout(() => popup.remove(), 1800); } };
-            function handleMatch(cardOne, cardTwo) {
+            
+            async function handleMatch(cardOne, cardTwo) {
                 matchesFound++; consecutiveMistakes = 0; matchStreak++; updateMistakeDisplay();
-                const timeTaken = (Date.now() - matchStartTime) / 1000; const basePoints = 25;
-                const timeBonus = Math.max(0, Math.floor((3 - timeTaken) * 5)); const levelBonus = currentLevelIndex * 5;
-                const streakBonus = (matchStreak > 1) ? (matchStreak * 10) : 0; const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
-                createPointPopup(cardOne, { time: timeBonus }); triggerCoinAnimation([cardOne, cardTwo], pointsEarned);
+                const timeTaken = (Date.now() - matchStartTime) / 1000; 
+                
+                const basePoints = 10;
+                const timeBonus = Math.max(0, Math.floor((2.5 - timeTaken) * 2));
+                const levelBonus = currentLevelIndex * 2;
+                const streakBonus = (matchStreak > 1) ? (matchStreak * 3) : 0;
+                const pointsEarned = basePoints + timeBonus + levelBonus + streakBonus;
+
                 cardOne.classList.add('matched'); cardTwo.classList.add('matched');
                 cardOne.removeEventListener('click', flipCard); cardTwo.removeEventListener('click', flipCard);
+                createPointPopup(cardOne, { time: timeBonus }); 
+                triggerCoinAnimation([cardOne, cardTwo], pointsEarned);
+                
                 setTimeout(resetBoardState, 300);
-                if (matchesFound === levels[currentLevelIndex].images.length) {
-                    lockBoard = true; setTimeout(() => { currentLevelIndex++; if (currentLevelIndex < levels.length && totalScore < WIN_SCORE) { nextLevelOverlay.style.display = 'flex'; setTimeout(() => { nextLevelOverlay.style.display = 'none'; startLevel(currentLevelIndex); }, 2000); } }, 800);
+
+                const actualLevelIndex = shuffledLevelOrder[currentLevelIndex];
+                if (matchesFound === levels[actualLevelIndex].images.length) {
+                    lockBoard = true;
+                    
+                    const nextLevelProgressIndex = currentLevelIndex + 1;
+                    if (nextLevelProgressIndex < levels.length && totalScore < WIN_SCORE) {
+                        const nextActualLevelIndex = shuffledLevelOrder[nextLevelProgressIndex];
+                        await preloadLevelImages(nextActualLevelIndex);
+                        
+                        nextLevelOverlay.style.display = 'flex';
+                        setTimeout(() => {
+                            nextLevelOverlay.style.display = 'none';
+                            currentLevelIndex++;
+                            startLevel(currentLevelIndex);
+                        }, 2000);
+                    }
                 }
             }
             function handleMismatch(cardOne, cardTwo) {
                 consecutiveMistakes++; matchStreak = 0;
-                totalScore = Math.max(0, totalScore - 10); scoreDisplay.textContent = totalScore;
+                totalScore = Math.max(0, totalScore - 15);
+                scoreDisplay.textContent = totalScore;
                 scoreDisplay.style.color = 'var(--danger-color)';
                 setTimeout(() => { if (!scoreDisplay.classList.contains('updated')) { scoreDisplay.style.color = 'var(--primary-color)'; } }, 400);
                 updateMistakeDisplay(); sounds.error.play();
                 if (consecutiveMistakes >= 3) { gameOver(); return; }
-                cardOne.classList.remove('flipped'); cardTwo.classList.remove('flipped'); resetBoardState();
+
+                cardOne.addEventListener('transitionend', () => {
+                    resetBoardState();
+                }, { once: true });
+
+                cardOne.classList.remove('flipped'); 
+                cardTwo.classList.remove('flipped');
             }
             function resetBoardState() { flippedCards = []; lockBoard = false; }
             function triggerCoinAnimation(matchedCards, points) {
@@ -502,6 +634,7 @@
                 if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
             }
 
+            // <<< START OF MODIFIED FUNCTION >>>
             function handleClaimGiftFirebase() {
                 const deliveryInfoString = localStorage.getItem('deliveryInfo');
                 const sanitizedUserId = getSanitizedUserId();
@@ -513,40 +646,50 @@
                     deliveryInfo: JSON.parse(deliveryInfoString), timestamp: Date.now()
                 };
 
-                winOverlay.style.display = 'none'; claimSuccessOverlay.style.display = 'flex';
+                // Show the success overlay ON TOP of the win overlay
+                claimSuccessOverlay.style.display = 'flex';
                 
                 const loadingDots = claimSuccessOverlay.querySelector('.loading-dots');
                 const checkmark = claimSuccessOverlay.querySelector('.checkmark-circle');
                 const successText = claimSuccessOverlay.querySelector('.success-text');
-                const finalBtn = claimSuccessOverlay.querySelector('#final-restart-btn');
 
-                loadingDots.style.display = 'flex'; checkmark.style.display = 'none';
-                successText.style.display = 'none'; finalBtn.style.display = 'none';
+                // Reset success overlay state
+                loadingDots.style.display = 'flex';
+                checkmark.style.display = 'none';
+                successText.style.display = 'none';
 
                 database.ref('gift_claims').push(giftClaimData)
                     .then(() => {
                         localStorage.removeItem(WIN_STATE_KEY);
                         database.ref(`user_game_states/${sanitizedUserId}`).set({ hasWon: false });
+                        
+                        // After 1.5 seconds, show the success animation
                         setTimeout(() => {
-                            loadingDots.style.display = 'none'; checkmark.style.display = 'flex';
-                            successText.style.display = 'block'; finalBtn.style.display = 'inline-flex';
+                            loadingDots.style.display = 'none';
+                            checkmark.style.display = 'flex';
+                            successText.style.display = 'block';
+
+                            // After another 2.5 seconds, automatically restart the game
+                            setTimeout(() => {
+                                startNewShuffledGame();
+                            }, 2500);
+
                         }, 1500);
                     })
                     .catch((error) => {
                         console.error("Error writing to Firebase:", error);
                         alert('حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.');
-                        claimSuccessOverlay.style.display = 'none'; winOverlay.style.display = 'flex';
+                        // Just hide the claim overlay, the win overlay is still visible
+                        claimSuccessOverlay.style.display = 'none';
                     });
             }
+            // <<< END OF MODIFIED FUNCTION >>>
 
             // --- Event Listeners ---
-            startButton.addEventListener('click', startGame);
-            restartButton.addEventListener('click', startGame);
+            startButton.addEventListener('click', startNewShuffledGame);
+            resetGameButton.addEventListener('click', startNewShuffledGame); 
+            restartButton.addEventListener('click', beginGameSequence);
             
-            // هذا الزر يستدعي دالة startGame التي تمحو حالة الفوز من Firebase
-            resetGameButton.addEventListener('click', startGame); 
-            
-            finalRestartBtn.addEventListener('click', startGame);
             prizesButton.addEventListener('click', () => {
                 displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex';
             });
