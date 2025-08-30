@@ -335,11 +335,11 @@
         const getPositionY = (e) => e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
 
         const dragStart = (e) => {
-            state.dragDirection = null;
+            state.dragDirection = null; 
             state.isDragging = true;
             state.startTime = Date.now();
             state.startPos = getPositionX(e);
-            state.startY = getPositionY(e);
+            state.startY = getPositionY(e); 
             state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth;
             dom.track.classList.remove('transitioning');
         };
@@ -381,28 +381,32 @@
             }
 
             const dragOffset = state.currentTranslate - state.prevTranslate;
+            const dragDuration = Date.now() - state.startTime;
+            
+            // [الحل]: هذا الشرط هو مفتاح الحل.
+            // إذا كانت الحركة صغيرة جدًا وسريعة جدًا (أي نقرة)، فإنه يتوقف هنا.
+            // هذا يمنع `setActiveSlide` من العمل بشكل غير ضروري ويسمح لحدث النقر
+            // بالوصول إلى زر تشغيل الفيديو الموجود أسفله.
+            if (Math.abs(dragOffset) < 5 && dragDuration < 200) {
+                // نعيد الشريحة لمكانها الصحيح في حال تحركت بكسلات بسيطة، ولكن لا نفعل شيئًا آخر.
+                dom.track.classList.add('transitioning');
+                setSliderPosition(); 
+                return;
+            }
+
             const swipeThreshold = 50; // حد السحب الكافي لتغيير الشريحة
-            const originalIndex = state.currentIndex;
-
-            // [الحل]: تم حذف الشرط الذي كان يتحقق من النقرات (dragOffset < 5).
-            // الآن، سيتم تنفيذ هذا الكود فقط إذا كان هناك سحب حقيقي.
-
-            // تصحيح منطق اتجاه السحب ليتوافق مع RTL
-            // السحب لليمين (إزاحة موجبة) يعني الانتقال إلى الشريحة "السابقة"
+            
+            // تم تعديل هذا الجزء ليعمل بشكل صحيح مع اتجاه RTL
             if (dragOffset > swipeThreshold && state.currentIndex > 0) {
+                // السحب لليمين (إزاحة موجبة) ينتقل إلى الشريحة السابقة في RTL
                 state.currentIndex--;
-            // السحب لليسار (إزاحة سالبة) يعني الانتقال إلى الشريحة "التالية"
             } else if (dragOffset < -swipeThreshold && state.currentIndex < state.mediaItems.length - 1) {
+                // السحب لليسار (إزاحة سالبة) ينتقل إلى الشريحة التالية في RTL
                 state.currentIndex++;
             }
             
-            // استدعاء setActiveSlide فقط إذا تغير الفهرس أو إذا كان هناك سحب لمسافة قصيرة
-            // هذا يضمن أن النقرة لن تعيد تحميل الشريحة
-            if (originalIndex !== state.currentIndex || Math.abs(dragOffset) > 5) {
-                setActiveSlide(state.currentIndex, true);
-            }
-            
-            state.dragDirection = null; // إعادة التعيين
+            setActiveSlide(state.currentIndex, true);
+            state.dragDirection = null;
         };
         // --- END: نهاية التعديل ---
 
