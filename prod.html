@@ -335,11 +335,11 @@
         const getPositionY = (e) => e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
 
         const dragStart = (e) => {
-            state.dragDirection = null; 
+            state.dragDirection = null;
             state.isDragging = true;
             state.startTime = Date.now();
             state.startPos = getPositionX(e);
-            state.startY = getPositionY(e); 
+            state.startY = getPositionY(e);
             state.prevTranslate = state.currentIndex * dom.mainContainer.clientWidth;
             dom.track.classList.remove('transitioning');
         };
@@ -370,7 +370,7 @@
             }
         };
         
-        // --- START: هذا هو التعديل الوحيد في الكود ---
+        // --- START: هذا هو الجزء الذي تم تعديله ---
         const dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
@@ -382,11 +382,12 @@
 
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const swipeThreshold = 50; // حد السحب الكافي لتغيير الشريحة
+            const originalIndex = state.currentIndex;
 
-            // [الحل]: إزالة منطق معالجة "النقر" الذي كان يتعارض مع الأحداث.
-            // الآن، النقرات الفعلية ستصل إلى زر التشغيل مباشرة.
+            // [الحل]: تم حذف الشرط الذي كان يتحقق من النقرات (dragOffset < 5).
+            // الآن، سيتم تنفيذ هذا الكود فقط إذا كان هناك سحب حقيقي.
 
-            // [الحل]: تصحيح منطق اتجاه السحب ليتوافق مع RTL
+            // تصحيح منطق اتجاه السحب ليتوافق مع RTL
             // السحب لليمين (إزاحة موجبة) يعني الانتقال إلى الشريحة "السابقة"
             if (dragOffset > swipeThreshold && state.currentIndex > 0) {
                 state.currentIndex--;
@@ -395,8 +396,12 @@
                 state.currentIndex++;
             }
             
-            // هذه الدالة ستقوم بالانتقال للشريحة الجديدة أو إعادة الشريحة الحالية لمكانها إذا كان السحب غير كافٍ
-            setActiveSlide(state.currentIndex, true);
+            // استدعاء setActiveSlide فقط إذا تغير الفهرس أو إذا كان هناك سحب لمسافة قصيرة
+            // هذا يضمن أن النقرة لن تعيد تحميل الشريحة
+            if (originalIndex !== state.currentIndex || Math.abs(dragOffset) > 5) {
+                setActiveSlide(state.currentIndex, true);
+            }
+            
             state.dragDirection = null; // إعادة التعيين
         };
         // --- END: نهاية التعديل ---
