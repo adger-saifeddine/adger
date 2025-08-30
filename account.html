@@ -1,1589 +1,825 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adger</title>
-    <link rel="icon" href="logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- بيانات Open Graph -->
-    <meta property="og:title" content="Adger - التسوق الإلكتروني">
-    <meta property="og:description" content="مرحبًا بك في أدجر، وجهتك الأولى للتسوق الإلكتروني حيث تجد كل ما تبحث عنه بأسعار تنافسية وجودة عالية.">
-    <meta property="og:image" content="https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg">
-    <meta property="og:url" content="https://adger-saifeddine.github.io/adger/">
-    <meta property="og:type" content="website">
-
-    <!-- بيانات منظمة Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Adger",
-      "url": "https://adger-saifeddine.github.io/adger/",
-      "logo": "https://i.postimg.cc/bYk5FR3Q/2024-10-24-13-27-28-da2d3af5.jpg"
-    }
-    </script>
-
-    <!-- نص برمجي لتغيير الفيكون بناءً على نوع الجهاز -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function isDesktop() {
-            var userAgent = navigator.userAgent.toLowerCase();
-            return userAgent.includes('windows') || userAgent.includes('macintosh') || userAgent.includes('linux') && !userAgent.includes('android');
-        }
-        if (isDesktop()) {
-            document.querySelector('link[rel="icon"]').href = 'logo2.png';
-        }
-    });
-    </script>
-</head>
-<body>
-<!DOCTYPE html>
-
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حساب المستخدم</title>
     <style>
-               @font-face {
+        @font-face {
             font-family: 'Cairo';
             src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
             font-display: swap;
         }
-        
-        :root {
-            --primary-color: #667eea; /* A modern purple-blue */
-            --primary-hover: #5a67d8;
-            --secondary-color: #38a169; /* A rich green */
-            --secondary-hover: #2f855a;
-            --info-color: #3182ce; /* A nice blue for the info button */
-            --info-hover: #2b6cb0;
-            --danger-color: #e53e3e;
-            --danger-hover: #c53030;
-            --text-dark: #2d3748;
-            --text-light: #4A5568;
-            --border-color: #e2e8f0;
-            --background-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            --focus-shadow: rgba(102, 126, 234, 0.25);
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
         }
-
-/* --- General Styles --- */
-    body {
-        margin: 0;
-        font-family: 'Cairo', Arial, sans-serif;
-        background: var(--background-gradient);
-    }
-    
-    body.modal-open {
-        overflow: hidden;
-    }
-
-    .main-content-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 40px 20px;
-    }
-
-    /* --- Account Page Specific Styles --- */
-    @font-face {
-        font-family: 'Cairo';
-        src: url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        font-display: swap;
-    }
-
-    .loader-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; z-index: 999; }
-    .loader { width: 50px; height: 50px; border: 5px solid var(--primary-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
-    .login-container { 
-        background-color: white; 
-        padding: 35px; 
-        border-radius: 20px; 
-        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); 
-        text-align: center; 
-        width: 400px; 
-        max-width: 95%; 
-        transition: all 0.3s ease-in-out;
-        margin-top: -130px;
-    }
-
-@media (max-width: 499px) {
-    .login-container {
-        margin-top: -195px;
-    }
-}
-#registerContainer { width: 750px; }
-
-    .login-container h2 { font-family: 'Cairo', sans-serif; font-size: 24px; margin-bottom: 25px; color: var(--text-dark); }
-    
-    .form-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 22px; 
-        margin-bottom: 20px;
-    }
-    .form-group {
-        flex: 1 1 calc(50% - 11px);
-        text-align: right;
-    }
-    .form-group label {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text-light);
-        margin-bottom: 8px;
-    }
-    .form-group label .fas {
-        margin-left: 8px;
-        color: var(--primary-color);
-        font-size: 16px;
-    }
-
-    .login-container input { 
-        width: 100%; 
-        padding: 12px 15px; 
-        border: 1px solid var(--border-color); 
-        border-radius: 8px; 
-        box-sizing: border-box; 
-        font-family: 'Cairo', sans-serif;
-        font-size: 15px;
-        transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    #loginContainer input {
-        margin-bottom: 20px;
-    }
-    
-    .login-container input:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px var(--focus-shadow);
-        outline: none;
-    }
-
-    input[type="tel"] {
-        direction: ltr; 
-        text-align: right;
-    }
-    input[type="tel"]:not(:placeholder-shown) {
-        text-align: left;
-    }
-
-    .login-container button { 
-        width: 100%; 
-        padding: 11px 20px;
-        background-color: var(--primary-color); 
-        color: white; 
-        border: none; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        margin-bottom: 10px; 
-        font-family: 'Cairo', sans-serif; 
-        font-weight: bold; 
-        font-size: 15px;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-    .login-container button:hover { 
-        background-color: var(--primary-hover); 
-        transform: translateY(-2px);
-    }
-    .login-container button.register-btn { background-color: var(--secondary-color); }
-    .login-container button.register-btn:hover { background-color: var(--secondary-hover); }
-
-    .form-section-title {
-        width: 100%;
-        text-align: right;
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin: 25px 0 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid var(--primary-color);
-    }
-
-    @media (max-width: 768px) {
-        #registerContainer { width: 95%; padding: 25px; }
-        .form-group { flex-basis: 100%; }
-    }
-
-    .profile-picture-container { 
-        position: relative; 
-        display: inline-block; 
-        margin-bottom: 30px; 
-        margin-top: 10px;
-    }
-    .profile-picture { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .profile-picture-placeholder { width: 120px; height: 120px; border-radius: 50%; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; color: #a0aec0; font-size: 50px; cursor: pointer; border: 2px dashed #cbd5e0; }
-    .camera-icon { position: absolute; bottom: 5px; right: 5px; background-color: var(--primary-color); width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; cursor: pointer; z-index: 2; border: 2px solid white; }
-    .hidden-file-input { display: none; }
-
-    .form-switcher-text {
-        margin-top: 20px;
-        font-size: 14px;
-        color: var(--text-light);
-    }
-    .form-switcher-text span {
-        color: var(--primary-color);
-        font-weight: bold;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-    .form-switcher-text span:hover {
-        color: var(--primary-hover);
-        text-decoration: underline;
-    }
-
-    #usernameDisplay { font-family: Cairo, sans-serif; font-size: 18px; font-weight: bold; margin-top: 5px; color: var(--text-dark); }
-    .modal-content, .custom-alert-content { border-radius: 15px; background-color: #fff; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; }
-    
-    /* --- Buttons in Profile --- */
-    .info-btn { background-color: var(--info-color) !important; color: white !important; margin-top: 10px; }
-    .info-btn:hover { background-color: var(--info-hover) !important; }
-    .purchases-btn { background-color: var(--text-dark) !important; color: white !important; margin-top: 5px; }
-    .logout-button { background-color: #f1f5f9 !important; margin-top: 5px; color: var(--text-light) !important; border: 1px solid var(--border-color) !important; }
-    
-    /* --- Logout Modal --- */
-    #logoutModal .logout-prompt { margin-bottom: 20px; color: var(--text-dark); font-family: 'Cairo', sans-serif; }
-    #logoutModal .modal-buttons { display: flex; justify-content: center; gap: 15px; }
-    #confirmLogout { background-color: var(--danger-color); }
-    #confirmLogout:hover { background-color: var(--danger-hover); }
-    #cancelLogout { background-color: #e2e8f0; color: var(--text-dark); }
-    #cancelLogout:hover { background-color: #cbd5e0; }
-
-    @media (max-width: 499px) {
-        /* MUCH SMALLER LOGOUT MODAL STYLES */
-        #logoutModal .modal-content {
-            max-width: 260px; /* Significantly smaller width */
-            width: 85%;
-            padding: 20px 15px; /* Reduced padding */
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #0051ff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        #logoutModal .logout-prompt {
-            font-size: 15px; /* Smaller text */
-            margin-bottom: 15px; /* Reduced margin */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        #logoutModal .modal-buttons {
-            gap: 10px; /* Smaller gap between buttons */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff, #d8eeffd3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            direction: rtl;
+            position: relative;
         }
-        #logoutModal .modal-buttons button {
-            padding: 8px 15px; /* Smaller buttons */
+        body.no-scroll {
+            overflow: hidden;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            position: relative;
+            margin-top: -84px;
+        }
+        @media (max-width: 499px) {
+            .login-container { margin-top: -122px; width: 300px; }
+        }
+        .login-container h2 {
+            font-family: Cairo, sans-serif;
+            font-size: 17px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .login-container button.register-btn {
+            background-color: #28a745;
+        }
+        .login-container button.register-btn:hover {
+            background-color: #218838;
+        }
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            position: relative;
+            background-color: #f1f1f1;
+        }
+        .profile-picture-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .profile-picture-placeholder {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-size: 40px;
+            cursor: pointer;
+            border: 2px dashed #ccc;
+        }
+        .camera-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: #007bff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .hidden-file-input {
+            display: none;
+        }
+        .logout-button {
+            background-color: #e6e6e63d !important;
+            margin-top: 5px;
+            color: #000 !important;
+            border: 1px solid #000000 !important;
+        }
+        .logout-button:hover {
+            background-color: #9b9b9b1e !important;
+        }
+        .purchases-btn {
+            background-color: #292929 !important;
+            color: white !important;
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .purchases-btn:hover {
+            background-color: #1a1a1a !important;
+        }
+        #usernameDisplay {
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            margin-top: -3px;
+            color: #333;
+        }
+        .purchases-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+              -webkit-tap-highlight-color: transparent; /* لإزالة الهايلايت الأزرق في الجوال */
+            outline: none; /* إزالة الإطار عند النقر */
+            -webkit-focus-ring-color: transparent; /* إزالة الإطار الأزرق في بعض المتصفحات */
+        }
+        .purchases-modal-content {
+            background-color: #fff;
+            width: 400px;
+            max-height: 80vh;
+            min-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            direction: rtl;
+        }
+        .purchases-header {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1;
+        }
+        .purchases-header h3 {
+            font-family: Cairo, sans-serif;
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+        .purchases-list {
+            padding: 15px;
+            font-family: Cairo, sans-serif;
             font-size: 14px;
+            text-align: right;
+            min-height: calc(300px - 60px);
         }
-    }
-
-    /* --- Modals --- */
-    .modal, .custom-alert, .purchases-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
-    
-    /* --- Purchases Modal --- */
-    .purchases-modal-content { background-color: #fff; width: 400px; max-height: 80vh; min-height: 300px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow-y: auto; direction: rtl; }
-    .purchases-header { position: sticky; top: 0; background-color: #fff; padding: 15px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; z-index: 1; }
-    .purchases-header h3 { font-family: Cairo, sans-serif; font-size: 18px; margin: 0; color: #333; }
-    .purchases-header svg { cursor: pointer; }
-    .purchases-list { padding: 15px; font-family: Cairo, sans-serif; font-size: 14px; text-align: right; min-height: calc(300px - 60px); }
-    .purchase-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-    .purchase-item:last-child { border-bottom: none; }
-    .modal-buttons button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-family: Cairo, sans-serif; font-weight: bold; flex-grow: 1;}
-
-    /* --- My Info Modal --- */
-    .my-info-modal-content { max-width: 600px; width: 95%; background-color: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 0; text-align: right; overflow: hidden; transform: translateY(33px); /* This centers the modal below a 66px header */ }
-    .my-info-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: #f7fafc; border-bottom: 1px solid var(--border-color); }
-    .my-info-header h3 { margin: 0; font-size: 20px; color: var(--text-dark); }
-    .close-info-modal { font-size: 28px; color: var(--text-light); cursor: pointer; transition: color 0.2s; }
-    .close-info-modal:hover { color: var(--text-dark); }
-    .my-info-body { padding: 25px; max-height: 60vh; overflow-y: auto; text-align: center; }
-    .info-picture-container { text-align: center; margin-bottom: 25px; position: relative; display: inline-block; }
-    .info-picture-container .profile-picture, .info-picture-container .initial-avatar { width: 100px; height: 100px; font-size: 40px; margin: 0 auto; }
-    .info-picture-container .camera-icon { width: 30px; height: 30px; bottom: 0; right: 0; }
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; text-align: right; }
-    .info-item { display: flex; flex-direction: column; }
-    .info-item label { font-size: 13px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; display: flex; align-items: center; }
-    .info-item label .fas { margin-left: 6px; }
-    .info-item input { background-color: #f8f9fa; border: 1px solid transparent; border-radius: 6px; padding: 10px; font-family: 'Cairo', sans-serif; font-size: 15px; color: var(--text-dark); transition: all 0.2s ease; }
-    .info-item input:read-only { cursor: default; }
-    .info-item input.editable-field { background-color: #fff; border-color: var(--border-color); }
-    .info-item input.editable-field:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--focus-shadow); outline: none; }
-    .my-info-footer { padding: 15px 25px; background-color: #f7fafc; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: flex-end; }
-    .my-info-footer button { width: auto; padding: 8px 25px; margin: 0; }
-    #updateInfoBtn { background-color: var(--secondary-color); }
-    #updateInfoBtn:hover { background-color: var(--secondary-hover); }
-    #cancelEditBtn { background-color: #e2e8f0; color: var(--text-dark); }
-    #cancelEditBtn:hover { background-color: #cbd5e0; }
-    
-    /* --- Alert & Icons --- */
-    .icon { width: 50px; height: 50px; margin-bottom: 10px; }
-    .checkmark-circle, .error-circle { stroke-width: 2; stroke-miterlimit: 10; stroke-dasharray: 166; stroke-dashoffset: 166; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-    .checkmark-check, .error-x { stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
-    .checkmark-circle, .checkmark-check { stroke: #4CAF50; }
-    .error-circle, .error-x { stroke: #ff0000; }
-    @keyframes stroke { 100% { stroke-dashoffset: 0; } }
-    #customAlertMessage { font-family: Cairo, sans-serif; font-size: 16px; margin-bottom: 20px; }
-    .custom-alert-content button { padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .initial-avatar { width: 120px; height: 120px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 50px; font-weight: bold; margin: 0 auto 15px auto; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-</style>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        .purchase-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .purchase-item:last-child {
+            border-bottom: none;
+        }
+        .purchase-item.latest {
+            border-bottom: none;
+        }
+        .loading-text {
+            text-align: center;
+            margin-top: 70px;
+            padding: 20px;
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            color: #666;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .modal-buttons {
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #confirmLogout {
+            margin-left: 11px;
+            background-color: #ff0000;
+            color: white;
+        }
+        #confirmLogout:hover {
+            background-color: #cc0000;
+        }
+        #cancelLogout {
+            background-color: #e4e4e4;
+            color: #333;
+        }
+        #cancelLogout:hover {
+            background-color: #d8d8d8;
+        }
+        .colorful-divider {
+            margin-top: -15px;
+            width: 100%;
+            height: 2.5px;
+            background: repeating-linear-gradient(90deg,
+                rgb(0, 183, 255) 0 15px,
+                white 15px 30px,
+                red 30px 45px,
+                rgb(0, 183, 255) 45px 60px,
+                white 60px 75px,
+                rgb(255, 0, 0) 75px 90px
+            );
+            background-size: 90px 100%;
+        }
+        .purchase-item .date-time {
+            color: rgb(65, 65, 65);
+        }
+        .custom-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .custom-alert-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .checkmark-circle {
+            stroke: #4CAF50;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            stroke: #4CAF50;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        .error-circle {
+            stroke: #ff0000;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .error-x {
+            stroke: #ff0000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        #customAlertMessage {
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .custom-alert-content button {
+            padding: 10px 20px;
+            background-color: #00b7ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .custom-alert-content button:hover {
+            background-color: #00c3ff;
+        }
+        .initial-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+        #totalPurchasesPrice {
+            position: absolute;
+            top: 80px;
+            right: 10px;
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            font-family: Cairo, sans-serif;
+            font-size: 16px;
+            color: #333;
+            display: none; /* إخفاء العنصر افتراضيًا */
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+    <!-- عنصر عرض سعر المشتريات -->
+    <div id="totalPurchasesPrice">
+        أسعار مشترياتي: <span id="totalPrice">0.00</span> جنيه
+    </div>
 
-<div class="loader-overlay" id="loaderOverlay"><div class="loader"></div></div>
+    <div class="loader-overlay" id="loaderOverlay">
+        <div class="loader" id="loader"></div>
+    </div>
 
-<div class="main-content-wrapper">
+    <!-- نموذج تسجيل الدخول -->
     <div class="login-container" id="loginContainer" style="display: none;">
         <h2>تسجيل الدخول</h2>
-        <input type="tel" id="loginPhone" placeholder="رقم الهاتف">
+        <input type="text" id="username" placeholder="اسم المستخدم">
         <input type="password" id="password" placeholder="كلمة المرور">
         <button onclick="login()">تسجيل الدخول</button>
         <button class="register-btn" onclick="showRegisterForm()">إنشاء حساب جديد</button>
     </div>
 
-<div class="login-container" id="registerContainer" style="display: none;">
-    <h2>إنشاء حساب جديد</h2>
-<div class="profile-picture-container">
-    <div id="profilePicturePlaceholder" class="profile-picture-placeholder"><i class="fas fa-camera-retro"></i></div>
-    <div class="camera-icon" onclick="document.getElementById('profileImage').click()"><i class="fas fa-camera"></i></div>
-    <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
-</div>
-
-<div class="form-section-title">معلومات الحساب</div>
-<div class="form-grid">
-    <div class="form-group">
-        <label for="registerUsername"><i class="fas fa-user"></i> اسم المستخدم (9 حروف أو أكثر)</label>
-        <input type="text" id="registerUsername" placeholder="مثال: عبدالله محمد علي">
-    </div>
-    <div class="form-group">
-        <label for="registerPhone"><i class="fas fa-phone"></i> رقم الهاتف</label>
-        <input type="tel" id="registerPhone" placeholder="01xxxxxxxxx">
-    </div>
-    <div class="form-group">
-        <label for="newPassword"><i class="fas fa-lock"></i> كلمة المرور</label>
-        <input type="password" id="newPassword" placeholder="اختر كلمة مرور قوية">
-    </div>
-    <div class="form-group">
-        <label for="registerEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-        <input type="email" id="registerEmail" placeholder="example@email.com">
-    </div>
-</div>
-
-<div class="form-section-title">معلومات التوصيل</div>
-<div class="form-grid">
-     <div class="form-group">
-        <label for="registerGovernorate"><i class="fas fa-map-marked-alt"></i> المحافظة</label>
-        <input type="text" id="registerGovernorate" placeholder="مثال: القاهرة">
-    </div>
-     <div class="form-group">
-        <label for="registerCity"><i class="fas fa-city"></i> المدينة</label>
-        <input type="text" id="registerCity" placeholder="مثال: مدينة نصر">
-    </div>
-     <div class="form-group">
-        <label for="registerStreet"><i class="fas fa-road"></i> اسم الشارع أو الحي</label>
-        <input type="text" id="registerStreet" placeholder="مثال: شارع عباس العقاد">
-    </div>
-     <div class="form-group">
-        <label for="registerLandmark"><i class="fas fa-landmark"></i> أقرب معلم مميز</label>
-        <input type="text" id="registerLandmark" placeholder="مثال: بجوار حديقة الطفل">
-    </div>
-</div>
-
-<button onclick="register()">إنشاء الحساب</button>
-
-<p class="form-switcher-text">
-    لديك حساب بالفعل؟ <span onclick="showLoginForm()">تسجيل الدخول</span>
-</p>
-</div>
-
-<div class="login-container" id="profileContainer" style="display: none;">
-    <h2>حساب المستخدم</h2>
-    <div id="profilePictureDisplayContainer"></div>
-    <p id="usernameDisplay"></p>
-    <button class="info-btn" onclick="showMyInfo()">معلوماتي الشخصية</button>
-    <button class="purchases-btn" onclick="showPurchases()">مشترياتي (<span id="purchasesCount">0</span>)</button>
-    <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
-</div>
-</div>
-
-<!-- Modals -->
-
-<div id="purchasesModal" class="purchases-modal"><div class="purchases-modal-content"><div class="purchases-header"><h3>المشتريات (<span id="modalPurchasesCount">0</span>)</h3><svg onclick="closePurchasesModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);"><path d="M15 18l-6-6 6-6"/></svg></div><div class="purchases-list" id="purchasesList"></div></div></div>
-<div id="logoutModal" class="modal"><div class="modal-content"><p class="logout-prompt">أأنت متأكد من الإستكمال؟</p><div class="modal-buttons"><button id="confirmLogout">نعم</button><button id="cancelLogout">لا</button></div></div></div>
-<div id="customAlert" class="custom-alert"><div class="custom-alert-content"><div id="alertIcon"></div><p id="customAlertMessage"></p><button>حسنًا</button></div></div>
-
-<!-- My Info Modal -->
-
-<div id="myInfoModal" class="modal">
-    <div class="my-info-modal-content">
-        <div class="my-info-header">
-            <h3>معلوماتي الشخصية</h3>
-            <span class="close-info-modal" onclick="closeMyInfoModal()">&times;</span>
-        </div>
-        <div class="my-info-body">
-            <div class="info-picture-container">
-                <div id="infoImagePreview">
-                    <!-- Image or initial avatar will be inserted here by JS -->
-                </div>
-                <div class="camera-icon" id="infoCameraIcon" style="display: none;" onclick="document.getElementById('infoProfileImageInput').click()"><i class="fas fa-camera"></i></div>
-                <input type="file" id="infoProfileImageInput" accept="image/*" class="hidden-file-input" onchange="previewNewProfileImage(event)">
+    <!-- نموذج إنشاء حساب -->
+    <div class="login-container" id="registerContainer" style="display: none;">
+        <h2>إنشاء حساب</h2>
+        <input type="text" id="newUsername" placeholder="اسم المستخدم">
+        <input type="password" id="newPassword" placeholder="كلمة المرور">
+        
+        <div class="profile-picture-container">
+            <div id="profilePicturePlaceholder" class="profile-picture-placeholder">
+                <i class="fas fa-user"></i>
             </div>
-            <div class="info-grid">
-                <div class="info-item">
-                    <label for="infoUsername"><i class="fas fa-user"></i> اسم المستخدم</label>
-                    <input type="text" id="infoUsername" readonly>
-                </div>
-                <div class="info-item">
-                    <label for="infoPhone"><i class="fas fa-phone"></i> رقم الهاتف</label>
-                    <input type="tel" id="infoPhone" readonly style="cursor: not-allowed; background-color: #e9ecef;">
-                </div>
-                <div class="info-item">
-                    <label for="infoEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-                    <input type="email" id="infoEmail" readonly>
-                </div>
-                <div class="info-item">
-                    <label for="infoGovernorate"><i class="fas fa-map-marked-alt"></i> المحافظة</label>
-                    <input type="text" id="infoGovernorate" readonly>
-                </div>
-                <div class="info-item">
-                    <label for="infoCity"><i class="fas fa-city"></i> المدينة</label>
-                    <input type="text" id="infoCity" readonly>
-                </div>
-                <div class="info-item">
-                    <label for="infoStreet"><i class="fas fa-road"></i> الشارع/الحي</label>
-                    <input type="text" id="infoStreet" readonly>
-                </div>
-                <div class="info-item">
-                    <label for="infoLandmark"><i class="fas fa-landmark"></i> أقرب معلم</label>
-                    <input type="text" id="infoLandmark" readonly>
-                </div>
+            <div class="camera-icon" onclick="document.getElementById('profileImage').click()">
+                <i class="fas fa-camera"></i>
+            </div>
+            <input type="file" id="profileImage" accept="image/*" class="hidden-file-input" onchange="previewImage(event)">
+        </div>
+        
+        <button onclick="register()">إنشاء حساب</button>
+    </div>
+
+    <!-- ملف تعريف المستخدم -->
+    <div class="login-container" id="profileContainer" style="display: none;">
+        <h2>حساب المستخدم</h2>
+        <div id="profilePictureDisplayContainer">
+            <!-- سيتم تعبئتها ديناميكيًا -->
+        </div>
+        <p id="usernameDisplay"></p>
+        <button class="purchases-btn" onclick="showPurchases()">مشترياتي (<span id="purchasesCount">0</span>)</button>
+        <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
+    </div>
+
+    <!-- نافذة المشتريات -->
+    <div id="purchasesModal" class="purchases-modal">
+        <div class="purchases-modal-content">
+            <div class="purchases-header">
+                <h3>المشتريات (<span id="modalPurchasesCount">0</span>)</h3>
+                <svg onclick="closePurchasesModal()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </div>
+            <div class="purchases-list" id="purchasesList"></div>
+        </div>
+    </div>
+
+    <!-- نافذة التأكيد لتسجيل الخروج -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p style="font-family: Cairo, sans-serif;">أأنت متأكد من الإستكمال؟</p>
+            <div class="modal-buttons">
+                <button id="confirmLogout">نعم</button>
+                <button id="cancelLogout">لا</button>
             </div>
         </div>
-        <div class="my-info-footer">
-            <button id="editInfoBtn" onclick="enableInfoEditing()">تعديل البيانات</button>
-            <button id="updateInfoBtn" onclick="updateUserInfo()" style="display:none;">تحديث</button>
-            <button id="cancelEditBtn" onclick="cancelInfoEditing()" style="display:none;">إلغاء</button>
+    </div>
+
+    <!-- نافذة مخصصة للرسائل -->
+    <div id="customAlert" class="custom-alert">
+        <div class="custom-alert-content">
+            <div id="alertIcon"></div>
+            <p id="customAlertMessage"></p>
+            <button>حسنًا</button>
         </div>
     </div>
-</div>
 
-<script>
-    // --- Firebase Initialization ---
-    firebase.initializeApp({
-        apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
-        authDomain: "buy-from-adger.firebaseapp.com",
-        databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
-        projectId: "buy-from-adger",
-        storageBucket: "buy-from-adger.appspot.com",
-        messagingSenderId: "396020785601",
-        appId: "1:396020785601:web:yourWebAppID"
-    });
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+            authDomain: "buy-from-adger.firebaseapp.com",
+            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+            projectId: "buy-from-adger",
+            storageBucket: "buy-from-adger.appspot.com",
+            messagingSenderId: "396020785601",
+            appId: "1:396020785601:web:yourWebAppID"
+        });
 
-    const database = firebase.database();
-    let selectedProfileImage = null;
-    let newProfileImageForUpdate = null;
-    
-    function showCustomAlert(message, isSuccess, callback) {
-        document.body.classList.add('modal-open');
-        const alertIcon = document.getElementById('alertIcon');
-        document.getElementById('customAlertMessage').textContent = message;
-        document.getElementById('customAlert').style.display = 'flex';
-        alertIcon.innerHTML = isSuccess ? `<svg class="icon" viewBox="0 0 52 52"><circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>` : `<svg class="icon" viewBox="0 0 52 52"><circle class="error-circle" cx="26" cy="26" r="25" fill="none"/><path class="error-x" fill="none" d="M18 18l16 16M34 18l-16 16"/></svg>`;
-        document.getElementById('customAlert').querySelector('button').onclick = function() {
-            closeCustomAlert();
-            if (callback) callback();
-        };
-    }
-    function closeCustomAlert() { 
-        document.getElementById('customAlert').style.display = 'none';
-        // Only remove modal-open if no other modals are open
-        if (document.querySelectorAll('.modal[style*="display: flex"], .purchases-modal[style*="display: flex"]').length === 0) {
-            document.body.classList.remove('modal-open');
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('loaderOverlay').style.display = 'none';
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn) {
-            document.getElementById('profileContainer').style.display = 'block';
-            document.getElementById('loginContainer').style.display = 'none';
+        const database = firebase.database();
+        let selectedProfileImage = null;
+
+        // دالة تحديث سعر المشتريات
+        function updateTotalPurchasesPrice() {
             const username = localStorage.getItem('username');
-            const profileImage = localStorage.getItem('profileImage');
-            document.getElementById('usernameDisplay').textContent = username;
-            const profileContainer = document.getElementById('profilePictureDisplayContainer');
-            if (profileImage && profileImage !== 'default') {
-                profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+            if (username) {
+                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                    const purchases = snapshot.val();
+                    let total = 0;
+                    if (purchases) {
+                        Object.values(purchases).forEach(purchase => {
+                            total += parseFloat(purchase.totalPrice);
+                        });
+                    }
+                    document.getElementById('totalPrice').textContent = total.toFixed(2);
+                });
             } else {
-                const initial = username ? username.charAt(0).toUpperCase() : '';
-                profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
+                document.getElementById('totalPrice').textContent = '0';
             }
-            const phone = localStorage.getItem('phone');
-            if(phone) {
-                database.ref('purchases').orderByChild('deliveryInfo/phone').equalTo(phone).once('value', (snapshot) => {
-                    const purchasesCount = snapshot.exists() ? snapshot.numChildren() : 0;
+        }
+
+        function showCustomAlert(message, isSuccess, callback) {
+            const alertIcon = document.getElementById('alertIcon');
+            document.getElementById('customAlertMessage').textContent = message;
+            document.getElementById('customAlert').style.display = 'flex';
+
+            if (isSuccess) {
+                alertIcon.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                `;
+            } else {
+                alertIcon.innerHTML = `
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="error-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="error-x" fill="none" d="M18 18l16 16M34 18l-16 16"/>
+                    </svg>
+                `;
+            }
+
+            document.getElementById('customAlert').querySelector('button').onclick = function() {
+                closeCustomAlert();
+                if (callback) callback();
+            };
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('customAlert').style.display = 'none';
+        }
+
+        window.addEventListener('load', () => {
+            document.getElementById('loaderOverlay').style.display = 'none';
+            
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                document.getElementById('profileContainer').style.display = 'block';
+                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
+                const username = localStorage.getItem('username');
+                const profileImage = localStorage.getItem('profileImage');
+                document.getElementById('usernameDisplay').textContent = username;
+                
+                const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                if (profileImage && profileImage !== 'default') {
+                    profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                } else {
+                    const initial = username.charAt(0).toUpperCase();
+                    profileContainer.innerHTML = `
+                        <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                            ${initial}
+                        </div>
+                    `;
+                }
+
+                database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
+                    const purchases = snapshot.val();
+                    const purchasesCount = purchases ? Object.keys(purchases).length : 0;
                     document.getElementById('purchasesCount').textContent = purchasesCount;
                     document.getElementById('modalPurchasesCount').textContent = purchasesCount;
                 });
-            }
-        } else {
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('profileContainer').style.display = 'none';
-        }
-    });
 
-    function previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                selectedProfileImage = e.target.result;
-                document.getElementById('profilePicturePlaceholder').innerHTML = `<img src="${e.target.result}" alt="صورة المستخدم" class="profile-picture">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-    function showRegisterForm() {
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('registerContainer').style.display = 'block';
-    }
-    function showLoginForm() {
-        document.getElementById('registerContainer').style.display = 'none';
-        document.getElementById('loginContainer').style.display = 'block';
-    }
-
-    function register() {
-        const username = document.getElementById('registerUsername').value.trim();
-        const phone = document.getElementById('registerPhone').value.trim();
-        const password = document.getElementById('newPassword').value;
-        const profileImage = selectedProfileImage || 'default';
-        const email = document.getElementById('registerEmail').value.trim();
-        const governorate = document.getElementById('registerGovernorate').value.trim();
-        const city = document.getElementById('registerCity').value.trim();
-        const street = document.getElementById('registerStreet').value.trim();
-        const landmark = document.getElementById('registerLandmark').value.trim();
-
-        if (!username || !phone || !password || !email || !governorate || !city || !street || !landmark) {
-             showCustomAlert('يرجى ملء جميع الحقول!', false); return; 
-        }
-        if (username.length < 9) {
-            showCustomAlert('يجب أن يتكون اسم المستخدم من 9 حروف على الأقل.', false); return;
-        }
-        if (!phone.startsWith('01') || phone.length !== 11 || !/^\d+$/.test(phone)) { 
-            showCustomAlert('يرجى إدخال رقم هاتف مصري صحيح.', false); return; 
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showCustomAlert('يرجى إدخال بريد إلكتروني صحيح.', false); return;
-        }
-
-        database.ref('users/' + phone).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                showCustomAlert('رقم الهاتف هذا مسجل بالفعل!', false);
+                updateTotalPurchasesPrice();
             } else {
-                const deliveryInfo = { name: username, phone: phone, email: email, governorate: governorate, city: city, street: street, landmark: landmark };
-                database.ref('users/' + phone).set({ username: username, password: password, profileImage: profileImage, deliveryInfo: deliveryInfo });
-                localStorage.setItem('phone', phone);
-                localStorage.setItem('username', username);
-                localStorage.setItem('profileImage', profileImage);
-                localStorage.setItem('isLoggedIn', true);
-                localStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
-                showCustomAlert('تم إنشاء الحساب بنجاح!', true, () => {
-                    window.location.reload(); 
-                });
+                document.getElementById('loginContainer').style.display = 'block';
+                document.getElementById('totalPurchasesPrice').style.display = 'none'; // إخفاء العنصر
             }
         });
-    }
 
-    function login() {
-        const phone = document.getElementById('loginPhone').value;
-        const password = document.getElementById('password').value;
-        if (!phone || !password) { showCustomAlert('يرجى إدخال رقم الهاتف وكلمة المرور!', false); return; }
-        database.ref('users/' + phone).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                const userData = snapshot.val();
-                if (userData.password === password) {
-                    localStorage.setItem('phone', phone);
-                    localStorage.setItem('username', userData.username);
-                    localStorage.setItem('profileImage', userData.profileImage || 'default');
-                    localStorage.setItem('isLoggedIn', true);
-                    if (userData.deliveryInfo) {
-                        localStorage.setItem('deliveryInfo', JSON.stringify(userData.deliveryInfo));
+        function getRandomColor() {
+            const colors = [
+                '#007bff', '#28a745', '#dc3545', '#fd7e14', '#6f42c1', 
+                '#20c997', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedProfileImage = e.target.result;
+                    document.getElementById('profilePicturePlaceholder').innerHTML = `
+                        <img src="${e.target.result}" alt="صورة المستخدم" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+            document.getElementById('profilePicturePlaceholder').innerHTML = '<i class="fas fa-user"></i>';
+            selectedProfileImage = null;
+        }
+
+        function register() {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const profileImage = selectedProfileImage || 'default';
+
+            if (username.length < 9) {
+                showCustomAlert('اسم المستخدم يجب أن يكون 9 حروف أو أكثر!', false, function() {});
+                return;
+            }
+
+            if (username && password) {
+                database.ref('users/' + username).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        showCustomAlert('اسم المستخدم موجود بالفعل! يرجى اختيار اسم آخر.', false, function() {});
+                    } else {
+                        database.ref('users/' + username).set({
+                            password: password,
+                            profileImage: profileImage
+                        });
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('profileImage', profileImage);
+                        localStorage.setItem('isLoggedIn', true);
+
+                        if (window.opener) {
+                            window.opener.postMessage({ key: 'username', value: username }, '*');
+                        }
+
+                        showCustomAlert('تم إنشاء الحساب بنجاح وتسجيل الدخول!', true, function() {
+                            document.getElementById('registerContainer').style.display = 'none';
+                            document.getElementById('profileContainer').style.display = 'block';
+                            document.getElementById('usernameDisplay').textContent = username;
+                            
+                            const profileContainer = document.getElementById('profilePictureDisplayContainer');
+                            if (profileImage && profileImage !== 'default') {
+                                profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
+                            } else {
+                                const initial = username.charAt(0).toUpperCase();
+                                profileContainer.innerHTML = `
+                                    <div class="initial-avatar" style="background-color: ${getRandomColor()}">
+                                        ${initial}
+                                    </div>
+                                `;
+                            }
+
+                            setTimeout(() => {
+                                history.back();
+                                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
+                                updateTotalPurchasesPrice();
+                            }, 1000);
+                        });
                     }
-                    showCustomAlert('تم تسجيل الدخول بنجاح!', true, () => {
-                       window.location.reload();
-                    });
-                } else {
-                    showCustomAlert('كلمة المرور غير صحيحة!', false);
-                }
+                });
             } else {
-                showCustomAlert('رقم الهاتف غير موجود!', false);
+                showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
             }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                database.ref('users/' + username).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.password === password) {
+                            localStorage.setItem('username', username);
+                            localStorage.setItem('profileImage', userData.profileImage || 'default');
+                            localStorage.setItem('isLoggedIn', true);
+
+                            if (window.opener) {
+                                window.opener.postMessage({ key: 'username', value: username }, '*');
+                            }
+
+                            showCustomAlert('تم تسجيل الدخول بنجاح!', true, function() {
+                                history.back();
+                                document.getElementById('totalPurchasesPrice').style.display = 'block'; // عرض العنصر
+                                updateTotalPurchasesPrice();
+                            });
+                        } else {
+                            showCustomAlert('كلمة المرور غير صحيحة!', false, function() {});
+                        }
+                    } else {
+                        showCustomAlert('اسم المستخدم غير موجود!', false, function() {});
+                    }
+                });
+            } else {
+                showCustomAlert('يرجى إدخال اسم المستخدم وكلمة المرور!', false, function() {});
+            }
+        }
+
+        function logout() {
+            const modal = document.getElementById('logoutModal');
+            modal.style.display = 'flex';
+        }
+
+        document.getElementById('confirmLogout').addEventListener('click', () => {
+            localStorage.removeItem('username');
+            localStorage.removeItem('profileImage');
+            localStorage.removeItem('isLoggedIn');
+
+            if (window.opener) {
+                window.opener.postMessage({ key: 'username', value: null }, '*');
+            }
+
+            history.back();
+            document.getElementById('totalPurchasesPrice').style.display = 'none'; // إخفاء العنصر
+            updateTotalPurchasesPrice();
         });
-    }
-    
-    function logout() { 
-        document.body.classList.add('modal-open');
-        document.getElementById('logoutModal').style.display = 'flex'; 
-    }
-    document.getElementById('confirmLogout').addEventListener('click', () => {
-        localStorage.clear();
-        window.location.reload();
-    });
-    document.getElementById('cancelLogout').addEventListener('click', () => { 
-        document.getElementById('logoutModal').style.display = 'none'; 
-        document.body.classList.remove('modal-open');
-    });
-    
-    function showPurchases() {
-        document.body.classList.add('modal-open');
-        const modal = document.getElementById('purchasesModal');
-        const purchasesList = document.getElementById('purchasesList');
-        purchasesList.innerHTML = '<p class="loading-text">جاري التحميل...</p>';
-        modal.style.display = 'flex';
-        const phone = localStorage.getItem('phone');
-        if (phone) {
-            database.ref('purchases').orderByChild('deliveryInfo/phone').equalTo(phone).once('value', (snapshot) => {
+
+        document.getElementById('cancelLogout').addEventListener('click', () => {
+            document.getElementById('logoutModal').style.display = 'none';
+        });
+
+        function showPurchases() {
+            const modal = document.getElementById('purchasesModal');
+            const purchasesList = document.getElementById('purchasesList');
+            purchasesList.innerHTML = '<p class="loading-text">جاري التحميل...</p>';
+
+            document.body.classList.add('no-scroll');
+            modal.style.display = 'flex';
+
+            const username = localStorage.getItem('username');
+
+            database.ref('purchases').orderByChild('username').equalTo(username).once('value', (snapshot) => {
                 purchasesList.innerHTML = '';
-                if (snapshot.exists()) {
-                    const purchasesArray = [];
-                    snapshot.forEach(childSnapshot => { purchasesArray.push(childSnapshot.val()); });
+                const purchases = snapshot.val();
+
+                if (purchases) {
+                    const purchasesArray = Object.values(purchases);
                     purchasesArray.sort((a, b) => b.timestamp - a.timestamp);
-                    purchasesArray.forEach(purchase => {
-                        const item = document.createElement('div');
-                        item.classList.add('purchase-item');
-                        const purchaseDate = new Date(purchase.timestamp).toLocaleString('ar-EG');
-                        item.innerHTML = `<strong>المنتج:</strong> ${purchase.productName}<br><strong>الكمية:</strong> ${purchase.quantity}<br><strong>السعر الإجمالي:</strong> ${purchase.totalPrice.toFixed(2)} جنيه<br><strong>التاريخ:</strong> ${purchaseDate}`;
-                        purchasesList.appendChild(item);
-                    });
+
+                    if (purchasesArray.length > 0) {
+                        const latestHeader = document.createElement('h4');
+                        latestHeader.textContent = 'تفاصيل آخر منتج تم شراؤه';
+                        latestHeader.style.marginTop = '3px';
+                        purchasesList.appendChild(latestHeader);
+
+                        const latestPurchase = purchasesArray[0];
+                        const latestPurchaseItem = createPurchaseItem(latestPurchase, true);
+                        purchasesList.appendChild(latestPurchaseItem);
+
+                        if (purchasesArray.length > 1) {
+                            const divider = document.createElement('div');
+                            divider.className = 'colorful-divider';
+                            purchasesList.appendChild(divider);
+
+                            const oldHeader = document.createElement('h4');
+                            oldHeader.textContent = 'المنتجات القديمة';
+                            purchasesList.appendChild(oldHeader);
+
+                            for (let i = 1; i < purchasesArray.length; i++) {
+                                const purchaseItem = createPurchaseItem(purchasesArray[i], false);
+                                purchasesList.appendChild(purchaseItem);
+                            }
+                        }
+                    }
                 } else {
                     purchasesList.innerHTML = '<p>لا توجد مشتريات بعد.</p>';
                 }
             });
-        } else {
-            purchasesList.innerHTML = '<p>لا توجد مشتريات لعرضها.</p>';
         }
-    }
-    function closePurchasesModal() {
-        document.getElementById('purchasesModal').style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
 
-    // --- My Info Modal Functions ---
-    function populateInfoModal() {
-        const deliveryInfo = JSON.parse(localStorage.getItem('deliveryInfo') || '{}');
-        const profileImage = localStorage.getItem('profileImage');
-        const username = localStorage.getItem('username');
-        
-        document.getElementById('infoUsername').value = deliveryInfo.name || '';
-        document.getElementById('infoPhone').value = deliveryInfo.phone || '';
-        document.getElementById('infoEmail').value = deliveryInfo.email || '';
-        document.getElementById('infoGovernorate').value = deliveryInfo.governorate || '';
-        document.getElementById('infoCity').value = deliveryInfo.city || '';
-        document.getElementById('infoStreet').value = deliveryInfo.street || '';
-        document.getElementById('infoLandmark').value = deliveryInfo.landmark || '';
-
-        const profileContainer = document.getElementById('infoImagePreview');
-        if (profileImage && profileImage !== 'default') {
-            profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-        } else {
-            const initial = username ? username.charAt(0).toUpperCase() : '';
-            profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
-        }
-    }
-    
-    function showMyInfo() {
-        document.body.classList.add('modal-open');
-        populateInfoModal();
-        document.getElementById('myInfoModal').style.display = 'flex';
-    }
-
-    function closeMyInfoModal() {
-        cancelInfoEditing(); // Reset to read-only state
-        document.getElementById('myInfoModal').style.display = 'none';
-        document.body.classList.remove('modal-open');
-    }
-
-    function enableInfoEditing() {
-        document.querySelectorAll('#myInfoModal .info-item input:not(#infoPhone)').forEach(input => {
-            input.readOnly = false;
-            input.classList.add('editable-field');
-        });
-        document.getElementById('infoCameraIcon').style.display = 'flex';
-        document.getElementById('editInfoBtn').style.display = 'none';
-        document.getElementById('updateInfoBtn').style.display = 'inline-block';
-        document.getElementById('cancelEditBtn').style.display = 'inline-block';
-    }
-
-    function cancelInfoEditing() {
-        document.querySelectorAll('#myInfoModal .info-item input').forEach(input => {
-            input.readOnly = true;
-            input.classList.remove('editable-field');
-        });
-        document.getElementById('infoCameraIcon').style.display = 'none';
-        document.getElementById('editInfoBtn').style.display = 'inline-block';
-        document.getElementById('updateInfoBtn').style.display = 'none';
-        document.getElementById('cancelEditBtn').style.display = 'none';
-        
-        newProfileImageForUpdate = null; // Clear any selected image
-        document.getElementById('infoProfileImageInput').value = ''; // Reset file input
-        populateInfoModal(); // Revert any changes
-    }
-
-    function previewNewProfileImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                newProfileImageForUpdate = e.target.result;
-                document.getElementById('infoImagePreview').innerHTML = `<img src="${newProfileImageForUpdate}" alt="صورة المستخدم" class="profile-picture">`;
+        function createPurchaseItem(purchase, isLatest) {
+            const purchaseItem = document.createElement('div');
+            purchaseItem.className = 'purchase-item';
+            if (isLatest) {
+                purchaseItem.classList.add('latest');
+            }
+            let purchaseDate = 'غير محدد';
+            let purchaseTime = 'غير محدد';
+            if (purchase.timestamp) {
+                const dateObj = new Date(purchase.timestamp);
+                purchaseDate = dateObj.toLocaleDateString('ar-EG');
+                purchaseTime = dateObj.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            }
+            purchaseItem.innerHTML = `
+                <p>اسم المنتج: ${purchase.productName}</p>
+                <p>رقم المنتج: ${purchase.productId}</p>
+                <p>الكمية: ${purchase.quantity}</p>
+                <p>سعر المنتج: ${purchase.productPrice} جنيه</p>
+                <p>سعر الشحن: ${purchase.shippingPrice} جنيه</p>
+                <p>السعر الإجمالي: ${purchase.totalPrice} جنيه</p>
+                ${purchase.color ? `<p>اللون: ${purchase.color}</p>` : ''}
+                ${purchase.size ? `<p>المقاس: ${purchase.size}</p>` : ''}
+                ${purchase.material ? `<p>المادة: ${purchase.material}</p>` : ''}
+                <p class="date-time">التاريخ: ${purchaseDate} الساعة: ${purchaseTime}</p>
+            `;
+            // إضافة حدث النقر لتوجيه المستخدم إلى صفحة المنتج
+            purchaseItem.style.cursor = 'pointer';
+            purchaseItem.onclick = function() {
+                window.location.href = `prod.html?id=${purchase.productId}`;
             };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function updateUserInfo() {
-        const phone = localStorage.getItem('phone');
-        if (!phone) return;
-
-        const updatedData = {
-            username: document.getElementById('infoUsername').value.trim(),
-            email: document.getElementById('infoEmail').value.trim(),
-            governorate: document.getElementById('infoGovernorate').value.trim(),
-            city: document.getElementById('infoCity').value.trim(),
-            street: document.getElementById('infoStreet').value.trim(),
-            landmark: document.getElementById('infoLandmark').value.trim()
-        };
-        
-        // Validation
-        if (!updatedData.username || !updatedData.email || !updatedData.governorate || !updatedData.city || !updatedData.street || !updatedData.landmark) {
-             showCustomAlert('يرجى ملء جميع الحقول!', false); return; 
-        }
-        if (updatedData.username.length < 9) {
-            showCustomAlert('يجب أن يتكون اسم المستخدم من 9 حروف على الأقل.', false); return;
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(updatedData.email)) {
-            showCustomAlert('يرجى إدخال بريد إلكتروني صحيح.', false); return;
-        }
-        
-        const updates = {
-            ['/users/' + phone + '/username']: updatedData.username,
-            ['/users/' + phone + '/deliveryInfo/name']: updatedData.username,
-            ['/users/' + phone + '/deliveryInfo/email']: updatedData.email,
-            ['/users/' + phone + '/deliveryInfo/governorate']: updatedData.governorate,
-            ['/users/' + phone + '/deliveryInfo/city']: updatedData.city,
-            ['/users/' + phone + '/deliveryInfo/street']: updatedData.street,
-            ['/users/' + phone + '/deliveryInfo/landmark']: updatedData.landmark,
-        };
-
-        if (newProfileImageForUpdate) {
-            updates['/users/' + phone + '/profileImage'] = newProfileImageForUpdate;
+            return purchaseItem;
         }
 
-        database.ref().update(updates).then(() => {
-            // Update localStorage
-            localStorage.setItem('username', updatedData.username);
-            const currentDeliveryInfo = JSON.parse(localStorage.getItem('deliveryInfo'));
-            currentDeliveryInfo.name = updatedData.username;
-            currentDeliveryInfo.email = updatedData.email;
-            currentDeliveryInfo.governorate = updatedData.governorate;
-            currentDeliveryInfo.city = updatedData.city;
-            currentDeliveryInfo.street = updatedData.street;
-            currentDeliveryInfo.landmark = updatedData.landmark;
-            localStorage.setItem('deliveryInfo', JSON.stringify(currentDeliveryInfo));
-            
-            if (newProfileImageForUpdate) {
-                localStorage.setItem('profileImage', newProfileImageForUpdate);
-            }
-
-            // Update main profile UI
-            document.getElementById('usernameDisplay').textContent = updatedData.username;
-            const profileImage = localStorage.getItem('profileImage');
-            const profileContainer = document.getElementById('profilePictureDisplayContainer');
-             if (profileImage && profileImage !== 'default') {
-                profileContainer.innerHTML = `<img src="${profileImage}" alt="صورة المستخدم" class="profile-picture">`;
-            } else {
-                const initial = updatedData.username ? updatedData.username.charAt(0).toUpperCase() : '';
-                profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
-            }
-
-            closeMyInfoModal(); // Close the modal after successful update
-            showCustomAlert('تم تحديث البيانات بنجاح!', true);
-
-        }).catch(error => {
-            showCustomAlert('حدث خطأ أثناء تحديث البيانات: ' + error.message, false);
-        });
-    }
-
-</script>
-
+        function closePurchasesModal() {
+            document.getElementById('purchasesModal').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>الصفحة الرئيسية</title>
-        <style>
-            /* التنسيق العام */
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #ffffff;
-                padding-top: 66px; /* تعديل الحشو الأعلى بعد إزالة الشريط */
-            }
-    
-            /* الشريط العلوي الثابت */
-            .header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 66px;
-                background-color: white;
-                padding: 0 20px;
-                z-index: 111111111;
-                box-shadow: 0 3px 1px -2px rgba(37, 37, 37, 0.1);
-            }
-    
-            /* بقية التنسيقات كما هي */
-            .search-wrapper {
-                flex-grow: 1;
-                margin: 0 10px;
-                position: relative;
-            }
-            @media (min-width: 768px) { /* تعديل المارغن فقط للشاشات الأكبر من الهواتف */
-                .search-wrapper {
-                    margin-right: 6px;
-                    margin-left: 11px;
-                }
-            }
-    
-            #search-box {
-                width: 100%;
-                padding: 10px 12px 10px 53px;
-                font-size: 16px;
-                border: 1px solid #000000;
-                border-radius: 51px;
-                outline: none;
-                box-sizing: border-box;
-                text-align: right;
-                direction: rtl;
-            }
-    
-            #search-button {
-    position: absolute;
-    left: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: black;
-    color: white;
-    width: 70px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 33px;
-    border: none;
-    cursor: pointer;
-    outline: none; /* إزالة التأثير الأزرق عند التركيز */
-    -webkit-tap-highlight-color: transparent; /* إزالة التأثير الأزرق على الأجهزة التي تستخدم WebKit */
-}
-            @media (max-width: 1066px) {
-                #search-button {
-                    width: 46px;
-                }
-            }
-    
-            #search-button svg {
-                width: 20px;
-                height: 20px;
-                color: white;
-            }
-    
-            .right-elements {
-                display: flex;
-                align-items: center;
-                gap: 30px;
-            }
-    
-            .right-elements span {
-                font-size: 16px;
-                color: #333;
-            }
-    
-            .user-icon {
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-left: 20px;
-                justify-content: center;
-            }
-    
-            .user-icon svg {
-                width: 24px;
-                height: 24px;
-                color: #333;
-                flex-shrink: 0;
-            }
-    
-            .welcome-message {
-                font-size: 16px;
-                color: #007bff;
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-    
-            .welcome-message span {
-                font-weight: bold;
-                color: #333;
-            }
-    
-            .left-elements {
-                display: flex;
-                align-items: center;
-                gap: 30px;
-            }
-    
-            .menu-icon, .cart-icon, .message-button {
-                cursor: pointer;
-            }
-    
-            .menu-icon svg, .cart-icon svg, .message-button svg {
-                width: 24px;
-                height: 24px;
-                color: #333;
-            }
-    
-            .cart-icon {
-                position: relative;
-                user-select: none; /* منع تحديد النص */
-    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
-    outline: none;
-            }
-    
-            .cart-count {
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background-color: red;
-                color: white;
-                font-size: 12px;
-                padding: 2px 6px;
-                border-radius: 50%;
-            }
-    
-            /* إخفاء العنصر على الهواتف */
-            @media only screen and (max-width: 767px) {
-                .cart-icon {
-                    margin-left: -10px;
-                    margin-right: -10px;
-                }
-            }
-            @media only screen and (max-width: 767px) {
-                .cart-icon {
-                    margin-left: -12px;
-                }
-            }
-    
-            /* تعديلات النافذة الجانبية */
-            .menu-popup {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: -250px;
-                width: 250px;
-                height: 100vh;
-                background-color: white;
-                box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-                z-index: 100999999999999999990;
-                transition: left 0.3s ease-in-out;
-                overflow-y: auto;
-            }
-    
-            @keyframes slideIn {
-                from {
-                    left: -250px;
-                }
-                to {
-                    left: 0;
-                }
-            }
-    
-            @keyframes slideOut {
-                from {
-                    left: 0;
-                }
-                to {
-                    left: -250px;
-                }
-            }
-    
-            .menu-popup.active {
-                display: block;
-                animation: slideIn 0.3s ease-in-out forwards;
-            }
-    
-            .menu-popup.closing {
-                animation: slideOut 0.3s ease-in-out forwards;
-            }
-    
-            .menu-popup .back-arrow {
-                cursor: pointer;
-                margin-bottom: 20px;
-                -webkit-tap-highlight-color: transparent; /* إزالة تأثير التظليل */
-            }
-    
-            .menu-popup .back-arrow:focus {
-                outline: none; /* منع ظهور التحديد عند التركيز */
-            }
-    
-            .menu-popup .back-arrow svg {
-                width: 24px;
-                height: 24px;
-                color: #333;
-                pointer-events: none; /* يمنع التأثير على الـ SVG */
-            }
-    
-            .menu-popup p {
-                font-size: 18px;
-                color: #333;
-                cursor: pointer;
-            }
-    
-            .menu-icon {
-                margin-left: 10px;
-                user-select: none; /* منع تحديد النص */
-    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
-    outline: none;
-            }
-    
-            /* إخفاء العنصر على الهواتف */
-            @media only screen and (max-width: 767px) {
-                .menu-icon {
-                    margin-left: -6px;
-                    margin-right: -4px;
-                }
-            }
-
-            @media only screen and (min-width: 767px) {
-                .menu-icon {
-               margin-right: -7px;
-                }
-            }
-    
-            .adger {
-                font-family: Arial, sans-serif;
-                font-size: 27px;
-                margin-left: 10px;
-                font-weight: bold;
-                background: linear-gradient(to right, #f37420, #ffc4c4);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                cursor: pointer;
-                user-select: none;
-                user-select: none; /* منع تحديد النص */
-    -webkit-tap-highlight-color: transparent; /* إزالة التحديد الأزرق في جوجل كروم */
-    outline: none;
-            }
-    
-            @media (max-width: 767px) {
-                .adger {
-                    font-size: 20px;
-                }
-            }
-    
-            @media (min-width: 767px) {
-                .adger {
-                    margin-left: 10px;
-                }
-            }
-    
-            .container22 {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-            }
-    
-            .country-code {
-                display: inline-flex;
-                align-items: center;
-                font-size: 18px;
-            }
-    
-            .flag {
-                width: 24px;
-                height: 16px;
-                margin-left: 8px;
-            }
-    
-            /* تعديلات للهواتف */
-            @media only screen and (max-width: 767px) {
-                .search-wrapper {
-                    width: 100%; /* Let the search bar take full width on mobile */
-                    max-width: none;
-                    margin: 0; /* Reset margin for mobile */
-                }
-    
-                #search-box {
-                    padding: 10px 12px 10px 45px; /* Adjust padding for mobile, if needed */
-                    font-size: 14px; /* Smaller font size for mobile */
-                }
-    
-                #search-button {
-                    left: 3px;
-                    width: 45px; /* Smaller button for mobile */
-                    height: 32px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <!-- الهيكل الرئيسي -->
-        <div class="header">
-            <!-- العناصر على اليمين -->
-            <div class="right-elements">
-                <style>
-                    .adger-container {
-                        display: flex;
-                        align-items: center;
-                    }
-    
-                    .adger-container svg {
-                        margin-left: 15px; /* Space between text and arrow */
-                        margin-right: 5px; /* Adjust for better visibility */
-                        cursor: pointer; /* This makes the cursor change to a pointing hand */
-                        color: #1a1a1a;
-                        background-color: #f1f1f1; /* Black background */
-                        border-radius: 50%; /* Makes the background circular */
-                        padding: 4px; /* Adds some space around the SVG */
-                    }
-    
-                    /* For mobile devices, adjust the arrow's margins */
-                    @media (max-width: 1167px) {
-                        .adger-container svg {
-                            margin-left: 7px; /* Space between text and arrow */
-                            margin-right: -13px;
-                        }
-                    }
-    
-                    /* Set cursor for both SVG and text within the container */
-                    .adger-container svg, .adger-container h2 {
-                        cursor: pointer;
-                    }
-    
-                    /* Differentiate click areas */
-                    .adger-container h2 {
-                        margin-left: 5px; /* To ensure space from the arrow */
-                    }
-                </style>
-    
-                <div class="adger-container">
-                    <svg onclick="history.back()" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
-                    </svg>
-                    <h2 class="adger" onclick="window.location.href='index.html';">Adger</h2>
-                </div>
-    
-                <style>
-                    /* إخفاء العنصر على الهواتف */
-                    @media only screen and (max-width: 767px) {
-                        .element-to-hide {
-                            display: none;
-                        }
-                    }
-                </style>
-                <div class="element-to-hide" style="font-family: Cairo, sans-serif;">
-                    اللغه / <span style="color: red;">ar</span>
-                </div>
-                <style>
-                    /* إخفاء العنصر على الهواتف */
-                    @media only screen and (max-width: 767px) {
-                        .user-icon {
-                            display: none;
-                        }
-                    }
-                </style>
-                <div class="user-icon" onclick="window.location.href='account.html'">
-                    <div class="welcome-message" id="welcomeMessage">
-                        أهلاً <span id="usernameDisplay"></span>
-                    </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-            </div>
-    
-            <!-- صندوق البحث -->
-            <div class="search-wrapper">
-                <input
-                    type="text"
-                    id="search-box"
-                    placeholder="ابحث فى أدجر"
-                    autocomplete="off"
-                    readonly
-                    onclick="redirectToSearch(event)">
-                    <a href="search.html" id="search-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </a>
-            </div>
-    
-            <script>
-                function redirectToSearch(event) {
-                    // منع التركيز على صندوق الإدخال
-                    event.preventDefault();
-    
-                    // تنفيذ إعادة التوجيه إلى صفحة البحث
-                    window.location.href = "search.html";
-                }
-            </script>
-    
-            <!-- العناصر على اليسار -->
-            <div class="left-elements">
-                <style>
-                    /* إخفاء العنصر على الهواتف */
-                    @media only screen and (max-width: 767px) {
-                        .hide-on-mobile {
-                            display: none;
-                        }
-                    }
-    
-                    /* منع النص من الانقسام */
-                    .country-code {
-                        white-space: nowrap;
-                    }
-    
-                    .flag {
-                        width: 20px;
-                        height: auto;
-                        margin-left: 5px;
-                    }
-    
-                    /* إضافة مسافة بين العنصر والزر */
-                    .country-code {
-                        margin-right: 20px;
-                    }
-                </style>
-                <div class="container22">
-                    <div class="country-code hide-on-mobile">
-                        <span>البلد / </span>
-                        <span style="color: #000000; width: 44px;">EGP</span>
-                        <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg" alt="علم مصر">
-                    </div>
-                </div>
-    
-                <style>
-                    /* إخفاء زر المراسلة على الهواتف */
-                    @media only screen and (max-width: 767px) {
-                        .message-button {
-                            display: none;
-                        }
-                    }
-                </style>
-                <div class="message-button" onclick="window.open('https://wa.me/201152366798', '_blank')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    <span style="font-family: Cairo, sans-serif;">مراسلة</span>
-                </div>
-    
-                <div class="cart-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    <span class="cart-count">0</span>
-                </div>
-    
-                <div class="menu-icon" onclick="toggleMenu()">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            // تحديث عدد المنتجات عند تحميل الصفحة
-            document.getElementById('cartCount').textContent = localStorage.getItem('cartCount') || 0;
-        
-            // الاستماع إلى تغييرات localStorage
-            window.addEventListener('storage', function(event) {
-                if (event.key === 'cartCount') {
-                    document.getElementById('cartCount').textContent = event.newValue;
-                }
-            });
-        </script>
-    
-        <!-- نافذة القائمة الجانبية -->
-        <div class="menu-popup" id="menuPopup">
-            <div class="back-arrow" onclick="toggleMenu()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
-                </svg>
-            </div>
-            <p onclick="window.location.href='account.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">حسابي</span>
-         </p>
-         
-         <p onclick="window.location.href='about.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">سياسات وأحكام</span>
-         </p>
-         
-         <p onclick="window.location.href='return.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">طلب استرجاع</span>
-         </p>
-         
-         <p onclick="window.location.href='deals.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">صفقة رابحة</span>
-         </p>
-         
-         <p onclick="window.location.href='wholesale.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">شراء بالجملة</span>
-         </p>
-         
-         <p onclick="window.location.href='companies.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">شركات عالمية</span>
-         </p>
-         
-         <p onclick="window.location.href='categories.html'" 
-            style="font-family: Cairo, sans-serif; user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent; color: black;"
-            onmouseover="this.style.color='#888'" 
-            onmouseout="this.style.color='black'"
-            ontouchstart="this.style.color='#888'" 
-            ontouchend="setTimeout(() => this.style.color='black', 300)">
-             <span style="pointer-events: none;">الفئات</span>
-         </p>
-        </div>
-    
-        <script>
-    // --- الدوال المساعدة ---
-
-    // دالة للتحقق من النصوص العربية
-    function isArabic(text) {
-        // إذا كان النص فارغًا أو غير موجود، أرجع خطأ
-        if (!text) return false;
-        // استخدم تعبيرًا نمطيًا للبحث عن أي حرف عربي
-        return /[\u0600-\u06FF]/.test(text);
-    }
-    
-    // دالة لتقصير اسم المستخدم على الشاشات الصغيرة
-    function truncateUsername(name) {
-        if (!name) return '';
-        // حدد أقصى طول للاسم بناءً على اللغة
-        const maxLength = isArabic(name) ? 12 : 7;
-        // إذا كانت الشاشة صغيرة والاسم طويلًا، قم بتقصيره
-        if (window.innerWidth < 966 && name.length > maxLength) {
-            if (isArabic(name)) {
-                return name.substring(0, maxLength) + '..';
-            } else {
-                return '..' + name.substring(0, maxLength);
-            }
-        }
-        // في الحالات الأخرى، أرجع الاسم كما هو
-        return name;
-    }
-
-    // --- الدوال الوظيفية ---
-
-    /**
-     * الدالة الرئيسية التي تلبي طلبك:
-     * تحديث رسالة الترحيب بناءً على حالة تسجيل دخول المستخدم.
-     */
-    function updateWelcomeMessage() {
-        // استرجاع اسم المستخدم من الذاكرة المحلية
-        const username = localStorage.getItem('username');
-        // الحصول على عنصر رسالة الترحيب
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        
-        // التحقق من وجود العنصر قبل التعامل معه
-        if (welcomeMessage) {
-            // إذا كان المستخدم قد سجل دخوله (يوجد اسم مستخدم)
-            if (username) {
-                // عرض رسالة "أهلاً" مع اسم المستخدم المقصر
-                welcomeMessage.innerHTML = `أهلاً <span>${truncateUsername(username)}</span>`;
-            } else {
-                // إذا لم يكن المستخدم مسجلاً، اعرض رسالة لتسجيل الدخول
-                welcomeMessage.innerHTML = 'أهلاً، <span style="color: black; cursor: pointer;" onclick="window.location.href=\'account.html\'">سجل دخولك</span>';
-            }
-        }
-    }
-    
-    // دالة لإظهار أو إخفاء القائمة الجانبية
-    function toggleMenu() {
-        const menuPopup = document.getElementById('menuPopup');
-        if (menuPopup.classList.contains('active')) {
-            menuPopup.classList.add('closing');
-            setTimeout(() => {
-                menuPopup.classList.remove('active', 'closing');
-                menuPopup.style.display = 'none';
-            }, 300); // يتناسب مع مدة animation
-        } else {
-            menuPopup.style.display = 'block';
-            menuPopup.classList.add('active');
-        }
-    }
-    
-    // دالة لتحديث عدد العناصر في العربة
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartCountElement = document.querySelector('.cart-count');
-        if (cartCountElement) {
-            cartCountElement.textContent = cart.length;
-        }
-    }
-    
-    // دالة لإضافة المنتج إلى العربة
-    function addToCart(button) {
-        const productContainer = button.closest('.image-container');
-        const product = {
-            id: productContainer.querySelector('img').src, // استخدام الصورة كمعرف فريد
-            image: productContainer.querySelector('img').src,
-            name: productContainer.querySelector('h1').textContent,
-            sold: productContainer.querySelector('h2').textContent,
-            price: productContainer.querySelector('.number').textContent,
-            discount: productContainer.querySelector('h3').textContent,
-            link: productContainer.querySelector('a').href // حفظ رابط الصفحة المخصصة
-        };
-    
-        // استرجاع العربة الحالية من localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        // التحقق مما إذا كان المنتج موجودًا بالفعل في العربة
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (!existingProduct) {
-            cart.push(product); // إضافة المنتج الجديد
-            localStorage.setItem('cart', JSON.stringify(cart)); // تحديث العربة في localStorage
-            updateCartCount();
-        }
-    }
-    
-    // التنقل إلى صفحة العربة
-    function navigateToCart() {
-        window.location.href = 'cart.html';
-    }
-    
-    // --- ربط الأحداث والدوال ---
-
-    // ربط حدث النقر على أيقونة العربة
-    document.querySelector('.cart-icon')?.addEventListener('click', navigateToCart);
-    
-    // إغلاق النافذة بالنقر على الشاشة خارج النافذة
-    document.body.addEventListener('click', function(event) {
-        const menuPopup = document.getElementById('menuPopup');
-        if (menuPopup.classList.contains('active') && 
-            !menuPopup.contains(event.target) && 
-            !event.target.closest('.menu-icon')) {
-            toggleMenu();
-        }
-    });
-    
-    // إغلاق النافذة أثناء التمرير من اليمين إلى اليسار
-    let touchStartX = 0;
-    let touchCurrentX = 0;
-    let isSwiping = false;
-    
-    document.addEventListener('touchstart', function(event) {
-        const menuPopup = document.getElementById('menuPopup');
-        if (menuPopup.classList.contains('active')) {
-            touchStartX = event.touches[0].screenX;
-            isSwiping = true;
-        }
-    });
-    
-    document.addEventListener('touchmove', function(event) {
-        if (isSwiping) {
-            touchCurrentX = event.touches[0].screenX;
-            const swipeDistance = touchStartX - touchCurrentX;
-            if (swipeDistance > 50) {
-                toggleMenu();
-                isSwiping = false;
-            }
-        }
-    });
-    
-    document.addEventListener('touchend', function() {
-        isSwiping = false;
-    });
-
-    // تحديث المحتوى عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', function() {
-        updateCartCount();
-        updateWelcomeMessage(); // تحديث رسالة الترحيب عند تحميل الصفحة
-    });
-
-    // الاستماع إلى تغييرات localStorage من صفحات أخرى
-    window.addEventListener('storage', function(event) {
-        if (event.key === 'cart') {
-            updateCartCount();
-        }
-        // إذا تغير اسم المستخدم في صفحة أخرى (تسجيل دخول/خروج)، حدث الرسالة هنا
-        if (event.key === 'username') {
-            updateWelcomeMessage();
-        }
-    });
-
-    // تحديث رسالة الترحيب عند تغيير حجم النافذة لضمان تقصير الاسم بشكل صحيح
-    window.addEventListener('resize', updateWelcomeMessage);
-
-</script> 
-
-
-
-
-
-
-
