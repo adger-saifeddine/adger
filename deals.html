@@ -151,7 +151,6 @@
         #initial-loader-overlay { z-index: 9999; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #initial-loader-overlay.hidden { opacity: 0; visibility: hidden; }
         
-        /* MODIFICATION: Combined Media Queries for better organization */
         @media (max-width: 500px) {
             body {
                 align-items: flex-start;
@@ -170,7 +169,6 @@
             .primary-btn { padding: 12px 25px; font-size: 1rem; } 
         }
 
-        /* MODIFICATION: Added bottom margin ONLY for larger screens */
         @media (min-width: 521px) {
             #gameCanvas {
                 margin-bottom: 30px;
@@ -405,10 +403,10 @@
                 ctx.font = 'bold 32px Cairo';
                 ctx.fillStyle = 'white';
                 ctx.textAlign = 'center';
-                ctx.fillText('اوووه لقد ربحت منتج لمرة واحدة', canvas.width / 2, canvas.height / 2 - 20);
+                ctx.fillText('لقد ربحت جائزتك بالفعل!', canvas.width / 2, canvas.height / 2 - 20);
                 ctx.font = '22px Cairo';
                 ctx.fillStyle = '#ccc';
-                ctx.fillText('و سيتم ارساله لك', canvas.width / 2, canvas.height / 2 + 25);
+                ctx.fillText('سيتم إرسالها إليك قريبًا.', canvas.width / 2, canvas.height / 2 + 25);
             } else if (!state.canPlayToday) {
                 ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -604,27 +602,19 @@
             canvas.height = gameHeight;
         }
 
-        // MODIFICATION: New function to handle resizing
         function handleResize() {
             setupCanvasDimensions();
-            // Ensure state is initialized before trying to reposition elements
             if (state && state.cannon && state.obstacles && state.obstacles.length > 0) {
-                // Reposition elements that are relative to canvas dimensions
                 state.cannon.x = canvas.width / 2;
                 state.cannon.y = canvas.height - 40;
                 state.obstacles[0].x = canvas.width / 2 - 75;
-                
-                // Re-generate stars to fit the new dimensions better, preventing empty areas on expand
                 state.stars = [];
                 for (let i = 0; i < 100; i++) state.stars.push(createStar());
-
-                // Manually re-render to show changes immediately, even if game loop is paused.
                 render();
             }
         }
 
         function init() {
-            // MODIFICATION: Use the new handler for initial setup and resizing
             handleResize();
             displayInfoPrize(infoPrizeIndex);
             const sanitizedUserId = getSanitizedUserId();
@@ -635,12 +625,19 @@
                 initialLoader.classList.add('hidden');
             };
             
+            // MODIFICATION: Changed logic for handling already claimed prize
             if (localStorage.getItem(CLAIMED_PRIZE_KEY + sanitizedUserId) === 'true') {
-                localStorage.removeItem(CLAIMED_PRIZE_KEY + sanitizedUserId);
-                startGame(false, 0); 
+                localStorage.removeItem(CLAIMED_PRIZE_KEY + sanitizedUserId); // Clean up key
+                
+                // Set up the game state to show the message but DO NOT start the game loop
+                startGame(false, 0, false); 
+                
+                // Set the specific message state and render it once
                 state.prizeClaimedMessage = true;
+                render(); 
+                
                 finalizeInit();
-                return;
+                return; // Stop further initialization
             }
             
             if (!sanitizedUserId) {
@@ -679,7 +676,8 @@
             }).finally(finalizeInit);
         }
 
-        function startGame(canPlay = true, initialAmmo) {
+        // MODIFICATION: Added 'runLoop' parameter to prevent starting game loop when needed
+        function startGame(canPlay = true, initialAmmo, runLoop = true) {
             const sanitizedUserId = getSanitizedUserId();
             if (canPlay && sanitizedUserId) { 
                 const today = new Date().toISOString().split('T')[0];
@@ -701,16 +699,31 @@
             state.canPlayToday = initialAmmo > 0;
             
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            lastTime = performance.now();
-            animationFrameId = requestAnimationFrame(gameLoop);
+            
+            if (runLoop) {
+                lastTime = performance.now();
+                animationFrameId = requestAnimationFrame(gameLoop);
+            }
         }
 
+        // MODIFICATION: Added score check for winning
         function checkWinLose() {
             if (state.gameState === 'gameover') return;
+
+            // New win condition: score reaches 1000 or more
+            if (state.score >= 1000) {
+                state.gameState = 'gameover';
+                winGame(state.ammo);
+                return; // Stop checking other conditions
+            }
+
+            // Original win condition: all targets hit
             if (state.targets.length === 0 && state.ball === null) {
                 state.gameState = 'gameover';
                 winGame(state.ammo);
-            } else if (state.ammo <= 0 && state.ball === null) {
+            } 
+            // Lose condition: out of ammo
+            else if (state.ammo <= 0 && state.ball === null) {
                 state.gameState = 'gameover';
                 gameOver();
             }
@@ -805,11 +818,10 @@
         canvas.addEventListener('touchstart', e => handleInput(e, 'start'), { passive: false });
         window.addEventListener('touchmove', e => handleInput(e, 'move'), { passive: false });
         window.addEventListener('touchend', e => handleInput(e, 'end'));
-
-        // MODIFICATION: Add event listener for window resize
+        
         window.addEventListener('resize', handleResize);
 
-        init(); // Start the whole process
+        init();
     });
     </script>
 </body>
