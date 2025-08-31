@@ -509,7 +509,7 @@ outline: none;
             text-align: center;
             display: none;
             z-index: 10;
-            padding: 30px 20px; /* تم التعديل */
+            padding: 30px 20px;
             color: #fff;
             overflow: hidden; /* لإخفاء أي تأثيرات تفيض */
         }
@@ -543,8 +543,8 @@ outline: none;
         
         .title-header {
             color: #ffffff;
-            font-size: 24px; /* تم التعديل */
-            margin-bottom: 25px; /* تم التعديل */
+            font-size: 24px;
+            margin-bottom: 25px;
             font-weight: 700;
             font-family: 'Cairo', sans-serif;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -554,7 +554,7 @@ outline: none;
         .input-group {
             margin-bottom: 25px;
             text-align: right;
-            position: relative; /* لإضافة الأيقونات */
+            position: relative;
         }
 
         .field-label {
@@ -562,17 +562,17 @@ outline: none;
             margin-bottom: 10px;
             color: #f0f0f0;
             font-weight: normal;
-            font-size: 14px; /* تم التعديل */
+            font-size: 14px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .input-field {
             width: 100%;
-            padding: 12px 40px 12px 15px; /* تم التعديل */
+            padding: 12px 40px 12px 15px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             box-sizing: border-box;
-            font-size: 14px; /* تم التعديل */
+            font-size: 14px;
             transition: all 0.3s ease;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.15);
@@ -588,16 +588,13 @@ outline: none;
         .input-group svg {
             position: absolute;
             right: 12px;
-            /* === بداية التعديل === */
-            /* تم تغيير القيمة الثابتة إلى قيمة ديناميكية لحساب ارتفاع العنوان العلوي */
-            top: calc(50% + 14px); 
+            top: 52px;
             transform: translateY(-50%);
-            /* === نهاية التعديل === */
             color: rgba(255, 255, 255, 0.7);
             width: 20px;
             height: 20px;
-            pointer-events: none; /* لمنع التفاعل مع الأيقونة */
-            transition: color 0.3s ease;
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
 
         .input-field:focus {
@@ -614,10 +611,10 @@ outline: none;
             background: linear-gradient(45deg, #0051ff, #00c6ff);
             color: white;
             margin-top: 15px;
-            padding: 12px 15px; /* تم التعديل */
+            padding: 12px 15px;
             border: none;
             border-radius: 10px;
-            font-size: 16px; /* تم التعديل */
+            font-size: 16px;
             font-weight: bold;
             font-family: 'Cairo', sans-serif;
             cursor: pointer;
@@ -641,14 +638,13 @@ outline: none;
             padding: 0 10px;
         }
 
-        /* --- تعديل جديد: إزالة الخلفية وتغيير اللون --- */
         .error-message {
-            color: #ff5c5c; /* لون أحمر زاهي وواضح */
-            font-weight: bold; /* جعل الخط أعرض ليكون أوضح */
-            font-size: 12px; /* تم التعديل */
+            color: #ff5c5c;
+            font-weight: bold;
+            font-size: 12px;
             margin-top: 8px;
             display: none;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); /* ظل خفيف للنص لزيادة الوضوح */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
         
         @media (max-width: 600px) {
@@ -675,12 +671,23 @@ outline: none;
                 padding-bottom: 11px;
                 font-size: 13px;
             }
-            /* لم نعد بحاجة لتعديل top هنا لأن الحل الجديد يعمل على كل الشاشات */
             .submit-button {
                 padding: 11px 15px;
                 font-size: 15px;
             }
         }
+
+        /* === بداية التعديل المطلوب === */
+        @media (max-width: 499px) {
+            .input-group svg {
+                width: 18px; /* تصغير حجم الأيقونة */
+                height: 18px; /* تصغير حجم الأيقونة */
+                top: 50px; /* ضبط الموضع العمودي بدقة ليتناسب مع حجم الحقل الجديد */
+                right: 14px; /* تحريك الأيقونة قليلاً لليمين لتتناسب مع حجمها الجديد */
+            }
+        }
+        /* === نهاية التعديل المطلوب === */
+
         /* === نهاية التنسيقات المذهلة === */
     </style>
 </head>
