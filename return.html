@@ -57,8 +57,9 @@
             padding-top: 66px; /* ارتفاع الشريط العلوي */
             min-height: 100vh;
             background: linear-gradient(45deg, #0d1b2a, #1b263b);
-            overflow-y: auto; /* السماح بالتمرير العمودي */
+            overflow-y: auto; 
             position: relative;
+            box-sizing: border-box; /* === الحل رقم 1: لمنع شريط التمرير غير الضروري === */
         }
 
         /* الشريط العلوي الثابت (من الكود الثاني) */
@@ -462,35 +463,6 @@ outline: none;
             100% { transform: rotateX(360deg) rotateY(360deg); }
         }
 
-        /* شاشة التحميل */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .loader::after {
-            content: "";
-            width: 50px;
-            height: 50px;
-            border: 5px solid #0051ff;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* === بداية التنسيقات المذهلة لنافذة الإرجاع === */
         .return-container {
             position: fixed;
@@ -507,7 +479,7 @@ outline: none;
             width: 100%;
             max-width: 420px;
             text-align: center;
-            display: none;
+            display: none; /* سيتم تغييره بالـ JS */
             z-index: 10;
             padding: 30px 20px;
             color: #fff;
@@ -568,7 +540,8 @@ outline: none;
 
         .input-field {
             width: 100%;
-            padding: 12px 40px 12px 15px;
+            /* === الحل رقم 2: إعادة الحشوة المتوازنة === */
+            padding: 12px 15px; 
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             box-sizing: border-box;
@@ -585,26 +558,10 @@ outline: none;
             color: rgba(255, 255, 255, 0.6);
         }
 
-        .input-group svg {
-            position: absolute;
-            right: 12px;
-            top: 52px;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.7);
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-
         .input-field:focus {
             background-color: rgba(255, 255, 255, 0.25);
             border-color: rgba(0, 81, 255, 0.8);
             box-shadow: 0 0 15px rgba(0, 81, 255, 0.5);
-        }
-
-        .input-field:focus + svg {
-            color: #fff;
         }
 
         .submit-button {
@@ -676,18 +633,6 @@ outline: none;
                 font-size: 15px;
             }
         }
-
-        /* === بداية التعديل المطلوب === */
-        @media (max-width: 499px) {
-            .input-group svg {
-                width: 18px; /* تصغير حجم الأيقونة */
-                height: 18px; /* تصغير حجم الأيقونة */
-                top: 50px; /* ضبط الموضع العمودي بدقة ليتناسب مع حجم الحقل الجديد */
-                right: 14px; /* تحريك الأيقونة قليلاً لليمين لتتناسب مع حجمها الجديد */
-            }
-        }
-        /* === نهاية التعديل المطلوب === */
-
         /* === نهاية التنسيقات المذهلة === */
     </style>
 </head>
@@ -836,9 +781,6 @@ outline: none;
         <div class="cube"><div class="front"></div><div class="back"></div><div class="right"></div><div class="left"></div><div class="top"></div><div class="bottom"></div></div>
     </div>
 
-    <!-- شاشة التحميل -->
-    <div class="loader" id="loader"></div>
-
     <!-- النافذة البيضاء -->
     <div class="return-container" id="returnContainer">
         <h1 class="title-header">طلب استرجاع</h1>
@@ -846,19 +788,16 @@ outline: none;
             <div class="input-group">
                 <label for="name" class="field-label">ادخل اسمك:</label>
                 <input type="text" id="name" name="name" class="input-field" placeholder="الاسم" required>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <p id="name-error" class="error-message">يرجى ملء الحقل</p>
             </div>
             <div class="input-group">
                 <label for="phone" class="field-label">ادخل رقم الهاتف:</label>
                 <input type="tel" id="phone" name="phone" class="input-field" placeholder="رقم الهاتف" required>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 <p id="phone-error" class="error-message">يرجى ملء الحقل</p>
             </div>
             <div class="input-group">
                 <label for="productNumber" class="field-label">ادخل رقم المنتج:</label>
                 <input type="text" id="productNumber" name="productNumber" class="input-field" placeholder="رقم المنتج" required>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
                 <p id="productNumber-error" class="error-message">يرجى ملء الحقل</p>
             </div>
             <button type="button" class="submit-button" onclick="validateForm()">موافق</button>
@@ -869,15 +808,10 @@ outline: none;
 </html>
 
 <script>
-// إخفاء شاشة التحميل وإظهار النموذج
+// إظهار النموذج فور تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById('loader');
     const returnContainer = document.getElementById('returnContainer');
-
-    setTimeout(() => {
-        loader.style.display = 'none';
-        returnContainer.style.display = 'block';
-    }, 1000);
+    returnContainer.style.display = 'block';
 
     const savedName = localStorage.getItem('name');
     const savedPhone = localStorage.getItem('phone');
@@ -1092,5 +1026,3 @@ menuPopup.addEventListener('touchmove', function(event) {
     }
 }, { passive: false });
 </script>
-</body>
-</html>
