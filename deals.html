@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>لعبة المدفع - تحدي الجوائز</title>
-    <link rel="icon" href="logo.jpg" type="image/x-icon">
     <link rel="icon" href="https://i.postimg.cc/3JWGVzJs/cannon-game-logo.png" type="image/x-icon">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
@@ -25,7 +24,6 @@
         *:focus {
             outline: none;
         }
-        /* --- التعديل هنا --- */
         body {
             font-family: 'Cairo', 'Tajawal', sans-serif; 
             display: flex; 
@@ -37,10 +35,7 @@
             color: var(--text-color);
             padding: 20px 10px; 
             user-select: none;
-            /* 
-               تم حذف `overflow: hidden;` و `touch-action: none;` 
-               للسماح بالتمرير في النوافذ المنبثقة عند الحاجة.
-            */
+            /* overflow: hidden is removed from here to allow scrolling in overlays */
         }
         #game-container {
             position: relative; z-index: 2; display: flex; flex-direction: column;
@@ -85,7 +80,7 @@
             cursor: crosshair; background-color: #161b22;
             margin-top: 10px;
             display: block;
-            touch-action: none; /* تم نقل هذه الخاصية هنا للتحكم في اللوحة فقط */
+            touch-action: none; /* Keep touch control on canvas only */
         }
         #gameCanvas:active { cursor: crosshair; }
 
@@ -100,7 +95,14 @@
         .primary-btn { padding: 14px 35px; font-size: 1.1rem; font-family: 'Cairo', sans-serif; color: #fff; background: var(--success-color); border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0, 0.2); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
         .primary-btn:hover { background-color: #2ea043; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0, 0.3); }
 
-        #win-overlay { padding: 0; background: transparent; backdrop-filter: none; animation: fadeIn 0.5s; }
+        /* --- التعديل النهائي هنا --- */
+        #win-overlay {
+            padding: 0;
+            background: transparent;
+            backdrop-filter: none;
+            animation: fadeIn 0.5s;
+            align-items: flex-start; /* يضمن بدء المحتوى من الأعلى للسماح بالتمرير */
+        }
         #win-overlay .overlay-content { width: 100%; max-width: 100%; min-height: 100vh; border-radius: 0; box-shadow: none; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; padding: 20px 15px 40px; padding-top: calc(env(safe-area-inset-top) + 20px); background: linear-gradient(120deg, #1f6feb, #f78166, var(--gold-color)); background-size: 200% 200%; animation: popUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), aurora 10s ease infinite; border: none; backdrop-filter: none; }
         @keyframes aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         @keyframes slideUpFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -183,7 +185,6 @@
     </style>
 </head>
 <body>
-    <!-- محتوى HTML يبقى كما هو -->
     <div id="initial-loader-overlay" class="overlay">
         <div class="loading-dots">
             <div class="dot"></div>
@@ -202,6 +203,7 @@
         <canvas id="gameCanvas"></canvas>
     </div>
 
+    <!-- ... باقي محتوى HTML يبقى كما هو تمامًا ... -->
     <div id="login-required-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <h2>أوه.. يجب تسجيل الدخول أولاً!</h2>
@@ -296,497 +298,312 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-    // شيفرة JavaScript تبقى كما هي بدون تغيير
-    document.addEventListener('DOMContentLoaded', () => {
-        firebase.initializeApp({
-            apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
-            authDomain: "buy-from-adger.firebaseapp.com",
-            databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
-            projectId: "buy-from-adger",
-            storageBucket: "buy-from-adger.appspot.com",
-            messagingSenderId: "3960207785601",
-            appId: "1:396020785601:web:yourWebAppID"
-        });
-        const database = firebase.database();
-
-        const initialLoader = document.getElementById('initial-loader-overlay');
-        const gameContainer = document.getElementById('game-container');
-        const startOverlay = document.getElementById('start-overlay');
-        const winOverlay = document.getElementById('win-overlay');
-        const gameOverOverlay = document.getElementById('game-over-overlay');
-        const claimSuccessOverlay = document.getElementById('claim-success-overlay');
-        const loginRequiredOverlay = document.getElementById('login-required-overlay');
-        
-        const startButton = document.getElementById('start-button');
-        const claimGiftButton = document.getElementById('claim-gift-btn');
-        const gameOverOkButton = document.getElementById('game-over-ok-btn');
-        
-        const prizesButton = document.getElementById('prizes-button');
-        const prizesOverlay = document.getElementById('prizes-overlay');
-        const prizeDisplay = document.getElementById('prize-display');
-        const prizeImage = document.getElementById('prize-image');
-        const prizeName = document.getElementById('prize-name');
-        const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
-        const switchProductBtn = document.getElementById('switch-product-btn');
-        const productCarousel = document.getElementById('product-carousel');
-        
-        const scoreDisplayValue = document.querySelector('#score .value');
-        const ammoDisplayValue = document.querySelector('#ammo .value');
-
-        const sounds = {
-            win: document.getElementById('win-sound'),
-            gameOver: document.getElementById('game-over-sound')
-        };
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        const prizes = [
-            { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/3Np9JSRw/9u3606.jpg", price: "199$" },
-            { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
-            { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
-        ];
-        let winPrizeIndex = 0;
-        let infoPrizeIndex = 0;
-        const WIN_STATE_KEY = 'cannonGameWinState';
-        const DAILY_PLAY_KEY = 'cannonGameLastPlayDate';
-        const DAILY_AMMO_KEY = 'cannonGameDailyAmmo';
-        const STARTING_AMMO = 12;
-
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let state = {};
-        let lastTime = 0;
-        let timeScale = 1;
-        let animationFrameId = null;
-
-        function playCannonSound(type) { if (!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'fire') { g.gain.setValueAtTime(0.4, audioCtx.currentTime); o.frequency.setValueAtTime(150, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); o.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.4); o.type = 'sawtooth'; o.start(); o.stop(audioCtx.currentTime + 0.5); } else if (type === 'hit') { g.gain.setValueAtTime(0.3, audioCtx.currentTime); o.frequency.setValueAtTime(600, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); o.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.3); o.type = 'sine'; o.start(); o.stop(audioCtx.currentTime + 0.3); } else if (type === 'bounce') { g.gain.setValueAtTime(0.15, audioCtx.currentTime); o.frequency.setValueAtTime(300, audioCtx.currentTime); g.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); o.type = 'triangle'; o.start(); o.stop(audioCtx.currentTime + 0.1); } }
-        function lerp(start, end, amt) { return (1 - amt) * start + amt * end; }
-        
-        function createParticle(x, y, options = {}) { const angle = options.angle ?? Math.random() * Math.PI * 2; const speed = options.speed ?? Math.random() * 5 + 2; return { x, y, dx: Math.cos(angle) * speed, dy: Math.sin(angle) * speed, radius: options.radius ?? Math.random() * 3 + 2, life: options.life ?? Math.random() * 60 + 40, initialLife: this.life, color: options.color ?? '#ffffff' }; }
-        function createStar() { return { x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.5, z: Math.random() * 0.5 + 0.5 }; }
-        
-        function getPointsForHit(hitNumber) {
-            if (hitNumber === 0) return 50;
-            if (hitNumber === 1) return 40;
-            if (hitNumber === 2) return 30;
-            return 20;
-        }
-
-        function render() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.save();
-            if (state.screenShake.duration > 0) { state.screenShake.duration -= 1; ctx.translate((Math.random()-0.5) * state.screenShake.magnitude, (Math.random()-0.5) * state.screenShake.magnitude); }
-            state.stars.forEach(star => { const parallaxX = state.cannon.x * (1 - star.z) * 0.05; ctx.fillStyle = `rgba(255, 255, 255, ${star.z * 0.8})`; ctx.beginPath(); ctx.arc(star.x - parallaxX, star.y, star.radius, 0, Math.PI * 2); ctx.fill(); });
-            state.obstacles.forEach(obs => { ctx.fillStyle = '#484f58'; ctx.strokeStyle = '#8b949e'; ctx.lineWidth = 2; ctx.fillRect(obs.x, obs.y, obs.width, obs.height); ctx.strokeRect(obs.x, obs.y, obs.width, obs.height); });
-            state.targets.forEach(t => { const scale = t.isDying ? t.scale : 1 + Math.sin(Date.now() * 0.002 + t.pulseOffset) * 0.05; ctx.save(); ctx.translate(t.x, t.y); ctx.scale(scale, scale); ctx.globalAlpha = t.isDying ? t.scale : 1; const grad = ctx.createRadialGradient(0, 0, 1, 0, 0, t.radius); grad.addColorStop(0, '#fff'); grad.addColorStop(0.7, t.color); ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(0, 0, t.radius, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
-            if (state.ball) { const trail = state.ball.trail; for (let i = 0; i < trail.length - 1; i++) { const p1 = trail[i]; const p2 = trail[i+1]; const alpha = (i / trail.length) * 0.5; ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(247, 183, 51, ${alpha})`; ctx.lineWidth = i / trail.length * state.ball.radius * 1.5; ctx.stroke(); } }
-            const c = state.cannon; ctx.save(); const recoilX = Math.cos(c.angle) * c.recoil; const recoilY = Math.sin(c.angle) * c.recoil; ctx.translate(c.x - recoilX, c.y - recoilY); ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 15; ctx.shadowOffsetY = 5; ctx.fillStyle = '#21262d'; ctx.beginPath(); ctx.arc(-35, 10, 20, 0, Math.PI*2); ctx.arc(35, 10, 20, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#30363d'; ctx.beginPath(); ctx.arc(-35, 10, 10, 0, Math.PI*2); ctx.arc(35, 10, 10, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#484f58'; ctx.fillRect(-50, -10, 100, 20); ctx.rotate(c.angle); const gradCannon = ctx.createLinearGradient(0, -12, 0, 12); gradCannon.addColorStop(0, '#c9d1d9'); gradCannon.addColorStop(0.5, '#8b949e'); gradCannon.addColorStop(1, '#c9d1d9'); ctx.fillStyle = gradCannon; ctx.fillRect(0, -12, 80, 24); ctx.restore();
-            if (state.ball) { const b = state.ball; const gradBall = ctx.createRadialGradient(b.x, b.y, 1, b.x, b.y, b.radius); gradBall.addColorStop(0, '#fee255'); gradBall.addColorStop(1, '#f7b733'); ctx.fillStyle = gradBall; ctx.beginPath(); ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2); ctx.fill(); }
-            state.particles.forEach(p => { ctx.globalAlpha = p.life / p.initialLife; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); }); ctx.globalAlpha = 1;
-            
-            state.scorePopups.forEach(popup => {
-                ctx.save();
-                ctx.globalAlpha = popup.life / popup.initialLife;
-                ctx.font = 'bold 28px Cairo';
-                ctx.fillStyle = 'var(--gold-color)';
-                ctx.textAlign = 'center';
-                ctx.shadowColor = 'rgba(0,0,0,0.7)';
-                ctx.shadowBlur = 6;
-                ctx.fillText(popup.text, popup.x, popup.y);
-                ctx.restore();
+        // شيفرة JavaScript تبقى كما هي تمامًا
+        document.addEventListener('DOMContentLoaded', () => {
+            firebase.initializeApp({
+                apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
+                authDomain: "buy-from-adger.firebaseapp.com",
+                databaseURL: "https://buy-from-adger-default-rtdb.firebaseio.com",
+                projectId: "buy-from-adger",
+                storageBucket: "buy-from-adger.appspot.com",
+                messagingSenderId: "3960207785601",
+                appId: "1:396020785601:web:yourWebAppID"
             });
+            const database = firebase.database();
 
-            const wind = state.wind; if (Math.abs(wind) > 0.001) { const dir = wind > 0 ? ">>" : "<<"; const strength = Math.abs(Math.round(wind * 1000)); const text = `${dir} رياح ${strength}`; ctx.font = '16px Tajawal'; ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.textAlign = 'center'; ctx.fillText(text, canvas.width / 2, 25); }
-            if (state.gameState === 'aiming' && state.input.isDragging) { const { power, angle } = getLaunchParams(); const barrelTip = getBarrelTip(); let sim = { x: barrelTip.x, y: barrelTip.y, dx: Math.cos(angle) * power, dy: Math.sin(angle) * power }; const powerRatio = Math.min(1, power / 18); const trajectoryColor = `rgba(255, ${255 - 100 * powerRatio}, ${100 - 100 * powerRatio}, 0.6)`; ctx.beginPath(); ctx.setLineDash([2, 5]); ctx.strokeStyle = trajectoryColor; ctx.lineWidth = 2; ctx.moveTo(sim.x, sim.y); for (let i = 0; i < 35; i++) { sim.x += sim.dx; sim.y += sim.dy; ctx.lineTo(sim.x, sim.y); } ctx.stroke(); ctx.setLineDash([]); }
+            const initialLoader = document.getElementById('initial-loader-overlay');
+            const gameContainer = document.getElementById('game-container');
+            const startOverlay = document.getElementById('start-overlay');
+            const winOverlay = document.getElementById('win-overlay');
+            const gameOverOverlay = document.getElementById('game-over-overlay');
+            const claimSuccessOverlay = document.getElementById('claim-success-overlay');
+            const loginRequiredOverlay = document.getElementById('login-required-overlay');
             
-            if (!state.canPlayToday) {
-                ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = 'bold 32px Cairo';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.fillText('لقد استنفذت محاولاتك اليوم', canvas.width / 2, canvas.height / 2 - 20);
-                ctx.font = '22px Cairo';
-                ctx.fillStyle = '#ccc';
-                ctx.fillText('حاول مجددًا غدًا', canvas.width / 2, canvas.height / 2 + 25);
+            const startButton = document.getElementById('start-button');
+            const claimGiftButton = document.getElementById('claim-gift-btn');
+            const gameOverOkButton = document.getElementById('game-over-ok-btn');
+            
+            const prizesButton = document.getElementById('prizes-button');
+            const prizesOverlay = document.getElementById('prizes-overlay');
+            const prizeDisplay = document.getElementById('prize-display');
+            const prizeImage = document.getElementById('prize-image');
+            const prizeName = document.getElementById('prize-name');
+            const infoSwitchPrizeBtn = document.getElementById('info-switch-prize-btn');
+            const switchProductBtn = document.getElementById('switch-product-btn');
+            const productCarousel = document.getElementById('product-carousel');
+            
+            const scoreDisplayValue = document.querySelector('#score .value');
+            const ammoDisplayValue = document.querySelector('#ammo .value');
+
+            const sounds = {
+                win: document.getElementById('win-sound'),
+                gameOver: document.getElementById('game-over-sound')
+            };
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            const prizes = [
+                { name: "سماعة رأس لاسلكية احترافية للألعاب", image: "https://i.postimg.cc/3Np9JSRw/9u3606.jpg", price: "199$" },
+                { name: "ساعة ذكية أنيقة", image: "https://i.postimg.cc/k4GkYyv2/61-ZJLh-Sj-Gk-L.jpg", price: "249$" },
+                { name: "كاميرا فورية حديثة", image: "https://i.postimg.cc/6pQWzJjR/D191353-800x800.jpg", price: "129$" }
+            ];
+            let winPrizeIndex = 0;
+            let infoPrizeIndex = 0;
+            const WIN_STATE_KEY = 'cannonGameWinState';
+            const DAILY_PLAY_KEY = 'cannonGameLastPlayDate';
+            const DAILY_AMMO_KEY = 'cannonGameDailyAmmo';
+            const STARTING_AMMO = 12;
+
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            let state = {};
+            let lastTime = 0;
+            let timeScale = 1;
+            let animationFrameId = null;
+
+            function playCannonSound(type) { if (!audioCtx) return; const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); if (type === 'fire') { g.gain.setValueAtTime(0.4, audioCtx.currentTime); o.frequency.setValueAtTime(150, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5); o.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.4); o.type = 'sawtooth'; o.start(); o.stop(audioCtx.currentTime + 0.5); } else if (type === 'hit') { g.gain.setValueAtTime(0.3, audioCtx.currentTime); o.frequency.setValueAtTime(600, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); o.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.3); o.type = 'sine'; o.start(); o.stop(audioCtx.currentTime + 0.3); } else if (type === 'bounce') { g.gain.setValueAtTime(0.15, audioCtx.currentTime); o.frequency.setValueAtTime(300, audioCtx.currentTime); g.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); o.type = 'triangle'; o.start(); o.stop(audioCtx.currentTime + 0.1); } }
+            function lerp(start, end, amt) { return (1 - amt) * start + amt * end; }
+            function createParticle(x, y, options = {}) { const angle = options.angle ?? Math.random() * Math.PI * 2; const speed = options.speed ?? Math.random() * 5 + 2; return { x, y, dx: Math.cos(angle) * speed, dy: Math.sin(angle) * speed, radius: options.radius ?? Math.random() * 3 + 2, life: options.life ?? Math.random() * 60 + 40, initialLife: this.life, color: options.color ?? '#ffffff' }; }
+            function createStar() { return { x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.5, z: Math.random() * 0.5 + 0.5 }; }
+            function getPointsForHit(hitNumber) {
+                if (hitNumber === 0) return 50;
+                if (hitNumber === 1) return 40;
+                if (hitNumber === 2) return 30;
+                return 20;
             }
 
-            ctx.restore();
-        }
-        
-        function update(deltaTime) {
-            const scaledDelta = deltaTime * timeScale;
-            state.cannon.angle = lerp(state.cannon.angle, state.cannon.targetAngle, 0.2); 
-            state.cannon.recoil = lerp(state.cannon.recoil, 0, 0.15);
-            if (state.ball) { const b = state.ball; b.dx += state.wind * scaledDelta * 60; b.x += b.dx * scaledDelta * 60; b.y += b.dy * scaledDelta * 60; b.trail.unshift({x: b.x, y: b.y}); if (b.trail.length > 20) b.trail.pop(); if (b.x > canvas.width - b.radius) { b.x = canvas.width - b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.x < b.radius) { b.x = b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.y < b.radius) { b.y = b.radius; b.dy *= -0.9; playCannonSound('bounce'); } if (b.y > canvas.height + b.radius * 2) { state.ball = null; if(state.score < 1000) state.gameState = 'aiming'; } state.obstacles.forEach(obs => { if (b.x + b.radius > obs.x && b.x - b.radius < obs.x + obs.width && b.y + b.radius > obs.y && b.y - b.radius < obs.y + obs.height) { const overlapX = (b.radius + obs.width / 2) - Math.abs(b.x - (obs.x + obs.width / 2)); const overlapY = (b.radius + obs.height / 2) - Math.abs(b.y - (obs.y + obs.height / 2)); if (overlapX < overlapY) { b.dx *= -0.9; b.x += b.dx > 0 ? overlapX : -overlapX; } else { b.dy *= -0.9; b.y += b.dy > 0 ? overlapY : -overlapY; } playCannonSound('bounce'); } });
-                
-                state.targets.forEach(target => { 
-                    if (target.isDying) return; 
-                    const dist = Math.hypot(b.x - target.x, b.y - target.y); 
-                    if (dist < b.radius + target.radius) { 
-                        playCannonSound('hit'); 
-                        state.screenShake = { duration: 15, magnitude: 5 }; 
-                        
-                        const points = getPointsForHit(state.hitsInARow);
-                        state.score += points;
-                        state.hitsInARow++;
-                        
-                        const sanitizedUserId = getSanitizedUserId();
-                        if (sanitizedUserId) {
-                            database.ref(`user_profiles/${sanitizedUserId}`).update({ totalScore: state.score });
-                        }
-                        
-                        state.scorePopups.push({ x: target.x, y: target.y, text: `+${points}`, life: 70, initialLife: 70 });
-                        target.isDying = true; 
-                        if (state.targets.filter(t => !t.isDying).length === 1) { timeScale = 0.1; } 
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.save();
+                if (state.screenShake.duration > 0) { state.screenShake.duration -= 1; ctx.translate((Math.random()-0.5) * state.screenShake.magnitude, (Math.random()-0.5) * state.screenShake.magnitude); }
+                state.stars.forEach(star => { const parallaxX = state.cannon.x * (1 - star.z) * 0.05; ctx.fillStyle = `rgba(255, 255, 255, ${star.z * 0.8})`; ctx.beginPath(); ctx.arc(star.x - parallaxX, star.y, star.radius, 0, Math.PI * 2); ctx.fill(); });
+                state.obstacles.forEach(obs => { ctx.fillStyle = '#484f58'; ctx.strokeStyle = '#8b949e'; ctx.lineWidth = 2; ctx.fillRect(obs.x, obs.y, obs.width, obs.height); ctx.strokeRect(obs.x, obs.y, obs.width, obs.height); });
+                state.targets.forEach(t => { const scale = t.isDying ? t.scale : 1 + Math.sin(Date.now() * 0.002 + t.pulseOffset) * 0.05; ctx.save(); ctx.translate(t.x, t.y); ctx.scale(scale, scale); ctx.globalAlpha = t.isDying ? t.scale : 1; const grad = ctx.createRadialGradient(0, 0, 1, 0, 0, t.radius); grad.addColorStop(0, '#fff'); grad.addColorStop(0.7, t.color); ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(0, 0, t.radius, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+                if (state.ball) { const trail = state.ball.trail; for (let i = 0; i < trail.length - 1; i++) { const p1 = trail[i]; const p2 = trail[i+1]; const alpha = (i / trail.length) * 0.5; ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(247, 183, 51, ${alpha})`; ctx.lineWidth = i / trail.length * state.ball.radius * 1.5; ctx.stroke(); } }
+                const c = state.cannon; ctx.save(); const recoilX = Math.cos(c.angle) * c.recoil; const recoilY = Math.sin(c.angle) * c.recoil; ctx.translate(c.x - recoilX, c.y - recoilY); ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 15; ctx.shadowOffsetY = 5; ctx.fillStyle = '#21262d'; ctx.beginPath(); ctx.arc(-35, 10, 20, 0, Math.PI*2); ctx.arc(35, 10, 20, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#30363d'; ctx.beginPath(); ctx.arc(-35, 10, 10, 0, Math.PI*2); ctx.arc(35, 10, 10, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = '#484f58'; ctx.fillRect(-50, -10, 100, 20); ctx.rotate(c.angle); const gradCannon = ctx.createLinearGradient(0, -12, 0, 12); gradCannon.addColorStop(0, '#c9d1d9'); gradCannon.addColorStop(0.5, '#8b949e'); gradCannon.addColorStop(1, '#c9d1d9'); ctx.fillStyle = gradCannon; ctx.fillRect(0, -12, 80, 24); ctx.restore();
+                if (state.ball) { const b = state.ball; const gradBall = ctx.createRadialGradient(b.x, b.y, 1, b.x, b.y, b.radius); gradBall.addColorStop(0, '#fee255'); gradBall.addColorStop(1, '#f7b733'); ctx.fillStyle = gradBall; ctx.beginPath(); ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2); ctx.fill(); }
+                state.particles.forEach(p => { ctx.globalAlpha = p.life / p.initialLife; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); }); ctx.globalAlpha = 1;
+                state.scorePopups.forEach(popup => { ctx.save(); ctx.globalAlpha = popup.life / popup.initialLife; ctx.font = 'bold 28px Cairo'; ctx.fillStyle = 'var(--gold-color)'; ctx.textAlign = 'center'; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 6; ctx.fillText(popup.text, popup.x, popup.y); ctx.restore(); });
+                const wind = state.wind; if (Math.abs(wind) > 0.001) { const dir = wind > 0 ? ">>" : "<<"; const strength = Math.abs(Math.round(wind * 1000)); const text = `${dir} رياح ${strength}`; ctx.font = '16px Tajawal'; ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.textAlign = 'center'; ctx.fillText(text, canvas.width / 2, 25); }
+                if (state.gameState === 'aiming' && state.input.isDragging) { const { power, angle } = getLaunchParams(); const barrelTip = getBarrelTip(); let sim = { x: barrelTip.x, y: barrelTip.y, dx: Math.cos(angle) * power, dy: Math.sin(angle) * power }; const powerRatio = Math.min(1, power / 18); const trajectoryColor = `rgba(255, ${255 - 100 * powerRatio}, ${100 - 100 * powerRatio}, 0.6)`; ctx.beginPath(); ctx.setLineDash([2, 5]); ctx.strokeStyle = trajectoryColor; ctx.lineWidth = 2; ctx.moveTo(sim.x, sim.y); for (let i = 0; i < 35; i++) { sim.x += sim.dx; sim.y += sim.dy; ctx.lineTo(sim.x, sim.y); } ctx.stroke(); ctx.setLineDash([]); }
+                if (!state.canPlayToday) { ctx.fillStyle = 'rgba(13, 17, 23, 0.75)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.font = 'bold 32px Cairo'; ctx.fillStyle = 'white'; ctx.textAlign = 'center'; ctx.fillText('لقد استنفذت محاولاتك اليوم', canvas.width / 2, canvas.height / 2 - 20); ctx.font = '22px Cairo'; ctx.fillStyle = '#ccc'; ctx.fillText('حاول مجددًا غدًا', canvas.width / 2, canvas.height / 2 + 25); }
+                ctx.restore();
+            }
+            
+            function update(deltaTime) {
+                const scaledDelta = deltaTime * timeScale;
+                state.cannon.angle = lerp(state.cannon.angle, state.cannon.targetAngle, 0.2); 
+                state.cannon.recoil = lerp(state.cannon.recoil, 0, 0.15);
+                if (state.ball) { const b = state.ball; b.dx += state.wind * scaledDelta * 60; b.x += b.dx * scaledDelta * 60; b.y += b.dy * scaledDelta * 60; b.trail.unshift({x: b.x, y: b.y}); if (b.trail.length > 20) b.trail.pop(); if (b.x > canvas.width - b.radius) { b.x = canvas.width - b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.x < b.radius) { b.x = b.radius; b.dx *= -0.9; playCannonSound('bounce'); } if (b.y < b.radius) { b.y = b.radius; b.dy *= -0.9; playCannonSound('bounce'); } if (b.y > canvas.height + b.radius * 2) { state.ball = null; if(state.score < 1000) state.gameState = 'aiming'; } state.obstacles.forEach(obs => { if (b.x + b.radius > obs.x && b.x - b.radius < obs.x + obs.width && b.y + b.radius > obs.y && b.y - b.radius < obs.y + obs.height) { const overlapX = (b.radius + obs.width / 2) - Math.abs(b.x - (obs.x + obs.width / 2)); const overlapY = (b.radius + obs.height / 2) - Math.abs(b.y - (obs.y + obs.height / 2)); if (overlapX < overlapY) { b.dx *= -0.9; b.x += b.dx > 0 ? overlapX : -overlapX; } else { b.dy *= -0.9; b.y += b.dy > 0 ? overlapY : -overlapY; } playCannonSound('bounce'); } });
+                    state.targets.forEach(target => { 
+                        if (target.isDying) return; 
+                        const dist = Math.hypot(b.x - target.x, b.y - target.y); 
+                        if (dist < b.radius + target.radius) { 
+                            playCannonSound('hit'); 
+                            state.screenShake = { duration: 15, magnitude: 5 }; 
+                            const points = getPointsForHit(state.hitsInARow);
+                            state.score += points;
+                            state.hitsInARow++;
+                            const sanitizedUserId = getSanitizedUserId();
+                            if (sanitizedUserId) {
+                                database.ref(`user_profiles/${sanitizedUserId}`).update({ totalScore: state.score });
+                            }
+                            state.scorePopups.push({ x: target.x, y: target.y, text: `+${points}`, life: 70, initialLife: 70 });
+                            target.isDying = true; 
+                            if (state.targets.filter(t => !t.isDying).length === 1) { timeScale = 0.1; } 
+                        } 
+                    }); 
+                }
+                state.particles.forEach(p => { p.life -= scaledDelta * 60; p.x += p.dx * scaledDelta * 60; p.y += p.dy * scaledDelta * 60; }); state.particles = state.particles.filter(p => p.life > 0);
+                state.scorePopups.forEach(p => { p.life--; p.y -= 0.8; });
+                state.scorePopups = state.scorePopups.filter(p => p.life > 0);
+                state.targets.forEach(t => { 
+                    if (t.isDying) { 
+                        t.scale -= scaledDelta * 2; 
+                        if (t.scale <= 0) { 
+                            for (let i = 0; i < 50; i++) state.particles.push(createParticle(t.x, t.y, { color: t.color })); 
+                        } 
+                    } else { 
+                        if (t.moveVertical) { t.y = t.initialY + Math.sin(Date.now() * t.moveSpeed) * t.moveRange; } 
+                        else { t.x = t.initialX + Math.sin(Date.now() * t.moveSpeed) * t.moveRange; }
                     } 
                 }); 
-            }
-            state.particles.forEach(p => { p.life -= scaledDelta * 60; p.x += p.dx * scaledDelta * 60; p.y += p.dy * scaledDelta * 60; }); state.particles = state.particles.filter(p => p.life > 0);
-            
-            state.scorePopups.forEach(p => { p.life--; p.y -= 0.8; });
-            state.scorePopups = state.scorePopups.filter(p => p.life > 0);
-            
-            state.targets.forEach(t => { 
-                if (t.isDying) { 
-                    t.scale -= scaledDelta * 2; 
-                    if (t.scale <= 0) { 
-                        for (let i = 0; i < 50; i++) state.particles.push(createParticle(t.x, t.y, { color: t.color })); 
-                    } 
-                } else { 
-                    if (t.moveVertical) {
-                        t.y = t.initialY + Math.sin(Date.now() * t.moveSpeed) * t.moveRange;
-                    } else {
-                        t.x = t.initialX + Math.sin(Date.now() * t.moveSpeed) * t.moveRange; 
-                    }
-                } 
-            }); 
-            state.targets = state.targets.filter(t => !t.isDying || t.scale > 0);
-            
-            if (state.targets.length === 0 && state.ball === null && state.gameState === 'aiming' && state.score < 1000) {
-                state.wind = (Math.random() - 0.5) * 0.08; 
-                state.targets = [ 
-                    { x: 250, y: 150, radius: 18, color: '#58a6ff', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 250, initialY: 150, moveSpeed: 0.002, moveRange: 120, moveVertical: false }, 
-                    { x: 550, y: 250, radius: 18, color: '#f78166', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 550, initialY: 250, moveSpeed: -0.0025, moveRange: 150, moveVertical: false }, 
-                    { x: 400, y: 100, radius: 22, color: '#3fb950', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 400, initialY: 100, moveSpeed: 0.0018, moveRange: 250, moveVertical: false }, 
-                    { x: 150, y: 250, radius: 15, color: '#a371f7', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 150, initialY: 250, moveSpeed: 0.0022, moveRange: 120, moveVertical: true }, 
-                ];
-            }
-
-            state.displayScore = lerp(state.displayScore, state.score, 0.1);
-            if (timeScale < 1) { timeScale = Math.min(1, timeScale + deltaTime * 0.5); }
-            checkWinLose();
-        }
-
-        function fire() {
-            if (state.gameState !== 'aiming' || state.ammo <= 0) return;
-            const { power, angle } = getLaunchParams();
-            if (power < 1) return;
-            state.ammo--;
-            state.hitsInARow = 0;
-
-            const sanitizedUserId = getSanitizedUserId();
-            if (sanitizedUserId) {
-                localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, state.ammo);
-            }
-
-            state.gameState = 'flying';
-            const barrelTip = getBarrelTip();
-            state.ball = { x: barrelTip.x, y: barrelTip.y, radius: 12, trail: [], dx: Math.cos(angle) * power, dy: Math.sin(angle) * power };
-            playCannonSound('fire');
-            state.screenShake = { duration: 20, magnitude: 7 };
-            state.cannon.recoil = -20;
-        }
-
-        function getBarrelTip() { const c = state.cannon; return { x: c.x + Math.cos(c.angle) * 80, y: c.y + Math.sin(c.angle) * 80 }; }
-        
-        function getLaunchParams() { 
-            const dragStart = { x: state.cannon.x, y: state.cannon.y }; 
-            const dragEnd = state.input.dragEnd; 
-            const dx = dragEnd.x - dragStart.x; 
-            const dy = dragEnd.y - dragStart.y; 
-            let angle = Math.atan2(dy, dx); 
-            const dist = Math.hypot(dx, dy); 
-            const power = Math.min(20, dist / 15); 
-            return { power, angle }; 
-        }
-
-        function updateUI() { scoreDisplayValue.textContent = Math.floor(state.displayScore); ammoDisplayValue.textContent = state.ammo; }
-        
-        function gameLoop(currentTime) { const deltaTime = (currentTime - lastTime) / 1000; lastTime = currentTime; update(deltaTime); render(); updateUI(); animationFrameId = requestAnimationFrame(gameLoop); }
-        
-        function handleInput(e, type) { 
-            if (!state.canPlayToday) return;
-            e.preventDefault(); 
-            
-            const pos = {x:0, y:0}; 
-            const rect = canvas.getBoundingClientRect();
-            
-            let touchPoint;
-            if (e.touches && e.touches.length > 0) {
-                touchPoint = e.touches[0];
-            } else if (e.changedTouches && e.changedTouches.length > 0) {
-                touchPoint = e.changedTouches[0];
-            }
-
-            const clientX = touchPoint ? touchPoint.clientX : e.clientX;
-            const clientY = touchPoint ? touchPoint.clientY : e.clientY;
-
-            if (typeof clientX === 'undefined') {
-                if (type === 'end' && state.input.isDragging) {
-                    state.input.isDragging = false;
-                    fire();
+                state.targets = state.targets.filter(t => !t.isDying || t.scale > 0);
+                if (state.targets.length === 0 && state.ball === null && state.gameState === 'aiming' && state.score < 1000) {
+                    state.wind = (Math.random() - 0.5) * 0.08; 
+                    state.targets = [ { x: 250, y: 150, radius: 18, color: '#58a6ff', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 250, initialY: 150, moveSpeed: 0.002, moveRange: 120, moveVertical: false }, { x: 550, y: 250, radius: 18, color: '#f78166', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 550, initialY: 250, moveSpeed: -0.0025, moveRange: 150, moveVertical: false }, { x: 400, y: 100, radius: 22, color: '#3fb950', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 400, initialY: 100, moveSpeed: 0.0018, moveRange: 250, moveVertical: false }, { x: 150, y: 250, radius: 15, color: '#a371f7', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 150, initialY: 250, moveSpeed: 0.0022, moveRange: 120, moveVertical: true }, ];
                 }
-                return;
+                state.displayScore = lerp(state.displayScore, state.score, 0.1);
+                if (timeScale < 1) { timeScale = Math.min(1, timeScale + deltaTime * 0.5); }
+                checkWinLose();
             }
 
-            pos.x = (clientX - rect.left) * (canvas.width / rect.width); 
-            pos.y = (clientY - rect.top) * (canvas.height / rect.height); 
-            
-            if (type === 'start' && state.gameState === 'aiming') { 
-                state.input.isDragging = true; 
-                state.input.dragEnd = pos; 
-            } else if (type === 'move' && state.input.isDragging) { 
-                state.input.dragEnd = pos; 
-                const { angle } = getLaunchParams(); 
-                state.cannon.targetAngle = angle; 
-            } else if (type === 'end' && state.input.isDragging) { 
-                state.input.isDragging = false; 
-                fire(); 
-            } 
-        }
+            function fire() {
+                if (state.gameState !== 'aiming' || state.ammo <= 0) return;
+                const { power, angle } = getLaunchParams();
+                if (power < 1) return;
+                state.ammo--;
+                state.hitsInARow = 0;
+                const sanitizedUserId = getSanitizedUserId();
+                if (sanitizedUserId) { localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, state.ammo); }
+                state.gameState = 'flying';
+                const barrelTip = getBarrelTip();
+                state.ball = { x: barrelTip.x, y: barrelTip.y, radius: 12, trail: [], dx: Math.cos(angle) * power, dy: Math.sin(angle) * power };
+                playCannonSound('fire');
+                state.screenShake = { duration: 20, magnitude: 7 };
+                state.cannon.recoil = -20;
+            }
 
-        function resetCannonGame() {
-            state = { 
-                score: state.score || 0,
-                displayScore: state.displayScore || 0,
-                ammo: STARTING_AMMO, 
-                gameState: 'aiming', 
-                cannon: { x: canvas.width / 2, y: canvas.height - 40, angle: -Math.PI / 2, targetAngle: -Math.PI / 2, recoil: 0 }, 
-                ball: null, 
-                targets: [], 
-                particles: [], 
-                stars: [], 
-                obstacles: [], 
-                wind: (Math.random() - 0.5) * 0.08, 
-                input: { isDragging: false, dragEnd: {} }, 
-                screenShake: { duration: 0, magnitude: 0 },
-                canPlayToday: true,
-                scorePopups: [],
-                hitsInARow: 0
-            };
-            for (let i = 0; i < 100; i++) state.stars.push(createStar());
+            function getBarrelTip() { const c = state.cannon; return { x: c.x + Math.cos(c.angle) * 80, y: c.y + Math.sin(c.angle) * 80 }; }
+            function getLaunchParams() { const dragStart = { x: state.cannon.x, y: state.cannon.y }; const dragEnd = state.input.dragEnd; const dx = dragEnd.x - dragStart.x; const dy = dragEnd.y - dragStart.y; let angle = Math.atan2(dy, dx); const dist = Math.hypot(dx, dy); const power = Math.min(20, dist / 15); return { power, angle }; }
+            function updateUI() { scoreDisplayValue.textContent = Math.floor(state.displayScore); ammoDisplayValue.textContent = state.ammo; }
+            function gameLoop(currentTime) { const deltaTime = (currentTime - lastTime) / 1000; lastTime = currentTime; update(deltaTime); render(); updateUI(); animationFrameId = requestAnimationFrame(gameLoop); }
             
-            state.obstacles.push({ x: canvas.width / 2 - 75, y: 350, width: 150, height: 25 });
-            
-            state.targets = [ 
-                { x: 250, y: 150, radius: 18, color: '#58a6ff', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 250, initialY: 150, moveSpeed: 0.002, moveRange: 120, moveVertical: false }, 
-                { x: 550, y: 250, radius: 18, color: '#f78166', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 550, initialY: 250, moveSpeed: -0.0025, moveRange: 150, moveVertical: false }, 
-                { x: 400, y: 100, radius: 22, color: '#3fb950', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 400, initialY: 100, moveSpeed: 0.0018, moveRange: 250, moveVertical: false }, 
-                { x: 150, y: 250, radius: 15, color: '#a371f7', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 150, initialY: 250, moveSpeed: 0.0022, moveRange: 120, moveVertical: true }, 
-            ];
-            
-            timeScale = 1; 
-            updateUI();
-        }
+            function handleInput(e, type) { 
+                if (!state.canPlayToday) return;
+                e.preventDefault(); 
+                const pos = {x:0, y:0}; 
+                const rect = canvas.getBoundingClientRect();
+                let touchPoint;
+                if (e.touches && e.touches.length > 0) { touchPoint = e.touches[0]; } 
+                else if (e.changedTouches && e.changedTouches.length > 0) { touchPoint = e.changedTouches[0]; }
+                const clientX = touchPoint ? touchPoint.clientX : e.clientX;
+                const clientY = touchPoint ? touchPoint.clientY : e.clientY;
+                if (typeof clientX === 'undefined') { if (type === 'end' && state.input.isDragging) { state.input.isDragging = false; fire(); } return; }
+                pos.x = (clientX - rect.left) * (canvas.width / rect.width); 
+                pos.y = (clientY - rect.top) * (canvas.height / rect.height); 
+                if (type === 'start' && state.gameState === 'aiming') { state.input.isDragging = true; state.input.dragEnd = pos; } 
+                else if (type === 'move' && state.input.isDragging) { state.input.dragEnd = pos; const { angle } = getLaunchParams(); state.cannon.targetAngle = angle; } 
+                else if (type === 'end' && state.input.isDragging) { state.input.isDragging = false; fire(); } 
+            }
 
-        function getSanitizedUserId() { const deliveryInfoString = localStorage.getItem('deliveryInfo'); if (!deliveryInfoString) return null; try { const deliveryInfo = JSON.parse(deliveryInfoString); const userId = deliveryInfo.phone; if (!userId) return null; return userId.replace(/\D/g, ''); } catch (e) { console.error("Could not parse delivery info:", e); return null; } }
-        
-        function setupCanvasDimensions() {
-            const gameWidth = 800;
-            const isMobile = window.innerWidth <= 500 && window.innerHeight > window.innerWidth;
-            const gameHeight = isMobile ? 1200 : 600;
-            
-            canvas.width = gameWidth;
-            canvas.height = gameHeight;
-        }
-
-        function handleResize() {
-            setupCanvasDimensions();
-            if (state && state.cannon && state.obstacles && state.obstacles.length > 0) {
-                state.cannon.x = canvas.width / 2;
-                state.cannon.y = canvas.height - 40;
-                state.obstacles[0].x = canvas.width / 2 - 75;
-                state.stars = [];
+            function resetCannonGame() {
+                state = { score: state.score || 0, displayScore: state.displayScore || 0, ammo: STARTING_AMMO, gameState: 'aiming', cannon: { x: canvas.width / 2, y: canvas.height - 40, angle: -Math.PI / 2, targetAngle: -Math.PI / 2, recoil: 0 }, ball: null, targets: [], particles: [], stars: [], obstacles: [], wind: (Math.random() - 0.5) * 0.08, input: { isDragging: false, dragEnd: {} }, screenShake: { duration: 0, magnitude: 0 }, canPlayToday: true, scorePopups: [], hitsInARow: 0 };
                 for (let i = 0; i < 100; i++) state.stars.push(createStar());
-                render();
-            }
-        }
-
-        function init() {
-            handleResize();
-            displayInfoPrize(infoPrizeIndex);
-            const sanitizedUserId = getSanitizedUserId();
-
-            const finalizeInit = () => {
-                gameContainer.style.visibility = 'visible';
-                gameContainer.style.opacity = '1';
-                initialLoader.classList.add('hidden');
-            };
-            
-            if (!sanitizedUserId) {
-                loginRequiredOverlay.style.display = 'flex';
-                finalizeInit();
-                return;
-            }
-
-            const userProfileRef = database.ref(`user_profiles/${sanitizedUserId}`);
-            userProfileRef.once('value').then(snapshot => {
-                const profileData = snapshot.val();
-                state.score = profileData ? profileData.totalScore || 0 : 0;
-                state.displayScore = state.score;
+                state.obstacles.push({ x: canvas.width / 2 - 75, y: 350, width: 150, height: 25 });
+                state.targets = [ { x: 250, y: 150, radius: 18, color: '#58a6ff', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 250, initialY: 150, moveSpeed: 0.002, moveRange: 120, moveVertical: false }, { x: 550, y: 250, radius: 18, color: '#f78166', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 550, initialY: 250, moveSpeed: -0.0025, moveRange: 150, moveVertical: false }, { x: 400, y: 100, radius: 22, color: '#3fb950', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 400, initialY: 100, moveSpeed: 0.0018, moveRange: 250, moveVertical: false }, { x: 150, y: 250, radius: 15, color: '#a371f7', pulseOffset: Math.random()*1000, isDying: false, scale: 1, initialX: 150, initialY: 250, moveSpeed: 0.0022, moveRange: 120, moveVertical: true }, ];
+                timeScale = 1; 
                 updateUI();
-
-                const today = new Date().toISOString().split('T')[0];
-                const lastPlayDate = localStorage.getItem(DAILY_PLAY_KEY + sanitizedUserId);
-                
-                if (lastPlayDate === today) {
-                    const savedAmmo = localStorage.getItem(DAILY_AMMO_KEY + sanitizedUserId);
-                    const currentAmmo = savedAmmo !== null ? parseInt(savedAmmo, 10) : 0;
-                    startGame(false, currentAmmo); 
-                } else {
-                    const hasWonBeforeRef = database.ref(`user_game_states/${sanitizedUserId}/hasWon`);
-                    hasWonBeforeRef.once('value').then(winSnapshot => {
-                        if (winSnapshot.val()) {
-                            winGame(state.ammo);
-                        } else {
-                            startOverlay.style.display = 'flex';
-                        }
-                    });
-                }
-            }).catch(error => {
-                console.error("Firebase profile check failed:", error);
-                startOverlay.style.display = 'flex';
-            }).finally(finalizeInit);
-        }
-
-        function startGame(canPlay = true, initialAmmo) {
-            const sanitizedUserId = getSanitizedUserId();
-            if (canPlay && sanitizedUserId) { 
-                const today = new Date().toISOString().split('T')[0];
-                localStorage.setItem(DAILY_PLAY_KEY + sanitizedUserId, today);
-                localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, initialAmmo);
             }
 
-            if (canPlay) {
-                localStorage.removeItem(WIN_STATE_KEY);
-                if (sanitizedUserId) {
+            function getSanitizedUserId() { const deliveryInfoString = localStorage.getItem('deliveryInfo'); if (!deliveryInfoString) return null; try { const deliveryInfo = JSON.parse(deliveryInfoString); const userId = deliveryInfo.phone; if (!userId) return null; return userId.replace(/\D/g, ''); } catch (e) { console.error("Could not parse delivery info:", e); return null; } }
+            
+            function setupCanvasDimensions() {
+                const gameWidth = 800;
+                const isMobile = window.innerWidth <= 500 && window.innerHeight > window.innerWidth;
+                const gameHeight = isMobile ? 1200 : 600;
+                canvas.width = gameWidth;
+                canvas.height = gameHeight;
+            }
+
+            function handleResize() {
+                setupCanvasDimensions();
+                if (state && state.cannon && state.obstacles && state.obstacles.length > 0) {
+                    state.cannon.x = canvas.width / 2;
+                    state.cannon.y = canvas.height - 40;
+                    state.obstacles[0].x = canvas.width / 2 - 75;
+                    state.stars = [];
+                    for (let i = 0; i < 100; i++) state.stars.push(createStar());
+                    render();
+                }
+            }
+
+            function init() {
+                handleResize();
+                displayInfoPrize(infoPrizeIndex);
+                const sanitizedUserId = getSanitizedUserId();
+                const finalizeInit = () => { gameContainer.style.visibility = 'visible'; gameContainer.style.opacity = '1'; initialLoader.classList.add('hidden'); };
+                if (!sanitizedUserId) { loginRequiredOverlay.style.display = 'flex'; finalizeInit(); return; }
+                const userProfileRef = database.ref(`user_profiles/${sanitizedUserId}`);
+                userProfileRef.once('value').then(snapshot => {
+                    const profileData = snapshot.val();
+                    state.score = profileData ? profileData.totalScore || 0 : 0;
+                    state.displayScore = state.score;
+                    updateUI();
+                    const today = new Date().toISOString().split('T')[0];
+                    const lastPlayDate = localStorage.getItem(DAILY_PLAY_KEY + sanitizedUserId);
+                    if (lastPlayDate === today) {
+                        const savedAmmo = localStorage.getItem(DAILY_AMMO_KEY + sanitizedUserId);
+                        const currentAmmo = savedAmmo !== null ? parseInt(savedAmmo, 10) : 0;
+                        startGame(false, currentAmmo); 
+                    } else {
+                        const hasWonBeforeRef = database.ref(`user_game_states/${sanitizedUserId}/hasWon`);
+                        hasWonBeforeRef.once('value').then(winSnapshot => {
+                            if (winSnapshot.val()) { winGame(state.ammo); } 
+                            else { startOverlay.style.display = 'flex'; }
+                        });
+                    }
+                }).catch(error => { console.error("Firebase profile check failed:", error); startOverlay.style.display = 'flex'; }).finally(finalizeInit);
+            }
+
+            function startGame(canPlay = true, initialAmmo) {
+                const sanitizedUserId = getSanitizedUserId();
+                if (canPlay && sanitizedUserId) { const today = new Date().toISOString().split('T')[0]; localStorage.setItem(DAILY_PLAY_KEY + sanitizedUserId, today); localStorage.setItem(DAILY_AMMO_KEY + sanitizedUserId, initialAmmo); }
+                if (canPlay) { localStorage.removeItem(WIN_STATE_KEY); if (sanitizedUserId) { database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: false }); } }
+                [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
+                resetCannonGame();
+                state.ammo = initialAmmo;
+                state.canPlayToday = initialAmmo > 0;
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                lastTime = performance.now();
+                animationFrameId = requestAnimationFrame(gameLoop);
+            }
+
+            function checkWinLose() {
+                if (state.gameState === 'gameover') return;
+                if (state.score >= 1000 && state.ball === null) { state.gameState = 'gameover'; winGame(state.ammo); } 
+                else if (state.ammo <= 0 && state.ball === null) { state.gameState = 'gameover'; gameOver(); }
+            }
+
+            function gameOver() { if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; } sounds.gameOver.play(); setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500); }
+            function launchConfetti() { const confettiContainer = document.body; const confettiCount = 100; const colors = ['#58a6ff', '#f78166', '#ffc107', '#f85149', '#3fb950']; for (let i = 0; i < confettiCount; i++) { const confetti = document.createElement('div'); const size = Math.random() * 10 + 5; confetti.style.width = `${size}px`; confetti.style.height = `${size}px`; confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`; confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1'; confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none'; const anim = confetti.animate([{ transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 }, { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 }); anim.onfinish = () => confetti.remove(); confettiContainer.appendChild(confetti); } }
+            
+            function winGame(remainingAmmo) {
+                if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; }
+                if (winOverlay.style.display === 'flex') return;
+                sounds.win.play(); launchConfetti();
+                localStorage.setItem(WIN_STATE_KEY, 'true');
+                const sanitizedUserId = getSanitizedUserId();
+                if (sanitizedUserId) { database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: true }); }
+                document.getElementById('win-score-val').textContent = Math.floor(state.score);
+                document.getElementById('win-ammo-val').textContent = remainingAmmo;
+                buildWinCarousel(); updateWinCarousel();
+                [startOverlay, gameOverOverlay].forEach(o => o.style.display = 'none');
+                winOverlay.style.display = 'flex';
+            }
+
+            function displayInfoPrize(index) { prizeDisplay.classList.add('fade-out'); setTimeout(() => { const prize = prizes[index]; prizeImage.src = prize.image; prizeName.textContent = prize.name; prizeDisplay.classList.remove('fade-out'); }, 300); }
+            function buildWinCarousel() { productCarousel.innerHTML = ''; prizes.forEach((p, index) => { productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`; }); }
+            function updateWinCarousel() { const slides = document.querySelectorAll('.product-slide'); slides.forEach(slide => slide.classList.remove('active')); if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active'); }
+
+            function handleClaimGiftFirebase() {
+                const deliveryInfoString = localStorage.getItem('deliveryInfo');
+                const sanitizedUserId = getSanitizedUserId();
+                if (!deliveryInfoString || !sanitizedUserId) { alert('حدث خطأ. لا يمكن العثور على بياناتك. يرجى إعادة تسجيل الدخول.'); window.location.href = 'account.html'; return; }
+                const product = prizes[winPrizeIndex];
+                const giftClaimData = { productName: product.name, productImage: product.image, deliveryInfo: JSON.parse(deliveryInfoString), timestamp: Date.now() };
+                claimSuccessOverlay.style.display = 'flex';
+                database.ref('gift_claims').push(giftClaimData).then(() => {
+                    localStorage.removeItem(WIN_STATE_KEY);
                     database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: false });
-                }
+                    setTimeout(() => { window.location.reload(); }, 1500);
+                }).catch((error) => { console.error("Error writing to Firebase:", error); alert('حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.'); claimSuccessOverlay.style.display = 'none'; });
             }
             
-            [startOverlay, gameOverOverlay, winOverlay, claimSuccessOverlay, loginRequiredOverlay].forEach(o => o.style.display = 'none');
-            
-            resetCannonGame();
-            state.ammo = initialAmmo;
-            state.canPlayToday = initialAmmo > 0;
-            
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            lastTime = performance.now();
-            animationFrameId = requestAnimationFrame(gameLoop);
-        }
-
-        function checkWinLose() {
-            if (state.gameState === 'gameover') return;
-            if (state.score >= 1000 && state.ball === null) {
-                state.gameState = 'gameover';
-                winGame(state.ammo);
-            } else if (state.ammo <= 0 && state.ball === null) {
-                state.gameState = 'gameover';
-                gameOver();
-            }
-        }
-
-        function gameOver() {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-            sounds.gameOver.play();
-            setTimeout(() => { gameOverOverlay.style.display = 'flex'; }, 500);
-        }
-
-        function launchConfetti() { const confettiContainer = document.body; const confettiCount = 100; const colors = ['#58a6ff', '#f78166', '#ffc107', '#f85149', '#3fb950']; for (let i = 0; i < confettiCount; i++) { const confetti = document.createElement('div'); const size = Math.random() * 10 + 5; confetti.style.width = `${size}px`; confetti.style.height = `${size}px`; confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; confetti.style.position = 'fixed'; confetti.style.top = `${Math.random() * -20}vh`; confetti.style.left = `${Math.random() * 100}vw`; confetti.style.opacity = '1'; confetti.style.zIndex = '2000'; confetti.style.pointerEvents = 'none'; const anim = confetti.animate([{ transform: `translateY(0) rotate(${Math.random() * 360}deg)`, opacity: 1 }, { transform: `translateY(120vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }], { duration: Math.random() * 3000 + 4000, easing: 'ease-out', delay: Math.random() * 1000 }); anim.onfinish = () => confetti.remove(); confettiContainer.appendChild(confetti); } }
-        
-        function winGame(remainingAmmo) {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-            if (winOverlay.style.display === 'flex') return;
-            
-            sounds.win.play(); launchConfetti();
-            localStorage.setItem(WIN_STATE_KEY, 'true');
-            const sanitizedUserId = getSanitizedUserId();
-            if (sanitizedUserId) { database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: true }); }
-            
-            document.getElementById('win-score-val').textContent = Math.floor(state.score);
-            document.getElementById('win-ammo-val').textContent = remainingAmmo;
-
-            buildWinCarousel(); updateWinCarousel();
-            [startOverlay, gameOverOverlay].forEach(o => o.style.display = 'none');
-            winOverlay.style.display = 'flex';
-        }
-
-        function displayInfoPrize(index) {
-            prizeDisplay.classList.add('fade-out');
-            setTimeout(() => { const prize = prizes[index]; prizeImage.src = prize.image; prizeName.textContent = prize.name; prizeDisplay.classList.remove('fade-out'); }, 300);
-        }
-        function buildWinCarousel() {
-            productCarousel.innerHTML = '';
-            prizes.forEach((p, index) => { productCarousel.innerHTML += `<div class="product-slide" data-index="${index}"><img src="${p.image}" alt="${p.name}"><div class="product-name">${p.name}</div><div class="product-price"><span class="original">${p.price}</span> <span class="free">مجاني!</span></div></div>`; });
-        }
-        function updateWinCarousel() {
-            const slides = document.querySelectorAll('.product-slide');
-            slides.forEach(slide => slide.classList.remove('active'));
-            if (slides[winPrizeIndex]) slides[winPrizeIndex].classList.add('active');
-        }
-
-        function handleClaimGiftFirebase() {
-            const deliveryInfoString = localStorage.getItem('deliveryInfo');
-            const sanitizedUserId = getSanitizedUserId();
-            if (!deliveryInfoString || !sanitizedUserId) { alert('حدث خطأ. لا يمكن العثور على بياناتك. يرجى إعادة تسجيل الدخول.'); window.location.href = 'account.html'; return; }
-            const product = prizes[winPrizeIndex];
-            const giftClaimData = { productName: product.name, productImage: product.image, deliveryInfo: JSON.parse(deliveryInfoString), timestamp: Date.now() };
-            
-            claimSuccessOverlay.style.display = 'flex';
-            
-            database.ref('gift_claims').push(giftClaimData).then(() => {
-                localStorage.removeItem(WIN_STATE_KEY);
-                database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: false });
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-
-            }).catch((error) => {
-                console.error("Error writing to Firebase:", error);
-                alert('حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.');
-                claimSuccessOverlay.style.display = 'none';
-            });
-        }
-        
-        startButton.addEventListener('click', () => startGame(true, STARTING_AMMO)); 
-        
-        gameOverOkButton.addEventListener('click', () => {
-            gameOverOverlay.style.display = 'none';
+            startButton.addEventListener('click', () => startGame(true, STARTING_AMMO)); 
+            gameOverOkButton.addEventListener('click', () => { gameOverOverlay.style.display = 'none'; });
+            prizesButton.addEventListener('click', () => { displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex'; });
+            prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay || e.target.classList.contains('close-btn')) { prizesOverlay.style.display = 'none'; } });
+            infoSwitchPrizeBtn.addEventListener('click', () => { infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length; displayInfoPrize(infoPrizeIndex); });
+            switchProductBtn.addEventListener('click', () => { winPrizeIndex = (winPrizeIndex + 1) % prizes.length; updateWinCarousel(); });
+            claimGiftButton.addEventListener('click', handleClaimGiftFirebase);
+            canvas.addEventListener('mousedown', e => handleInput(e, 'start'));
+            window.addEventListener('mousemove', e => handleInput(e, 'move'));
+            window.addEventListener('mouseup', e => handleInput(e, 'end'));
+            canvas.addEventListener('touchstart', e => handleInput(e, 'start'), { passive: false });
+            window.addEventListener('touchmove', e => handleInput(e, 'move'), { passive: false });
+            window.addEventListener('touchend', e => handleInput(e, 'end'));
+            window.addEventListener('resize', handleResize);
+            init();
         });
-
-        prizesButton.addEventListener('click', () => { displayInfoPrize(infoPrizeIndex); prizesOverlay.style.display = 'flex'; });
-        prizesOverlay.addEventListener('click', (e) => { if(e.target === prizesOverlay || e.target.classList.contains('close-btn')) { prizesOverlay.style.display = 'none'; } });
-        infoSwitchPrizeBtn.addEventListener('click', () => { infoPrizeIndex = (infoPrizeIndex + 1) % prizes.length; displayInfoPrize(infoPrizeIndex); });
-        switchProductBtn.addEventListener('click', () => { winPrizeIndex = (winPrizeIndex + 1) % prizes.length; updateWinCarousel(); });
-        claimGiftButton.addEventListener('click', handleClaimGiftFirebase);
-
-        canvas.addEventListener('mousedown', e => handleInput(e, 'start'));
-        window.addEventListener('mousemove', e => handleInput(e, 'move'));
-        window.addEventListener('mouseup', e => handleInput(e, 'end'));
-        canvas.addEventListener('touchstart', e => handleInput(e, 'start'), { passive: false });
-        window.addEventListener('touchmove', e => handleInput(e, 'move'), { passive: false });
-        window.addEventListener('touchend', e => handleInput(e, 'end'));
-
-        window.addEventListener('resize', handleResize);
-
-        init();
-    });
     </script>
 </body>
 </html>
