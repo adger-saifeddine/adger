@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>لعبة المدفع - تحدي الجوائز</title>
     <link rel="icon" href="logo.jpg" type="image/x-icon">
-        <link rel="icon" href="https://i.postimg.cc/3JWGVzJs/cannon-game-logo.png" type="image/x-icon">
+    <link rel="icon" href="https://i.postimg.cc/3JWGVzJs/cannon-game-logo.png" type="image/x-icon">
     <style>
-        /* --- CSS Styling (From Memory Game Base) --- */
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
 
         :root {
             --bg-start: #0d1117; --bg-end: #161b22;
@@ -27,15 +25,22 @@
         *:focus {
             outline: none;
         }
+        /* --- التعديل هنا --- */
         body {
-            font-family: 'Cairo', 'Tajawal', sans-serif; display: flex; justify-content: center;
-            align-items: center; min-height: 100vh; margin: 0;
+            font-family: 'Cairo', 'Tajawal', sans-serif; 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0;
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
             color: var(--text-color);
             padding: 20px 10px; 
-            overflow: hidden;
             user-select: none;
-            touch-action: none;
+            /* 
+               تم حذف `overflow: hidden;` و `touch-action: none;` 
+               للسماح بالتمرير في النوافذ المنبثقة عند الحاجة.
+            */
         }
         #game-container {
             position: relative; z-index: 2; display: flex; flex-direction: column;
@@ -80,6 +85,7 @@
             cursor: crosshair; background-color: #161b22;
             margin-top: 10px;
             display: block;
+            touch-action: none; /* تم نقل هذه الخاصية هنا للتحكم في اللوحة فقط */
         }
         #gameCanvas:active { cursor: crosshair; }
 
@@ -151,7 +157,6 @@
         #initial-loader-overlay { z-index: 9999; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #initial-loader-overlay.hidden { opacity: 0; visibility: hidden; }
         
-        /* MODIFICATION: Combined Media Queries for better organization */
         @media (max-width: 500px) {
             body {
                 align-items: flex-start;
@@ -170,7 +175,6 @@
             .primary-btn { padding: 12px 25px; font-size: 1rem; } 
         }
 
-        /* MODIFICATION: Added bottom margin ONLY for larger screens */
         @media (min-width: 521px) {
             #gameCanvas {
                 margin-bottom: 30px;
@@ -179,6 +183,7 @@
     </style>
 </head>
 <body>
+    <!-- محتوى HTML يبقى كما هو -->
     <div id="initial-loader-overlay" class="overlay">
         <div class="loading-dots">
             <div class="dot"></div>
@@ -197,7 +202,6 @@
         <canvas id="gameCanvas"></canvas>
     </div>
 
-    <!-- === OVERLAYS === -->
     <div id="login-required-overlay" class="overlay" style="display: none;">
         <div class="overlay-content">
             <h2>أوه.. يجب تسجيل الدخول أولاً!</h2>
@@ -292,10 +296,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
+    // شيفرة JavaScript تبقى كما هي بدون تغيير
     document.addEventListener('DOMContentLoaded', () => {
-        // ==========================================================
-        //  1. SETUP & SELECTORS
-        // ==========================================================
         firebase.initializeApp({
             apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
             authDomain: "buy-from-adger.firebaseapp.com",
@@ -349,9 +351,6 @@
         const DAILY_AMMO_KEY = 'cannonGameDailyAmmo';
         const STARTING_AMMO = 12;
 
-        // ==========================================================
-        //  2. CANNON GAME LOGIC
-        // ==========================================================
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         let state = {};
@@ -589,9 +588,6 @@
             updateUI();
         }
 
-        // ==========================================================
-        //  3. MAIN GAME CONTROLLER
-        // ==========================================================
         function getSanitizedUserId() { const deliveryInfoString = localStorage.getItem('deliveryInfo'); if (!deliveryInfoString) return null; try { const deliveryInfo = JSON.parse(deliveryInfoString); const userId = deliveryInfo.phone; if (!userId) return null; return userId.replace(/\D/g, ''); } catch (e) { console.error("Could not parse delivery info:", e); return null; } }
         
         function setupCanvasDimensions() {
@@ -768,7 +764,6 @@
             });
         }
         
-        // --- Event Listeners ---
         startButton.addEventListener('click', () => startGame(true, STARTING_AMMO)); 
         
         gameOverOkButton.addEventListener('click', () => {
