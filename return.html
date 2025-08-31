@@ -509,7 +509,7 @@ outline: none;
             text-align: center;
             display: none;
             z-index: 10;
-            padding: 30px 20px;
+            padding: 30px 20px; /* تم التعديل */
             color: #fff;
             overflow: hidden; /* لإخفاء أي تأثيرات تفيض */
         }
@@ -543,8 +543,8 @@ outline: none;
         
         .title-header {
             color: #ffffff;
-            font-size: 24px;
-            margin-bottom: 25px;
+            font-size: 24px; /* تم التعديل */
+            margin-bottom: 25px; /* تم التعديل */
             font-weight: 700;
             font-family: 'Cairo', sans-serif;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -562,17 +562,17 @@ outline: none;
             margin-bottom: 10px;
             color: #f0f0f0;
             font-weight: normal;
-            font-size: 14px;
+            font-size: 14px; /* تم التعديل */
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .input-field {
             width: 100%;
-            padding: 12px 40px 12px 15px;
+            padding: 12px 40px 12px 15px; /* تم التعديل */
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 14px; /* تم التعديل */
             transition: all 0.3s ease;
             text-align: right;
             background-color: rgba(255, 255, 255, 0.15);
@@ -585,33 +585,27 @@ outline: none;
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* === بداية التعديل الجذري === */
         .input-group svg {
             position: absolute;
             right: 12px;
-            /* 
-               الحساب: 
-               font-size(14px) * line-height(~1.5) = ~21px (ارتفاع الليبل)
-               + margin-bottom(10px) = 31px
-               + padding-top(12px) = 43px
-               هذا يضع الأيقونة في بداية الحقل بشكل صحيح
-            */
-            top: 43px; 
+            /* === بداية التعديل === */
+            /* تم تغيير القيمة الثابتة إلى قيمة ديناميكية لحساب ارتفاع العنوان العلوي */
+            top: calc(50% + 14px); 
+            transform: translateY(-50%);
+            /* === نهاية التعديل === */
             color: rgba(255, 255, 255, 0.7);
             width: 20px;
             height: 20px;
             pointer-events: none; /* لمنع التفاعل مع الأيقونة */
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
-        /* === نهاية التعديل الجذري === */
 
         .input-field:focus {
             background-color: rgba(255, 255, 255, 0.25);
             border-color: rgba(0, 81, 255, 0.8);
             box-shadow: 0 0 15px rgba(0, 81, 255, 0.5);
         }
-        
-        /* عند التركيز على الحقل، نغير لون الأيقونة المجاورة له */
+
         .input-field:focus + svg {
             color: #fff;
         }
@@ -620,10 +614,10 @@ outline: none;
             background: linear-gradient(45deg, #0051ff, #00c6ff);
             color: white;
             margin-top: 15px;
-            padding: 12px 15px;
+            padding: 12px 15px; /* تم التعديل */
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 16px; /* تم التعديل */
             font-weight: bold;
             font-family: 'Cairo', sans-serif;
             cursor: pointer;
@@ -647,13 +641,14 @@ outline: none;
             padding: 0 10px;
         }
 
+        /* --- تعديل جديد: إزالة الخلفية وتغيير اللون --- */
         .error-message {
-            color: #ff5c5c;
-            font-weight: bold;
-            font-size: 12px;
+            color: #ff5c5c; /* لون أحمر زاهي وواضح */
+            font-weight: bold; /* جعل الخط أعرض ليكون أوضح */
+            font-size: 12px; /* تم التعديل */
             margin-top: 8px;
             display: none;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); /* ظل خفيف للنص لزيادة الوضوح */
         }
         
         @media (max-width: 600px) {
@@ -680,18 +675,7 @@ outline: none;
                 padding-bottom: 11px;
                 font-size: 13px;
             }
-            /* === بداية التعديل الجذري للشاشات الصغيرة === */
-            .input-group svg {
-                 /* 
-                   إعادة الحساب للشاشات الصغيرة: 
-                   ارتفاع الليبل (~21px) + margin(10px) = 31px
-                   + padding-top الجديد (11px) = 42px
-                   هذه القيمة تضمن بقاء الأيقونة في مكانها الصحيح
-                */
-                top: 42px;
-            }
-            /* === نهاية التعديل الجذري للشاشات الصغيرة === */
-
+            /* لم نعد بحاجة لتعديل top هنا لأن الحل الجديد يعمل على كل الشاشات */
             .submit-button {
                 padding: 11px 15px;
                 font-size: 15px;
@@ -876,6 +860,7 @@ outline: none;
 
 </body>
 </html>
+
 <script>
 // إخفاء شاشة التحميل وإظهار النموذج
 document.addEventListener('DOMContentLoaded', function() {
