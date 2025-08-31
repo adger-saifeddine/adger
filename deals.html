@@ -346,7 +346,6 @@
         let infoPrizeIndex = 0;
         const WIN_STATE_KEY = 'cannonGameWinState';
         const DAILY_PLAY_KEY = 'cannonGameLastPlayDate';
-        const CLAIMED_PRIZE_KEY = 'cannonGameClaimedPrize'; 
         const DAILY_AMMO_KEY = 'cannonGameDailyAmmo';
         const STARTING_AMMO = 12;
 
@@ -399,17 +398,7 @@
             const wind = state.wind; if (Math.abs(wind) > 0.001) { const dir = wind > 0 ? ">>" : "<<"; const strength = Math.abs(Math.round(wind * 1000)); const text = `${dir} رياح ${strength}`; ctx.font = '16px Tajawal'; ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; ctx.textAlign = 'center'; ctx.fillText(text, canvas.width / 2, 25); }
             if (state.gameState === 'aiming' && state.input.isDragging) { const { power, angle } = getLaunchParams(); const barrelTip = getBarrelTip(); let sim = { x: barrelTip.x, y: barrelTip.y, dx: Math.cos(angle) * power, dy: Math.sin(angle) * power }; const powerRatio = Math.min(1, power / 18); const trajectoryColor = `rgba(255, ${255 - 100 * powerRatio}, ${100 - 100 * powerRatio}, 0.6)`; ctx.beginPath(); ctx.setLineDash([2, 5]); ctx.strokeStyle = trajectoryColor; ctx.lineWidth = 2; ctx.moveTo(sim.x, sim.y); for (let i = 0; i < 35; i++) { sim.x += sim.dx; sim.y += sim.dy; ctx.lineTo(sim.x, sim.y); } ctx.stroke(); ctx.setLineDash([]); }
             
-            if (state.prizeClaimedMessage) {
-                ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.font = 'bold 32px Cairo';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.fillText('اوووه لقد ربحت منتج لمرة واحدة', canvas.width / 2, canvas.height / 2 - 20);
-                ctx.font = '22px Cairo';
-                ctx.fillStyle = '#ccc';
-                ctx.fillText('و سيتم ارساله لك', canvas.width / 2, canvas.height / 2 + 25);
-            } else if (!state.canPlayToday) {
+            if (!state.canPlayToday) {
                 ctx.fillStyle = 'rgba(13, 17, 23, 0.75)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.font = 'bold 32px Cairo';
@@ -473,7 +462,6 @@
             }); 
             state.targets = state.targets.filter(t => !t.isDying || t.scale > 0);
             
-            // MODIFICATION: Respawn targets if all are cleared and score is less than 1000
             if (state.targets.length === 0 && state.ball === null && state.gameState === 'aiming' && state.score < 1000) {
                 state.wind = (Math.random() - 0.5) * 0.08; 
                 state.targets = [ 
@@ -527,7 +515,7 @@
         function gameLoop(currentTime) { const deltaTime = (currentTime - lastTime) / 1000; lastTime = currentTime; update(deltaTime); render(); updateUI(); animationFrameId = requestAnimationFrame(gameLoop); }
         
         function handleInput(e, type) { 
-            if (!state.canPlayToday || state.prizeClaimedMessage) return;
+            if (!state.canPlayToday) return;
             e.preventDefault(); 
             
             const pos = {x:0, y:0}; 
@@ -584,7 +572,6 @@
                 screenShake: { duration: 0, magnitude: 0 },
                 canPlayToday: true,
                 scorePopups: [],
-                prizeClaimedMessage: false,
                 hitsInARow: 0
             };
             for (let i = 0; i < 100; i++) state.stars.push(createStar());
@@ -616,27 +603,19 @@
             canvas.height = gameHeight;
         }
 
-        // MODIFICATION: New function to handle resizing
         function handleResize() {
             setupCanvasDimensions();
-            // Ensure state is initialized before trying to reposition elements
             if (state && state.cannon && state.obstacles && state.obstacles.length > 0) {
-                // Reposition elements that are relative to canvas dimensions
                 state.cannon.x = canvas.width / 2;
                 state.cannon.y = canvas.height - 40;
                 state.obstacles[0].x = canvas.width / 2 - 75;
-                
-                // Re-generate stars to fit the new dimensions better, preventing empty areas on expand
                 state.stars = [];
                 for (let i = 0; i < 100; i++) state.stars.push(createStar());
-
-                // Manually re-render to show changes immediately, even if game loop is paused.
                 render();
             }
         }
 
         function init() {
-            // MODIFICATION: Use the new handler for initial setup and resizing
             handleResize();
             displayInfoPrize(infoPrizeIndex);
             const sanitizedUserId = getSanitizedUserId();
@@ -646,14 +625,6 @@
                 gameContainer.style.opacity = '1';
                 initialLoader.classList.add('hidden');
             };
-            
-            if (localStorage.getItem(CLAIMED_PRIZE_KEY + sanitizedUserId) === 'true') {
-                localStorage.removeItem(CLAIMED_PRIZE_KEY + sanitizedUserId);
-                startGame(false, 0); 
-                state.prizeClaimedMessage = true;
-                finalizeInit();
-                return;
-            }
             
             if (!sanitizedUserId) {
                 loginRequiredOverlay.style.display = 'flex';
@@ -719,7 +690,6 @@
 
         function checkWinLose() {
             if (state.gameState === 'gameover') return;
-            // MODIFICATION: Win condition changed to reaching 1000 points
             if (state.score >= 1000 && state.ball === null) {
                 state.gameState = 'gameover';
                 winGame(state.ammo);
@@ -787,7 +757,6 @@
                 localStorage.removeItem(WIN_STATE_KEY);
                 database.ref(`user_game_states/${sanitizedUserId}`).update({ hasWon: false });
 
-                localStorage.setItem(CLAIMED_PRIZE_KEY + sanitizedUserId, 'true');
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
@@ -819,10 +788,9 @@
         window.addEventListener('touchmove', e => handleInput(e, 'move'), { passive: false });
         window.addEventListener('touchend', e => handleInput(e, 'end'));
 
-        // MODIFICATION: Add event listener for window resize
         window.addEventListener('resize', handleResize);
 
-        init(); // Start the whole process
+        init();
     });
     </script>
 </body>
