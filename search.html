@@ -161,8 +161,7 @@
             height: 20px;
             fill: white;
         }
-
-        /* --- الحل 1: تغيير طريقة إخفاء زر الحذف لمنع الاهتزاز --- */
+ 
         .search-container .clear-button {
             position: absolute;
             left: 80px;
@@ -173,14 +172,12 @@
             cursor: pointer;
             font-size: 16px;
             color: #000000;
-            /* استخدام الشفافية بدلاً من display:none لمنع إعادة تخطيط الصفحة */
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
             transition: opacity 0.2s ease-in-out;
         }
 
-        /* كلاس جديد لإظهار الزر بسلاسة */
         .search-container .clear-button.visible {
             opacity: 1;
             visibility: visible;
@@ -497,11 +494,10 @@
             z-index: 1000;
         }
 
-        /* --- الحل 2: رفع نافذة الملاحظات فوق لوحة المفاتيح عند الكتابة --- */
         .modal:focus-within {
-            align-items: flex-start; /* تغيير المحاذاة من الوسط إلى الأعلى */
-            padding-top: 20px;     /* ترك مسافة صغيرة من الأعلى */
-            overflow-y: auto;      /* إضافة شريط تمرير إذا كان المحتوى طويلاً */
+            align-items: flex-start;
+            padding-top: 20px;
+            overflow-y: auto;
         }
 
         .modal-content {
@@ -807,8 +803,6 @@
         fabButton.addEventListener('click', () => {
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
-            // للتركيز التلقائي على حقل النص عند فتح النافذة
-            // notesTextarea.focus(); 
         });
         closeNotesButton.addEventListener('click', () => {
             notesModal.style.display = 'none';
@@ -850,20 +844,25 @@
             if (event.key === 'Enter') executeSearch(searchInput.value);
         });
         
-        // --- الحل 1: تعديل كود الجافاسكريبت للتحكم في ظهور زر الحذف ---
         searchInput.addEventListener('input', () => {
-            // استخدام classList.add/remove بدلاً من style.display
             if (searchInput.value.trim() !== '') {
                 clearButton.classList.add('visible');
             } else {
                 clearButton.classList.remove('visible');
             }
         });
+        
+        // --- الحل النهائي لمشكلة الاهتزاز ---
+        // 1. أضف مستمع حدث mousedown لمنع السلوك الافتراضي (وهو إزالة التركيز من حقل البحث)
+        clearButton.addEventListener('mousedown', (event) => {
+            event.preventDefault(); 
+        });
+
+        // 2. عند النقر، فقط قم بمسح القيمة. التركيز سيبقى كما هو.
         clearButton.addEventListener('click', () => {
             searchInput.value = '';
-            // استخدام classList.remove بدلاً من style.display
             clearButton.classList.remove('visible');
-            searchInput.focus();
+            searchInput.focus(); // يمكن الإبقاء على هذا السطر كإجراء احتياطي
         });
         
         // --- History and Term Management ---
@@ -953,7 +952,7 @@
             if (lastTerm) {
                 searchInput.value = lastTerm + ' ';
                 searchInput.focus();
-                clearButton.classList.add('visible'); // تعديل ليطابق الحل الجديد
+                clearButton.classList.add('visible');
             }
         });
         
