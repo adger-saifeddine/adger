@@ -608,7 +608,8 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 999;
-            transition: transform 0.2s, bottom 0.2s ease-out;
+            /* --- الحل: إضافة transition للـ opacity --- */
+            transition: transform 0.2s, bottom 0.2s ease-out, opacity 0.2s ease-out;
             -webkit-tap-highlight-color: transparent;
         }
         .fab:hover { transform: scale(1.05); }
@@ -636,7 +637,6 @@
             width: 90%;
             max-width: 500px;
             box-sizing: border-box;
-            /* --- تغيير مدة الحركة لتصبح أسرع --- */
             transition: transform 0.2s ease-out;
         }
         .notes-modal-content h3 {
@@ -791,7 +791,6 @@
             const keyboardThreshold = 100;
 
             if (keyboardHeight > keyboardThreshold) {
-                // يمكنك تعديل القيمة -40% لتناسب تصميمك بشكل أفضل
                 notesModalContent.style.transform = 'translateY(-40%)';
             } else {
                 notesModalContent.style.transform = 'translateY(0)';
@@ -804,6 +803,10 @@
             }
             notesModalContent.style.transform = 'translateY(0)';
             notesModal.style.display = 'none';
+
+            // --- الحل: إعادة إظهار زر الملاحظات عند إغلاق النافذة ---
+            fabButton.style.opacity = '1';
+            fabButton.style.pointerEvents = 'auto';
         };
         
         // --- Modal Event Listeners ---
@@ -828,6 +831,10 @@
                 adjustNotesModalForKeyboard(); 
                 window.visualViewport.addEventListener('resize', adjustNotesModalForKeyboard);
             }
+            
+            // --- الحل: إخفاء زر الملاحظات عند فتح النافذة ---
+            fabButton.style.opacity = '0';
+            fabButton.style.pointerEvents = 'none';
         });
 
         closeNotesButton.addEventListener('click', closeNotesHandler);
