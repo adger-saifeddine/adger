@@ -54,7 +54,7 @@
             margin: 0;
             padding: 0;
             font-family: "Tajawal", sans-serif;
-            margin-top: -48px;
+            padding-top: 25px; 
         }
         @media (max-width: 499px) {
             body {
@@ -64,11 +64,9 @@
         @media (max-width: 999px) {
             body {
                 font-family: Arial, sans-serif !important;
-                margin-top: -50px;
             }
         }
 
-        /* --- START: Keyframes for the new 3D Background --- */
         @keyframes aurora {
             0% {
                 background-position: 50% 0%, 0% 50%, 100% 50%;
@@ -80,8 +78,6 @@
                 background-position: 50% 0%, 0% 50%, 100% 50%;
             }
         }
-        /* --- END: Keyframes --- */
-
 
         .header-background {
             position: fixed;
@@ -224,7 +220,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            margin-top: 100px;
+            margin-top: 20px;
         }
 
         .search-history-header h2 {
@@ -242,14 +238,12 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: #000000;
             font-size: 16px;
             padding: 0;
             height: 24px;
             width: 24px;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .search-history-header .delete-all-button {
@@ -264,6 +258,37 @@
             gap: 5px;
             padding: 20px;
         }
+        
+        .empty-history-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            color: #a0a0a0;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .empty-history-container svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+            fill: #d0d0d0;
+        }
+        .empty-history-container span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        @media (max-width: 555px) {
+            .empty-history-container svg {
+                width: 32px;
+                height: 32px;
+            }
+            .empty-history-container span {
+                font-size: 14px;
+            }
+        }
+
 
         .search-item {
             background-color: #f0f0f0;
@@ -277,7 +302,6 @@
             max-width: 300px;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .search-item {
@@ -326,21 +350,20 @@
                 display: none !important;
             }
         }
-
+        
+        /* --- CHANGE: HIDDEN BY DEFAULT --- */
         .last-search-item {
             background-color: #0077ff1c;
             border-radius: 16px;
             padding: 9px 15px;
             cursor: pointer;
-            display: inline-flex;
+            display: none; /* Changed from inline-flex to none */
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
             margin: 1px 40px 0 20px;
             max-width: 300px;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
             .last-search-item {
@@ -362,17 +385,14 @@
             text-overflow: ellipsis;
         }
         
-        /* --- START: UPDATED 3D Animated Background --- */
         .image-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 15px;
             padding: 15px;
             margin-top: 20px;
-            border-radius: 0;
             position: relative;
             overflow: hidden;
-            
             background-color: #0d1a42;
             background-image: 
                 radial-gradient(ellipse at 50% 0%, rgba(28, 119, 219, 0.5) 0%, transparent 80%),
@@ -382,7 +402,6 @@
             background-size: 200% 200%;
             animation: aurora 20s linear infinite;
         }
-        /* --- END: UPDATED 3D Animated Background --- */
 
         .image-item {
             display: flex;
@@ -395,7 +414,6 @@
             padding: 12px;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            -webkit-focus-ring-color: transparent;
         }
 
         .image-item img {
@@ -403,9 +421,6 @@
             max-height: 120px;
             object-fit: cover;
             border-radius: 12px;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-            -webkit-focus-ring-color: transparent;
         }
 
         .image-item span {
@@ -417,7 +432,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 150px;
-              font-family: 'Cairo', sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         .image-item:hover {
@@ -426,83 +441,34 @@
         }
 
         @media (max-width: 767px) {
-            .search-history-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .image-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 10px;
-            }
-            .image-item {
-                padding: 8px;
-            }
-            .image-item img {
-                width: 80px;
-                max-height: 80px;
-            }
-            .image-item span {
-                font-size: 14px;
-                margin-right: 6px;
-                max-width: 110px;
-                  font-family: 'Cairo', sans-serif;
-            }
-            .search-item small {
-                display: none;
-            }
+            .image-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+            .image-item { padding: 8px; }
+            .image-item img { width: 80px; max-height: 80px; }
+            .image-item span { font-size: 14px; margin-right: 6px; max-width: 110px; }
+            .search-item small { display: none; }
         }
 
         @media (max-width: 499px) {
-            .image-grid {
-                gap: 10px;      /* تم التعديل */
-                padding: 10px;  /* تم التعديل */
-            }
-            .image-item {
-                padding: 6px;
-            }
-            .image-item img {
-                width: 80px;
-                max-height: 80px;
-            }
-            .image-item span {
-                font-size: 10px;
-                margin-right: 4px;
-                max-width: 120px;
-            }
+            .image-grid { gap: 10px; padding: 10px; }
+            .image-item { padding: 6px; }
+            .image-item img { width: 80px; max-height: 80px; }
+            .image-item span { font-size: 10px; margin-right: 4px; max-width: 120px; }
         }
 
         @media (min-width: 768px) and (max-width: 1500px) {
-            .image-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .image-item img {
-                width: 100px;
-                max-height: 100px;
-            }
-            .image-item span {
-                font-size: 16px;
-                max-width: 120px;
-            }
+            .image-grid { grid-template-columns: repeat(3, 1fr); }
+            .image-item img { width: 100px; max-height: 100px; }
+            .image-item span { font-size: 16px; max-width: 120px; }
         }
 
         @media (min-width: 1201px) and (max-width: 1800px) {
-            .image-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .image-item img {
-                width: 100px;
-                max-height: 100px;
-            }
-            .image-item span {
-                font-size: 16px;
-                max-width: 120px;
-            }
+            .image-grid { grid-template-columns: repeat(4, 1fr); }
+            .image-item img { width: 100px; max-height: 100px; }
+            .image-item span { font-size: 16px; max-width: 120px; }
         }
 
         @media (min-width: 2001px) {
-            .image-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
+            .image-grid { grid-template-columns: repeat(6, 1fr); }
         }
 
         .modal {
@@ -524,6 +490,8 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
         }
 
         .modal-buttons {
@@ -541,15 +509,8 @@
             font-size: 16px;
         }
 
-        #confirm-yes {
-            background-color: #ff0000;
-            color: white;
-        }
-
-        #confirm-no {
-            background-color: #ccc;
-            color: black;
-        }
+        #confirm-yes { background-color: #ff0000; color: white; }
+        #confirm-no { background-color: #ccc; color: black; }
 
         .discover-more-header {
             display: flex;
@@ -560,10 +521,7 @@
             margin-bottom: -18px;
         }
         @media (max-width: 555px) {
-            .discover-more-header {
-                margin-top: -20px;
-                margin-bottom: -24px;
-            }
+            .discover-more-header { margin-top: -20px; margin-bottom: -24px; }
         }
 
         .discover-more-header h2 {
@@ -572,9 +530,7 @@
             font-family: 'Cairo', sans-serif;
         }
         @media (max-width: 555px) {
-            .discover-more-header h2 {
-                font-size: 15px;
-            }
+            .discover-more-header h2 { font-size: 15px; }
         }
 
         .discover-more-grid {
@@ -591,33 +547,17 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
             -webkit-tap-highlight-color: transparent;
             outline: none;
-            -webkit-focus-ring-color: transparent;
         }
         @media (max-width: 555px) {
-            .discover-item {
-                padding: 6px 11px;
-                margin-top: 1px;
-            }
+            .discover-item { padding: 6px 11px; margin-top: 1px; }
         }
 
-        .discover-item:hover {
-            background-color: #f3f3f3;
-        }
-
-        .discover-item span {
-            font-size: 16px;
-            flex-grow: 1;
-        }
-
-        .search-item-with-arrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .discover-item:hover { background-color: #f3f3f3; }
+        .discover-item span { font-size: 16px; flex-grow: 1; }
+        .search-item-with-arrow { display: inline-flex; align-items: center; gap: 10px; }
 
         #show-more-arrow {
             background-color: #ebebeb;
@@ -629,32 +569,75 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        @media (max-width: 555px) {
-            #show-more-arrow {
-                padding: 4px 5px;
-            }
+        @media (max-width: 555px) { #show-more-arrow { padding: 4px 5px; } }
+        #show-more-arrow:hover { background-color: #d0d0d0b4; }
+        #show-more-arrow svg { width: 24px; height: 24px; }
+        @media (max-width: 555px) { #show-more-arrow svg { width: 21px; height: 21px; } }
+        
+        /* --- CHANGE: MOVED TO LEFT --- */
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            left: 25px; /* Changed from right to left */
+            width: 56px;
+            height: 56px;
+            background-color: #000000;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        #show-more-arrow:hover {
-            background-color: #d0d0d0b4;
+        .fab:hover { transform: scale(1.05); }
+        .fab svg { width: 24px; height: 24px; }
+        
+        .notes-modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: right;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            box-sizing: border-box;
         }
-
-        #show-more-arrow svg {
-            width: 24px;
-            height: 24px;
+        .notes-modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-family: 'Cairo', sans-serif;
+            color: #333;
         }
-        @media (max-width: 555px) {
-            #show-more-arrow svg {
-                width: 21px;
-                height: 21px;
-            }
+        .notes-modal-content textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        .notes-modal-content .modal-buttons button {
+            background-color: #000000;
+            color: white;
+        }
+        .notes-modal-content .modal-buttons button.cancel {
+            background-color: #ccc;
+            color: black;
         }
     </style>
 </head>
 <body>
     <div class="header-background"></div>
     <button class="back-button" id="back-button">
-        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
         </svg>          
     </button>
@@ -685,7 +668,7 @@
         </button>
     </div>
 
-    <div class="search-history-header">
+    <div class="search-history-header" id="search-history-header">
         <h2>بحث المحفوظات</h2>
         <button class="delete-all-button" id="delete-all-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -697,7 +680,7 @@
     </div>
 
     <div class="last-search-item" id="last-search-item">
-        <span id="last-search-term">آخر نص كتبه المستخدم</span>
+        <span id="last-search-term"></span>
     </div>
 
     <div class="search-history-grid" id="search-history"></div>
@@ -706,248 +689,203 @@
         <h2>استكشف المزيد</h2>
     </div>
     <div class="discover-more-grid" id="discover-more">
-        <div class="discover-item" onclick="redirectToSea('كتاب ابقَ قويًا 365 يومًا في السنة')">
-            <span>كتاب ابقَ قويًا 365 يومًا في السنة</span>
-        </div>
-        <div class="discover-item" onclick="redirectToSea('حذاء جلد - p30 سكاي مريح')">
-            <span>حذاء جلد - p30 سكاي مريح</span>
-        </div>
-        <div class="discover-item" onclick="redirectToSea('مج حراري فاخر 500 مل مع كوبين')">
-            <span>مج حراري فاخر 500 مل مع كوبين</span>
-        </div>
-        <div class="discover-item" onclick="redirectToSea('ايربودز A-16 بلوتوث')">
-            <span>ايربودز A-16 بلوتوث</span>
-        </div>
-        <div class="discover-item" onclick="redirectToSea('طابعة USB')">
-            <span>طابعة USB</span>
-        </div>
+        <div class="discover-item" onclick="executeSearch('كتاب ابقَ قويًا 365 يومًا في السنة')"><span>كتاب ابقَ قويًا 365 يومًا في السنة</span></div>
+        <div class="discover-item" onclick="executeSearch('حذاء جلد - p30 سكاي مريح')"><span>حذاء جلد - p30 سكاي مريح</span></div>
+        <div class="discover-item" onclick="executeSearch('مج حراري فاخر 500 مل مع كوبين')"><span>مج حراري فاخر 500 مل مع كوبين</span></div>
+        <div class="discover-item" onclick="executeSearch('ايربودز A-16 بلوتوث')"><span>ايربودز A-16 بلوتوث</span></div>
+        <div class="discover-item" onclick="executeSearch('طابعة USB')"><span>طابعة USB</span></div>
     </div>
 
     <div class="image-grid" id="image-grid">
-        <div class="image-item" data-term="إلكترونيات">
-            <img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات">
-            <span>إلكترونيات</span>
-        </div>
-        <div class="image-item" data-term="كمبيوتر">
-            <img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر">
-            <span>كمبيوتر</span>
-        </div>
-        <div class="image-item" data-term="سماعات">
-            <img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات">
-            <span>سماعات</span>
-        </div>
-        <div class="image-item" data-term="كتب">
-            <img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب">
-            <span>كتب</span>
-        </div>
-        <div class="image-item" data-term="ألعاب">
-            <img src="https://i.postimg.cc/Y0Qpgh25/2025-04-10-07-24-51-b2ba5d7c.jpg" alt="ألعاب">
-            <span>ألعاب</span>
-        </div>
-        <div class="image-item" data-term="كاميرات">
-            <img src="https://i.postimg.cc/vBRknX1m/2025-04-10-07-24-45-facc6757.jpg" alt="كاميرات">
-            <span>كاميرات</span>
-        </div>
-        <div class="image-item" data-term="ملابس">
-            <img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس">
-            <span>ملابس</span>
-        </div>
-        <div class="image-item" data-term="أحذية">
-            <img src="https://i.postimg.cc/zGZzJw7q/2025-04-10-07-24-37-93a3f62f.jpg" alt="أحذية">
-            <span>أحذية</span>
-        </div>
-        <div class="image-item" data-term="أثري">
-            <img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري">
-            <span>أثري</span>
-        </div>
-        <div class="image-item" data-term="ساعات">
-            <img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات">
-            <span>ساعات</span>
-        </div>
-          <div class="image-item" data-term="إكسسوارات">
-            <img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات">
-            <span>إكسسوارات</span>
-        </div>
-         <div class="image-item" data-term="فن">
-            <img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن">
-            <span>فن</span>
+        <div class="image-item" data-term="إلكترونيات"><img src="https://i.postimg.cc/MpjL8zcT/2025-04-05-09-45-39-ed15ed17.jpg" alt="إلكترونيات"><span>إلكترونيات</span></div>
+        <div class="image-item" data-term="كمبيوتر"><img src="https://i.postimg.cc/FzRPCv5h/2025-04-05-09-45-39-39aedaee.jpg" alt="كمبيوتر"><span>كمبيوتر</span></div>
+        <div class="image-item" data-term="سماعات"><img src="https://i.postimg.cc/sf6HQM7x/2025-04-05-09-45-39-2be9783b.jpg" alt="سماعات"><span>سماعات</span></div>
+        <div class="image-item" data-term="كتب"><img src="https://i.postimg.cc/wvxF3zBD/2025-04-05-09-45-39-5deb6b6f.jpg" alt="كتب"><span>كتب</span></div>
+        <div class="image-item" data-term="ألعاب"><img src="https://i.postimg.cc/Y0Qpgh25/2025-04-10-07-24-51-b2ba5d7c.jpg" alt="ألعاب"><span>ألعاب</span></div>
+        <div class="image-item" data-term="كاميرات"><img src="https://i.postimg.cc/vBRknX1m/2025-04-10-07-24-45-facc6757.jpg" alt="كاميرات"><span>كاميرات</span></div>
+        <div class="image-item" data-term="ملابس"><img src="https://i.postimg.cc/TYbjd1cZ/2025-04-05-09-45-40-41d5fc86.jpg" alt="ملابس"><span>ملابس</span></div>
+        <div class="image-item" data-term="أحذية"><img src="https://i.postimg.cc/zGZzJw7q/2025-04-10-07-24-37-93a3f62f.jpg" alt="أحذية"><span>أحذية</span></div>
+        <div class="image-item" data-term="أثري"><img src="https://i.postimg.cc/Qdkp7zwm/2025-04-05-09-45-40-48ae9eca.jpg" alt="أثري"><span>أثري</span></div>
+        <div class="image-item" data-term="ساعات"><img src="https://i.postimg.cc/PqX1Q4kj/2025-04-05-09-45-41-8295ff26.jpg" alt="ساعات"><span>ساعات</span></div>
+        <div class="image-item" data-term="إكسسوارات"><img src="https://i.postimg.cc/9fLZ87Wq/2025-04-05-09-45-41-41001644.jpg" alt="إكسسوارات"><span>إكسسوارات</span></div>
+        <div class="image-item" data-term="فن"><img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن"><span>فن</span></div>
+    </div>
+
+    <!-- ADDED: FAB Button -->
+    <div class="fab" id="fab-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" /><path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" /></svg>
+    </div>
+
+    <!-- ADDED: Notes Modal -->
+    <div id="notes-modal" class="modal">
+        <div class="notes-modal-content">
+            <h3>ملاحظات سريعة</h3>
+            <textarea id="notes-textarea" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+            <div class="modal-buttons">
+                <button id="save-notes-button">حفظ</button>
+                <button id="close-notes-button" class="cancel">إغلاق</button>
+            </div>
         </div>
     </div>
     
     <script>
+        // --- Element Constants ---
         const deleteAllButton = document.getElementById('delete-all-button');
         const modal = document.getElementById('confirmation-modal');
         const confirmYes = document.getElementById('confirm-yes');
         const confirmNo = document.getElementById('confirm-no');
-        
-        let isAllHistoryShown = false;
-        
-        deleteAllButton.addEventListener('click', () => {
-            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            if (searchHistory.length > 0) {
-                modal.style.display = 'flex';
-            }
-        });
-        
-        confirmYes.addEventListener('click', () => {
-            localStorage.removeItem('searchHistory');
-            isAllHistoryShown = false;
-            displaySearchHistory();
-            modal.style.display = 'none';
-        });
-        
-        confirmNo.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-        
         const searchInput = document.getElementById('search-input');
         const searchButton = document.getElementById('search-button');
         const backButton = document.getElementById('back-button');
         const searchHistoryGrid = document.getElementById('search-history');
+        const searchHistoryHeader = document.getElementById('search-history-header');
         const imageGrid = document.getElementById('image-grid');
         const clearButton = document.getElementById('clear-button');
         const lastSearchItem = document.getElementById('last-search-item');
         const lastSearchTerm = document.getElementById('last-search-term');
+        const fabButton = document.getElementById('fab-button');
+        const notesModal = document.getElementById('notes-modal');
+        const closeNotesButton = document.getElementById('close-notes-button');
+        const saveNotesButton = document.getElementById('save-notes-button');
+        const notesTextarea = document.getElementById('notes-textarea');
         
-        backButton.addEventListener('click', function () {
-            window.history.back();
+        let isAllHistoryShown = false;
+        
+        // --- Modal Event Listeners ---
+        deleteAllButton.addEventListener('click', () => {
+            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            if (searchHistory.length > 0) modal.style.display = 'flex';
+        });
+        confirmYes.addEventListener('click', () => {
+            localStorage.removeItem('searchHistory');
+            isAllHistoryShown = false;
+            initializePage(); // Re-render the page state
+            modal.style.display = 'none';
+        });
+        confirmNo.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        fabButton.addEventListener('click', () => {
+            notesTextarea.value = localStorage.getItem('quickNotes') || '';
+            notesModal.style.display = 'flex';
+        });
+        closeNotesButton.addEventListener('click', () => {
+            notesModal.style.display = 'none';
+        });
+        saveNotesButton.addEventListener('click', () => {
+            localStorage.setItem('quickNotes', notesTextarea.value);
+            notesModal.style.display = 'none';
+        });
+        window.addEventListener('click', (event) => {
+            if (event.target === modal || event.target === notesModal) {
+                modal.style.display = 'none';
+                notesModal.style.display = 'none';
+            }
         });
         
-        const searchTexts = [
-            "ابحث هنا",
-            "اكتشف العروض الجديدة",
-            "تصفح الفئات",
-            "ابحث عن العلامات التجارية",
-            "ابحث عن الكلمات الرئيسية"
-        ];
+        // --- Core Search Functionality ---
+        backButton.addEventListener('click', () => window.history.back());
+        
+        const searchTexts = ["ابحث هنا", "اكتشف العروض الجديدة", "تصفح الفئات", "ابحث عن العلامات التجارية", "ابحث عن الكلمات الرئيسية"];
         let currentTextIndex = 0;
-        let currentSearchText = searchTexts[currentTextIndex];
-        
-        function changeSearchText() {
+        setInterval(() => {
             currentTextIndex = (currentTextIndex + 1) % searchTexts.length;
-            currentSearchText = searchTexts[currentTextIndex];
-            searchInput.placeholder = currentSearchText;
-        }
-        setInterval(changeSearchText, 5000);
-        
-        function isDefaultSearchText(searchTerm) {
-            return searchTerm === "ابحث هنا";
-        }
-        
-        searchButton.addEventListener('click', function () {
-            const searchTerm = searchInput.value.trim() || currentSearchText;
-            if (searchTerm && !isDefaultSearchText(searchTerm)) {
-                saveSearchTerm(searchTerm);
-                saveLastSearchTerm(searchTerm);
-                window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
+            if (document.activeElement !== searchInput) {
+                 searchInput.placeholder = searchTexts[currentTextIndex];
             }
-        });
+        }, 5000);
         
-        searchInput.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                const searchTerm = searchInput.value.trim();
-                if (searchTerm && !isDefaultSearchText(searchTerm)) {
-                    saveSearchTerm(searchTerm);
-                    saveLastSearchTerm(searchTerm);
-                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
-                }
+        function executeSearch(searchTerm) {
+            const term = searchTerm.trim();
+            if (term && term !== "ابحث هنا") {
+                saveSearchTerm(term);
+                saveLastSearchTerm(term);
+                window.location.href = `adger.search.html?search=${encodeURIComponent(term)}`;
             }
-        });
+        }
         
-        searchInput.addEventListener('input', function () {
+        searchButton.addEventListener('click', () => executeSearch(searchInput.value || searchTexts[currentTextIndex]));
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') executeSearch(searchInput.value);
+        });
+        searchInput.addEventListener('input', () => {
             clearButton.style.display = searchInput.value.trim() !== '' ? 'block' : 'none';
         });
-        
-        clearButton.addEventListener('click', function () {
+        clearButton.addEventListener('click', () => {
             searchInput.value = '';
             clearButton.style.display = 'none';
             searchInput.focus();
         });
         
+        // --- History and Term Management ---
         function saveSearchTerm(term) {
-            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            const existingIndex = searchHistory.findIndex(entry => entry.term === term);
-        
-            if (existingIndex !== -1) {
-                searchHistory.splice(existingIndex, 1);
-            }
-        
-            const today = new Date();
-            const date = today.toLocaleDateString('ar-EG');
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            searchHistory = searchHistory.filter(entry => entry.term !== term); // Remove duplicates
+            const date = new Date().toLocaleDateString('ar-EG');
             searchHistory.unshift({ term, date });
-        
             localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-            displaySearchHistory();
         }
         
         function saveLastSearchTerm(term) {
             localStorage.setItem('lastSearchTerm', term);
-            displayLastSearchTerm();
         }
         
         function displayLastSearchTerm() {
-            const lastTerm = localStorage.getItem('lastSearchTerm') || 'آخر نص كتبه المستخدم';
-            const displayTerm = (lastTerm.length > 26) ? lastTerm.slice(0, 26) + '...' : lastTerm;
-            lastSearchTerm.textContent = displayTerm;
+            const lastTerm = localStorage.getItem('lastSearchTerm');
+            if (lastTerm) {
+                const displayTerm = (lastTerm.length > 26) ? lastTerm.slice(0, 26) + '...' : lastTerm;
+                lastSearchTerm.textContent = displayTerm;
+                // --- CHANGE: EXPLICITLY SHOW THE ELEMENT ---
+                lastSearchItem.style.display = 'inline-flex';
+            } else {
+                // This else is technically not needed due to CSS default, but good for clarity
+                lastSearchItem.style.display = 'none';
+            }
         }
         
         function displaySearchHistory() {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistoryGrid.innerHTML = '';
-            const isMobile = window.matchMedia("(max-width: 1522px)").matches;
-            const maxItems = isMobile ? 12 : 22;
-
-            const itemsToShow = (isAllHistoryShown || searchHistory.length <= maxItems) 
-                                ? searchHistory 
-                                : searchHistory.slice(0, maxItems);
+            
+            searchHistoryHeader.style.display = 'flex';
+        
+            if (searchHistory.length === 0) {
+                searchHistoryGrid.innerHTML = `<div class="empty-history-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7v2a9 9 0 0 0 9-9 9 9 0 0 0-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg>
+                    <span>سجل البحث فارغ</span>
+                </div>`;
+                return;
+            }
+        
+            const maxItems = window.matchMedia("(max-width: 1522px)").matches ? 12 : 22;
+            const itemsToShow = (isAllHistoryShown || searchHistory.length <= maxItems) ? searchHistory : searchHistory.slice(0, maxItems);
 
             itemsToShow.forEach((entry, index) => {
                 const searchItem = document.createElement('div');
                 searchItem.className = 'search-item';
                 const displayTerm = (entry.term.length > 26) ? entry.term.slice(0, 26) + '...' : entry.term;
-                searchItem.innerHTML = 
-                    `<span>${displayTerm}</span>
-                    <small>${entry.date}</small>
-                    <button class="delete-button">✖</button>`;
+                searchItem.innerHTML = `<span>${displayTerm}</span><small>${entry.date}</small><button class="delete-button">✖</button>`;
 
-                searchItem.addEventListener('click', function (event) {
-                    if (event.target.className !== 'delete-button') {
-                        saveSearchTerm(entry.term);
-                        saveLastSearchTerm(entry.term);
-                        window.location.href = `adger.search.html?search=${encodeURIComponent(entry.term)}`;
-                    }
+                searchItem.addEventListener('click', (e) => {
+                    if (e.target.className !== 'delete-button') executeSearch(entry.term);
                 });
-
-                searchItem.querySelector('.delete-button').addEventListener('click', function (event) {
-                    event.stopPropagation();
+                searchItem.querySelector('.delete-button').addEventListener('click', (e) => {
+                    e.stopPropagation();
                     removeSearchTermFromHistory(entry.term);
                 });
 
                 if (!isAllHistoryShown && searchHistory.length > maxItems && index === maxItems - 1) {
                     const itemWithArrow = document.createElement('div');
                     itemWithArrow.className = 'search-item-with-arrow';
-                    
                     itemWithArrow.appendChild(searchItem);
-
                     const arrow = document.createElement('div');
                     arrow.id = 'show-more-arrow';
-                    arrow.innerHTML = 
-                        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>`;
-                    
-                    arrow.addEventListener('click', function (event) {
-                        event.stopPropagation();
+                    arrow.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>`;
+                    arrow.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         isAllHistoryShown = true;
                         displaySearchHistory();
                     });
-
                     itemWithArrow.appendChild(arrow);
                     searchHistoryGrid.appendChild(itemWithArrow);
                 } else {
@@ -957,13 +895,13 @@
         }
         
         function removeSearchTermFromHistory(term) {
-            const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const updatedHistory = searchHistory.filter(entry => entry.term !== term);
             localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
             displaySearchHistory();
         }
         
-        lastSearchItem.addEventListener('click', function () {
+        lastSearchItem.addEventListener('click', () => {
             const lastTerm = localStorage.getItem('lastSearchTerm');
             if (lastTerm) {
                 searchInput.value = lastTerm + ' ';
@@ -972,61 +910,32 @@
             }
         });
         
-        imageGrid.addEventListener('click', function (event) {
+        imageGrid.addEventListener('click', (event) => {
             const imageItem = event.target.closest('.image-item');
-            if (imageItem) {
-                const searchTerm = imageItem.getAttribute('data-term');
-                if (searchTerm) {
-                    saveSearchTerm(searchTerm);
-                    saveLastSearchTerm(searchTerm);
-                    window.location.href = `adger.search.html?search=${encodeURIComponent(searchTerm)}`;
-                }
-            }
+            if (imageItem) executeSearch(imageItem.getAttribute('data-term'));
         });
         
-        displaySearchHistory();
-        displayLastSearchTerm();
+        // --- Initial Load and Resizing ---
+        function initializePage() {
+            displaySearchHistory();
+            displayLastSearchTerm();
+        }
         
-        window.addEventListener('load', function () {
+        // Deprecated redirectToSea function for old inline onclick attributes
+        function redirectToSea(categoryName) {
+            executeSearch(categoryName);
+        }
+
+        window.addEventListener('load', () => {
             setTimeout(() => {
                 searchInput.focus();
                 searchInput.click();
             }, 500);
+            initializePage();
         });
         
-        window.addEventListener('resize', function () {
-            displaySearchHistory();
-            displayLastSearchTerm();
-        });
+        window.addEventListener('resize', initializePage);
         
-        function redirectToSea(categoryName) {
-            window.location.href = `adger.search.html?search=${encodeURIComponent(categoryName)}`;
-        }
-        
-        function performSearch(searchTerm) {
-            const products = document.querySelectorAll('.product');
-            products.forEach(product => {
-                const productName = product.getAttribute('data-name').toLowerCase();
-                if (productName.includes(searchTerm.toLowerCase())) {
-                    product.classList.remove('hidden');
-                } else {
-                    product.classList.add('hidden');
-                }
-            });
-        }
-        
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchTerm = urlParams.get('search');
-            if (searchTerm) {
-                const searchBox = document.getElementById('search-box');
-                if (searchBox) {
-                    searchBox.value = searchTerm;
-                    performSearch(searchTerm);
-                }
-            }
-            displaySearchHistory();
-        };
     </script>
 </body>
 </html>
