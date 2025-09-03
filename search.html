@@ -636,8 +636,8 @@
             width: 90%;
             max-width: 500px;
             box-sizing: border-box;
-            /* --- الحل 1: إضافة transition للحركة السلسة --- */
-            transition: transform 0.3s ease-out;
+            /* --- تغيير مدة الحركة لتصبح أسرع --- */
+            transition: transform 0.2s ease-out;
         }
         .notes-modal-content h3 {
             margin-top: 0;
@@ -776,14 +776,13 @@
         const lastSearchTerm = document.getElementById('last-search-term');
         const fabButton = document.getElementById('fab-button');
         const notesModal = document.getElementById('notes-modal');
-        const notesModalContent = notesModal.querySelector('.notes-modal-content'); // استهداف النافذة الداخلية
+        const notesModalContent = notesModal.querySelector('.notes-modal-content');
         const closeNotesButton = document.getElementById('close-notes-button');
         const saveNotesButton = document.getElementById('save-notes-button');
         const notesTextarea = document.getElementById('notes-textarea');
         
         let isAllHistoryShown = false;
 
-        // --- دالة ذكية وسلسة لضبط نافذة الملاحظات عند ظهور الكيبورد ---
         const adjustNotesModalForKeyboard = () => {
             if (!notesModalContent || !('visualViewport' in window)) return;
             
@@ -792,10 +791,9 @@
             const keyboardThreshold = 100;
 
             if (keyboardHeight > keyboardThreshold) {
-                // الكيبورد ظاهر، ادفع النافذة للأعلى بسلاسة
+                // يمكنك تعديل القيمة -40% لتناسب تصميمك بشكل أفضل
                 notesModalContent.style.transform = 'translateY(-40%)';
             } else {
-                // الكيبورد مختفي، أعد النافذة لوضعها الأصلي بسلاسة
                 notesModalContent.style.transform = 'translateY(0)';
             }
         };
@@ -804,7 +802,6 @@
             if ('visualViewport' in window) {
                 window.visualViewport.removeEventListener('resize', adjustNotesModalForKeyboard);
             }
-            // إعادة النافذة لوضعها الطبيعي قبل الإغلاق
             notesModalContent.style.transform = 'translateY(0)';
             notesModal.style.display = 'none';
         };
@@ -828,7 +825,6 @@
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
             if ('visualViewport' in window) {
-                // التأكد من أن الوضع الابتدائي صحيح عند الفتح
                 adjustNotesModalForKeyboard(); 
                 window.visualViewport.addEventListener('resize', adjustNotesModalForKeyboard);
             }
