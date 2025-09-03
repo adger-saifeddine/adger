@@ -329,17 +329,13 @@
     document.addEventListener('DOMContentLoaded', () => {
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         
-        const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, dragDirection: null, };
-        
-        // --- START: التعديل الأول: كشف نوع الجهاز ---
-        // سيتحقق هذا المتغير مرة واحدة لمعرفة ما إذا كان المتصفح يدعم أحداث اللمس.
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        // --- END: نهاية التعديل الأول ---
+        const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, dragDirection: null, startEventType: '' };
 
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const getPositionY = (e) => e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
 
         const dragStart = (e) => {
+            state.startEventType = e.type; // نسجل نوع الحدث (لمس أو ماوس)
             state.dragDirection = null; 
             state.isDragging = true;
             state.startTime = Date.now();
@@ -397,7 +393,9 @@
                 state.currentIndex--;
             }
             
-            setActiveSlide(state.currentIndex, true);
+            // هنا نحدد إذا كان الانتقال سلساً أم لا بناءً على نوع بداية السحب
+            const isTouchEvent = state.startEventType.includes('touch');
+            setActiveSlide(state.currentIndex, isTouchEvent); // السلس فقط مع اللمس
             state.dragDirection = null;
         };
 
@@ -408,26 +406,19 @@
             indexesToLoad.forEach(index => { const slide = dom.track.children[index]; if (!slide || slide.dataset.loaded) return; const mediaEl = slide.querySelector('img, video'); if (mediaEl && mediaEl.dataset.src) { mediaEl.src = mediaEl.dataset.src; delete mediaEl.dataset.src; slide.dataset.loaded = 'true'; if (mediaEl.tagName === 'VIDEO') { mediaEl.load(); } } });
         };
         
-        // --- START: التعديل الثاني: تعديل دالة الانتقال ---
         const setActiveSlide = (index, withTransition = false) => {
             state.currentIndex = index;
             state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth;
-            
-            // الشرط الجديد: أضف كلاس الانتقال السلس فقط إذا طُلب ذلك (withTransition)
-            // وإذا كان الجهاز هو جهاز لمس (isTouchDevice).
-            // في أجهزة الكمبيوتر، سيكون isTouchDevice خطأ، وبالتالي لن يتم إضافة الكلاس أبدًا.
-            if (withTransition && isTouchDevice) {
+            // يتم التحكم بإضافة الكلاس من خلال المتغير الثاني
+            if (withTransition) {
                 dom.track.classList.add('transitioning');
             } else {
-                // نضمن إزالة الكلاس في أجهزة الكمبيوتر لمنع أي انتقال بالخطأ
                 dom.track.classList.remove('transitioning');
             }
-
             setSliderPosition();
             updateUI();
             loadVisibleSlides();
         };
-        // --- END: نهاية التعديل الثاني ---
 
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
@@ -490,19 +481,25 @@
                     const img = document.createElement('img'); img.dataset.src = item.src; img.alt = "صورة المنتج"; img.onload = () => { placeholder.style.display = 'none'; }; if (img.complete) placeholder.style.display = 'none';
                     slide.appendChild(img); thumbnail.innerHTML = `<img src="${item.src}" alt="صورة مصغرة">`;
                 }
-                dom.track.appendChild(slide); dom.thumbnails.appendChild(thumbnail); thumbnail.addEventListener('click', () => setActiveSlide(index, true));
+                dom.track.appendChild(slide); dom.thumbnails.appendChild(thumbnail);
+                // --- START: التعديل 1: الانتقال فوري عند النقر على الصورة المصغرة ---
+                thumbnail.addEventListener('click', () => setActiveSlide(index, false));
             });
-            dom.totalEl.textContent = state.mediaItems.length; setActiveSlide(0);
+            dom.totalEl.textContent = state.mediaItems.length;
+            // يتم استدعاء setActiveSlide بدون transition في البداية
+            setActiveSlide(0, false);
         }
 
         const init = () => {
             ['mousedown', 'touchstart'].forEach(evt => dom.mainContainer.addEventListener(evt, dragStart, { passive: true }));
             ['mousemove', 'touchmove'].forEach(evt => dom.mainContainer.addEventListener(evt, dragMove, { passive: true }));
             ['mouseup', 'mouseleave', 'touchend'].forEach(evt => document.addEventListener(evt, dragEnd));
-            dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, true); });
-            dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, true); });
+            // --- START: التعديل 2: الانتقال فوري عند النقر على السهم السابق ---
+            dom.prevArrow.addEventListener('click', () => { if (state.currentIndex > 0) setActiveSlide(state.currentIndex - 1, false); });
+            // --- START: التعديل 3: الانتقال فوري عند النقر على السهم التالي ---
+            dom.nextArrow.addEventListener('click', () => { if (state.currentIndex < state.mediaItems.length - 1) setActiveSlide(state.currentIndex + 1, false); });
             dom.shareButton.addEventListener('click', sharePage);
-            window.addEventListener('resize', () => setActiveSlide(state.currentIndex));
+            window.addEventListener('resize', () => setActiveSlide(state.currentIndex, false));
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             if (productId) {
