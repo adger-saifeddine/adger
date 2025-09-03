@@ -40,7 +40,7 @@
     </script>
 </head>
 <body>
-    <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -485,13 +485,24 @@
 
         .modal-content {
             background-color: white;
-            padding: 20px;
+            /* --- تعديل: تحسين الحشوة الداخلية --- */
+            padding: 30px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 90%;
             max-width: 400px;
+            box-sizing: border-box; /* إضافة لضمان حساب الحجم بشكل صحيح */
         }
+        
+        /* --- تعديل: إضافة حشوة خارجية أكبر للهواتف --- */
+        @media (max-width: 767px) {
+            .modal-content {
+                width: 85%; /* زيادة المسافة الخارجية عن طريق تقليل العرض */
+                padding: 25px 20px; /* تعديل الحشوة الداخلية لتناسب الشاشات الأصغر */
+            }
+        }
+
 
         .modal-buttons {
             display: flex;
