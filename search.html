@@ -40,9 +40,7 @@
     </script>
 </head>
 <body>
-
-
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -353,13 +351,12 @@
             }
         }
         
-        /* --- CHANGE: HIDDEN BY DEFAULT --- */
         .last-search-item {
             background-color: #0077ff1c;
             border-radius: 16px;
             padding: 9px 15px;
             cursor: pointer;
-            display: none; /* Changed from inline-flex to none */
+            display: none;
             align-items: center;
             gap: 10px;
             margin: 1px 40px 0 20px;
@@ -576,11 +573,10 @@
         #show-more-arrow svg { width: 24px; height: 24px; }
         @media (max-width: 555px) { #show-more-arrow svg { width: 21px; height: 21px; } }
         
-        /* --- CHANGE: MOVED TO LEFT --- */
         .fab {
             position: fixed;
             bottom: 25px;
-            left: 25px; /* Changed from right to left */
+            left: 25px; 
             width: 56px;
             height: 56px;
             background-color: #000000;
@@ -592,14 +588,12 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 999;
-            /* --- MODIFIED: Added 'bottom' for smooth transition when keyboard appears --- */
             transition: transform 0.2s, bottom 0.2s ease-out;
             -webkit-tap-highlight-color: transparent;
         }
         .fab:hover { transform: scale(1.05); }
         .fab svg { width: 24px; height: 24px; }
         
-        /* --- ADDED: Makes the notes icon smaller on mobile devices --- */
         @media (max-width: 767px) {
             .fab {
                 width: 48px;
@@ -728,12 +722,10 @@
         <div class="image-item" data-term="فن"><img src="https://i.postimg.cc/WzXBtSj1/2025-04-05-09-45-42-b7e6d1c8.jpg" alt="فن"><span>فن</span></div>
     </div>
 
-    <!-- ADDED: FAB Button -->
     <div class="fab" id="fab-button">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" /><path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" /></svg>
     </div>
 
-    <!-- ADDED: Notes Modal -->
     <div id="notes-modal" class="modal">
         <div class="notes-modal-content">
             <h3>ملاحظات سريعة</h3>
@@ -852,10 +844,8 @@
             if (lastTerm) {
                 const displayTerm = (lastTerm.length > 26) ? lastTerm.slice(0, 26) + '...' : lastTerm;
                 lastSearchTerm.textContent = displayTerm;
-                // --- CHANGE: EXPLICITLY SHOW THE ELEMENT ---
                 lastSearchItem.style.display = 'inline-flex';
             } else {
-                // This else is technically not needed due to CSS default, but good for clarity
                 lastSearchItem.style.display = 'none';
             }
         }
@@ -938,7 +928,6 @@
             displayLastSearchTerm();
         }
         
-        // Deprecated redirectToSea function for old inline onclick attributes
         function redirectToSea(categoryName) {
             executeSearch(categoryName);
         }
@@ -953,25 +942,25 @@
         
         window.addEventListener('resize', initializePage);
 
-        // --- ADDED: FAB behavior to appear above virtual keyboard ---
+        // --- CORRECTED: FAB behavior to appear above virtual keyboard ---
         if (fabButton && 'visualViewport' in window) {
+            // --- FIX: Store the initial bottom value ONCE, outside the event listener ---
+            const initialFabBottomValue = parseFloat(window.getComputedStyle(fabButton).bottom);
+
             const adjustFabForKeyboard = () => {
                 const viewport = window.visualViewport;
-                // Calculate the space taken by the keyboard by comparing window and viewport heights
+                // Calculate the space taken by the keyboard
                 const keyboardHeight = window.innerHeight - viewport.height;
-
                 // A threshold to avoid reacting to browser UI changes (like address bar hiding)
                 const keyboardThreshold = 100;
 
-                // Get the initial bottom value from the CSS dynamically
-                const initialFabBottom = parseFloat(window.getComputedStyle(fabButton).bottom);
-
                 if (keyboardHeight > keyboardThreshold) {
-                    // Keyboard is open, move the FAB up
-                    fabButton.style.bottom = `${keyboardHeight + initialFabBottom}px`;
+                    // Keyboard is open. The new bottom position is the keyboard's height
+                    // plus the original margin we want to maintain.
+                    fabButton.style.bottom = `${keyboardHeight + initialFabBottomValue}px`;
                 } else {
-                    // Keyboard is closed, use its default CSS value
-                    fabButton.style.bottom = `${initialFabBottom}px`;
+                    // Keyboard is closed. Reset the button to its original stored value.
+                    fabButton.style.bottom = `${initialFabBottomValue}px`;
                 }
             };
             
