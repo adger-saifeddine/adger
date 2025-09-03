@@ -330,6 +330,11 @@
         const dom = { mainContainer: document.getElementById('mainMediaContainer'), track: document.getElementById('imageTrack'), thumbnails: document.getElementById('thumbnailsContainer'), shareButton: document.getElementById('shareButton'), mediaCounter: document.querySelector('.media-counter'), currentEl: document.getElementById('currentMedia'), totalEl: document.getElementById('totalMedia'), prevArrow: document.getElementById('prevArrow'), nextArrow: document.getElementById('nextArrow'), };
         
         const state = { isDragging: false, startPos: 0, startY: 0, currentTranslate: 0, prevTranslate: 0, currentIndex: 0, mediaItems: [], startTime: 0, dragDirection: null, };
+        
+        // --- START: التعديل الأول: كشف نوع الجهاز ---
+        // سيتحقق هذا المتغير مرة واحدة لمعرفة ما إذا كان المتصفح يدعم أحداث اللمس.
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        // --- END: نهاية التعديل الأول ---
 
         const getPositionX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
         const getPositionY = (e) => e.type.includes('mouse') ? e.pageY : e.touches[0].clientY;
@@ -370,7 +375,6 @@
             }
         };
         
-        // --- START: التعديل الوحيد والدقيق هنا ---
         const dragEnd = () => {
             if (!state.isDragging) return;
             state.isDragging = false;
@@ -383,15 +387,10 @@
             const dragOffset = state.currentTranslate - state.prevTranslate;
             const dragDuration = Date.now() - state.startTime;
 
-            // [الحل]: هذا الشرط هو مفتاح الحل.
-            // إذا كانت الحركة صغيرة جدًا وسريعة جدًا (أي نقرة)، فإنه يتوقف هنا فورًا.
-            // هذا يمنع بقية الكود من العمل ويسمح لحدث "النقر" الأصلي بالوصول لزر التشغيل.
-            // تم إزالة `setActiveSlide` من هنا لمنع "إغلاق" الشريحة عند النقر.
             if (Math.abs(dragOffset) < 5 && dragDuration < 200) {
                 return;
             }
 
-            // --- هذا الكود لم يتغير وهو المسؤول عن التمرير الذي تفضله ---
             if (dragOffset > 1 && state.currentIndex < state.mediaItems.length - 1) {
                 state.currentIndex++;
             } else if (dragOffset < -1 && state.currentIndex > 0) {
@@ -401,7 +400,6 @@
             setActiveSlide(state.currentIndex, true);
             state.dragDirection = null;
         };
-        // --- END: نهاية التعديل ---
 
         const loadVisibleSlides = () => {
             const indexesToLoad = [state.currentIndex];
@@ -410,7 +408,27 @@
             indexesToLoad.forEach(index => { const slide = dom.track.children[index]; if (!slide || slide.dataset.loaded) return; const mediaEl = slide.querySelector('img, video'); if (mediaEl && mediaEl.dataset.src) { mediaEl.src = mediaEl.dataset.src; delete mediaEl.dataset.src; slide.dataset.loaded = 'true'; if (mediaEl.tagName === 'VIDEO') { mediaEl.load(); } } });
         };
         
-        const setActiveSlide = (index, withTransition = false) => { state.currentIndex = index; state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth; if (withTransition) dom.track.classList.add('transitioning'); setSliderPosition(); updateUI(); loadVisibleSlides(); };
+        // --- START: التعديل الثاني: تعديل دالة الانتقال ---
+        const setActiveSlide = (index, withTransition = false) => {
+            state.currentIndex = index;
+            state.currentTranslate = state.currentIndex * dom.mainContainer.clientWidth;
+            
+            // الشرط الجديد: أضف كلاس الانتقال السلس فقط إذا طُلب ذلك (withTransition)
+            // وإذا كان الجهاز هو جهاز لمس (isTouchDevice).
+            // في أجهزة الكمبيوتر، سيكون isTouchDevice خطأ، وبالتالي لن يتم إضافة الكلاس أبدًا.
+            if (withTransition && isTouchDevice) {
+                dom.track.classList.add('transitioning');
+            } else {
+                // نضمن إزالة الكلاس في أجهزة الكمبيوتر لمنع أي انتقال بالخطأ
+                dom.track.classList.remove('transitioning');
+            }
+
+            setSliderPosition();
+            updateUI();
+            loadVisibleSlides();
+        };
+        // --- END: نهاية التعديل الثاني ---
+
         const setSliderPosition = () => { dom.track.style.transform = `translateX(${state.currentTranslate}px)`; };
         const sharePage = () => { if (navigator.share) navigator.share({ title: document.title, url: window.location.href }); };
         
@@ -507,7 +525,6 @@
 
 </body>
 </html>
-
 
 
 
