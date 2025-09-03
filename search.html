@@ -608,8 +608,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 999;
-            /* --- الحل: إضافة transition للـ opacity --- */
-            transition: transform 0.2s, bottom 0.2s ease-out, opacity 0.2s ease-out;
+            transition: transform 0.2s, bottom 0.2s ease-out;
             -webkit-tap-highlight-color: transparent;
         }
         .fab:hover { transform: scale(1.05); }
@@ -782,6 +781,8 @@
         const notesTextarea = document.getElementById('notes-textarea');
         
         let isAllHistoryShown = false;
+        // --- الحل: إضافة متغير "flag" لتتبع حالة نافذة الملاحظات ---
+        let isNotesModalActive = false;
 
         const adjustNotesModalForKeyboard = () => {
             if (!notesModalContent || !('visualViewport' in window)) return;
@@ -803,10 +804,8 @@
             }
             notesModalContent.style.transform = 'translateY(0)';
             notesModal.style.display = 'none';
-
-            // --- الحل: إعادة إظهار زر الملاحظات عند إغلاق النافذة ---
-            fabButton.style.opacity = '1';
-            fabButton.style.pointerEvents = 'auto';
+            // --- الحل: إعادة ضبط المتغير عند إغلاق النافذة ---
+            isNotesModalActive = false;
         };
         
         // --- Modal Event Listeners ---
@@ -825,16 +824,14 @@
         });
 
         fabButton.addEventListener('click', () => {
+            // --- الحل: ضبط المتغير على true عند فتح النافذة ---
+            isNotesModalActive = true;
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
             if ('visualViewport' in window) {
                 adjustNotesModalForKeyboard(); 
                 window.visualViewport.addEventListener('resize', adjustNotesModalForKeyboard);
             }
-            
-            // --- الحل: إخفاء زر الملاحظات عند فتح النافذة ---
-            fabButton.style.opacity = '0';
-            fabButton.style.pointerEvents = 'none';
         });
 
         closeNotesButton.addEventListener('click', closeNotesHandler);
@@ -1018,6 +1015,11 @@
             const initialFabBottomValue = parseFloat(window.getComputedStyle(fabButton).bottom);
 
             const adjustFabForKeyboard = () => {
+                // --- الحل: إضافة شرط للتحقق من حالة نافذة الملاحظات ---
+                if (isNotesModalActive) {
+                    return; // لا تفعل شيئاً إذا كانت نافذة الملاحظات مفتوحة
+                }
+
                 const viewport = window.visualViewport;
                 const keyboardHeight = window.innerHeight - viewport.height;
                 const keyboardThreshold = 100;
