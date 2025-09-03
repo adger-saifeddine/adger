@@ -283,27 +283,42 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            color: #a0a0a0;
-            padding: 15px 0;
+            color: #888;
+            padding: 60px 20px;
             text-align: center;
+            background-color: #f8f9fa;
+            border: 1px dashed #e0e0e0;
+            border-radius: 16px;
+            box-sizing: border-box;
         }
         .empty-history-container svg {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 8px;
-            fill: #d0d0d0;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 16px;
+            stroke: #b0b0b0;
         }
         .empty-history-container span {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .empty-history-container .subtitle {
+            font-size: 14px;
+            color: #aaa;
         }
         @media (max-width: 555px) {
+            .empty-history-container {
+                 padding: 40px 15px;
+            }
             .empty-history-container svg {
-                width: 32px;
-                height: 32px;
+                width: 40px;
+                height: 40px;
             }
             .empty-history-container span {
-                font-size: 14px;
+                font-size: 16px;
+            }
+            .empty-history-container .subtitle {
+                font-size: 13px;
             }
         }
 
@@ -934,8 +949,16 @@
         
             if (searchHistory.length === 0) {
                 searchHistoryGrid.innerHTML = `<div class="empty-history-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7v2a9 9 0 0 0 9-9 9 9 0 0 0-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15.5 15.5L19 19"></path>
+                        <path d="M5 11a6 6 0 1 0 12 0a6 6 0 0 0-12 0z"></path>
+                        <path d="M2 3h4a1 1 0 0 1 1 1v4"></path>
+                        <path d="M22 3h-4a1 1 0 0 0-1 1v4"></path>
+                        <path d="M2 21h4a1 1 0 0 0 1-1v-4"></path>
+                        <path d="M22 21h-4a1 1 0 0 1-1-1v-4"></path>
+                    </svg>
                     <span>سجل البحث فارغ</span>
+                    <div class="subtitle">عمليات البحث التي تجريها ستظهر هنا</div>
                 </div>`;
                 return;
             }
