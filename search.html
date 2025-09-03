@@ -175,7 +175,6 @@
             visibility: hidden;
             pointer-events: none;
             transition: opacity 0.2s ease-in-out;
-            /* --- الحل 2: إزالة اللون الأزرق عند النقر على الهواتف --- */
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -493,7 +492,6 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: align-items 0.2s ease-out, padding-top 0.2s ease-out;
         }
 
         .modal-content {
@@ -638,6 +636,8 @@
             width: 90%;
             max-width: 500px;
             box-sizing: border-box;
+            /* --- الحل 1: إضافة transition للحركة السلسة --- */
+            transition: transform 0.3s ease-out;
         }
         .notes-modal-content h3 {
             margin-top: 0;
@@ -776,39 +776,36 @@
         const lastSearchTerm = document.getElementById('last-search-term');
         const fabButton = document.getElementById('fab-button');
         const notesModal = document.getElementById('notes-modal');
+        const notesModalContent = notesModal.querySelector('.notes-modal-content'); // استهداف النافذة الداخلية
         const closeNotesButton = document.getElementById('close-notes-button');
         const saveNotesButton = document.getElementById('save-notes-button');
         const notesTextarea = document.getElementById('notes-textarea');
         
         let isAllHistoryShown = false;
 
-        // --- الحل 1: دالة ذكية لضبط نافذة الملاحظات عند ظهور الكيبورد ---
+        // --- دالة ذكية وسلسة لضبط نافذة الملاحظات عند ظهور الكيبورد ---
         const adjustNotesModalForKeyboard = () => {
-            if (!notesModal || !('visualViewport' in window)) return;
+            if (!notesModalContent || !('visualViewport' in window)) return;
             
             const viewport = window.visualViewport;
             const keyboardHeight = window.innerHeight - viewport.height;
-            const keyboardThreshold = 100; // قيمة تقديرية لارتفاع الكيبورد
+            const keyboardThreshold = 100;
 
             if (keyboardHeight > keyboardThreshold) {
-                // الكيبورد ظاهر، ارفع النافذة للأعلى
-                notesModal.style.alignItems = 'flex-start';
-                notesModal.style.paddingTop = '20px';
+                // الكيبورد ظاهر، ادفع النافذة للأعلى بسلاسة
+                notesModalContent.style.transform = 'translateY(-40%)';
             } else {
-                // الكيبورد مختفي، أعد النافذة للمنتصف
-                notesModal.style.alignItems = 'center';
-                notesModal.style.paddingTop = '0px';
+                // الكيبورد مختفي، أعد النافذة لوضعها الأصلي بسلاسة
+                notesModalContent.style.transform = 'translateY(0)';
             }
         };
 
-        // --- دالة لإغلاق نافذة الملاحظات وتنظيف المستمعات ---
         const closeNotesHandler = () => {
             if ('visualViewport' in window) {
                 window.visualViewport.removeEventListener('resize', adjustNotesModalForKeyboard);
             }
-            // إعادة النافذة لوضعها الطبيعي عند الإغلاق
-            notesModal.style.alignItems = 'center';
-            notesModal.style.paddingTop = '0px';
+            // إعادة النافذة لوضعها الطبيعي قبل الإغلاق
+            notesModalContent.style.transform = 'translateY(0)';
             notesModal.style.display = 'none';
         };
         
@@ -831,6 +828,8 @@
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
             if ('visualViewport' in window) {
+                // التأكد من أن الوضع الابتدائي صحيح عند الفتح
+                adjustNotesModalForKeyboard(); 
                 window.visualViewport.addEventListener('resize', adjustNotesModalForKeyboard);
             }
         });
