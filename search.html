@@ -40,7 +40,9 @@
     </script>
 </head>
 <body>
-   <!DOCTYPE html>
+
+    
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -160,6 +162,7 @@
             fill: white;
         }
 
+        /* --- الحل 1: تغيير طريقة إخفاء زر الحذف لمنع الاهتزاز --- */
         .search-container .clear-button {
             position: absolute;
             left: 80px;
@@ -169,8 +172,19 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
-            display: none;
             color: #000000;
+            /* استخدام الشفافية بدلاً من display:none لمنع إعادة تخطيط الصفحة */
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        /* كلاس جديد لإظهار الزر بسلاسة */
+        .search-container .clear-button.visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         @media (max-width: 768px) {
@@ -483,23 +497,28 @@
             z-index: 1000;
         }
 
+        /* --- الحل 2: رفع نافذة الملاحظات فوق لوحة المفاتيح عند الكتابة --- */
+        .modal:focus-within {
+            align-items: flex-start; /* تغيير المحاذاة من الوسط إلى الأعلى */
+            padding-top: 20px;     /* ترك مسافة صغيرة من الأعلى */
+            overflow-y: auto;      /* إضافة شريط تمرير إذا كان المحتوى طويلاً */
+        }
+
         .modal-content {
             background-color: white;
-            /* --- تعديل: تحسين الحشوة الداخلية --- */
             padding: 30px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 90%;
             max-width: 400px;
-            box-sizing: border-box; /* إضافة لضمان حساب الحجم بشكل صحيح */
+            box-sizing: border-box;
         }
         
-        /* --- تعديل: إضافة حشوة خارجية أكبر للهواتف --- */
         @media (max-width: 767px) {
             .modal-content {
-                width: 85%; /* زيادة المسافة الخارجية عن طريق تقليل العرض */
-                padding: 25px 20px; /* تعديل الحشوة الداخلية لتناسب الشاشات الأصغر */
+                width: 85%;
+                padding: 25px 20px;
             }
         }
 
@@ -788,6 +807,8 @@
         fabButton.addEventListener('click', () => {
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
+            // للتركيز التلقائي على حقل النص عند فتح النافذة
+            // notesTextarea.focus(); 
         });
         closeNotesButton.addEventListener('click', () => {
             notesModal.style.display = 'none';
@@ -828,12 +849,20 @@
         searchInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') executeSearch(searchInput.value);
         });
+        
+        // --- الحل 1: تعديل كود الجافاسكريبت للتحكم في ظهور زر الحذف ---
         searchInput.addEventListener('input', () => {
-            clearButton.style.display = searchInput.value.trim() !== '' ? 'block' : 'none';
+            // استخدام classList.add/remove بدلاً من style.display
+            if (searchInput.value.trim() !== '') {
+                clearButton.classList.add('visible');
+            } else {
+                clearButton.classList.remove('visible');
+            }
         });
         clearButton.addEventListener('click', () => {
             searchInput.value = '';
-            clearButton.style.display = 'none';
+            // استخدام classList.remove بدلاً من style.display
+            clearButton.classList.remove('visible');
             searchInput.focus();
         });
         
@@ -924,7 +953,7 @@
             if (lastTerm) {
                 searchInput.value = lastTerm + ' ';
                 searchInput.focus();
-                clearButton.style.display = 'block';
+                clearButton.classList.add('visible'); // تعديل ليطابق الحل الجديد
             }
         });
         
@@ -953,29 +982,22 @@
         
         window.addEventListener('resize', initializePage);
 
-        // --- CORRECTED: FAB behavior to appear above virtual keyboard ---
+        // --- FAB behavior to appear above virtual keyboard ---
         if (fabButton && 'visualViewport' in window) {
-            // --- FIX: Store the initial bottom value ONCE, outside the event listener ---
             const initialFabBottomValue = parseFloat(window.getComputedStyle(fabButton).bottom);
 
             const adjustFabForKeyboard = () => {
                 const viewport = window.visualViewport;
-                // Calculate the space taken by the keyboard
                 const keyboardHeight = window.innerHeight - viewport.height;
-                // A threshold to avoid reacting to browser UI changes (like address bar hiding)
                 const keyboardThreshold = 100;
 
                 if (keyboardHeight > keyboardThreshold) {
-                    // Keyboard is open. The new bottom position is the keyboard's height
-                    // plus the original margin we want to maintain.
                     fabButton.style.bottom = `${keyboardHeight + initialFabBottomValue}px`;
                 } else {
-                    // Keyboard is closed. Reset the button to its original stored value.
                     fabButton.style.bottom = `${initialFabBottomValue}px`;
                 }
             };
             
-            // Add the listener to the visualViewport's resize event
             window.visualViewport.addEventListener('resize', adjustFabForKeyboard);
         }
         
