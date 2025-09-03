@@ -105,7 +105,7 @@
 
         .search-container input[type="text"] {
             width: 100%;
-            padding: 10px 12px 10px 108px;
+            padding: 10px 12px 10px 110px;
             font-size: 16px;
             border: 1px solid #000000;
             border-radius: 51px;
@@ -114,6 +114,13 @@
             text-align: right;
             direction: rtl;
             transition: border-color 0.3s;
+        }
+
+   @media (max-width: 767px) {
+             .search-container input[type="text"]{
+                   padding: 10px 12px 10px 85px;  
+             }
+
         }
 
         @media (max-width: 499px) {
