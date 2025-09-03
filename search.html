@@ -40,6 +40,8 @@
     </script>
 </head>
 <body>
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -590,11 +592,26 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 999;
-            transition: transform 0.2s;
+            /* --- MODIFIED: Added 'bottom' for smooth transition when keyboard appears --- */
+            transition: transform 0.2s, bottom 0.2s ease-out;
             -webkit-tap-highlight-color: transparent;
         }
         .fab:hover { transform: scale(1.05); }
         .fab svg { width: 24px; height: 24px; }
+        
+        /* --- ADDED: Makes the notes icon smaller on mobile devices --- */
+        @media (max-width: 767px) {
+            .fab {
+                width: 48px;
+                height: 48px;
+                bottom: 20px;
+                left: 20px;
+            }
+            .fab svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
         
         .notes-modal-content {
             background-color: white;
@@ -935,6 +952,32 @@
         });
         
         window.addEventListener('resize', initializePage);
+
+        // --- ADDED: FAB behavior to appear above virtual keyboard ---
+        if (fabButton && 'visualViewport' in window) {
+            const adjustFabForKeyboard = () => {
+                const viewport = window.visualViewport;
+                // Calculate the space taken by the keyboard by comparing window and viewport heights
+                const keyboardHeight = window.innerHeight - viewport.height;
+
+                // A threshold to avoid reacting to browser UI changes (like address bar hiding)
+                const keyboardThreshold = 100;
+
+                // Get the initial bottom value from the CSS dynamically
+                const initialFabBottom = parseFloat(window.getComputedStyle(fabButton).bottom);
+
+                if (keyboardHeight > keyboardThreshold) {
+                    // Keyboard is open, move the FAB up
+                    fabButton.style.bottom = `${keyboardHeight + initialFabBottom}px`;
+                } else {
+                    // Keyboard is closed, use its default CSS value
+                    fabButton.style.bottom = `${initialFabBottom}px`;
+                }
+            };
+            
+            // Add the listener to the visualViewport's resize event
+            window.visualViewport.addEventListener('resize', adjustFabForKeyboard);
+        }
         
     </script>
 </body>
