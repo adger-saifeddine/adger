@@ -822,6 +822,7 @@
         });
         confirmYes.addEventListener('click', () => {
             localStorage.removeItem('searchHistory');
+            localStorage.removeItem('lastSearchTerm');
             isAllHistoryShown = false;
             initializePage(); 
             modal.style.display = 'none';
