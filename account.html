@@ -42,6 +42,7 @@
 <body>
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    
 <!DOCTYPE html>
 
 <html lang="ar" dir="rtl">
@@ -461,8 +462,14 @@
         </div>
     </div>
 </div>
-
 <script>
+    // =======================================================
+    // [الحل 1]: إعادة تعيين موضع التمرير عند العودة للصفحة من نافذة أخرى
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    }
+    // =======================================================
+
     // --- Firebase Initialization ---
     firebase.initializeApp({
         apiKey: "AIzaSyBkEIs1GP17POkhQd378yl0_2ZcPqYNiDM",
@@ -491,7 +498,6 @@
     }
     function closeCustomAlert() { 
         document.getElementById('customAlert').style.display = 'none';
-        // Only remove modal-open if no other modals are open
         if (document.querySelectorAll('.modal[style*="display: flex"], .purchases-modal[style*="display: flex"]').length === 0) {
             document.body.classList.remove('modal-open');
         }
@@ -538,14 +544,21 @@
             reader.readAsDataURL(file);
         }
     }
+
+    // =======================================================
+    // [الحل 2]: إعادة التمرير للأعلى عند تبديل النماذج
+    // =======================================================
     function showRegisterForm() {
+        window.scrollTo(0, 0); // <-- التعديل هنا
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('registerContainer').style.display = 'block';
     }
     function showLoginForm() {
+        window.scrollTo(0, 0); // <-- والتعديل هنا
         document.getElementById('registerContainer').style.display = 'none';
         document.getElementById('loginContainer').style.display = 'block';
     }
+    // =======================================================
 
     function register() {
         const username = document.getElementById('registerUsername').value.trim();
@@ -694,7 +707,7 @@
     }
 
     function closeMyInfoModal() {
-        cancelInfoEditing(); // Reset to read-only state
+        cancelInfoEditing(); 
         document.getElementById('myInfoModal').style.display = 'none';
         document.body.classList.remove('modal-open');
     }
@@ -720,9 +733,9 @@
         document.getElementById('updateInfoBtn').style.display = 'none';
         document.getElementById('cancelEditBtn').style.display = 'none';
         
-        newProfileImageForUpdate = null; // Clear any selected image
-        document.getElementById('infoProfileImageInput').value = ''; // Reset file input
-        populateInfoModal(); // Revert any changes
+        newProfileImageForUpdate = null;
+        document.getElementById('infoProfileImageInput').value = '';
+        populateInfoModal(); 
     }
 
     function previewNewProfileImage(event) {
@@ -750,7 +763,6 @@
             landmark: document.getElementById('infoLandmark').value.trim()
         };
         
-        // Validation
         if (!updatedData.username || !updatedData.email || !updatedData.governorate || !updatedData.city || !updatedData.street || !updatedData.landmark) {
              showCustomAlert('يرجى ملء جميع الحقول!', false); return; 
         }
@@ -777,7 +789,6 @@
         }
 
         database.ref().update(updates).then(() => {
-            // Update localStorage
             localStorage.setItem('username', updatedData.username);
             const currentDeliveryInfo = JSON.parse(localStorage.getItem('deliveryInfo'));
             currentDeliveryInfo.name = updatedData.username;
@@ -792,7 +803,6 @@
                 localStorage.setItem('profileImage', newProfileImageForUpdate);
             }
 
-            // Update main profile UI
             document.getElementById('usernameDisplay').textContent = updatedData.username;
             const profileImage = localStorage.getItem('profileImage');
             const profileContainer = document.getElementById('profilePictureDisplayContainer');
@@ -803,7 +813,7 @@
                 profileContainer.innerHTML = `<div class="initial-avatar">${initial}</div>`;
             }
 
-            closeMyInfoModal(); // Close the modal after successful update
+            closeMyInfoModal();
             showCustomAlert('تم تحديث البيانات بنجاح!', true);
 
         }).catch(error => {
@@ -812,12 +822,6 @@
     }
 
 </script>
-
-</body>
-</html>
-
-
-
 
 
 
