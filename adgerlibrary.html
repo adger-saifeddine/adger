@@ -355,16 +355,6 @@
             font-size: 0.9rem;
             padding: 0.6rem 1rem;
         }
-        
-        /* START: الحل المضاف لمشكلة زر المفضلة */
-        #modal-favorite-btn.active .btn-text {
-            display: none;
-        }
-    
-        #modal-favorite-btn.active {
-            justify-content: center;
-        }
-        /* END: الحل المضاف */
     }
     /* END: Modal Styles */
 
@@ -530,10 +520,10 @@
     </div>
     <div class="modal-footer">
         <button id="modal-favorite-btn" class="modal-footer-btn">
-            <i class="far fa-heart"></i><span class="btn-text">إضافة للمفضلة</span>
+            <i class="far fa-heart"></i> إضافة للمفضلة
         </button>
         <a id="modal-pdf-btn" href="#" target="_blank" class="modal-footer-btn">
-            <i class="fas fa-file-pdf"></i><span class="btn-text">قراءة كـ PDF</span>
+            <i class="fas fa-file-pdf"></i> قراءة كـ PDF
         </a>
         <a id="modal-buy-btn" href="#" target="_blank" class="modal-footer-btn">
             صفحة الكتاب و الشراء
@@ -547,6 +537,7 @@
     <span id="toast-icon"></span>
     <span id="toast-message"></span>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const bookData = [
@@ -859,7 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isFav = isFavorite(bookId);
         modalFavoriteBtn.classList.toggle('active', isFav);
         modalFavoriteBtn.innerHTML = isFav 
-            ? '<i class="fas fa-heart"></i> تمت الإضافة للمفضلة' 
+            ? '<i class="fas fa-heart"></i>   محفوظة' 
             : '<i class="far fa-heart"></i> إضافة للمفضلة';
     }
 
