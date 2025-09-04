@@ -277,7 +277,6 @@
             padding: 20px;
         }
         
-        /* --- START: التعديل المطلوب هنا --- */
         .empty-history-container {
             display: flex;
             flex-direction: column;
@@ -289,10 +288,7 @@
             text-align: center;
             box-sizing: border-box;
             margin-bottom: 20px; 
-            /* تم حذف الخلفية والإطار */
         }
-        /* --- END: نهاية التعديل --- */
-
         .empty-history-container svg {
             width: 50px;
             height: 50px;
@@ -310,9 +306,11 @@
             color: #888;
         }
         @media (max-width: 555px) {
+            /* --- START: التعديل المطلوب هنا --- */
             .empty-history-container {
-                 padding: 40px 15px;
+                 padding: 30px 15px; /* تم تقليل المسافة العمودية للهواتف */
             }
+            /* --- END: نهاية التعديل --- */
             .empty-history-container svg {
                 width: 40px;
                 height: 40px;
