@@ -277,32 +277,31 @@
             padding: 20px;
         }
         
+        /* --- START: التعديل المطلوب هنا --- */
         .empty-history-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 100%;
-            color: #555; /* لون نص أغمق قليلًا */
-            padding: 50px 20px; /* مساحة داخلية متوازنة */
+            color: #555;
+            padding: 50px 20px;
             text-align: center;
-            background-color: #f8f9fa; /* خلفية مميزة */
-            border: 1px dashed #d9dde1; /* إطار متقطع */
-            border-radius: 16px;
             box-sizing: border-box;
-            /* الحل لموازنة المسافات: بما أن العنصر التالي له هامش علوي -20px */
-            /* نضيف هامش سفلي 20px هنا لتعويض النقص وتحقيق التوازن التام */
             margin-bottom: 20px; 
+            /* تم حذف الخلفية والإطار */
         }
+        /* --- END: نهاية التعديل --- */
+
         .empty-history-container svg {
             width: 50px;
             height: 50px;
             margin-bottom: 16px;
-            stroke: #adb5bd; /* لون أيقونة هادئ */
+            stroke: #adb5bd;
         }
         .empty-history-container span {
             font-size: 18px;
-            font-weight: 600; /* خط أعرض للعنوان */
+            font-weight: 600;
             margin-bottom: 8px;
             font-family: 'Cairo', sans-serif;
         }
@@ -952,7 +951,6 @@
             searchHistoryHeader.style.display = 'flex';
         
             if (searchHistory.length === 0) {
-                // --- START: تعديل HTML لرسالة السجل الفارغ بالأيقونة الجديدة ---
                 searchHistoryGrid.innerHTML = `<div class="empty-history-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
@@ -963,7 +961,6 @@
                     <span>سجل البحث فارغ</span>
                     <div class="subtitle">عمليات البحث التي تجريها ستظهر هنا.</div>
                 </div>`;
-                // --- END: نهاية التعديل ---
                 return;
             }
         
