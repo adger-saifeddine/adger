@@ -277,6 +277,7 @@
             padding: 20px;
         }
         
+        /* --- START: التعديل المطلوب هنا --- */
         .empty-history-container {
             display: flex;
             flex-direction: column;
@@ -284,11 +285,12 @@
             justify-content: center;
             width: 100%;
             color: #555;
-            padding: 50px 20px;
             text-align: center;
             box-sizing: border-box;
-            margin-bottom: 20px; 
+            /* التحكم المركزي بالمسافة عبر الهوامش المتساوية */
+            margin: 40px 0;
         }
+        
         .empty-history-container svg {
             width: 50px;
             height: 50px;
@@ -305,12 +307,12 @@
             font-size: 14px;
             color: #888;
         }
+
         @media (max-width: 555px) {
-            /* --- START: التعديل المطلوب هنا --- */
             .empty-history-container {
-                 padding: 30px 15px; /* تم تقليل المسافة العمودية للهواتف */
+                 /* تقليل المسافة العمودية المتساوية للهواتف */
+                 margin: 25px 0;
             }
-            /* --- END: نهاية التعديل --- */
             .empty-history-container svg {
                 width: 40px;
                 height: 40px;
@@ -322,6 +324,7 @@
                 font-size: 13px;
             }
         }
+        /* --- END: نهاية التعديل --- */
 
 
         .search-item {
@@ -946,9 +949,17 @@
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistoryGrid.innerHTML = '';
             
+            // استعادة النمط الافتراضي للعنصر الحاوي في كل مرة
+            searchHistoryGrid.style.padding = '20px';
+
             searchHistoryHeader.style.display = 'flex';
         
             if (searchHistory.length === 0) {
+                // --- START: التعديل المطلوب في JavaScript ---
+                // إلغاء المسافات الداخلية العمودية للعنصر الحاوي لإعطاء تحكم كامل
+                searchHistoryGrid.style.padding = '0 20px';
+                // --- END: نهاية التعديل ---
+
                 searchHistoryGrid.innerHTML = `<div class="empty-history-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
