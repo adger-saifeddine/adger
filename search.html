@@ -277,7 +277,6 @@
             padding: 20px;
         }
         
-        /* --- START: التعديل المطلوب هنا --- */
         .empty-history-container {
             display: flex;
             flex-direction: column;
@@ -285,14 +284,12 @@
             justify-content: center;
             width: 100%;
             color: #555;
-            padding: 50px 20px;
             text-align: center;
             box-sizing: border-box;
-            margin-bottom: 20px; 
-            /* تم حذف الخلفية والإطار */
+            /* المسافة المتساوية الجديدة */
+            margin: 40px 0;
         }
-        /* --- END: نهاية التعديل --- */
-
+        
         .empty-history-container svg {
             width: 50px;
             height: 50px;
@@ -309,9 +306,11 @@
             font-size: 14px;
             color: #888;
         }
+
         @media (max-width: 555px) {
             .empty-history-container {
-                 padding: 40px 15px;
+                 /* المسافة المتساوية والمقلصة للهواتف */
+                 margin: 25px 0;
             }
             .empty-history-container svg {
                 width: 40px;
@@ -564,6 +563,14 @@
             margin-top: -20px;
             margin-bottom: -18px;
         }
+        
+        /* --- START: الإضافة المطلوبة في CSS --- */
+        /* هذه القاعدة تلغي الهامش السالب فقط عندما يكون سجل البحث فارغًا */
+        .discover-more-header.preceded-by-empty {
+            margin-top: 0;
+        }
+        /* --- END: نهاية الإضافة --- */
+
         @media (max-width: 555px) {
             .discover-more-header { margin-top: -20px; margin-bottom: -24px; }
         }
@@ -804,9 +811,11 @@
         const closeNotesButton = document.getElementById('close-notes-button');
         const saveNotesButton = document.getElementById('save-notes-button');
         const notesTextarea = document.getElementById('notes-textarea');
+        // --- START: الإضافة المطلوبة في JavaScript ---
+        const discoverMoreHeader = document.querySelector('.discover-more-header');
+        // --- END: نهاية الإضافة ---
         
         let isAllHistoryShown = false;
-        // --- الحل: إضافة متغير "flag" لتتبع حالة نافذة الملاحظات ---
         let isNotesModalActive = false;
 
         const adjustNotesModalForKeyboard = () => {
@@ -829,11 +838,9 @@
             }
             notesModalContent.style.transform = 'translateY(0)';
             notesModal.style.display = 'none';
-            // --- الحل: إعادة ضبط المتغير عند إغلاق النافذة ---
             isNotesModalActive = false;
         };
         
-        // --- Modal Event Listeners ---
         deleteAllButton.addEventListener('click', () => {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             if (searchHistory.length > 0) modal.style.display = 'flex';
@@ -850,7 +857,6 @@
         });
 
         fabButton.addEventListener('click', () => {
-            // --- الحل: ضبط المتغير على true عند فتح النافذة ---
             isNotesModalActive = true;
             notesTextarea.value = localStorage.getItem('quickNotes') || '';
             notesModal.style.display = 'flex';
@@ -876,7 +882,6 @@
             }
         });
         
-        // --- Core Search Functionality ---
         backButton.addEventListener('click', () => window.history.back());
         
         const searchTexts = ["ابحث هنا", "اكتشف العروض الجديدة", "تصفح الفئات", "ابحث عن العلامات التجارية", "ابحث عن الكلمات الرئيسية"];
@@ -920,7 +925,6 @@
             searchInput.focus(); 
         });
         
-        // --- History and Term Management ---
         function saveSearchTerm(term) {
             let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistory = searchHistory.filter(entry => entry.term !== term);
@@ -947,10 +951,20 @@
         function displaySearchHistory() {
             const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
             searchHistoryGrid.innerHTML = '';
-            
+            searchHistoryGrid.style.padding = '20px';
             searchHistoryHeader.style.display = 'flex';
-        
+            // --- START: التعديل المطلوب في JavaScript ---
+            // تأكد من إزالة الفئة دائمًا في البداية
+            discoverMoreHeader.classList.remove('preceded-by-empty');
+            // --- END: نهاية التعديل ---
+
             if (searchHistory.length === 0) {
+                searchHistoryGrid.style.padding = '0 20px';
+                // --- START: التعديل المطلوب في JavaScript ---
+                // أضف الفئة فقط إذا كان السجل فارغًا
+                discoverMoreHeader.classList.add('preceded-by-empty');
+                // --- END: نهاية التعديل ---
+
                 searchHistoryGrid.innerHTML = `<div class="empty-history-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
@@ -1022,7 +1036,6 @@
             if (imageItem) executeSearch(imageItem.getAttribute('data-term'));
         });
         
-        // --- Initial Load and Resizing ---
         function initializePage() {
             displaySearchHistory();
             displayLastSearchTerm();
@@ -1042,14 +1055,12 @@
         
         window.addEventListener('resize', initializePage);
 
-        // --- FAB behavior to appear above virtual keyboard ---
         if (fabButton && 'visualViewport' in window) {
             const initialFabBottomValue = parseFloat(window.getComputedStyle(fabButton).bottom);
 
             const adjustFabForKeyboard = () => {
-                // --- الحل: إضافة شرط للتحقق من حالة نافذة الملاحظات ---
                 if (isNotesModalActive) {
-                    return; // لا تفعل شيئاً إذا كانت نافذة الملاحظات مفتوحة
+                    return; 
                 }
 
                 const viewport = window.visualViewport;
